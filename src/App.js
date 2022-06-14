@@ -12,6 +12,8 @@ import ContactSupport from "./pages/ContactSupport";
 import AccountSetings from "./pages/AccountSettings";
 import Pagenotfound from "./components/PageNotFound";
 import AdDeatailsTabs from "./pages/adDetails/AdDetailsTabs";
+import { useDispatch, useSelector } from "react-redux";
+import { loadMediaStart } from "./redux/ducks/mediaAds";
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
@@ -29,6 +31,11 @@ const App = () => {
     console.log("isOpen from Parent: ", isOpen);
   }, [isOpen]);
 
+  const dispatch = useDispatch();
+  useEffect(() => {
+		dispatch(loadMediaStart());
+	}, []);
+
   return (
     <>
       <Box sx={{ display: "flex" }}>
@@ -42,7 +49,7 @@ const App = () => {
             <Route exact path="/savedAds" element={<SavedAds />} />
             <Route exact path="/contactSupport" element={<ContactSupport />} />
             <Route exact path="/accountSetings" element={<AccountSetings />} />
-            <Route exact path="/adDeatails/*" element={<AdDeatailsTabs />} />
+            <Route exact path="/adDeatails/:adsId/*" element={<AdDeatailsTabs />} />
             <Route path="*" element={<Pagenotfound />} />
           </Routes>
         </Box>

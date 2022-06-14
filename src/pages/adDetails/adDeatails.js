@@ -1,22 +1,23 @@
-import {
-  Grid,
-  Box,
-  Typography,
-  Button,
-  Avatar,
-  styled,
-  Stack,
-} from "@mui/material";
+import { Grid, Box, Typography, Button, Stack } from "@mui/material";
 import Firstcard from "../../assets/Firstcard.svg";
 import LargePageLogo from "../../assets/largePageLogo.svg";
 import Firsrcardimg from "../../assets/FirstCardImg.svg";
 import facebook from "../../assets/facebook.svg";
 import instragram from "../../assets/instragram.svg";
 import { makeStyles } from "@material-ui/core/styles";
+import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 
 function AdDeatails() {
   const classes = useStyles();
+  // const { allMediaAds } = useSelector((state) => state.media);
+  // const adID = useParams();
+  // const adDetail = allMediaAds.adID === adsID.adsId
+  // const [adDetail, setAdDetail] = useState();
 
+  // useEffect(() => {
+  //   setAdDetail(allMediaAds.find((ads) => ads.id === Number(adID.adsId)));
+  // });
   return (
     <>
       <Grid container sx={{ marginTop: "36px" }}>

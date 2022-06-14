@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Avatar,
   Button,
@@ -21,6 +21,8 @@ import Saveicon from "../assets/Saveicon.svg";
 import Addgraph from "../assets/Addgraph.svg";
 import styled from "@emotion/styled";
 import { useNavigate } from "react-router-dom";
+import {  useSelector } from "react-redux";
+// import { loadMediaStart } from "../redux/ducks/mediaAds";
 const useStyles = makeStyles((theme) => ({
   title: {
     background:
@@ -117,8 +119,10 @@ const Addlibrarydatabase = ({ open }) => {
   const navigate = useNavigate();
   // const [openDatepicker, setopenDatepicker] = useState(false)
   const [opens, setOpen] = React.useState(false);
+  // const dispatch = useDispatch();
 
-  const adsList = [1, 2, 3, 4, 5, 6, 7];
+  const { allMediaAds } = useSelector((state) => state.media);
+  // const adsList = [1, 2, 3, 4, 5, 6, 7];
 
   const handleClick = () => {
     setOpen((prev) => !prev);
@@ -127,7 +131,11 @@ const Addlibrarydatabase = ({ open }) => {
   const handleClickAway = () => {
     setOpen(false);
   };
-
+  useEffect(() => {
+    console.log("11111111111111111111");
+    // console.log(allMediaAds[0].adID);
+    
+  });
   return (
     <>
       <Grid container>
@@ -383,7 +391,7 @@ const Addlibrarydatabase = ({ open }) => {
         </Grid>
         <Grid item xs={12}>
           <Grid container spacing={2} sx={{ marginTop: "10px" }}>
-            {adsList.map((user, index) => (
+            {allMediaAds.map((media, index) => (
               <Grid item xs={3}>
                 <Stack
                   sx={{
@@ -403,7 +411,8 @@ const Addlibrarydatabase = ({ open }) => {
                         color: "#2B2F42",
                       }}
                     >
-                      Best Sollar Lighting{" "}
+                      {/* Best Sollar Lighting{" "} */}
+                      {media.headline}
                     </Typography>
                     <Typography
                       noWrap
@@ -423,13 +432,14 @@ const Addlibrarydatabase = ({ open }) => {
                       src={Firstcardimg}
                       alt="img1"
                       className={classes.img}
+                      onClick={()=>navigate(`/adDeatails/${media.adID}`)}
                     />
                   </Box>
 
                   <Grid container sx={{ padding: "4px" }}>
                     <Grid item sm={9}>
                       <AddFooter>
-                        <Typography>Active</Typography>
+                        <Typography>{media.status}</Typography>
                         <img
                           src={Shareicon}
                           alt="img2"
@@ -441,7 +451,7 @@ const Addlibrarydatabase = ({ open }) => {
                           className={classes.saveicon}
                         />
                         <Typography color="#c0c0c0" className={classes.addinfo}>
-                          Started Running : May 15,2022
+                          Started Running : {media.startDate}
                         </Typography>
                         <Typography color="#2B2F42" className={classes.addinfo}>
                           Sollar Powered Butterfly Lights
@@ -484,7 +494,7 @@ const Addlibrarydatabase = ({ open }) => {
                               color: "#F6F6FB",
                             }}
                           >
-                            1
+                            {media.noOfCopyAds}
                           </Typography>
                           <Typography
                             variant="div"
