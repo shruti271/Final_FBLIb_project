@@ -1,17 +1,8 @@
-import {
-  Grid,
-  Box,
-  Typography,
-  Button,
-  Avatar,
-  styled,
-  Stack,
-} from "@mui/material";
+import { Grid, Box, Typography, Button, Stack } from "@mui/material";
 import Firstcard from "../../assets/Firstcard.svg";
 import LargePageLogo from "../../assets/largePageLogo.svg";
 import Firsrcardimg from "../../assets/FirstCardImg.svg";
 import facebook from "../../assets/facebook.svg";
-import instragram from "../../assets/instragram.svg";
 import { makeStyles } from "@material-ui/core/styles";
 
 function AdDeatails() {
