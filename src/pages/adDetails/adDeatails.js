@@ -7,17 +7,36 @@ import instragram from "../../assets/instragram.svg";
 import { makeStyles } from "@material-ui/core/styles";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 function AdDeatails() {
   const classes = useStyles();
-  // const { allMediaAds } = useSelector((state) => state.media);
-  // const adID = useParams();
+  const { allMediaAds } = useSelector((state) => state.media);
+  const adID = useParams();
+  const [adDetail, setAdDetail] = useState();
+
   // const adDetail = allMediaAds.adID === adsID.adsId
   // const [adDetail, setAdDetail] = useState();
 
-  // useEffect(() => {
-  //   setAdDetail(allMediaAds.find((ads) => ads.id === Number(adID.adsId)));
-  // });
+  useEffect(() => {
+    console.log("...................." + adID.adsId);
+    if (allMediaAds) {
+      const singleAds = allMediaAds.find((ad) => {
+        console.log("ad va;li..." + ad.adID);
+        if (ad.adID === adID.adsId) {
+          console.log("ad final  vali..." + ad.adID);
+          return ad;
+        }
+      });
+
+      setAdDetail(singleAds);
+      console.log("aksdji", adDetail);
+      console.log("single .......", singleAds);
+    }
+    // setAdDetail(allMediaAds.find((ads) => ads.id === Number(adID.adsId)));
+    console.log(adID.adsId);
+    console.log("??????");
+  });
   return (
     <>
       <Grid container sx={{ marginTop: "36px" }}>
@@ -39,7 +58,9 @@ function AdDeatails() {
                     color: "#2B2F42",
                   }}
                 >
-                  Best Sollar Lighting
+                  {/* Best Sollar Lighting */}
+                  {adDetail?.headline ? adDetail.headline : ' '}
+                  {/* {allMediaAds[adID.adsId].headline} */}
                 </Typography>
               </Box>
 
@@ -54,11 +75,12 @@ function AdDeatails() {
                     margin: "10px 12px 10px 26px",
                   }}
                 >
-                  🏡Elevate any plain or boring landscape into a colorful and
+                  {adDetail?.adDescription ? adDetail.adDescription : " "} 
+                  {/* 🏡Elevate any plain or boring landscape into a colorful and
                   artistic landscape with this solar powered garden wind
                   ornament ✅Durable and colorful ✅ Solar Powered and
                   Automatically Light Up ✅ Brighten Up Landscaping ✅ Best Gift
-                  Choice - Shop Now!
+                  Choice - Shop Now! */}
                 </Typography>
               </Box>
 
@@ -82,7 +104,8 @@ function AdDeatails() {
                         }}
                         noWrap
                       >
-                        WWW.BESTSOLARLIGHTING.COM
+                        {adDetail?.headline ? adDetail.displayURL : ' '}
+                        {/* WWW.BESTSOLARLIGHTING.COM */}
                       </Typography>
                       <Typography
                         style={{
@@ -104,6 +127,8 @@ function AdDeatails() {
                           color: "#2B2F42",
                         }}
                       >
+                  {adDetail?.purchaseDescription ? adDetail.purchaseDescription : ' '}
+
                         In Stock - Fast Delivery - 100% Satisfaction Guarantee -
                         Limited Quantities Available - Hurry Before it is gone!
                       </Typography>
@@ -132,7 +157,8 @@ function AdDeatails() {
                           color: "#F6F6FB",
                         }}
                       >
-                        1
+                  {adDetail?.noOfCopyAds ? adDetail.noOfCopyAds : ' '}
+                        
                       </Typography>
                       <Typography
                         variant="div"
@@ -212,7 +238,8 @@ function AdDeatails() {
               <Stack sx={{ alignItems: "center" }}>
                 <Typography className={classes.textdeco}>Ad Status</Typography>
                 <Typography className={classes.textdeco}>
-                  <b>Active</b>
+                  {adDetail?.status ? adDetail.status : ' '}
+                  <b></b>
                 </Typography>
               </Stack>
               <Stack sx={{ alignItems: "center" }}>
@@ -220,7 +247,7 @@ function AdDeatails() {
                   Started Running On
                 </Typography>
                 <Typography className={classes.textdeco}>
-                  <b>May 15, 2022</b>
+                  <b> {adDetail?.startDate ? adDetail.startDate : ' '}</b>
                 </Typography>
                 <Typography className={classes.textdeco}>
                   <b> 3 Days</b>
@@ -228,14 +255,17 @@ function AdDeatails() {
               </Stack>
               <Stack sx={{ alignItems: "center" }}>
                 <Typography className={classes.textdeco}>Placements</Typography>
-                <Typography //className={classes.textdeco}
+                {adDetail?.platforms.map((ads , index)=>( 
+                  <Typography  className={classes.textdeco}> <b>{ads}</b></Typography>
+                ))}
+                {/* <Typography //className={classes.textdeco}
                   className={classes.textdeco}
                 >
                   <b>Facebook</b>
-                </Typography>
-                <Typography className={classes.textdeco}>
+                </Typography> */}
+                {/* <Typography className={classes.textdeco}>
                   <b>Instagram</b>
-                </Typography>
+                </Typography> */}
               </Stack>
             </Grid>
             <Grid
