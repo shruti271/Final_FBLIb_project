@@ -35,7 +35,6 @@ function AdDeatails() {
     }
     // setAdDetail(allMediaAds.find((ads) => ads.id === Number(adID.adsId)));
     console.log(adID.adsId);
-    console.log("??????");
   });
   return (
     <>
@@ -58,9 +57,11 @@ function AdDeatails() {
                     color: "#2B2F42",
                   }}
                 >
-                  {/* Best Sollar Lighting */}
-                  {adDetail?.headline ? adDetail.headline : ' '}
-                  {/* {allMediaAds[adID.adsId].headline} */}
+                
+
+                  {adDetail?.headline ? adDetail.headline : " "}
+               
+
                 </Typography>
               </Box>
 
@@ -75,21 +76,35 @@ function AdDeatails() {
                     margin: "10px 12px 10px 26px",
                   }}
                 >
-                  {adDetail?.adDescription ? adDetail.adDescription : " "} 
-                  {/* 🏡Elevate any plain or boring landscape into a colorful and
-                  artistic landscape with this solar powered garden wind
-                  ornament ✅Durable and colorful ✅ Solar Powered and
-                  Automatically Light Up ✅ Brighten Up Landscaping ✅ Best Gift
-                  Choice - Shop Now! */}
+                  {adDetail?.adDescription ? adDetail.adDescription : " "}
+                 
                 </Typography>
               </Box>
 
-              <Box>
-                <img
+              <Box className={classes.box}>
+              {adDetail?.adMediaType === "video" ? (
+                    <video
+                      src={adDetail?.bucketMediaURL}
+                      autoPlay 
+                      className={classes.img}
+                    />
+                  ) : ( adDetail?.adMediaType === "image"?
+                    <img
+                      src={adDetail?.bucketMediaURL}
+                      alt="img1"
+                      className={classes.img}
+                    />:
+                    <img
+                      src={Firsrcardimg}
+                      alt="img1"
+                      className={classes.img}
+                    />
+                  )}
+                {/* <img
                   src={Firsrcardimg}
                   className={classes.adImage}
                   alt="ad media"
-                />
+                /> */}
               </Box>
               <Box>
                 <Grid container spacing={1}>
@@ -104,8 +119,8 @@ function AdDeatails() {
                         }}
                         noWrap
                       >
-                        {adDetail?.headline ? adDetail.displayURL : ' '}
-                        {/* WWW.BESTSOLARLIGHTING.COM */}
+                        {adDetail?.headline ? adDetail.displayURL : " "}
+                      
                       </Typography>
                       <Typography
                         style={{
@@ -127,8 +142,9 @@ function AdDeatails() {
                           color: "#2B2F42",
                         }}
                       >
-                  {adDetail?.purchaseDescription ? adDetail.purchaseDescription : ' '}
-
+                        {adDetail?.purchaseDescription
+                          ? adDetail.purchaseDescription
+                          : " "}
                         In Stock - Fast Delivery - 100% Satisfaction Guarantee -
                         Limited Quantities Available - Hurry Before it is gone!
                       </Typography>
@@ -157,8 +173,7 @@ function AdDeatails() {
                           color: "#F6F6FB",
                         }}
                       >
-                  {adDetail?.noOfCopyAds ? adDetail.noOfCopyAds : ' '}
-                        
+                        {adDetail?.noOfCopyAds ? adDetail.noOfCopyAds : " "}
                       </Typography>
                       <Typography
                         variant="div"
@@ -238,8 +253,7 @@ function AdDeatails() {
               <Stack sx={{ alignItems: "center" }}>
                 <Typography className={classes.textdeco}>Ad Status</Typography>
                 <Typography className={classes.textdeco}>
-                  {adDetail?.status ? adDetail.status : ' '}
-                  <b></b>
+                  <b> {adDetail?.status ? adDetail.status : " "}</b>
                 </Typography>
               </Stack>
               <Stack sx={{ alignItems: "center" }}>
@@ -247,7 +261,7 @@ function AdDeatails() {
                   Started Running On
                 </Typography>
                 <Typography className={classes.textdeco}>
-                  <b> {adDetail?.startDate ? adDetail.startDate : ' '}</b>
+                  <b> {adDetail?.startDate ? adDetail.startDate : " "}</b>
                 </Typography>
                 <Typography className={classes.textdeco}>
                   <b> 3 Days</b>
@@ -255,8 +269,11 @@ function AdDeatails() {
               </Stack>
               <Stack sx={{ alignItems: "center" }}>
                 <Typography className={classes.textdeco}>Placements</Typography>
-                {adDetail?.platforms.map((ads , index)=>( 
-                  <Typography  className={classes.textdeco}> <b>{ads}</b></Typography>
+                {adDetail?.platforms.map((ads, index) => (
+                  <Typography className={classes.textdeco}>
+                    {" "}
+                    <b>{ads}</b>
+                  </Typography>
                 ))}
                 {/* <Typography //className={classes.textdeco}
                   className={classes.textdeco}
@@ -359,5 +376,19 @@ const useStyles = makeStyles(() => ({
     height: "100%",
     width: "100%",
     padding: "12px",
+  },
+  box: {
+    width: "98%",
+    height: "20%",
+    // backgroundSize: "cover"
+  },
+  img: {
+    objectFit: "contain",
+    // backgroundSize:"cover",
+    resizeMode: "Startch",
+    height: "100%",
+    width: "100%",
+    // maxWidth:"100%",
+    // maxHeight:"100%"
   },
 }));

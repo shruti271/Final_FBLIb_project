@@ -14,6 +14,7 @@ import Pagenotfound from "./components/PageNotFound";
 import AdDeatailsTabs from "./pages/adDetails/AdDetailsTabs";
 import { useDispatch, useSelector } from "react-redux";
 import { loadMediaStart } from "./redux/ducks/mediaAds";
+import { Button } from "@mui/material";
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
@@ -33,23 +34,27 @@ const App = () => {
 
   const dispatch = useDispatch();
   useEffect(() => {
-		dispatch(loadMediaStart());
-	}, []);
+    dispatch(loadMediaStart());
+  }, []);
 
   return (
     <>
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
         <CustomAppBar isOpen={isOpen} setIsOpen={setIsOpen} />
-        <CustomSidebar isOpen={isOpen} />
-        <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+        <CustomSidebar isOpen={isOpen} />        
+        <Box component="main" sx={{ flexGrow: 1, p: 3}}>
           <DrawerHeader />
           <Routes>
             <Route exact path="/" element={<Addlibrarydatabase />} />
             <Route exact path="/savedAds" element={<SavedAds />} />
             <Route exact path="/contactSupport" element={<ContactSupport />} />
             <Route exact path="/accountSetings" element={<AccountSetings />} />
-            <Route exact path="/adDeatails/:adsId/*" element={<AdDeatailsTabs />} />
+            <Route
+              exact
+              path="/adDeatails/:adsId/*"
+              element={<AdDeatailsTabs />}
+            />
             <Route path="*" element={<Pagenotfound />} />
           </Routes>
         </Box>

@@ -21,7 +21,7 @@ import Saveicon from "../assets/Saveicon.svg";
 import Addgraph from "../assets/Addgraph.svg";
 import styled from "@emotion/styled";
 import { useNavigate } from "react-router-dom";
-import {  useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 // import { loadMediaStart } from "../redux/ducks/mediaAds";
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -96,6 +96,10 @@ const useStyles = makeStyles((theme) => ({
       "linear-gradient(270deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)",
     float: "right",
   },
+  btntry:{
+    border:3,
+    
+  }
 }));
 
 const Addheader = styled("div")(({ theme }) => ({
@@ -133,11 +137,11 @@ const Addlibrarydatabase = ({ open }) => {
   };
   useEffect(() => {
     console.log("11111111111111111111");
-    // console.log(allMediaAds[0].adID);
-    
+    console.log(allMediaAds);
   });
   return (
     <>
+    {/* <Button variant="outlined" sx={{borderRadius: 50 , fontWeight: 600 , border:"1px solid #EBEBEB"}}>hello</Button> */}
       <Grid container>
         <Grid item xs={12}>
           <Box component="main">
@@ -392,7 +396,7 @@ const Addlibrarydatabase = ({ open }) => {
         <Grid item xs={12}>
           <Grid container spacing={2} sx={{ marginTop: "10px" }}>
             {allMediaAds.map((media, index) => (
-              <Grid item xs={3}>
+              <Grid item xs={3} key={index}>
                 <Stack
                   sx={{
                     border: "2px solid #F6F6FB",
@@ -428,12 +432,20 @@ const Addlibrarydatabase = ({ open }) => {
                     </Typography>
                   </Addheader>
                   <Box>
-                    <img
+                    {media.adMediaType === "video" ? (
+                      <video src={media.bucketMediaURL} autoPlay muted className={classes.img} onClick={() => navigate(`/adDeatails/${media.adID}`)}/>
+                    ) : ( media?.adMediaType === "image" ?
+                      <img
+                        src={media?.bucketMediaURL}
+                        alt="img1"
+                        className={classes.img}
+                        onClick={() => navigate(`/adDeatails/${media.adID}`)}
+                      />:<img
                       src={Firstcardimg}
                       alt="img1"
                       className={classes.img}
-                      onClick={()=>navigate(`/adDeatails/${media.adID}`)}
                     />
+                    )}
                   </Box>
 
                   <Grid container sx={{ padding: "4px" }}>

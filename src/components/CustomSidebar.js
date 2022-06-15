@@ -234,7 +234,7 @@ export const CustomSidebar = ({ isOpen }) => {
                 marginLeft: "20px",
               }}
             >
-              <img alt="Logout" src={logout} />
+              <img alt="Logout" src={logout} width="17px"/>
               <Typography sx={{ marginLeft: "26px" }}>Log Out</Typography>
             </Stack>
           </Box>
