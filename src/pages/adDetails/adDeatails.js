@@ -1,17 +1,19 @@
-import { Grid, Box, Typography, Button, Stack } from "@mui/material";
+import { Grid, Box, Typography, Button, Stack, Link } from "@mui/material";
 import Firstcard from "../../assets/Firstcard.svg";
 import LargePageLogo from "../../assets/largePageLogo.svg";
 import Firsrcardimg from "../../assets/FirstCardImg.svg";
 import facebook from "../../assets/facebook.svg";
-import instragram from "../../assets/instragram.svg";
+// import instragram from "../../assets/instragram.svg";
 import { makeStyles } from "@material-ui/core/styles";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import {  useParams } from "react-router-dom";
+import instragram from "../../assets/instragram.svg";
+
 
 function AdDeatails() {
   const classes = useStyles();
-  const { allMediaAds } = useSelector((state) => state.media);
+  const { allMediaAds } = useSelector((state) => state.allMediaAds);
   const adID = useParams();
   const [adDetail, setAdDetail] = useState();
 
@@ -38,6 +40,7 @@ function AdDeatails() {
   });
   return (
     <>
+        
       <Grid container sx={{ marginTop: "36px" }}>
         <Grid item xs={12} lg={4} md={4} sm={12}>
           <Box sx={{ border: "4.97421px solid #F6F6FB" }}>
@@ -57,11 +60,7 @@ function AdDeatails() {
                     color: "#2B2F42",
                   }}
                 >
-                
-
                   {adDetail?.headline ? adDetail.headline : " "}
-               
-
                 </Typography>
               </Box>
 
@@ -77,29 +76,26 @@ function AdDeatails() {
                   }}
                 >
                   {adDetail?.adDescription ? adDetail.adDescription : " "}
-                 
                 </Typography>
               </Box>
 
               <Box className={classes.box}>
-              {adDetail?.adMediaType === "video" ? (
-                    <video
-                      src={adDetail?.bucketMediaURL}
-                      autoPlay 
-                      className={classes.img}
-                    />
-                  ) : ( adDetail?.adMediaType === "image"?
-                    <img
-                      src={adDetail?.bucketMediaURL}
-                      alt="img1"
-                      className={classes.img}
-                    />:
-                    <img
-                      src={Firsrcardimg}
-                      alt="img1"
-                      className={classes.img}
-                    />
-                  )}
+                {adDetail?.adMediaType === "video" ? (
+                  <video
+                    src={adDetail?.bucketMediaURL}
+                    autoPlay
+                    controls
+                    className={classes.img}
+                  />
+                ) : adDetail?.adMediaType === "image" ? (
+                  <img
+                    src={adDetail?.bucketMediaURL}
+                    alt="img1"
+                    className={classes.img}
+                  />
+                ) : (
+                  <img src={Firsrcardimg} alt="img1" className={classes.img} />
+                )}
                 {/* <img
                   src={Firsrcardimg}
                   className={classes.adImage}
@@ -120,7 +116,6 @@ function AdDeatails() {
                         noWrap
                       >
                         {adDetail?.headline ? adDetail.displayURL : " "}
-                      
                       </Typography>
                       <Typography
                         style={{
@@ -145,8 +140,8 @@ function AdDeatails() {
                         {adDetail?.purchaseDescription
                           ? adDetail.purchaseDescription
                           : " "}
-                        In Stock - Fast Delivery - 100% Satisfaction Guarantee -
-                        Limited Quantities Available - Hurry Before it is gone!
+                        {/* In Stock - Fast Delivery - 100% Satisfaction Guarantee -
+                        Limited Quantities Available - Hurry Before it is gone! */}
                       </Typography>
                     </Box>
                   </Grid>
@@ -217,6 +212,7 @@ function AdDeatails() {
         <Grid item xs={12} lg={8} md={8} sm={12}>
           <Box>
             <Grid container sx={{ justifyContent: "space-around" }}>
+             
               <Button
                 style={{
                   background: "#00CBFF",
@@ -227,9 +223,15 @@ function AdDeatails() {
                   paddingRight: "16px",
                 }}
               >
-                <Typography color={"white"} noWrap>
+                <a
+                  href={adDetail?.bucketMediaURL}
+                  style={{ textDecoration: "none", color: "white" }}
+                  download
+                  disabled={adDetail?.adMediaType === "image" ? true : false}
+                >
+                  {" "}
                   Download Thumbnail
-                </Typography>
+                </a>
               </Button>
               <Button
                 style={{
@@ -240,10 +242,19 @@ function AdDeatails() {
                   paddingLeft: "16px",
                   paddingRight: "16px",
                 }}
+                disabled={adDetail?.adMediaType === "video" ? true : false}
               >
-                <Typography color={"white"} noWrap>
+                <a
+                  href={adDetail?.bucketMediaURL}
+                  style={{ textDecoration: "none", color: "white" }}
+                  download
+                >
+                  {" "}
                   Download Video
-                </Typography>
+                </a>
+                {/* <Typography color={"white"} noWrap>
+                  Download Video
+                </Typography> */}
               </Button>
             </Grid>
             <Grid
@@ -270,7 +281,7 @@ function AdDeatails() {
               <Stack sx={{ alignItems: "center" }}>
                 <Typography className={classes.textdeco}>Placements</Typography>
                 {adDetail?.platforms.map((ads, index) => (
-                  <Typography className={classes.textdeco}>
+                  <Typography className={classes.textdeco} key={index}>
                     {" "}
                     <b>{ads}</b>
                   </Typography>
@@ -339,7 +350,7 @@ function AdDeatails() {
                   sx={{ justifyContent: "center", alignItems: "center" }}
                 >
                   <Box sx={{ marginRight: "10px" }}>
-                    <img src={facebook} aria-label="Add" />
+                    <img src={instragram} aria-label="Add" />
                   </Box>
                   <Stack>
                     <Typography
@@ -370,25 +381,21 @@ function AdDeatails() {
 export default AdDeatails;
 
 const useStyles = makeStyles(() => ({
-  adImage: {
-    objectFit: "contain",
-    resizeMode: "Startch",
-    height: "100%",
-    width: "100%",
-    padding: "12px",
-  },
+  // adImage: {
+  //   objectFit: "contain",
+  //   resizeMode: "Startch",
+  //   height: "100%",
+  //   width: "100%",
+  //   padding: "12px",
+  // },
   box: {
     width: "98%",
     height: "20%",
-    // backgroundSize: "cover"
   },
   img: {
-    objectFit: "contain",
-    // backgroundSize:"cover",
+    objectFit: "contain",    
     resizeMode: "Startch",
     height: "100%",
     width: "100%",
-    // maxWidth:"100%",
-    // maxHeight:"100%"
   },
 }));

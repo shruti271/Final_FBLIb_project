@@ -6,7 +6,7 @@ import watcherSaga from './sagas/rootSaga';
 
 
 const reducer = combineReducers({
-	media: mediaReducer,
+	allMediaAds: mediaReducer,
 });
 
 const sagaMiddleWares = createSagaMiddleware();

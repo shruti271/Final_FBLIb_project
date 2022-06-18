@@ -89,7 +89,7 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
   };
   return (
     <>
-      <AppBar position="fixed">
+      <AppBar>
         <Toolbar>
           <Stack
             direction={"row"}

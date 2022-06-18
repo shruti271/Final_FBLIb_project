@@ -103,7 +103,7 @@ const AddFooter = styled("div")(({ theme }) => ({
 const AllAds = () => {
   const classes = useStyles();
   // const dispatch = useDispatch();
-  // const { media} = useSelector((state) => state.media);
+  // const { media} = useSelector((state) => state.allMediaAds);
 
   // useEffect(() => {
 	// 	dispatch(loadMediaStart);
