@@ -88,7 +88,6 @@ const App = () => {
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
         <CustomSidebar isOpen={isOpen} />
-
         <CustomAppBar isOpen={isOpen} setIsOpen={setIsOpen} />
         <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
           <DrawerHeader />
