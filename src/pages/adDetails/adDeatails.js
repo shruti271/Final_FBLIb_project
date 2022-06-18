@@ -7,9 +7,8 @@ import facebook from "../../assets/facebook.svg";
 import { makeStyles } from "@material-ui/core/styles";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import {  useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import instragram from "../../assets/instragram.svg";
-
 
 function AdDeatails() {
   const classes = useStyles();
@@ -40,7 +39,6 @@ function AdDeatails() {
   });
   return (
     <>
-        
       <Grid container sx={{ marginTop: "36px" }}>
         <Grid item xs={12} lg={4} md={4} sm={12}>
           <Box sx={{ border: "4.97421px solid #F6F6FB" }}>
@@ -212,7 +210,6 @@ function AdDeatails() {
         <Grid item xs={12} lg={8} md={8} sm={12}>
           <Box>
             <Grid container sx={{ justifyContent: "space-around" }}>
-             
               <Button
                 style={{
                   background: "#00CBFF",
@@ -393,7 +390,7 @@ const useStyles = makeStyles(() => ({
     height: "20%",
   },
   img: {
-    objectFit: "contain",    
+    objectFit: "contain",
     resizeMode: "Startch",
     height: "100%",
     width: "100%",
