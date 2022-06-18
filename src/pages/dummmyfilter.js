@@ -25,10 +25,9 @@ import Shareicon from "../assets/Shareicon.svg";
 import Saveicon from "../assets/Saveicon.svg";
 import Addgraph from "../assets/Addgraph.svg";
 import styled from "@emotion/styled";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import CloseIcon from "@mui/icons-material/Close";
-import AdDeatails from "./adDetails/adDeatails";
 // import {MdOutlineClose} from  "react-icons/md"
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -123,23 +122,9 @@ const AddFooter = styled("div")(({ theme }) => ({
   whiteSpace: "nowrap",
 }));
 
-export const AllDataPage = () => {
-  return (
-    <>
-      <Box>
-        <Routes>
-          <Route exact path="/*" element={<Addlibrarydatabase />} />
-          {/* <Route exact path="AdlibraryDatabase" element={< />} />           */}
-          <Route exact path="adDeatails/:adsId" element={<AdDeatails />} />
-        </Routes>
-      </Box>
-    </>
-  );
-};
 // const Addlibrarydatabase = ({ open }) => {
 const Addlibrarydatabase = () => {
   const { allMediaAds } = useSelector((state) => state.allMediaAds);
-  console.log("init media data===================", allMediaAds);
   const classes = useStyles();
   const [startDate, setStartDate] = useState(new Date());
   const navigate = useNavigate();
@@ -148,89 +133,75 @@ const Addlibrarydatabase = () => {
   const [selectedDate, setSelectedDate] = React.useState(new Date());
   const [selectedEndDate, setSelectedEndDate] = React.useState(new Date());
 
-  const [min, setMin] = React.useState(0);
+  // const [opens, setOpen] = React.useState(false);
+
+  // const [addcounter, setAddcounter] = useState(false);
+  const [min, setMin] = React.useState(1);
   const [max, setMax] = React.useState(1000);
 
   // const [addmediaselect, setaddmediaselect] = useState(false);
-  const [adsFilteredData, setAdsFilteredData] = useState([]);
-  console.log("init data===================", adsFilteredData);
-  // const [selectedMediaTypeValue, setSelectedMediaTypeValue] = useState("");
-
+  const [adsFilteredData, setAdsFilteredData] = useState([...allMediaAds]);
   const [appliedFilters, setAppliedFilters] = useState({
-    StartRunningDate: { Message: "" },
-    AdStatus: { selectedData: "", Message: "" },
-    AdCount: { min: 0, max: 1000, Message: "" },
-    FacebookLikes: { Message: "" },
-    InstragramLike: { Message: "" },
-    MediaType: { selectedMedia: "Video or Photo", Message: "" },
+    StartRunningDate: "",
+    AdCount: "",
+    FacebookLikes: "",
+    InstragramLike: "",
+    MediaType: "",
   });
+  const [selectedMediaTypeValue, setSelectedMediaTypeValue] = useState("");
 
   const [rangeanchorel, setrangeAnchorEl] = React.useState(null);
   const addcounteropen = Boolean(rangeanchorel);
   const [mediaTypeAnchorel, setMediaTypeAnchorel] = React.useState(null);
   const openMediaTypeAnchorel = Boolean(mediaTypeAnchorel);
-  const [adStatusAnchorel, setAdStatusAnchorel] = React.useState(null);
-  const openAdStatusAnchorel = Boolean(adStatusAnchorel);
 
-  useEffect(() => {
-    setAdsFilteredData([...allMediaAds]);
-    console.log(adsFilteredData);
-  }, [allMediaAds]);
   const openAddcounter = (e) => {
     setrangeAnchorEl(e.currentTarget);
   };
 
-  // const counterIncremten = (newValue) => {
   const counterIncremten = (event, newValue) => {
-    console.log(
-      "handleChange2 newValue--------------",
-      newValue[0],
-      newValue[1]
-    );
+    console.log("handleChange2 newValue", newValue);
 
     setMin(newValue[0]);
     setMax(newValue[1]);
     setAppliedFilters((pre) => ({
       ...pre,
-      AdCount: {
-        min: newValue[0],
-        max: newValue[1],
-        Message: `Ad Count: ${newValue[0]}-${newValue[1]}`,
-      },
+      AdCount: `Ad Count: ${min}-${max}`,
     }));
   };
 
-  const handlechange = (event, newValue) => {
-    // setSelectedMediaTypeValue(newValue);
-
-    setAppliedFilters((pre) => ({
-      ...pre,
-      MediaType: {
-        selectedMedia: newValue,
-        Message: `MediaType:${newValue}`,
-      },
-    }));
+  // const openAddmedia = () => {
+  //   if (addmediaselect === false) {
+  //     setaddmediaselect(true);
+  //   } else {
+  //     setaddmediaselect(false);
+  //   }
+  // };
+  const handlechange = (event) => {
+    setSelectedMediaTypeValue(event.currentTarget.value);
+    console.log(
+      ".................----------------------",
+      event.currentTarget.value
+    );
   };
-  const handleChangeStatus = (event, newValue) => {
-    // setSelectedMediaTypeValue(newValue);
+  console.log("..//", selectedMediaTypeValue);
 
-    setAppliedFilters((pre) => ({
-      ...pre,
-      AdStatus: {
-        selectedData: newValue,
-        Message: `MediaType:${newValue}`,
-      },
-    }));
-  };
-  console.log(
-    "applied filters-------------------------" +
-      appliedFilters?.MediaType?.selectedMedia
-  );
-  console.log("..//", appliedFilters?.MediaType?.Message);
-  console.log("..outsidemedia update//", appliedFilters);
+  useEffect(() => {
+    // console.log("11111111111111111111");
+    console.log(allMediaAds);
+    // setAdsFilteredData(allMediaAds);
+  });
 
+  useEffect(() => {
+    // setAdsFilteredData(
+    //   allMediaAds.filter(
+    //     (ads) => ads.noOfCopyAds >= min && ads.noOfCopyAds <= max
+    //   )
+    // );
+  }, [allMediaAds, max, min]);
   return (
     <>
+      {/* <Button variant="outlined" sx={{borderRadius: 50 , fontWeight: 600 ,borderColor:"#00CBFF",color:"#00CBFF", borderWidth:3}}>hello</Button> */}
       <Grid container>
         <Grid item xs={12}>
           <Box component="main">
@@ -351,14 +322,7 @@ const Addlibrarydatabase = () => {
               }}
             >
               {/* {console.log(selectedDate + "comming in render")} */}
-              {/* <DatePicker
-      selected={startDate}
-      onChange={onChange}
-      startDate={startDate}
-      endDate={endDate}
-      selectsRange
-      inline
-    /> */}
+
               <DatePicker
                 inline
                 selectsRange
@@ -475,14 +439,12 @@ const Addlibrarydatabase = () => {
                   }}
                 >
                   <Typography sx={{ padding: "0px" }}>
-                    {/* From {appliedFilters?.AdCount?.min} to {appliedFilters?.AdCount?.max}+ */}
                     From {min} to {max}+
                   </Typography>
                   <Slider
                     size="small"
-                    // value={[appliedFilters?.AdCount?.min, appliedFilters?.AdCount?.max]}
                     value={[min, max]}
-                    min={0}
+                    min={1}
                     max={1000}
                     sx={{ color: "#00CBFF" }}
                     onChange={counterIncremten}
@@ -497,12 +459,15 @@ const Addlibrarydatabase = () => {
                       borderWidth: 2,
                     }}
                     onClick={() => {
+                      setMax(1000);
+                      setMin(1);
+                      // console.log("ad count99999999999999999999");
                       setAppliedFilters((pre) => ({
                         ...pre,
-                        AdCount: { min: 0, max: 1000, Message: "" },
+                        AdCount: "",
                       }));
-                      setMin(0);
-                      setMax(1000);
+                      // console.log("ad count99999999999999999999");
+
                       setrangeAnchorEl(null);
                     }}
                   >
@@ -514,10 +479,6 @@ const Addlibrarydatabase = () => {
 
             <Button
               variant="outlined"
-              onClick={(e) => setAdStatusAnchorel(e.currentTarget)}
-              size="large"
-              disableElevation
-              disableRipple
               sx={{
                 color: "#2B2F42",
                 whiteSpace: "nowrap",
@@ -539,71 +500,6 @@ const Addlibrarydatabase = () => {
                 Ad status{" "}
               </Typography>
             </Button>
-            <Popover
-              anchorEl={adStatusAnchorel}
-              //  open={open}
-              add={openAdStatusAnchorel ? "simple-popover" : undefined}
-              onClose={() => {
-                setAdStatusAnchorel(null);
-                console.log(
-                  setAdStatusAnchorel,
-                  "jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj"
-                );
-              }}
-              open={openAdStatusAnchorel}
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-            >
-              <Box sx={{ width: "190px" }}>
-                <FormControl sx={{ padding: "10px" }}>
-                  <RadioGroup
-                    aria-labelledby="demo-radio-buttons-group-label"
-                    defaultValue="female"
-                    name="radio-buttons-group"
-                    value={appliedFilters?.AdStatus?.selectedData || ""}
-                    onChange={handleChangeStatus}
-                    // background="#00CBFF"
-                  >
-                    <FormControlLabel
-                      value="Active"
-                      control={<Radio style={{ color: "#00CBFF" }} />}
-                      label="Active"
-                    />
-                    <FormControlLabel
-                      value="inActive"
-                      control={<Radio style={{ color: "#00CBFF" }} />}
-                      label="inActive"
-                    />
-                  </RadioGroup>
-                  <Box
-                    display={"flex"}
-                    alignContent={"center"}
-                    justifyContent={"center"}
-                  >
-                    <Button
-                      variant="outlined"
-                      sx={{
-                        borderRadius: 50,
-                        fontWeight: 600,
-                        borderColor: "#00CBFF",
-                        color: "#00CBFF",
-                        height: "35px",
-                        width: "80px",
-                        borderWidth: 2,
-                      }}
-                    >
-                      Reset
-                    </Button>
-                  </Box>
-                </FormControl>
-              </Box>
-            </Popover>
 
             <Button
               variant="outlined"
@@ -706,12 +602,12 @@ const Addlibrarydatabase = () => {
                     aria-labelledby="demo-radio-buttons-group-label"
                     defaultValue="female"
                     name="radio-buttons-group"
-                    value={appliedFilters?.MediaType?.selectedMedia || ""}
+                    value={selectedMediaTypeValue}
                     onChange={handlechange}
                     // background="#00CBFF"
                   >
                     <FormControlLabel
-                      value="Video or Photo"
+                      value="Video-Photo"
                       control={<Radio style={{ color: "#00CBFF" }} />}
                       label="Video or Photo"
                     />
@@ -721,9 +617,9 @@ const Addlibrarydatabase = () => {
                       label="Video"
                     />
                     <FormControlLabel
-                      value="image"
+                      value="photo"
                       control={<Radio style={{ color: "#00CBFF" }} />}
-                      label="photo"
+                      label="Photo"
                     />
                   </RadioGroup>
                   <Box
@@ -741,14 +637,6 @@ const Addlibrarydatabase = () => {
                         height: "35px",
                         width: "80px",
                         borderWidth: 2,
-                      }}
-                      onClick={() => {
-                        setAppliedFilters((pre) => ({
-                          ...pre,
-                          MediaType: { selectedMedia:"Video or Photo", Message: "" },
-                        }));
-                      
-                        setMediaTypeAnchorel(null);
                       }}
                     >
                       Reset
@@ -780,70 +668,25 @@ const Addlibrarydatabase = () => {
                 Button{" "}
               </Typography>
             </Button>
-          </Grid>
-          <Grid sx={{ marginTop: 1 }}>
-            <Box
-              sx={{ display: "flex", justifyContent: "end", alignItems: "end" }}
+            <Button
+              onClick={() => {
+                setAdsFilteredData(
+                  allMediaAds.filter(
+                    (ads) => ads.noOfCopyAds >= min && ads.noOfCopyAds <= max
+                  )
+                );
+              }}
             >
-              <Button
-                disableRipple
-                disableElevation
-                // sx={{ background: "#00CBFF", color: "white", borderRadius: 4 }}
-                onClick={() => {
-                  // setAdsFilteredData(allMediaAds)
-
-                  console.log(appliedFilters?.AdCount?.Message);
-                  console.log(appliedFilters?.StartRunningDate?.Message);
-                  console.log(appliedFilters?.FacebookLikes?.Message);
-                  console.log(appliedFilters?.InstragramLike?.Message);
-                  console.log(appliedFilters?.MediaType?.Message);
-                  console.log(
-                    "variable",
-                    appliedFilters?.MediaType?.selectedMedia
-                  );
-                  // console.log(
-                  //   "selectedMediaTypeValue + ",
-                  //   selectedMediaTypeValue
-                  // );
-                  console.log(
-                    "adsFilteredData?.AdCount?.min + ",
-                    adsFilteredData?.AdCount?.min
-                  );
-
-                  setAdsFilteredData(
-                    allMediaAds.filter(
-                      (ads) =>
-                        (appliedFilters?.AdCount?.min !== 0 || appliedFilters?.AdCount?.max !== 1000
-                          ? ads.noOfCopyAds >= appliedFilters?.AdCount?.min && ads.noOfCopyAds <= appliedFilters?.AdCount?.max
-                          : true) &&
-                        (appliedFilters?.MediaType?.selectedMedia === "" ||
-                        appliedFilters?.MediaType?.selectedMedia ===
-                          "Video or Photo"
-                          ? true
-                          : ads.adMediaType ===
-                            appliedFilters?.MediaType?.selectedMedia) &&
-                        (appliedFilters?.AdStatus?.selectedData !== ""
-                          ? ads?.status ===
-                            appliedFilters?.AdStatus?.selectedData
-                          : true)
-                    )
-                  );
-                  console.log("ppppppppppppppp----");
-                  console.log(adsFilteredData);
-                  console.log("ppppppppppppppp----");
-                }}
-              >
-                apply
-              </Button>
-            </Box>
+              apply
+            </Button>
           </Grid>
           <Grid container sx={{ marginTop: 1 }}>
             {Object.keys(appliedFilters).map((filter, index) => {
               return (
-                appliedFilters[filter]["Message"] && (
+                appliedFilters[filter] && (
                   <Chip
                     color="primary"
-                    label={appliedFilters[filter]["Message"]}
+                    label={appliedFilters[filter]}
                     // deleteIcon={<img src={CancleButton} />}
                     deleteIcon={
                       <CloseIcon
@@ -851,35 +694,11 @@ const Addlibrarydatabase = () => {
                       />
                     }
                     onDelete={() => {
-                      if (filter === "AdCount") {
-                        setAppliedFilters((abc) => ({
-                          ...abc,
-                          [`${filter}`]: {
-                            min: 0,
-                            max: 1000,
-                            Message: "",
-                          },
-                        }));
-                        setMin(0);
-                        setMax(1000);
-                      } else if (filter === "MediaType") {
-                        // appliedFilters?.MediaType?.selectedMedia
-                        setAppliedFilters((abc) => ({
-                          ...abc,
-                          [`${filter}`]: {
-                            selectedMedia: "Video or Photo",
-                            Message: "",
-                          },
-                        }));
-                      } else {
-                        setAppliedFilters((abc) => ({
-                          ...abc,
-                          [`${filter}`]: {
-                            ...abc[filter],
-                            Message: "",
-                          },
-                        }));
-                      }
+                      console.log("clicked delete button" + appliedFilters);
+                      setAppliedFilters((pre) => ({
+                        ...pre,
+                        [`${filter}`]: "",
+                      }));
                     }}
                     sx={{
                       borderRadius: 2,
@@ -890,11 +709,24 @@ const Addlibrarydatabase = () => {
                 )
               );
             })}
+            {/* <Chip
+              color="primary"
+              label="starting date of jan is "
+              // deleteIcon={<img src={CancleButton} />}
+              deleteIcon={<CloseIcon color="#00CBFF" />}
+              onDelete={() => console.log("first")}
+              sx={{ borderRadius: 2, backgroundColor: "#00CBFF" }}
+            /> */}
+
+            {/* <Chip
+              color="info"
+              deleteIcon={<CancleButton />}
+              onDelete={() => console.log("first")}
+            /> */}
           </Grid>
         </Grid>
         <Grid item xs={12}>
           <Grid container spacing={2} sx={{ marginTop: "10px" }}>
-            {console.log("indie oooooooooooooooooooooooo" + adsFilteredData)}
             {adsFilteredData.map((ads, index) => (
               <Grid item xs={3} key={index}>
                 <Stack

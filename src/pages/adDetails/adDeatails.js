@@ -1,13 +1,42 @@
-import { Grid, Box, Typography, Button, Stack } from "@mui/material";
+import { Grid, Box, Typography, Button, Stack, Link } from "@mui/material";
 import Firstcard from "../../assets/Firstcard.svg";
 import LargePageLogo from "../../assets/largePageLogo.svg";
 import Firsrcardimg from "../../assets/FirstCardImg.svg";
 import facebook from "../../assets/facebook.svg";
+// import instragram from "../../assets/instragram.svg";
 import { makeStyles } from "@material-ui/core/styles";
+import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import instragram from "../../assets/instragram.svg";
 
 function AdDeatails() {
   const classes = useStyles();
+  const { allMediaAds } = useSelector((state) => state.allMediaAds);
+  const adID = useParams();
+  const [adDetail, setAdDetail] = useState();
 
+  // const adDetail = allMediaAds.adID === adsID.adsId
+  // const [adDetail, setAdDetail] = useState();
+
+  useEffect(() => {
+    console.log("...................." + adID.adsId);
+    if (allMediaAds) {
+      const singleAds = allMediaAds.find((ad) => {
+        console.log("ad va;li..." + ad.adID);
+        if (ad.adID === adID.adsId) {
+          console.log("ad final  vali..." + ad.adID);
+          return ad;
+        }
+      });
+
+      setAdDetail(singleAds);
+      console.log("aksdji", adDetail);
+      console.log("single .......", singleAds);
+    }
+    // setAdDetail(allMediaAds.find((ads) => ads.id === Number(adID.adsId)));
+    console.log(adID.adsId);
+  });
   return (
     <>
       <Grid container sx={{ marginTop: "36px" }}>
@@ -29,7 +58,7 @@ function AdDeatails() {
                     color: "#2B2F42",
                   }}
                 >
-                  Best Sollar Lighting
+                  {adDetail?.headline ? adDetail.headline : " "}
                 </Typography>
               </Box>
 
@@ -44,20 +73,32 @@ function AdDeatails() {
                     margin: "10px 12px 10px 26px",
                   }}
                 >
-                  🏡Elevate any plain or boring landscape into a colorful and
-                  artistic landscape with this solar powered garden wind
-                  ornament ✅Durable and colorful ✅ Solar Powered and
-                  Automatically Light Up ✅ Brighten Up Landscaping ✅ Best Gift
-                  Choice - Shop Now!
+                  {adDetail?.adDescription ? adDetail.adDescription : " "}
                 </Typography>
               </Box>
 
-              <Box>
-                <img
+              <Box className={classes.box}>
+                {adDetail?.adMediaType === "video" ? (
+                  <video
+                    src={adDetail?.bucketMediaURL}
+                    autoPlay
+                    controls
+                    className={classes.img}
+                  />
+                ) : adDetail?.adMediaType === "image" ? (
+                  <img
+                    src={adDetail?.bucketMediaURL}
+                    alt="img1"
+                    className={classes.img}
+                  />
+                ) : (
+                  <img src={Firsrcardimg} alt="img1" className={classes.img} />
+                )}
+                {/* <img
                   src={Firsrcardimg}
                   className={classes.adImage}
                   alt="ad media"
-                />
+                /> */}
               </Box>
               <Box>
                 <Grid container spacing={1}>
@@ -72,7 +113,7 @@ function AdDeatails() {
                         }}
                         noWrap
                       >
-                        WWW.BESTSOLARLIGHTING.COM
+                        {adDetail?.headline ? adDetail.displayURL : " "}
                       </Typography>
                       <Typography
                         style={{
@@ -94,8 +135,11 @@ function AdDeatails() {
                           color: "#2B2F42",
                         }}
                       >
-                        In Stock - Fast Delivery - 100% Satisfaction Guarantee -
-                        Limited Quantities Available - Hurry Before it is gone!
+                        {adDetail?.purchaseDescription
+                          ? adDetail.purchaseDescription
+                          : " "}
+                        {/* In Stock - Fast Delivery - 100% Satisfaction Guarantee -
+                        Limited Quantities Available - Hurry Before it is gone! */}
                       </Typography>
                     </Box>
                   </Grid>
@@ -122,7 +166,7 @@ function AdDeatails() {
                           color: "#F6F6FB",
                         }}
                       >
-                        1
+                        {adDetail?.noOfCopyAds ? adDetail.noOfCopyAds : " "}
                       </Typography>
                       <Typography
                         variant="div"
@@ -176,9 +220,15 @@ function AdDeatails() {
                   paddingRight: "16px",
                 }}
               >
-                <Typography color={"white"} noWrap>
+                <a
+                  href={adDetail?.bucketMediaURL}
+                  style={{ textDecoration: "none", color: "white" }}
+                  download
+                  disabled={adDetail?.adMediaType === "image" ? true : false}
+                >
+                  {" "}
                   Download Thumbnail
-                </Typography>
+                </a>
               </Button>
               <Button
                 style={{
@@ -189,10 +239,19 @@ function AdDeatails() {
                   paddingLeft: "16px",
                   paddingRight: "16px",
                 }}
+                disabled={adDetail?.adMediaType === "video" ? true : false}
               >
-                <Typography color={"white"} noWrap>
+                <a
+                  href={adDetail?.bucketMediaURL}
+                  style={{ textDecoration: "none", color: "white" }}
+                  download
+                >
+                  {" "}
                   Download Video
-                </Typography>
+                </a>
+                {/* <Typography color={"white"} noWrap>
+                  Download Video
+                </Typography> */}
               </Button>
             </Grid>
             <Grid
@@ -202,7 +261,7 @@ function AdDeatails() {
               <Stack sx={{ alignItems: "center" }}>
                 <Typography className={classes.textdeco}>Ad Status</Typography>
                 <Typography className={classes.textdeco}>
-                  <b>Active</b>
+                  <b> {adDetail?.status ? adDetail.status : " "}</b>
                 </Typography>
               </Stack>
               <Stack sx={{ alignItems: "center" }}>
@@ -210,7 +269,7 @@ function AdDeatails() {
                   Started Running On
                 </Typography>
                 <Typography className={classes.textdeco}>
-                  <b>May 15, 2022</b>
+                  <b> {adDetail?.startDate ? adDetail.startDate : " "}</b>
                 </Typography>
                 <Typography className={classes.textdeco}>
                   <b> 3 Days</b>
@@ -218,14 +277,20 @@ function AdDeatails() {
               </Stack>
               <Stack sx={{ alignItems: "center" }}>
                 <Typography className={classes.textdeco}>Placements</Typography>
-                <Typography //className={classes.textdeco}
+                {adDetail?.platforms.map((ads, index) => (
+                  <Typography className={classes.textdeco} key={index}>
+                    {" "}
+                    <b>{ads}</b>
+                  </Typography>
+                ))}
+                {/* <Typography //className={classes.textdeco}
                   className={classes.textdeco}
                 >
                   <b>Facebook</b>
-                </Typography>
-                <Typography className={classes.textdeco}>
+                </Typography> */}
+                {/* <Typography className={classes.textdeco}>
                   <b>Instagram</b>
-                </Typography>
+                </Typography> */}
               </Stack>
             </Grid>
             <Grid
@@ -282,7 +347,7 @@ function AdDeatails() {
                   sx={{ justifyContent: "center", alignItems: "center" }}
                 >
                   <Box sx={{ marginRight: "10px" }}>
-                    <img src={facebook} aria-label="Add" />
+                    <img src={instragram} aria-label="Add" />
                   </Box>
                   <Stack>
                     <Typography
@@ -313,11 +378,21 @@ function AdDeatails() {
 export default AdDeatails;
 
 const useStyles = makeStyles(() => ({
-  adImage: {
+  // adImage: {
+  //   objectFit: "contain",
+  //   resizeMode: "Startch",
+  //   height: "100%",
+  //   width: "100%",
+  //   padding: "12px",
+  // },
+  box: {
+    width: "98%",
+    height: "20%",
+  },
+  img: {
     objectFit: "contain",
     resizeMode: "Startch",
     height: "100%",
     width: "100%",
-    padding: "12px",
   },
 }));

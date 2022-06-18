@@ -4,8 +4,10 @@ import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import MenuIcon from "@mui/icons-material/Menu";
 import {
+  Avatar,
   Box,
   Divider,
+  Grid,
   IconButton,
   Menu,
   MenuItem,
@@ -20,6 +22,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import PersonIcon from "@mui/icons-material/Person";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import Notefictionicon from "../assets/Notefictionicon.svg";
+import Profileicon from "../assets/Profile.svg";
+import Polygonicon from "../assets/Polygon.svg";
 
 const drawerWidth = 240;
 
@@ -72,10 +77,11 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
     { name: "Logout", icon: billing },
   ];
   const [isMenuOptionActive, setIsMenuOptionActive] =
-    React.useState("Account Setings");
+    React.useState("");
   const navigate = useNavigate();
   const [anchoerEL, setAnchoerEL] = React.useState();
   const handleOpenMenu = (e) => {
+    console.log("first,", e.currentTarget);
     setAnchoerEL(e.currentTarget);
   };
   const handleCloseMenu = (e) => {
@@ -83,7 +89,7 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
   };
   return (
     <>
-      <AppBar position="fixed" open={isOpen}>
+      <AppBar>
         <Toolbar>
           <Stack
             direction={"row"}
@@ -118,7 +124,7 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
 
                 <Stack
                   direction={"row"}
-                  onClick={handleOpenMenu}
+                  // onClick={handleOpenMenu}
                   sx={{ justifyContent: "center", alignItems: "center" }}
                   spacing={2}
                 >
@@ -137,10 +143,13 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
                     className={classes.avtar}
                     sx={{ borderRadius: "4px", width: "16px", height: "16px" }}
                   >
-                    <ArrowDropDownIcon />
+                    <ArrowDropDownIcon
+                      onClick={handleOpenMenu}
+                      // onClose={handleCloseMenu}
+                    />
                   </Box>
+
                   <Menu
-                    variant="container"
                     id="menu"
                     anchorEl={anchoerEL}
                     open={Boolean(anchoerEL)}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect ,} from "react";
 import { Grid, Stack, Box, Typography, Button } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { makeStyles } from "@material-ui/core/styles";
@@ -7,6 +7,8 @@ import Firstcardimg from "../../assets/FirstCardImg.svg";
 import Shareicon from "../../assets/Shareicon.svg";
 import Saveicon from "../../assets/Saveicon.svg";
 import Addgraph from "../../assets/Addgraph.svg";
+import { useDispatch , useSelector} from 'react-redux';
+import { loadMediaStart } from "../../redux/ducks/mediaAds";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -100,6 +102,16 @@ const AddFooter = styled("div")(({ theme }) => ({
 
 const AllAds = () => {
   const classes = useStyles();
+  // const dispatch = useDispatch();
+  // const { media} = useSelector((state) => state.allMediaAds);
+
+  // useEffect(() => {
+	// 	dispatch(loadMediaStart);
+  //   console.log("???????????????????????????????????????????");
+  //   console.table(media);
+  //   console.log()
+	// }, [dispatch]);
+
   const adsList = [1, 2, 3, 4, 5, 6, 7];
   return (
     <Grid container spacing={2} sx={{ marginTop: "10px" }}>

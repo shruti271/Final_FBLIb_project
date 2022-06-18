@@ -1,9 +1,12 @@
-import { Button, Grid, Stack, TextField, Typography } from "@mui/material";
+import { Button, Grid, InputBase, Stack, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
 import viss from "../assets/viss.svg";
+import { makeStyles } from "@material-ui/core/styles";
+
+
 function AccountSetings() {
-  // const classes = useStyles();
+  const classes = useStyles();
   return (
     <>
       <Stack marginLeft={5}>
@@ -30,12 +33,34 @@ function AccountSetings() {
               >
                 <Stack direction={"row"} spacing={2}>
                   <Stack direction={"column"} width="50%">
-                    <Typography>First Name</Typography>
-                    <TextField />
+                    <Typography >First Name</Typography>
+                    {/* <TextField /> */}
+                    <InputBase
+                        className={classes.inputField}
+                        label="outlined"
+                        variant="outlined"
+                        placeholder="Name"
+                        error
+                        required
+                        // error={this.state.errors ? true : false}
+                        name="email"
+                        fullWidth
+                      />
                   </Stack>
                   <Stack direction={"column"} width="50%">
                     <Typography>Last Name</Typography>
-                    <TextField />
+                    {/* <TextField /> */}
+                    <InputBase
+                        className={classes.inputField}
+                        label="outlined"
+                        variant="outlined"
+                        // placeholder="Name"
+                        error
+                        required
+                        // error={this.state.errors ? true : false}
+                        name="LastName"
+                        fullWidth
+                      />
                   </Stack>
                 </Stack>
                 <Stack direction={"row"} marginTop={2}>
@@ -80,11 +105,32 @@ function AccountSetings() {
                 <Stack direction={"row"} spacing={2}>
                   <Stack direction={"column"} width="50%">
                     <Typography>current password</Typography>
-                    <TextField placeholder="Type in your current password" />
+                    {/* <TextField placeholder="Type in your current password" /> */}
+                    <InputBase
+                        className={classes.inputField}
+                        label="outlined"
+                        variant="outlined"
+                        placeholder="Type in your current password"
+                        error
+                        required                        
+                        name="currentPassword"
+                        fullWidth
+                      />
                   </Stack>
                   <Stack direction={"column"} width="50%">
                     <Typography>New password</Typography>
-                    <TextField placeholder="Type in your new password" />
+                    {/* <TextField placeholder="Type in your new password" /> */}
+                    <InputBase
+                        className={classes.inputField}
+                        label="outlined"
+                        variant="outlined"
+                        placeholder="Type in your new password"
+                        error
+                        required
+                        // error={this.state.errors ? true : false}
+                        name="newPassword"
+                        fullWidth
+                      />
                   </Stack>
                 </Stack>
                 <Stack direction={"row"} marginTop={2}>
@@ -269,4 +315,14 @@ function AccountSetings() {
   );
 }
 
+const useStyles = makeStyles(() => ({
+  inputField: {
+    border: "2px solid #EBEBEB",
+    borderRadius: "10px",
+    // height: "43px",
+    paddingLeft: "16px",
+    // width: "43px",//{ md: "43px", sm: "43px" ,lg:"43px"},
+    height: "43px", //{ md: "43px", sm: "43px" ,lg:"43px"},
+  },  
+}));
 export default AccountSetings;
