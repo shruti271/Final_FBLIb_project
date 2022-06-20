@@ -38,11 +38,11 @@ const Signup = () => {
     const response = await usermanager(data);
     if (response.success) {
       // setLoading(true)
-      navigate("/Login");
+      navigate("/auth/login");
     }
   };
   const gotoSigninpage = () => {
-    navigate("/Login");
+    navigate("/auth/login");
   };
   return (
     <MuiThemeProvider theme={themeLight}>

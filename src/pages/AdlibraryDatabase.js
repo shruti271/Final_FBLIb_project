@@ -123,19 +123,6 @@ const AddFooter = styled("div")(({ theme }) => ({
   whiteSpace: "nowrap",
 }));
 
-export const AllDataPage = () => {
-  return (
-    <>
-      <Box>
-        <Routes>
-          <Route exact path="/*" element={<Addlibrarydatabase />} />
-          {/* <Route exact path="AdlibraryDatabase" element={< />} />           */}
-          <Route exact path="adDeatails/:adsId" element={<AdDeatails />} />
-        </Routes>
-      </Box>
-    </>
-  );
-};
 // const Addlibrarydatabase = ({ open }) => {
 const Addlibrarydatabase = () => {
   const { allMediaAds } = useSelector((state) => state.allMediaAds);
@@ -745,9 +732,12 @@ const Addlibrarydatabase = () => {
                       onClick={() => {
                         setAppliedFilters((pre) => ({
                           ...pre,
-                          MediaType: { selectedMedia:"Video or Photo", Message: "" },
+                          MediaType: {
+                            selectedMedia: "Video or Photo",
+                            Message: "",
+                          },
                         }));
-                      
+
                         setMediaTypeAnchorel(null);
                       }}
                     >
@@ -813,8 +803,10 @@ const Addlibrarydatabase = () => {
                   setAdsFilteredData(
                     allMediaAds.filter(
                       (ads) =>
-                        (appliedFilters?.AdCount?.min !== 0 || appliedFilters?.AdCount?.max !== 1000
-                          ? ads.noOfCopyAds >= appliedFilters?.AdCount?.min && ads.noOfCopyAds <= appliedFilters?.AdCount?.max
+                        (appliedFilters?.AdCount?.min !== 0 ||
+                        appliedFilters?.AdCount?.max !== 1000
+                          ? ads.noOfCopyAds >= appliedFilters?.AdCount?.min &&
+                            ads.noOfCopyAds <= appliedFilters?.AdCount?.max
                           : true) &&
                         (appliedFilters?.MediaType?.selectedMedia === "" ||
                         appliedFilters?.MediaType?.selectedMedia ===

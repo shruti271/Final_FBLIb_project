@@ -144,7 +144,7 @@ const ForgetPassword = () => {
           ":::::::::::::::::::::::::::::::",
           res?.data?.data?.is_alive
         );
-        navigate("/Addlibrarydatabase");
+        navigate("/");
       }
     }
     console.log(res);

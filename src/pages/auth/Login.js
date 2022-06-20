@@ -13,12 +13,78 @@ import {
 import appLogo from "../../assets/appLogo.svg";
 import { Grid } from "@material-ui/core";
 import { Stack } from "@mui/material";
-// import { CardMedia } from "@mui/material";
-// import axiosInstance from "../axios/Index";
-// import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { isAlive, login } from "../../services/index";
 import { useEffect } from "react";
+
+const themeLight = createTheme({
+  overrides: {
+    MuiCssBaseline: {
+      "@global": {
+        body: {
+          background:
+            "linear-gradient(270deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)",
+          backgroundRepeat: "no-repeat",
+          backgroundAttachment: "fixed",
+        },
+      },
+    },
+  },
+});
+
+const useStyles = makeStyles(() => ({
+  logo: {
+    height: "37px !important",
+    width: "65px !important",
+    marginRight: "10px",
+    marginTop: "4px",
+  },
+  title: {
+    fontFamily: "Neue Haas Grotesk Display Pro",
+    fontStyle: "normal !important",
+    fontWeight: "900 !important",
+    fontSize: "32.5271px !important",
+    lineHeight: "43px !important",
+    background:
+      "linear-gradient(270deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)",
+    WebkitBackgroundClip: "text",
+    WebkitTextFillColor: "transparent",
+    backgroundClip: "text",
+    textFillColor: "transparent",
+  },
+  Login: {
+    fontWeight: 600,
+    fontSize: "30px",
+    lineHeight: "36px",
+    color: "#2B2F42",
+  },
+  donotaccount: {
+    fontWeight: 500,
+    fontSize: "16px",
+    lineHeight: "19px",
+    color: "#2B2F42",
+    marginTop: "10px",
+  },
+  forgetpassword: {
+    display: "flex",
+    justifyContent: "end",
+    color: "#00CBFF",
+    cursor: "pointer",
+  },
+  loginbutton: {
+    background:
+      "linear-gradient(270deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)",
+    fontFamily: "Neue Haas Grotesk Display Pro",
+    fontSize: "22px",
+    fontHeight: 600,
+    lineHeight: "22px",
+    letterSpacing: "0em",
+    textAlign: "left",
+    textTransform: "capitalize",
+    color: "#F6F6FB",
+    width: "60%",
+  },
+}));
 
 const Login = () => {
   const classes = useStyles();
@@ -46,7 +112,7 @@ const Login = () => {
           ":::::::::::::::::::::::::::::::",
           res?.data?.data?.is_alive
         );
-        navigate("/Addlibrarydatabase");
+        navigate("/");
       }
     }
     // console.log(res);
@@ -57,11 +123,11 @@ const Login = () => {
   }, []);
 
   const gotoSignuppage = () => {
-    navigate("/Signup");
+    navigate("/auth/register");
   };
 
   const forgetPassword = () => {
-    navigate("/Forgetpassword");
+    navigate("/auth/Forgetpassword");
   };
   return (
     <MuiThemeProvider theme={themeLight}>
@@ -165,71 +231,3 @@ const Login = () => {
 };
 
 export default Login;
-
-const themeLight = createTheme({
-  overrides: {
-    MuiCssBaseline: {
-      "@global": {
-        body: {
-          background:
-            "linear-gradient(270deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)",
-          backgroundRepeat: "no-repeat",
-          backgroundAttachment: "fixed",
-        },
-      },
-    },
-  },
-});
-const useStyles = makeStyles(() => ({
-  logo: {
-    height: "37px !important",
-    width: "65px !important",
-    marginRight: "10px",
-    marginTop: "4px",
-  },
-  title: {
-    fontFamily: "Neue Haas Grotesk Display Pro",
-    fontStyle: "normal !important",
-    fontWeight: "900 !important",
-    fontSize: "32.5271px !important",
-    lineHeight: "43px !important",
-    background:
-      "linear-gradient(270deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)",
-    WebkitBackgroundClip: "text",
-    WebkitTextFillColor: "transparent",
-    backgroundClip: "text",
-    textFillColor: "transparent",
-  },
-  Login: {
-    fontWeight: 600,
-    fontSize: "30px",
-    lineHeight: "36px",
-    color: "#2B2F42",
-  },
-  donotaccount: {
-    fontWeight: 500,
-    fontSize: "16px",
-    lineHeight: "19px",
-    color: "#2B2F42",
-    marginTop: "10px",
-  },
-  forgetpassword: {
-    display: "flex",
-    justifyContent: "end",
-    color: "#00CBFF",
-    cursor: "pointer",
-  },
-  loginbutton: {
-    background:
-      "linear-gradient(270deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)",
-    fontFamily: "Neue Haas Grotesk Display Pro",
-    fontSize: "22px",
-    fontHeight: 600,
-    lineHeight: "22px",
-    letterSpacing: "0em",
-    textAlign: "left",
-    textTransform: "capitalize",
-    color: "#F6F6FB",
-    width: "60%",
-  },
-}));

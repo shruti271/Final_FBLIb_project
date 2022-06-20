@@ -2,7 +2,7 @@ import React from "react";
 import { Navigate } from "react-router-dom";
 
 // const PrivateRoute = ({ component: Component, ...rest }) => {
-//     return (      
+//     return (
 //         <Route
 //             {...rest}
 //             render={(props) =>
@@ -16,12 +16,11 @@ import { Navigate } from "react-router-dom";
 //     );
 // };
 
-const PrivateRoute = ({children }) => {
-    return checkAuth() ? children :<Navigate to="/login"/>
+const PrivateRoute = ({ children }) => {
+  return checkAuth() ? children : <Navigate to="/auth/login" />;
 };
 const checkAuth = () => {
-    const token = localStorage.getItem("is_alive");
-    return JSON.parse(token);
+  const token = localStorage.getItem("is_alive");
+  return JSON.parse(token);
 };
-console.log("*****************************",checkAuth())
 export default PrivateRoute;

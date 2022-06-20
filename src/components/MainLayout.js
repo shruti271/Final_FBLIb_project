@@ -13,6 +13,7 @@ import AccountSetings from "../pages/AccountSettings";
 import Pagenotfound from "../components/PageNotFound";
 import AdDeatailsTabs from "../pages/adDetails/AdDetailsTabs";
 import { useDispatch } from "react-redux";
+import Addlibrarydatabase from "./../pages/dummmyfilter";
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
@@ -39,7 +40,7 @@ const MainLayout = () => {
         <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
           <DrawerHeader />
           <Routes>
-            <Route exact path="/" element={<AllDataPage />} />
+            <Route exact path="/" element={<Addlibrarydatabase />} />
             <Route exact path="/savedAds" element={<SavedAds />} />
             <Route exact path="/contactSupport" element={<ContactSupport />} />
             <Route exact path="/accountSetings" element={<AccountSetings />} />
@@ -49,7 +50,6 @@ const MainLayout = () => {
               path="/adDeatails/:adsId/*"
               element={<AdDeatailsTabs />}
             />
-            <Route path="*" element={<Pagenotfound />} />
           </Routes>
         </Box>
       </Box>

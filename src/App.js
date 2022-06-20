@@ -11,10 +11,22 @@ const App = () => {
   return (
     <>
       <Routes>
-        <Route path="/auth/login" exact component={Login} />
-        <Route path="/auth/register" exact component={Signup} />
-        <Route path="/auth/forgot-password" exact component={ForgetPassword} />
-        <PrivateRoute exact path="/" component={MainLayout}></PrivateRoute>
+        <Route path="/auth/login" exact element={<Login />} />
+        <Route path="/auth/register" exact element={<Signup />} />
+        <Route
+          path="/auth/forgot-password"
+          exact
+          element={<ForgetPassword />}
+        />
+        <Route
+          exact
+          path="/"
+          element={
+            <PrivateRoute>
+              <MainLayout />
+            </PrivateRoute>
+          }
+        />
         <Route path="*" element={<Pagenotfound />} />
       </Routes>
     </>
