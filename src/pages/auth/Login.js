@@ -16,7 +16,9 @@ import { Stack } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { isAlive, login } from "../../services/index";
 import { useEffect } from "react";
-
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { validationSchema } from "../../services/index";
 const themeLight = createTheme({
   overrides: {
     MuiCssBaseline: {
@@ -91,16 +93,25 @@ const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
-  const tkn = localStorage.getItem("is_alive");
-  console.log("::::::", tkn);
-  const Loginuser = async () => {
-    const data = {
-      email: email,
-      password: password,
-    };
-    const response = await login(data);
-    if (response.success) {
-      navigate("/");
+
+
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    resolver: yupResolver(validationSchema)
+  });
+
+  const submitLoginform = async (data) => {
+    console.log("dataaa", data)
+    try {
+      const formData = new FormData();
+      console.log("------------------------dd", formData)
+      formData.append('email', data.email);
+      formData.append('password', data.password);
+      const response = await login(formData);
+      if (response.success) {
+        navigate("/");
+      }
+    } catch {
+      console.log("some error occour")
     }
   };
   const getAlive = async () => {
@@ -120,6 +131,7 @@ const Login = () => {
 
   useEffect(() => {
     getAlive();
+    // eslint-disable-next-line
   }, []);
 
   const gotoSignuppage = () => {
@@ -127,7 +139,7 @@ const Login = () => {
   };
 
   const forgetPassword = () => {
-    navigate("/auth/Forgetpassword");
+    navigate("/auth/forgot-password");
   };
   return (
     <MuiThemeProvider theme={themeLight}>
@@ -187,7 +199,12 @@ const Login = () => {
                           fullWidth
                           required
                           onChange={(e) => setEmail(e.target.value)}
+                          {...register('email')}
+                          error={errors.email ? true : false}
                         />
+                        <Typography variant="inherit" color="textSecondary">
+                          {errors.email?.message}
+                        </Typography>
                       </Grid>
                       <Grid item xs={12}>
                         <Typography
@@ -205,7 +222,12 @@ const Login = () => {
                           fullWidth
                           required
                           onChange={(e) => setPassword(e.target.value)}
+                          {...register('password')}
+                          error={errors.password ? true : false}
                         />
+                        <Typography variant="inherit" color="textSecondary">
+                          {errors.password?.message}
+                        </Typography>
                       </Grid>
                     </Grid>
                   </form>
@@ -216,7 +238,7 @@ const Login = () => {
                     size="large"
                     sx={{ borderRadius: "14px" }}
                     className={classes.loginbutton}
-                    onClick={Loginuser}
+                    onClick={handleSubmit(submitLoginform)}
                   >
                     Log in
                   </Button>

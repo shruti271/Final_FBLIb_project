@@ -14,36 +14,50 @@ import {
 } from "@material-ui/core";
 import appLogo from "../../assets/appLogo.svg";
 import { Grid } from "@material-ui/core";
-import { Stack } from "@mui/material";
+import { CircularProgress, Stack } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { usermanager } from "../../services/index";
+import { useForm, Controller } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { validationSchema } from "../../services/index";
 
 const Signup = () => {
   const classes = useStyles();
   const navigate = useNavigate();
-  // const [error, setError] = useState(null)
-  // const [loading,setLoading] = useState(false)
-  const [firstname, setFirstname] = useState();
-  const [lastname, setLasttname] = useState();
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-  const submitsigninform = async () => {
-    const data = {
-      first_name: firstname,
-      last_name: lastname,
-      email: email,
-      password: password,
-    };
-    // setLoading(false)
-    const response = await usermanager(data);
-    if (response.success) {
-      // setLoading(true)
-      navigate("/auth/login");
+
+  const [loading, setLoading] = useState(false)
+
+  const {
+    register,
+    control,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({
+    resolver: yupResolver(validationSchema)
+  });
+
+  const submitsigninform = async (data) => {
+    console.log("dataaa", data)
+    try {
+      const formData = new FormData();
+      formData.append('firstname', data.firstname);
+      formData.append('lastname', data.lastname);
+      formData.append('email', data.email);
+      formData.append('password', data.password);
+      const response = await usermanager(formData);
+      setLoading(true)
+      console.log("8888888888888888888888888", response)
+      if (response.success) {
+        navigate("/auth/login");
+      }
+    } catch {
+      console.log("error")
     }
   };
   const gotoSigninpage = () => {
     navigate("/auth/login");
   };
+
   return (
     <MuiThemeProvider theme={themeLight}>
       <CssBaseline />
@@ -101,8 +115,13 @@ const Signup = () => {
                         variant="outlined"
                         fullWidth
                         required
-                        onChange={(e) => setFirstname(e.target.value)}
+                        // onChange={(e) => setFirstname(e.target.value)}
+                        {...register('firstname')}
+                        error={errors.firstname ? true : false}
                       />
+                      <Typography variant="inherit" color="textSecondary">
+                        {errors.firstname?.message}
+                      </Typography>
                     </Grid>
                     <Grid xs={12} item>
                       <TextField
@@ -111,8 +130,13 @@ const Signup = () => {
                         variant="outlined"
                         fullWidth
                         required
-                        onChange={(e) => setLasttname(e.target.value)}
+                        // onChange={(e) => setLasttname(e.target.value)}
+                        {...register('lastname')}
+                        error={errors.lastname ? true : false}
                       />
+                      <Typography variant="inherit" color="textSecondary">
+                        {errors.lastname?.message}
+                      </Typography>
                     </Grid>
                     <Grid item xs={12}>
                       <TextField
@@ -122,8 +146,13 @@ const Signup = () => {
                         variant="outlined"
                         fullWidth
                         required
-                        onChange={(e) => setEmail(e.target.value)}
+                        // onChange={(e) => setEmail(e.target.value)}
+                        {...register('email')}
+                        error={errors.email ? true : false}
                       />
+                      <Typography variant="inherit" color="textSecondary">
+                        {errors.email?.message}
+                      </Typography>
                     </Grid>
                     <Grid item xs={12}>
                       <TextField
@@ -132,27 +161,42 @@ const Signup = () => {
                         variant="outlined"
                         fullWidth
                         required
-                        onChange={(e) => setPassword(e.target.value)}
+                        // onChange={(e) => setPassword(e.target.value)}
+                        {...register('password')}
+                        error={errors.password ? true : false}
                       />
+                      <Typography variant="inherit" color="textSecondary">
+                        {errors.password?.message}
+                      </Typography>
                     </Grid>
                     <Grid item xs={12}>
                       <FormControlLabel
                         control={
-                          <Checkbox style={{ color: "#00CBFF" }}></Checkbox>
+                          <Controller
+                            control={control}
+                            name="acceptTerms"
+                            defaultValue="false"
+                            inputRef={register()}
+                            render={({ field: { onChange } }) => (
+                              <Checkbox
+                                style={{ color: '#00CBFF' }}
+                                onChange={e => onChange(e.target.checked)}
+                              />
+                            )}
+                          />
                         }
                         label={
-                          <Typography className={classes.termsandcondition}>
-                            I agree to the{" "}
-                            <span style={{ color: "#00CBFF" }}>
-                              Terms of service
-                            </span>{" "}
-                            and{" "}
-                            <span style={{ color: "#00CBFF" }}>
-                              Privacy Policy
-                            </span>
+                          <Typography color={errors.acceptTerms ? 'error' : 'inherit'} className={classes.termsandcondition}>
+                            I agree to the <span style={{ color: "#00CBFF" }}>Terms of service</span> and <span style={{ color: "#00CBFF" }}>Privacy Policy</span>
                           </Typography>
                         }
-                      ></FormControlLabel>
+                      />
+                      <br />
+                      <Typography variant="inherit" color="textSecondary">
+                        {errors.acceptTerms
+                          ? '(' + errors.acceptTerms.message + ')'
+                          : ''}
+                      </Typography>
                     </Grid>
                   </Grid>
                 </form>
@@ -163,11 +207,14 @@ const Signup = () => {
                   size="large"
                   sx={{ borderRadius: "14px" }}
                   className={classes.Crateaccountbutton}
-                  onClick={submitsigninform}
+                  onClick={handleSubmit(submitsigninform)}
                 >
-                  Create Account
+                  {loading ? <CircularProgress /> : "Create Account"}
+                  {console.log("jjjjjjjjjjjjjjjj", loading)}
+                  {/* create Account */}
                 </Button>
               </Box>
+             
             </CardContent>
           </Card>
         </Box>
@@ -242,3 +289,4 @@ const useStyles = makeStyles(() => ({
     width: "60%",
   },
 }));
+

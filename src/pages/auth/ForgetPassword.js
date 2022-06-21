@@ -17,7 +17,9 @@ import Backtologin from "../../assets/Backtologinicon.svg";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { forgotPassword, isAlive } from "../../services/index";
-
+import { useForm } from "react-hook-form";
+import { yupResolver } from '@hookform/resolvers/yup';
+import { validationSchema } from "../../services/index";
 const themeLight = createTheme({
   overrides: {
     MuiCssBaseline: {
@@ -94,47 +96,19 @@ const useStyles = makeStyles(() => ({
 const ForgetPassword = () => {
   const classes = useStyles();
 
-  // const [email,setEmail] = useState()
-
   const navigate = useNavigate();
-
-  // const [authState, setauthState] = useContext(AuthContext);
   const [userEmail, setUserEmail] = useState("");
-  // const [password, setPassword] = useState("");
-  // const [showPassword, setShowPassword] = useState(false);
-  // const [errorMsg, setErrorMsg] = useState("");
-  // const [successMsg, setSuccessMsg] = useState("");
-  // const [invalid, setInvalid] = useState(false);
+  const {register, handleSubmit,formState: { errors }} = useForm({
+    resolver: yupResolver(validationSchema)
+  });
 
-  const handlesubmit = async () => {
-    var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    if (userEmail.match(mailformat)) {
-      const response = await forgotPassword({ email: userEmail });
-      console.log(response);
-      if (!response.success) {
-        // setErrorMsg(response.message.response.data.message);
-        console.log(response.message.response.data.message);
 
-        // setInvalid(true);
-      } else {
-        console.log(response);
-        // setSuccessMsg(response.data.message);
-      }
-      //   alert("Valid email address!");
-      return true;
-    } else {
-      // setErrorMsg("You have entered an invalid email address!");
-      alert("You have entered an invalid email addre/ss!");
-      return false;
-    }
-  };
+  const forgetPassword = async (data) => {
+    const formData = new FormData();
+      formData.append('email', data.email);
+    const response = await forgotPassword(formData);
+  }
 
-  const test_str = () => {
-    var idx = userEmail.indexOf("@");
-    var res = userEmail.replace(userEmail.slice(5, idx), "*".repeat(5));
-    console.log(res);
-    return res;
-  };
 
   const getAlive = async () => {
     const res = await isAlive();
@@ -155,7 +129,7 @@ const ForgetPassword = () => {
   }, []);
 
   const gotoLoginpage = () => {
-    navigate("/Login");
+    navigate("/auth/login");
   };
   return (
     <MuiThemeProvider theme={themeLight}>
@@ -201,14 +175,20 @@ const ForgetPassword = () => {
                     </Grid>
 
                     <Grid xs={12} item>
-                      <TextField
-                        placeholder="Enter Email Address"
-                        label="Email Address"
-                        variant="outlined"
-                        fullWidth
-                        required
-                        onChange={(e) => setUserEmail(e.target.value)}
-                      />
+                    <TextField
+                          type="email"
+                          placeholder="Enter email"
+                          label="Email"
+                          variant="outlined"
+                          fullWidth
+                          required
+                          onChange={(e) => setUserEmail(e.target.value)}
+                          {...register('email')}
+                          error={errors.email ? true : false}
+                        />
+                        <Typography variant="inherit" color="textSecondary">
+                          {errors.email?.message}
+                        </Typography>
                     </Grid>
                   </Grid>
                 </Box>
@@ -219,7 +199,7 @@ const ForgetPassword = () => {
                     size="large"
                     sx={{ borderRadius: "14px" }}
                     className={classes.forgetPasswordbutton}
-                    onClick={handlesubmit}
+                    onClick={handleSubmit(forgetPassword)}
                   >
                     Reset Password
                   </Button>
@@ -237,6 +217,7 @@ const ForgetPassword = () => {
                     Back to log in
                   </Typography>
                 </Box>
+                
               </CardContent>
             </Card>
           </Grid>
