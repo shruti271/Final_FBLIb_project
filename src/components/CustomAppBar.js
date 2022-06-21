@@ -25,6 +25,7 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import Notefictionicon from "../assets/Notefictionicon.svg";
 import Profileicon from "../assets/Profile.svg";
 import Polygonicon from "../assets/Polygon.svg";
+import { logoutUser } from "../services";
 
 const drawerWidth = 240;
 
@@ -86,6 +87,13 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
   };
   const handleCloseMenu = (e) => {
     setAnchoerEL(null);
+  };
+  const userLogout =  async () => {
+    const res = await logoutUser();
+    if (res.success && res?.data?.data) {
+      localStorage.clear();
+      navigate("/auth/register");
+    }
   };
   return (
     <>
@@ -154,6 +162,7 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
                     anchorEl={anchoerEL}
                     open={Boolean(anchoerEL)}
                     onClose={handleCloseMenu}
+                    onClick={userLogout}
                     PaperProps={{
                       style: {
                         marginTop: 13,

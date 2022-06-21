@@ -1,20 +1,10 @@
 import React, { useState } from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
-import {
-  Card,
-  CardContent,
-  Typography,
-  makeStyles,
-  TextField,
-  Button,
-  Box,
-  Checkbox,
-  FormControlLabel,
-} from "@material-ui/core";
+import { MuiThemeProvider, createTheme, } from "@material-ui/core/styles";
+import {makeStyles} from '@material-ui/core'
 import appLogo from "../../assets/appLogo.svg";
-import { Grid } from "@material-ui/core";
-import { CircularProgress, Stack } from "@mui/material";
+import { CardContent, Grid } from "@material-ui/core";
+import { Alert, Box, Button, Card, Checkbox, CircularProgress, FormControlLabel, Stack, TextField, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { usermanager } from "../../services/index";
 import { useForm, Controller } from 'react-hook-form';
@@ -24,9 +14,8 @@ import { validationSchema } from "../../services/index";
 const Signup = () => {
   const classes = useStyles();
   const navigate = useNavigate();
-
   const [loading, setLoading] = useState(false)
-
+  const [message,setMessage] =useState(true)
   const {
     register,
     control,
@@ -37,7 +26,7 @@ const Signup = () => {
   });
 
   const submitsigninform = async (data) => {
-    console.log("dataaa", data)
+    setLoading(true)
     try {
       const formData = new FormData();
       formData.append('firstname', data.firstname);
@@ -45,13 +34,14 @@ const Signup = () => {
       formData.append('email', data.email);
       formData.append('password', data.password);
       const response = await usermanager(formData);
-      setLoading(true)
-      console.log("8888888888888888888888888", response)
+
       if (response.success) {
+        setMessage(true)
         navigate("/auth/login");
       }
     } catch {
       console.log("error")
+      setLoading(false)
     }
   };
   const gotoSigninpage = () => {
@@ -92,7 +82,7 @@ const Signup = () => {
                 </Typography>
               </Stack>
 
-              <Box style={{ padding: "30px 70px" }}>
+              <Box style={{ padding: "10px 61px" }}>
                 <Typography className={classes.signin}>
                   Create a free account
                 </Typography>
@@ -209,12 +199,12 @@ const Signup = () => {
                   className={classes.Crateaccountbutton}
                   onClick={handleSubmit(submitsigninform)}
                 >
-                  {loading ? <CircularProgress /> : "Create Account"}
+                  {loading ? <CircularProgress style={{color:"#F6F6FB"}} /> : "Create Account"}
                   {console.log("jjjjjjjjjjjjjjjj", loading)}
                   {/* create Account */}
                 </Button>
               </Box>
-             
+                   {message ? <Alert severity="success">This is a success message!</Alert> :"false"}
             </CardContent>
           </Card>
         </Box>

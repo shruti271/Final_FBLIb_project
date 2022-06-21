@@ -12,13 +12,13 @@ import {
 } from "@material-ui/core";
 import appLogo from "../../assets/appLogo.svg";
 import { Grid } from "@material-ui/core";
-import { Stack } from "@mui/material";
+import { CircularProgress, Stack } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { isAlive, login } from "../../services/index";
+import { isAlive, login, loginvalidationSchema } from "../../services/index";
 import { useEffect } from "react";
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { validationSchema } from "../../services/index";
+
 const themeLight = createTheme({
   overrides: {
     MuiCssBaseline: {
@@ -91,22 +91,20 @@ const useStyles = makeStyles(() => ({
 const Login = () => {
   const classes = useStyles();
   const navigate = useNavigate();
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-
-
+  const [loading,setLoading] = useState(false)
   const { register, handleSubmit, formState: { errors } } = useForm({
-    resolver: yupResolver(validationSchema)
+    resolver: yupResolver(loginvalidationSchema)
   });
 
   const submitLoginform = async (data) => {
-    console.log("dataaa", data)
+    setLoading(true)
     try {
       const formData = new FormData();
       console.log("------------------------dd", formData)
       formData.append('email', data.email);
       formData.append('password', data.password);
       const response = await login(formData);
+
       if (response.success) {
         navigate("/");
       }
@@ -114,6 +112,10 @@ const Login = () => {
       console.log("some error occour")
     }
   };
+
+  const onError = (errors) => console.log("Errors Occurred !! :", errors);
+
+
   const getAlive = async () => {
     const res = await isAlive();
     console.log("resss::", res);
@@ -130,8 +132,8 @@ const Login = () => {
   };
 
   useEffect(() => {
+ setLoading(false)
     getAlive();
-    // eslint-disable-next-line
   }, []);
 
   const gotoSignuppage = () => {
@@ -198,7 +200,6 @@ const Login = () => {
                           variant="outlined"
                           fullWidth
                           required
-                          onChange={(e) => setEmail(e.target.value)}
                           {...register('email')}
                           error={errors.email ? true : false}
                         />
@@ -221,7 +222,6 @@ const Login = () => {
                           variant="outlined"
                           fullWidth
                           required
-                          onChange={(e) => setPassword(e.target.value)}
                           {...register('password')}
                           error={errors.password ? true : false}
                         />
@@ -238,9 +238,10 @@ const Login = () => {
                     size="large"
                     sx={{ borderRadius: "14px" }}
                     className={classes.loginbutton}
-                    onClick={handleSubmit(submitLoginform)}
+                    onClick={handleSubmit(submitLoginform, onError)}
                   >
-                    Log in
+                     {loading ? <CircularProgress style={{color:"#F6F6FB"}} /> : "Log in"}
+                    {/* Log in */}
                   </Button>
                 </Box>
               </CardContent>

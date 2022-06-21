@@ -12,14 +12,13 @@ import {
 } from "@material-ui/core";
 import appLogo from "../../assets/appLogo.svg";
 import { Grid } from "@material-ui/core";
-import { Stack } from "@mui/material";
+import { CircularProgress, Stack } from "@mui/material";
 import Backtologin from "../../assets/Backtologinicon.svg";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { forgotPassword, isAlive } from "../../services/index";
+import { forgetvalidationSchema, forgotPassword, isAlive } from "../../services/index";
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
-import { validationSchema } from "../../services/index";
 const themeLight = createTheme({
   overrides: {
     MuiCssBaseline: {
@@ -96,17 +95,21 @@ const useStyles = makeStyles(() => ({
 const ForgetPassword = () => {
   const classes = useStyles();
 
+  const [loading, setLoading] = useState(false)
   const navigate = useNavigate();
-  const [userEmail, setUserEmail] = useState("");
-  const {register, handleSubmit,formState: { errors }} = useForm({
-    resolver: yupResolver(validationSchema)
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    resolver: yupResolver(forgetvalidationSchema)
   });
 
 
   const forgetPassword = async (data) => {
+    setLoading(true)
     const formData = new FormData();
-      formData.append('email', data.email);
+    formData.append('email', data.email);
     const response = await forgotPassword(formData);
+    if (response.success) {
+      setLoading(false)
+    }
   }
 
 
@@ -125,6 +128,7 @@ const ForgetPassword = () => {
   };
 
   useEffect(() => {
+    // setLoading(false)
     getAlive();
   }, []);
 
@@ -175,20 +179,19 @@ const ForgetPassword = () => {
                     </Grid>
 
                     <Grid xs={12} item>
-                    <TextField
-                          type="email"
-                          placeholder="Enter email"
-                          label="Email"
-                          variant="outlined"
-                          fullWidth
-                          required
-                          onChange={(e) => setUserEmail(e.target.value)}
-                          {...register('email')}
-                          error={errors.email ? true : false}
-                        />
-                        <Typography variant="inherit" color="textSecondary">
-                          {errors.email?.message}
-                        </Typography>
+                      <TextField
+                        type="email"
+                        placeholder="Enter email"
+                        label="Email"
+                        variant="outlined"
+                        fullWidth
+                        required
+                        {...register('email')}
+                        error={errors.email ? true : false}
+                      />
+                      <Typography variant="inherit" color="textSecondary">
+                        {errors.email?.message}
+                      </Typography>
                     </Grid>
                   </Grid>
                 </Box>
@@ -201,7 +204,7 @@ const ForgetPassword = () => {
                     className={classes.forgetPasswordbutton}
                     onClick={handleSubmit(forgetPassword)}
                   >
-                    Reset Password
+                    {loading ? <CircularProgress style={{ color: "#F6F6FB" }} /> : "Forget Password"}
                   </Button>
                 </Box>
                 <Box
@@ -217,7 +220,7 @@ const ForgetPassword = () => {
                     Back to log in
                   </Typography>
                 </Box>
-                
+
               </CardContent>
             </Card>
           </Grid>

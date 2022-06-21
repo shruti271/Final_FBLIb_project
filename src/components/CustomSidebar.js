@@ -11,6 +11,7 @@ import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { Stack } from "@mui/material";
+import { logoutUser } from "../services";
 
 const useStyles = makeStyles(() => ({
   title: {
@@ -94,7 +95,13 @@ export const CustomSidebar = ({ isOpen }) => {
   const [selectedMenuItem, setSelectedMenuItem] = useState(
     sideBarMenuItems.ADLIBSDATABASE
   );
-
+  const userLogout =  async () => {
+    const res = await logoutUser();
+    if (res.success && res?.data?.data) {
+      localStorage.clear();
+      navigate("/auth/register");
+    }
+  };
   return (
     <>
       <Drawer variant="permanent" open={isOpen}>
@@ -233,6 +240,7 @@ export const CustomSidebar = ({ isOpen }) => {
                 paddingBottom: "20px",
                 marginLeft: "20px",
               }}
+              onClick={userLogout}
             >
               <img alt="Logout" src={logout} width="17px"/>
               <Typography sx={{ marginLeft: "26px" }}>Log Out</Typography>
