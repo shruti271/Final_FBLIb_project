@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import MuiDrawer from "@mui/material/Drawer";
 import appLogo from "../assets/appLogo.svg";
@@ -11,6 +11,7 @@ import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { Stack } from "@mui/material";
+import { logoutUser } from "../services";
 
 const useStyles = makeStyles(() => ({
   title: {
@@ -95,6 +96,30 @@ export const CustomSidebar = ({ isOpen }) => {
     sideBarMenuItems.ADLIBSDATABASE
   );
 
+  const userLogout =  async () => {
+    const res = await logoutUser();
+    if (res.success && res?.data?.data) {
+      localStorage.clear();
+      navigate("/Login");
+    }
+  };
+
+useEffect(()=>{
+  if (
+    window.location.pathname === `/ContactSupport` 
+  ) {
+    setSelectedMenuItem(sideBarMenuItems.SUPPORT)
+  }else if(window.location.pathname === `/` )  
+  {
+    setSelectedMenuItem(sideBarMenuItems.ADLIBSDATABASE)
+  }
+  else if(window.location.pathname === `/savedAds` )  
+  {
+    setSelectedMenuItem(sideBarMenuItems.SAVEDADS)
+  }else{
+    setSelectedMenuItem('')
+  }
+})
   return (
     <>
       <Drawer variant="permanent" open={isOpen}>
@@ -233,6 +258,7 @@ export const CustomSidebar = ({ isOpen }) => {
                 paddingBottom: "20px",
                 marginLeft: "20px",
               }}
+              onClick={userLogout}
             >
               <img alt="Logout" src={logout} width="17px"/>
               <Typography sx={{ marginLeft: "26px" }}>Log Out</Typography>

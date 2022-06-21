@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Button,
   Chip,
@@ -6,6 +6,7 @@ import {
   FormControl,
   FormControlLabel,
   Grid,
+  Icon,
   InputBase,
   Popover,
   Radio,
@@ -26,10 +27,19 @@ import Saveicon from "../assets/Saveicon.svg";
 import Addgraph from "../assets/Addgraph.svg";
 import styled from "@emotion/styled";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import CloseIcon from "@mui/icons-material/Close";
 import AdDeatails from "./adDetails/adDeatails";
+import { loadMediaStart } from "../redux/ducks/mediaAds";
+import { createSavedAdsStart, loadSavedAdsStart } from "../redux/ducks/saveAds";
+import { DateRange } from "react-date-range";
 // import {MdOutlineClose} from  "react-icons/md"
+
+import "react-date-range/dist/styles.css";
+import "react-date-range/dist/theme/default.css";
+
+import format from "date-fns/format";
+import { addDays } from "date-fns";
 const useStyles = makeStyles((theme) => ({
   title: {
     background:
@@ -90,6 +100,7 @@ const useStyles = makeStyles((theme) => ({
   },
   saveicon: {
     marginLeft: theme.spacing(2),
+    cursor: "pointer",
   },
   addinfo: {
     display: "inlineBlock",
@@ -103,8 +114,19 @@ const useStyles = makeStyles((theme) => ({
       "linear-gradient(270deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)",
     float: "right",
   },
-  btntry: {
-    border: 3,
+  filterBtn: {
+    "&:hover": {
+      //you want this to be the same as the backgroundColor above
+      backgroundColor: "#FFF",
+    },
+    backgroundColor: "#FFF",
+    // border: 3,
+    // background:"#00CBFF",
+    // "&:hover": {
+    //   backgroundColor: "none",
+    //   // color: "white",
+    //   borderRadius: 3,
+    // },
   },
 }));
 
@@ -134,7 +156,7 @@ const Addlibrarydatabase = () => {
   const open = Boolean(anchorEl);
   const [selectedDate, setSelectedDate] = React.useState(new Date());
   const [selectedEndDate, setSelectedEndDate] = React.useState(new Date());
-
+  const refOne = useRef(null);
   const [min, setMin] = React.useState(0);
   const [max, setMax] = React.useState(1000);
 
@@ -149,7 +171,7 @@ const Addlibrarydatabase = () => {
     AdCount: { min: 0, max: 1000, Message: "" },
     FacebookLikes: { Message: "" },
     InstragramLike: { Message: "" },
-    MediaType: { selectedMedia: "Video or Photo", Message: "" },
+    MediaType: { selectedData: "Video or Photo", Message: "" },
   });
 
   const [rangeanchorel, setrangeAnchorEl] = React.useState(null);
@@ -163,6 +185,12 @@ const Addlibrarydatabase = () => {
     setAdsFilteredData([...allMediaAds]);
     console.log(adsFilteredData);
   }, [allMediaAds]);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(loadMediaStart());
+  }, []);
+
   const openAddcounter = (e) => {
     setrangeAnchorEl(e.currentTarget);
   };
@@ -188,18 +216,17 @@ const Addlibrarydatabase = () => {
   };
 
   const handlechange = (event, newValue) => {
-    // setSelectedMediaTypeValue(newValue);
-
+ 
     setAppliedFilters((pre) => ({
       ...pre,
       MediaType: {
-        selectedMedia: newValue,
+        selectedData: newValue,
         Message: `MediaType:${newValue}`,
       },
     }));
   };
   const handleChangeStatus = (event, newValue) => {
-    // setSelectedMediaTypeValue(newValue);
+   
 
     setAppliedFilters((pre) => ({
       ...pre,
@@ -211,11 +238,21 @@ const Addlibrarydatabase = () => {
   };
   console.log(
     "applied filters-------------------------" +
-      appliedFilters?.MediaType?.selectedMedia
+      appliedFilters?.MediaType?.selectedData
   );
   console.log("..//", appliedFilters?.MediaType?.Message);
   console.log("..outsidemedia update//", appliedFilters);
-
+  const [range, setRange] = useState([
+    {
+      startDate: new Date(),
+      endDate: addDays(new Date(), 7),
+      key: "selection",
+    },
+  ]);
+  useEffect(()=>{
+    console.log("00000000000000000000000000000"+range.startDate);
+    console.log("00000000000000000000000000000"+range.endDate);
+  })
   return (
     <>
       <Grid container>
@@ -285,294 +322,153 @@ const Addlibrarydatabase = () => {
               </Box>
             </Grid>
           </Grid>
-          <Grid container>
-            <Button
-              onClick={(event) => {
-                setAnchorEl(event.currentTarget);
-                console.log(event.currentTarget);
-              }}
-              size="large"
-              variant="outlined"
-              disableElevation
-              disableRipple
-              sx={{
-                color: "#2B2F42",
-                whiteSpace: "nowrap",
-                border: "1px solid #EBEBEB",
-                borderRadius: "10px",
-                marginRight: "14px",
-                marginTop: "22px",
-              }}
-              endIcon={
-                <img
-                  alt="arrowdown"
-                  src={Arrowdown}
-                  className={classes.Arrow}
-                />
-              }
-            >
-              <Typography
-                noWrap
-                textTransform="capitalize"
-                //   onClick={handleClick}
-              >
-                {" "}
-                Started Running Date{" "}
-              </Typography>
-            </Button>
-            <Popover
-              anchorEl={anchorEl}
-              open={open}
-              add={open ? "simple-popover" : undefined}
-              onClose={() => {
-                setAnchorEl(null);
-                console.log(setAnchorEl, "jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj");
-              }}
-              transformOrigin={{
-                horizontal: "left",
-                vertical: "top",
-              }}
-              anchorOrigin={{
-                horizontal: "left",
-                vertical: "bottom",
-              }}
-            >
-              {/* {console.log(selectedDate + "comming in render")} */}
-              {/* <DatePicker
-      selected={startDate}
-      onChange={onChange}
-      startDate={startDate}
-      endDate={endDate}
-      selectsRange
-      inline
-    /> */}
-              <DatePicker
-                inline
-                selectsRange
-                // startDate={startDate}
-                // value={selectedDate}
-                // selectedDate={selectedDate}
-                // openToDate={selectedDate}
-                // selected={selectedDate}
-                // endDate={selectedEndDate}
-                // selectsStarts
-                peekNextMonth
-                showMonthDropdown
-                showYearDropdown
-                dropdownMode="select"
-                onChange={(newValue) => {
-                  console.log(
-                    ".............................",
-                    newValue[0] + "/////////////" + newValue[1]
-                  );
-                  console.log("............" + startDate);
-                  console.log("............" + selectedEndDate);
-                  // console.log("newvalue--------------------" + newValue);
-                  // console.log(
-                  //   "selectedvalue--------------------" + selectedDate
-                  // );
-
-                  // setSelectedDate(newValue);
-                  // console.log(
-                  //   "selectedvalue--------------------" + selectedDate
-                  // );
-
-                  // console.log(
-                  //   ";selected date--------------------;" + selectedDate
-                  // );
-                  // setAppliedFilters((pre) => ({
-                  //   ...pre,
-                  //   StartRunningDate: `Started Running Between ${newValue?.getDate()} to ${newValue?.getDate()}`,
-                  // }));
-                  // setAnchorEl(null);
+          <Grid container sx={{ alignItems: "center" }}>
+            <Grid item lg={11} md={11}>
+              <Button
+                onClick={(event) => {
+                  setAnchorEl(event.currentTarget);
+                  console.log(event.currentTarget);
                 }}
-                // onSelect={(newValue) => {
-                //   console.log("newvalue--------------------"+newValue)
-                //   setSelectedDate(newValue);
-                //   console.log("selected date--------------------;"+selectedDate.getDate())
-                //   setAppliedFilters((pre) => ({
-                //     ...pre,
-                //     StartRunningDate: `Started Running Between ${selectedDate?.getDate()} to ${selectedDate?.getDate()}`,
-                //   }));
-                //   setAnchorEl(null);
-                // }}
-              />
-            </Popover>
-
-            <Button
-              // onClick={openAddcounter}
-              onClick={(e) => setrangeAnchorEl(e.currentTarget)}
-              variant="outlined"
-              size="large"
-              disableElevation
-              disableRipple
-              sx={{
-                color: "#2B2F42",
-                whiteSpace: "nowrap",
-                border: "1px solid #EBEBEB",
-                borderRadius: "10px",
-                marginRight: "14px",
-                marginTop: "22px",
-                cursor: "pointer",
-              }}
-              endIcon={
-                <img
-                  alt="arrowdown"
-                  src={Arrowdown}
-                  className={classes.Arrow}
-                />
-              }
-            >
-              <Typography noWrap textTransform="capitalize">
-                {" "}
-                Ad count{" "}
-              </Typography>
-            </Button>
-            <Popover
-              open={addcounteropen}
-              anchorEl={rangeanchorel}
-              onClose={() => {
-                setrangeAnchorEl(null);
-                // console.log(rangeanchorel, "jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj");
-              }}
-              add={open ? "simple-popover" : undefined}
-              transformOrigin={{
-                horizontal: "left",
-                vertical: "top",
-              }}
-              anchorOrigin={{
-                horizontal: "left",
-                vertical: "bottom",
-              }}
-            >
-              <Box
+                size="large"
+                variant="outlined"
+                disableElevation
+                disableRipple
                 sx={{
-                  margin: 2,
-                  width: "187px",
-                  alignContent: "center",
-                  justifyContent: "center",
+                  color: "#2B2F42",
+                  whiteSpace: "nowrap",
+                  border: "1px solid #EBEBEB",
+                  borderRadius: "10px",
+                  marginRight: "14px",
+                  marginTop: "22px",
+                }}
+                endIcon={
+                  <img
+                    alt="arrowdown"
+                    src={Arrowdown}
+                    className={classes.Arrow}
+                  />
+                }
+              >
+                <Typography
+                  noWrap
+                  textTransform="capitalize"
+                  //   onClick={handleClick}
+                >
+                  {" "}
+                  Started Running Date{" "}
+                </Typography>
+              </Button>
+              <Popover
+                anchorEl={anchorEl}
+                open={open}
+                add={open ? "simple-popover" : undefined}
+                onClose={() => {
+                  setAnchorEl(null);
+                  console.log(setAnchorEl, "jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj");
+                }}
+                transformOrigin={{
+                  horizontal: "left",
+                  vertical: "top",
+                }}
+                anchorOrigin={{
+                  horizontal: "left",
+                  vertical: "bottom",
                 }}
               >
-                <Stack
-                  direction={"column"}
+                <DateRange
+                  
+                  onChange={(item) => {
+                    console.log(item)
+                    setAppliedFilters((pre) => ({
+                      ...pre,
+                      StartRunningDate: { Message: `running date ${item.startDate}` },
+                    }));
+                    setRange([item.selection]);
+                  }}
+                  editableDateInputs={false}
+                  // moveRangeOnFirstSelection={false}                  
+                  ranges={range}
+                  months={1}
+                  direction="horizontal"
+                  className="calendarElement"
+                />
+              </Popover>
+
+              <Button
+                // onClick={openAddcounter}
+                onClick={(e) => setrangeAnchorEl(e.currentTarget)}
+                variant="outlined"
+                size="large"
+                disableElevation
+                disableRipple
+                sx={{
+                  color: "#2B2F42",
+                  whiteSpace: "nowrap",
+                  border: "1px solid #EBEBEB",
+                  borderRadius: "10px",
+                  marginRight: "14px",
+                  marginTop: "22px",
+                  cursor: "pointer",
+                }}
+                endIcon={
+                  <img
+                    alt="arrowdown"
+                    src={Arrowdown}
+                    className={classes.Arrow}
+                  />
+                }
+              >
+                <Typography noWrap textTransform="capitalize">
+                  {" "}
+                  Ad count{" "}
+                </Typography>
+              </Button>
+              <Popover
+                open={addcounteropen}
+                anchorEl={rangeanchorel}
+                onClose={() => {
+                  setrangeAnchorEl(null);
+                  // console.log(rangeanchorel, "jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj");
+                }}
+                add={open ? "simple-popover" : undefined}
+                transformOrigin={{
+                  horizontal: "left",
+                  vertical: "top",
+                }}
+                anchorOrigin={{
+                  horizontal: "left",
+                  vertical: "bottom",
+                }}
+              >
+                <Box
                   sx={{
-                    display: "flex",
-                    alignItems: "center",
+                    margin: 2,
+                    width: "187px",
+                    alignContent: "center",
                     justifyContent: "center",
                   }}
                 >
-                  <Typography sx={{ padding: "0px" }}>
-                    {/* From {appliedFilters?.AdCount?.min} to {appliedFilters?.AdCount?.max}+ */}
-                    From {min} to {max}+
-                  </Typography>
-                  <Slider
-                    size="small"
-                    // value={[appliedFilters?.AdCount?.min, appliedFilters?.AdCount?.max]}
-                    value={[min, max]}
-                    min={0}
-                    max={1000}
-                    sx={{ color: "#00CBFF" }}
-                    onChange={counterIncremten}
-                  />
-                  <Button
-                    variant="outlined"
+                  <Stack
+                    direction={"column"}
                     sx={{
-                      borderRadius: 50,
-                      fontWeight: 600,
-                      borderColor: "#00CBFF",
-                      color: "#00CBFF",
-                      borderWidth: 2,
-                    }}
-                    onClick={() => {
-                      setAppliedFilters((pre) => ({
-                        ...pre,
-                        AdCount: { min: 0, max: 1000, Message: "" },
-                      }));
-                      setMin(0);
-                      setMax(1000);
-                      setrangeAnchorEl(null);
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
                     }}
                   >
-                    Reset
-                  </Button>
-                </Stack>
-              </Box>
-            </Popover>
-
-            <Button
-              variant="outlined"
-              onClick={(e) => setAdStatusAnchorel(e.currentTarget)}
-              size="large"
-              disableElevation
-              disableRipple
-              sx={{
-                color: "#2B2F42",
-                whiteSpace: "nowrap",
-                border: "1px solid #EBEBEB",
-                borderRadius: "10px",
-                marginRight: "14px",
-                marginTop: "22px",
-              }}
-              endIcon={
-                <img
-                  alt="arrowdown"
-                  src={Arrowdown}
-                  className={classes.Arrow}
-                />
-              }
-            >
-              <Typography noWrap textTransform="capitalize">
-                {" "}
-                Ad status{" "}
-              </Typography>
-            </Button>
-            <Popover
-              anchorEl={adStatusAnchorel}
-              //  open={open}
-              add={openAdStatusAnchorel ? "simple-popover" : undefined}
-              onClose={() => {
-                setAdStatusAnchorel(null);
-                console.log(
-                  setAdStatusAnchorel,
-                  "jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj"
-                );
-              }}
-              open={openAdStatusAnchorel}
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-            >
-              <Box sx={{ width: "190px" }}>
-                <FormControl sx={{ padding: "10px" }}>
-                  <RadioGroup
-                    aria-labelledby="demo-radio-buttons-group-label"
-                    defaultValue="female"
-                    name="radio-buttons-group"
-                    value={appliedFilters?.AdStatus?.selectedData || ""}
-                    onChange={handleChangeStatus}
-                    // background="#00CBFF"
-                  >
-                    <FormControlLabel
-                      value="Active"
-                      control={<Radio style={{ color: "#00CBFF" }} />}
-                      label="Active"
+                    <Typography sx={{ padding: "0px" }}>
+                      {/* From {appliedFilters?.AdCount?.min} to {appliedFilters?.AdCount?.max}+ */}
+                      From {min} to {max}+
+                    </Typography>
+                    <Slider
+                      size="small"
+                      // value={[appliedFilters?.AdCount?.min, appliedFilters?.AdCount?.max]}
+                      value={[min, max]}
+                      min={0}
+                      max={1000}
+                      sx={{ color: "#00CBFF" }}
+                      onChange={counterIncremten}
                     />
-                    <FormControlLabel
-                      value="inActive"
-                      control={<Radio style={{ color: "#00CBFF" }} />}
-                      label="inActive"
-                    />
-                  </RadioGroup>
-                  <Box
-                    display={"flex"}
-                    alignContent={"center"}
-                    justifyContent={"center"}
-                  >
                     <Button
                       variant="outlined"
                       sx={{
@@ -580,198 +476,449 @@ const Addlibrarydatabase = () => {
                         fontWeight: 600,
                         borderColor: "#00CBFF",
                         color: "#00CBFF",
-                        height: "35px",
-                        width: "80px",
-                        borderWidth: 2,
-                      }}
-                    >
-                      Reset
-                    </Button>
-                  </Box>
-                </FormControl>
-              </Box>
-            </Popover>
-
-            <Button
-              variant="outlined"
-              sx={{
-                color: "#2B2F42",
-                whiteSpace: "nowrap",
-                border: "1px solid #EBEBEB",
-                borderRadius: "10px",
-                marginRight: "14px",
-                marginTop: "22px",
-              }}
-              endIcon={
-                <img
-                  alt="arrowdown"
-                  src={Arrowdown}
-                  className={classes.Arrow}
-                />
-              }
-            >
-              <Typography noWrap textTransform="capitalize">
-                {" "}
-                Facebook Page Likes
-              </Typography>
-            </Button>
-            <Button
-              variant="outlined"
-              sx={{
-                color: "#2B2F42",
-                whiteSpace: "nowrap",
-                border: "1px solid #EBEBEB",
-                borderRadius: "10px",
-                marginRight: "14px",
-                marginTop: "22px",
-              }}
-              endIcon={
-                <img
-                  alt="arrowdown"
-                  src={Arrowdown}
-                  className={classes.Arrow}
-                />
-              }
-            >
-              <Typography noWrap textTransform="capitalize">
-                {" "}
-                Instagram Page Like{" "}
-              </Typography>
-            </Button>
-
-            <Button
-              variant="outlined"
-              onClick={(e) => setMediaTypeAnchorel(e.currentTarget)}
-              disableElevation
-              disableRipple
-              sx={{
-                color: "#2B2F42",
-                whiteSpace: "nowrap",
-                border: "1px solid #EBEBEB",
-                borderRadius: "10px",
-                marginRight: "14px",
-                marginTop: "22px",
-              }}
-              endIcon={
-                <img
-                  alt="arrowdown"
-                  src={Arrowdown}
-                  className={classes.Arrow}
-                />
-              }
-              size="large"
-            >
-              <Typography noWrap textTransform="capitalize">
-                {" "}
-                Media Type{" "}
-              </Typography>
-            </Button>
-            <Popover
-              anchorEl={mediaTypeAnchorel}
-              //  open={open}
-              add={openMediaTypeAnchorel ? "simple-popover" : undefined}
-              onClose={() => {
-                setMediaTypeAnchorel(null);
-                console.log(
-                  setMediaTypeAnchorel,
-                  "jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj"
-                );
-              }}
-              open={openMediaTypeAnchorel}
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-            >
-              <Box sx={{ width: "190px" }}>
-                <FormControl sx={{ padding: "10px" }}>
-                  <RadioGroup
-                    aria-labelledby="demo-radio-buttons-group-label"
-                    defaultValue="female"
-                    name="radio-buttons-group"
-                    value={appliedFilters?.MediaType?.selectedMedia || ""}
-                    onChange={handlechange}
-                    // background="#00CBFF"
-                  >
-                    <FormControlLabel
-                      value="Video or Photo"
-                      control={<Radio style={{ color: "#00CBFF" }} />}
-                      label="Video or Photo"
-                    />
-                    <FormControlLabel
-                      value="video"
-                      control={<Radio style={{ color: "#00CBFF" }} />}
-                      label="Video"
-                    />
-                    <FormControlLabel
-                      value="image"
-                      control={<Radio style={{ color: "#00CBFF" }} />}
-                      label="photo"
-                    />
-                  </RadioGroup>
-                  <Box
-                    display={"flex"}
-                    alignContent={"center"}
-                    justifyContent={"center"}
-                  >
-                    <Button
-                      variant="outlined"
-                      sx={{
-                        borderRadius: 50,
-                        fontWeight: 600,
-                        borderColor: "#00CBFF",
-                        color: "#00CBFF",
-                        height: "35px",
-                        width: "80px",
                         borderWidth: 2,
                       }}
                       onClick={() => {
                         setAppliedFilters((pre) => ({
                           ...pre,
-                          MediaType: {
-                            selectedMedia: "Video or Photo",
-                            Message: "",
-                          },
+                          AdCount: { min: 0, max: 1000, Message: "" },
                         }));
-
-                        setMediaTypeAnchorel(null);
+                        setMin(0);
+                        setMax(1000);
+                        setrangeAnchorEl(null);
                       }}
                     >
                       Reset
                     </Button>
-                  </Box>
-                </FormControl>
+                  </Stack>
+                </Box>
+              </Popover>
+
+              <Button
+                variant="outlined"
+                onClick={(e) => setAdStatusAnchorel(e.currentTarget)}
+                size="large"
+                disableElevation
+                disableRipple
+                sx={{
+                  color: "#2B2F42",
+                  whiteSpace: "nowrap",
+                  border: "1px solid #EBEBEB",
+                  borderRadius: "10px",
+                  marginRight: "14px",
+                  marginTop: "22px",
+                }}
+                endIcon={
+                  <img
+                    alt="arrowdown"
+                    src={Arrowdown}
+                    className={classes.Arrow}
+                  />
+                }
+              >
+                <Typography noWrap textTransform="capitalize">
+                  {" "}
+                  Ad status{" "}
+                </Typography>
+              </Button>
+              <Popover
+                anchorEl={adStatusAnchorel}
+                //  open={open}
+                add={openAdStatusAnchorel ? "simple-popover" : undefined}
+                onClose={() => {
+                  setAdStatusAnchorel(null);
+                  console.log(
+                    setAdStatusAnchorel,
+                    "jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj"
+                  );
+                }}
+                open={openAdStatusAnchorel}
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "left",
+                }}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "left",
+                }}
+              >
+                <Box sx={{ width: "190px" }}>
+                  <FormControl sx={{ padding: "10px" }}>
+                    <RadioGroup
+                      aria-labelledby="demo-radio-buttons-group-label"
+                      defaultValue="female"
+                      name="radio-buttons-group"
+                      value={appliedFilters?.AdStatus?.selectedData || ""}
+                      onChange={handleChangeStatus}
+                      // background="#00CBFF"
+                    >
+                      <FormControlLabel
+                        value="Active"
+                        control={<Radio style={{ color: "#00CBFF" }} />}
+                        label="Active"
+                      />
+                      <FormControlLabel
+                        value="inActive"
+                        control={<Radio style={{ color: "#00CBFF" }} />}
+                        label="inActive"
+                      />
+                    </RadioGroup>
+                    <Box
+                      display={"flex"}
+                      alignContent={"center"}
+                      justifyContent={"center"}
+                    >
+                      <Button
+                        variant="outlined"
+                        sx={{
+                          borderRadius: 50,
+                          fontWeight: 600,
+                          borderColor: "#00CBFF",
+                          color: "#00CBFF",
+                          height: "35px",
+                          width: "80px",
+                          borderWidth: 2,
+                        }}
+                      >
+                        Reset
+                      </Button>
+                    </Box>
+                  </FormControl>
+                </Box>
+              </Popover>
+
+              <Button
+                variant="outlined"
+                sx={{
+                  color: "#2B2F42",
+                  whiteSpace: "nowrap",
+                  border: "1px solid #EBEBEB",
+                  borderRadius: "10px",
+                  marginRight: "14px",
+                  marginTop: "22px",
+                }}
+                endIcon={
+                  <img
+                    alt="arrowdown"
+                    src={Arrowdown}
+                    className={classes.Arrow}
+                  />
+                }
+              >
+                <Typography noWrap textTransform="capitalize">
+                  {" "}
+                  Facebook Page Likes
+                </Typography>
+              </Button>
+              <Button
+                variant="outlined"
+                sx={{
+                  color: "#2B2F42",
+                  whiteSpace: "nowrap",
+                  border: "1px solid #EBEBEB",
+                  borderRadius: "10px",
+                  marginRight: "14px",
+                  marginTop: "22px",
+                }}
+                endIcon={
+                  <img
+                    alt="arrowdown"
+                    src={Arrowdown}
+                    className={classes.Arrow}
+                  />
+                }
+              >
+                <Typography noWrap textTransform="capitalize">
+                  {" "}
+                  Instagram Page Like{" "}
+                </Typography>
+              </Button>
+
+              <Button
+                variant="outlined"
+                onClick={(e) => setMediaTypeAnchorel(e.currentTarget)}
+                disableElevation
+                disableRipple
+                sx={{
+                  color: "#2B2F42",
+                  whiteSpace: "nowrap",
+                  border: "1px solid #EBEBEB",
+                  borderRadius: "10px",
+                  marginRight: "14px",
+                  marginTop: "22px",
+                }}
+                endIcon={
+                  <img
+                    alt="arrowdown"
+                    src={Arrowdown}
+                    className={classes.Arrow}
+                  />
+                }
+                size="large"
+              >
+                <Typography noWrap textTransform="capitalize">
+                  {" "}
+                  Media Type{" "}
+                </Typography>
+              </Button>
+              <Popover
+                anchorEl={mediaTypeAnchorel}
+                //  open={open}
+                add={openMediaTypeAnchorel ? "simple-popover" : undefined}
+                onClose={() => {
+                  setMediaTypeAnchorel(null);
+                  console.log(
+                    setMediaTypeAnchorel,
+                    "jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj"
+                  );
+                }}
+                open={openMediaTypeAnchorel}
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "left",
+                }}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "left",
+                }}
+              >
+                <Box sx={{ width: "190px" }}>
+                  <FormControl sx={{ padding: "10px" }}>
+                    <RadioGroup
+                      aria-labelledby="demo-radio-buttons-group-label"
+                      defaultValue="female"
+                      name="radio-buttons-group"
+                      value={appliedFilters?.MediaType?.selectedData || ""}
+                      onChange={handlechange}
+                      // background="#00CBFF"
+                    >
+                      <FormControlLabel
+                        value="Video or Photo"
+                        control={<Radio style={{ color: "#00CBFF" }} />}
+                        label="Video or Photo"
+                      />
+                      <FormControlLabel
+                        value="video"
+                        control={<Radio style={{ color: "#00CBFF" }} />}
+                        label="Video"
+                      />
+                      <FormControlLabel
+                        value="image"
+                        control={<Radio style={{ color: "#00CBFF" }} />}
+                        label="photo"
+                      />
+                    </RadioGroup>
+                    <Box
+                      display={"flex"}
+                      alignContent={"center"}
+                      justifyContent={"center"}
+                    >
+                      <Button
+                        variant="outlined"
+                        sx={{
+                          borderRadius: 50,
+                          fontWeight: 600,
+                          borderColor: "#00CBFF",
+                          color: "#00CBFF",
+                          height: "35px",
+                          width: "80px",
+                          borderWidth: 2,
+                        }}
+                        onClick={() => {
+                          setAppliedFilters((pre) => ({
+                            ...pre,
+                            MediaType: {
+                              selectedData: "Video or Photo",
+                              Message: "",
+                            },
+                          }));
+
+                          setMediaTypeAnchorel(null);
+                        }}
+                      >
+                        Reset
+                      </Button>
+                    </Box>
+                  </FormControl>
+                </Box>
+              </Popover>
+              <Button
+                variant="outlined"
+                sx={{
+                  color: "#2B2F42",
+                  whiteSpace: "nowrap",
+                  border: "1px solid #EBEBEB",
+                  borderRadius: "10px",
+                  marginRight: "14px",
+                  marginTop: "22px",
+                }}
+                endIcon={
+                  <img
+                    alt="arrowdown"
+                    src={Arrowdown}
+                    className={classes.Arrow}
+                  />
+                }
+              >
+                <Typography noWrap textTransform="capitalize">
+                  {" "}
+                  Button{" "}
+                </Typography>
+              </Button>
+            </Grid>
+            <Grid item lg={1} md={1}>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Grid container>
+                  <Grid item>
+                    {/* <Button
+                      disableRipple
+                      item
+                      className={classes.filterBtn}
+                      variant="contained"
+                      sx={{
+                        backgroundColor: "#00CBFF",
+                        color: "white",
+                        borderRadius: 4,
+                      }}
+                      onClick={() => {
+                        // Object.keys(appliedFilters).map((element) => {
+                        //   console.log(element);
+                        //   Object.keys(appliedFilters[element]).map((ele) => {
+                        //     console.log(ele);
+                        //     if (
+                        //       typeof appliedFilters[element][ele] === "number"
+                        //     )
+                        //     setAppliedFilters((pre)=>({
+                        //       ...pre,
+                        //       [appliedFilters[element]]:{
+                        //         [`${ele}`]:0
+                        //       }
+                        //     }))
+
+                        //     else {
+                        //       setAppliedFilters((pre)=>({
+                        //         ...pre,
+                        //         [appliedFilters[element]]:{
+                        //           [`${ele}`]:''
+                        //         }
+                        //       }))
+                        //       // setAppliedFilters([...appliedFilters ,appliedFilters[element][ele] = '']);
+                        //     }
+                        //   });
+                        // });
+                        console.log(appliedFilters.AdCount.Message);
+                        // appliedFilters.map((filter) => {
+                        //   if (filter === "AdCount") {
+                        //     setAppliedFilters((abc) => ({
+                        //       ...abc,
+                        //       [`${filter}`]: {
+                        //         min: 0,
+                        //         max: 1000,
+                        //         Message: "",
+                        //       },
+                        //     }));
+                        //     setMin(0);
+                        //     setMax(1000);
+                        //   } else if (filter === "MediaType") {
+                        //     // appliedFilters?.MediaType?.selectedMedia
+                        //     setAppliedFilters((abc) => ({
+                        //       ...abc,
+                        //       [`${filter}`]: {
+                        //         selectedData: "Video or Photo",
+                        //         Message: "",
+                        //       },
+                        //     }));
+                        //   } else {
+                        //     setAppliedFilters((abc) => ({
+                        //       ...abc,
+                        //       [`${filter}`]: {
+                        //         ...abc[filter],
+                        //         Message: "",
+                        //       },
+                        //     }));
+                        //   }
+                        // });
+                      }}
+                    >
+                      cancle
+                    </Button> */}
+                    <Button
+                      style={{
+                        background: "#00CBFF",
+                        borderRadius: 30,
+                        fontSize: "18px",
+                        textTransform: "none",
+                        paddingLeft: "16px",
+                        paddingRight: "16px",
+                        color: "white",
+                      }}
+                      onClick={() => {
+                        // setAdsFilteredData(allMediaAds)
+
+                        console.log(appliedFilters?.AdCount?.Message);
+                        console.log(appliedFilters?.StartRunningDate?.Message);
+                        console.log(appliedFilters?.FacebookLikes?.Message);
+                        console.log(appliedFilters?.InstragramLike?.Message);
+                        console.log(appliedFilters?.MediaType?.Message);
+                        console.log(
+                          "variable",
+                          appliedFilters?.MediaType?.selectedData
+                        );
+                        // console.log(
+                        //   "selectedMediaTypeValue + ",
+                        //   selectedMediaTypeValue
+                        // );
+                        console.log(
+                          "adsFilteredData?.AdCount?.min + ",
+                          adsFilteredData?.AdCount?.min
+                        );
+
+                        setAdsFilteredData(
+                          allMediaAds.filter(
+                            (ads) =>
+                              (appliedFilters?.AdCount?.min !== 0 ||
+                              appliedFilters?.AdCount?.max !== 1000
+                                ? ads.noOfCopyAds >=
+                                    appliedFilters?.AdCount?.min &&
+                                  ads.noOfCopyAds <=
+                                    appliedFilters?.AdCount?.max
+                                : true) &&
+                              (appliedFilters?.MediaType?.selectedData === "" ||
+                              appliedFilters?.MediaType?.selectedData ===
+                                "Video or Photo"
+                                ? true
+                                : ads.adMediaType ===
+                                  appliedFilters?.MediaType?.selectedData) &&
+                              (appliedFilters?.AdStatus?.selectedData !== ""
+                                ? ads?.status ===
+                                  appliedFilters?.AdStatus?.selectedData
+                                : true) &&
+                              (range?.startDate !== null &&
+                              range?.endDate !== null
+                                ? ads?.startDate >= range?.startDate &&
+                                  ads?.startDate <= range?.endDate
+                                : true)
+                          )
+                        );
+                        console.log("ppppppppppppppp----");
+                        console.log(adsFilteredData);
+                        console.log("ppppppppppppppp----");
+                      }}
+                    >
+                      apply
+                    </Button>
+                  </Grid>
+                </Grid>
               </Box>
-            </Popover>
-            <Button
-              variant="outlined"
-              sx={{
-                color: "#2B2F42",
-                whiteSpace: "nowrap",
-                border: "1px solid #EBEBEB",
-                borderRadius: "10px",
-                marginRight: "14px",
-                marginTop: "22px",
-              }}
-              endIcon={
-                <img
-                  alt="arrowdown"
-                  src={Arrowdown}
-                  className={classes.Arrow}
-                />
-              }
-            >
-              <Typography noWrap textTransform="capitalize">
-                {" "}
-                Button{" "}
-              </Typography>
-            </Button>
+            </Grid>
           </Grid>
-          <Grid sx={{ marginTop: 1 }}>
+          {/* <Grid sx={{ marginTop: 1 }}>
             <Box
               sx={{ display: "flex", justifyContent: "end", alignItems: "end" }}
             >
@@ -828,7 +975,7 @@ const Addlibrarydatabase = () => {
                 apply
               </Button>
             </Box>
-          </Grid>
+          </Grid> */}
           <Grid container sx={{ marginTop: 1 }}>
             {Object.keys(appliedFilters).map((filter, index) => {
               return (
@@ -859,7 +1006,7 @@ const Addlibrarydatabase = () => {
                         setAppliedFilters((abc) => ({
                           ...abc,
                           [`${filter}`]: {
-                            selectedMedia: "Video or Photo",
+                            selectedData: "Video or Photo",
                             Message: "",
                           },
                         }));
@@ -886,7 +1033,6 @@ const Addlibrarydatabase = () => {
         </Grid>
         <Grid item xs={12}>
           <Grid container spacing={2} sx={{ marginTop: "10px" }}>
-            {console.log("indie oooooooooooooooooooooooo" + adsFilteredData)}
             {adsFilteredData.map((ads, index) => (
               <Grid item xs={3} key={index}>
                 <Stack
@@ -961,7 +1107,11 @@ const Addlibrarydatabase = () => {
                           src={Saveicon}
                           alt="img2"
                           className={classes.saveicon}
+                          onClick={() => {
+                            dispatch(createSavedAdsStart({ ad: ads.adID }));
+                          }}
                         />
+
                         <Typography color="#c0c0c0" className={classes.addinfo}>
                           Started Running : {ads.startDate}
                         </Typography>

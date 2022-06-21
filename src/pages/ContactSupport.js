@@ -5,9 +5,12 @@ import { Button, Grid, InputBase } from "@mui/material";
 import { Box } from "@mui/system";
 import { useForm } from "react-hook-form";
 import { makeStyles } from "@material-ui/core/styles";
+import { contactSupport } from "../services";
+import { useNavigate } from "react-router-dom";
 
 const ContactSupport = () => {
   const classes = useStyles();
+  const navigate = useNavigate();
 
   const {
     register,
@@ -15,8 +18,25 @@ const ContactSupport = () => {
     formState: { errors },
   } = useForm();
 
-  const onFormSubmit = (data) => {
-    console.table(data);
+  const onFormSubmit = async (data) => {
+    console.table("-----------------------", data);
+    const response = await contactSupport({
+      name: data.firstName,
+      email: data.email,
+      message: data.Message
+    });
+    // console.response(response);
+    if (!response.success) {
+      // setErrorMsg(response.message.response.data.message);
+      // navigate("/");
+      console.log(response.message.response.data.message);
+
+      // setInvalid(true);
+    } else {
+      console.log(response);
+      navigate("/");
+      // setSuccessMsg(response.data.message);
+    }
   };
 
   return (

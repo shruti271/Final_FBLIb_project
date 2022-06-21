@@ -6,14 +6,16 @@ import { Route } from "react-router-dom";
 import { CustomAppBar } from "../components/CustomAppBar";
 import { CustomSidebar } from "../components/CustomSidebar";
 import { styled } from "@mui/material/styles";
-import { AllDataPage } from "../pages/AdlibraryDatabase";
+import Addlibrarydatabase, { AllDataPage } from "../pages/AdlibraryDatabase";
 import SavedAds from "../pages/SavedAds";
 import ContactSupport from "../pages/ContactSupport";
 import AccountSetings from "../pages/AccountSettings";
 import Pagenotfound from "../components/PageNotFound";
 import AdDeatailsTabs from "../pages/adDetails/AdDetailsTabs";
 import { useDispatch } from "react-redux";
-import Addlibrarydatabase from "./../pages/dummmyfilter";
+// import Addlibrarydatabase from "./../pages/dummmyfilter";
+import { loadMediaStart } from "../redux/ducks/mediaAds";
+import { loadSavedAdsStart } from "../redux/ducks/saveAds";
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
@@ -26,11 +28,31 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 
 const MainLayout = () => {
   const [isOpen, setIsOpen] = React.useState(false);
+  // const dispatch = useDispatch();
 
   useEffect(() => {
     console.log("isOpen from Parent: ", isOpen);
   }, [isOpen]);
+  
+  //   useEffect(() => {
+  //   dispatch(loadMediaStart());
+  // }, );
+  // const dispatch = useDispatch();
 
+  // useEffect(() => {
+  //   dispatch(loadMediaStart());
+  // }, );
+  // useEffect(() => {
+  //   dispatch(loadSavedAdsStart());
+  // }, []);
+  
+  // const dispatch = useDispatch();
+  // const { savedAds } = useSelector((state) => state.savedAds);
+  
+  // useEffect(() => {
+  //   dispatch(loadSavedAdsStart());
+  //   // console.log("--"+savedAds);
+  // }, []);
   return (
     <>
       <Box sx={{ display: "flex" }}>

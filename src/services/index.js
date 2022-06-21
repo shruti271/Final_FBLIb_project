@@ -86,3 +86,87 @@ export const forgotPassword = async (payload) => {
     };
   }
 };
+
+export const changePassword = async (payload) => {
+  let result = {};
+  try {
+    const userid = await axios.get(
+      `http://localhost:8000/api/usermanager/`, //http://127.0.0.1:8000/api/usermanager/      
+      { withCredentials: true }
+    );
+    console.log(userid.data.data);
+    console.log("---------------- payload",payload)
+    // console.log(payload);
+    const res = await axios.put(
+      `http://localhost:8000/api/usermanager/${userid?.data?.data?.id}/`, //http://127.0.0.1:8000/api/usermanager/
+      payload,
+      { withCredentials: true }
+    );
+    result = res.data || {};
+    return { success: true, data: result };
+  } catch (err) {
+    return {
+      success: false,
+      message: err || "something went wrong",
+    };
+  }
+};
+
+export const getName =async()=>{
+  let result = {};
+  try {
+    const res = await axios.get(
+      `http://localhost:8000/api/usermanager/`, //http://127.0.0.1:8000/api/usermanager/      
+      { withCredentials: true }
+    );
+    result = res.data.data || {};
+    console.log(result)
+    return { success: true, data: result };
+  }catch (err) {
+    return {
+      success: false,
+      message: err || "something went wrong",
+    };
+  }
+}
+
+export const changeName = async (payload) => {
+  let result = {};
+  try {
+    const userid = await axios.get(
+      `http://localhost:8000/api/usermanager/`, //http://127.0.0.1:8000/api/usermanager/      
+      { withCredentials: true }
+    );
+    console.log(userid.data.data);
+    console.log("---------------- payload",payload)
+    console.log(payload);
+    const res = await axios.put(
+      `http://localhost:8000/api/usermanager/${userid?.data?.data?.id}/`, //http://127.0.0.1:8000/api/usermanager/
+      payload,
+      { withCredentials: true }
+    );
+    result = res.data || {};
+    return { success: true, data: result };
+  } catch (err) {
+    return {
+      success: false,
+      message: err || "something went wrong",
+    };
+  }
+};
+
+export const contactSupport = async (payload) => {
+  let result = {};
+  try {
+    const res = await axios.post(`${appConfig.appUrl}/api/support/`, payload, {
+      withCredentials: true,
+    });
+    result = res.data || {};
+    return { success: true, data: result };
+  } catch (err) {
+    return {
+      success: false,
+      message: err || "something went wrong",
+    };
+  }
+};
