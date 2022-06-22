@@ -1,47 +1,53 @@
 import React, { useState } from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import { MuiThemeProvider, createTheme, } from "@material-ui/core/styles";
-import {makeStyles} from '@material-ui/core'
-import appLogo from "../../assets/appLogo.svg";
+import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core";
 import { CardContent, Grid } from "@material-ui/core";
-import { Alert, Box, Button, Card, Checkbox, CircularProgress, FormControlLabel, Stack, TextField, Typography } from "@mui/material";
+import {
+  Alert,
+  Box,
+  Button,
+  Card,
+  Checkbox,
+  CircularProgress,
+  FormControlLabel,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { usermanager } from "../../services/index";
-import { useForm, Controller } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { validationSchema } from "../../services/index";
+import { useForm, Controller } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { registerValidationSchema } from "./../../utils/validationSchemas";
+import appLogo from "../../assets/appLogo.svg";
+import { signUp } from "./../../services/index";
 
 const Signup = () => {
   const classes = useStyles();
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false)
-  const [message,setMessage] =useState(true)
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState(true);
   const {
     register,
     control,
     handleSubmit,
-    formState: { errors }
+    formState: { errors },
   } = useForm({
-    resolver: yupResolver(validationSchema)
+    resolver: yupResolver(registerValidationSchema),
   });
 
   const submitsigninform = async (data) => {
-    setLoading(true)
+    setLoading(true);
     try {
-      const formData = new FormData();
-      formData.append('firstname', data.firstname);
-      formData.append('lastname', data.lastname);
-      formData.append('email', data.email);
-      formData.append('password', data.password);
-      const response = await usermanager(formData);
+      const response = await signUp(data);
 
       if (response.success) {
-        setMessage(true)
+        setMessage(true);
         navigate("/auth/login");
       }
     } catch {
-      console.log("error")
-      setLoading(false)
+      console.log("error");
+      setLoading(false);
     }
   };
   const gotoSigninpage = () => {
@@ -106,7 +112,7 @@ const Signup = () => {
                         fullWidth
                         required
                         // onChange={(e) => setFirstname(e.target.value)}
-                        {...register('firstname')}
+                        {...register("firstname")}
                         error={errors.firstname ? true : false}
                       />
                       <Typography variant="inherit" color="textSecondary">
@@ -121,7 +127,7 @@ const Signup = () => {
                         fullWidth
                         required
                         // onChange={(e) => setLasttname(e.target.value)}
-                        {...register('lastname')}
+                        {...register("lastname")}
                         error={errors.lastname ? true : false}
                       />
                       <Typography variant="inherit" color="textSecondary">
@@ -137,7 +143,7 @@ const Signup = () => {
                         fullWidth
                         required
                         // onChange={(e) => setEmail(e.target.value)}
-                        {...register('email')}
+                        {...register("email")}
                         error={errors.email ? true : false}
                       />
                       <Typography variant="inherit" color="textSecondary">
@@ -152,7 +158,7 @@ const Signup = () => {
                         fullWidth
                         required
                         // onChange={(e) => setPassword(e.target.value)}
-                        {...register('password')}
+                        {...register("password")}
                         error={errors.password ? true : false}
                       />
                       <Typography variant="inherit" color="textSecondary">
@@ -169,23 +175,33 @@ const Signup = () => {
                             inputRef={register()}
                             render={({ field: { onChange } }) => (
                               <Checkbox
-                                style={{ color: '#00CBFF' }}
-                                onChange={e => onChange(e.target.checked)}
+                                style={{ color: "#00CBFF" }}
+                                onChange={(e) => onChange(e.target.checked)}
                               />
                             )}
                           />
                         }
                         label={
-                          <Typography color={errors.acceptTerms ? 'error' : 'inherit'} className={classes.termsandcondition}>
-                            I agree to the <span style={{ color: "#00CBFF" }}>Terms of service</span> and <span style={{ color: "#00CBFF" }}>Privacy Policy</span>
+                          <Typography
+                            color={errors.acceptTerms ? "error" : "inherit"}
+                            className={classes.termsandcondition}
+                          >
+                            I agree to the{" "}
+                            <span style={{ color: "#00CBFF" }}>
+                              Terms of service
+                            </span>{" "}
+                            and{" "}
+                            <span style={{ color: "#00CBFF" }}>
+                              Privacy Policy
+                            </span>
                           </Typography>
                         }
                       />
                       <br />
                       <Typography variant="inherit" color="textSecondary">
                         {errors.acceptTerms
-                          ? '(' + errors.acceptTerms.message + ')'
-                          : ''}
+                          ? "(" + errors.acceptTerms.message + ")"
+                          : ""}
                       </Typography>
                     </Grid>
                   </Grid>
@@ -199,12 +215,20 @@ const Signup = () => {
                   className={classes.Crateaccountbutton}
                   onClick={handleSubmit(submitsigninform)}
                 >
-                  {loading ? <CircularProgress style={{color:"#F6F6FB"}} /> : "Create Account"}
+                  {loading ? (
+                    <CircularProgress style={{ color: "#F6F6FB" }} />
+                  ) : (
+                    "Create Account"
+                  )}
                   {console.log("jjjjjjjjjjjjjjjj", loading)}
                   {/* create Account */}
                 </Button>
               </Box>
-                   {message ? <Alert severity="success">This is a success message!</Alert> :"false"}
+              {message ? (
+                <Alert severity="success">This is a success message!</Alert>
+              ) : (
+                "false"
+              )}
             </CardContent>
           </Card>
         </Box>
@@ -279,4 +303,3 @@ const useStyles = makeStyles(() => ({
     width: "60%",
   },
 }));
-

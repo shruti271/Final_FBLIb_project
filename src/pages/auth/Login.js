@@ -14,10 +14,11 @@ import appLogo from "../../assets/appLogo.svg";
 import { Grid } from "@material-ui/core";
 import { CircularProgress, Stack } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { isAlive, login, loginvalidationSchema } from "../../services/index";
+import { isAlive, login } from "../../services/index";
 import { useEffect } from "react";
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { loginvalidationSchema } from "./../../utils/validationSchemas";
 
 const themeLight = createTheme({
   overrides: {
@@ -91,30 +92,33 @@ const useStyles = makeStyles(() => ({
 const Login = () => {
   const classes = useStyles();
   const navigate = useNavigate();
-  const [loading,setLoading] = useState(false)
-  const { register, handleSubmit, formState: { errors } } = useForm({
-    resolver: yupResolver(loginvalidationSchema)
+  const [loading, setLoading] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(loginvalidationSchema),
   });
 
   const submitLoginform = async (data) => {
-    setLoading(true)
+    setLoading(true);
     try {
       const formData = new FormData();
-      console.log("------------------------dd", formData)
-      formData.append('email', data.email);
-      formData.append('password', data.password);
+      console.log("------------------------dd", formData);
+      formData.append("email", data.email);
+      formData.append("password", data.password);
       const response = await login(formData);
 
       if (response.success) {
         navigate("/");
       }
     } catch {
-      console.log("some error occour")
+      console.log("some error occour");
     }
   };
 
   const onError = (errors) => console.log("Errors Occurred !! :", errors);
-
 
   const getAlive = async () => {
     const res = await isAlive();
@@ -132,7 +136,7 @@ const Login = () => {
   };
 
   useEffect(() => {
- setLoading(false)
+    setLoading(false);
     getAlive();
   }, []);
 
@@ -200,7 +204,7 @@ const Login = () => {
                           variant="outlined"
                           fullWidth
                           required
-                          {...register('email')}
+                          {...register("email")}
                           error={errors.email ? true : false}
                         />
                         <Typography variant="inherit" color="textSecondary">
@@ -222,7 +226,7 @@ const Login = () => {
                           variant="outlined"
                           fullWidth
                           required
-                          {...register('password')}
+                          {...register("password")}
                           error={errors.password ? true : false}
                         />
                         <Typography variant="inherit" color="textSecondary">
@@ -240,7 +244,11 @@ const Login = () => {
                     className={classes.loginbutton}
                     onClick={handleSubmit(submitLoginform, onError)}
                   >
-                     {loading ? <CircularProgress style={{color:"#F6F6FB"}} /> : "Log in"}
+                    {loading ? (
+                      <CircularProgress style={{ color: "#F6F6FB" }} />
+                    ) : (
+                      "Log in"
+                    )}
                     {/* Log in */}
                   </Button>
                 </Box>

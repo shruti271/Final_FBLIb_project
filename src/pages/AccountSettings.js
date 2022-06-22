@@ -1,85 +1,127 @@
-import {
-  Button,
-  Grid,
-  InputBase,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Button, Grid, InputBase, Stack, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useEffect } from "react";
-import viss from "../assets/viss.svg";
 import { makeStyles } from "@material-ui/core/styles";
 import { useForm } from "react-hook-form";
-import { changeName, changePassword, getName } from "../services";
 import { useNavigate } from "react-router-dom";
-import PersonalInfo from "./PersonalInfo";
+import viss from "../assets/viss.svg";
+import { useSelector, useDispatch } from "react-redux";
+import { updateAccountSettingsStart } from "../redux/ducks/accountSettings";
 
-function AccountSetings() {
+const useStyles = makeStyles(() => ({
+  inputField: {
+    border: "2px solid #EBEBEB",
+    borderRadius: "10px",
+    // height: "43px",
+    paddingLeft: "16px",
+    // width: "43px",//{ md: "43px", sm: "43px" ,lg:"43px"},
+    height: "43px", //{ md: "43px", sm: "43px" ,lg:"43px"},
+  },
+}));
+
+function AccountSettings() {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { accountSettings } = useSelector((state) => state.accountSettings);
 
   const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    setValue,
-  } = useForm();
-  // const formData = new FormData();
-  // const formDataForName = new FormData();
-  const fields = ["first_name", "last_name"];
-  const getname = async () => {
-    const res = await getName();
-    // fields.forEach((field) => setValue(field, res.first_name));
-    console.log("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\");
-    console.log(res.data.first_name);
-    console.log("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\");
+    register: personalFormRegister,
+    handleSubmit: personalFormHandleSubmit,
+    formState: { personalFormErrors },
+    setValue: personalFormSetValue,
+  } = useForm({
+    defaultValues: {
+      first_name: "",
+      last_name: "",
+    },
+  });
 
-    if (res) {
-      setValue(fields[0], res.data.first_name);
-      setValue(fields[1], res.data.last_name);
-    }
-
-    // console.log(res);
-    // console.log("_++++++++++++++++++++++++_");
-    // formData.append("first_name", res.first_name);
-    // formData.append("last_name", res.last_name);
-  };
+  const {
+    register: securityFormRegister,
+    handleSubmit: securityFormHandleSubmit,
+    formState: { securityFormErrors },
+    setValue: securityFormSetValue,
+  } = useForm({
+    defaultValues: {
+      c_password: "",
+      n_password: "",
+    },
+  });
 
   useEffect(() => {
-    getname();
-  }, []);
+    console.log("accountSettings ::", accountSettings);
+    personalFormSetValue("first_name", accountSettings.first_name);
+    personalFormSetValue("last_name", accountSettings.last_name);
+  }, [accountSettings, personalFormSetValue]);
 
-  const onFormChangeNameSubmit = async (data) => {
-    console.log("-----------------------", data);
+  // const fields = ["first_name", "last_name"];
+  // const getname = async () => {
+  //   const res = await getName();
+  //   // fields.forEach((field) => setValue(field, res.first_name));
+  //   console.log("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\");
+  //   console.log(res.data.first_name);
+  //   console.log("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\");
 
-    const response = await changeName({
-      first_name: data?.first_name,
-      last_name: data?.last_name,
-    });
+  //   if (res) {
+  //     setValue(fields[0], res.data.first_name);
+  //     setValue(fields[1], res.data.last_name);
+  //   }
+  // };
 
-    if (!response.success) {
-      console.log(response.message.response.data.message);
-      errors.currentPassword.message = "password not mached";
-    } else {
-      console.log(response);
-    }
+  // useEffect(() => {
+  //   getname();
+  // }, []);
+
+  // const onFormChangeNameSubmit = async (data) => {
+  //   console.log("-----------------------", data);
+
+  //   const response = await changeName({
+  //     first_name: data?.first_name,
+  //     last_name: data?.last_name,
+  //   });
+
+  //   if (!response.success) {
+  //     console.log(response.message.response.data.message);
+  //     errors.currentPassword.message = "password not mached";
+  //   } else {
+  //     console.log(response);
+  //   }
+  // };
+
+  const onPersonalFormSubmit = async (data) => {
+    console.table("onPersonalFormSubmit data:", data);
+    console.table("onPersonalFormSubmit data:", data);
+    dispatch(updateAccountSettingsStart({ data, id: accountSettings?.id }));
+    // const response = await changePassword({
+    //   c_password: data?.currentpassword,
+    //   n_password: data?.newpassword,
+    // });
+
+    // if (!response.success) {
+    //   console.log(response.message.response.data.message);
+    // } else {
+    //   console.log(response);
+    //   errors.currentPassword.message = "password not mached";
+    //   navigate("/");
+    // }
   };
 
-  const onFormSubmit = async (data) => {
-    console.table("-----------------------", data);
-    const response = await changePassword({
-      c_password: data?.currentpassword,
-      n_password: data?.newpassword,
-    });
+  const onSecurityFormSubmit = async (data) => {
+    console.table("onSecurityFormSubmit data:", data);
+    dispatch(updateAccountSettingsStart({ data, id: accountSettings?.id }));
+    // const response = await changePassword({
+    //   c_password: data?.currentpassword,
+    //   n_password: data?.newpassword,
+    // });
 
-    if (!response.success) {
-      console.log(response.message.response.data.message);
-    } else {
-      console.log(response);
-      errors.currentPassword.message = "password not mached";
-      navigate("/");
-    }
+    // if (!response.success) {
+    //   console.log(response.message.response.data.message);
+    // } else {
+    //   console.log(response);
+    //   errors.currentPassword.message = "password not mached";
+    //   navigate("/");
+    // }
   };
 
   return (
@@ -90,7 +132,85 @@ function AccountSetings() {
         </Typography>
 
         <Stack width="80%" direction={"column"} marginTop={8}>
-          <PersonalInfo />
+          <Box>
+            <Typography variant="h6">Personal Information</Typography>
+            <Box
+              border={0.5}
+              borderRadius={5}
+              borderColor="#EBEBEB"
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+            >
+              <Stack
+                direction={"column"}
+                width="90%"
+                marginTop={3}
+                marginBottom={3}
+              >
+                <form onSubmit={personalFormHandleSubmit(onPersonalFormSubmit)}>
+                  <Stack direction={"row"} spacing={2}>
+                    <Stack direction={"column"} width="50%">
+                      <Typography>First Name</Typography>
+                      <InputBase
+                        className={classes.inputField}
+                        label="outlined"
+                        variant="outlined"
+                        placeholder="firstname"
+                        {...personalFormRegister("first_name", {
+                          required: "firstname is required",
+                        })}
+                        name="first_name"
+                        fullWidth
+                      />
+                      {personalFormErrors?.first_name?.message && (
+                        <p style={{ color: "red" }}>Firstname is required.</p>
+                      )}
+                    </Stack>
+                    <Stack direction={"column"} width="50%">
+                      <Typography>Last Name</Typography>
+
+                      <InputBase
+                        className={classes.inputField}
+                        label="outlined"
+                        variant="outlined"
+                        placeholder="lastname"
+                        {...personalFormRegister("last_name", {
+                          required: "lastname is required",
+                        })}
+                        name="last_name"
+                        fullWidth
+                      />
+                      {personalFormErrors?.last_name?.message && (
+                        <p style={{ color: "red" }}>Lastname is required.</p>
+                      )}
+                    </Stack>
+                  </Stack>
+                  <Stack direction={"row"} marginTop={2}>
+                    <Grid
+                      container
+                      style={{ display: "flex", justifyContent: "right" }}
+                      item
+                    >
+                      <Box justifyContent={"right "}>
+                        <Button
+                          type="Submit"
+                          variant="contained"
+                          color="primary"
+                          style={{
+                            borderRadius: 50,
+                            backgroundColor: "#00CBFF",
+                          }}
+                        >
+                          Save
+                        </Button>
+                      </Box>
+                    </Grid>
+                  </Stack>
+                </form>
+              </Stack>
+            </Box>
+          </Box>
 
           <Box marginTop={5}>
             <Typography variant="h6">Security</Typography>
@@ -108,43 +228,43 @@ function AccountSetings() {
                 marginTop={3}
                 marginBottom={3}
               >
-                <form onSubmit={handleSubmit(onFormSubmit)}>
+                <form onSubmit={securityFormHandleSubmit(onSecurityFormSubmit)}>
                   <Stack direction={"row"} spacing={2}>
                     <Stack direction={"column"} width="50%">
-                      <Typography>current password</Typography>
+                      <Typography>Current Password</Typography>
                       <InputBase
                         className={classes.inputField}
                         label="outlined"
                         variant="outlined"
                         placeholder="Type in your current password"
                         name="currentPassword"
-                        {...register("currentpassword", {
+                        {...securityFormRegister("c_password", {
                           required: "currentpassword is required",
                         })}
                         fullWidth
                       />
-                      {errors.currentpassword?.message && (
+                      {securityFormErrors?.currentpassword?.message && (
                         <p style={{ color: "red" }}>
-                          current password is required.
+                          Current password is required.
                         </p>
                       )}
                     </Stack>
                     <Stack direction={"column"} width="50%">
-                      <Typography>New password</Typography>
+                      <Typography>New Password</Typography>
                       <InputBase
                         className={classes.inputField}
                         label="outlined"
                         variant="outlined"
                         name="newPassword"
                         placeholder="Type in your new password"
-                        {...register("newpassword", {
+                        {...securityFormRegister("n_password", {
                           required: "newpassword is required",
                         })}
                         fullWidth
                       />
-                      {errors.newpassword?.message && (
+                      {securityFormErrors?.newpassword?.message && (
                         <p style={{ color: "red" }}>
-                          new password is required.
+                          New password is required.
                         </p>
                       )}
                     </Stack>
@@ -165,7 +285,6 @@ function AccountSetings() {
                             borderRadius: 50,
                             backgroundColor: "#00CBFF",
                           }}
-                          onClick={onFormSubmit}
                         >
                           Change password
                         </Button>
@@ -243,26 +362,6 @@ function AccountSetings() {
                     </Grid>
                   </Stack>
                 </Stack>
-
-                {/* <Stack direction={"row"} marginTop={2}>
-                          
-                          <Grid
-                            container
-                            style={{ display: "flex", justifyContent: "right" }}
-                            item
-                          >
-                            <Box justifyContent={"right "}>
-                              <Button
-                                type="Submit"
-                                variant="contained"
-                                color="primary"
-                                style={{ borderRadius: 50, backgroundColor: "#00CBFF" }}
-                              >
-                                Change password
-                              </Button>
-                            </Box>
-                          </Grid>
-                        </Stack> */}
               </Stack>
             </Box>
           </Box>
@@ -335,15 +434,4 @@ function AccountSetings() {
     </>
   );
 }
-
-const useStyles = makeStyles(() => ({
-  inputField: {
-    border: "2px solid #EBEBEB",
-    borderRadius: "10px",
-    // height: "43px",
-    paddingLeft: "16px",
-    // width: "43px",//{ md: "43px", sm: "43px" ,lg:"43px"},
-    height: "43px", //{ md: "43px", sm: "43px" ,lg:"43px"},
-  },
-}));
-export default AccountSetings;
+export default AccountSettings;

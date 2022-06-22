@@ -1,9 +1,6 @@
-import axios from 'axios';
-
-
+import axiosInstance from "./../../../axios/Index";
 export function requestGetMedia() {
-	return axios.request({
-		method: 'get',
-		url: 'http://127.0.0.1:8000/api/allads/',		
-	});
+  return axiosInstance.get("api/allads/", {
+    withCredentials: true,
+  });
 }

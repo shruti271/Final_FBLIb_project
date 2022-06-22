@@ -1,39 +1,61 @@
-import { all, fork, takeLatest } from 'redux-saga/effects';
+import { all, fork, takeLatest } from "redux-saga/effects";
 import { LOAD_MEDIA_START } from "../ducks/mediaAds";
-import { CREATE_SAVEADS_START, DELETE_SAVEADS_START, LOAD_SAVEADS_START } from '../ducks/saveAds';
+import {
+  CREATE_SAVEADS_START,
+  DELETE_SAVEADS_START,
+  LOAD_SAVEADS_START,
+} from "../ducks/saveAds";
 import { handleGetMedia } from "./handlers/mediaAds";
-import { handleCreateSavedAds, handleDeleteSavedAds, handleGetSavedAds } from './handlers/savedAds';
+import {
+  handleGetAccountSettings,
+  handleUpdateAccountSettings,
+} from "./handlers/accountSettings";
+import {
+  handleCreateSavedAds,
+  handleDeleteSavedAds,
+  handleGetSavedAds,
+} from "./handlers/savedAds";
+import {
+  LOAD_ACCOUNT_SETTINGS_START,
+  UPDATE_ACCOUNT_SETTINGS_START,
+} from "./../ducks/accountSettings";
 
 function* onLoadMeida() {
-	yield takeLatest(LOAD_MEDIA_START, handleGetMedia);
+  yield takeLatest(LOAD_MEDIA_START, handleGetMedia);
 }
 
 function* onLoadSavedAds() {
-	yield takeLatest(LOAD_SAVEADS_START, handleGetSavedAds);
+  yield takeLatest(LOAD_SAVEADS_START, handleGetSavedAds);
 }
 
 function* onCreateSavedAds() {
-	yield takeLatest(CREATE_SAVEADS_START, handleCreateSavedAds);
+  yield takeLatest(CREATE_SAVEADS_START, handleCreateSavedAds);
 }
 
 function* onDeleteSavedAds() {
-	yield takeLatest(DELETE_SAVEADS_START, handleDeleteSavedAds);
+  yield takeLatest(DELETE_SAVEADS_START, handleDeleteSavedAds);
 }
 
-const mediaSagas = [
-	fork(onLoadMeida),
-	
-];
+function* onGetAccountSettings() {
+  yield takeLatest(LOAD_ACCOUNT_SETTINGS_START, handleGetAccountSettings);
+}
+
+function* onUpdateAccountSettings() {
+  yield takeLatest(UPDATE_ACCOUNT_SETTINGS_START, handleUpdateAccountSettings);
+}
+
+const mediaSagas = [fork(onLoadMeida)];
 
 const savedAdsSagas = [
-	fork(onLoadSavedAds),
-	fork(onCreateSavedAds),
-	fork(onDeleteSavedAds),
-	
+  fork(onLoadSavedAds),
+  fork(onCreateSavedAds),
+  fork(onDeleteSavedAds),
+];
+
+const accountSettingsSagas = [
+  fork(onGetAccountSettings),
+  fork(onUpdateAccountSettings),
 ];
 export default function* watcherSaga() {
-	yield all([
-		...mediaSagas,
-		...savedAdsSagas
-	]);
+  yield all([...mediaSagas, ...savedAdsSagas, ...accountSettingsSagas]);
 }

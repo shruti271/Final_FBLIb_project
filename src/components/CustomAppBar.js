@@ -1,13 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { styled } from "@mui/material/styles";
 import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import MenuIcon from "@mui/icons-material/Menu";
 import {
-  Avatar,
   Box,
   Divider,
-  Grid,
   IconButton,
   Menu,
   MenuItem,
@@ -22,10 +20,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import PersonIcon from "@mui/icons-material/Person";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import Notefictionicon from "../assets/Notefictionicon.svg";
-import Profileicon from "../assets/Profile.svg";
-import Polygonicon from "../assets/Polygon.svg";
 import { logoutUser } from "../services";
+import { useSelector } from "react-redux";
 
 const drawerWidth = 240;
 
@@ -64,6 +60,12 @@ const AppBar = styled(MuiAppBar, {
 export const CustomAppBar = ({ isOpen, setIsOpen }) => {
   console.log("isOpen from child: ", isOpen);
   const classes = useStyles();
+  const { accountSettings } = useSelector((state) => state.accountSettings);
+
+  useEffect(() => {
+    console.log("accountSettings :", accountSettings);
+  }, [accountSettings]);
+
   const handleDrawerOpen = () => {
     if (!isOpen) {
       setIsOpen(true);
@@ -72,13 +74,12 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
     }
   };
   const MenuListOptios = [
-    { name: "Account Setings", icon: settings },
+    { name: "Account Setings", icon: settings, url: "/accountSettings" },
     { name: "Billing", icon: billing },
-    { name: "Contact Support", icon: contactUs },
+    { name: "Contact Support", icon: contactUs, url: "/contactSupport" },
     { name: "Logout", icon: billing },
   ];
-  const [isMenuOptionActive, setIsMenuOptionActive] =
-    React.useState("");
+  const [isMenuOptionActive, setIsMenuOptionActive] = React.useState("");
   const navigate = useNavigate();
   const [anchoerEL, setAnchoerEL] = React.useState();
   const handleOpenMenu = (e) => {
@@ -88,11 +89,11 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
   const handleCloseMenu = (e) => {
     setAnchoerEL(null);
   };
-  const userLogout =  async () => {
+  const userLogout = async () => {
     const res = await logoutUser();
     if (res.success && res?.data?.data) {
       localStorage.clear();
-      navigate("/auth/register");
+      navigate("/auth/login");
     }
   };
   return (
@@ -131,30 +132,41 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
                 </Box>
 
                 <Stack
-                  direction={"row"}
-                  // onClick={handleOpenMenu}
-                  sx={{ justifyContent: "center", alignItems: "center" }}
-                  spacing={2}
+                  sx={{
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
                 >
-                  <Typography
+                  <Box
+                    onClick={handleOpenMenu}
                     sx={{
-                      fontStyle: "normal",
-                      fontWeight: "600",
-                      fontSize: "18px",
-                      lineHeight: "24px",
-                      color: "#2B2F42",
+                      display: "flex",
+                      flexWrap: "nowrap",
                     }}
                   >
-                    Jeans Beans
-                  </Typography>
-                  <Box
-                    className={classes.avtar}
-                    sx={{ borderRadius: "4px", width: "16px", height: "16px" }}
-                  >
-                    <ArrowDropDownIcon
-                      onClick={handleOpenMenu}
-                      // onClose={handleCloseMenu}
-                    />
+                    <Typography
+                      sx={{
+                        fontStyle: "normal",
+                        fontWeight: "600",
+                        fontSize: "18px",
+                        lineHeight: "24px",
+                        color: "#2B2F42",
+                        marginRight: "16px",
+                      }}
+                    >
+                      {accountSettings &&
+                        `${accountSettings?.first_name} ${accountSettings?.last_name}`}
+                    </Typography>
+                    <Box
+                      className={classes.avtar}
+                      sx={{
+                        borderRadius: "4px",
+                        width: "16px",
+                        height: "16px",
+                      }}
+                    >
+                      <ArrowDropDownIcon />
+                    </Box>
                   </Box>
 
                   <Menu
@@ -162,7 +174,7 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
                     anchorEl={anchoerEL}
                     open={Boolean(anchoerEL)}
                     onClose={handleCloseMenu}
-                    onClick={userLogout}
+                    // onClick={userLogout}
                     PaperProps={{
                       style: {
                         marginTop: 13,
@@ -174,9 +186,14 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
                   >
                     <Box marginLeft={3} marginTop={1} marginBottom={1}>
                       <Typography>
-                        <b>JeansBeans</b>
+                        <b>
+                          {accountSettings &&
+                            `${accountSettings?.first_name} ${accountSettings?.last_name}`}
+                        </b>
                       </Typography>
-                      <Typography>JeansBeans@gmail.com</Typography>
+                      <Typography>
+                        {accountSettings && accountSettings?.email}
+                      </Typography>
                     </Box>
                     <Divider />
 
@@ -186,7 +203,7 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
                         <MenuItem
                           key={index}
                           onClick={() => {
-                            navigate(item.name.replace(" ", ""));
+                            navigate(item.url);
                             handleCloseMenu();
                             setIsMenuOptionActive(item.name);
                           }}

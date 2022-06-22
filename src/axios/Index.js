@@ -1,10 +1,9 @@
 import axios from "axios";
-const baseURL = "http://localhost:8000";
-// const baseURL = "https://qwdev.servicepack.ai";
+import appConfig from "../config/index";
+
 const axiosInstance = axios.create({
-  baseURL: baseURL,
+  baseURL: appConfig.appUrl,
   headers: {
-    // 'Authorization': "bearer " + localStorage.getItem('access_token'),
     "Content-Type": "application/json",
     accept: "application/json",
   },

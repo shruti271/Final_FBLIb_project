@@ -16,9 +16,11 @@ import { CircularProgress, Stack } from "@mui/material";
 import Backtologin from "../../assets/Backtologinicon.svg";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { forgetvalidationSchema, forgotPassword, isAlive } from "../../services/index";
+import { forgotPassword, isAlive } from "../../services/index";
 import { useForm } from "react-hook-form";
-import { yupResolver } from '@hookform/resolvers/yup';
+import { yupResolver } from "@hookform/resolvers/yup";
+import { forgetvalidationSchema } from "./../../utils/validationSchemas";
+
 const themeLight = createTheme({
   overrides: {
     MuiCssBaseline: {
@@ -77,6 +79,7 @@ const useStyles = makeStyles(() => ({
     height: "16px !important",
     width: "14px !important",
     margin: "2px",
+
     marginRight: "10px",
   },
   Backtologinfont: {
@@ -95,23 +98,25 @@ const useStyles = makeStyles(() => ({
 const ForgetPassword = () => {
   const classes = useStyles();
 
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { register, handleSubmit, formState: { errors } } = useForm({
-    resolver: yupResolver(forgetvalidationSchema)
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(forgetvalidationSchema),
   });
 
-
   const forgetPassword = async (data) => {
-    setLoading(true)
+    setLoading(true);
     const formData = new FormData();
-    formData.append('email', data.email);
+    formData.append("email", data.email);
     const response = await forgotPassword(formData);
     if (response.success) {
-      setLoading(false)
+      setLoading(false);
     }
-  }
-
+  };
 
   const getAlive = async () => {
     const res = await isAlive();
@@ -186,7 +191,7 @@ const ForgetPassword = () => {
                         variant="outlined"
                         fullWidth
                         required
-                        {...register('email')}
+                        {...register("email")}
                         error={errors.email ? true : false}
                       />
                       <Typography variant="inherit" color="textSecondary">
@@ -204,7 +209,11 @@ const ForgetPassword = () => {
                     className={classes.forgetPasswordbutton}
                     onClick={handleSubmit(forgetPassword)}
                   >
-                    {loading ? <CircularProgress style={{ color: "#F6F6FB" }} /> : "Forget Password"}
+                    {loading ? (
+                      <CircularProgress style={{ color: "#F6F6FB" }} />
+                    ) : (
+                      "Forget Password"
+                    )}
                   </Button>
                 </Box>
                 <Box
@@ -220,7 +229,6 @@ const ForgetPassword = () => {
                     Back to log in
                   </Typography>
                 </Box>
-
               </CardContent>
             </Card>
           </Grid>
