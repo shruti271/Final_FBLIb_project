@@ -20,7 +20,7 @@ const App = () => {
         />
         <Route
           exact
-          path="/"
+          path="/*"
           element={
             <PrivateRoute>
               <MainLayout />

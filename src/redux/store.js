@@ -3,10 +3,11 @@ import logger from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
 import mediaReducer from "./ducks/mediaAds";
 import watcherSaga from './sagas/rootSaga';
-
+import savedAdsReducer from './ducks/saveAds'
 
 const reducer = combineReducers({
 	allMediaAds: mediaReducer,
+	savedAds: savedAdsReducer
 });
 
 const sagaMiddleWares = createSagaMiddleware();

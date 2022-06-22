@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import MuiDrawer from "@mui/material/Drawer";
 import appLogo from "../assets/appLogo.svg";
@@ -95,6 +95,7 @@ export const CustomSidebar = ({ isOpen }) => {
   const [selectedMenuItem, setSelectedMenuItem] = useState(
     sideBarMenuItems.ADLIBSDATABASE
   );
+
   const userLogout =  async () => {
     const res = await logoutUser();
     if (res.success && res?.data?.data) {
@@ -102,6 +103,25 @@ export const CustomSidebar = ({ isOpen }) => {
       navigate("/auth/register");
     }
   };
+
+
+useEffect(()=>{
+  if (
+    window.location.pathname === `/ContactSupport` 
+  ) {
+    setSelectedMenuItem(sideBarMenuItems.SUPPORT)
+  }else if(window.location.pathname === `/` )  
+  {
+    setSelectedMenuItem(sideBarMenuItems.ADLIBSDATABASE)
+  }
+  else if(window.location.pathname === `/savedAds` )  
+  {
+    setSelectedMenuItem(sideBarMenuItems.SAVEDADS)
+  }else{
+    setSelectedMenuItem('')
+  }
+})
+
   return (
     <>
       <Drawer variant="permanent" open={isOpen}>
