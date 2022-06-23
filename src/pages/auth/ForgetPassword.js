@@ -1,94 +1,3 @@
-<<<<<<< HEAD
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
-import {
-  Card,
-  CardContent,
-  Typography,
-  makeStyles,
-  TextField,
-  Button,
-  Box,
-} from "@material-ui/core";
-import { Grid } from "@material-ui/core";
-import { CircularProgress, Stack } from "@mui/material";
-import appLogo from "../../assets/appLogo.svg";
-import Backtologin from "../../assets/Backtologinicon.svg";
-import { forgotPassword, isAlive } from "../../services/index";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { forgetvalidationSchema } from "./../../utils/validationSchemas";
-
-const themeLight = createTheme({
-  overrides: {
-    MuiCssBaseline: {
-      "@global": {
-        body: {
-          background:
-            "linear-gradient(270deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)",
-          backgroundRepeat: "no-repeat",
-          backgroundAttachment: "fixed",
-        },
-      },
-    },
-  },
-});
-const useStyles = makeStyles(() => ({
-  logo: {
-    height: "37px !important",
-    width: "65px !important",
-    marginRight: "10px",
-    marginTop: "4px",
-  },
-  title: {
-    fontFamily: "Neue Haas Grotesk Display Pro",
-    fontStyle: "normal !important",
-    fontWeight: "900 !important",
-    fontSize: "32.5271px !important",
-    lineHeight: "43px !important",
-    background:
-      "linear-gradient(270deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)",
-    WebkitBackgroundClip: "text",
-    WebkitTextFillColor: "transparent",
-    backgroundClip: "text",
-    textFillColor: "transparent",
-  },
-  signin: {
-    fontWeight: 600,
-    fontSize: "30px",
-    lineHeight: "36px",
-    color: "#2B2F42",
-  },
-
-  forgetPasswordbutton: {
-    background:
-      "linear-gradient(270deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)",
-    fontFamily: "Neue Haas Grotesk Display Pro",
-    fontSize: "22px",
-    fontHeight: 600,
-    lineHeight: "22px",
-    letterSpacing: "0em",
-    textAlign: "left",
-    textTransform: "capitalize",
-    color: "#F6F6FB",
-    width: "60%",
-  },
-  BackToLogInArrow: {
-    height: "16px !important",
-    width: "14px !important",
-    margin: "2px",
-
-    marginRight: "10px",
-  },
-  Backtologinfont: {
-    fontWeight: 600,
-    fontSize: "18px",
-    lineHeight: "22px",
-    color: "#2B2F42",
-  },
-=======
 import appLogo from "../../assets/appLogo.svg";
 import React, { useState, useEffect } from "react";
 import { makeStyles, MuiThemeProvider } from '@material-ui/core/styles';
@@ -101,7 +10,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { themeLight, globalStyles } from "../../css/globalcss";
 import { CssBaseline } from "@material-ui/core";
 const useStyles = makeStyles(() => ({
->>>>>>> auth-changes
   Backtologinbutton: {
     display: "flex",
     justifyContent: "center",
@@ -111,11 +19,7 @@ const useStyles = makeStyles(() => ({
 
 const ForgetPassword = () => {
   const classes = useStyles();
-<<<<<<< HEAD
-
-=======
   const global = globalStyles()
->>>>>>> auth-changes
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const {
@@ -134,11 +38,7 @@ const ForgetPassword = () => {
     if (response.success) {
       setLoading(false);
     }
-<<<<<<< HEAD
-  };
-=======
   }
->>>>>>> auth-changes
 
   const getAlive = async () => {
     const res = await isAlive();
@@ -230,10 +130,7 @@ const ForgetPassword = () => {
                   <img
                     src={Backtologin}
                     className={classes.BackToLogInArrow}
-<<<<<<< HEAD
-=======
                     style={{ marginRight: "10px" }}
->>>>>>> auth-changes
                     alt="bactologin"
                   />
                   <Typography variant="h6" sx={{ cursor: "pointer", }} onClick={() => navigate("/auth/login")}>

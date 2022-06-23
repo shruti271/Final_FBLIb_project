@@ -1,10 +1,6 @@
 import axios from "axios";
 import appConfig from "../config/index";
-<<<<<<< HEAD
-
-=======
 import * as Yup from 'yup';
->>>>>>> auth-changes
 export const signUp = async (payload) => {
   let result = {};
   try {
@@ -88,8 +84,6 @@ export const forgotPassword = async (payload) => {
     );
     result = res.data || {};
     return { success: true, data: result, message: null };
-<<<<<<< HEAD
-=======
   } catch (err) {
     return {
       success: false,
@@ -191,7 +185,6 @@ export const changeName = async (payload) => {
     );
     result = res.data || {};
     return { success: true, data: result };
->>>>>>> auth-changes
   } catch (err) {
     return {
       success: false,
