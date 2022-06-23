@@ -1,13 +1,16 @@
 import axios from "axios";
-import axiosInstance from "../axios/Index";
 import appConfig from "../config/index";
 import * as Yup from 'yup';
-export const usermanager = async (payload) => {
+export const signUp = async (payload) => {
   let result = {};
   try {
-    const res = await axiosInstance.post(`api/usermanager/`, payload, {
-      withCredentials: true,
-    });
+    const res = await axios.post(
+      `${appConfig.appUrl}/api/usermanager/`,
+      payload,
+      {
+        withCredentials: true,
+      }
+    );
     result = res.data || {};
     return { success: true, data: result };
   } catch (err) {
@@ -18,7 +21,6 @@ export const usermanager = async (payload) => {
   }
 };
 
-
 export const login = async (payload) => {
   let result = {};
   try {
@@ -27,11 +29,12 @@ export const login = async (payload) => {
     });
     result = res.data || {};
     localStorage.setItem("is_alive", true);
-    return { success: true, data: result };
+    return { success: true, data: result, message: null };
   } catch (err) {
     return {
       success: false,
       message: err || "something went wrong",
+      data: null,
     };
   }
 };
@@ -43,11 +46,12 @@ export const logoutUser = async () => {
     });
     result = res.data || {};
     localStorage.setItem("is_alive", false);
-    return { success: true, data: result };
+    return { success: true, data: result, message: null };
   } catch (err) {
     return {
       success: false,
       message: err || "something went wrong",
+      data: null,
     };
   }
 };
@@ -59,13 +63,13 @@ export const isAlive = async () => {
       withCredentials: "true",
     });
     result = res.data || {};
-    console.log("--------------------------result", result);
     localStorage.setItem("is_alive", res.data.data.is_alive);
-    return { success: true, data: result };
+    return { success: true, data: result, message: null };
   } catch (err) {
     return {
       success: false,
       message: err || "something went wrong",
+      data: null,
     };
   }
 };
@@ -79,7 +83,7 @@ export const forgotPassword = async (payload) => {
       { withCredentials: true }
     );
     result = res.data || {};
-    return { success: true, data: result };
+    return { success: true, data: result, message: null };
   } catch (err) {
     return {
       success: false,
@@ -105,7 +109,6 @@ export const validationSchema = Yup.object().shape({
 });
 
 export const loginvalidationSchema = Yup.object().shape({
-
   email: Yup.string()
     .required('Email is required')
     .email('Email is invalid'),
@@ -186,6 +189,7 @@ export const changeName = async (payload) => {
     return {
       success: false,
       message: err || "something went wrong",
+      data: null,
     };
   }
 };
@@ -197,12 +201,12 @@ export const contactSupport = async (payload) => {
       withCredentials: true,
     });
     result = res.data || {};
-    return { success: true, data: result };
+    return { success: true, data: result, message: null };
   } catch (err) {
     return {
       success: false,
       message: err || "something went wrong",
+      data: null,
     };
   }
 };
-
