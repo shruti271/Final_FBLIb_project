@@ -1,3 +1,5 @@
+
+
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import {
@@ -24,9 +26,11 @@ import Arrowdown from "../assets/Arrowdown.svg";
 
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
+import { format } from "date-fns";
 
 import { addDays } from "date-fns";
 import ThumbNailBox from "../components/ThumbNailBox";
+import { object } from "yup";
 const useStyles = makeStyles((theme) => ({
   title: {
     background:
@@ -130,7 +134,7 @@ const Addlibrarydatabase = () => {
   // const [filterAll, setFilterAll] = useState([]);
 
   const [appliedFilters, setAppliedFilters] = useState({
-    StartRunningDate: { Message: "" },
+    StartRunningDate: { startdate: "", enddate: "", Message: "" },
     AdStatus: { selectedData: "", Message: "" },
     AdCount: { min: 0, max: 1000, Message: "" },
     FacebookLikes: { Message: "" },
@@ -291,6 +295,21 @@ const Addlibrarydatabase = () => {
                 <DateRange
                   onClick={(item) => {
                     console.log(item);
+                    setAppliedFilters((pre) => ({
+                      ...pre,
+                      StartRunningDate: {
+                        startdate: format(
+                          item.selection.startDate,
+                          "yyyy/MM/dd"
+                        ),
+                        enddate: format(item.selection.endDate, "yyyy/MM/dd"),
+                        Message: `running date ${format(
+                          item.selection.startDate,
+                          "yyyy/MM/dd"
+                        )}`,
+                      },
+                    }));
+                    setRange([item.selection]);
                   }}
                   onChange={(item) => {
                     console.log(item);
@@ -298,9 +317,18 @@ const Addlibrarydatabase = () => {
                     setAppliedFilters((pre) => ({
                       ...pre,
                       StartRunningDate: {
-                        Message: `running date ${item.startDate}`,
+                        startdate: format(
+                          item.selection.startDate,
+                          "yyyy-MM-dd"
+                        ),
+                        enddate: format(item.selection.endDate, "yyyy-MM-dd"),
+                        Message: `running date ${format(
+                          item.selection.startDate,
+                          "yyyy/MM/dd"
+                        )} to ${format(item.selection.endDate, "yyyy/MM/dd")}`,
                       },
                     }));
+                    console.log(appliedFilters);
                     setRange([item.selection]);
                   }}
                   editableDateInputs={false}
@@ -679,51 +707,44 @@ const Addlibrarydatabase = () => {
                 }}
               >
                 <Grid container>
-                  <Grid item >
-                  <Button 
-                    variant="outlined"
+                  <Grid item sx={{ marginTop: "20px" }}>
+                    <Button
+                      variant="outlined"
                       style={{
                         // background: "#00CBFF",
                         borderRadius: 30,
                         fontSize: "18px",
-                        borderColor:"#00CBFF",
+                        borderColor: "#00CBFF",
                         textTransform: "none",
                         paddingLeft: "16px",
                         paddingRight: "16px",
-                        marginBottom:"10px",
+                        marginBottom: "10px",
                         color: "#00CBFF",
                       }}
                       onClick={() => {
-                        console.log(
-                          "adsFilteredData?.AdCount?.min + ",
-                          adsFilteredData?.AdCount?.min
-                        );
-
-                        setAdsFilteredData(
-                          allMediaAds.filter(
-                            (ads) =>
-                              (appliedFilters?.AdCount?.min !== 0 ||
-                              appliedFilters?.AdCount?.max !== 1000
-                                ? ads.noOfCopyAds >=
-                                    appliedFilters?.AdCount?.min &&
-                                  ads.noOfCopyAds <=
-                                    appliedFilters?.AdCount?.max
-                                : true) &&
-                              (appliedFilters?.MediaType?.selectedData === "" ||
-                              appliedFilters?.MediaType?.selectedData ===
-                                "Video or Photo"
-                                ? true
-                                : ads.adMediaType ===
-                                  appliedFilters?.MediaType?.selectedData) &&
-                              (appliedFilters?.AdStatus?.selectedData !== ""
-                                ? ads?.status ===
-                                  appliedFilters?.AdStatus?.selectedData
-                                : true)
-                          )
-                        );
+                        Object.keys(appliedFilters).map((filter, index) => {
+                          const FilterRemoveDat = [];
+                          for (let dum in appliedFilters[filter]) {
+                            FilterRemoveDat[dum] =
+                              typeof appliedFilters[filter][dum] === "number"
+                                ? dum === "min"
+                                  ? 0
+                                  : 1000
+                                : typeof appliedFilters[filter][dum] ===
+                                  "string"
+                                ? dum === "Mediatype"
+                                  ? "Video or Photo"
+                                  : ""
+                                : new Date();
+                          }
+                          setAppliedFilters((pre) => ({
+                            ...pre,
+                            [`${filter}`]: FilterRemoveDat,
+                          }));
+                        });
                       }}
                     >
-                      claer
+                      clear
                     </Button>
                     <Button
                       style={{
@@ -760,6 +781,14 @@ const Addlibrarydatabase = () => {
                               (appliedFilters?.AdStatus?.selectedData !== ""
                                 ? ads?.status ===
                                   appliedFilters?.AdStatus?.selectedData
+                                : true) &&
+                              // (appliedFilters?.StartRunningDate?.startdate ? appliedFilters?.StartRunningDate?.startdate == ads.startDate : "")
+                              (appliedFilters?.StartRunningDate?.startdate &&
+                              appliedFilters?.StartRunningDate?.enddate
+                                ? appliedFilters?.StartRunningDate?.startdate <=
+                                    ads?.startDate &&
+                                  appliedFilters?.StartRunningDate?.enddate >=
+                                    ads?.startDate
                                 : true)
                           )
                         );
@@ -780,7 +809,6 @@ const Addlibrarydatabase = () => {
                     key={index}
                     color="primary"
                     label={appliedFilters[filter]["Message"]}
-                    x
                     deleteIcon={
                       <CloseIcon
                         style={{ color: "white", backgroundColor: "#00CBFF" }}
@@ -817,33 +845,6 @@ const Addlibrarydatabase = () => {
                         [`${filter}`]: FilterRemoveData,
                       }));
                       console.log(filter);
-
-                      if (filter === "AdCount") {
-                        setAppliedFilters((abc) => ({
-                          ...abc,
-                          [`${filter}`]: {
-                            min: 0,
-                            max: 1000,
-                            Message: "",
-                          },
-                        }));
-                      } else if (filter === "MediaType") {
-                        setAppliedFilters((abc) => ({
-                          ...abc,
-                          [`${filter}`]: {
-                            selectedData: "Video or Photo",
-                            Message: "",
-                          },
-                        }));
-                      } else {
-                        setAppliedFilters((abc) => ({
-                          ...abc,
-                          [`${filter}`]: {
-                            ...abc[filter],
-                            Message: "",
-                          },
-                        }));
-                      }
                     }}
                     sx={{
                       borderRadius: 2,
