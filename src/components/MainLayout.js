@@ -3,19 +3,18 @@ import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import { Routes } from "react-router-dom";
 import { Route } from "react-router-dom";
-import { CustomAppBar } from "../components/CustomAppBar";
-import { CustomSidebar } from "../components/CustomSidebar";
 import { styled } from "@mui/material/styles";
-import Addlibrarydatabase, { AllDataPage } from "../pages/AdlibraryDatabase";
+import Addlibrarydatabase from "../pages/AdlibraryDatabase";
 import SavedAds from "../pages/SavedAds";
 import ContactSupport from "../pages/ContactSupport";
-import AccountSetings from "../pages/AccountSettings";
-import Pagenotfound from "../components/PageNotFound";
+import AccountSettings from "../pages/AccountSettings";
 import AdDeatailsTabs from "../pages/adDetails/AdDetailsTabs";
 import { useDispatch } from "react-redux";
-// import Addlibrarydatabase from "./../pages/dummmyfilter";
 import { loadMediaStart } from "../redux/ducks/mediaAds";
 import { loadSavedAdsStart } from "../redux/ducks/saveAds";
+import { CustomAppBar } from "../components/CustomAppBar";
+import { CustomSidebar } from "../components/CustomSidebar";
+import { loadAccountSettingsStart } from "./../redux/ducks/accountSettings";
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
@@ -28,31 +27,14 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 
 const MainLayout = () => {
   const [isOpen, setIsOpen] = React.useState(false);
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log("isOpen from Parent: ", isOpen);
-  }, [isOpen]);
-  
-  //   useEffect(() => {
-  //   dispatch(loadMediaStart());
-  // }, );
-  // const dispatch = useDispatch();
+    dispatch(loadMediaStart());
+    dispatch(loadSavedAdsStart());
+    dispatch(loadAccountSettingsStart());
+  }, [dispatch]);
 
-  // useEffect(() => {
-  //   dispatch(loadMediaStart());
-  // }, );
-  // useEffect(() => {
-  //   dispatch(loadSavedAdsStart());
-  // }, []);
-  
-  // const dispatch = useDispatch();
-  // const { savedAds } = useSelector((state) => state.savedAds);
-  
-  // useEffect(() => {
-  //   dispatch(loadSavedAdsStart());
-  //   // console.log("--"+savedAds);
-  // }, []);
   return (
     <>
       <Box sx={{ display: "flex" }}>
@@ -65,8 +47,11 @@ const MainLayout = () => {
             <Route exact path="/" element={<Addlibrarydatabase />} />
             <Route exact path="/savedAds" element={<SavedAds />} />
             <Route exact path="/contactSupport" element={<ContactSupport />} />
-            <Route exact path="/accountSetings" element={<AccountSetings />} />
-            {/* <Route exact path="/adDeatails/:adsId" element={<AdDeatails />} /> */}
+            <Route
+              exact
+              path="/accountSettings"
+              element={<AccountSettings />}
+            />
             <Route
               exact
               path="/adDeatails/:adsId/*"

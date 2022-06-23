@@ -1,13 +1,16 @@
 import axios from "axios";
-import axiosInstance from "../axios/Index";
 import appConfig from "../config/index";
-import * as Yup from 'yup';
-export const usermanager = async (payload) => {
+
+export const signUp = async (payload) => {
   let result = {};
   try {
-    const res = await axiosInstance.post(`api/usermanager/`, payload, {
-      withCredentials: true,
-    });
+    const res = await axios.post(
+      `${appConfig.appUrl}/api/usermanager/`,
+      payload,
+      {
+        withCredentials: true,
+      }
+    );
     result = res.data || {};
     return { success: true, data: result };
   } catch (err) {
@@ -18,7 +21,6 @@ export const usermanager = async (payload) => {
   }
 };
 
-
 export const login = async (payload) => {
   let result = {};
   try {
@@ -27,11 +29,12 @@ export const login = async (payload) => {
     });
     result = res.data || {};
     localStorage.setItem("is_alive", true);
-    return { success: true, data: result };
+    return { success: true, data: result, message: null };
   } catch (err) {
     return {
       success: false,
       message: err || "something went wrong",
+      data: null,
     };
   }
 };
@@ -43,11 +46,12 @@ export const logoutUser = async () => {
     });
     result = res.data || {};
     localStorage.setItem("is_alive", false);
-    return { success: true, data: result };
+    return { success: true, data: result, message: null };
   } catch (err) {
     return {
       success: false,
       message: err || "something went wrong",
+      data: null,
     };
   }
 };
@@ -59,13 +63,13 @@ export const isAlive = async () => {
       withCredentials: "true",
     });
     result = res.data || {};
-    console.log("--------------------------result", result);
     localStorage.setItem("is_alive", res.data.data.is_alive);
-    return { success: true, data: result };
+    return { success: true, data: result, message: null };
   } catch (err) {
     return {
       success: false,
       message: err || "something went wrong",
+      data: null,
     };
   }
 };
@@ -79,113 +83,12 @@ export const forgotPassword = async (payload) => {
       { withCredentials: true }
     );
     result = res.data || {};
-    return { success: true, data: result };
+    return { success: true, data: result, message: null };
   } catch (err) {
     return {
       success: false,
       message: err || "something went wrong",
-    };
-  }
-};
-
-export const validationSchema = Yup.object().shape({
-  firstname: Yup.string().required('Enter your firstname'),
-  lastname: Yup.string()
-    .required('Username is required'),
-  //   .min(6, 'Username must be at least 6 characters')
-  //   .max(20, 'Username must not exceed 20 characters'),
-  email: Yup.string()
-    .required('Email is required')
-    .email('Email is invalid'),
-  password: Yup.string()
-    .required('Password is required')
-    .min(6, 'Password must be at least 6 characters')
-    .max(40, 'Password must not exceed 40 characters'),
-  acceptTerms: Yup.bool().oneOf([true], 'Accept Terms is required')
-});
-
-export const loginvalidationSchema = Yup.object().shape({
-
-  email: Yup.string()
-    .required('Email is required')
-    .email('Email is invalid'),
-  password: Yup.string()
-    .required('Password is required')
-    .min(6, 'Password must be at least 6 characters')
-    .max(40, 'Password must not exceed 40 characters'),
-});
-
-export const forgetvalidationSchema = Yup.object().shape({
-
-  email: Yup.string()
-    .required('Email is required')
-    .email('Email is invalid'),
-
-});
-
-export const changePassword = async (payload) => {
-  let result = {};
-  try {
-    const userid = await axios.get(
-      `http://localhost:8000/api/usermanager/`, //http://127.0.0.1:8000/api/usermanager/      
-      { withCredentials: true }
-    );
-    console.log(userid.data.data);
-    console.log("---------------- payload",payload)
-    // console.log(payload);
-    const res = await axios.put(
-      `http://localhost:8000/api/usermanager/${userid?.data?.data?.id}/`, //http://127.0.0.1:8000/api/usermanager/
-      payload,
-      { withCredentials: true }
-    );
-    result = res.data || {};
-    return { success: true, data: result };
-  } catch (err) {
-    return {
-      success: false,
-      message: err || "something went wrong",
-    };
-  }
-};
-
-export const getName =async()=>{
-  let result = {};
-  try {
-    const res = await axios.get(
-      `http://localhost:8000/api/usermanager/`, //http://127.0.0.1:8000/api/usermanager/      
-      { withCredentials: true }
-    );
-    result = res.data.data || {};
-    return { success: true, data: result };
-  }catch (err) {
-    return {
-      success: false,
-      message: err || "something went wrong",
-    };
-  }
-}
-
-export const changeName = async (payload) => {
-  let result = {};
-  try {
-    const userid = await axios.get(
-      `http://localhost:8000/api/usermanager/`, //http://127.0.0.1:8000/api/usermanager/      
-      { withCredentials: true }
-    );
-    console.log(userid.data.data);
-    console.log("---------------- payload",payload)
-    console.log(payload);
-    const res = await axios.put(
-      `http://localhost:8000/api/usermanager/${userid?.data?.data?.id}/`, //http://127.0.0.1:8000/api/usermanager/
-      payload,
-      { withCredentials: true }
-    );
-    result = res.data || {};
-    return { success: true, data: result };
-  } catch (err) {
-    return {
-      success: false,
-      message: err || "something went wrong",
+      data: null,
     };
   }
 };
@@ -197,12 +100,12 @@ export const contactSupport = async (payload) => {
       withCredentials: true,
     });
     result = res.data || {};
-    return { success: true, data: result };
+    return { success: true, data: result, message: null };
   } catch (err) {
     return {
       success: false,
       message: err || "something went wrong",
+      data: null,
     };
   }
 };
-

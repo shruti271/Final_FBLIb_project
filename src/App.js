@@ -11,6 +11,7 @@ const App = () => {
   return (
     <>
       <Routes>
+        {/* Public Routes */}
         <Route path="/auth/login" exact element={<Login />} />
         <Route path="/auth/register" exact element={<Signup />} />
         <Route
@@ -18,6 +19,8 @@ const App = () => {
           exact
           element={<ForgetPassword />}
         />
+
+        {/* Private Routes */}
         <Route
           exact
           path="/*"
@@ -27,6 +30,8 @@ const App = () => {
             </PrivateRoute>
           }
         />
+
+        {/* unknown Routes */}
         <Route path="*" element={<Pagenotfound />} />
       </Routes>
     </>

@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import MuiDrawer from "@mui/material/Drawer";
-import appLogo from "../assets/appLogo.svg";
-import libraryicon from "../assets/Vector.svg";
-import staricon from "../assets/Vectora.svg";
-import contact from "../assets/contact.svg";
-import logout from "../assets/Logout.svg";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { Stack } from "@mui/material";
+import appLogo from "../assets/appLogo.svg";
+import libraryicon from "../assets/Vector.svg";
+import staricon from "../assets/Vectora.svg";
+import contact from "../assets/contact.svg";
+import logout from "../assets/Logout.svg";
 import { logoutUser } from "../services";
 
 const useStyles = makeStyles(() => ({
@@ -96,31 +96,25 @@ export const CustomSidebar = ({ isOpen }) => {
     sideBarMenuItems.ADLIBSDATABASE
   );
 
-  const userLogout =  async () => {
+  const userLogout = async () => {
     const res = await logoutUser();
     if (res.success && res?.data?.data) {
       localStorage.clear();
-      navigate("/auth/register");
+      navigate("/auth/login");
     }
   };
 
-
-useEffect(()=>{
-  if (
-    window.location.pathname === `/ContactSupport` 
-  ) {
-    setSelectedMenuItem(sideBarMenuItems.SUPPORT)
-  }else if(window.location.pathname === `/` )  
-  {
-    setSelectedMenuItem(sideBarMenuItems.ADLIBSDATABASE)
-  }
-  else if(window.location.pathname === `/savedAds` )  
-  {
-    setSelectedMenuItem(sideBarMenuItems.SAVEDADS)
-  }else{
-    setSelectedMenuItem('')
-  }
-})
+  useEffect(() => {
+    if (window.location.pathname === `/ContactSupport`) {
+      setSelectedMenuItem(sideBarMenuItems.SUPPORT);
+    } else if (window.location.pathname === `/`) {
+      setSelectedMenuItem(sideBarMenuItems.ADLIBSDATABASE);
+    } else if (window.location.pathname === `/savedAds`) {
+      setSelectedMenuItem(sideBarMenuItems.SAVEDADS);
+    } else {
+      setSelectedMenuItem("");
+    }
+  }, []);
 
   return (
     <>
@@ -262,7 +256,7 @@ useEffect(()=>{
               }}
               onClick={userLogout}
             >
-              <img alt="Logout" src={logout} width="17px"/>
+              <img alt="Logout" src={logout} width="17px" />
               <Typography sx={{ marginLeft: "26px" }}>Log Out</Typography>
             </Stack>
           </Box>

@@ -1,12 +1,26 @@
 import React from "react";
 import Typography from "@mui/material/Typography";
-// import { Card } from "@material-ui/core";
 import { Button, Grid, InputBase } from "@mui/material";
 import { Box } from "@mui/system";
 import { useForm } from "react-hook-form";
 import { makeStyles } from "@material-ui/core/styles";
-import { contactSupport } from "../services";
 import { useNavigate } from "react-router-dom";
+import { contactSupport } from "../services";
+
+const useStyles = makeStyles(() => ({
+  fieldsStyle: {
+    border: "2px solid #EBEBEB",
+    borderRadius: "10px",
+    height: "43px",
+    paddingLeft: "16px",
+  },
+  multilineinput: {
+    border: "2px solid #EBEBEB",
+    borderRadius: "10px",
+    height: "264px",
+    paddingLeft: "16px !important",
+  },
+}));
 
 const ContactSupport = () => {
   const classes = useStyles();
@@ -19,23 +33,14 @@ const ContactSupport = () => {
   } = useForm();
 
   const onFormSubmit = async (data) => {
-    console.table("-----------------------", data);
-    const response = await contactSupport({
-      name: data.firstName,
-      email: data.email,
-      message: data.Message
-    });
-    // console.response(response);
+    console.table("Contact Support Form Data :", data);
+    const response = await contactSupport(data);
     if (!response.success) {
-      // setErrorMsg(response.message.response.data.message);
+      console.log("SuccessFull!!", response);
       // navigate("/");
-      console.log(response.message.response.data.message);
-
-      // setInvalid(true);
     } else {
-      console.log(response);
-      navigate("/");
-      // setSuccessMsg(response.data.message);
+      console.log("Failure!!", response);
+      // navigate("/");
     }
   };
 
@@ -65,14 +70,14 @@ const ContactSupport = () => {
                   variant="outlined"
                   placeholder="Name"
                   error
-                  name="firstName"
+                  name="name"
                   fullWidth
-                  {...register("firstName", {
+                  {...register("name", {
                     required: "FirstName is required",
                   })}
                 />
-                {errors.firstName?.message && (
-                  <p style={{ color: "red" }}>Last name is required.</p>
+                {errors.name?.message && (
+                  <span style={{ color: "#00CBFF" }}>*Name is required</span>
                 )}
               </Grid>
 
@@ -96,7 +101,7 @@ const ContactSupport = () => {
                   name="email"
                 />
                 {errors.email?.message && (
-                  <p style={{ color: "red" }}>Email is required.</p>
+                  <span style={{ color: "#00CBFF" }}>*Email is required.</span>
                 )}
                 {/* <span style={{ color: 'red' }}>{errors.email?.message}</span> */}
               </Grid>
@@ -106,16 +111,18 @@ const ContactSupport = () => {
                   className={classes.multilineinput}
                   label="outlined"
                   variant="outlined"
-                  {...register("Message", { required: "Message is required" })}
+                  {...register("message", { required: "Message is required" })}
                   fullWidth
                   placeholder="Message"
                   multiline
                   rows={10}
-                  name="Message"
+                  name="message"
                   // required
                 />
-                {errors.Message?.message && (
-                  <p style={{ color: "red" }}>Message is required.</p>
+                {errors.message?.message && (
+                  <span style={{ color: "#00CBFF" }}>
+                    *Message is required.
+                  </span>
                 )}
 
                 {/* <span style={{ color: 'red' }}>{errors.Message?.message}</span> */}
@@ -143,95 +150,8 @@ const ContactSupport = () => {
           </form>
         </Box>
       </Box>
-      {/* <Box
-        clone
-        style={{ alignItems: "center", justifyContent: "center" }}
-        margin={5}
-      >
-        <Typography variant="h4">Contact Support</Typography>
-
-      
-        <Box width={"60%"} border={0.5} borderRadius={5} borderColor="#ebebeb">
-          <form onSubmit={handleSubmit(onFormSubmit)}>
-            <Grid item xs={10} container spacing={2} margin={2}>
-              <Grid xs={6} sm={6} lg={6} item>
-                <TextField
-                  label="Name"
-                  variant="outlined"
-                  fullWidth
-                  name="firstname"
-                  {...register("firstName", {
-                    required: "FirstName is required",
-                  })}
-                />
-              </Grid>
-
-              <Grid xs={6} sm={6} lg={6} item>
-                <TextField
-                  type={"email"}
-                  label="Email"
-                  variant="outlined"
-                  fullWidth
-                  // name="email"
-                  {...register("email", { required: "Email is required" })}
-                  borderRadius="10"
-                  // required
-                  name="email"
-                />
-              </Grid>
-
-              <Grid xs={12} item>
-                <TextField
-                  label="Message"
-                  multiline
-                  variant="outlined"
-                  borderColor="#EBEBEB"
-                  borderRadius={9}
-                  fullWidth
-                
-                  name="Message"
-                  {...register("Message", { required: "Message is required" })}
-                  rows={10}
-                />
-              </Grid>
-
-              <Grid
-                container
-                style={{ display: "flex", justifyContent: "right" }}
-                item
-              >
-                <Box justifyContent={"right "}>
-                  <Button
-                    type="Submit"
-                    variant="contained"
-                    color="primary"
-                    style={{ borderRadius: 50, backgroundColor: "#00CBFF" }}
-                  >
-                    Submit
-                  </Button>
-                </Box>
-              </Grid>
-            </Grid>
-          </form>
-        </Box>
-      </Box> */}
     </>
   );
 };
-
-const useStyles = makeStyles(() => ({
-  fieldsStyle: {
-    border: "2px solid #EBEBEB",
-    borderRadius: "10px",
-    height: "43px",
-    paddingLeft: "16px",
-  },
-  multilineinput: {
-    border: "2px solid #EBEBEB",
-    borderRadius: "10px",
-    height: "264px",
-    paddingLeft: "16px !important",
-  },
-}));
 
 export default ContactSupport;
