@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState } from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
@@ -21,12 +22,28 @@ import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { registerValidationSchema } from "./../../utils/validationSchemas";
 import { signUp } from "./../../services/index";
+=======
+import React,{useState} from "react"
+import { MuiThemeProvider } from "@material-ui/core/styles";
+import appLogo from "../../assets/appLogo.svg";
+import { Box, Button, Card, Checkbox, CircularProgress, FormControlLabel, Stack, TextField, Typography, CardContent, Grid } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { useForm, Controller } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import {validationSchema,signUp } from "../../services/index";
+import { themeLight, globalStyles } from "../../css/globalcss";
+import { CssBaseline } from "@material-ui/core";
+>>>>>>> auth-changes
 
 const Signup = () => {
-  const classes = useStyles();
+  const global = globalStyles()
   const navigate = useNavigate();
+<<<<<<< HEAD
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState(true);
+=======
+  const [loading, setLoading] = useState(false)
+>>>>>>> auth-changes
   const {
     register,
     control,
@@ -40,6 +57,7 @@ const Signup = () => {
     setLoading(true);
     try {
       const response = await signUp(data);
+<<<<<<< HEAD
 
       if (response.success) {
         setMessage(true);
@@ -48,12 +66,15 @@ const Signup = () => {
     } catch {
       console.log("error");
       setLoading(false);
+=======
+      if (response.success) {
+        navigate("/auth/login");
+      }
+    } catch {
+      setLoading(false)
+>>>>>>> auth-changes
     }
   };
-  const gotoSigninpage = () => {
-    navigate("/auth/login");
-  };
-
   return (
     <MuiThemeProvider theme={themeLight}>
       <CssBaseline />
@@ -82,28 +103,29 @@ const Signup = () => {
                 direction={"row"}
                 sx={{ displayl: "flex", justifyContent: "center" }}
               >
-                <img alt="logo" src={appLogo} className={classes.logo} />
-                <Typography edge="start" className={classes.title}>
-                  Eye of Ecom
+                <img alt="logo" src={appLogo} className={global.logo} />
+                <Typography edge="start" className={global.title}>
+                  EYE OF ECOM
                 </Typography>
               </Stack>
 
-              <Box style={{ padding: "10px 61px" }}>
-                <Typography className={classes.signin}>
+              <Box style={{ padding: "18px 61px" }}>
+                <Typography variant="h5" sx={{ fontWeight: "bold" }}
+                >
                   Create a free account
                 </Typography>
 
-                <Typography className={classes.alreadyaccount}>
+                <Typography className={global.alreadyaccount} pt={1}>
                   Already Have an account?{" "}
                   <span
                     style={{ color: "#00CBFF", cursor: "pointer" }}
-                    onClick={gotoSigninpage}
+                    onClick={() => navigate("/auth/login")}
                   >
-                    signin
+                    Signin
                   </span>
                 </Typography>
-                <form style={{ paddingTop: "50px" }}>
-                  <Grid container spacing={4}>
+                <form style={{ paddingTop: "30px" }}>
+                  <Grid container spacing={2}>
                     <Grid xs={12} item>
                       <TextField
                         placeholder="Enter first name"
@@ -115,7 +137,7 @@ const Signup = () => {
                         {...register("firstname")}
                         error={errors.firstname ? true : false}
                       />
-                      <Typography variant="inherit" color="textSecondary">
+                      <Typography variant="inherit" color="textSecondary" p={0.5} >
                         {errors.firstname?.message}
                       </Typography>
                     </Grid>
@@ -130,7 +152,7 @@ const Signup = () => {
                         {...register("lastname")}
                         error={errors.lastname ? true : false}
                       />
-                      <Typography variant="inherit" color="textSecondary">
+                      <Typography variant="inherit" color="textSecondary" p={0.5}>
                         {errors.lastname?.message}
                       </Typography>
                     </Grid>
@@ -142,11 +164,14 @@ const Signup = () => {
                         variant="outlined"
                         fullWidth
                         required
+<<<<<<< HEAD
                         // onChange={(e) => setEmail(e.target.value)}
+=======
+>>>>>>> auth-changes
                         {...register("email")}
                         error={errors.email ? true : false}
                       />
-                      <Typography variant="inherit" color="textSecondary">
+                      <Typography variant="inherit" color="textSecondary" p={0.5}>
                         {errors.email?.message}
                       </Typography>
                     </Grid>
@@ -155,13 +180,18 @@ const Signup = () => {
                         placeholder="Password"
                         label="Password(must be at least 6 charcters)"
                         variant="outlined"
+                        type="password"
                         fullWidth
                         required
+<<<<<<< HEAD
                         // onChange={(e) => setPassword(e.target.value)}
                         {...register("password")}
+=======
+                        {...register('password')}
+>>>>>>> auth-changes
                         error={errors.password ? true : false}
                       />
-                      <Typography variant="inherit" color="textSecondary">
+                      <Typography variant="inherit" color="textSecondary" p={0.5}>
                         {errors.password?.message}
                       </Typography>
                     </Grid>
@@ -182,6 +212,7 @@ const Signup = () => {
                           />
                         }
                         label={
+<<<<<<< HEAD
                           <Typography
                             color={errors.acceptTerms ? "error" : "inherit"}
                             className={classes.termsandcondition}
@@ -194,11 +225,15 @@ const Signup = () => {
                             <span style={{ color: "#00CBFF" }}>
                               Privacy Policy
                             </span>
+=======
+                          <Typography color={errors.acceptTerms ? 'error' : 'inherit'} className={global.termsandcondition}>
+                            I agree to the <span style={{ color: "#00CBFF" }}>Terms of service</span> and <span style={{ color: "#00CBFF" }}>Privacy Policy</span>
+>>>>>>> auth-changes
                           </Typography>
                         }
                       />
                       <br />
-                      <Typography variant="inherit" color="textSecondary">
+                      <Typography variant="inherit" color="textSecondary" mr={2}>
                         {errors.acceptTerms
                           ? "(" + errors.acceptTerms.message + ")"
                           : ""}
@@ -211,10 +246,11 @@ const Signup = () => {
                 <Button
                   variant="contained"
                   size="large"
-                  sx={{ borderRadius: "14px" }}
-                  className={classes.Crateaccountbutton}
+                  sx={{ borderRadius: "14px", textTransform: "none", fontSize: "20px" }}
+                  className={global.Crateaccountbutton}
                   onClick={handleSubmit(submitsigninform)}
                 >
+<<<<<<< HEAD
                   {loading ? (
                     <CircularProgress style={{ color: "#F6F6FB" }} />
                   ) : (
@@ -229,6 +265,11 @@ const Signup = () => {
               ) : (
                 "false"
               )}
+=======
+                  {loading ? <CircularProgress style={{ color: "#F6F6FB" }} /> : "Create Account"}
+                </Button>
+              </Box>
+>>>>>>> auth-changes
             </CardContent>
           </Card>
         </Box>
@@ -238,6 +279,7 @@ const Signup = () => {
 };
 
 export default Signup;
+<<<<<<< HEAD
 
 const themeLight = createTheme({
   overrides: {
@@ -303,3 +345,5 @@ const useStyles = makeStyles(() => ({
     width: "60%",
   },
 }));
+=======
+>>>>>>> auth-changes

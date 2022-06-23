@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -87,17 +88,34 @@ const useStyles = makeStyles(() => ({
     lineHeight: "22px",
     color: "#2B2F42",
   },
+=======
+import appLogo from "../../assets/appLogo.svg";
+import React, { useState, useEffect } from "react";
+import { makeStyles, MuiThemeProvider } from '@material-ui/core/styles';
+import { Box, Button, Card, CardContent, CircularProgress, Grid, Stack, TextField, Typography } from "@mui/material";
+import Backtologin from "../../assets/Backtologinicon.svg";
+import { useNavigate } from "react-router-dom";
+import { forgetvalidationSchema, forgotPassword, isAlive } from "../../services/index";
+import { useForm } from "react-hook-form";
+import { yupResolver } from '@hookform/resolvers/yup';
+import { themeLight, globalStyles } from "../../css/globalcss";
+import { CssBaseline } from "@material-ui/core";
+const useStyles = makeStyles(() => ({
+>>>>>>> auth-changes
   Backtologinbutton: {
     display: "flex",
     justifyContent: "center",
     marginTop: "32px",
-    cursor: "pointer",
   },
 }));
 
 const ForgetPassword = () => {
   const classes = useStyles();
+<<<<<<< HEAD
 
+=======
+  const global = globalStyles()
+>>>>>>> auth-changes
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const {
@@ -116,30 +134,25 @@ const ForgetPassword = () => {
     if (response.success) {
       setLoading(false);
     }
+<<<<<<< HEAD
   };
+=======
+  }
+>>>>>>> auth-changes
 
   const getAlive = async () => {
     const res = await isAlive();
     if (res.success && res?.data?.data) {
       if (res?.data?.data?.is_alive === true) {
-        console.log(
-          ":::::::::::::::::::::::::::::::",
-          res?.data?.data?.is_alive
-        );
         navigate("/");
       }
     }
-    console.log(res);
   };
 
   useEffect(() => {
-    // setLoading(false)
     getAlive();
   }, []);
 
-  const gotoLoginpage = () => {
-    navigate("/auth/login");
-  };
   return (
     <MuiThemeProvider theme={themeLight}>
       <CssBaseline />
@@ -169,20 +182,18 @@ const ForgetPassword = () => {
                   direction={"row"}
                   sx={{ displayl: "flex", justifyContent: "center" }}
                 >
-                  <img alt="logo" src={appLogo} className={classes.logo} />
-                  <Typography edge="start" className={classes.title}>
-                    Eye of Ecom
+                  <img alt="logo" src={appLogo} className={global.logo} />
+                  <Typography edge="start" className={global.title}>
+                    EYE OF ECOM
                   </Typography>
                 </Stack>
-
                 <Box style={{ padding: "30px 32px" }}>
                   <Grid container spacing={2}>
                     <Grid xs={12} item>
-                      <Typography className={classes.signin}>
+                      <Typography variant="h5" sx={{ fontWeight: "bold" }}>
                         Forget Password?
                       </Typography>
                     </Grid>
-
                     <Grid xs={12} item>
                       <TextField
                         type="email"
@@ -194,19 +205,18 @@ const ForgetPassword = () => {
                         {...register("email")}
                         error={errors.email ? true : false}
                       />
-                      <Typography variant="inherit" color="textSecondary">
+                      <Typography variant="inherit" color="textSecondary" p={1}>
                         {errors.email?.message}
                       </Typography>
                     </Grid>
                   </Grid>
                 </Box>
-
                 <Box style={{ display: "flex", justifyContent: "center" }}>
                   <Button
                     variant="contained"
                     size="large"
-                    sx={{ borderRadius: "14px" }}
-                    className={classes.forgetPasswordbutton}
+                    sx={{ borderRadius: "14px", textTransform: "none", fontSize: "20px" }}
+                    className={global.Crateaccountbutton}
                     onClick={handleSubmit(forgetPassword)}
                   >
                     {loading ? (
@@ -216,16 +226,17 @@ const ForgetPassword = () => {
                     )}
                   </Button>
                 </Box>
-                <Box
-                  className={classes.Backtologinbutton}
-                  onClick={gotoLoginpage}
-                >
+                <Box className={classes.Backtologinbutton}>
                   <img
                     src={Backtologin}
                     className={classes.BackToLogInArrow}
+<<<<<<< HEAD
+=======
+                    style={{ marginRight: "10px" }}
+>>>>>>> auth-changes
                     alt="bactologin"
                   />
-                  <Typography className={classes.Backtologinfont}>
+                  <Typography variant="h6" sx={{ cursor: "pointer", }} onClick={() => navigate("/auth/login")}>
                     Back to log in
                   </Typography>
                 </Box>
@@ -236,6 +247,6 @@ const ForgetPassword = () => {
       </Grid>
     </MuiThemeProvider>
   );
-};
+}
 
 export default ForgetPassword;
