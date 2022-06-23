@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
 import {
@@ -10,12 +11,10 @@ import {
   Button,
   Box,
 } from "@material-ui/core";
-import appLogo from "../../assets/appLogo.svg";
 import { Grid } from "@material-ui/core";
 import { CircularProgress, Stack } from "@mui/material";
+import appLogo from "../../assets/appLogo.svg";
 import Backtologin from "../../assets/Backtologinicon.svg";
-import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 import { forgotPassword, isAlive } from "../../services/index";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -75,7 +74,7 @@ const useStyles = makeStyles(() => ({
     color: "#F6F6FB",
     width: "60%",
   },
-  arrow: {
+  BackToLogInArrow: {
     height: "16px !important",
     width: "14px !important",
     margin: "2px",
@@ -95,6 +94,7 @@ const useStyles = makeStyles(() => ({
     cursor: "pointer",
   },
 }));
+
 const ForgetPassword = () => {
   const classes = useStyles();
 
@@ -222,7 +222,7 @@ const ForgetPassword = () => {
                 >
                   <img
                     src={Backtologin}
-                    className={classes.arrow}
+                    className={classes.BackToLogInArrow}
                     alt="bactologin"
                   />
                   <Typography className={classes.Backtologinfont}>

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import {
   Button,
   Chip,
@@ -16,35 +17,39 @@ import {
 } from "@mui/material";
 import { makeStyles } from "@material-ui/core/styles";
 import { Box } from "@mui/system";
+import CloseIcon from "@mui/icons-material/Close";
+import { DateRange } from "react-date-range";
 import "react-datepicker/dist/react-datepicker.css";
 import Arrowdown from "../assets/Arrowdown.svg";
-import Firstcard from "../assets/Firstcard.svg";
-import Firstcardimg from "../assets/FirstCardImg.svg";
-import Shareicon from "../assets/Shareicon.svg";
-import Saveicon from "../assets/Saveicon.svg";
-import Addgraph from "../assets/Addgraph.svg";
-import styled from "@emotion/styled";
-import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import CloseIcon from "@mui/icons-material/Close";
-import { createSavedAdsStart } from "../redux/ducks/saveAds";
-import { DateRange } from "react-date-range";
+
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
-import { addDays } from "date-fns";
 
+import { addDays } from "date-fns";
+import ThumbNailBox from "../components/ThumbNailBox";
 const useStyles = makeStyles((theme) => ({
   title: {
     background:
       "linear-gradient(270deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)",
     WebkitBackgroundClip: "text",
     WebkitTextFillColor: "transparent",
-    // margin:
   },
-  titleimage: {
-    height: "37px !important",
-    width: "41px !important",
-    marginRight: "10px",
+  titleHome: {
+    // height: "37px !important",
+    // width: "41px !important",
+    // marginRight: "10px",
+    fontWeight: 600,
+    fontSize: "24px",
+    lineHeight: "24px",
+    color: "#2B2F42",
+  },
+  subTitleHome: {
+    fontWeight: 500,
+    fontSize: "18px",
+    lineHeight: "24px",
+    color: "#2B2F42",
+    marginTop: "8px",
+    marginBottom: "18px",
   },
   addTextfilter: {
     padding: theme.spacing(1, 3),
@@ -70,14 +75,8 @@ const useStyles = makeStyles((theme) => ({
     border: "1px solid #EBEBEB",
     borderRadius: 3,
   },
-  staricon: {
-    marginLeft: "20px",
-  },
-  libraryimg: {
-    marginLeft: "20px",
-  },
-  img: {
-    // maxWidth: "100%",
+
+  AdsImageVideo: {
     width: "100%",
     height: "auto",
     padding: "0",
@@ -85,7 +84,7 @@ const useStyles = makeStyles((theme) => ({
     overflowY: "none",
     outline: "none",
   },
-  Arrow: {
+  DropDownArrow: {
     marginLeft: theme.spacing(1),
   },
   shareicon: {
@@ -95,63 +94,40 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(2),
     cursor: "pointer",
   },
-  addinfo: {
+  AdsText: {
     display: "inlineBlock",
     fontWeight: "16px",
     whiteSpace: "nowrap",
     overflow: "hidden !important",
     textOverflow: "ellipsis",
   },
-  sedetails: {
-    background:
-      "linear-gradient(270deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)",
-    float: "right",
+  Addheader: {
+    display: "flex",
+    justifyContent: "space-evenly",
+    padding: "6px",
+    whiteSpace: "nowrap",
   },
-  filterBtn: {
-    "&:hover": {
-      //you want this to be the same as the backgroundColor above
-      backgroundColor: "#FFF",
-    },
-    backgroundColor: "#FFF",
-    // border: 3,
-    // background:"#00CBFF",
-    // "&:hover": {
-    //   backgroundColor: "none",
-    //   // color: "white",
-    //   borderRadius: 3,
-    // },
+  AddFooter: {
+    display: "flex",
+    flexWrap: "wrap",
+    whiteSpace: "nowrap",
+  },
+  FilterBox: {
+    color: "#2B2F42",
+    whiteSpace: "nowrap",
+    border: "1px solid #EBEBEB",
+    borderRadius: "10px",
+    marginRight: "14px",
+    marginTop: "22px",
   },
 }));
 
-const Addheader = styled("div")(({ theme }) => ({
-  display: "flex",
-  // justifyContent: "space-evenly",
-  padding: "6px",
-  whiteSpace: "nowrap",
-}));
-
-const AddFooter = styled("div")(({ theme }) => ({
-  display: "flex",
-  flexWrap: "wrap",
-  //   padding: "2px",
-  // marginLeft: "30px",
-  whiteSpace: "nowrap",
-}));
-
-// const Addlibrarydatabase = ({ open }) => {
 const Addlibrarydatabase = () => {
-  const dispatch = useDispatch();
-  const { allMediaAds } = useSelector((state) => state.allMediaAds);
   const classes = useStyles();
-  const navigate = useNavigate();
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
-  const [min, setMin] = React.useState(0);
-  const [max, setMax] = React.useState(1000);
 
-  // const [addmediaselect, setaddmediaselect] = useState(false);
+  const { allMediaAds } = useSelector((state) => state.allMediaAds);
   const [adsFilteredData, setAdsFilteredData] = useState([]);
-  // const [selectedMediaTypeValue, setSelectedMediaTypeValue] = useState("");
+  // const [filterAll, setFilterAll] = useState([]);
 
   const [appliedFilters, setAppliedFilters] = useState({
     StartRunningDate: { Message: "" },
@@ -162,6 +138,8 @@ const Addlibrarydatabase = () => {
     MediaType: { selectedData: "Video or Photo", Message: "" },
   });
 
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
   const [rangeanchorel, setrangeAnchorEl] = React.useState(null);
   const addcounteropen = Boolean(rangeanchorel);
   const [mediaTypeAnchorel, setMediaTypeAnchorel] = React.useState(null);
@@ -173,10 +151,7 @@ const Addlibrarydatabase = () => {
     setAdsFilteredData([...allMediaAds]);
   }, [allMediaAds]);
 
-  // const counterIncremten = (newValue) => {
   const counterIncremten = (event, newValue) => {
-    setMin(newValue[0]);
-    setMax(newValue[1]);
     setAppliedFilters((pre) => ({
       ...pre,
       AdCount: {
@@ -214,29 +189,14 @@ const Addlibrarydatabase = () => {
   ]);
   return (
     <>
+      {console.log(appliedFilters)}
       <Grid container>
         <Grid item xs={12}>
           <Box component="main">
-            <Typography
-              sx={{
-                fontWeight: 600,
-                fontSize: "24px",
-                lineHeight: "24px",
-                color: "#2B2F42",
-              }}
-            >
+            <Typography className={classes.titleHome}>
               Welcome to the All-Seeing Eye!
             </Typography>
-            <Typography
-              sx={{
-                fontWeight: 500,
-                fontSize: "18px",
-                lineHeight: "24px",
-                color: "#2B2F42",
-                marginTop: "8px",
-                marginBottom: "18px",
-              }}
-            >
+            <Typography className={classes.subTitleHome}>
               Spy on 100% of the ads ran by over 30,000 active dropshippingn
               stores
             </Typography>
@@ -269,7 +229,7 @@ const Addlibrarydatabase = () => {
                   <img
                     alt="arrowdown"
                     src={Arrowdown}
-                    className={classes.Arrow}
+                    className={classes.DropDownArrow}
                   />
                 </Stack>
               </Box>
@@ -299,20 +259,16 @@ const Addlibrarydatabase = () => {
                   marginRight: "14px",
                   marginTop: "22px",
                 }}
+                // className={classes.FilterBox}
                 endIcon={
                   <img
                     alt="arrowdown"
                     src={Arrowdown}
-                    className={classes.Arrow}
+                    className={classes.DropDownArrow}
                   />
                 }
               >
-                <Typography
-                  noWrap
-                  textTransform="capitalize"
-                  //   onClick={handleClick}
-                >
-                  {" "}
+                <Typography noWrap textTransform="capitalize">
                   Started Running Date{" "}
                 </Typography>
               </Button>
@@ -333,7 +289,12 @@ const Addlibrarydatabase = () => {
                 }}
               >
                 <DateRange
+                  onClick={(item) => {
+                    console.log(item);
+                  }}
                   onChange={(item) => {
+                    console.log(item);
+
                     setAppliedFilters((pre) => ({
                       ...pre,
                       StartRunningDate: {
@@ -343,7 +304,6 @@ const Addlibrarydatabase = () => {
                     setRange([item.selection]);
                   }}
                   editableDateInputs={false}
-                  // moveRangeOnFirstSelection={false}
                   ranges={range}
                   months={1}
                   direction="horizontal"
@@ -352,7 +312,6 @@ const Addlibrarydatabase = () => {
               </Popover>
 
               <Button
-                // onClick={openAddcounter}
                 onClick={(e) => setrangeAnchorEl(e.currentTarget)}
                 variant="outlined"
                 size="large"
@@ -371,7 +330,7 @@ const Addlibrarydatabase = () => {
                   <img
                     alt="arrowdown"
                     src={Arrowdown}
-                    className={classes.Arrow}
+                    className={classes.DropDownArrow}
                   />
                 }
               >
@@ -413,11 +372,15 @@ const Addlibrarydatabase = () => {
                     }}
                   >
                     <Typography sx={{ padding: "0px" }}>
-                      From {min} to {max}+
+                      From {appliedFilters?.AdCount?.min} to{" "}
+                      {appliedFilters?.AdCount?.max}+
                     </Typography>
                     <Slider
                       size="small"
-                      value={[min, max]}
+                      value={[
+                        appliedFilters?.AdCount?.min,
+                        appliedFilters?.AdCount?.max,
+                      ]}
                       min={0}
                       max={1000}
                       sx={{ color: "#00CBFF" }}
@@ -437,8 +400,7 @@ const Addlibrarydatabase = () => {
                           ...pre,
                           AdCount: { min: 0, max: 1000, Message: "" },
                         }));
-                        setMin(0);
-                        setMax(1000);
+
                         setrangeAnchorEl(null);
                       }}
                     >
@@ -466,7 +428,7 @@ const Addlibrarydatabase = () => {
                   <img
                     alt="arrowdown"
                     src={Arrowdown}
-                    className={classes.Arrow}
+                    className={classes.DropDownArrow}
                   />
                 }
               >
@@ -477,7 +439,6 @@ const Addlibrarydatabase = () => {
               </Button>
               <Popover
                 anchorEl={adStatusAnchorel}
-                //  open={open}
                 add={openAdStatusAnchorel ? "simple-popover" : undefined}
                 onClose={() => {
                   setAdStatusAnchorel(null);
@@ -500,7 +461,6 @@ const Addlibrarydatabase = () => {
                       name="radio-buttons-group"
                       value={appliedFilters?.AdStatus?.selectedData || ""}
                       onChange={handleChangeStatus}
-                      // background="#00CBFF"
                     >
                       <FormControlLabel
                         value="Active"
@@ -551,7 +511,7 @@ const Addlibrarydatabase = () => {
                   <img
                     alt="arrowdown"
                     src={Arrowdown}
-                    className={classes.Arrow}
+                    className={classes.DropDownArrow}
                   />
                 }
               >
@@ -574,7 +534,7 @@ const Addlibrarydatabase = () => {
                   <img
                     alt="arrowdown"
                     src={Arrowdown}
-                    className={classes.Arrow}
+                    className={classes.DropDownArrow}
                   />
                 }
               >
@@ -601,7 +561,7 @@ const Addlibrarydatabase = () => {
                   <img
                     alt="arrowdown"
                     src={Arrowdown}
-                    className={classes.Arrow}
+                    className={classes.DropDownArrow}
                   />
                 }
                 size="large"
@@ -613,7 +573,6 @@ const Addlibrarydatabase = () => {
               </Button>
               <Popover
                 anchorEl={mediaTypeAnchorel}
-                //  open={open}
                 add={openMediaTypeAnchorel ? "simple-popover" : undefined}
                 onClose={() => {
                   setMediaTypeAnchorel(null);
@@ -636,7 +595,6 @@ const Addlibrarydatabase = () => {
                       name="radio-buttons-group"
                       value={appliedFilters?.MediaType?.selectedData || ""}
                       onChange={handlechange}
-                      // background="#00CBFF"
                     >
                       <FormControlLabel
                         value="Video or Photo"
@@ -702,7 +660,7 @@ const Addlibrarydatabase = () => {
                   <img
                     alt="arrowdown"
                     src={Arrowdown}
-                    className={classes.Arrow}
+                    className={classes.DropDownArrow}
                   />
                 }
               >
@@ -721,18 +679,26 @@ const Addlibrarydatabase = () => {
                 }}
               >
                 <Grid container>
-                  <Grid item>
-                    <Button
+                  <Grid item >
+                  <Button 
+                    variant="outlined"
                       style={{
-                        background: "#00CBFF",
+                        // background: "#00CBFF",
                         borderRadius: 30,
                         fontSize: "18px",
+                        borderColor:"#00CBFF",
                         textTransform: "none",
                         paddingLeft: "16px",
                         paddingRight: "16px",
-                        color: "white",
+                        marginBottom:"10px",
+                        color: "#00CBFF",
                       }}
                       onClick={() => {
+                        console.log(
+                          "adsFilteredData?.AdCount?.min + ",
+                          adsFilteredData?.AdCount?.min
+                        );
+
                         setAdsFilteredData(
                           allMediaAds.filter(
                             (ads) =>
@@ -752,11 +718,48 @@ const Addlibrarydatabase = () => {
                               (appliedFilters?.AdStatus?.selectedData !== ""
                                 ? ads?.status ===
                                   appliedFilters?.AdStatus?.selectedData
+                                : true)
+                          )
+                        );
+                      }}
+                    >
+                      claer
+                    </Button>
+                    <Button
+                      style={{
+                        background: "#00CBFF",
+                        borderRadius: 30,
+                        fontSize: "18px",
+                        textTransform: "none",
+                        paddingLeft: "16px",
+                        paddingRight: "16px",
+                        color: "white",
+                      }}
+                      onClick={() => {
+                        console.log(
+                          "adsFilteredData?.AdCount?.min + ",
+                          adsFilteredData?.AdCount?.min
+                        );
+
+                        setAdsFilteredData(
+                          allMediaAds.filter(
+                            (ads) =>
+                              (appliedFilters?.AdCount?.min !== 0 ||
+                              appliedFilters?.AdCount?.max !== 1000
+                                ? ads.noOfCopyAds >=
+                                    appliedFilters?.AdCount?.min &&
+                                  ads.noOfCopyAds <=
+                                    appliedFilters?.AdCount?.max
                                 : true) &&
-                              (range?.startDate !== null &&
-                              range?.endDate !== null
-                                ? ads?.startDate >= range?.startDate &&
-                                  ads?.startDate <= range?.endDate
+                              (appliedFilters?.MediaType?.selectedData === "" ||
+                              appliedFilters?.MediaType?.selectedData ===
+                                "Video or Photo"
+                                ? true
+                                : ads.adMediaType ===
+                                  appliedFilters?.MediaType?.selectedData) &&
+                              (appliedFilters?.AdStatus?.selectedData !== ""
+                                ? ads?.status ===
+                                  appliedFilters?.AdStatus?.selectedData
                                 : true)
                           )
                         );
@@ -774,16 +777,47 @@ const Addlibrarydatabase = () => {
               return (
                 appliedFilters[filter]["Message"] && (
                   <Chip
+                    key={index}
                     color="primary"
                     label={appliedFilters[filter]["Message"]}
-                    key={index}
-                    // deleteIcon={<img src={CancleButton} />}
+                    x
                     deleteIcon={
                       <CloseIcon
                         style={{ color: "white", backgroundColor: "#00CBFF" }}
                       />
                     }
                     onDelete={() => {
+                      const filters = Object(appliedFilters[filter]);
+                      const AdsRemovedElement = {
+                        MIN: "min",
+                        MEDIATYPE: "selectedData",
+                        SELECTEDDATE: "StartRunningDate",
+                      };
+                      console.log(filter);
+                      console.log(";;;;;;;;;;;;;;;");
+                      const FilterRemoveData = [];
+                      for (let dum in filters) {
+                        // console.log(dum, filters[dum]);
+                        // console.log(typeof appliedFilters[filter][dum]);
+                        FilterRemoveData[dum] =
+                          typeof appliedFilters[filter][dum] === "number"
+                            ? dum === AdsRemovedElement.MIN
+                              ? 0
+                              : 1000
+                            : typeof appliedFilters[filter][dum] === "string"
+                            ? dum === AdsRemovedElement.MEDIATYPE
+                              ? "Video or Photo"
+                              : ""
+                            : new Date();
+                      }
+                      console.table(FilterRemoveData);
+                      console.log(FilterRemoveData);
+                      setAppliedFilters((pre) => ({
+                        ...pre,
+                        [`${filter}`]: FilterRemoveData,
+                      }));
+                      console.log(filter);
+
                       if (filter === "AdCount") {
                         setAppliedFilters((abc) => ({
                           ...abc,
@@ -793,10 +827,7 @@ const Addlibrarydatabase = () => {
                             Message: "",
                           },
                         }));
-                        setMin(0);
-                        setMax(1000);
                       } else if (filter === "MediaType") {
-                        // appliedFilters?.MediaType?.selectedMedia
                         setAppliedFilters((abc) => ({
                           ...abc,
                           [`${filter}`]: {
@@ -828,168 +859,7 @@ const Addlibrarydatabase = () => {
         <Grid item xs={12}>
           <Grid container spacing={2} sx={{ marginTop: "10px" }}>
             {adsFilteredData.map((ads, index) => (
-              <Grid item xs={4} key={index}>
-                <Stack
-                  sx={{
-                    border: "2px solid #F6F6FB",
-                    padding: "10px",
-                  }}
-                >
-                  <Addheader>
-                    <Box sx={{ marginRight: "12px" }}>
-                      <img src={Firstcard} aria-label="Add" />
-                    </Box>
-                    <Typography
-                      sx={{
-                        fontWeight: 500,
-                        fontSize: "16px",
-                        lineHeight: "24px",
-                        color: "#2B2F42",
-                        marginRight: "12px",
-                      }}
-                    >
-                      {ads?.pageInfo?.name}
-                    </Typography>
-                    <Typography
-                      noWrap
-                      sx={{
-                        fontWeight: 500,
-                        fontSize: "15px",
-                        lineHeight: "24px",
-                        color: "#2B2F42",
-                        opacity: 0.6,
-                      }}
-                    >
-                      (21,604 likes)
-                    </Typography>
-                  </Addheader>
-                  <Box>
-                    {ads.adMediaType === "video" ? (
-                      <video
-                        src={ads.bucketMediaURL}
-                        autoPlay={false}
-                        // muted
-                        className={classes.img}
-                        controls
-                        // onClick={() => navigate(`/adDeatails/${media.adID}`)}
-                      />
-                    ) : ads?.adMediaType === "image" ? (
-                      <img
-                        src={ads?.bucketMediaURL}
-                        alt="img1"
-                        className={classes.img}
-                        // onClick={() => navigate(`/adDeatails/${media.adID}`)}
-                      />
-                    ) : (
-                      <img
-                        src={Firstcardimg}
-                        alt="img1"
-                        className={classes.img}
-                      />
-                    )}
-                  </Box>
-
-                  <Grid container sx={{ padding: "4px" }}>
-                    <Grid item sm={9}>
-                      <AddFooter>
-                        <Typography>{ads.status}</Typography>
-                        <img
-                          src={Shareicon}
-                          alt="img2"
-                          className={classes.shareicon}
-                        />
-                        <img
-                          src={Saveicon}
-                          alt="img2"
-                          className={classes.saveicon}
-                          onClick={() => {
-                            dispatch(createSavedAdsStart({ ad: ads.adID }));
-                          }}
-                        />
-
-                        <Typography color="#c0c0c0" className={classes.addinfo}>
-                          Started Running : {ads.startDate}
-                        </Typography>
-                        <Typography color="#2B2F42" className={classes.addinfo}>
-                          {/* Sollar Powered Butterfly Lights */}
-                          {ads.headline}
-                        </Typography>
-                      </AddFooter>
-                    </Grid>
-                    <Grid
-                      item
-                      sm={3}
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <Box
-                        sx={{
-                          width: "55px",
-                          height: "55px",
-                          background: "#00CBFF",
-                          borderRadius: "50%",
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                        }}
-                      >
-                        <Stack
-                          sx={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                          }}
-                        >
-                          <Typography
-                            variant="div"
-                            sx={{
-                              fontWeight: 600,
-                              fontSize: "30px",
-                              lineHeight: "24px",
-                              color: "#F6F6FB",
-                            }}
-                          >
-                            {ads.noOfCopyAds}
-                          </Typography>
-                          <Typography
-                            variant="div"
-                            sx={{
-                              fontWeight: 600,
-                              fontSize: "10px",
-                              lineHeight: "24px",
-                              color: "#F6F6FB",
-                            }}
-                          >
-                            Ads
-                          </Typography>
-                        </Stack>
-                      </Box>
-                    </Grid>
-                  </Grid>
-                  <Box sx={{ marginTop: "20px", marginBottom: "20px" }}>
-                    <img
-                      src={Addgraph}
-                      alt="addgraph"
-                      className={classes.img}
-                    />
-                  </Box>
-                  <Button
-                    variant="contained"
-                    size="small"
-                    sx={{ borderRadius: "17px" }}
-                    className={classes.sedetails}
-                    onClick={() => {
-                      // navigate("adDeatails");
-                      navigate(`/adDeatails/${ads.adID}`);
-                    }}
-                  >
-                    see Details
-                  </Button>
-                </Stack>
-              </Grid>
+              <ThumbNailBox adInfo={ads} index={index} key={index} />
             ))}
           </Grid>
         </Grid>

@@ -1,28 +1,18 @@
 import { Button, Grid, InputBase, Stack, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 import viss from "../assets/viss.svg";
 import { useSelector, useDispatch } from "react-redux";
 import { updateAccountSettingsStart } from "../redux/ducks/accountSettings";
+import useStyles from "../css/mediapage";
 
-const useStyles = makeStyles(() => ({
-  inputField: {
-    border: "2px solid #EBEBEB",
-    borderRadius: "10px",
-    // height: "43px",
-    paddingLeft: "16px",
-    // width: "43px",//{ md: "43px", sm: "43px" ,lg:"43px"},
-    height: "43px", //{ md: "43px", sm: "43px" ,lg:"43px"},
-  },
-}));
+
 
 function AccountSettings() {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  
   const { accountSettings } = useSelector((state) => state.accountSettings);
 
   const {
@@ -55,39 +45,7 @@ function AccountSettings() {
     personalFormSetValue("last_name", accountSettings.last_name);
   }, [accountSettings, personalFormSetValue]);
 
-  // const fields = ["first_name", "last_name"];
-  // const getname = async () => {
-  //   const res = await getName();
-  //   // fields.forEach((field) => setValue(field, res.first_name));
-  //   console.log("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\");
-  //   console.log(res.data.first_name);
-  //   console.log("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\");
 
-  //   if (res) {
-  //     setValue(fields[0], res.data.first_name);
-  //     setValue(fields[1], res.data.last_name);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   getname();
-  // }, []);
-
-  // const onFormChangeNameSubmit = async (data) => {
-  //   console.log("-----------------------", data);
-
-  //   const response = await changeName({
-  //     first_name: data?.first_name,
-  //     last_name: data?.last_name,
-  //   });
-
-  //   if (!response.success) {
-  //     console.log(response.message.response.data.message);
-  //     errors.currentPassword.message = "password not mached";
-  //   } else {
-  //     console.log(response);
-  //   }
-  // };
 
   const onPersonalFormSubmit = async (data) => {
     console.table("onPersonalFormSubmit data:", data);
@@ -318,17 +276,14 @@ function AccountSettings() {
                 >
                   <Stack direction={"row"} spacing={10}>
                     <Stack direction={"column"}>
-                      {/* <FaCcVisa /> */}
-
                       <Typography>Payment method</Typography>
-                      {/* <TextField label="current password"/> */}
                     </Stack>
                     <Stack direction={"column"}>
                       <Stack direction={"row"}>
                         <Typography>
                           <img
                             src={viss}
-                            alt="img1"
+                            alt="viss"
                             style={{ height: "20px", width: "30px" }}
                           />
                         </Typography>
@@ -336,8 +291,6 @@ function AccountSettings() {
                           <b>Visa ending in 4436</b>
                         </Typography>
                       </Stack>
-
-                      {/* <TextField label="New password" /> */}
                     </Stack>
                   </Stack>
                   <Stack direction={"row"}>
@@ -389,9 +342,7 @@ function AccountSettings() {
                   <Stack direction={"column"}>
                     <Typography variant="h6">
                       Subscription Status:
-                      {/* <Box fontWeight="bold" > */}
                       <b>true</b>
-                      {/* </Box> */}
                     </Typography>
                   </Stack>
                   <Stack direction={"column"}>

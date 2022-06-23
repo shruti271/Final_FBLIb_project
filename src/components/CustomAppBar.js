@@ -16,27 +16,13 @@ import { useNavigate } from "react-router-dom";
 import settings from "../assets/settings.svg";
 import billing from "../assets/billing.svg";
 import contactUs from "../assets/contactUs.svg";
-import { makeStyles } from "@material-ui/core/styles";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import PersonIcon from "@mui/icons-material/Person";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { logoutUser } from "../services";
 import { useSelector } from "react-redux";
-
-const drawerWidth = 240;
-
-const useStyles = makeStyles(() => ({
-  avtar: {
-    backgroundColor: "#00CBFF",
-    width: "34px",
-    height: "34px",
-    padding: "10px",
-    borderRadius: "50px",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-}));
+import useStyles from "../css/mediapage";
+import { drawerWidth } from "../variable";
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",

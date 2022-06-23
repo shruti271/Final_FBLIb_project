@@ -32,9 +32,7 @@ const useStyles = makeStyles(() => ({
     width: "46px !important",
     marginRight: "8px",
   },
-  staricon: {
-    marginLeft: "20px",
-  },
+
   selectedMenu: {
     background:
       "linear-gradient(270deg, rgba(0, 203, 255, 0.5) 0%, rgba(0, 203, 255, 0.03) 100%)",
@@ -114,8 +112,7 @@ export const CustomSidebar = ({ isOpen }) => {
     } else {
       setSelectedMenuItem("");
     }
-  }, []);
-
+  });
   return (
     <>
       <Drawer variant="permanent" open={isOpen}>
@@ -196,7 +193,7 @@ export const CustomSidebar = ({ isOpen }) => {
                 marginLeft: "20px",
               }}
             >
-              <img alt="staricon" src={staricon} />
+              <img alt="staricon" src={staricon} sx={{ marginLeft: "20px" }} />
               <Typography sx={{ marginLeft: "26px" }}>Saved Ads</Typography>
             </Stack>
           </Box>

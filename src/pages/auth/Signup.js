@@ -15,11 +15,11 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import appLogo from "../../assets/appLogo.svg";
 import { useNavigate } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { registerValidationSchema } from "./../../utils/validationSchemas";
-import appLogo from "../../assets/appLogo.svg";
 import { signUp } from "./../../services/index";
 
 const Signup = () => {

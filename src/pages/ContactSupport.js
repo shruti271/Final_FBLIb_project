@@ -1,30 +1,15 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import { Button, Grid, InputBase } from "@mui/material";
 import { Box } from "@mui/system";
 import { useForm } from "react-hook-form";
-import { makeStyles } from "@material-ui/core/styles";
-import { useNavigate } from "react-router-dom";
 import { contactSupport } from "../services";
-
-const useStyles = makeStyles(() => ({
-  fieldsStyle: {
-    border: "2px solid #EBEBEB",
-    borderRadius: "10px",
-    height: "43px",
-    paddingLeft: "16px",
-  },
-  multilineinput: {
-    border: "2px solid #EBEBEB",
-    borderRadius: "10px",
-    height: "264px",
-    paddingLeft: "16px !important",
-  },
-}));
+import useStyles from "../css/mediapage";
 
 const ContactSupport = () => {
   const classes = useStyles();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const {
     register,
@@ -65,7 +50,7 @@ const ContactSupport = () => {
             <Grid item xs={10} container spacing={2} margin={2}>
               <Grid xs={6} sm={6} lg={6} item>
                 <InputBase
-                  className={classes.fieldsStyle}
+                  className={classes.inputField}
                   label="outlined"
                   variant="outlined"
                   placeholder="Name"
@@ -83,9 +68,8 @@ const ContactSupport = () => {
 
               <Grid xs={6} sm={6} lg={6} item>
                 <InputBase
-                  className={classes.fieldsStyle}
+                  className={classes.inputField}
                   type="email"
-                  // required
                   label="outlined"
                   variant="outlined"
                   {...register("email", {
@@ -103,7 +87,6 @@ const ContactSupport = () => {
                 {errors.email?.message && (
                   <span style={{ color: "#00CBFF" }}>*Email is required.</span>
                 )}
-                {/* <span style={{ color: 'red' }}>{errors.email?.message}</span> */}
               </Grid>
 
               <Grid xs={12} item>
@@ -124,8 +107,6 @@ const ContactSupport = () => {
                     *Message is required.
                   </span>
                 )}
-
-                {/* <span style={{ color: 'red' }}>{errors.Message?.message}</span> */}
               </Grid>
 
               <Grid
