@@ -90,7 +90,6 @@ const useStyles = makeStyles((theme) => ({
   },
   Addheader: {
     display: "flex",
-    justifyContent: "space-evenly",
     padding: "6px",
     whiteSpace: "nowrap",
   },
@@ -113,9 +112,9 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  console.log("??????????????????")
-console.log(deleteId);
-console.log("??????????????????")
+  console.log("??????????????????");
+  console.log(deleteId);
+  console.log("??????????????????");
 
   return (
     <Grid item xs={4} key={index}>
@@ -135,6 +134,7 @@ console.log("??????????????????")
               fontSize: "16px",
               lineHeight: "24px",
               color: "#2B2F42",
+              marginRight: "12px",
             }}
           >
             {adInfo?.pageInfo?.name}
@@ -147,6 +147,7 @@ console.log("??????????????????")
               lineHeight: "24px",
               color: "#2B2F42",
               opacity: 0.6,
+              marginRight: "12px",
             }}
           >
             (21,604 likes)

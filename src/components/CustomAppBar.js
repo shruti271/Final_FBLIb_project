@@ -79,6 +79,7 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
             style={{
               display: "flex",
               justifyContent: "space-between",
+              alignItems: "center",
               width: "100%",
             }}
           >
@@ -108,6 +109,7 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
                 </Box>
 
                 <Stack
+                  className={classes.profileItem}
                   sx={{
                     justifyContent: "center",
                     alignItems: "center",
