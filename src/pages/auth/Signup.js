@@ -1,10 +1,7 @@
 import React, { useState } from "react";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
-import { makeStyles } from "@material-ui/core";
-import { CardContent, Grid } from "@material-ui/core";
+import { MuiThemeProvider } from "@material-ui/core/styles";
+import appLogo from "../../assets/appLogo.svg";
 import {
-  Alert,
   Box,
   Button,
   Card,
@@ -14,19 +11,21 @@ import {
   Stack,
   TextField,
   Typography,
+  CardContent,
+  Grid,
 } from "@mui/material";
-import appLogo from "../../assets/appLogo.svg";
 import { useNavigate } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
-// import { yupResolver } from "@hookform/resolvers/yup";
-// import { registerValidationSchema } from "./../../utils/validationSchemas";
-import { signUp } from "./../../services/index";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { signUp } from "../../services/index";
+import { themeLight, globalStyles } from "../../css/globalcss";
+import { CssBaseline } from "@material-ui/core";
+import { registerValidationSchema } from "./../../utils/validationSchemas";
 
 const Signup = () => {
-  const classes = useStyles();
+  const global = globalStyles();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState(true);
   const {
     register,
     control,
@@ -41,20 +40,13 @@ const Signup = () => {
     setLoading(true);
     try {
       const response = await signUp(data);
-
       if (response.success) {
-        setMessage(true);
         navigate("/auth/login");
       }
     } catch {
-      console.log("error");
       setLoading(false);
     }
   };
-  const gotoSigninpage = () => {
-    navigate("/auth/login");
-  };
-
   return (
     <MuiThemeProvider theme={themeLight}>
       <CssBaseline />
@@ -83,31 +75,30 @@ const Signup = () => {
                 direction={"row"}
                 sx={{ displayl: "flex", justifyContent: "center" }}
               >
-                <img alt="logo" src={appLogo} className={classes.logo} />
-                <Typography edge="start" className={classes.title}>
-                  Eye of Ecom
+                <img alt="logo" src={appLogo} className={global.logo} />
+                <Typography edge="start" className={global.title}>
+                  EYE OF ECOM
                 </Typography>
               </Stack>
               <form
                 style={{ paddingTop: "50px" }}
                 onSubmit={handleSubmit(submitsigninform)}
               >
-                <Box style={{ padding: "10px 61px" }}>
-                  <Typography className={classes.signin}>
+                <Box style={{ padding: "18px 61px" }}>
+                  <Typography variant="h5" sx={{ fontWeight: "bold" }}>
                     Create a free account
                   </Typography>
 
-                  <Typography className={classes.alreadyaccount}>
+                  <Typography className={global.alreadyaccount} pt={1}>
                     Already Have an account?{" "}
                     <span
                       style={{ color: "#00CBFF", cursor: "pointer" }}
-                      onClick={gotoSigninpage}
+                      onClick={() => navigate("/auth/login")}
                     >
-                      signin
+                      Signin
                     </span>
                   </Typography>
-                  {/* <form style={{ paddingTop: "50px" }}> */}
-                  <Grid container spacing={4}>
+                  <Grid container spacing={2}>
                     <Grid xs={12} item>
                       <TextField
                         placeholder="Enter first name"
@@ -147,11 +138,14 @@ const Signup = () => {
                         variant="outlined"
                         fullWidth
                         required
-                        // onChange={(e) => setEmail(e.target.value)}
                         {...register("email")}
                         error={errors.email ? true : false}
                       />
-                      <Typography variant="inherit" color="textSecondary">
+                      <Typography
+                        variant="inherit"
+                        color="textSecondary"
+                        p={0.5}
+                      >
                         {errors.email?.message}
                       </Typography>
                     </Grid>
@@ -160,13 +154,17 @@ const Signup = () => {
                         placeholder="Password"
                         label="Password(must be at least 6 charcters)"
                         variant="outlined"
+                        type="password"
                         fullWidth
                         required
-                        // onChange={(e) => setPassword(e.target.value)}
                         {...register("password")}
                         error={errors.password ? true : false}
                       />
-                      <Typography variant="inherit" color="textSecondary">
+                      <Typography
+                        variant="inherit"
+                        color="textSecondary"
+                        p={0.5}
+                      >
                         {errors.password?.message}
                       </Typography>
                     </Grid>
@@ -189,7 +187,7 @@ const Signup = () => {
                         label={
                           <Typography
                             color={errors.acceptTerms ? "error" : "inherit"}
-                            className={classes.termsandcondition}
+                            className={global.termsandcondition}
                           >
                             I agree to the{" "}
                             <span style={{ color: "#00CBFF" }}>
@@ -203,38 +201,38 @@ const Signup = () => {
                         }
                       />
                       <br />
-                      <Typography variant="inherit" color="textSecondary">
+                      <Typography
+                        variant="inherit"
+                        color="textSecondary"
+                        mr={2}
+                      >
                         {errors.acceptTerms
                           ? "(" + errors.acceptTerms.message + ")"
                           : ""}
                       </Typography>
                     </Grid>
                   </Grid>
-                  {/* </form> */}
                 </Box>
                 <Box style={{ display: "flex", justifyContent: "center" }}>
                   <Button
-                    type="submit"
                     variant="contained"
                     size="large"
-                    sx={{ borderRadius: "14px" }}
-                    className={classes.Crateaccountbutton}
+                    sx={{
+                      borderRadius: "14px",
+                      textTransform: "none",
+                      fontSize: "20px",
+                    }}
+                    className={global.Crateaccountbutton}
+                    onClick={handleSubmit(submitsigninform)}
                   >
                     {loading ? (
                       <CircularProgress style={{ color: "#F6F6FB" }} />
                     ) : (
                       "Create Account"
                     )}
-                    {console.log("jjjjjjjjjjjjjjjj", loading)}
-                    {/* create Account */}
                   </Button>
                 </Box>
               </form>
-              {message ? (
-                <Alert severity="success">This is a success message!</Alert>
-              ) : (
-                "false"
-              )}
             </CardContent>
           </Card>
         </Box>
@@ -244,68 +242,3 @@ const Signup = () => {
 };
 
 export default Signup;
-
-const themeLight = createTheme({
-  overrides: {
-    MuiCssBaseline: {
-      "@global": {
-        body: {
-          background:
-            "linear-gradient(270deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)",
-          backgroundRepeat: "no-repeat",
-          backgroundAttachment: "fixed",
-        },
-      },
-    },
-  },
-});
-const useStyles = makeStyles(() => ({
-  logo: {
-    height: "37px !important",
-    width: "65px !important",
-    marginRight: "10px",
-    marginTop: "4px",
-  },
-  title: {
-    fontFamily: "Neue Haas Grotesk Display Pro",
-    fontStyle: "normal !important",
-    fontWeight: "900 !important",
-    fontSize: "32.5271px !important",
-    lineHeight: "43px !important",
-    background:
-      "linear-gradient(270deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)",
-    WebkitBackgroundClip: "text",
-    WebkitTextFillColor: "transparent",
-    backgroundClip: "text",
-    textFillColor: "transparent",
-  },
-  signin: {
-    fontWeight: 600,
-    fontSize: "30px",
-    lineHeight: "36px",
-    color: "#2B2F42",
-  },
-  alreadyaccount: {
-    fontWeight: 500,
-    fontSize: "16px",
-    lineHeight: "19px",
-    color: "#2B2F42",
-    marginTop: "10px",
-  },
-  termsandcondition: {
-    letterSpacing: "00.01px",
-  },
-  Crateaccountbutton: {
-    background:
-      "linear-gradient(270deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)",
-    fontFamily: "Neue Haas Grotesk Display Pro",
-    fontSize: "22px",
-    fontHeight: 600,
-    lineHeight: "22px",
-    letterSpacing: "0em",
-    textAlign: "left",
-    textTransform: "capitalize",
-    color: "#F6F6FB",
-    width: "60%",
-  },
-}));

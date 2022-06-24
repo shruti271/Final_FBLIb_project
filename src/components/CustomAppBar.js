@@ -44,24 +44,12 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 export const CustomAppBar = ({ isOpen, setIsOpen }) => {
-  console.log("isOpen from child: ", isOpen);
   const classes = useStyles();
   const { accountSettings } = useSelector((state) => state.accountSettings);
 
-  useEffect(() => {
-    console.log("accountSettings :", accountSettings);
-  }, [accountSettings]);
-
-  const handleDrawerOpen = () => {
-    if (!isOpen) {
-      setIsOpen(true);
-    } else {
-      setIsOpen(false);
-    }
-  };
   const MenuListOptios = [
     { name: "Account Setings", icon: settings, url: "/accountSettings" },
-    { name: "Billing", icon: billing },
+    { name: "Billing", icon: billing, url: "/billing" },
     { name: "Contact Support", icon: contactUs, url: "/contactSupport" },
     { name: "Logout", icon: billing },
   ];
@@ -69,7 +57,6 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
   const navigate = useNavigate();
   const [anchoerEL, setAnchoerEL] = React.useState();
   const handleOpenMenu = (e) => {
-    console.log("first,", e.currentTarget);
     setAnchoerEL(e.currentTarget);
   };
   const handleCloseMenu = (e) => {
@@ -84,7 +71,7 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
   };
   return (
     <>
-      <AppBar>
+      <AppBar open={isOpen}>
         <Toolbar>
           <Stack
             direction={"row"}
@@ -98,7 +85,9 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
               <IconButton
                 color="inherit"
                 aria-label="open drawer"
-                onClick={handleDrawerOpen}
+                onClick={() => {
+                  !isOpen ? setIsOpen(true) : setIsOpen(false);
+                }}
                 edge="start"
                 sx={{
                   marginRight: 5,

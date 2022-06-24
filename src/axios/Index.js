@@ -1,13 +1,13 @@
 import axios from "axios";
-import appConfig from "../config/index";
 
 const axiosInstance = axios.create({
-  baseURL: appConfig.appUrl,
+  baseURL: process.env.REACT_APP_API_URL,
   headers: {
     "Content-Type": "application/json",
     accept: "application/json",
   },
 });
+
 axiosInstance.interceptors.response.use(
   (response) => {
     return response;
@@ -15,7 +15,7 @@ axiosInstance.interceptors.response.use(
   (error) => {
     if (error.response.status === 401) {
       localStorage.setItem("is_alive", false);
-      window.location.href = "/signin/";
+      window.location.href = "/auth/login";
       return Promise.reject(error);
     }
     return Promise.reject(error);

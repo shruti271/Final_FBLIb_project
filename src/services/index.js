@@ -1,11 +1,9 @@
 import axios from "axios";
-import appConfig from "../config/index";
-
 export const signUp = async (payload) => {
   let result = {};
   try {
     const res = await axios.post(
-      `${appConfig.appUrl}/api/usermanager/`,
+      `${process.env.REACT_APP_API_URL}/api/usermanager/`,
       payload,
       {
         withCredentials: true,
@@ -24,9 +22,13 @@ export const signUp = async (payload) => {
 export const login = async (payload) => {
   let result = {};
   try {
-    const res = await axios.post(`${appConfig.appUrl}/api/login/`, payload, {
-      withCredentials: true,
-    });
+    const res = await axios.post(
+      `${process.env.REACT_APP_API_URL}/api/login/`,
+      payload,
+      {
+        withCredentials: true,
+      }
+    );
     result = res.data || {};
     localStorage.setItem("is_alive", true);
     return { success: true, data: result, message: null };
@@ -41,9 +43,12 @@ export const login = async (payload) => {
 export const logoutUser = async () => {
   let result = {};
   try {
-    const res = await axios.get(`${appConfig.appUrl}/api/logout/`, {
-      withCredentials: true,
-    });
+    const res = await axios.get(
+      `${process.env.REACT_APP_API_URL}/api/logout/`,
+      {
+        withCredentials: true,
+      }
+    );
     result = res.data || {};
     localStorage.setItem("is_alive", false);
     return { success: true, data: result, message: null };
@@ -59,9 +64,12 @@ export const logoutUser = async () => {
 export const isAlive = async () => {
   let result = {};
   try {
-    const res = await axios.get(`${appConfig.appUrl}/api/isalive/`, {
-      withCredentials: "true",
-    });
+    const res = await axios.get(
+      `${process.env.REACT_APP_API_URL}/api/isalive/`,
+      {
+        withCredentials: "true",
+      }
+    );
     result = res.data || {};
     localStorage.setItem("is_alive", res.data.data.is_alive);
     return { success: true, data: result, message: null };
@@ -78,7 +86,7 @@ export const forgotPassword = async (payload) => {
   let result = {};
   try {
     const res = await axios.post(
-      `${appConfig.appUrl}/api/forgot_password/`,
+      `${process.env.REACT_APP_API_URL}/api/forgot_password/`,
       payload,
       { withCredentials: true }
     );
@@ -88,7 +96,6 @@ export const forgotPassword = async (payload) => {
     return {
       success: false,
       message: err || "something went wrong",
-      data: null,
     };
   }
 };
@@ -96,9 +103,13 @@ export const forgotPassword = async (payload) => {
 export const contactSupport = async (payload) => {
   let result = {};
   try {
-    const res = await axios.post(`${appConfig.appUrl}/api/support/`, payload, {
-      withCredentials: true,
-    });
+    const res = await axios.post(
+      `${process.env.REACT_APP_API_URL}/api/support/`,
+      payload,
+      {
+        withCredentials: true,
+      }
+    );
     result = res.data || {};
     return { success: true, data: result, message: null };
   } catch (err) {
