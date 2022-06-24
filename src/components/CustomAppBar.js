@@ -101,7 +101,7 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
                 onClick={handleDrawerOpen}
                 edge="start"
                 sx={{
-                  marginRight: 5,
+                  ...isOpen && { ml:22 },
                   color: "#00CBFF",
                 }}
               >
