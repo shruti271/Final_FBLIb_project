@@ -1,7 +1,7 @@
 import axiosInstance from "./../../../axios/Index";
 
-export function requestGetSubAllMedia() {
-  return axiosInstance.get("api/suballads/", {
+export function requestGetSubAllMedia(payload) {
+  return axiosInstance.post("api/adsbypage/", payload, {
     withCredentials: true,
   });
 }

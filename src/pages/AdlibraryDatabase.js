@@ -1,10 +1,9 @@
-
-
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import {
   Button,
   Chip,
+  CircularProgress,
   Divider,
   FormControl,
   FormControlLabel,
@@ -129,7 +128,7 @@ const useStyles = makeStyles((theme) => ({
 const Addlibrarydatabase = () => {
   const classes = useStyles();
 
-  const { allMediaAds } = useSelector((state) => state.allMediaAds);
+  const { allMediaAds, loading } = useSelector((state) => state.allMediaAds);
   const [adsFilteredData, setAdsFilteredData] = useState([]);
   // const [filterAll, setFilterAll] = useState([]);
 
@@ -193,8 +192,24 @@ const Addlibrarydatabase = () => {
   ]);
   return (
     <>
-      {console.log(appliedFilters)}
-      <Grid container>
+      {/* <Box
+        sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+      >
+        <CircularProgress
+          style={{
+            position: "relative",
+            top: 50,
+            left: 50,
+            opacity: 1,
+            zIndex: 1,
+            visibility: loading ? "visible" : "hidden",
+          }}
+        />
+      </Box> */}
+      <Grid
+        container
+        sx={{ opacity: loading ? 0.5 : 1, disabled: loading ? true : false }}
+      >
         <Grid item xs={12}>
           <Box component="main">
             <Typography className={classes.titleHome}>
@@ -858,7 +873,34 @@ const Addlibrarydatabase = () => {
           </Grid>
         </Grid>
         <Grid item xs={12}>
-          <Grid container spacing={2} sx={{ marginTop: "10px" }}>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <CircularProgress
+              style={{
+                position: "relative",
+                top: 50,
+                left: 50,
+                opacity: 1,
+                zIndex: 1,
+                visibility: loading ? "visible" : "hidden",
+              }}
+            />
+          </Box>
+
+          <Grid
+            container
+            spacing={2}
+            sx={{
+              marginTop: "10px",
+              opacity: loading ? 0.5 : 1,
+              disabled: loading ? true : false,
+            }}
+          >
             {adsFilteredData.map((ads, index) => (
               <ThumbNailBox adInfo={ads} index={index} key={index} />
             ))}
