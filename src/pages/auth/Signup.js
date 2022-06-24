@@ -1,25 +1,38 @@
-import React,{useState} from "react"
+import React, { useState } from "react";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import appLogo from "../../assets/appLogo.svg";
-import { Box, Button, Card, Checkbox, CircularProgress, FormControlLabel, Stack, TextField, Typography, CardContent, Grid } from "@mui/material";
+import {
+  Box,
+  Button,
+  Card,
+  Checkbox,
+  CircularProgress,
+  FormControlLabel,
+  Stack,
+  TextField,
+  Typography,
+  CardContent,
+  Grid,
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { useForm, Controller } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import {validationSchema,signUp } from "../../services/index";
+import { useForm, Controller } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { signUp } from "../../services/index";
 import { themeLight, globalStyles } from "../../css/globalcss";
 import { CssBaseline } from "@material-ui/core";
+import { registerValidationSchema } from "./../../utils/validationSchemas";
 
 const Signup = () => {
-  const global = globalStyles()
+  const global = globalStyles();
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const {
     register,
     control,
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(validationSchema),
+    resolver: yupResolver(registerValidationSchema),
   });
 
   const submitsigninform = async (data) => {
@@ -30,7 +43,7 @@ const Signup = () => {
         navigate("/auth/login");
       }
     } catch {
-      setLoading(false)
+      setLoading(false);
     }
   };
   return (
@@ -68,8 +81,7 @@ const Signup = () => {
               </Stack>
 
               <Box style={{ padding: "18px 61px" }}>
-                <Typography variant="h5" sx={{ fontWeight: "bold" }}
-                >
+                <Typography variant="h5" sx={{ fontWeight: "bold" }}>
                   Create a free account
                 </Typography>
 
@@ -95,7 +107,11 @@ const Signup = () => {
                         {...register("firstname")}
                         error={errors.firstname ? true : false}
                       />
-                      <Typography variant="inherit" color="textSecondary" p={0.5} >
+                      <Typography
+                        variant="inherit"
+                        color="textSecondary"
+                        p={0.5}
+                      >
                         {errors.firstname?.message}
                       </Typography>
                     </Grid>
@@ -110,7 +126,11 @@ const Signup = () => {
                         {...register("lastname")}
                         error={errors.lastname ? true : false}
                       />
-                      <Typography variant="inherit" color="textSecondary" p={0.5}>
+                      <Typography
+                        variant="inherit"
+                        color="textSecondary"
+                        p={0.5}
+                      >
                         {errors.lastname?.message}
                       </Typography>
                     </Grid>
@@ -125,7 +145,11 @@ const Signup = () => {
                         {...register("email")}
                         error={errors.email ? true : false}
                       />
-                      <Typography variant="inherit" color="textSecondary" p={0.5}>
+                      <Typography
+                        variant="inherit"
+                        color="textSecondary"
+                        p={0.5}
+                      >
                         {errors.email?.message}
                       </Typography>
                     </Grid>
@@ -137,10 +161,14 @@ const Signup = () => {
                         type="password"
                         fullWidth
                         required
-                        {...register('password')}
+                        {...register("password")}
                         error={errors.password ? true : false}
                       />
-                      <Typography variant="inherit" color="textSecondary" p={0.5}>
+                      <Typography
+                        variant="inherit"
+                        color="textSecondary"
+                        p={0.5}
+                      >
                         {errors.password?.message}
                       </Typography>
                     </Grid>
@@ -161,13 +189,27 @@ const Signup = () => {
                           />
                         }
                         label={
-                          <Typography color={errors.acceptTerms ? 'error' : 'inherit'} className={global.termsandcondition}>
-                            I agree to the <span style={{ color: "#00CBFF" }}>Terms of service</span> and <span style={{ color: "#00CBFF" }}>Privacy Policy</span>
+                          <Typography
+                            color={errors.acceptTerms ? "error" : "inherit"}
+                            className={global.termsandcondition}
+                          >
+                            I agree to the{" "}
+                            <span style={{ color: "#00CBFF" }}>
+                              Terms of service
+                            </span>{" "}
+                            and{" "}
+                            <span style={{ color: "#00CBFF" }}>
+                              Privacy Policy
+                            </span>
                           </Typography>
                         }
                       />
                       <br />
-                      <Typography variant="inherit" color="textSecondary" mr={2}>
+                      <Typography
+                        variant="inherit"
+                        color="textSecondary"
+                        mr={2}
+                      >
                         {errors.acceptTerms
                           ? "(" + errors.acceptTerms.message + ")"
                           : ""}
@@ -180,11 +222,19 @@ const Signup = () => {
                 <Button
                   variant="contained"
                   size="large"
-                  sx={{ borderRadius: "14px", textTransform: "none", fontSize: "20px" }}
+                  sx={{
+                    borderRadius: "14px",
+                    textTransform: "none",
+                    fontSize: "20px",
+                  }}
                   className={global.Crateaccountbutton}
                   onClick={handleSubmit(submitsigninform)}
                 >
-                  {loading ? <CircularProgress style={{ color: "#F6F6FB" }} /> : "Create Account"}
+                  {loading ? (
+                    <CircularProgress style={{ color: "#F6F6FB" }} />
+                  ) : (
+                    "Create Account"
+                  )}
                 </Button>
               </Box>
             </CardContent>

@@ -6,6 +6,7 @@ import MainLayout from "./components/MainLayout";
 import Login from "./pages/auth/Login";
 import ForgetPassword from "./pages/auth/ForgetPassword";
 import Signup from "./pages/auth/Signup";
+import "./App.scss";
 
 const App = () => {
   return (

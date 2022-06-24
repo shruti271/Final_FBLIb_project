@@ -29,7 +29,6 @@ const MainLayout = () => {
 
   const [isOpen, setIsOpen] = React.useState(false);
 
-
   useEffect(() => {
     dispatch(loadMediaStart());
     dispatch(loadSavedAdsStart());
