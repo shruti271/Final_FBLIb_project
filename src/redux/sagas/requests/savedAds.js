@@ -11,7 +11,9 @@ export function requestCreateSavedAds(SavedAds) {
 }
 
 export function requestDeleteSavedAds(id) {
-  return axiosInstance.delete(`api/saveadmanager/${Number(id)}/`, {
+  console.log("?????????????????????????????+++++++++++++")
+  console.log(id.deleted_id);
+  return axiosInstance.delete(`api/saveadmanager/${Number(id.deleted_id)}/`, {
     withCredentials: true,
   });
 }

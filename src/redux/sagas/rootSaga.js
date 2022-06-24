@@ -19,6 +19,8 @@ import {
   LOAD_ACCOUNT_SETTINGS_START,
   UPDATE_ACCOUNT_SETTINGS_START,
 } from "./../ducks/accountSettings";
+import { LOAD_SUBALLMEDIA_START } from "../ducks/subAllAds";
+import { handleGetSubAllMedia } from "./handlers/subAllAds";
 
 function* onLoadMeida() {
   yield takeLatest(LOAD_MEDIA_START, handleGetMedia);
@@ -44,6 +46,10 @@ function* onUpdateAccountSettings() {
   yield takeLatest(UPDATE_ACCOUNT_SETTINGS_START, handleUpdateAccountSettings);
 }
 
+function* onLoadSubAllMeida() {
+  yield takeLatest(LOAD_SUBALLMEDIA_START, handleGetSubAllMedia);
+}
+
 const mediaSagas = [fork(onLoadMeida)];
 
 const savedAdsSagas = [
@@ -56,6 +62,14 @@ const accountSettingsSagas = [
   fork(onGetAccountSettings),
   fork(onUpdateAccountSettings),
 ];
+
+const suballadsSagas = [fork(onLoadSubAllMeida)];
+
 export default function* watcherSaga() {
-  yield all([...mediaSagas, ...savedAdsSagas, ...accountSettingsSagas]);
+  yield all([
+    ...mediaSagas,
+    ...savedAdsSagas,
+    ...accountSettingsSagas,
+    ...suballadsSagas,
+  ]);
 }

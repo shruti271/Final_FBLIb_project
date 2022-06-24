@@ -18,8 +18,8 @@ import {
 import appLogo from "../../assets/appLogo.svg";
 import { useNavigate } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { registerValidationSchema } from "./../../utils/validationSchemas";
+// import { yupResolver } from "@hookform/resolvers/yup";
+// import { registerValidationSchema } from "./../../utils/validationSchemas";
 import { signUp } from "./../../services/index";
 
 const Signup = () => {
@@ -32,11 +32,12 @@ const Signup = () => {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm({
-    resolver: yupResolver(registerValidationSchema),
-  });
+  } = useForm();
 
   const submitsigninform = async (data) => {
+    console.log("first name---------------------------------");
+    console.log(data);
+    // console.log(data);
     setLoading(true);
     try {
       const response = await signUp(data);
@@ -87,22 +88,25 @@ const Signup = () => {
                   Eye of Ecom
                 </Typography>
               </Stack>
+              <form
+                style={{ paddingTop: "50px" }}
+                onSubmit={handleSubmit(submitsigninform)}
+              >
+                <Box style={{ padding: "10px 61px" }}>
+                  <Typography className={classes.signin}>
+                    Create a free account
+                  </Typography>
 
-              <Box style={{ padding: "10px 61px" }}>
-                <Typography className={classes.signin}>
-                  Create a free account
-                </Typography>
-
-                <Typography className={classes.alreadyaccount}>
-                  Already Have an account?{" "}
-                  <span
-                    style={{ color: "#00CBFF", cursor: "pointer" }}
-                    onClick={gotoSigninpage}
-                  >
-                    signin
-                  </span>
-                </Typography>
-                <form style={{ paddingTop: "50px" }}>
+                  <Typography className={classes.alreadyaccount}>
+                    Already Have an account?{" "}
+                    <span
+                      style={{ color: "#00CBFF", cursor: "pointer" }}
+                      onClick={gotoSigninpage}
+                    >
+                      signin
+                    </span>
+                  </Typography>
+                  {/* <form style={{ paddingTop: "50px" }}> */}
                   <Grid container spacing={4}>
                     <Grid xs={12} item>
                       <TextField
@@ -110,13 +114,14 @@ const Signup = () => {
                         label="First Name"
                         variant="outlined"
                         fullWidth
-                        required
+                        // required
+                        name="first_name"
                         // onChange={(e) => setFirstname(e.target.value)}
-                        {...register("firstname")}
-                        error={errors.firstname ? true : false}
+                        {...register("first_name")}
+                        error={errors.first_name ? true : false}
                       />
                       <Typography variant="inherit" color="textSecondary">
-                        {errors.firstname?.message}
+                        {errors.first_name?.message}
                       </Typography>
                     </Grid>
                     <Grid xs={12} item>
@@ -125,13 +130,13 @@ const Signup = () => {
                         label="Last Name"
                         variant="outlined"
                         fullWidth
-                        required
+                        // required
                         // onChange={(e) => setLasttname(e.target.value)}
-                        {...register("lastname")}
-                        error={errors.lastname ? true : false}
+                        {...register("last_name")}
+                        error={errors.last_name ? true : false}
                       />
                       <Typography variant="inherit" color="textSecondary">
-                        {errors.lastname?.message}
+                        {errors.last_name?.message}
                       </Typography>
                     </Grid>
                     <Grid item xs={12}>
@@ -205,25 +210,26 @@ const Signup = () => {
                       </Typography>
                     </Grid>
                   </Grid>
-                </form>
-              </Box>
-              <Box style={{ display: "flex", justifyContent: "center" }}>
-                <Button
-                  variant="contained"
-                  size="large"
-                  sx={{ borderRadius: "14px" }}
-                  className={classes.Crateaccountbutton}
-                  onClick={handleSubmit(submitsigninform)}
-                >
-                  {loading ? (
-                    <CircularProgress style={{ color: "#F6F6FB" }} />
-                  ) : (
-                    "Create Account"
-                  )}
-                  {console.log("jjjjjjjjjjjjjjjj", loading)}
-                  {/* create Account */}
-                </Button>
-              </Box>
+                  {/* </form> */}
+                </Box>
+                <Box style={{ display: "flex", justifyContent: "center" }}>
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    size="large"
+                    sx={{ borderRadius: "14px" }}
+                    className={classes.Crateaccountbutton}
+                  >
+                    {loading ? (
+                      <CircularProgress style={{ color: "#F6F6FB" }} />
+                    ) : (
+                      "Create Account"
+                    )}
+                    {console.log("jjjjjjjjjjjjjjjj", loading)}
+                    {/* create Account */}
+                  </Button>
+                </Box>
+              </form>
               {message ? (
                 <Alert severity="success">This is a success message!</Alert>
               ) : (

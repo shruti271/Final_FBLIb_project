@@ -111,10 +111,10 @@ const SavedAds = () => {
   return (
     <Grid container spacing={2} sx={{ marginTop: "10px" }}>
       {savedAds.map((ads, index) => (
-         console.log("------------------"+ads.id),
-         console.log(ads.ad_detail),
+         console.log("------------------ads.id ---------------"+ads.id),
+         console.log(ads.id),
         <ThumbNailBox
-          adInfo={ads.ad_detail}
+          adInfo={ads}
           index={index}
           key={index}
           deleteId={ads.id}
