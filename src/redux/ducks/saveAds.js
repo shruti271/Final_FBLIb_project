@@ -92,7 +92,7 @@ const savedAdsReducer = (state = initialState, action) => {
         return {
           ...state,
           loading: false,
-          savedAds: state.savedAds.filter((savedads) => savedads.id !== action.payload),
+          savedAds: state.savedAds.filter((savedads) => savedads.id !== action.payload.deleted_id),
         };
       }
     default:

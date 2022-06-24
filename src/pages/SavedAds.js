@@ -1,3 +1,6 @@
+
+
+
 import React, { useEffect, useState } from "react";
 import { Grid } from "@mui/material";
 
@@ -81,39 +84,40 @@ import { loadSavedAdsStart } from "../redux/ducks/saveAds";
 // }));
 
 const SavedAds = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const { savedAds } = useSelector((state) => state.savedAds);
   const { allMediaAds } = useSelector((state) => state.allMediaAds);
 
-  const [savedAdsData, setSavedAdsData] = useState([]);
+  // const [savedAdsData, setSavedAdsData] = useState([]);
 
+  // useEffect(() => {
+  //   dispatch(loadSavedAdsStart());
+  // }, [dispatch]);
   useEffect(() => {
-    dispatch(loadSavedAdsStart());
-  }, [dispatch]);
-  useEffect(() => {
-    setSavedAdsData((pre) => []);
-
-    for (let i = 0; i < savedAds.length; i++) {
-      for (let j = 0; j < allMediaAds.length; j++) {
-        if (savedAds[i].ad === allMediaAds[j].adID) {
-          setSavedAdsData((pre) => [
-            ...pre,
-            { deleteId: savedAds[i].id, data: allMediaAds[j] },
-          ]);
-        }
-      }
-    }
+    // setSavedAdsData((pre) => []);
+    // for (let i = 0; i < savedAds.length; i++) {
+    //   for (let j = 0; j < allMediaAds.length; j++) {
+    //     if (savedAds[i].ad === allMediaAds[j].adID) {
+    //       setSavedAdsData((pre) => [
+    //         ...pre,
+    //         { deleteId: savedAds[i].id, data: allMediaAds[j] },
+    //       ]);
+    //     }
+    //   }
+    // }
   }, [allMediaAds, savedAds]);
 
   return (
     <Grid container spacing={2} sx={{ marginTop: "10px" }}>
-      {savedAdsData.map((ads, index) => (
+      {savedAds.map((ads, index) => (
+         console.log("------------------ads.id ---------------"+ads.id),
+         console.log(ads.id),
         <ThumbNailBox
-          adInfo={ads.data}
+          adInfo={ads}
           index={index}
           key={index}
-          deleteId={ads.deleteId}
+          deleteId={ads.id}
         />
       ))}
     </Grid>

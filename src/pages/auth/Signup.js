@@ -31,11 +31,12 @@ const Signup = () => {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm({
-    resolver: yupResolver(registerValidationSchema),
-  });
+  } = useForm();
 
   const submitsigninform = async (data) => {
+    console.log("first name---------------------------------");
+    console.log(data);
+    // console.log(data);
     setLoading(true);
     try {
       const response = await signUp(data);
@@ -79,22 +80,24 @@ const Signup = () => {
                   EYE OF ECOM
                 </Typography>
               </Stack>
+              <form
+                style={{ paddingTop: "50px" }}
+                onSubmit={handleSubmit(submitsigninform)}
+              >
+                <Box style={{ padding: "18px 61px" }}>
+                  <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+                    Create a free account
+                  </Typography>
 
-              <Box style={{ padding: "18px 61px" }}>
-                <Typography variant="h5" sx={{ fontWeight: "bold" }}>
-                  Create a free account
-                </Typography>
-
-                <Typography className={global.alreadyaccount} pt={1}>
-                  Already Have an account?{" "}
-                  <span
-                    style={{ color: "#00CBFF", cursor: "pointer" }}
-                    onClick={() => navigate("/auth/login")}
-                  >
-                    Signin
-                  </span>
-                </Typography>
-                <form style={{ paddingTop: "30px" }}>
+                  <Typography className={global.alreadyaccount} pt={1}>
+                    Already Have an account?{" "}
+                    <span
+                      style={{ color: "#00CBFF", cursor: "pointer" }}
+                      onClick={() => navigate("/auth/login")}
+                    >
+                      Signin
+                    </span>
+                  </Typography>
                   <Grid container spacing={2}>
                     <Grid xs={12} item>
                       <TextField
@@ -102,17 +105,14 @@ const Signup = () => {
                         label="First Name"
                         variant="outlined"
                         fullWidth
-                        required
+                        // required
+                        name="first_name"
                         // onChange={(e) => setFirstname(e.target.value)}
-                        {...register("firstname")}
-                        error={errors.firstname ? true : false}
+                        {...register("first_name")}
+                        error={errors.first_name ? true : false}
                       />
-                      <Typography
-                        variant="inherit"
-                        color="textSecondary"
-                        p={0.5}
-                      >
-                        {errors.firstname?.message}
+                      <Typography variant="inherit" color="textSecondary">
+                        {errors.first_name?.message}
                       </Typography>
                     </Grid>
                     <Grid xs={12} item>
@@ -121,17 +121,13 @@ const Signup = () => {
                         label="Last Name"
                         variant="outlined"
                         fullWidth
-                        required
+                        // required
                         // onChange={(e) => setLasttname(e.target.value)}
-                        {...register("lastname")}
-                        error={errors.lastname ? true : false}
+                        {...register("last_name")}
+                        error={errors.last_name ? true : false}
                       />
-                      <Typography
-                        variant="inherit"
-                        color="textSecondary"
-                        p={0.5}
-                      >
-                        {errors.lastname?.message}
+                      <Typography variant="inherit" color="textSecondary">
+                        {errors.last_name?.message}
                       </Typography>
                     </Grid>
                     <Grid item xs={12}>
@@ -216,27 +212,27 @@ const Signup = () => {
                       </Typography>
                     </Grid>
                   </Grid>
-                </form>
-              </Box>
-              <Box style={{ display: "flex", justifyContent: "center" }}>
-                <Button
-                  variant="contained"
-                  size="large"
-                  sx={{
-                    borderRadius: "14px",
-                    textTransform: "none",
-                    fontSize: "20px",
-                  }}
-                  className={global.Crateaccountbutton}
-                  onClick={handleSubmit(submitsigninform)}
-                >
-                  {loading ? (
-                    <CircularProgress style={{ color: "#F6F6FB" }} />
-                  ) : (
-                    "Create Account"
-                  )}
-                </Button>
-              </Box>
+                </Box>
+                <Box style={{ display: "flex", justifyContent: "center" }}>
+                  <Button
+                    variant="contained"
+                    size="large"
+                    sx={{
+                      borderRadius: "14px",
+                      textTransform: "none",
+                      fontSize: "20px",
+                    }}
+                    className={global.Crateaccountbutton}
+                    onClick={handleSubmit(submitsigninform)}
+                  >
+                    {loading ? (
+                      <CircularProgress style={{ color: "#F6F6FB" }} />
+                    ) : (
+                      "Create Account"
+                    )}
+                  </Button>
+                </Box>
+              </form>
             </CardContent>
           </Card>
         </Box>

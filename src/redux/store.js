@@ -5,11 +5,13 @@ import mediaReducer from "./ducks/mediaAds";
 import watcherSaga from "./sagas/rootSaga";
 import savedAdsReducer from "./ducks/saveAds";
 import accountSettingsReducer from "./ducks/accountSettings";
+import subAllMediaReducer from "./ducks/subAllAds";
 
 const reducer = combineReducers({
   allMediaAds: mediaReducer,
   savedAds: savedAdsReducer,
   accountSettings: accountSettingsReducer,
+  subAllMedia: subAllMediaReducer
 });
 
 const sagaMiddleWares = createSagaMiddleware();

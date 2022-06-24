@@ -113,6 +113,9 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  console.log("??????????????????")
+console.log(deleteId);
+console.log("??????????????????")
 
   return (
     <Grid item xs={4} key={index}>
@@ -187,7 +190,7 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
                   alt="StarFill"
                   className={classes.saveicon}
                   onClick={() => {
-                    dispatch(deleteSavedAdsStart({ id: Number(deleteId) }));
+                    dispatch(deleteSavedAdsStart({ deleted_id: deleteId }));
                   }}
                 />
               ) : (
