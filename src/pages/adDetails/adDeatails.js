@@ -1,31 +1,14 @@
-import { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, Box, Typography, Button, Stack } from "@mui/material";
-import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
 import Firstcard from "../../assets/Firstcard.svg";
 import LargePageLogo from "../../assets/largePageLogo.svg";
 import Firsrcardimg from "../../assets/FirstCardImg.svg";
 import facebook from "../../assets/facebook.svg";
 import instragram from "../../assets/instragram.svg";
 
-function AdDeatails() {
+function AdDeatails({ ThumbnailData }) {
   const classes = useStyles();
-  const adID = useParams();
-  const { allMediaAds } = useSelector((state) => state.allMediaAds);
-  const [adDetail, setAdDetail] = useState();
 
-  useEffect(() => {
-    if (allMediaAds) {
-      const singleAds = allMediaAds.find((ad) => {
-        if (ad.adID === adID.adsId) {
-          return ad;
-        }
-      });
-
-      setAdDetail(singleAds);
-    }
-  }, [allMediaAds, adID.adsId]);
   return (
     <>
       <Grid container sx={{ marginTop: "36px" }}>
@@ -47,7 +30,7 @@ function AdDeatails() {
                     color: "#2B2F42",
                   }}
                 >
-                  {adDetail?.headline ? adDetail.headline : " "}
+                  {ThumbnailData?.headline ? ThumbnailData.headline : " "}
                 </Typography>
               </Box>
 
@@ -62,26 +45,32 @@ function AdDeatails() {
                     margin: "10px 12px 10px 26px",
                   }}
                 >
-                  {adDetail?.adDescription ? adDetail.adDescription : " "}
+                  {ThumbnailData?.adDescription
+                    ? ThumbnailData.adDescription
+                    : " "}
                 </Typography>
               </Box>
 
               <Box sx={{ width: "98%", height: "20%" }}>
-                {adDetail?.adMediaType === "video" ? (
+                {ThumbnailData?.adMediaType === "video" ? (
                   <video
-                    src={adDetail?.bucketMediaURL}
+                    src={ThumbnailData?.bucketMediaURL}
                     autoPlay
                     controls
                     className={classes.AdsImageVideo}
                   />
-                ) : adDetail?.adMediaType === "image" ? (
+                ) : ThumbnailData?.adMediaType === "image" ? (
                   <img
-                    src={adDetail?.bucketMediaURL}
+                    src={ThumbnailData?.bucketMediaURL}
                     alt="img1"
                     className={classes.AdsImageVideo}
                   />
                 ) : (
-                  <img src={Firsrcardimg} alt="img1" className={classes.AdsImageVideo} />
+                  <img
+                    src={Firsrcardimg}
+                    alt="img1"
+                    className={classes.AdsImageVideo}
+                  />
                 )}
               </Box>
               <Box>
@@ -97,7 +86,9 @@ function AdDeatails() {
                         }}
                         noWrap
                       >
-                        {adDetail?.headline ? adDetail.displayURL : " "}
+                        {ThumbnailData?.headline
+                          ? ThumbnailData.displayURL
+                          : " "}
                       </Typography>
                       <Typography
                         style={{
@@ -119,8 +110,8 @@ function AdDeatails() {
                           color: "#2B2F42",
                         }}
                       >
-                        {adDetail?.purchaseDescription
-                          ? adDetail.purchaseDescription
+                        {ThumbnailData?.purchaseDescription
+                          ? ThumbnailData.purchaseDescription
                           : " "}
                       </Typography>
                     </Box>
@@ -148,7 +139,9 @@ function AdDeatails() {
                           color: "#F6F6FB",
                         }}
                       >
-                        {adDetail?.noOfCopyAds ? adDetail.noOfCopyAds : " "}
+                        {ThumbnailData?.noOfCopyAds
+                          ? ThumbnailData.noOfCopyAds
+                          : " "}
                       </Typography>
                       <Typography
                         variant="div"
@@ -201,10 +194,12 @@ function AdDeatails() {
                 }}
               >
                 <a
-                  href={adDetail?.bucketMediaURL}
+                  href={ThumbnailData?.bucketMediaURL}
                   style={{ textDecoration: "none", color: "white" }}
                   download
-                  disabled={adDetail?.adMediaType === "image" ? true : false}
+                  disabled={
+                    ThumbnailData?.adMediaType === "image" ? true : false
+                  }
                 >
                   {" "}
                   Download Thumbnail
@@ -219,10 +214,10 @@ function AdDeatails() {
                   paddingLeft: "16px",
                   paddingRight: "16px",
                 }}
-                disabled={adDetail?.adMediaType === "video" ? true : false}
+                disabled={ThumbnailData?.adMediaType === "video" ? true : false}
               >
                 <a
-                  href={adDetail?.bucketMediaURL}
+                  href={ThumbnailData?.bucketMediaURL}
                   style={{ textDecoration: "none", color: "white" }}
                   download
                 >
@@ -238,7 +233,7 @@ function AdDeatails() {
               <Stack sx={{ alignItems: "center" }}>
                 <Typography className={classes.textdeco}>Ad Status</Typography>
                 <Typography className={classes.textdeco}>
-                  <b> {adDetail?.status ? adDetail.status : " "}</b>
+                  <b> {ThumbnailData?.status ? ThumbnailData.status : " "}</b>
                 </Typography>
               </Stack>
               <Stack sx={{ alignItems: "center" }}>
@@ -246,7 +241,10 @@ function AdDeatails() {
                   Started Running On
                 </Typography>
                 <Typography className={classes.textdeco}>
-                  <b> {adDetail?.startDate ? adDetail.startDate : " "}</b>
+                  <b>
+                    {" "}
+                    {ThumbnailData?.startDate ? ThumbnailData.startDate : " "}
+                  </b>
                 </Typography>
                 <Typography className={classes.textdeco}>
                   <b> 3 Days</b>
@@ -254,7 +252,7 @@ function AdDeatails() {
               </Stack>
               <Stack sx={{ alignItems: "center" }}>
                 <Typography className={classes.textdeco}>Placements</Typography>
-                {adDetail?.platforms.map((ads, index) => (
+                {ThumbnailData?.platforms.map((ads, index) => (
                   <Typography className={classes.textdeco} key={index}>
                     {" "}
                     <b>{ads}</b>
@@ -344,7 +342,6 @@ function AdDeatails() {
 export default AdDeatails;
 
 const useStyles = makeStyles(() => ({
- 
   AdsImageVideo: {
     objectFit: "contain",
     resizeMode: "Startch",

@@ -1,10 +1,13 @@
 import { call, put } from "redux-saga/effects";
-import { loadSubAllMediaError, loadSubAllMediaSuccess } from "../../ducks/subAllAds";
+import {
+  loadSubAllMediaError,
+  loadSubAllMediaSuccess,
+} from "../../ducks/subAllAds";
 import { requestGetSubAllMedia } from "../requests/subAllAds";
 
-export function* handleGetSubAllMedia() {
+export function* handleGetSubAllMedia({ payload }) {
   try {
-    const response = yield call(requestGetSubAllMedia);
+    const response = yield call(requestGetSubAllMedia, payload);
     console.log("response", response);
 
     if (response.status === 200) {

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { styled } from "@mui/material/styles";
 import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -22,7 +22,8 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { logoutUser } from "../services";
 import { useSelector } from "react-redux";
 import useStyles from "../css/mediapage";
-import { drawerWidth } from "../variable";
+
+const drawerWidth = 240;
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",

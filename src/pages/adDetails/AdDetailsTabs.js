@@ -1,17 +1,48 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Stack } from "@mui/material";
 import { Box } from "@mui/system";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes, useNavigate, useParams } from "react-router-dom";
 import AllAds from "./AllAds";
 import AdDeatails from "./adDeatails";
+import { useDispatch, useSelector } from "react-redux";
+import { loadSubAllMediaStart } from "../../redux/ducks/subAllAds";
 
 function AdDeatailsTabs() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const adID = useParams();
+
+  const { allMediaAds } = useSelector((state) => state.allMediaAds);
+
   const adDetailsTabs = {
     ADOVERVIEW: "Ad Overview",
     ALLADS: "All Ads",
   };
   const [isActiveTab, setIsActiveTab] = useState(adDetailsTabs.ADOVERVIEW);
+  const [adDetail, setAdDetail] = useState();
+  useEffect(() => {
+    if (window.location.pathname === `/adDeatails/${adID.adsId}`) {
+      setIsActiveTab(adDetailsTabs.ADOVERVIEW);
+    } else {
+      setIsActiveTab(adDetailsTabs.ALLADS);
+    }
+  }, []);
+  useEffect(() => {
+    if (allMediaAds) {
+      const singleAds = allMediaAds.find((ad) => {
+        if (ad.adID === adID.adsId) {
+          return ad;
+        }
+      });
+
+      setAdDetail(singleAds);
+    }
+  }, [allMediaAds, adID.adsId, adDetail]);
+
+  useEffect(() => {
+    dispatch(loadSubAllMediaStart({ ad_name: adDetail?.pageInfo?.name }));
+  }, [adDetail?.pageInfo?.name, dispatch]);
 
   return (
     <>
@@ -67,7 +98,11 @@ function AdDeatailsTabs() {
         </Box>
       </Box>
       <Routes>
-        <Route exact path="" element={<AdDeatails />} />
+        <Route
+          exact
+          path=""
+          element={<AdDeatails ThumbnailData={adDetail} />}
+        />
         <Route exact path="allAds" element={<AllAds />} />
       </Routes>
     </>
