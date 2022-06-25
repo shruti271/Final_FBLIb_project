@@ -16,11 +16,11 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
+// import { yupResolver } from "@hookform/resolvers/yup";
 import { signUp } from "../../services/index";
 import { themeLight, globalStyles } from "../../css/globalcss";
 import { CssBaseline } from "@material-ui/core";
-import { registerValidationSchema } from "./../../utils/validationSchemas";
+// import { registerValidationSchema } from "./../../utils/validationSchemas";
 
 const Signup = () => {
   const global = globalStyles();
