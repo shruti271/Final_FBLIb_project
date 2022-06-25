@@ -134,7 +134,7 @@ const Addlibrarydatabase = () => {
 
   const [appliedFilters, setAppliedFilters] = useState({
     StartRunningDate: { startdate: "", enddate: "", Message: "" },
-    AdStatus: { selectedData: "", Message: "" },
+    AdStatus: { status: "", Message: "" },
     AdCount: { min: 0, max: 1000, Message: "" },
     FacebookLikes: { Message: "" },
     InstragramLike: { Message: "" },
@@ -178,8 +178,8 @@ const Addlibrarydatabase = () => {
     setAppliedFilters((pre) => ({
       ...pre,
       AdStatus: {
-        selectedData: newValue,
-        Message: `MediaType:${newValue}`,
+        status: newValue,
+        Message: `Ad Status:${newValue}`,
       },
     }));
   };
@@ -190,6 +190,9 @@ const Addlibrarydatabase = () => {
       key: "selection",
     },
   ]);
+  useEffect(() => {
+    console.log(adsFilteredData);
+  });
   return (
     <>
       {/* <Box
@@ -502,7 +505,7 @@ const Addlibrarydatabase = () => {
                       aria-labelledby="demo-radio-buttons-group-label"
                       defaultValue="female"
                       name="radio-buttons-group"
-                      value={appliedFilters?.AdStatus?.selectedData || ""}
+                      value={appliedFilters?.AdStatus?.status || ""}
                       onChange={handleChangeStatus}
                     >
                       <FormControlLabel
@@ -749,6 +752,8 @@ const Addlibrarydatabase = () => {
                                   "string"
                                 ? dum === "Mediatype"
                                   ? "Video or Photo"
+                                  : dum === "status"
+                                  ? ""
                                   : ""
                                 : new Date();
                           }
@@ -756,6 +761,15 @@ const Addlibrarydatabase = () => {
                             ...pre,
                             [`${filter}`]: FilterRemoveDat,
                           }));
+
+                          setAdsFilteredData(() => allMediaAds);
+                          console.log(
+                            "???????????????????????????????????????????????????"
+                          );
+                          console.log(adsFilteredData);
+                          console.log(
+                            "???????????????????????????????????????????????????"
+                          );
                         });
                       }}
                     >
@@ -793,9 +807,9 @@ const Addlibrarydatabase = () => {
                                 ? true
                                 : ads.adMediaType ===
                                   appliedFilters?.MediaType?.selectedData) &&
-                              (appliedFilters?.AdStatus?.selectedData !== ""
+                              (appliedFilters?.AdStatus?.status !== ""
                                 ? ads?.status ===
-                                  appliedFilters?.AdStatus?.selectedData
+                                  appliedFilters?.AdStatus?.status
                                 : true) &&
                               // (appliedFilters?.StartRunningDate?.startdate ? appliedFilters?.StartRunningDate?.startdate == ads.startDate : "")
                               (appliedFilters?.StartRunningDate?.startdate &&
@@ -834,13 +848,16 @@ const Addlibrarydatabase = () => {
                       const AdsRemovedElement = {
                         MIN: "min",
                         MEDIATYPE: "selectedData",
+                        STATUS: "status",
                         SELECTEDDATE: "StartRunningDate",
                       };
                       console.log(filter);
+
                       console.log(";;;;;;;;;;;;;;;");
                       const FilterRemoveData = [];
                       for (let dum in filters) {
-                        // console.log(dum, filters[dum]);
+                        console.log("dum" + dum);
+                        console.log(dum, filters[dum]);
                         // console.log(typeof appliedFilters[filter][dum]);
                         FilterRemoveData[dum] =
                           typeof appliedFilters[filter][dum] === "number"
@@ -849,7 +866,9 @@ const Addlibrarydatabase = () => {
                               : 1000
                             : typeof appliedFilters[filter][dum] === "string"
                             ? dum === AdsRemovedElement.MEDIATYPE
-                              ? "Video or Photo"
+                              ? dum === AdsRemovedElement.STATUS
+                                ? "Active"
+                                : "Video or Photo"
                               : ""
                             : new Date();
                       }
@@ -859,6 +878,11 @@ const Addlibrarydatabase = () => {
                         ...pre,
                         [`${filter}`]: FilterRemoveData,
                       }));
+
+                      // setAdsFilteredData(()=>[])
+                      // console.log("???????????????????????????????????????????????????")
+                      // console.log(adsFilteredData)
+                      // console.log("???????????????????????????????????????????????????")
                       console.log(filter);
                     }}
                     sx={{
