@@ -27,9 +27,11 @@ function AdDeatailsTabs() {
     } else {
       setIsActiveTab(adDetailsTabs.ALLADS);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
     if (allMediaAds) {
+      // eslint-disable-next-line array-callback-return
       const singleAds = allMediaAds.find((ad) => {
         if (ad.adID === adID.adsId) {
           return ad;

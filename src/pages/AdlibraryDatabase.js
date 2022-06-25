@@ -29,7 +29,7 @@ import { format } from "date-fns";
 
 import { addDays } from "date-fns";
 import ThumbNailBox from "../components/ThumbNailBox";
-import { object } from "yup";
+
 const useStyles = makeStyles((theme) => ({
   title: {
     background:
@@ -740,6 +740,7 @@ const Addlibrarydatabase = () => {
                         color: "#00CBFF",
                       }}
                       onClick={() => {
+                        // eslint-disable-next-line array-callback-return
                         Object.keys(appliedFilters).map((filter, index) => {
                           const FilterRemoveDat = [];
                           for (let dum in appliedFilters[filter]) {

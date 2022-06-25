@@ -35,20 +35,14 @@ const SavedAds = () => {
           disabled: loading ? true : false,
         }}
       >
-        {savedAds.map(
-          (ads, index) => (
-            console.log("------------------ads.id ---------------" + ads.id),
-            console.log(ads.id),
-            (
-              <ThumbNailBox
-                adInfo={ads}
-                index={index}
-                key={index}
-                deleteId={ads.id}
-              />
-            )
-          )
-        )}
+        {savedAds.map((ads, index) => (
+          <ThumbNailBox
+            adInfo={ads}
+            index={index}
+            key={index}
+            deleteId={ads.id}
+          />
+        ))}
       </Grid>
     </>
   );
