@@ -1,6 +1,7 @@
 import { call, put } from 'redux-saga/effects';
 import { requestCreateSavedAds, requestDeleteSavedAds, requestGetSavedAds } from "../requests/savedAds";
 import { createSavedAdsError, createSavedAdsSuccess, deleteSavedAdsError, deleteSavedAdsSuccess, loadSavedAdsError, loadSavedAdsSuccess } from "../../ducks/saveAds";
+import { loadMediaStart, updateMediaStart } from '../../ducks/mediaAds';
 
 export function* handleGetSavedAds() {
 	try {
@@ -23,6 +24,7 @@ export function* handleCreateSavedAds({ payload }) {
 
 		if (response.status === 200) {
 			yield put(createSavedAdsSuccess(response.data.data));
+			// yield put(loadMediaStart());
 		}
 	} catch (error) {
 		yield put(createSavedAdsError(error));
@@ -35,6 +37,7 @@ export function* handleDeleteSavedAds({ payload }) {
 
 		if (response.status === 200) {
 			yield put(deleteSavedAdsSuccess(payload));
+			// yield put(updateMediaStart(payload));
 		}
 	} catch (error) {
 		yield put(deleteSavedAdsError(error));

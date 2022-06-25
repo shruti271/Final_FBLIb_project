@@ -19,6 +19,7 @@ import {
 import { makeStyles } from "@material-ui/core/styles";
 import { Box } from "@mui/system";
 import CloseIcon from "@mui/icons-material/Close";
+import { useDispatch } from "react-redux";
 import { DateRange } from "react-date-range";
 import "react-datepicker/dist/react-datepicker.css";
 import Arrowdown from "../assets/Arrowdown.svg";
@@ -127,11 +128,18 @@ const useStyles = makeStyles((theme) => ({
 
 const Addlibrarydatabase = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  
 
   const { allMediaAds, loading } = useSelector((state) => state.allMediaAds);
   const [adsFilteredData, setAdsFilteredData] = useState([]);
   // const [filterAll, setFilterAll] = useState([]);
-
+  useEffect(() => {
+    console.log("555555555555555555555555555555555555555555555555");
+    console.log(allMediaAds);
+    console.log("555555555555555555555555555555555555555555555555");
+    
+  });
   const [appliedFilters, setAppliedFilters] = useState({
     StartRunningDate: { startdate: "", enddate: "", Message: "" },
     AdStatus: { status: "", Message: "" },
@@ -153,7 +161,9 @@ const Addlibrarydatabase = () => {
   useEffect(() => {
     setAdsFilteredData([...allMediaAds]);
   }, [allMediaAds]);
-
+// useEffect(()=>{
+//   dispatch(loadMediaStart());
+// },[])
   const counterIncremten = (event, newValue) => {
     setAppliedFilters((pre) => ({
       ...pre,
@@ -190,9 +200,21 @@ const Addlibrarydatabase = () => {
       key: "selection",
     },
   ]);
-  useEffect(() => {
-    console.log(adsFilteredData);
-  });
+  // useEffect(() => {
+  //   console.log(adsFilteredData);
+  //   console.log("--------------------------------------")
+  //   adsFilteredData[0].map((abc)=>{
+  //     console.log("1")
+  //     console.log(abc)
+  //   // })
+  //     console.log("1")
+
+  //     // abc.map((dummy)=>{console.log(dummy) })
+  //   console.log("--------------------------------------")
+  //   // adsFilteredData[0].map((abc)=>{
+  //   //   abc.map((dummy)=>{console.log(dummy) })
+  //   })
+  // });
   return (
     <>
       {/* <Box
@@ -926,7 +948,19 @@ const Addlibrarydatabase = () => {
               disabled: loading ? true : false,
             }}
           >
+            {/* {
+              adsFilteredData[0].map((abc)=>{
+                abc.map((dummy)=>{console.log(dummy) })
+              })
+            } */}
+            {/* {Object(adsFilteredData).map((ads, index) => {
+              <ThumbNailBox adInfo={ads[0]} index={index} key={index} />;
+            })} */}
             {adsFilteredData.map((ads, index) => (
+              console.log("\\\\\\\\\\\\\\\\\\\\\\\\||||||||||||||||||||||||||||||||"),
+              console.log(ads),
+              console.log("\\\\\\\\\\\\\\\\\\\\\\\\||||||||||||||||||||||||||||||||"),
+              // ads[0].map(())
               <ThumbNailBox adInfo={ads} index={index} key={index} />
             ))}
           </Grid>

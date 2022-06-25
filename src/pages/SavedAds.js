@@ -1,14 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { CircularProgress, Grid } from "@mui/material";
-
+import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 
 import ThumbNailBox from "../components/ThumbNailBox";
 import { Box } from "@mui/system";
+import { loadSavedAdsStart } from "../redux/ducks/saveAds";
 
 const SavedAds = () => {
   const { savedAds, loading } = useSelector((state) => state.savedAds);
+  const dispatch = useDispatch();
 
+useEffect(()=>{
+  // dispatch(loadSavedAdsStart());
+  console.log(savedAds)
+
+})
   return (
     <>
       <Box

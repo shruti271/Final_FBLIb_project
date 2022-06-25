@@ -1,6 +1,13 @@
-import { Button, Grid, InputBase, Stack, Typography } from "@mui/material";
+import {
+  Button,
+  CircularProgress,
+  Grid,
+  InputBase,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { Box } from "@mui/system";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import viss from "../assets/viss.svg";
 import { useSelector, useDispatch } from "react-redux";
@@ -11,7 +18,10 @@ function AccountSettings() {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const { accountSettings } = useSelector((state) => state.accountSettings);
+  const { accountSettings, loading } = useSelector(
+    (state) => state.accountSettings
+  );
+  const [loadingname, setLoadingname] = useState("");
 
   const {
     register: personalFormRegister,
@@ -42,10 +52,14 @@ function AccountSettings() {
   }, [accountSettings, personalFormSetValue]);
 
   const onPersonalFormSubmit = async (data) => {
+    // setLoading(true)
+    setLoadingname("personal");
     dispatch(updateAccountSettingsStart({ data, id: accountSettings?.id }));
+    // setLoading(false)
   };
 
   const onSecurityFormSubmit = async (data) => {
+    setLoadingname("security");
     console.table("onSecurityFormSubmit data:", data);
     dispatch(updateAccountSettingsStart({ data, id: accountSettings?.id }));
   };
@@ -63,12 +77,40 @@ function AccountSettings() {
               <Box>
                 <Typography variant="h6">Personal Information</Typography>
                 <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <CircularProgress
+                    style={{
+                      position: "relative",
+                      top: 50,
+                      left: 50,
+                      opacity: 1,
+                      zIndex: 1,
+                      visibility:
+                        loadingname === "personal"
+                          ? loading
+                            ? "visible"
+                            : "hidden"
+                          : "hidden",
+                    }}
+                  />
+                </Box>
+                <Box
                   border={0.5}
                   borderRadius={5}
                   borderColor="#EBEBEB"
                   display="flex"
                   justifyContent="center"
                   alignItems="center"
+                  sx={{
+                    opacity:
+                      loadingname === "personal" ? (loading ? 0.5 : 1) : 1,
+                    disabled: loading ? true : false,
+                  }}
                 >
                   <Stack
                     direction={"column"}
@@ -149,12 +191,40 @@ function AccountSettings() {
               <Box marginTop={5}>
                 <Typography variant="h6">Security</Typography>
                 <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <CircularProgress
+                    style={{
+                      position: "relative",
+                      top: 50,
+                      left: 50,
+                      opacity: 1,
+                      zIndex: 1,
+                      visibility:
+                        loadingname === "security"
+                          ? loading
+                            ? "visible"
+                            : "hidden"
+                          : "hidden",
+                    }}
+                  />
+                </Box>
+                <Box
                   border={0.5}
                   borderRadius={5}
                   borderColor="#EBEBEB"
                   display="flex"
                   justifyContent="center"
                   alignItems="center"
+                  sx={{
+                    opacity:
+                      loadingname === "security" ? (loading ? 0.5 : 1) : 1,
+                    disabled: loading ? true : false,
+                  }}
                 >
                   <Stack
                     direction={"column"}

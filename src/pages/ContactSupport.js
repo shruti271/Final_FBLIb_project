@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Typography from "@mui/material/Typography";
-import { Button, Grid, InputBase } from "@mui/material";
+import { Button, CircularProgress, Grid, InputBase } from "@mui/material";
 import { Box } from "@mui/system";
 import { useForm } from "react-hook-form";
 import { contactSupport } from "../services";
@@ -8,8 +9,8 @@ import useStyles from "../css/mediapage";
 
 const ContactSupport = () => {
   const classes = useStyles();
-  // const navigate = useNavigate();
-
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const {
     register,
     handleSubmit,
@@ -17,22 +18,48 @@ const ContactSupport = () => {
   } = useForm();
 
   const onFormSubmit = async (data) => {
+    setLoading(true);
     console.table("Contact Support Form Data :", data);
     const response = await contactSupport(data);
     if (!response.success) {
+      setLoading(false);
       console.log("SuccessFull!!", response);
       // navigate("/");
     } else {
+      setLoading(false);
       console.log("Failure!!", response);
-      // navigate("/");
+      navigate("/");
     }
   };
 
   return (
     <>
       <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <CircularProgress
+          style={{
+            position: "relative",
+            top: 50,
+            left: 50,
+            opacity: 1,
+            zIndex: 1,
+            visibility: loading ? "visible" : "hidden",
+          }}
+        />
+      </Box>
+      <Box
         clone
-        style={{ alignItems: "center", justifyContent: "center" }}
+        style={{
+          alignItems: "center",
+          justifyContent: "center",
+          opacity: loading ? 0.5 : 1,
+          disabled: loading ? true : false,
+        }}
         margin={5}
       >
         <Typography fontSize={{ lg: 25, md: 25, sm: 25 }}>

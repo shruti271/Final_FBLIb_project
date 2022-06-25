@@ -118,9 +118,12 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
 //   console.log("??????????????????")
 // console.log(deleteId);
 // console.log("??????????????????")
+  //   console.log("??????????????????")
+  // console.log(deleteId);
+  // console.log("??????????????????")
 
   return (
-    <Grid item xs={4} key={index}>
+    <Grid item lg={3} md={4} xs={4} key={index}>
       <Stack
         sx={{
           border: "2px solid #F6F6FB",
@@ -188,7 +191,7 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
                 alt="Shareicon"
                 className={classes.shareicon}
               />
-              {deleteId ? (
+              {adInfo?.saved_id || deleteId ? (
                 <img
                   src={StarFill}
                   alt="StarFill"
@@ -277,6 +280,7 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
             className={classes.AdsImageVideo}
           />
         </Box>
+        <Box>
         <Button
           variant="contained"
           size="small"
@@ -292,6 +296,7 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
         >
           see Details
         </Button>
+        </Box>
       </Stack>
     </Grid>
   );

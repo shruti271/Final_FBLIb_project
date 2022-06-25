@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Button, Stack } from "@mui/material";
 import { Box } from "@mui/system";
-import { Route, Routes, useNavigate, useParams } from "react-router-dom";
+import {
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 import AllAds from "./AllAds";
 import AdDeatails from "./adDeatails";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,10 +16,18 @@ import { loadSubAllMediaStart } from "../../redux/ducks/subAllAds";
 function AdDeatailsTabs() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  // const { itemId, otherParam } = route.params;
+  // const { state } = useLocation();
+  console.log("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\?????????????");
+  // console.log(state.adName);
+  console.log("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\");
   const adID = useParams();
 
   const { allMediaAds } = useSelector((state) => state.allMediaAds);
+  const { subAllMedia } = useSelector((state) => state.subAllMedia);
+  console.log("11111111111111111");
+  console.log(subAllMedia[0]?.pageInfo?.name);
+  console.log("11111111111111111");
 
   const adDetailsTabs = {
     ADOVERVIEW: "Ad Overview",
@@ -39,12 +53,14 @@ function AdDeatailsTabs() {
       });
 
       setAdDetail(singleAds);
-    }
-  }, [allMediaAds, adID.adsId, adDetail]);
 
-  useEffect(() => {
-    dispatch(loadSubAllMediaStart({ ad_name: adDetail?.pageInfo?.name }));
-  }, [adDetail?.pageInfo?.name, dispatch]);
+      if (subAllMedia[0]?.pageInfo?.name === singleAds?.pageInfo?.name) {
+        console.log("dont callllllllllllllllllllllllll");
+      } else {
+        dispatch(loadSubAllMediaStart({ ad_name: singleAds?.pageInfo?.name }));
+      }
+    }
+  }, [allMediaAds, adID.adsId, adDetail, subAllMedia, dispatch]);
 
   return (
     <>

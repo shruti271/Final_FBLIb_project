@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { styled } from "@mui/material/styles";
 import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -60,6 +60,10 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
   const handleOpenMenu = (e) => {
     setAnchoerEL(e.currentTarget);
   };
+  useEffect(() => {
+    console.log(window.location.pathname);
+    console.log("}}}}}}}}}}}");
+  });
   const handleCloseMenu = (e) => {
     setAnchoerEL(null);
   };
@@ -70,6 +74,9 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
       navigate("/auth/login");
     }
   };
+  useEffect(() => {
+    setIsMenuOptionActive(window.location.pathname);
+  });
   return (
     <>
       <AppBar open={isOpen}>
@@ -176,18 +183,18 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
                     <Divider />
 
                     {MenuListOptios.map((item, index) => {
-                      // console.log(item.name.replace(' ',''));
                       return (
                         <MenuItem
                           key={index}
                           onClick={() => {
                             navigate(item.url);
                             handleCloseMenu();
-                            setIsMenuOptionActive(item.name);
+
+                            // setIsMenuOptionActive(window.location.pathname);
                           }}
                           style={{
                             background:
-                              isMenuOptionActive === item.name
+                              isMenuOptionActive === item.url
                                 ? "white"
                                 : "#ebebeb",
                           }}

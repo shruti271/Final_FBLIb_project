@@ -12,6 +12,7 @@ export function* handleGetSubAllMedia({ payload }) {
 
     if (response.status === 200) {
       yield put(loadSubAllMediaSuccess(response?.data?.data));
+      // yield put(loadMediaStart);
     }
   } catch (error) {
     yield put(loadSubAllMediaError(error));
