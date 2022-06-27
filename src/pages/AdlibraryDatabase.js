@@ -30,6 +30,7 @@ import { format } from "date-fns";
 
 import { addDays } from "date-fns";
 import ThumbNailBox from "../components/ThumbNailBox";
+import { loadSavedAdsClientSideStart } from "../redux/ducks/saveAds_clientSide";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -129,17 +130,15 @@ const useStyles = makeStyles((theme) => ({
 const Addlibrarydatabase = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  
 
   const { allMediaAds, loading } = useSelector((state) => state.allMediaAds);
+
   const [adsFilteredData, setAdsFilteredData] = useState([]);
-  // const [filterAll, setFilterAll] = useState([]);
-  useEffect(() => {
-    console.log("555555555555555555555555555555555555555555555555");
-    console.log(allMediaAds);
-    console.log("555555555555555555555555555555555555555555555555");
-    
-  });
+
+  // const { savedAds } = useSelector((state) => state.savedAds);
+  const { savedIds } = useSelector(
+    (state) => state.savedclienads
+  );
   const [appliedFilters, setAppliedFilters] = useState({
     StartRunningDate: { startdate: "", enddate: "", Message: "" },
     AdStatus: { status: "", Message: "" },
@@ -158,12 +157,13 @@ const Addlibrarydatabase = () => {
   const [adStatusAnchorel, setAdStatusAnchorel] = React.useState(null);
   const openAdStatusAnchorel = Boolean(adStatusAnchorel);
 
+  // useEffect(() => {
+  //   dispatch(loadSavedAdsClientSideStart(savedAds));
+  // },[dispatch, savedAds]);
   useEffect(() => {
-    setAdsFilteredData([...allMediaAds]);
+    setAdsFilteredData(allMediaAds[1]?.all_ads);
   }, [allMediaAds]);
-// useEffect(()=>{
-//   dispatch(loadMediaStart());
-// },[])
+
   const counterIncremten = (event, newValue) => {
     setAppliedFilters((pre) => ({
       ...pre,
@@ -786,13 +786,13 @@ const Addlibrarydatabase = () => {
                           }));
 
                           setAdsFilteredData(() => allMediaAds);
-                          console.log(
-                            "???????????????????????????????????????????????????"
-                          );
-                          console.log(adsFilteredData);
-                          console.log(
-                            "???????????????????????????????????????????????????"
-                          );
+                          // console.log(
+                          //   "???????????????????????????????????????????????????"
+                          // );
+                          // console.log(adsFilteredData);
+                          // console.log(
+                          //   "???????????????????????????????????????????????????"
+                          // );
                         });
                       }}
                     >
@@ -948,20 +948,13 @@ const Addlibrarydatabase = () => {
               disabled: loading ? true : false,
             }}
           >
-            {/* {
-              adsFilteredData[0].map((abc)=>{
-                abc.map((dummy)=>{console.log(dummy) })
-              })
-            } */}
-            {/* {Object(adsFilteredData).map((ads, index) => {
-              <ThumbNailBox adInfo={ads[0]} index={index} key={index} />;
-            })} */}
-            {adsFilteredData.map((ads, index) => (
-              console.log("\\\\\\\\\\\\\\\\\\\\\\\\||||||||||||||||||||||||||||||||"),
-              console.log(ads),
-              console.log("\\\\\\\\\\\\\\\\\\\\\\\\||||||||||||||||||||||||||||||||"),
-              // ads[0].map(())
-              <ThumbNailBox adInfo={ads} index={index} key={index} />
+            {adsFilteredData?.map((ads, index) => (
+              <ThumbNailBox
+                adInfo={ads}
+                index={index}
+                deleteId={savedIds?.includes(ads.adID) ? ads.adID : false}
+                key={index}
+              />
             ))}
           </Grid>
         </Grid>

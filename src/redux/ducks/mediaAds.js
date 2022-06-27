@@ -37,11 +37,15 @@ export const updateMediaError = (error) => ({
 
 const initialState = {
   allMediaAds: [],
+  // savedIds:[],
   loading: false,
   error: "",
 };
 
 const mediaReducer = (state = initialState, action) => {
+  // console.log(action?.payload?.adID);
+  // console.log(allMediaAds[0].adID);
+  // console.log("88888888888888888888888888888888888888888");
   switch (action.type) {
     case LOAD_MEDIA_START:
     case UPDATE_MEDIA_START:
@@ -57,12 +61,13 @@ const mediaReducer = (state = initialState, action) => {
       };
     case UPDATE_MEDIA_SUCCESS:
       const index = state.allMediaAds.findIndex(
-        (ads) => ads.saved_id === action.payload.saved_id
+        (ads) => ads.adID === action.payload.adID
       );
 
       const newArray = [...state.allMediaAds];
 
       newArray[index] = action.payload;
+
       return {
         ...state,
         loading: false,
@@ -74,6 +79,7 @@ const mediaReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         error: action.payload,
+
       };
     default:
       return state;

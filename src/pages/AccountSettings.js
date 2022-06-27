@@ -86,8 +86,8 @@ function AccountSettings() {
                   <CircularProgress
                     style={{
                       position: "relative",
-                      top: 50,
-                      left: 50,
+                      top: 100,
+                      left: 30,
                       opacity: 1,
                       zIndex: 1,
                       visibility:
@@ -200,8 +200,8 @@ function AccountSettings() {
                   <CircularProgress
                     style={{
                       position: "relative",
-                      top: 50,
-                      left: 50,
+                      top: 100,
+                      left: 40,
                       opacity: 1,
                       zIndex: 1,
                       visibility:
