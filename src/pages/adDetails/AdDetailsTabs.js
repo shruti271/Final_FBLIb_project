@@ -25,6 +25,7 @@ function AdDeatailsTabs() {
 
   const { allMediaAds } = useSelector((state) => state.allMediaAds);
   const { subAllMedia } = useSelector((state) => state.subAllMedia);
+  console.log(adID)
   console.log("11111111111111111");
   console.log(subAllMedia[0]?.pageInfo?.name);
   console.log("11111111111111111");
@@ -45,14 +46,17 @@ function AdDeatailsTabs() {
   }, []);
   useEffect(() => {
     if (allMediaAds) {
+      console.log("comin------------------")
+      console.log(allMediaAds[1]?.all_ads)
       // eslint-disable-next-line array-callback-return
-      const singleAds = allMediaAds.find((ad) => {
+      const singleAds = allMediaAds[1]?.all_ads.find((ad) => {
         if (ad.adID === adID.adsId) {
           return ad;
         }
       });
 
-      setAdDetail(singleAds);
+      setAdDetail(()=>singleAds);
+      console.log(singleAds)
 
       if (subAllMedia[0]?.pageInfo?.name === singleAds?.pageInfo?.name) {
         console.log("dont callllllllllllllllllllllllll");

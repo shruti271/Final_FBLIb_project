@@ -785,7 +785,7 @@ const Addlibrarydatabase = () => {
                             [`${filter}`]: FilterRemoveDat,
                           }));
 
-                          setAdsFilteredData(() => allMediaAds);
+                          setAdsFilteredData(() => allMediaAds[1]?.all_ads);
                           // console.log(
                           //   "???????????????????????????????????????????????????"
                           // );
@@ -815,7 +815,7 @@ const Addlibrarydatabase = () => {
                         );
 
                         setAdsFilteredData(
-                          allMediaAds.filter(
+                          allMediaAds[1]?.all_ads.filter(
                             (ads) =>
                               (appliedFilters?.AdCount?.min !== 0 ||
                               appliedFilters?.AdCount?.max !== 1000
