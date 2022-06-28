@@ -203,8 +203,6 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
                   alt="Saveicon"
                   className={classes.saveicon}
                   onClick={() => {
-                    console.log(adInfo);
-                    console.log("******************************************");
                     dispatch(
                       createSavedAdsClientSideStart({ ad: adInfo.adID })
                     );

@@ -19,7 +19,6 @@ import {
 import { makeStyles } from "@material-ui/core/styles";
 import { Box } from "@mui/system";
 import CloseIcon from "@mui/icons-material/Close";
-import { useDispatch } from "react-redux";
 import { DateRange } from "react-date-range";
 import "react-datepicker/dist/react-datepicker.css";
 import Arrowdown from "../assets/Arrowdown.svg";
@@ -27,10 +26,8 @@ import Arrowdown from "../assets/Arrowdown.svg";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import { format } from "date-fns";
-
 import { addDays } from "date-fns";
 import ThumbNailBox from "../components/ThumbNailBox";
-import { loadSavedAdsClientSideStart } from "../redux/ducks/saveAds_clientSide";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -129,16 +126,12 @@ const useStyles = makeStyles((theme) => ({
 
 const Addlibrarydatabase = () => {
   const classes = useStyles();
-  const dispatch = useDispatch();
 
   const { allMediaAds, loading } = useSelector((state) => state.allMediaAds);
 
   const [adsFilteredData, setAdsFilteredData] = useState([]);
 
-  // const { savedAds } = useSelector((state) => state.savedAds);
-  const { savedIds } = useSelector(
-    (state) => state.savedclienads
-  );
+  const { savedIds } = useSelector((state) => state.savedclienads);
   const [appliedFilters, setAppliedFilters] = useState({
     StartRunningDate: { startdate: "", enddate: "", Message: "" },
     AdStatus: { status: "", Message: "" },
@@ -146,6 +139,11 @@ const Addlibrarydatabase = () => {
     FacebookLikes: { Message: "" },
     InstragramLike: { Message: "" },
     MediaType: { selectedData: "Video or Photo", Message: "" },
+  });
+
+  const [sortedDetail, setSortedDetail] = useState({
+    order: "startDate",
+    type: "Ascending",
   });
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -156,10 +154,9 @@ const Addlibrarydatabase = () => {
   const openMediaTypeAnchorel = Boolean(mediaTypeAnchorel);
   const [adStatusAnchorel, setAdStatusAnchorel] = React.useState(null);
   const openAdStatusAnchorel = Boolean(adStatusAnchorel);
+  const [sortByAnchorel, setSortByAnchorel] = React.useState(null);
+  const openSortByAnchorel = Boolean(sortByAnchorel);
 
-  // useEffect(() => {
-  //   dispatch(loadSavedAdsClientSideStart(savedAds));
-  // },[dispatch, savedAds]);
   useEffect(() => {
     setAdsFilteredData(allMediaAds[1]?.all_ads);
   }, [allMediaAds]);
@@ -193,6 +190,43 @@ const Addlibrarydatabase = () => {
       },
     }));
   };
+
+  const handleChangeAceOrDes = (event, newValue) => {
+    console.log(newValue);
+    setSortedDetail((pre) => ({ ...pre, order: newValue }));
+  };
+
+  const handleChangeSortType = (event, newValue) => {
+    console.log(newValue);
+    setSortedDetail((pre) => ({ ...pre, type: newValue }));
+  };
+
+  useEffect(() => {
+    console.log(sortedDetail?.type);
+    if (sortedDetail?.order === "Ascending") {
+      sortedDetail?.type === "startDate"
+        ? adsFilteredData?.sort(
+            (firstAd, secondAd) =>
+              Date.parse(firstAd[sortedDetail?.type]) -
+              Date.parse(secondAd[sortedDetail?.type])
+          )
+        : adsFilteredData?.sort(
+            (firstAd, secondAd) =>
+              firstAd[sortedDetail?.type] - secondAd[sortedDetail?.type]
+          );
+    } else
+      sortedDetail?.type === "startDate"
+        ? adsFilteredData?.sort(
+            (firstAd, secondAd) =>
+              Date.parse(secondAd[sortedDetail?.type]) -
+              Date.parse(firstAd[sortedDetail?.type])
+          )
+        : adsFilteredData?.sort(
+            (firstAd, secondAd) =>
+              secondAd[sortedDetail?.type] - firstAd[sortedDetail?.type]
+          );
+  }, [adsFilteredData, sortedDetail?.order, sortedDetail?.type]);
+
   const [range, setRange] = useState([
     {
       startDate: new Date(),
@@ -200,24 +234,10 @@ const Addlibrarydatabase = () => {
       key: "selection",
     },
   ]);
-  // useEffect(() => {
-  //   console.log(adsFilteredData);
-  //   console.log("--------------------------------------")
-  //   adsFilteredData[0].map((abc)=>{
-  //     console.log("1")
-  //     console.log(abc)
-  //   // })
-  //     console.log("1")
 
-  //     // abc.map((dummy)=>{console.log(dummy) })
-  //   console.log("--------------------------------------")
-  //   // adsFilteredData[0].map((abc)=>{
-  //   //   abc.map((dummy)=>{console.log(dummy) })
-  //   })
-  // });
   return (
     <>
-      {/* <Box
+      <Box
         sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
       >
         <CircularProgress
@@ -230,7 +250,7 @@ const Addlibrarydatabase = () => {
             visibility: loading ? "visible" : "hidden",
           }}
         />
-      </Box> */}
+      </Box>
       <Grid
         container
         sx={{ opacity: loading ? 0.5 : 1, disabled: loading ? true : false }}
@@ -918,6 +938,141 @@ const Addlibrarydatabase = () => {
               );
             })}
           </Grid>
+        </Grid>
+        <Grid container justifyContent="flex-end">
+          <Box>
+            <Button
+              onClick={(event) => {
+                setSortByAnchorel(event.currentTarget);
+              }}
+              size="large"
+              variant="outlined"
+              disableElevation
+              disableRipple
+              sx={{
+                color: "#2B2F42",
+                whiteSpace: "nowrap",
+                border: "1px solid #EBEBEB",
+                borderRadius: "10px",
+                marginRight: "14px",
+                marginTop: "22px",
+              }}
+              // className={classes.FilterBox}
+              endIcon={
+                <img
+                  alt="arrowdown"
+                  src={Arrowdown}
+                  className={classes.DropDownArrow}
+                />
+              }
+            >
+              <Typography noWrap textTransform="capitalize">
+                {/* {sortedDetail || "sort by"} */}
+                Sort by
+              </Typography>
+            </Button>
+            <Popover
+              anchorEl={sortByAnchorel}
+              open={openSortByAnchorel}
+              add={openSortByAnchorel ? "simple-popover" : undefined}
+              onClose={() => {
+                setSortByAnchorel(null);
+              }}
+              transformOrigin={{
+                horizontal: "left",
+                vertical: "top",
+              }}
+              anchorOrigin={{
+                horizontal: "left",
+                vertical: "bottom",
+              }}
+            >
+              <Box>
+                <FormControl sx={{ padding: "10px" }}>
+                  <RadioGroup
+                    aria-labelledby="demo-radio-buttons-group-label"
+                    defaultValue="female"
+                    name="radio-buttons-group"
+                    value={sortedDetail.type}
+                    onChange={handleChangeSortType}
+                  >
+                    <FormControlLabel
+                      value="startDate"
+                      control={<Radio style={{ color: "#00CBFF" }} />}
+                      label="Started running date"
+                    />
+                    <FormControlLabel
+                      value="Recently updated"
+                      control={<Radio style={{ color: "#00CBFF" }} />}
+                      label="Recently updated"
+                    />
+                    <FormControlLabel
+                      value="Page likes"
+                      control={<Radio style={{ color: "#00CBFF" }} />}
+                      label="Page likes"
+                    />
+                    <FormControlLabel
+                      value="noOfCopyAds"
+                      control={<Radio style={{ color: "#00CBFF" }} />}
+                      label="Ad count total"
+                    />
+                    <FormControlLabel
+                      value="Ad count increase"
+                      control={<Radio style={{ color: "#00CBFF" }} />}
+                      label="Ad count increase"
+                    />
+                    <FormControlLabel
+                      value="Ad count decrease"
+                      control={<Radio style={{ color: "#00CBFF" }} />}
+                      label="Ad count decrease"
+                    />
+                  </RadioGroup>
+                </FormControl>
+                <Divider />
+                <FormControl sx={{ padding: "10px" }}>
+                  <RadioGroup
+                    aria-labelledby="demo-radio-buttons-group-label"
+                    defaultValue="female"
+                    name="radio-buttons-group"
+                    value={sortedDetail?.order}
+                    onChange={handleChangeAceOrDes}
+                  >
+                    <FormControlLabel
+                      value="Ascending"
+                      control={<Radio style={{ color: "#00CBFF" }} />}
+                      label="Ascending"
+                    />
+                    <FormControlLabel
+                      value="Descending"
+                      control={<Radio style={{ color: "#00CBFF" }} />}
+                      label="Descending"
+                    />
+                  </RadioGroup>
+                </FormControl>
+
+                {/* <Box
+                  display={"flex"}
+                  alignContent={"center"}
+                  justifyContent={"center"}
+                >
+                  <Button
+                    variant="outlined"
+                    sx={{
+                      borderRadius: 50,
+                      fontWeight: 600,
+                      borderColor: "#00CBFF",
+                      color: "#00CBFF",
+                      height: "35px",
+                      width: "80px",
+                      borderWidth: 2,
+                    }}
+                  >
+                    Reset
+                  </Button>
+                </Box> */}
+              </Box>
+            </Popover>
+          </Box>
         </Grid>
         <Grid item xs={12}>
           <Box
