@@ -55,7 +55,7 @@ function AdDeatails({ ThumbnailData }) {
                 {ThumbnailData?.adMediaType === "video" ? (
                   <video
                     src={ThumbnailData?.bucketMediaURL}
-                    autoPlay
+                    // autoPlay
                     controls
                     className={classes.AdsImageVideo}
                   />

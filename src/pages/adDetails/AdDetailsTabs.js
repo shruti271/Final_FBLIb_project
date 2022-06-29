@@ -1,18 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Button, Stack } from "@mui/material";
+import { Button, Stack, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import {
-  Route,
-  Routes,
-  useLocation,
-  useNavigate,
-  useParams,
-} from "react-router-dom";
+import { Route, Routes, useNavigate, useParams } from "react-router-dom";
 import AllAds from "./AllAds";
 import AdDeatails from "./adDeatails";
 import { useDispatch, useSelector } from "react-redux";
 import { loadSubAllMediaStart } from "../../redux/ducks/subAllAds";
-
+import LeftArrow from "../../assets/LeftArrow.svg";
 function AdDeatailsTabs() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -25,7 +19,7 @@ function AdDeatailsTabs() {
 
   const { allMediaAds } = useSelector((state) => state.allMediaAds);
   const { subAllMedia } = useSelector((state) => state.subAllMedia);
-  console.log(adID)
+  console.log(adID);
   console.log("11111111111111111");
   console.log(subAllMedia[0]?.pageInfo?.name);
   console.log("11111111111111111");
@@ -42,12 +36,12 @@ function AdDeatailsTabs() {
     } else {
       setIsActiveTab(adDetailsTabs.ALLADS);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
     if (allMediaAds) {
-      console.log("comin------------------")
-      console.log(allMediaAds[1]?.all_ads)
+      console.log("comin------------------");
+      console.log(allMediaAds[1]?.all_ads);
       // eslint-disable-next-line array-callback-return
       const singleAds = allMediaAds[1]?.all_ads.find((ad) => {
         if (ad.adID === adID.adsId) {
@@ -55,8 +49,8 @@ function AdDeatailsTabs() {
         }
       });
 
-      setAdDetail(()=>singleAds);
-      console.log(singleAds)
+      setAdDetail(() => singleAds);
+      console.log(singleAds);
 
       if (subAllMedia[0]?.pageInfo?.name === singleAds?.pageInfo?.name) {
         console.log("dont callllllllllllllllllllllllll");
@@ -76,6 +70,19 @@ function AdDeatailsTabs() {
           alignItems: "center",
         }}
       >
+        <Box
+          onClick={() => {            
+            navigate("/");
+          }}
+          sx={{ cursor: "pointer" }}
+        >
+          <Stack direction={"row"}>
+            <Box sx={{ marginRight: "12px" }}>
+              <img src={LeftArrow} aria-label="FirstCard" />
+            </Box>
+            <Typography><b>Search Results</b></Typography>
+          </Stack>
+        </Box>
         <Box
           style={{
             display: "flex",

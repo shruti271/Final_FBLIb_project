@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Button,
   Chip,
@@ -14,6 +14,7 @@ import {
   RadioGroup,
   Slider,
   Stack,
+  TextField,
   Typography,
 } from "@mui/material";
 import { makeStyles } from "@material-ui/core/styles";
@@ -28,6 +29,17 @@ import "react-date-range/dist/theme/default.css";
 import { format } from "date-fns";
 import { addDays } from "date-fns";
 import ThumbNailBox from "../components/ThumbNailBox";
+import {
+  AdCountvalueStart,
+  applyallfilters,
+  clearFilteredDataStart,
+  clearSingleFilteredDataStart,
+  datevalueStart,
+  loadFilteredDataStart,
+  MediaTypevalueStart,
+  putFilteredDataStart,
+  statusValueStart,
+} from "../redux/ducks/filtered_Data";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -126,20 +138,24 @@ const useStyles = makeStyles((theme) => ({
 
 const Addlibrarydatabase = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
 
   const { allMediaAds, loading } = useSelector((state) => state.allMediaAds);
-
-  const [adsFilteredData, setAdsFilteredData] = useState([]);
-
+  const { filteredData, appliedFilters } = useSelector(
+    (state) => state.filteredData
+  );
+  const [countMin, setCountMin] = useState([]);
+  const [countMax, setCountMax] = useState(1000);
   const { savedIds } = useSelector((state) => state.savedclienads);
-  const [appliedFilters, setAppliedFilters] = useState({
-    StartRunningDate: { startdate: "", enddate: "", Message: "" },
-    AdStatus: { status: "", Message: "" },
-    AdCount: { min: 0, max: 1000, Message: "" },
-    FacebookLikes: { Message: "" },
-    InstragramLike: { Message: "" },
-    MediaType: { selectedData: "Video or Photo", Message: "" },
-  });
+
+  // const [appliedFilters, setAppliedFilters] = useState({
+  //   StartRunningDate: { startdate: "", enddate: "", Message: "" },
+  //   AdStatus: { status: "", Message: "" },
+  //   AdCount: { min: 0, max: 1000, Message: "" },
+  //   FacebookLikes: { Message: "" },
+  //   InstragramLike: { Message: "" },
+  //   MediaType: { selectedData: "Video or Photo", Message: "" },
+  // });
 
   const [sortedDetail, setSortedDetail] = useState({
     order: "startDate",
@@ -156,39 +172,103 @@ const Addlibrarydatabase = () => {
   const openAdStatusAnchorel = Boolean(adStatusAnchorel);
   const [sortByAnchorel, setSortByAnchorel] = React.useState(null);
   const openSortByAnchorel = Boolean(sortByAnchorel);
-
   useEffect(() => {
-    setAdsFilteredData(allMediaAds[1]?.all_ads);
+    console.log("33333333333333333333333333333333333333333333333333");
+    console.log(appliedFilters);
+    console.log(filteredData);
+    console.log("33333333333333333333333333333333333333333333333333");
+  });
+  useEffect(() => {
+    console.log(filteredData);
+    console.log(
+      "hhhhhhhhhhhhhhhh:::::::::::::::::::::",
+      Object(filteredData).length
+    );
+    if (Object(filteredData).length) {
+      console.log("come here 111111");
+      dispatch(loadFilteredDataStart());
+    } else {
+      console.log("come here 2");
+      // setAdsFilteredData(allMediaAds[1]?.all_ads);
+      dispatch(putFilteredDataStart(allMediaAds[1]?.all_ads));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [allMediaAds]);
 
+  // useEffect(() => {
+  //   dispatch(loadFilteredDataStart());
+  // }, [adsFilteredData, dispatch]);
+
   const counterIncremten = (event, newValue) => {
-    setAppliedFilters((pre) => ({
-      ...pre,
-      AdCount: {
+    console.log(newValue);
+    console.log("............................................................");
+    dispatch(
+      AdCountvalueStart({
+        name: "AdCount",
         min: newValue[0],
         max: newValue[1],
         Message: `Ad Count: ${newValue[0]}-${newValue[1]}`,
-      },
-    }));
+      })
+    );
+    dispatch(applyallfilters());
+
+    // setAppliedFilters((pre) => ({
+    //   ...pre,
+    //   AdCount: {
+    // min: newValue[0],
+    // max: newValue[1],
+    // Message: `Ad Count: ${newValue[0]}-${newValue[1]}`,
+    //   },
+    // }));
+  };
+  const handlechangeall = (newValue) => {
+    dispatch(
+      AdCountvalueStart({
+        name: "AdCount",
+        min: newValue,
+        max: 1000,
+        Message: `Ad Count: ${newValue[0]}-${appliedFilters?.AdCount?.max}`,
+      })
+    );
+    console.log("------------------" + newValue.currentTarget.textContent);
   };
 
   const handlechange = (event, newValue) => {
-    setAppliedFilters((pre) => ({
-      ...pre,
-      MediaType: {
+    console.log(newValue);
+    console.log("..................................................");
+    dispatch(
+      MediaTypevalueStart({
+        name: "MediaType",
         selectedData: newValue,
-        Message: `MediaType:${newValue}`,
-      },
-    }));
+        Message: `MediaType : ${newValue}`,
+      })
+    );
+    dispatch(applyallfilters());
+
+    // setAppliedFilters((pre) => ({
+    //   ...pre,
+    //   MediaType: {
+    // selectedData: newValue,
+    // Message: `MediaType:${newValue}`,
+    //   },
+    // }));
   };
   const handleChangeStatus = (event, newValue) => {
-    setAppliedFilters((pre) => ({
-      ...pre,
-      AdStatus: {
+    dispatch(
+      statusValueStart({
+        name: "AdStatus",
         status: newValue,
         Message: `Ad Status:${newValue}`,
-      },
-    }));
+      })
+    );
+    dispatch(applyallfilters());
+    // setAppliedFilters((pre) => ({
+    //   ...pre,
+    //   AdStatus: {
+    // status: newValue,
+    // Message: `Ad Status:${newValue}`,
+    //   },
+    // }));
   };
 
   const handleChangeAceOrDes = (event, newValue) => {
@@ -201,31 +281,34 @@ const Addlibrarydatabase = () => {
     setSortedDetail((pre) => ({ ...pre, type: newValue }));
   };
 
-  useEffect(() => {
-    console.log(sortedDetail?.type);
-    if (sortedDetail?.order === "Ascending") {
-      sortedDetail?.type === "startDate"
-        ? adsFilteredData?.sort(
-            (firstAd, secondAd) =>
-              Date.parse(firstAd[sortedDetail?.type]) -
-              Date.parse(secondAd[sortedDetail?.type])
-          )
-        : adsFilteredData?.sort(
-            (firstAd, secondAd) =>
-              firstAd[sortedDetail?.type] - secondAd[sortedDetail?.type]
-          );
-    } else
-      sortedDetail?.type === "startDate"
-        ? adsFilteredData?.sort(
-            (firstAd, secondAd) =>
-              Date.parse(secondAd[sortedDetail?.type]) -
-              Date.parse(firstAd[sortedDetail?.type])
-          )
-        : adsFilteredData?.sort(
-            (firstAd, secondAd) =>
-              secondAd[sortedDetail?.type] - firstAd[sortedDetail?.type]
-          );
-  }, [adsFilteredData, sortedDetail?.order, sortedDetail?.type]);
+  // useEffect(()=>{
+    
+  // },[addcounteropen])
+  // useEffect(() => {
+  //   console.log(sortedDetail?.type);
+  //   if (sortedDetail?.order === "Ascending") {
+  //     sortedDetail?.type === "startDate"
+  //       ? adsFilteredData?.sort(
+  //           (firstAd, secondAd) =>
+  //             Date.parse(firstAd[sortedDetail?.type]) -
+  //             Date.parse(secondAd[sortedDetail?.type])
+  //         )
+  //       : adsFilteredData?.sort(
+  //           (firstAd, secondAd) =>
+  //             firstAd[sortedDetail?.type] - secondAd[sortedDetail?.type]
+  //         );
+  //   } else
+  //     sortedDetail?.type === "startDate"
+  //       ? adsFilteredData?.sort(
+  //           (firstAd, secondAd) =>
+  //             Date.parse(secondAd[sortedDetail?.type]) -
+  //             Date.parse(firstAd[sortedDetail?.type])
+  //         )
+  //       : adsFilteredData?.sort(
+  //           (firstAd, secondAd) =>
+  //             secondAd[sortedDetail?.type] - firstAd[sortedDetail?.type]
+  //         );
+  // }, [adsFilteredData, sortedDetail?.order, sortedDetail?.type]);
 
   const [range, setRange] = useState([
     {
@@ -234,7 +317,11 @@ const Addlibrarydatabase = () => {
       key: "selection",
     },
   ]);
-
+  // useEffect(() => {
+  //   const abc = document.getElementById("countRange").innerText;
+  //   console.log(abc)
+  //   console.log("((((((((((((((((((((((((((((((((((((((()))))))))))))))))))))))))))))))))))))))")
+  // },[]);
   return (
     <>
       <Box
@@ -305,7 +392,7 @@ const Addlibrarydatabase = () => {
               </Box>
             </Grid>
           </Grid>
-          <Grid container sx={{ alignItems: "center" }}>
+          <Grid container>
             <Grid item lg={11} md={11}>
               <Button
                 onClick={(event) => {
@@ -355,28 +442,9 @@ const Addlibrarydatabase = () => {
                 <DateRange
                   onClick={(item) => {
                     console.log(item);
-                    setAppliedFilters((pre) => ({
-                      ...pre,
-                      StartRunningDate: {
-                        startdate: format(
-                          item.selection.startDate,
-                          "yyyy/MM/dd"
-                        ),
-                        enddate: format(item.selection.endDate, "yyyy/MM/dd"),
-                        Message: `running date ${format(
-                          item.selection.startDate,
-                          "yyyy/MM/dd"
-                        )}`,
-                      },
-                    }));
-                    setRange([item.selection]);
-                  }}
-                  onChange={(item) => {
-                    console.log(item);
-
-                    setAppliedFilters((pre) => ({
-                      ...pre,
-                      StartRunningDate: {
+                    dispatch(
+                      datevalueStart({
+                        name: "StartRunningDate",
                         startdate: format(
                           item.selection.startDate,
                           "yyyy-MM-dd"
@@ -384,10 +452,57 @@ const Addlibrarydatabase = () => {
                         enddate: format(item.selection.endDate, "yyyy-MM-dd"),
                         Message: `running date ${format(
                           item.selection.startDate,
-                          "yyyy/MM/dd"
-                        )} to ${format(item.selection.endDate, "yyyy/MM/dd")}`,
-                      },
-                    }));
+                          "yyyy-MM-dd"
+                        )}`,
+                      })
+                    );
+                    // setAppliedFilters((pre) => ({
+                    //   ...pre,
+                    //   StartRunningDate: {
+                    //     startdate: format(
+                    //       item.selection.startDate,
+                    //       "yyyy/MM/dd"
+                    //     ),
+                    //     enddate: format(item.selection.endDate, "yyyy/MM/dd"),
+                    //     Message: `running date ${format(
+                    //       item.selection.startDate,
+                    //       "yyyy/MM/dd"
+                    //     )}`,
+                    //   },
+                    // }));
+                    setRange([item.selection]);
+                  }}
+                  onChange={(item) => {
+                    console.log(item);
+                    dispatch(
+                      datevalueStart({
+                        name: "StartRunningDate",
+
+                        startdate: format(
+                          item.selection.startDate,
+                          "yyyy-MM-dd"
+                        ),
+                        enddate: format(item.selection.endDate, "yyyy-MM-dd"),
+                        Message: `running date ${format(
+                          item.selection.startDate,
+                          "yyyy-MM-dd"
+                        )} to ${format(item.selection.endDate, "yyyy-MM-dd")}`,
+                      })
+                    );
+                    // setAppliedFilters((pre) => ({
+                    //   ...pre,
+                    //   StartRunningDate: {
+                    //     startdate: format(
+                    //       item.selection.startDate,
+                    //       "yyyy-MM-dd"
+                    //     ),
+                    //     enddate: format(item.selection.endDate, "yyyy-MM-dd"),
+                    //     Message: `running date ${format(
+                    //       item.selection.startDate,
+                    //       "yyyy/MM/dd"
+                    //     )} to ${format(item.selection.endDate, "yyyy/MM/dd")}`,
+                    //   },
+                    // }));
                     console.log(appliedFilters);
                     setRange([item.selection]);
                   }}
@@ -432,6 +547,21 @@ const Addlibrarydatabase = () => {
                 anchorEl={rangeanchorel}
                 onClose={() => {
                   setrangeAnchorEl(null);
+                  // let min = document.getElementById("minRange").innerText;
+                  // let max = document.getElementById("maxRange").innerText;
+                  // console.log(min);
+                  // console.log(max);
+                  // dispatch(
+                  //   AdCountvalueStart({
+                  //     name: "AdCount",
+                  //     min: min,
+                  //     max: max,
+                  //     Message: `Ad Count: ${min}-${max}`,
+                  //   })
+                  // );
+                  // console.log(
+                  //   "[]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]][[[[[[[[[[[[[[[[[]]]]]]]]]]]]]]]]]]"
+                  // );
                 }}
                 add={open ? "simple-popover" : undefined}
                 transformOrigin={{
@@ -459,10 +589,81 @@ const Addlibrarydatabase = () => {
                       justifyContent: "center",
                     }}
                   >
-                    <Typography sx={{ padding: "0px" }}>
+                    {/* <Box>
+                      <TextField sx={{border: 'none',borderColor:"white"}} min={0} max={1000}/>
+                    </Box> */}
+                    <Box>
+                      <Stack direction={"row"} spacing={1}>
+                        <Typography>From</Typography>
+                        {/* <span
+                          contentEditable
+                          onInput={(e) => {
+                            console.log(
+                              "????????????????????",
+                              +e.currentTarget.textContent
+                            );
+                          }}
+                        >
+                          11111
+                        </span> */}
+
+                        <Typography
+                          contentEditable
+                          id="minRange"
+                          // onInput={handlechangeall}
+                          // onInput={(newValue) => {
+                          //   setCountMin(
+                          //     `${newValue.currentTarget.textContent}`
+                          //   );
+                          // }}
+                          onInput={(newValue) => {
+                            dispatch(
+                              AdCountvalueStart({
+                                name: "AdCount",
+                                min: Number(newValue.currentTarget.textContent),
+                                max: appliedFilters?.AdCount?.max,
+                                Message: `Ad Count: ${newValue.currentTarget.textContent}-${appliedFilters?.AdCount?.max}`,
+                              })
+                            );
+                            console.log(
+                              "------------------" +
+                                newValue.currentTarget.textContent
+                            );
+                          }}
+                        >
+                          {appliedFilters?.AdCount?.min}
+                        </Typography>
+                        <Typography>to</Typography>
+                        <Typography
+                          contentEditable={true}
+                          id="maxRange"
+                          onInput={(newValue) => {
+                            // setCountMax(
+                            //   `${newValue.currentTarget.textContent}`
+                            // );
+                            dispatch(
+                              AdCountvalueStart({
+                                name: "AdCount",
+                                min: appliedFilters?.AdCount?.min,
+                                max: Number(newValue.currentTarget.textContent),
+                                Message: `Ad Count: ${appliedFilters?.AdCount?.min}-${newValue.currentTarget.textContent}`,
+                              })
+                            );
+                            console.log(
+                              "------------------" +
+                                newValue.currentTarget.textContent
+                            );
+                          }}
+                        >
+                          {" "}
+                          {appliedFilters?.AdCount?.max}
+                        </Typography>
+                      </Stack>
+                    </Box>
+                    {/* <Typography contentEditable={true} sx={{ padding: "0px" }}>
                       From {appliedFilters?.AdCount?.min} to{" "}
                       {appliedFilters?.AdCount?.max}+
-                    </Typography>
+                    </Typography> */}
                     <Slider
                       size="small"
                       value={[
@@ -484,10 +685,19 @@ const Addlibrarydatabase = () => {
                         borderWidth: 2,
                       }}
                       onClick={() => {
-                        setAppliedFilters((pre) => ({
-                          ...pre,
-                          AdCount: { min: 0, max: 1000, Message: "" },
-                        }));
+                        dispatch(
+                          AdCountvalueStart({
+                            name: "AdCount",
+                            min: 0,
+                            max: 1000,
+                            Message: "",
+                          })
+                        );
+                        dispatch(applyallfilters());
+                        // setAppliedFilters((pre) => ({
+                        //   ...pre,
+                        //   AdCount: { min: 0, max: 1000, Message: "" },
+                        // }));
 
                         setrangeAnchorEl(null);
                       }}
@@ -576,6 +786,16 @@ const Addlibrarydatabase = () => {
                           height: "35px",
                           width: "80px",
                           borderWidth: 2,
+                        }}
+                        onClick={() => {
+                          dispatch(
+                            statusValueStart({
+                              name: "AdStatus",
+                              status: "Active",
+                              Message: "",
+                            })
+                          );
+                          dispatch(applyallfilters());
                         }}
                       >
                         Reset
@@ -717,13 +937,21 @@ const Addlibrarydatabase = () => {
                           borderWidth: 2,
                         }}
                         onClick={() => {
-                          setAppliedFilters((pre) => ({
-                            ...pre,
-                            MediaType: {
+                          dispatch(
+                            MediaTypevalueStart({
+                              name: "MediaType",
                               selectedData: "Video or Photo",
                               Message: "",
-                            },
-                          }));
+                            })
+                          );
+                          dispatch(applyallfilters());
+                          // setAppliedFilters((pre) => ({
+                          //   ...pre,
+                          //   MediaType: {
+                          //     selectedData: "Video or Photo",
+                          //     Message: "",
+                          //   },
+                          // }));
 
                           setMediaTypeAnchorel(null);
                         }}
@@ -782,6 +1010,7 @@ const Addlibrarydatabase = () => {
                         color: "#00CBFF",
                       }}
                       onClick={() => {
+                        const emptyFilter = [];
                         // eslint-disable-next-line array-callback-return
                         Object.keys(appliedFilters).map((filter, index) => {
                           const FilterRemoveDat = [];
@@ -800,20 +1029,15 @@ const Addlibrarydatabase = () => {
                                   : ""
                                 : new Date();
                           }
-                          setAppliedFilters((pre) => ({
-                            ...pre,
-                            [`${filter}`]: FilterRemoveDat,
-                          }));
-
-                          setAdsFilteredData(() => allMediaAds[1]?.all_ads);
-                          // console.log(
-                          //   "???????????????????????????????????????????????????"
-                          // );
-                          // console.log(adsFilteredData);
-                          // console.log(
-                          //   "???????????????????????????????????????????????????"
-                          // );
+                          dispatch(clearFilteredDataStart(FilterRemoveDat));
+                          // setAppliedFilters((pre) => ({
+                          //   ...pre,
+                          //   [`${filter}`]: FilterRemoveDat,
+                          // }));
+                          emptyFilter[filter] = FilterRemoveDat;
+                          // setAdsFilteredData(() => allMediaAds[1]?.all_ads);
                         });
+                        dispatch(clearFilteredDataStart(emptyFilter));
                       }}
                     >
                       clear
@@ -829,41 +1053,36 @@ const Addlibrarydatabase = () => {
                         color: "white",
                       }}
                       onClick={() => {
-                        console.log(
-                          "adsFilteredData?.AdCount?.min + ",
-                          adsFilteredData?.AdCount?.min
-                        );
-
-                        setAdsFilteredData(
-                          allMediaAds[1]?.all_ads.filter(
-                            (ads) =>
-                              (appliedFilters?.AdCount?.min !== 0 ||
-                              appliedFilters?.AdCount?.max !== 1000
-                                ? ads.noOfCopyAds >=
-                                    appliedFilters?.AdCount?.min &&
-                                  ads.noOfCopyAds <=
-                                    appliedFilters?.AdCount?.max
-                                : true) &&
-                              (appliedFilters?.MediaType?.selectedData === "" ||
-                              appliedFilters?.MediaType?.selectedData ===
-                                "Video or Photo"
-                                ? true
-                                : ads.adMediaType ===
-                                  appliedFilters?.MediaType?.selectedData) &&
-                              (appliedFilters?.AdStatus?.status !== ""
-                                ? ads?.status ===
-                                  appliedFilters?.AdStatus?.status
-                                : true) &&
-                              // (appliedFilters?.StartRunningDate?.startdate ? appliedFilters?.StartRunningDate?.startdate == ads.startDate : "")
-                              (appliedFilters?.StartRunningDate?.startdate &&
-                              appliedFilters?.StartRunningDate?.enddate
-                                ? appliedFilters?.StartRunningDate?.startdate <=
-                                    ads?.startDate &&
-                                  appliedFilters?.StartRunningDate?.enddate >=
-                                    ads?.startDate
-                                : true)
-                          )
-                        );
+                        dispatch(applyallfilters());
+                        // setAdsFilteredData(
+                        //   allMediaAds[1]?.all_ads.filter(
+                        //     (ads) =>
+                        //       (appliedFilters?.AdCount?.min !== 0 ||
+                        //       appliedFilters?.AdCount?.max !== 1000
+                        //         ? ads.noOfCopyAds >=
+                        //             appliedFilters?.AdCount?.min &&
+                        //           ads.noOfCopyAds <=
+                        //             appliedFilters?.AdCount?.max
+                        //         : true) &&
+                        //       (appliedFilters?.MediaType?.selectedData === "" ||
+                        //       appliedFilters?.MediaType?.selectedData ===
+                        //         "Video or Photo"
+                        //         ? true
+                        //         : ads.adMediaType ===
+                        //           appliedFilters?.MediaType?.selectedData) &&
+                        //       (appliedFilters?.AdStatus?.status !== ""
+                        //         ? ads?.status ===
+                        //           appliedFilters?.AdStatus?.status
+                        //         : true) &&
+                        //       (appliedFilters?.StartRunningDate?.startdate &&
+                        //       appliedFilters?.StartRunningDate?.enddate
+                        //         ? appliedFilters?.StartRunningDate?.startdate <=
+                        //             ads?.startDate &&
+                        //           appliedFilters?.StartRunningDate?.enddate >=
+                        //             ads?.startDate
+                        //         : true)
+                        //   )
+                        // );
                       }}
                     >
                       apply
@@ -917,15 +1136,18 @@ const Addlibrarydatabase = () => {
                       }
                       console.table(FilterRemoveData);
                       console.log(FilterRemoveData);
-                      setAppliedFilters((pre) => ({
-                        ...pre,
-                        [`${filter}`]: FilterRemoveData,
-                      }));
+                      dispatch(
+                        clearSingleFilteredDataStart({
+                          name: filter,
+                          data: FilterRemoveData,
+                        })
+                      );
+                      dispatch(applyallfilters());
+                      // setAppliedFilters((pre) => ({
+                      //   ...pre,
+                      //   [`${filter}`]: FilterRemoveData,
+                      // }));
 
-                      // setAdsFilteredData(()=>[])
-                      // console.log("???????????????????????????????????????????????????")
-                      // console.log(adsFilteredData)
-                      // console.log("???????????????????????????????????????????????????")
                       console.log(filter);
                     }}
                     sx={{
@@ -1075,35 +1297,14 @@ const Addlibrarydatabase = () => {
           </Box>
         </Grid>
         <Grid item xs={12}>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <CircularProgress
-              style={{
-                position: "relative",
-                top: 50,
-                left: 50,
-                opacity: 1,
-                zIndex: 1,
-                visibility: loading ? "visible" : "hidden",
-              }}
-            />
-          </Box>
-
           <Grid
             container
             spacing={2}
             sx={{
               marginTop: "10px",
-              opacity: loading ? 0.5 : 1,
-              disabled: loading ? true : false,
             }}
           >
-            {adsFilteredData?.map((ads, index) => (
+            {filteredData?.map((ads, index) => (
               <ThumbNailBox
                 adInfo={ads}
                 index={index}

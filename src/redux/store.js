@@ -7,13 +7,15 @@ import savedAdsReducer from "./ducks/saveAds";
 import accountSettingsReducer from "./ducks/accountSettings";
 import subAllMediaReducer from "./ducks/subAllAds";
 import savedAdsClienSideReducer from "./ducks/saveAds_clientSide";
+import FilterDataReducer from "./ducks/filtered_Data";
 
 const reducer = combineReducers({
   allMediaAds: mediaReducer,
   savedAds: savedAdsReducer,
   accountSettings: accountSettingsReducer,
   subAllMedia: subAllMediaReducer,
-  savedclienads:savedAdsClienSideReducer,
+  savedclienads: savedAdsClienSideReducer,
+  filteredData: FilterDataReducer,
 });
 
 const sagaMiddleWares = createSagaMiddleware();
