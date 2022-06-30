@@ -5,7 +5,7 @@ export const APPLIED_FILTERS = "APPLIED_FILTERS";
 export const DATEFILTER = "DATEFILTER";
 export const NOODADS_START = "NOODADS_START";
 export const MEDIATYPE_START = "MEDIATYPE_START";
-export const SORT_ODER_START = "SORT_ODER_START";
+export const SET_SORT_FILTER_START = "SET_SORT_FILTER_START";
 export const SORT_TYPE_START = "SORT_TYPE_START";
 export const STATUS_START = "STATUS_START";
 
@@ -41,11 +41,11 @@ export const MediaTypevalueStart = (filter) => ({
   type: MEDIATYPE_START,
   payload: filter,
 });
-export const SortOrdervalueStart = (filter) => ({
-  type: SORT_ODER_START,
+export const SetSortOrdervalueStart = (filter) => ({
+  type: SET_SORT_FILTER_START,
   payload: filter,
 });
-export const SortTypevalueStart = () => ({
+export const SortvalueStart = () => ({
   type: SORT_TYPE_START,
   // payload: filter,
 });
@@ -161,31 +161,7 @@ const FilterDataReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         filteredData: [...state.filteredData],
-        // filteredData: [
-        //     ...state.allData.filter(
-        //       (ads) =>
-        //         (state.appliedFilters?.AdCount?.min !== 0 ||
-        //         state.appliedFilters?.AdCount?.max !== 1000
-        //           ? ads.noOfCopyAds >= state.appliedFilters?.AdCount?.min &&
-        //             ads.noOfCopyAds <= state.appliedFilters?.AdCount?.max
-        //           : true) &&
-        //         (action.payload.selectedData === "" ||
-        //         action.payload.selectedData === "Video or Photo"
-        //           ? true
-        //           : ads.adMediaType ===
-        //           action.payload.selectedData) &&
-        //         (state.appliedFilters?.AdStatus?.status !== ""
-        //           ? ads?.status === state.appliedFilters?.AdStatus?.status
-        //           : true) &&
-        //         (state.appliedFilters?.StartRunningDate?.startdate &&
-        //         state.appliedFilters?.StartRunningDate?.enddate
-        //           ? state.appliedFilters?.StartRunningDate?.startdate <=
-        //               ads?.startDate &&
-        //             state.appliedFilters?.StartRunningDate?.enddate >=
-        //               ads?.startDate
-        //           : true)
-        //     ),
-        //   ],
+
         appliedFilters: {
           ...state.appliedFilters,
           [`${action.payload.name}`]: {
@@ -194,14 +170,7 @@ const FilterDataReducer = (state = initialState, action) => {
           },
         },
       };
-    case SORT_ODER_START:
-      // console.log(action.payload.name);
-      // console.log(action.payload.data);
-      // console.log("000000000000000000000000000000000");
-      // const tempType = "";
-      // const tempOrder = "";
-      // tempType = action.payload.name === "type"?  action.payload.data : state.sortFilter.type
-      // else tempOrder = action.payload.data;
+    case SET_SORT_FILTER_START:
       return {
         ...state,
         loading: false,
@@ -210,7 +179,7 @@ const FilterDataReducer = (state = initialState, action) => {
           ...state.sortFilter,
           [`${action.payload.name}`]: `${action.payload.data}`,
         },
-        // filteredData: [...state.filteredData],
+
         filteredData: [...state.filteredData],
       };
     case SORT_TYPE_START:
@@ -237,8 +206,8 @@ const FilterDataReducer = (state = initialState, action) => {
             (firstAd, secondAd) =>
               secondAd[state.sortFilter?.type] - firstAd[state.sortFilter?.type]
           );
-          console.log(dummy)
-          console.log("..............................................")
+      console.log(dummy);
+      console.log("..............................................");
       return {
         ...state,
         loading: false,

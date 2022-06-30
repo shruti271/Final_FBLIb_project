@@ -37,8 +37,8 @@ import {
   loadFilteredDataStart,
   MediaTypevalueStart,
   putFilteredDataStart,
-  SortOrdervalueStart,
-  SortTypevalueStart,
+  SetSortOrdervalueStart,
+  SortvalueStart,
   statusValueStart,
 } from "../redux/ducks/filtered_Data";
 
@@ -245,6 +245,7 @@ const Addlibrarydatabase = () => {
       })
     );
     dispatch(applyallfilters());
+    dispatch(SortvalueStart());
 
     // setAppliedFilters((pre) => ({
     //   ...pre,
@@ -261,8 +262,9 @@ const Addlibrarydatabase = () => {
         status: newValue,
         Message: `Ad Status:${newValue}`,
       })
-    );
+    );    
     dispatch(applyallfilters());
+    dispatch(SortvalueStart());
     // setAppliedFilters((pre) => ({
     //   ...pre,
     //   AdStatus: {
@@ -278,28 +280,24 @@ const Addlibrarydatabase = () => {
       "---------------------------1111111111111111111111111--------------------------"
     );
     dispatch(
-      SortOrdervalueStart({
+      SetSortOrdervalueStart({
         name: "order",
         data: newValue,
-        // order: newValue,
-        // type: sortFilter?.type,
       })
     );
-    dispatch(SortTypevalueStart());
+    dispatch(SortvalueStart());
     // setSortedDetail((pre) => ({ ...pre, order: newValue }));
   };
 
   const handleChangeSortType = (event, newValue) => {
     console.log(newValue);
     dispatch(
-      SortOrdervalueStart({
+      SetSortOrdervalueStart({
         name: "type",
         data: newValue,
-        // order: sortFilter?.order,
-        // type: newValue,
       })
     );
-    dispatch(SortTypevalueStart());
+    dispatch(SortvalueStart());
     // setSortedDetail((pre) => ({ ...pre, type: newValue }));
   };
   useEffect(() => {
@@ -465,6 +463,7 @@ const Addlibrarydatabase = () => {
                   onClose={() => {
                     setAnchorEl(null);
                     dispatch(applyallfilters());
+                    dispatch(SortvalueStart());
                   }}
                   transformOrigin={{
                     horizontal: "left",
@@ -492,6 +491,7 @@ const Addlibrarydatabase = () => {
                           )}`,
                         })
                       );
+                      // dispatch(SortvalueStart());
                       // setAppliedFilters((pre) => ({
                       //   ...pre,
                       //   StartRunningDate: {
@@ -528,6 +528,7 @@ const Addlibrarydatabase = () => {
                           )}`,
                         })
                       );
+                      // dispatch(SortvalueStart());
                       // setAppliedFilters((pre) => ({
                       //   ...pre,
                       //   StartRunningDate: {
@@ -666,10 +667,7 @@ const Addlibrarydatabase = () => {
                                   Message: `Ad Count: ${newValue.currentTarget.textContent}-${appliedFilters?.AdCount?.max}`,
                                 })
                               );
-                              console.log(
-                                "------------------" +
-                                  newValue.currentTarget.textContent
-                              );
+                              dispatch(SortvalueStart());
                             }}
                           >
                             {appliedFilters?.AdCount?.min}
@@ -692,6 +690,7 @@ const Addlibrarydatabase = () => {
                                   Message: `Ad Count: ${appliedFilters?.AdCount?.min}-${newValue.currentTarget.textContent}`,
                                 })
                               );
+                              dispatch(SortvalueStart());
                               console.log(
                                 "------------------" +
                                   newValue.currentTarget.textContent
@@ -839,6 +838,7 @@ const Addlibrarydatabase = () => {
                               })
                             );
                             dispatch(applyallfilters());
+                            dispatch(SortvalueStart());
                           }}
                         >
                           Reset
@@ -988,6 +988,7 @@ const Addlibrarydatabase = () => {
                               })
                             );
                             dispatch(applyallfilters());
+                            dispatch(SortvalueStart());
                             // setAppliedFilters((pre) => ({
                             //   ...pre,
                             //   MediaType: {
@@ -1081,12 +1082,13 @@ const Addlibrarydatabase = () => {
                             // setAdsFilteredData(() => allMediaAds[1]?.all_ads);
                           });
                           dispatch(clearFilteredDataStart(emptyFilter));
-                          dispatch(
-                            SortOrdervalueStart({
-                              name: "type",
-                              data: "",
-                            })
-                          );
+                          // dispatch(
+                          //   SetSortOrdervalueStart({
+                          //     name: "type",
+                          //     data: "",
+                          //   })
+                          // );
+                          dispatch(SortvalueStart());
                         }}
                       >
                         clear
@@ -1191,13 +1193,14 @@ const Addlibrarydatabase = () => {
                             data: FilterRemoveData,
                           })
                         );
-                        dispatch(
-                          SortOrdervalueStart({
-                            name: "type",
-                            data: "",
-                          })
-                        );
+                        // dispatch(
+                        //   SetSortOrdervalueStart({
+                        //     name: "type",
+                        //     data: "",
+                        //   })
+                        // );
                         dispatch(applyallfilters());
+                        dispatch(SortvalueStart());
                         // setAppliedFilters((pre) => ({
                         //   ...pre,
                         //   [`${filter}`]: FilterRemoveData,
