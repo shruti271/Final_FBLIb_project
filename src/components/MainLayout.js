@@ -30,7 +30,15 @@ const MainLayout = () => {
   const dispatch = useDispatch();
   const { savedAds } = useSelector((state) => state.savedAds);
 
-  const [isOpen, setIsOpen] = React.useState(false);
+  // const [isOpen, setIsOpen] = React.useState(false);
+  
+  
+  const drawerOpenKey = 'drawerOpen';
+  const defaultOpen = localStorage.getItem(drawerOpenKey) === 'true';
+  const [isOpen, setIsOpen] = React.useState(defaultOpen);
+  React.useEffect(() => {
+    localStorage.setItem(drawerOpenKey, isOpen);
+  }, [isOpen]);
 
   useEffect(() => {
     dispatch(loadMediaStart());

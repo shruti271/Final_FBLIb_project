@@ -12,6 +12,7 @@ import staricon from "../assets/Vectora.svg";
 import contact from "../assets/contact.svg";
 import logout from "../assets/Logout.svg";
 import { logoutUser } from "../services";
+import fbaddlogo from "../assets/fbaddlogo.svg"
 
 const useStyles = makeStyles(() => ({
   title: {
@@ -26,6 +27,14 @@ const useStyles = makeStyles(() => ({
     WebkitTextFillColor: "transparent",
     backgroundClip: "text",
     textFillColor: "transparent",
+  },
+  mainlogo: {
+    width: "210px !important",
+  },
+  submainlogo: {
+    marginTop: "40px",
+    height: "25px !important",
+    width: "46px !important",
   },
   logo: {
     height: "25px !important",
@@ -117,7 +126,7 @@ export const CustomSidebar = ({ isOpen }) => {
     <>
       <Drawer variant="permanent" open={isOpen}>
         <Stack sx={{ height: "100%" }}>
-          <Box
+          {/* <Box
             sx={{
               marginTop: "42px",
               cursor: "pointer",
@@ -142,6 +151,21 @@ export const CustomSidebar = ({ isOpen }) => {
                 Eye of Ecom
               </Typography>
             </Stack>
+          </Box> */}
+          <Box
+            sx={{
+              marginTop: "13px",
+              cursor: "pointer",
+              display: "flex",
+              justifyContent: "center",
+            }}
+            onClick={() => navigate("/")}
+          >
+            {isOpen ? (
+              <img alt="logo" src={fbaddlogo} className={classes.mainlogo} />
+            ) : (
+              <img alt="logo" src={appLogo} className={classes.submainlogo} />
+            )}
           </Box>
           <Box
             sx={{ marginTop: "72px", cursor: "pointer" }}

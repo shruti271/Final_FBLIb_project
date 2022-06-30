@@ -324,7 +324,7 @@ const Addlibrarydatabase = () => {
   // },[]);
   return (
     <>
-      <Box
+      {loading?<Box
         sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
       >
         <CircularProgress
@@ -333,18 +333,18 @@ const Addlibrarydatabase = () => {
             top: 50,
             left: 50,
             opacity: 1,
-            zIndex: 1,
+            // zIndex: 1,
             visibility: loading ? "visible" : "hidden",
           }}
         />
-      </Box>
+      </Box>:
       <Grid
         container
         sx={{ opacity: loading ? 0.5 : 1, disabled: loading ? true : false }}
       >
         <Grid item xs={12}>
           <Box component="main">
-            <Typography className={classes.titleHome}>
+            <Typography className={classes.titleHome} variant="h5" sx={{ fontWeight: "bold" }}>
               Welcome to the All-Seeing Eye!
             </Typography>
             <Typography className={classes.subTitleHome}>
@@ -429,6 +429,7 @@ const Addlibrarydatabase = () => {
                 add={open ? "simple-popover" : undefined}
                 onClose={() => {
                   setAnchorEl(null);
+                  dispatch(applyallfilters())
                 }}
                 transformOrigin={{
                   horizontal: "left",
@@ -1042,7 +1043,7 @@ const Addlibrarydatabase = () => {
                     >
                       clear
                     </Button>
-                    <Button
+                    {/* <Button
                       style={{
                         background: "#00CBFF",
                         borderRadius: 30,
@@ -1086,7 +1087,7 @@ const Addlibrarydatabase = () => {
                       }}
                     >
                       apply
-                    </Button>
+                    </Button> */}
                   </Grid>
                 </Grid>
               </Box>
@@ -1315,6 +1316,7 @@ const Addlibrarydatabase = () => {
           </Grid>
         </Grid>
       </Grid>
+      }
     </>
   );
 };
