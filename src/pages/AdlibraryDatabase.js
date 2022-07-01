@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Button,
@@ -37,10 +37,13 @@ import {
   loadFilteredDataStart,
   MediaTypevalueStart,
   putFilteredDataStart,
+  searchStart,
+  searchValueStart,
   SetSortOrdervalueStart,
   SortvalueStart,
   statusValueStart,
 } from "../redux/ducks/filtered_Data";
+import { escapeRegExp } from "@mui/x-data-grid/utils/utils";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -140,28 +143,14 @@ const useStyles = makeStyles((theme) => ({
 const Addlibrarydatabase = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const focusDiv = useRef();
 
   const { allMediaAds, loading } = useSelector((state) => state.allMediaAds);
-  const { filteredData, appliedFilters, sortFilter } = useSelector(
-    (state) => state.filteredData
-  );
+  const { filteredData, appliedFilters, sortFilter, searchBarData } =
+    useSelector((state) => state.filteredData);
   // const [countMin, setCountMin] = useState([]);
   // const [countMax, setCountMax] = useState(1000);
   const { savedIds } = useSelector((state) => state.savedclienads);
-
-  // const [appliedFilters, setAppliedFilters] = useState({
-  //   StartRunningDate: { startdate: "", enddate: "", Message: "" },
-  //   AdStatus: { status: "", Message: "" },
-  //   AdCount: { min: 0, max: 1000, Message: "" },
-  //   FacebookLikes: { Message: "" },
-  //   InstragramLike: { Message: "" },
-  //   MediaType: { selectedData: "Video or Photo", Message: "" },
-  // });
-
-  // const [sortedDetail, setSortedDetail] = useState({
-  //   order: "startDate",
-  //   type: "Ascending",
-  // });
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -177,6 +166,8 @@ const Addlibrarydatabase = () => {
     console.log("33333333333333333333333333333333333333333333333333");
     console.log(appliedFilters);
     console.log(filteredData);
+    console.log(appliedFilters);
+    console.log(searchBarData);
     console.log("33333333333333333333333333333333333333333333333333");
   });
   useEffect(() => {
@@ -190,19 +181,19 @@ const Addlibrarydatabase = () => {
       dispatch(loadFilteredDataStart());
     } else {
       console.log("come here 2");
-      // setAdsFilteredData(allMediaAds[1]?.all_ads);
       dispatch(putFilteredDataStart(allMediaAds[1]?.all_ads));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [allMediaAds]);
 
-  // useEffect(() => {
-  //   dispatch(loadFilteredDataStart());
-  // }, [adsFilteredData, dispatch]);
-
   const counterIncremten = (event, newValue) => {
+    console.log("++++++++++++++"+document.getElementById("searchbar").value)
     console.log(newValue);
     console.log("............................................................");
+    console.log(event.type);
+    console.log("............................................................");
+    // if(event.type!=="mousedown" && event.type!=="mousemove"){
+    console.log("insideeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
     dispatch(
       AdCountvalueStart({
         name: "AdCount",
@@ -211,28 +202,15 @@ const Addlibrarydatabase = () => {
         Message: `Ad Count: ${newValue[0]}-${newValue[1]}`,
       })
     );
+    // searchBarData!==[]?dispatch(searchStart(searchBarData)):
     dispatch(applyallfilters());
 
-    // setAppliedFilters((pre) => ({
-    //   ...pre,
-    //   AdCount: {
-    // min: newValue[0],
-    // max: newValue[1],
-    // Message: `Ad Count: ${newValue[0]}-${newValue[1]}`,
-    //   },
-    // }));
+    // }
+    // dispatch(applyallfilters());
+    // searchBarData !== []
+    //   ? dispatch(searchStart(searchBarData))
+    //   : dispatch(applyallfilters());
   };
-  // const handlechangeall = (newValue) => {
-  //   dispatch(
-  //     AdCountvalueStart({
-  //       name: "AdCount",
-  //       min: newValue,
-  //       max: 1000,
-  //       Message: `Ad Count: ${newValue[0]}-${appliedFilters?.AdCount?.max}`,
-  //     })
-  //   );
-  //   console.log("------------------" + newValue.currentTarget.textContent);
-  // };
 
   const handlechange = (event, newValue) => {
     console.log(newValue);
@@ -244,7 +222,11 @@ const Addlibrarydatabase = () => {
         Message: `MediaType : ${newValue}`,
       })
     );
-    dispatch(applyallfilters());
+    // dispatch(searchStart());
+    // dispatch(applyallfilters());
+    searchBarData !== []
+      ? dispatch(searchStart(searchBarData))
+      : dispatch(applyallfilters());
     dispatch(SortvalueStart());
 
     // setAppliedFilters((pre) => ({
@@ -262,8 +244,11 @@ const Addlibrarydatabase = () => {
         status: newValue,
         Message: `Ad Status:${newValue}`,
       })
-    );    
+    );
     dispatch(applyallfilters());
+    // searchBarData !== []
+    //   ? dispatch(searchStart(searchBarData))
+    //   : dispatch(applyallfilters());
     dispatch(SortvalueStart());
     // setAppliedFilters((pre) => ({
     //   ...pre,
@@ -300,38 +285,26 @@ const Addlibrarydatabase = () => {
     dispatch(SortvalueStart());
     // setSortedDetail((pre) => ({ ...pre, type: newValue }));
   };
-  useEffect(() => {
-    console.log(sortFilter);
-    console.log("0--0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0");
-  });
-  // useEffect(()=>{
 
-  // },[addcounteropen])
-  // useEffect(() => {
-  //   console.log(sortedDetail?.type);
-  // if (sortedDetail?.order === "Ascending") {
-  //   sortedDetail?.type === "startDate"
-  //     ? adsFilteredData?.sort(
-  //         (firstAd, secondAd) =>
-  //           Date.parse(firstAd[sortedDetail?.type]) -
-  //           Date.parse(secondAd[sortedDetail?.type])
-  //       )
-  //     : adsFilteredData?.sort(
-  //         (firstAd, secondAd) =>
-  //           firstAd[sortedDetail?.type] - secondAd[sortedDetail?.type]
-  //       );
-  // } else
-  //   sortedDetail?.type === "startDate"
-  //     ? adsFilteredData?.sort(
-  //         (firstAd, secondAd) =>
-  //           Date.parse(secondAd[sortedDetail?.type]) -
-  //           Date.parse(firstAd[sortedDetail?.type])
-  //       )
-  //     : adsFilteredData?.sort(
-  //         (firstAd, secondAd) =>
-  //           secondAd[sortedDetail?.type] - firstAd[sortedDetail?.type]
-  //       );
-  // }, [adsFilteredData, sortedDetail?.order, sortedDetail?.type]);
+  useEffect(() => {
+    // const abc = focusDiv.current ? true : false;
+    // console.log(abc);
+    // console.log(focusDiv.current?.textContent);
+    // dispatch(
+    //       AdCountvalueStart({
+    //         name: "AdCount",
+    //         min: Number(
+    //           focusDiv.current?.textContent
+    //         ),
+    //         max: appliedFilters?.AdCount?.max,
+    //         Message: `Ad Count: ${focusDiv.current?.textContent}-${appliedFilters?.AdCount?.max}`,
+    //       })
+    //     );
+    // dispatch(SortvalueStart());
+    console.log(
+      "111111111111111111111111111111111111111111111..............................."
+    );
+  });
 
   const [range, setRange] = useState([
     {
@@ -340,11 +313,7 @@ const Addlibrarydatabase = () => {
       key: "selection",
     },
   ]);
-  // useEffect(() => {
-  //   const abc = document.getElementById("countRange").innerText;
-  //   console.log(abc)
-  //   console.log("((((((((((((((((((((((((((((((((((((((()))))))))))))))))))))))))))))))))))))))")
-  // },[]);
+
   return (
     <>
       {loading ? (
@@ -421,7 +390,67 @@ const Addlibrarydatabase = () => {
               </Grid>
               <Grid item xs={10}>
                 <Box sx={{ marginLeft: "21px" }}>
-                  <InputBase margin="dense" size="large" placeholder="Search" />
+                  {/* <form
+                    onSubmit={(value) => {
+                      console.log(value);
+                      console.log(
+                        "--------------------------???????????????????????"
+                      );
+                    }} 
+                  >*/}
+
+                  <InputBase id="searchbar"
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        dispatch(
+                          searchStart({
+                            keywords: e.currentTarget.value.split(" "),
+                          })
+                        );
+                        // dispatch(applyallfilters())
+                        // const dum = Object.values(filteredData[2]).flat();
+                        // console.log(Object.values(filteredData[2]).flat());
+                        // // console.log(dum.includes("2022-06-10"));
+
+                        // filteredData.map((ads) => {
+                        //   // Object.values(ads).flat()
+                        //   const rarr = e.currentTarget.value.split(" ");
+                        //   console.log(rarr);
+                        //   e.currentTarget.value
+                        //     .split(" ")
+                        //     .every((a) =>
+                        //       Object.values(ads).flat().includes(a)
+                        //     );
+                        //   console.log(
+                        //     Object.values(ads).flat().includes("2022-06-10")
+                        //   );
+                        //   return true;
+                        // });
+                      }
+                      console.log("||||||||||||||||||||||||||||||||||||||||||")
+                      console.log(e.currentTarget.value==='')
+                      console.table(e.currentTarget.value)
+                      console.log("||||||||||||||||||||||||||||||||||||||||||")
+                      if (e.currentTarget.value ==='') {
+                        dispatch(
+                          searchStart({
+                            keywords: [],
+                          })
+                        );
+                        dispatch(applyallfilters())
+                      }
+                    }}
+                    margin="dense"
+                    size="large"
+                    placeholder="Search"
+                    // onSubmit={(value) => {
+                    //   console.log(value);
+                    //   console.log(
+                    //     "--------------------------???????????????????????"
+                    //   );
+                    // }}
+                  />
+                  {/* </form> */}
                 </Box>
               </Grid>
             </Grid>
@@ -462,7 +491,9 @@ const Addlibrarydatabase = () => {
                   add={open ? "simple-popover" : undefined}
                   onClose={() => {
                     setAnchorEl(null);
-                    dispatch(applyallfilters());
+                    searchBarData?.keywords !== []
+                      ? dispatch(searchStart(searchBarData))
+                      : dispatch(applyallfilters());
                     dispatch(SortvalueStart());
                   }}
                   transformOrigin={{
@@ -491,21 +522,10 @@ const Addlibrarydatabase = () => {
                           )}`,
                         })
                       );
-                      // dispatch(SortvalueStart());
-                      // setAppliedFilters((pre) => ({
-                      //   ...pre,
-                      //   StartRunningDate: {
-                      //     startdate: format(
-                      //       item.selection.startDate,
-                      //       "yyyy/MM/dd"
-                      //     ),
-                      //     enddate: format(item.selection.endDate, "yyyy/MM/dd"),
-                      //     Message: `running date ${format(
-                      //       item.selection.startDate,
-                      //       "yyyy/MM/dd"
-                      //     )}`,
-                      //   },
-                      // }));
+                      // searchBarData?.keywords !== []
+                      // ? dispatch(searchStart(searchBarData))
+                      // :
+                       dispatch(applyallfilters());
                       setRange([item.selection]);
                     }}
                     onChange={(item) => {
@@ -528,21 +548,8 @@ const Addlibrarydatabase = () => {
                           )}`,
                         })
                       );
-                      // dispatch(SortvalueStart());
-                      // setAppliedFilters((pre) => ({
-                      //   ...pre,
-                      //   StartRunningDate: {
-                      //     startdate: format(
-                      //       item.selection.startDate,
-                      //       "yyyy-MM-dd"
-                      //     ),
-                      //     enddate: format(item.selection.endDate, "yyyy-MM-dd"),
-                      //     Message: `running date ${format(
-                      //       item.selection.startDate,
-                      //       "yyyy/MM/dd"
-                      //     )} to ${format(item.selection.endDate, "yyyy/MM/dd")}`,
-                      //   },
-                      // }));
+                      // searchBarData?.keywords!==[]?dispatch(searchStart(searchBarData)):dispatch(applyallfilters());
+                      dispatch(applyallfilters())
                       console.log(appliedFilters);
                       setRange([item.selection]);
                     }}
@@ -587,6 +594,7 @@ const Addlibrarydatabase = () => {
                   anchorEl={rangeanchorel}
                   onClose={() => {
                     setrangeAnchorEl(null);
+                    // dispatch(applyallfilters());
                     // let min = document.getElementById("minRange").innerText;
                     // let max = document.getElementById("maxRange").innerText;
                     // console.log(min);
@@ -634,40 +642,42 @@ const Addlibrarydatabase = () => {
                     </Box> */}
                       <Box>
                         <Stack direction={"row"} spacing={1}>
-                          <Typography>From</Typography>
-                          {/* <span
-                          contentEditable
-                          onInput={(e) => {
-                            console.log(
-                              "????????????????????",
-                              +e.currentTarget.textContent
-                            );
-                          }}
-                        >
-                          11111
-                        </span> */}
-
+                          <Typography>From</Typography>                          
                           <Typography
-                            contentEditable
+                            contentEditable={true}
                             id="minRange"
-                            // onInput={handlechangeall}
-                            // onInput={(newValue) => {
-                            //   setCountMin(
-                            //     `${newValue.currentTarget.textContent}`
-                            //   );
-                            // }}
                             onInput={(newValue) => {
-                              dispatch(
-                                AdCountvalueStart({
-                                  name: "AdCount",
-                                  min: Number(
-                                    newValue.currentTarget.textContent
-                                  ),
-                                  max: appliedFilters?.AdCount?.max,
-                                  Message: `Ad Count: ${newValue.currentTarget.textContent}-${appliedFilters?.AdCount?.max}`,
-                                })
+                              console.log(typeof appliedFilters?.AdCount?.max);
+                              console.log(
+                                "++++++++++++++++++++++++*******************************"
                               );
-                              dispatch(SortvalueStart());
+                              if (newValue.currentTarget.textContent !== "") {
+                                // dispatch(
+                                //   AdCountvalueStart({
+                                //     name: "AdCount",
+                                //     min: newValue[0],
+                                //     max: newValue[1],
+                                //     Message: `Ad Count: ${newValue[0]}-${newValue[1]}`,
+                                //   })
+                                // );
+                                dispatch(
+                                  AdCountvalueStart({
+                                    name: "AdCount",
+                                    min: Number(newValue.currentTarget.textContent),
+                                    max: appliedFilters?.AdCount?.max,
+                                    Message: `Ad Count: ${newValue.currentTarget.textContent}-${appliedFilters?.AdCount?.max}`,
+                                  })
+                                );
+                                document.getElementById("searchbar").value?
+                                dispatch(searchStart(searchBarData)):
+                                dispatch(applyallfilters());
+
+                                // dispatch(applyallfilters());
+                                // if (searchBarData !== [])
+                                //   dispatch(searchStart(searchBarData));
+
+                                dispatch(SortvalueStart());
+                              }
                             }}
                           >
                             {appliedFilters?.AdCount?.min}
@@ -680,17 +690,23 @@ const Addlibrarydatabase = () => {
                               // setCountMax(
                               //   `${newValue.currentTarget.textContent}`
                               // );
+                              if (newValue.currentTarget.textContent !== "") {
                               dispatch(
                                 AdCountvalueStart({
                                   name: "AdCount",
                                   min: appliedFilters?.AdCount?.min,
-                                  max: Number(
-                                    newValue.currentTarget.textContent
-                                  ),
+                                  max: Number(newValue.currentTarget.textContent),
                                   Message: `Ad Count: ${appliedFilters?.AdCount?.min}-${newValue.currentTarget.textContent}`,
                                 })
                               );
+                              // searchBarData!==[]?dispatch(searchStart(searchBarData)):
+                              // dispatch(applyallfilters());
+                              document.getElementById("searchbar").value?
+                              dispatch(searchStart(searchBarData)):
+                              dispatch(applyallfilters());
+
                               dispatch(SortvalueStart());
+                              }
                               console.log(
                                 "------------------" +
                                   newValue.currentTarget.textContent
@@ -735,7 +751,13 @@ const Addlibrarydatabase = () => {
                               Message: "",
                             })
                           );
+                          document.getElementById("searchbar").value?
+                          dispatch(searchStart(searchBarData)):
                           dispatch(applyallfilters());
+                          // dispatch(applyallfilters());
+                          // searchBarData !== []
+                          //   ? dispatch(searchStart(searchBarData))
+                          //   : dispatch(applyallfilters());
                           // setAppliedFilters((pre) => ({
                           //   ...pre,
                           //   AdCount: { min: 0, max: 1000, Message: "" },
@@ -837,7 +859,10 @@ const Addlibrarydatabase = () => {
                                 Message: "",
                               })
                             );
-                            dispatch(applyallfilters());
+                            // dispatch(applyallfilters());
+                            searchBarData !== []
+                              ? dispatch(searchStart(searchBarData))
+                              : dispatch(applyallfilters());
                             dispatch(SortvalueStart());
                           }}
                         >
@@ -987,7 +1012,10 @@ const Addlibrarydatabase = () => {
                                 Message: "",
                               })
                             );
-                            dispatch(applyallfilters());
+                            // dispatch(applyallfilters());
+                            searchBarData !== []
+                              ? dispatch(searchStart(searchBarData))
+                              : dispatch(applyallfilters());
                             dispatch(SortvalueStart());
                             // setAppliedFilters((pre) => ({
                             //   ...pre,
@@ -1093,51 +1121,6 @@ const Addlibrarydatabase = () => {
                       >
                         clear
                       </Button>
-                      {/* <Button
-                      style={{
-                        background: "#00CBFF",
-                        borderRadius: 30,
-                        fontSize: "18px",
-                        textTransform: "none",
-                        paddingLeft: "16px",
-                        paddingRight: "16px",
-                        color: "white",
-                      }}
-                      onClick={() => {
-                        dispatch(applyallfilters());
-                        // setAdsFilteredData(
-                        //   allMediaAds[1]?.all_ads.filter(
-                        //     (ads) =>
-                        //       (appliedFilters?.AdCount?.min !== 0 ||
-                        //       appliedFilters?.AdCount?.max !== 1000
-                        //         ? ads.noOfCopyAds >=
-                        //             appliedFilters?.AdCount?.min &&
-                        //           ads.noOfCopyAds <=
-                        //             appliedFilters?.AdCount?.max
-                        //         : true) &&
-                        //       (appliedFilters?.MediaType?.selectedData === "" ||
-                        //       appliedFilters?.MediaType?.selectedData ===
-                        //         "Video or Photo"
-                        //         ? true
-                        //         : ads.adMediaType ===
-                        //           appliedFilters?.MediaType?.selectedData) &&
-                        //       (appliedFilters?.AdStatus?.status !== ""
-                        //         ? ads?.status ===
-                        //           appliedFilters?.AdStatus?.status
-                        //         : true) &&
-                        //       (appliedFilters?.StartRunningDate?.startdate &&
-                        //       appliedFilters?.StartRunningDate?.enddate
-                        //         ? appliedFilters?.StartRunningDate?.startdate <=
-                        //             ads?.startDate &&
-                        //           appliedFilters?.StartRunningDate?.enddate >=
-                        //             ads?.startDate
-                        //         : true)
-                        //   )
-                        // );
-                      }}
-                    >
-                      apply
-                    </Button> */}
                     </Grid>
                   </Grid>
                 </Box>
@@ -1199,7 +1182,10 @@ const Addlibrarydatabase = () => {
                         //     data: "",
                         //   })
                         // );
-                        dispatch(applyallfilters());
+                        // dispatch(applyallfilters());
+                        searchBarData !== ""
+                          ? dispatch(searchStart(searchBarData))
+                          : dispatch(applyallfilters());
                         dispatch(SortvalueStart());
                         // setAppliedFilters((pre) => ({
                         //   ...pre,

@@ -8,6 +8,9 @@ export const MEDIATYPE_START = "MEDIATYPE_START";
 export const SET_SORT_FILTER_START = "SET_SORT_FILTER_START";
 export const SORT_TYPE_START = "SORT_TYPE_START";
 export const STATUS_START = "STATUS_START";
+export const SEARCH_START = "SEARCH_START";
+export const SEARCH_SUCCESS = "SEARCH_SUCCESS";
+export const SEARCH_ERROR = "SEARCH_ERROR";
 
 export const CLEAR_FILTERDATA = "CLEAR_FILTERDATA";
 export const APPLY_ALL_FILTER = "APPLY_ALL_FILTER";
@@ -53,6 +56,10 @@ export const statusValueStart = (filter) => ({
   type: STATUS_START,
   payload: filter,
 });
+export const searchValueStart = (filter) => ({
+  type: SEARCH_START,
+  payload: filter,
+});
 // export const createFilteredDataStart = (ads) => ({
 //   type: CREATE_FILTERDATA,
 //   payload: ads,
@@ -68,13 +75,28 @@ export const clearSingleFilteredDataStart = (ads) => ({
   payload: ads,
 });
 
+export const searchStart = (Ads) => ({
+  type: SEARCH_START,
+  payload: Ads,
+});
+
+export const searchSuccess = (Ads) => ({
+  type: SEARCH_SUCCESS,
+  payload: Ads,
+});
+
+export const searchError = (error) => ({
+  type: SEARCH_ERROR,
+  payload: error,
+});
+
 const initialState = {
   allData: [],
   filteredData: [],
   appliedFilters: {
     StartRunningDate: { startdate: "", enddate: "", Message: "" },
     AdStatus: { status: "", Message: "" },
-    noOfCopyAds: { min: 0, max: 1000, Message: "" },
+    AdCount: { min: 0, max: 1000, Message: "" },
     FacebookLikes: { Message: "" },
     InstragramLike: { Message: "" },
     MediaType: { selectedData: "Video or Photo", Message: "" },
@@ -83,7 +105,8 @@ const initialState = {
     type: "",
     order: "Ascending",
   },
-  loading: false,
+  searchBarData: [],
+  search_loading: false,
   error: "",
 };
 
@@ -92,13 +115,13 @@ const FilterDataReducer = (state = initialState, action) => {
     case LOAD_FILTERDATA:
       return {
         ...state,
-        loading: false,
+        search_loading: false,
         // filteredData: action.payload,
       };
     case PUT_FILTERDATA:
       return {
         ...state,
-        loading: false,
+        search_loading: false,
         filteredData: action.payload,
         allData: action.payload,
       };
@@ -107,7 +130,7 @@ const FilterDataReducer = (state = initialState, action) => {
       console.log("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\");
       return {
         ...state,
-        loading: false,
+        search_loading: false,
         filteredData: [...state.filteredData],
         appliedFilters: {
           ...state.appliedFilters,
@@ -121,32 +144,33 @@ const FilterDataReducer = (state = initialState, action) => {
     case NOODADS_START:
       return {
         ...state,
-        loading: false,
-        filteredData: [
-          ...state.allData.filter(
-            (ads) =>
-              (state.appliedFilters?.noOfCopyAds?.min !== 0 ||
-              state.appliedFilters?.noOfCopyAds?.max !== 1000
-                ? ads.noOfCopyAds >= action.payload?.min &&
-                  ads.noOfCopyAds <= action.payload?.max
-                : true) &&
-              (state.appliedFilters?.MediaType?.selectedData === "" ||
-              state.appliedFilters?.MediaType?.selectedData === "Video or Photo"
-                ? true
-                : ads.adMediaType ===
-                  state.appliedFilters?.MediaType?.selectedData) &&
-              (state.appliedFilters?.AdStatus?.status !== ""
-                ? ads?.status === state.appliedFilters?.AdStatus?.status
-                : true) &&
-              (state.appliedFilters?.StartRunningDate?.startdate &&
-              state.appliedFilters?.StartRunningDate?.enddate
-                ? state.appliedFilters?.StartRunningDate?.startdate <=
-                    ads?.startDate &&
-                  state.appliedFilters?.StartRunningDate?.enddate >=
-                    ads?.startDate
-                : true)
-          ),
-        ],
+        search_loading: false,
+        filteredData:state.filteredData,
+        // filteredData: [
+        //   ...state.allData.filter(
+        //     (ads) =>
+        //       (state.appliedFilters?.AdCount?.min !== 0 ||
+        //       state.appliedFilters?.AdCount?.max !== 1000
+        //         ? ads.noOfCopyAds  >= action.payload?.min &&
+        //           ads.noOfCopyAds  <= action.payload?.max
+        //         : true) &&
+        //       (state.appliedFilters?.MediaType?.selectedData === "" ||
+        //       state.appliedFilters?.MediaType?.selectedData === "Video or Photo"
+        //         ? true
+        //         : ads.adMediaType ===
+        //           state.appliedFilters?.MediaType?.selectedData) &&
+        //       (state.appliedFilters?.AdStatus?.status !== ""
+        //         ? ads?.status === state.appliedFilters?.AdStatus?.status
+        //         : true) &&
+        //       (state.appliedFilters?.StartRunningDate?.startdate &&
+        //       state.appliedFilters?.StartRunningDate?.enddate
+        //         ? state.appliedFilters?.StartRunningDate?.startdate <=
+        //             ads?.startDate &&
+        //           state.appliedFilters?.StartRunningDate?.enddate >=
+        //             ads?.startDate
+        //         : true)
+        //   ),
+        // ],
         appliedFilters: {
           ...state.appliedFilters,
           [`${action.payload.name}`]: {
@@ -159,7 +183,7 @@ const FilterDataReducer = (state = initialState, action) => {
     case MEDIATYPE_START:
       return {
         ...state,
-        loading: false,
+        search_loading: false,
         filteredData: [...state.filteredData],
 
         appliedFilters: {
@@ -173,7 +197,7 @@ const FilterDataReducer = (state = initialState, action) => {
     case SET_SORT_FILTER_START:
       return {
         ...state,
-        loading: false,
+        search_loading: false,
         appliedFilters: state.appliedFilters,
         sortFilter: {
           ...state.sortFilter,
@@ -210,7 +234,7 @@ const FilterDataReducer = (state = initialState, action) => {
       console.log("..............................................");
       return {
         ...state,
-        loading: false,
+        search_loading: false,
         appliedFilters: state.appliedFilters,
         sortFilter: state.sortFilter,
         filteredData: dummy,
@@ -241,7 +265,7 @@ const FilterDataReducer = (state = initialState, action) => {
     case STATUS_START:
       return {
         ...state,
-        loading: false,
+        search_loading: false,
         appliedFilters: {
           ...state.appliedFilters,
           [`${action.payload.name}`]: {
@@ -251,19 +275,96 @@ const FilterDataReducer = (state = initialState, action) => {
         },
         filteredData: [...state.filteredData],
       };
+    case SEARCH_START:
+      return {
+        ...state,
+        search_loading: false,
+        searchBarData: action.payload,
+        // appliedFilters: state.appliedFilters,
+        // searchBarData: action.payload,
+        // filteredData: [
+        //   ...state.allData.filter((ads) => {
+        //     console.log(action.payload)
+        //     const dummyData = JSON.stringify(Object.values(ads)).toLowerCase();
+        //     console.log(dummyData)
+        //     const darr = action.payload.split(" ").join(",").toLowerCase();
+        //     // console.log(darr);
+        //     console.log("|^ darr;;;;;" + dummyData.includes(...darr));
+        //     // console.log(ads);
+        //     console.log("000000000000000000000000000000000000")
+        //     return dummyData.includes(...darr);
+        //   }),
+        // ],
+      };
+
+    case SEARCH_SUCCESS:
+      return {
+        ...state,
+        search_loading: false,
+        appliedFilters: state.appliedFilters,
+        searchBarData: state.searchBarData,
+        filteredData:
+          state.searchBarData !== []
+            ? action.payload.filter(
+                (ads) =>
+                  (state.appliedFilters?.AdCount?.min !== 0 ||
+                  state.appliedFilters?.AdCount?.max !== 1000
+                    ? ads.noOfCopyAds >= state.appliedFilters?.AdCount?.min &&
+                      ads.noOfCopyAds <= state.appliedFilters?.AdCount?.max
+                    : true) &&
+                  (state.appliedFilters?.MediaType?.selectedData === "" ||
+                  state.appliedFilters?.MediaType?.selectedData ===
+                    "Video or Photo"
+                    ? true
+                    : ads.adMediaType ===
+                      state.appliedFilters?.MediaType?.selectedData) &&
+                  (state.appliedFilters?.AdStatus?.status !== ""
+                    ? ads?.status === state.appliedFilters?.AdStatus?.status
+                    : true) &&
+                  (state.appliedFilters?.StartRunningDate?.startdate &&
+                  state.appliedFilters?.StartRunningDate?.enddate
+                    ? state.appliedFilters?.StartRunningDate?.startdate <=
+                        ads?.startDate &&
+                      state.appliedFilters?.StartRunningDate?.enddate >=
+                        ads?.startDate
+                    : true)
+              )
+            : state.filteredData,
+
+        // filteredData: [
+        //   ...state.allData.filter((ads) => {
+        //     console.log(action.payload)
+        //     const dummyData = JSON.stringify(Object.values(ads)).toLowerCase();
+        //     console.log(dummyData)
+        //     const darr = action.payload.split(" ").join(",").toLowerCase();
+        //     // console.log(darr);
+        //     console.log("|^ darr;;;;;" + dummyData.includes(...darr));
+        //     // console.log(ads);
+        //     console.log("000000000000000000000000000000000000")
+        //     return dummyData.includes(...darr);
+        //   }),
+        // ],
+      };
+
+    case SEARCH_ERROR:
+      return {
+        ...state,
+        search_loading: false,
+        error: action.payload,
+      };
     case APPLY_ALL_FILTER:
       console.log(state.appliedFilters?.StartRunningDate?.startdate);
       console.log("..???????????????");
       return {
         ...state,
-        loading: false,
+        search_loading: false,
         filteredData: [
           ...state.allData.filter(
             (ads) =>
-              (state.appliedFilters?.noOfCopyAds?.min !== 0 ||
-              state.appliedFilters?.noOfCopyAds?.max !== 1000
-                ? ads.noOfCopyAds >= state.appliedFilters?.noOfCopyAds?.min &&
-                  ads.noOfCopyAds <= state.appliedFilters?.noOfCopyAds?.max
+              (state.appliedFilters?.AdCount?.min !== 0 ||
+              state.appliedFilters?.AdCount?.max !== 1000
+                ? ads.noOfCopyAds >= state.appliedFilters?.AdCount?.min &&
+                  ads.noOfCopyAds <= state.appliedFilters?.AdCount?.max
                 : true) &&
               (state.appliedFilters?.MediaType?.selectedData === "" ||
               state.appliedFilters?.MediaType?.selectedData === "Video or Photo"
@@ -288,7 +389,7 @@ const FilterDataReducer = (state = initialState, action) => {
     case APPLIED_FILTERS:
       return {
         ...state,
-        loading: false,
+        search_loading: false,
         filteredData: [...state.filteredData],
         appliedFilters: {
           ...state.filteredData,
@@ -298,14 +399,14 @@ const FilterDataReducer = (state = initialState, action) => {
     case CLEAR_FILTERDATA:
       return {
         ...state,
-        loading: false,
+        search_loading: false,
         filteredData: [...state.allData],
         appliedFilters: action.payload,
       };
     case CLEAR_SINGLE_FILTER:
       return {
         ...state,
-        loading: false,
+        search_loading: false,
         filteredData: [...state.filteredData],
         appliedFilters: {
           ...state.appliedFilters,
@@ -315,13 +416,13 @@ const FilterDataReducer = (state = initialState, action) => {
     // case CREATE_FILTERDATA:
     //   return {
     //     ...state,
-    //     loading: false,
+    //     search_loading: false,
     //     filteredData: [...state.filteredData.concat(action.payload)],
     //   };
     // case DELETE_FILTERDATA:
     //   return {
     //     ...state,
-    //     loading: false,
+    //     search_loading: false,
     //     filteredData: state.filteredData.filter(
     //       (savedads) => savedads.adID !== action.payload.adID
     //     ),
