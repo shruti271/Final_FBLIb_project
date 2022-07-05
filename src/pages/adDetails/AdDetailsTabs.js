@@ -51,7 +51,7 @@ function AdDeatailsTabs() {
 
       setAdDetail(() => singleAds);
       console.log(singleAds);
-
+console.log()
       if (subAllMedia[0]?.pageInfo?.name === singleAds?.pageInfo?.name) {
         console.log("dont callllllllllllllllllllllllll");
       } else {

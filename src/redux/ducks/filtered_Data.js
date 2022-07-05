@@ -8,6 +8,7 @@ export const MEDIATYPE_START = "MEDIATYPE_START";
 export const SET_SORT_FILTER_START = "SET_SORT_FILTER_START";
 export const SORT_TYPE_START = "SORT_TYPE_START";
 export const STATUS_START = "STATUS_START";
+export const FACEBOOKLIKES_START = "FACEBOOKLIKES_START";
 export const SEARCH_START = "SEARCH_START";
 export const SEARCH_SUCCESS = "SEARCH_SUCCESS";
 export const SEARCH_ERROR = "SEARCH_ERROR";
@@ -42,6 +43,10 @@ export const AdCountvalueStart = (filter) => ({
 });
 export const MediaTypevalueStart = (filter) => ({
   type: MEDIATYPE_START,
+  payload: filter,
+});
+export const facebookLikesStart = (filter) => ({
+  type: FACEBOOKLIKES_START,
   payload: filter,
 });
 export const SetSortOrdervalueStart = (filter) => ({
@@ -97,8 +102,8 @@ const initialState = {
     StartRunningDate: { startdate: "", enddate: "", Message: "" },
     AdStatus: { status: "", Message: "" },
     AdCount: { min: 0, max: 1000, Message: "" },
-    FacebookLikes: { Message: "" },
-    InstragramLike: { Message: "" },
+    FacebookLikes: { min: 0, max: 1000, Message: "" },
+    InstragramLike: { min: 0, max: 1000, Message: "" },
     MediaType: { selectedData: "Video or Photo", Message: "" },
   },
   sortFilter: {
@@ -145,7 +150,7 @@ const FilterDataReducer = (state = initialState, action) => {
       return {
         ...state,
         search_loading: false,
-        filteredData:state.filteredData,
+        filteredData: state.filteredData,
         // filteredData: [
         //   ...state.allData.filter(
         //     (ads) =>
@@ -215,6 +220,12 @@ const FilterDataReducer = (state = initialState, action) => {
                 Date.parse(firstAd[state.sortFilter?.type]) -
                 Date.parse(secondAd[state.sortFilter?.type])
             )
+          : state.sortFilter?.type === "likes"
+          ? dummy?.sort(
+              (firstAd, secondAd) =>
+                firstAd["pageInfo"]["platforms"][0][state.sortFilter?.type] -
+                secondAd["pageInfo"]["platforms"][0][state.sortFilter?.type]
+            )
           : dummy?.sort(
               (firstAd, secondAd) =>
                 firstAd[state.sortFilter?.type] -
@@ -225,6 +236,12 @@ const FilterDataReducer = (state = initialState, action) => {
             (firstAd, secondAd) =>
               Date.parse(secondAd[state.sortFilter?.type]) -
               Date.parse(firstAd[state.sortFilter?.type])
+          )
+        : state.sortFilter?.type === "likes"
+        ? dummy?.sort(
+            (firstAd, secondAd) =>
+              secondAd["pageInfo"]["platforms"][0][state.sortFilter?.type] -
+              firstAd["pageInfo"]["platforms"][0][state.sortFilter?.type]
           )
         : dummy?.sort(
             (firstAd, secondAd) =>
@@ -275,6 +292,19 @@ const FilterDataReducer = (state = initialState, action) => {
         },
         filteredData: [...state.filteredData],
       };
+    // case FACEBOOKLIKES_START:
+    //   return {
+    //     ...state,
+    //     search_loading: false,
+    //     appliedFilters: {
+    //       ...state.appliedFilters,
+    //       [`${action.payload.name}`]: {
+    //         status: action.payload.status,
+    //         Message: action.payload.Message,
+    //       },
+    //     },
+    //     filteredData: [...state.filteredData],
+    //   };
     case SEARCH_START:
       return {
         ...state,
@@ -327,6 +357,16 @@ const FilterDataReducer = (state = initialState, action) => {
                         ads?.startDate &&
                       state.appliedFilters?.StartRunningDate?.enddate >=
                         ads?.startDate
+                    : true) &&
+                  (state.appliedFilters?.FacebookLikes?.min !== 0 ||
+                  state.appliedFilters?.FacebookLikes?.max !== 1000
+                    ? state.appliedFilters?.FacebookLikes?.max === 0
+                      ? ads?.pageInfo?.platforms[0]?.likes >=
+                        state.appliedFilters?.FacebookLikes?.min
+                      : ads?.pageInfo?.platforms[0]?.likes >=
+                          state.appliedFilters?.FacebookLikes?.min &&
+                        ads?.pageInfo?.platforms[0]?.likes <=
+                          state.appliedFilters?.FacebookLikes?.max
                     : true)
               )
             : state.filteredData,
@@ -380,6 +420,16 @@ const FilterDataReducer = (state = initialState, action) => {
                     ads?.startDate &&
                   state.appliedFilters?.StartRunningDate?.enddate >=
                     ads?.startDate
+                : true) &&
+              (state.appliedFilters?.FacebookLikes?.min !== 0 ||
+              state.appliedFilters?.FacebookLikes?.max !== 1000
+                ? state.appliedFilters?.FacebookLikes?.max === 0
+                  ? ads?.pageInfo?.platforms[0]?.likes >=
+                    state.appliedFilters?.FacebookLikes?.min
+                  : ads?.pageInfo?.platforms[0]?.likes >=
+                      state.appliedFilters?.FacebookLikes?.min &&
+                    ads?.pageInfo?.platforms[0]?.likes <=
+                      state.appliedFilters?.FacebookLikes?.max
                 : true)
           ),
         ],

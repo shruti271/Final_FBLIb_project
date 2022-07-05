@@ -34,6 +34,7 @@ import {
   clearFilteredDataStart,
   clearSingleFilteredDataStart,
   datevalueStart,
+  facebookLikesStart,
   loadFilteredDataStart,
   MediaTypevalueStart,
   putFilteredDataStart,
@@ -162,6 +163,75 @@ const Addlibrarydatabase = () => {
   const openAdStatusAnchorel = Boolean(adStatusAnchorel);
   const [sortByAnchorel, setSortByAnchorel] = React.useState(null);
   const openSortByAnchorel = Boolean(sortByAnchorel);
+  const [facebookLikeanchorel, setFacebookLikeAnchorEl] = React.useState(null);
+  const openFaceboolLike = Boolean(facebookLikeanchorel);
+
+  // useEffect(() => {
+  //   // var words = ['hello', 'hi', 'howdy'];
+  //   var words = ["cool", "4"];
+
+  //   var strmy = "hello hi bas";
+  //   // var value = new RegExp(words.join('|'));
+  //   console.log(
+  //     ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;"
+  //   );
+  //   // console.log(value);
+  //   // Object.values()
+  //   // filteredData?.map(a=>{
+  //   // console.log(Object.values(a).toString().includes('cool'))
+  //   // words.forEach((dum) => {
+  //     var tarr=filteredData
+  //     tarr.filter((fil)=>{
+  //       let dum=0;
+  //       for (dum ; words.length<dum;dum++) {
+  //         console.log(words[dum]);
+  //         if (Object.values(fil).toString().includes(words[dum])) {
+  //           console.log(words[dum]);
+  //           // console.log(Object.values(filteredData[0]).toString())
+  //           console.log("0000000000");
+  //           console.log(fil);
+  //           // console.log("yesssssssssssss")
+  //         } else {
+  //           console.log("break........................................");
+  //           return null;
+  //           // return false;
+  //         }
+  //       }
+  //       // if(words.length === dum+1){
+  //         return true;
+  //       // }else return false;
+
+  //     })
+  //     console.log(tarr)
+  //     console.log("{{{{{{{{{{{{{{{{{{{{{{first}}}}}}}}}}}}}}}}}}}}}}")
+  //   for (let dat in filteredData) {
+  //     // let dum=0;
+  //     // for (dum in words) {
+  //     //   console.log(words[dum]);
+  //     //   if (Object.values(filteredData[0]).toString().includes(words[dum])) {
+  //     //     console.log(words[dum]);
+  //     //     // console.log(Object.values(filteredData[0]).toString())
+  //     //     console.log("0000000000");
+  //     //     console.log(filteredData[0]);
+  //     //     // console.log("yesssssssssssss")
+  //     //   } else {
+  //     //     console.log("break........................................");
+  //     //     // break;
+  //     //     // return false;
+  //     //   }
+  //     // }
+  //     // if(words.length === dum+1){
+
+  //     // }
+  //   }
+  //   // });
+
+  //   // })
+  //   console.log(
+  //     ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;"
+  //   );
+  // });
+
   useEffect(() => {
     console.log("33333333333333333333333333333333333333333333333333");
     console.log(appliedFilters);
@@ -187,7 +257,7 @@ const Addlibrarydatabase = () => {
   }, [allMediaAds]);
 
   const counterIncremten = (event, newValue) => {
-    console.log("++++++++++++++"+document.getElementById("searchbar").value)
+    console.log("++++++++++++++" + document.getElementById("searchbar").value);
     console.log(newValue);
     console.log("............................................................");
     console.log(event.type);
@@ -211,7 +281,25 @@ const Addlibrarydatabase = () => {
     //   ? dispatch(searchStart(searchBarData))
     //   : dispatch(applyallfilters());
   };
-
+  const FacebookLikesIncremten = (event, newValue) => {
+    console.log("llllllllllllllllllllllllll");
+    console.log(newValue.split("-")[1]);
+    console.log("llllllllllllllllllllllllll");
+    dispatch(
+      AdCountvalueStart({
+        name: "FacebookLikes",
+        min: Number(newValue.split("-")[0]),
+        max: Number(newValue.split("-")[1]),
+        Message:
+          newValue.split("-")[1] === "0"
+            ? `FacebookLikes : ${newValue.split("-")[0]}+`
+            : `FacebookLikes : ${newValue.split("-")[0]} - ${
+                newValue.split("-")[1]
+              }`,
+      })
+    );
+    dispatch(applyallfilters());
+  };
   const handlechange = (event, newValue) => {
     console.log(newValue);
     console.log("..................................................");
@@ -224,9 +312,17 @@ const Addlibrarydatabase = () => {
     );
     // dispatch(searchStart());
     // dispatch(applyallfilters());
-    searchBarData !== []
+    // document.getElementById("searchbar").innerText
+    //   ? dispatch(searchStart(searchBarData))
+    //   : dispatch(applyallfilters());
+    // searchBarData !== ''
+    //   ? dispatch(searchStart(searchBarData))
+    // :
+    //  dispatch(applyallfilters());
+    document.getElementById("searchbar").value
       ? dispatch(searchStart(searchBarData))
       : dispatch(applyallfilters());
+
     dispatch(SortvalueStart());
 
     // setAppliedFilters((pre) => ({
@@ -245,7 +341,10 @@ const Addlibrarydatabase = () => {
         Message: `Ad Status:${newValue}`,
       })
     );
-    dispatch(applyallfilters());
+    // dispatch(applyallfilters());
+    document.getElementById("searchbar").value
+      ? dispatch(searchStart(searchBarData))
+      : dispatch(applyallfilters());
     // searchBarData !== []
     //   ? dispatch(searchStart(searchBarData))
     //   : dispatch(applyallfilters());
@@ -399,7 +498,8 @@ const Addlibrarydatabase = () => {
                     }} 
                   >*/}
 
-                  <InputBase id="searchbar"
+                  <InputBase
+                    id="searchbar"
                     onKeyDown={(e) => {
                       if (e.key === "Enter") {
                         dispatch(
@@ -427,17 +527,21 @@ const Addlibrarydatabase = () => {
                         //   return true;
                         // });
                       }
-                      console.log("||||||||||||||||||||||||||||||||||||||||||")
-                      console.log(e.currentTarget.value==='')
-                      console.table(e.currentTarget.value)
-                      console.log("||||||||||||||||||||||||||||||||||||||||||")
-                      if (e.currentTarget.value ==='') {
+                      console.log("||||||||||||||||||||||||||||||||||||||||||");
+                      console.log(e.currentTarget.value === "");
+                      console.table(e.currentTarget.value);
+                      console.log("||||||||||||||||||||||||||||||||||||||||||");
+                      if (e.currentTarget.value === "") {
+                        dispatch(applyallfilters());
                         dispatch(
                           searchStart({
                             keywords: [],
                           })
                         );
-                        dispatch(applyallfilters())
+                        // dispatch(applyallfilters());
+                        // document.getElementById("searchbar").value
+                        dispatch(searchStart(searchBarData));
+                        // : dispatch(applyallfilters());
                       }
                     }}
                     margin="dense"
@@ -491,9 +595,13 @@ const Addlibrarydatabase = () => {
                   add={open ? "simple-popover" : undefined}
                   onClose={() => {
                     setAnchorEl(null);
-                    searchBarData?.keywords !== []
+                    document.getElementById("searchbar").value
                       ? dispatch(searchStart(searchBarData))
                       : dispatch(applyallfilters());
+                    // searchBarData?.keywords !== []
+                    //   ? dispatch(searchStart(searchBarData))
+                    //   : dispatch(applyallfilters());
+
                     dispatch(SortvalueStart());
                   }}
                   transformOrigin={{
@@ -525,7 +633,10 @@ const Addlibrarydatabase = () => {
                       // searchBarData?.keywords !== []
                       // ? dispatch(searchStart(searchBarData))
                       // :
-                       dispatch(applyallfilters());
+                      // dispatch(applyallfilters());
+                      document.getElementById("searchbar").value
+                        ? dispatch(searchStart(searchBarData))
+                        : dispatch(applyallfilters());
                       setRange([item.selection]);
                     }}
                     onChange={(item) => {
@@ -549,7 +660,11 @@ const Addlibrarydatabase = () => {
                         })
                       );
                       // searchBarData?.keywords!==[]?dispatch(searchStart(searchBarData)):dispatch(applyallfilters());
-                      dispatch(applyallfilters())
+                      // dispatch(applyallfilters());
+                      document.getElementById("searchbar").value
+                        ? dispatch(searchStart(searchBarData))
+                        : dispatch(applyallfilters());
+
                       console.log(appliedFilters);
                       setRange([item.selection]);
                     }}
@@ -642,7 +757,7 @@ const Addlibrarydatabase = () => {
                     </Box> */}
                       <Box>
                         <Stack direction={"row"} spacing={1}>
-                          <Typography>From</Typography>                          
+                          <Typography>From</Typography>
                           <Typography
                             contentEditable={true}
                             id="minRange"
@@ -663,14 +778,16 @@ const Addlibrarydatabase = () => {
                                 dispatch(
                                   AdCountvalueStart({
                                     name: "AdCount",
-                                    min: Number(newValue.currentTarget.textContent),
+                                    min: Number(
+                                      newValue.currentTarget.textContent
+                                    ),
                                     max: appliedFilters?.AdCount?.max,
                                     Message: `Ad Count: ${newValue.currentTarget.textContent}-${appliedFilters?.AdCount?.max}`,
                                   })
                                 );
-                                document.getElementById("searchbar").value?
-                                dispatch(searchStart(searchBarData)):
-                                dispatch(applyallfilters());
+                                document.getElementById("searchbar").value
+                                  ? dispatch(searchStart(searchBarData))
+                                  : dispatch(applyallfilters());
 
                                 // dispatch(applyallfilters());
                                 // if (searchBarData !== [])
@@ -691,21 +808,23 @@ const Addlibrarydatabase = () => {
                               //   `${newValue.currentTarget.textContent}`
                               // );
                               if (newValue.currentTarget.textContent !== "") {
-                              dispatch(
-                                AdCountvalueStart({
-                                  name: "AdCount",
-                                  min: appliedFilters?.AdCount?.min,
-                                  max: Number(newValue.currentTarget.textContent),
-                                  Message: `Ad Count: ${appliedFilters?.AdCount?.min}-${newValue.currentTarget.textContent}`,
-                                })
-                              );
-                              // searchBarData!==[]?dispatch(searchStart(searchBarData)):
-                              // dispatch(applyallfilters());
-                              document.getElementById("searchbar").value?
-                              dispatch(searchStart(searchBarData)):
-                              dispatch(applyallfilters());
+                                dispatch(
+                                  AdCountvalueStart({
+                                    name: "AdCount",
+                                    min: appliedFilters?.AdCount?.min,
+                                    max: Number(
+                                      newValue.currentTarget.textContent
+                                    ),
+                                    Message: `Ad Count: ${appliedFilters?.AdCount?.min}-${newValue.currentTarget.textContent}`,
+                                  })
+                                );
+                                // searchBarData!==[]?dispatch(searchStart(searchBarData)):
+                                // dispatch(applyallfilters());
+                                document.getElementById("searchbar").value
+                                  ? dispatch(searchStart(searchBarData))
+                                  : dispatch(applyallfilters());
 
-                              dispatch(SortvalueStart());
+                                dispatch(SortvalueStart());
                               }
                               console.log(
                                 "------------------" +
@@ -751,9 +870,9 @@ const Addlibrarydatabase = () => {
                               Message: "",
                             })
                           );
-                          document.getElementById("searchbar").value?
-                          dispatch(searchStart(searchBarData)):
-                          dispatch(applyallfilters());
+                          document.getElementById("searchbar").value
+                            ? dispatch(searchStart(searchBarData))
+                            : dispatch(applyallfilters());
                           // dispatch(applyallfilters());
                           // searchBarData !== []
                           //   ? dispatch(searchStart(searchBarData))
@@ -860,7 +979,10 @@ const Addlibrarydatabase = () => {
                               })
                             );
                             // dispatch(applyallfilters());
-                            searchBarData !== []
+                            // searchBarData !== []
+                            //   ? dispatch(searchStart(searchBarData))
+                            //   : dispatch(applyallfilters());
+                            document.getElementById("searchbar").value
                               ? dispatch(searchStart(searchBarData))
                               : dispatch(applyallfilters());
                             dispatch(SortvalueStart());
@@ -875,6 +997,7 @@ const Addlibrarydatabase = () => {
 
                 <Button
                   variant="outlined"
+                  onClick={(e) => setFacebookLikeAnchorEl(e.currentTarget)}
                   sx={{
                     color: "#2B2F42",
                     whiteSpace: "nowrap",
@@ -896,6 +1019,151 @@ const Addlibrarydatabase = () => {
                     Facebook Page Likes
                   </Typography>
                 </Button>
+                <Popover
+                  open={openFaceboolLike}
+                  anchorEl={facebookLikeanchorel}
+                  onClose={() => {
+                    setFacebookLikeAnchorEl(null);
+                  }}
+                  add={openFaceboolLike ? "simple-popover" : undefined}
+                  transformOrigin={{
+                    horizontal: "left",
+                    vertical: "top",
+                  }}
+                  anchorOrigin={{
+                    horizontal: "left",
+                    vertical: "bottom",
+                  }}
+                >
+                  <Box
+                    sx={{
+                      margin: 2,
+                      width: "187px",
+                      alignContent: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Stack
+                      direction={"column"}
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <Box sx={{ width: "190px" }}>
+                        <FormControl sx={{ padding: "10px" }}>
+                          <RadioGroup
+                            aria-labelledby="demo-radio-buttons-group-label"
+                            defaultValue="female"
+                            name="radio-buttons-group"
+                            value={
+                              `${appliedFilters?.FacebookLikes?.min}-${appliedFilters?.FacebookLikes?.max}` ||
+                              ""
+                            }
+                            onChange={FacebookLikesIncremten}
+                          >
+                            <FormControlLabel
+                              value="0-500"
+                              control={<Radio style={{ color: "#00CBFF" }} />}
+                              label="<500"
+                            />
+                            <FormControlLabel
+                              value="501-1000"
+                              control={<Radio style={{ color: "#00CBFF" }} />}
+                              label=">501 to <1000"
+                            />
+                            <FormControlLabel
+                              value="1001-5000"
+                              control={<Radio style={{ color: "#00CBFF" }} />}
+                              label=">1000 to <5000"
+                            />
+                            {/* <FormControlLabel
+                              value="5001-7000"
+                              control={<Radio style={{ color: "#00CBFF" }} />}
+                              label=">5001 to <7000"
+                            /> */}
+                            <FormControlLabel
+                              value="5001-0"
+                              control={<Radio style={{ color: "#00CBFF" }} />}
+                              label=">5001+"
+                            />
+                          </RadioGroup>
+                          {/* <Box
+                            display={"flex"}
+                            alignContent={"center"}
+                            justifyContent={"center"}
+                          >
+                            <Button
+                              variant="outlined"
+                              sx={{
+                                borderRadius: 50,
+                                fontWeight: 600,
+                                borderColor: "#00CBFF",
+                                color: "#00CBFF",
+                                height: "35px",
+                                width: "80px",
+                                borderWidth: 2,
+                              }}
+                              onClick={() => {
+                                dispatch(
+                                  statusValueStart({
+                                    name: "AdStatus",
+                                    status: "Active",
+                                    Message: "",
+                                  })
+                                );
+                                // dispatch(applyallfilters());
+                                searchBarData !== []
+                                  ? dispatch(searchStart(searchBarData))
+                                  : dispatch(applyallfilters());
+                                dispatch(SortvalueStart());
+                              }}
+                            >
+                              Reset
+                            </Button>
+                          </Box> */}
+                        </FormControl>
+                      </Box>
+                      {/* <Button
+                        variant="outlined"
+                        sx={{
+                          borderRadius: 50,
+                          fontWeight: 600,
+                          borderColor: "#00CBFF",
+                          color: "#00CBFF",
+                          borderWidth: 2,
+                        }}
+                        onClick={() => {
+                          dispatch(
+                            AdCountvalueStart({
+                              name: "AdCount",
+                              min: 0,
+                              max: 1000,
+                              Message: "",
+                            })
+                          );
+                          document.getElementById("searchbar").value
+                            ? dispatch(searchStart(searchBarData))
+                            : dispatch(applyallfilters());
+                          // dispatch(applyallfilters());
+                          // searchBarData !== []
+                          //   ? dispatch(searchStart(searchBarData))
+                          //   : dispatch(applyallfilters());
+                          // setAppliedFilters((pre) => ({
+                          //   ...pre,
+                          //   AdCount: { min: 0, max: 1000, Message: "" },
+                          // }));
+
+                          setrangeAnchorEl(null);
+                        }}
+                      >
+                        Reset
+                      </Button> */}
+                    </Stack>
+                  </Box>
+                </Popover>
+
                 <Button
                   variant="outlined"
                   sx={{
@@ -1013,7 +1281,10 @@ const Addlibrarydatabase = () => {
                               })
                             );
                             // dispatch(applyallfilters());
-                            searchBarData !== []
+                            // searchBarData !== []
+                            //   ? dispatch(searchStart(searchBarData))
+                            //   : dispatch(applyallfilters());
+                            document.getElementById("searchbar").value
                               ? dispatch(searchStart(searchBarData))
                               : dispatch(applyallfilters());
                             dispatch(SortvalueStart());
@@ -1183,7 +1454,11 @@ const Addlibrarydatabase = () => {
                         //   })
                         // );
                         // dispatch(applyallfilters());
-                        searchBarData !== ""
+                        console.log(document.getElementById("searchbar").value);
+                        console.log(
+                          "-----------======================================"
+                        );
+                        document.getElementById("searchbar").value !== ""
                           ? dispatch(searchStart(searchBarData))
                           : dispatch(applyallfilters());
                         dispatch(SortvalueStart());
@@ -1273,7 +1548,7 @@ const Addlibrarydatabase = () => {
                         label="Recently updated"
                       />
                       <FormControlLabel
-                        value="Page likes"
+                        value="likes"
                         control={<Radio style={{ color: "#00CBFF" }} />}
                         label="Page likes"
                       />

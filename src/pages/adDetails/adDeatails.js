@@ -19,7 +19,8 @@ function AdDeatails({ ThumbnailData }) {
                 sx={{ display: "flex", marginTop: "13px", marginLeft: "26px" }}
               >
                 <Box>
-                  <img src={Firstcard} aria-label="Add" />
+                  {/* <img src={Firstcard} aria-label="Add" /> */}
+                  <img src={ThumbnailData?.pageInfo?.logo} aria-label="FirstCard" style={{width:"25px"}}/>
                 </Box>
                 <Typography
                   style={{
@@ -282,7 +283,8 @@ function AdDeatails({ ThumbnailData }) {
                   Best Solar Lighting
                 </Typography>
                 <Box sx={{ width: "112px", height: "112px" }}>
-                  <img src={LargePageLogo} aria-label="Add" />
+                  {/* <img src={LargePageLogo} aria-label="Add" /> */}
+                  <img src={ThumbnailData?.pageInfo?.logo} aria-label="FirstCard" style={{width:"100%"}}/>
                 </Box>
               </Stack>
               <Stack style={{ justifyContent: "center", marginTop: "36px" }}>
@@ -303,7 +305,8 @@ function AdDeatails({ ThumbnailData }) {
                         fontFamily: "Neue Haas Grotesk Display Pro",
                       }}
                     >
-                      21,619 likes • Retail company
+                      {ThumbnailData?.pageInfo?.platforms[0].likes +" likes • "+ ThumbnailData?.pageInfo?.platforms[0].type}
+                       
                     </Typography>
                   </Stack>
                 </Stack>

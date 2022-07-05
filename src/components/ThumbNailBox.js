@@ -81,6 +81,7 @@ const useStyles = makeStyles((theme) => ({
   },
   shareicon: {
     marginLeft: theme.spacing(5),
+    cursor: "pointer",
   },
   saveicon: {
     marginLeft: theme.spacing(2),
@@ -128,7 +129,11 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
       >
         <Box className={classes.Addheader}>
           <Box sx={{ marginRight: "12px" }}>
-            <img src={Firstcard} aria-label="FirstCard" />
+            <img
+              src={adInfo?.pageInfo?.logo}
+              aria-label="FirstCard"
+              style={{ width: "25px" }}
+            />
           </Box>
           <Typography
             sx={{
@@ -152,7 +157,7 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
               marginRight: "12px",
             }}
           >
-            (21,604 likes)
+            {`(${adInfo?.pageInfo?.platforms[0].likes} likes)`}
           </Typography>
         </Box>
         <Box>
@@ -186,6 +191,12 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
                 src={Shareicon}
                 alt="Shareicon"
                 className={classes.shareicon}
+                onClick={(e) => {
+                  e.preventDefault();
+                  window.open(adInfo?.purchaseURL, "_blank", "");
+                  // window.location.target="_blank"
+                  // window.location.href=adInfo?.purchaseURL;
+                }}
               />
               {deleteId ? (
                 <img
@@ -202,11 +213,11 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
                   src={Saveicon}
                   alt="Saveicon"
                   className={classes.saveicon}
-                  onClick={() => {
+                  onClick={async () => {
                     dispatch(
-                      createSavedAdsClientSideStart({ ad: adInfo.adID })
+                      createSavedAdsClientSideStart({ ad: adInfo?.adID })
                     );
-                    dispatch(createSavedAdsStart({ ad: adInfo.adID }));
+                    await dispatch(createSavedAdsStart({ ad: adInfo.adID }));
                   }}
                 />
               )}
