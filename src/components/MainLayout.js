@@ -54,7 +54,7 @@ useEffect(()=>{
         <CssBaseline />
         <CustomSidebar isOpen={isOpen} />
         <CustomAppBar isOpen={isOpen} setIsOpen={setIsOpen} />
-        <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+        <Box component="main" sx={{ flexGrow: 1, paddingLeft:4 }}>
           <DrawerHeader />
           <Routes>
             <Route exact path="/" element={<Addlibrarydatabase />} />

@@ -111,7 +111,7 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
                 <Box className={classes.avtar}>
                   <NotificationsIcon />
                 </Box>
-                <Box className={classes.avtar}>
+                <Box className={classes.avtar} onClick={handleOpenMenu} sx={{cursor:"pointer"}}>
                   <PersonIcon />
                 </Box>
 

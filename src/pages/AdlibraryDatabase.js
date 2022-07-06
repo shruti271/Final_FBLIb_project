@@ -62,12 +62,12 @@ const useStyles = makeStyles((theme) => ({
     color: "#2B2F42",
   },
   subTitleHome: {
-    fontWeight: 500,
-    fontSize: "18px",
-    lineHeight: "24px",
-    color: "#2B2F42",
-    marginTop: "8px",
-    marginBottom: "18px",
+    // fontWeight: 500,
+    // fontSize: "18px",
+    // lineHeight: "24px",
+    // color: "#2B2F42",
+    // marginTop: "8px",
+    // marginBottom: "18px",
   },
   addTextfilter: {
     padding: theme.spacing(1, 3),
@@ -447,9 +447,19 @@ const Addlibrarydatabase = () => {
               >
                 Welcome to the All-Seeing Eye!
               </Typography>
-              <Typography className={classes.subTitleHome}>
-                Spy on 100% of the ads ran by over 30,000 active dropshippingn
-                stores
+              <Typography 
+              // className={classes.subTitleHome}
+              sx={{
+                fontWeight: 500,
+                fontSize: "18px",
+                // lineHeight: "24px",
+                color: "#2B2F42",
+                // marginTop: "8px",
+                // marginBottom: "18px",
+              }}
+              >
+                Spy on 100% of the ads ran by over 30,000 active dropshipping
+                stores.
               </Typography>
             </Box>
           </Grid>
@@ -460,6 +470,7 @@ const Addlibrarydatabase = () => {
               border: "1px solid #EBEBEB",
               borderRadius: "15px",
               padding: "16px 36px",
+              marginTop: 2,
             }}
           >
             <Grid
@@ -950,7 +961,7 @@ const Addlibrarydatabase = () => {
                         <FormControlLabel
                           value="inActive"
                           control={<Radio style={{ color: "#00CBFF" }} />}
-                          label="inActive"
+                          label="Inactive"
                         />
                       </RadioGroup>
                       <Box
