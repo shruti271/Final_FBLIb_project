@@ -29,7 +29,7 @@ function AdDeatails({ ThumbnailData }) {
                 <Typography
                   style={{
                     fontWeight: 500,
-                    fontSize: "19px",
+                    // fontSize: "19px",
                     marginLeft: "8px",
                     lineHeight: "30px",
                     color: "#2B2F42",
@@ -43,7 +43,7 @@ function AdDeatails({ ThumbnailData }) {
                 <Typography
                   sx={{
                     fontWeight: 500,
-                    fontSize: "18px",
+                    // fontSize: "18px",
                     lineHeight: "27px",
                     letterSpacing: "0.03em",
                     color: "#2B2F42",
@@ -94,20 +94,23 @@ function AdDeatails({ ThumbnailData }) {
                         }}
                         noWrap
                       >
-                        {ThumbnailData?.headline
+                        {ThumbnailData?.displayURL
                           ? ThumbnailData.displayURL
                           : " "}
                       </Typography>
                       <Typography
                         style={{
                           fontWeight: 500,
-                          fontSize: "20px",
+                          // fontSize: "20px",
                           lineHeight: "30px",
                           letterSpacing: "0.035em",
                           color: "#2B2F42",
                         }}
                       >
-                        Solar Cardinal Wind Chime Light
+                        {/* Solar Cardinal Wind Chime Light */}
+                        {ThumbnailData?.headline
+                          ? ThumbnailData.headline
+                          : " "}
                       </Typography>
                       <Typography
                         style={{
@@ -310,8 +313,8 @@ function AdDeatails({ ThumbnailData }) {
                       direction={"row"}
                       sx={{
                         marginBottom: "16px",
-                        justifyContent: "center",
-                        alignItems: "center",
+                        // justifyContent: "center",
+                        // alignItems: "center",
                       }}
                     >
                       <Box sx={{ marginRight: "10px" }}>
@@ -330,14 +333,18 @@ function AdDeatails({ ThumbnailData }) {
                             fontFamily: "Neue Haas Grotesk Display Pro",
                           }}
                         >
-                          @bestsolarlightingshop
+                          {socialMedia?.other}
                         </Typography>
                         <Typography
                           style={{
                             fontFamily: "Neue Haas Grotesk Display Pro",
                           }}
                         >
-                          {socialMedia.likes + " likes • " + socialMedia.type}
+                          {socialMedia.name === "Facebook"
+                            ? socialMedia.likes + " likes • " + socialMedia.type
+                            : socialMedia.followers +
+                              " followers • " +
+                              socialMedia.type}
                         </Typography>
                       </Stack>
                     </Stack>

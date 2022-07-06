@@ -129,11 +129,13 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
         }}
       >
         <Box className={classes.Addheader}>
-          <Box sx={{ marginRight: "12px" }}>
+          <Box sx={{ border: 1,width:"35px",borderRadius: '50%',borderColor:"#EBEBEB",display:"flex",justifyContent:"center",alignItems:"center"}} >
             <img
               src={adInfo?.pageInfo?.logo}
               aria-label="FirstCard"
-              style={{ width: "25px" ,border:2,borderColor:"#EBEBEB"}}
+              // sx={{}}
+              
+              style={{ width: "30px" ,borderRadius: '50%'}}
             />
           </Box>
           <Typography
@@ -143,6 +145,7 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
               lineHeight: "24px",
               color: "#2B2F42",
               marginRight: "12px",
+              paddingLeft:"10px"
             }}
           >
             {adInfo?.pageInfo?.name}

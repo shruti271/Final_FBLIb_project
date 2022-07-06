@@ -102,9 +102,10 @@ const initialState = {
     StartRunningDate: { startdate: "", enddate: "", Message: "" },
     AdStatus: { status: "", Message: "" },
     AdCount: { min: 0, max: 1000, Message: "" },
-    FacebookLikes: { min: 0, max: 1000, Message: "" },
-    InstragramLike: { min: 0, max: 1000, Message: "" },
+    FacebookLikes: { min: 0, max: 100000, Message: "" },
+    InstragramLike: { min: 0, max: 10000, Message: "" },
     MediaType: { selectedData: "Video or Photo", Message: "" },
+    PurchaseType:{selctedButton:'',Message:''}
   },
   sortFilter: {
     type: "",
@@ -399,12 +400,28 @@ const FilterDataReducer = (state = initialState, action) => {
         ...state,
         search_loading: false,
         filteredData: [
-          ...state.allData.filter(
-            (ads) =>
+          ...state.allData.filter((ads) => {
+            console.log(ads?.pageInfo?.platforms[1]?.followers);
+            console.log("#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+            return (
               (state.appliedFilters?.AdCount?.min !== 0 ||
               state.appliedFilters?.AdCount?.max !== 1000
                 ? ads.noOfCopyAds >= state.appliedFilters?.AdCount?.min &&
                   ads.noOfCopyAds <= state.appliedFilters?.AdCount?.max
+                : true) &&
+              (state.appliedFilters?.FacebookLikes?.min !== 0 ||
+              state.appliedFilters?.FacebookLikes?.max !== 100000
+                ? ads?.pageInfo?.platforms[0]?.likes >=
+                    state.appliedFilters?.FacebookLikes?.min &&
+                  ads?.pageInfo?.platforms[0]?.likes <=
+                    state.appliedFilters?.FacebookLikes?.max
+                : true) &&
+              (state.appliedFilters?.InstragramLike?.min !== 0 ||
+              state.appliedFilters?.InstragramLike?.max !== 10000
+                ? ads?.pageInfo?.platforms[1]?.followers >=
+                    state.appliedFilters?.InstragramLike?.min &&
+                  ads?.pageInfo?.platforms[1]?.followers <=
+                    state.appliedFilters?.InstragramLike?.max
                 : true) &&
               (state.appliedFilters?.MediaType?.selectedData === "" ||
               state.appliedFilters?.MediaType?.selectedData === "Video or Photo"
@@ -431,7 +448,8 @@ const FilterDataReducer = (state = initialState, action) => {
                     ads?.pageInfo?.platforms[0]?.likes <=
                       state.appliedFilters?.FacebookLikes?.max
                 : true)
-          ),
+            );
+          }),
         ],
         appliedFilters: state.appliedFilters,
       };

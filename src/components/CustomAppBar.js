@@ -165,7 +165,7 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
                         marginTop: 13,
                         maxHeight: 40 * 6,
                         width: "35ch",
-                        background: "#ebebeb",
+                        background: "white",
                       },
                     }}
                   >
@@ -195,8 +195,8 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
                           style={{
                             background:
                               isMenuOptionActive === item.url
-                                ? "white"
-                                : "#ebebeb",
+                                ? "#ebebeb"
+                                : "white",
                           }}
                         >
                           <img

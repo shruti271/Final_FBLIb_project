@@ -146,8 +146,12 @@ const Addlibrarydatabase = () => {
   const focusDiv = useRef();
 
   const { allMediaAds, loading } = useSelector((state) => state.allMediaAds);
-  const { filteredData, appliedFilters, sortFilter, searchBarData } =
-    useSelector((state) => state.filteredData);
+  const {
+    filteredData,
+    appliedFilters,
+    sortFilter,
+    searchBarData,
+  } = useSelector((state) => state.filteredData);
   // const [countMin, setCountMin] = useState([]);
   // const [countMax, setCountMax] = useState(1000);
   const { savedIds } = useSelector((state) => state.savedclienads);
@@ -164,7 +168,13 @@ const Addlibrarydatabase = () => {
   const openSortByAnchorel = Boolean(sortByAnchorel);
   const [facebookLikeanchorel, setFacebookLikeAnchorEl] = React.useState(null);
   const openFaceboolLike = Boolean(facebookLikeanchorel);
-
+  const [
+    instragramFolloweranchorel,
+    setInstragramFollowerAnchorEl,
+  ] = React.useState(null);
+  const openInstragramFollower = Boolean(instragramFolloweranchorel);
+  const [ButtonTypeanchorel, setButtonTypeAnchorEl] = React.useState(null);
+  const openButtonType = Boolean(ButtonTypeanchorel);
   // useEffect(() => {
   //   // var words = ['hello', 'hi', 'howdy'];
   //   var words = ["cool", "4"];
@@ -259,7 +269,7 @@ const Addlibrarydatabase = () => {
     console.log("++++++++++++++" + document.getElementById("searchbar").value);
     console.log(newValue);
     console.log("............................................................");
-    console.log(event.type);
+    // console.log(event.type);
     console.log("............................................................");
     // if(event.type!=="mousedown" && event.type!=="mousemove"){
     console.log("insideeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
@@ -281,24 +291,76 @@ const Addlibrarydatabase = () => {
     //   : dispatch(applyallfilters());
   };
   const FacebookLikesIncremten = (event, newValue) => {
-    console.log("llllllllllllllllllllllllll");
-    console.log(newValue.split("-")[1]);
-    console.log("llllllllllllllllllllllllll");
     dispatch(
       AdCountvalueStart({
         name: "FacebookLikes",
-        min: Number(newValue.split("-")[0]),
-        max: Number(newValue.split("-")[1]),
-        Message:
-          newValue.split("-")[1] === "0"
-            ? `FacebookLikes : ${newValue.split("-")[0]}+`
-            : `FacebookLikes : ${newValue.split("-")[0]} - ${
-                newValue.split("-")[1]
-              }`,
+        min: newValue[0],
+        max: newValue[1],
+        Message: `FacebookLikes: ${newValue[0]}-${newValue[1]}`,
       })
     );
+    // console.log("llllllllllllllllllllllllll");
+    // console.log(newValue.split("-")[1]);
+    // console.log("llllllllllllllllllllllllll");
+    // dispatch(
+    //   AdCountvalueStart({
+    //     name: "FacebookLikes",
+    //     min: Number(newValue.split("-")[0]),
+    //     max: Number(newValue.split("-")[1]),
+    //     Message:
+    //       newValue.split("-")[1] === "0"
+    //         ? `FacebookLikes : ${newValue.split("-")[0]}+`
+    //         : `FacebookLikes : ${newValue.split("-")[0]} - ${
+    //             newValue.split("-")[1]
+    //           }`,
+    //   })
+    // );
     dispatch(applyallfilters());
   };
+  const InstragramFollowerIncremten = (event, newValue) => {
+    console.log(newValue);
+    console.log("11111111111111111@@@@@@@@@@@@@@@@@@@@@@@@");
+    dispatch(
+      AdCountvalueStart({
+        name: "InstragramLike",
+        min: newValue[0],
+        max: newValue[1],
+        Message: `InstragramLike: ${newValue[0]}-${newValue[1]}`,
+      })
+    );
+    // console.log("llllllllllllllllllllllllll");
+    // console.log(newValue.split("-")[1]);
+    // console.log("llllllllllllllllllllllllll");
+    // dispatch(
+    //   AdCountvalueStart({
+    //     name: "FacebookLikes",
+    //     min: Number(newValue.split("-")[0]),
+    //     max: Number(newValue.split("-")[1]),
+    //     Message:
+    //       newValue.split("-")[1] === "0"
+    //         ? `FacebookLikes : ${newValue.split("-")[0]}+`
+    //         : `FacebookLikes : ${newValue.split("-")[0]} - ${
+    //             newValue.split("-")[1]
+    //           }`,
+    //   })
+    // );
+    dispatch(applyallfilters());
+  };
+  const handleButtonType=(event,newValue)=>{
+    // appliedFilters?.PurchaseType?.selctedButton 
+    dispatch(
+      MediaTypevalueStart({
+        name: "PurchaseType",
+        selctedButton: newValue,
+        Message: `PurchaseType : ${newValue}`,
+      })
+    );
+    document.getElementById("searchbar").value
+    ? dispatch(searchStart(searchBarData))
+    : dispatch(applyallfilters());
+
+  dispatch(SortvalueStart());
+  }
   const handlechange = (event, newValue) => {
     console.log(newValue);
     console.log("..................................................");
@@ -447,16 +509,16 @@ const Addlibrarydatabase = () => {
               >
                 Welcome to the All-Seeing Eye!
               </Typography>
-              <Typography 
-              // className={classes.subTitleHome}
-              sx={{
-                fontWeight: 500,
-                fontSize: "18px",
-                // lineHeight: "24px",
-                color: "#2B2F42",
-                // marginTop: "8px",
-                // marginBottom: "18px",
-              }}
+              <Typography
+                // className={classes.subTitleHome}
+                sx={{
+                  fontWeight: 500,
+                  fontSize: "18px",
+                  // lineHeight: "24px",
+                  color: "#2B2F42",
+                  // marginTop: "8px",
+                  // marginBottom: "18px",
+                }}
               >
                 Spy on 100% of the ads ran by over 30,000 active dropshipping
                 stores.
@@ -510,6 +572,7 @@ const Addlibrarydatabase = () => {
 
                   <InputBase
                     id="searchbar"
+                    fullWidth
                     onKeyDown={(e) => {
                       if (e.key === "Enter") {
                         dispatch(
@@ -769,7 +832,7 @@ const Addlibrarydatabase = () => {
                         <Stack direction={"row"} spacing={1}>
                           <Typography>From</Typography>
                           <Typography
-                            contentEditable={true}
+                            contentEditable
                             id="minRange"
                             onInput={(newValue) => {
                               console.log(typeof appliedFilters?.AdCount?.max);
@@ -852,6 +915,7 @@ const Addlibrarydatabase = () => {
                       {appliedFilters?.AdCount?.max}+
                     </Typography> */}
                       <Slider
+                        id="adcount"
                         size="small"
                         value={[
                           appliedFilters?.AdCount?.min,
@@ -1032,10 +1096,26 @@ const Addlibrarydatabase = () => {
                 <Popover
                   open={openFaceboolLike}
                   anchorEl={facebookLikeanchorel}
+                  add={openFaceboolLike ? "simple-popover" : undefined}
                   onClose={() => {
                     setFacebookLikeAnchorEl(null);
+                    // dispatch(applyallfilters());
+                    // let min = document.getElementById("minRange").innerText;
+                    // let max = document.getElementById("maxRange").innerText;
+                    // console.log(min);
+                    // console.log(max);
+                    // dispatch(
+                    //   AdCountvalueStart({
+                    //     name: "AdCount",
+                    //     min: min,
+                    //     max: max,
+                    //     Message: `Ad Count: ${min}-${max}`,
+                    //   })
+                    // );
+                    // console.log(
+                    //   "[]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]][[[[[[[[[[[[[[[[[]]]]]]]]]]]]]]]]]]"
+                    // );
                   }}
-                  add={openFaceboolLike ? "simple-popover" : undefined}
                   transformOrigin={{
                     horizontal: "left",
                     vertical: "top",
@@ -1061,81 +1141,101 @@ const Addlibrarydatabase = () => {
                         justifyContent: "center",
                       }}
                     >
-                      <Box sx={{ width: "190px" }}>
-                        <FormControl sx={{ padding: "10px" }}>
-                          <RadioGroup
-                            aria-labelledby="demo-radio-buttons-group-label"
-                            defaultValue="female"
-                            name="radio-buttons-group"
-                            value={
-                              `${appliedFilters?.FacebookLikes?.min}-${appliedFilters?.FacebookLikes?.max}` ||
-                              ""
+                      {/* <Box>
+                      <TextField sx={{border: 'none',borderColor:"white"}} min={0} max={1000}/>
+                    </Box> */}
+                      <Box>
+                        <Stack direction={"row"} spacing={1}>
+                          <Typography>From</Typography>
+                          <Typography
+                          contentEditable
+
+                          onInput={(newValue) => {
+                            console.log(typeof appliedFilters?.FacebookLikes?.max);
+                            console.log(
+                              "++++++++++++++++++++++++*******************************"
+                            );
+                            if (newValue.currentTarget.textContent !== "") {
+
+                              dispatch(
+                                AdCountvalueStart({
+                                  name: "FacebookLikes",
+                                  min: Number(
+                                    newValue.currentTarget.textContent
+                                  ),
+                                  max: appliedFilters?.FacebookLikes?.max,
+                                  Message: `FacebookLikes: ${newValue.currentTarget.textContent}-${appliedFilters?.FacebookLikes?.max}`,
+                                })
+                              );
+                              document.getElementById("searchbar").value
+                                ? dispatch(searchStart(searchBarData))
+                                : dispatch(applyallfilters());
+
+                              // dispatch(applyallfilters());
+                              // if (searchBarData !== [])
+                              //   dispatch(searchStart(searchBarData));
+
+                              dispatch(SortvalueStart());
                             }
-                            onChange={FacebookLikesIncremten}
+                          }}
                           >
-                            <FormControlLabel
-                              value="0-500"
-                              control={<Radio style={{ color: "#00CBFF" }} />}
-                              label="<500"
-                            />
-                            <FormControlLabel
-                              value="501-1000"
-                              control={<Radio style={{ color: "#00CBFF" }} />}
-                              label=">501 to <1000"
-                            />
-                            <FormControlLabel
-                              value="1001-5000"
-                              control={<Radio style={{ color: "#00CBFF" }} />}
-                              label=">1000 to <5000"
-                            />
-                            {/* <FormControlLabel
-                              value="5001-7000"
-                              control={<Radio style={{ color: "#00CBFF" }} />}
-                              label=">5001 to <7000"
-                            /> */}
-                            <FormControlLabel
-                              value="5001-0"
-                              control={<Radio style={{ color: "#00CBFF" }} />}
-                              label=">5001+"
-                            />
-                          </RadioGroup>
-                          {/* <Box
-                            display={"flex"}
-                            alignContent={"center"}
-                            justifyContent={"center"}
+                            {appliedFilters?.FacebookLikes?.min}
+                          </Typography>
+                          <Typography>to</Typography>
+                          <Typography
+                          contentEditable
+
+                          onInput={(newValue) => {
+                            // setCountMax(
+                            //   `${newValue.currentTarget.textContent}`
+                            // );
+                            if (newValue.currentTarget.textContent !== "") {
+                              dispatch(
+                                AdCountvalueStart({
+                                  name: "FacebookLikes",
+                                  min: appliedFilters?.FacebookLikes?.min,
+                                  max: Number(
+                                    newValue.currentTarget.textContent
+                                  ),
+                                  Message: `FacebookLikes : ${appliedFilters?.FacebookLikes?.min}-${newValue.currentTarget.textContent}`,
+                                })
+                              );
+                              // searchBarData!==[]?dispatch(searchStart(searchBarData)):
+                              // dispatch(applyallfilters());
+                              document.getElementById("searchbar").value
+                                ? dispatch(searchStart(searchBarData))
+                                : dispatch(applyallfilters());
+
+                              dispatch(SortvalueStart());
+                            }
+                            console.log(
+                              "------------------" +
+                                newValue.currentTarget.textContent
+                            );
+                          }}
                           >
-                            <Button
-                              variant="outlined"
-                              sx={{
-                                borderRadius: 50,
-                                fontWeight: 600,
-                                borderColor: "#00CBFF",
-                                color: "#00CBFF",
-                                height: "35px",
-                                width: "80px",
-                                borderWidth: 2,
-                              }}
-                              onClick={() => {
-                                dispatch(
-                                  statusValueStart({
-                                    name: "AdStatus",
-                                    status: "Active",
-                                    Message: "",
-                                  })
-                                );
-                                // dispatch(applyallfilters());
-                                searchBarData !== []
-                                  ? dispatch(searchStart(searchBarData))
-                                  : dispatch(applyallfilters());
-                                dispatch(SortvalueStart());
-                              }}
-                            >
-                              Reset
-                            </Button>
-                          </Box> */}
-                        </FormControl>
+                            {" "}
+                            {appliedFilters?.FacebookLikes?.max}
+                          </Typography>
+                        </Stack>
                       </Box>
-                      {/* <Button
+                      {/* <Typography contentEditable={true} sx={{ padding: "0px" }}>
+                      From {appliedFilters?.AdCount?.min} to{" "}
+                      {appliedFilters?.AdCount?.max}+
+                    </Typography> */}
+                      <Slider
+                        id="facebook"
+                        size="small"
+                        value={[
+                          appliedFilters?.FacebookLikes?.min,
+                          appliedFilters?.FacebookLikes?.max,
+                        ]}
+                        min={0}
+                        max={100000}
+                        sx={{ color: "#00CBFF" }}
+                        onChange={FacebookLikesIncremten}
+                      />
+                      <Button
                         variant="outlined"
                         sx={{
                           borderRadius: 50,
@@ -1147,7 +1247,215 @@ const Addlibrarydatabase = () => {
                         onClick={() => {
                           dispatch(
                             AdCountvalueStart({
-                              name: "AdCount",
+                              name: "FacebookLikes",
+                              min: 0,
+                              max: 1000,
+                              Message: "",
+                            })
+                          );
+                          document.getElementById("searchbar").value
+                            ? dispatch(searchStart(searchBarData))
+                            : dispatch(applyallfilters());
+
+                          setrangeAnchorEl(null);
+                        }}
+                      >
+                        Reset
+                      </Button>
+                    </Stack>
+                  </Box>
+                </Popover>
+
+                <Button
+                  variant="outlined"
+                  onClick={(e) =>
+                    setInstragramFollowerAnchorEl(e.currentTarget)
+                  }
+                  sx={{
+                    color: "#2B2F42",
+                    whiteSpace: "nowrap",
+                    border: "1px solid #EBEBEB",
+                    borderRadius: "10px",
+                    marginRight: "14px",
+                    marginTop: "22px",
+                  }}
+                  endIcon={
+                    <img
+                      alt="arrowdown"
+                      src={Arrowdown}
+                      className={classes.DropDownArrow}
+                    />
+                  }
+                >
+                  <Typography noWrap textTransform="capitalize">
+                    {" "}
+                    Instagram Page Followers{" "}
+                  </Typography>
+                </Button>
+                <Popover
+                  open={openInstragramFollower}
+                  anchorEl={instragramFolloweranchorel}
+                  add={openInstragramFollower ? "simple-popover" : undefined}
+                  onClose={() => {
+                    setInstragramFollowerAnchorEl(null);
+                    // dispatch(applyallfilters());
+                    // let min = document.getElementById("minRange").innerText;
+                    // let max = document.getElementById("maxRange").innerText;
+                    // console.log(min);
+                    // console.log(max);
+                    // dispatch(
+                    //   AdCountvalueStart({
+                    //     name: "AdCount",
+                    //     min: min,
+                    //     max: max,
+                    //     Message: `Ad Count: ${min}-${max}`,
+                    //   })
+                    // );
+                    // console.log(
+                    //   "[]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]][[[[[[[[[[[[[[[[[]]]]]]]]]]]]]]]]]]"
+                    // );
+                  }}
+                  transformOrigin={{
+                    horizontal: "left",
+                    vertical: "top",
+                  }}
+                  anchorOrigin={{
+                    horizontal: "left",
+                    vertical: "bottom",
+                  }}
+                >
+                  <Box
+                    sx={{
+                      margin: 2,
+                      width: "187px",
+                      alignContent: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Stack
+                      direction={"column"}
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      {/* <Box>
+                      <TextField sx={{border: 'none',borderColor:"white"}} min={0} max={1000}/>
+                    </Box> */}
+                      <Box>
+                        <Stack direction={"row"} spacing={1}>
+                          <Typography>From</Typography>
+                          <Typography
+                            contentEditable
+                            // id="minRange"
+                            onInput={(newValue) => {
+                              console.log(
+                                typeof appliedFilters?.InstragramLike?.max
+                              );
+                              console.log(
+                                "++++++++++++++++++++++++*******************************"
+                              );
+                              if (newValue.currentTarget.textContent !== "") {
+                                // dispatch(
+                                //   AdCountvalueStart({
+                                //     name: "AdCount",
+                                //     min: newValue[0],
+                                //     max: newValue[1],
+                                //     Message: `Ad Count: ${newValue[0]}-${newValue[1]}`,
+                                //   })
+                                // );
+                                dispatch(
+                                  AdCountvalueStart({
+                                    name: "InstragramLike",
+                                    min: Number(
+                                      newValue.currentTarget.textContent
+                                    ),
+                                    max: appliedFilters?.InstragramLike?.max,
+                                    Message: `InstragramLike: ${newValue.currentTarget.textContent}-${appliedFilters?.InstragramLike?.max}`,
+                                  })
+                                );
+                                document.getElementById("searchbar").value
+                                  ? dispatch(searchStart(searchBarData))
+                                  : dispatch(applyallfilters());
+
+                                // dispatch(applyallfilters());
+                                // if (searchBarData !== [])
+                                //   dispatch(searchStart(searchBarData));
+
+                                dispatch(SortvalueStart());
+                              }
+                            }}
+                          >
+                            {appliedFilters?.InstragramLike?.min}
+                          </Typography>
+                          <Typography>to</Typography>
+                          <Typography
+                            contentEditable
+                            // id="maxRange"
+                            onInput={(newValue) => {
+                              // setCountMax(
+                              //   `${newValue.currentTarget.textContent}`
+                              // );
+                              if (newValue.currentTarget.textContent !== "") {
+                                dispatch(
+                                  AdCountvalueStart({
+                                    name: "InstragramLike",
+                                    min: appliedFilters?.InstragramLike?.min,
+                                    max: Number(
+                                      newValue.currentTarget.textContent
+                                    ),
+                                    Message: `InstragramLike: ${appliedFilters?.InstragramLike?.min}-${newValue.currentTarget.textContent}`,
+                                  })
+                                );
+                                // searchBarData!==[]?dispatch(searchStart(searchBarData)):
+                                // dispatch(applyallfilters());
+                                document.getElementById("searchbar").value
+                                  ? dispatch(searchStart(searchBarData))
+                                  : dispatch(applyallfilters());
+
+                                dispatch(SortvalueStart());
+                              }
+                              console.log(
+                                "------------------" +
+                                  newValue.currentTarget.textContent
+                              );
+                            }}
+                          >
+                            {" "}
+                            {appliedFilters?.InstragramLike?.max}
+                          </Typography>
+                        </Stack>
+                      </Box>
+                      {/* <Typography contentEditable={true} sx={{ padding: "0px" }}>
+                      From {appliedFilters?.AdCount?.min} to{" "}
+                      {appliedFilters?.AdCount?.max}+
+                    </Typography> */}
+                      <Slider
+                        id="instragram"
+                        size="small"
+                        value={[
+                          appliedFilters?.InstragramLike?.min,
+                          appliedFilters?.InstragramLike?.max,
+                        ]}
+                        min={0}
+                        max={10000}
+                        sx={{ color: "#00CBFF" }}
+                        onChange={InstragramFollowerIncremten}
+                      />
+                      <Button
+                        variant="outlined"
+                        sx={{
+                          borderRadius: 50,
+                          fontWeight: 600,
+                          borderColor: "#00CBFF",
+                          color: "#00CBFF",
+                          borderWidth: 2,
+                        }}
+                        onClick={() => {
+                          dispatch(
+                            AdCountvalueStart({
+                              name: "InstragramLike",
                               min: 0,
                               max: 1000,
                               Message: "",
@@ -1169,34 +1477,10 @@ const Addlibrarydatabase = () => {
                         }}
                       >
                         Reset
-                      </Button> */}
+                      </Button>
                     </Stack>
                   </Box>
                 </Popover>
-
-                <Button
-                  variant="outlined"
-                  sx={{
-                    color: "#2B2F42",
-                    whiteSpace: "nowrap",
-                    border: "1px solid #EBEBEB",
-                    borderRadius: "10px",
-                    marginRight: "14px",
-                    marginTop: "22px",
-                  }}
-                  endIcon={
-                    <img
-                      alt="arrowdown"
-                      src={Arrowdown}
-                      className={classes.DropDownArrow}
-                    />
-                  }
-                >
-                  <Typography noWrap textTransform="capitalize">
-                    {" "}
-                    Instagram Page Like{" "}
-                  </Typography>
-                </Button>
 
                 <Button
                   variant="outlined"
@@ -1315,8 +1599,10 @@ const Addlibrarydatabase = () => {
                     </FormControl>
                   </Box>
                 </Popover>
+
                 <Button
                   variant="outlined"
+                  onClick={(e) => setButtonTypeAnchorEl(e.currentTarget)}
                   sx={{
                     color: "#2B2F42",
                     whiteSpace: "nowrap",
@@ -1338,6 +1624,86 @@ const Addlibrarydatabase = () => {
                     Button{" "}
                   </Typography>
                 </Button>
+                <Popover
+                  anchorEl={ButtonTypeanchorel}
+                  add={openButtonType ? "simple-popover" : undefined}
+                  onClose={() => {
+                    setButtonTypeAnchorEl(null);
+                  }}
+                  open={openButtonType}
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "left",
+                  }}
+                  anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "left",
+                  }}
+                >
+                  <Box sx={{ width: "190px" }}>
+                    <FormControl sx={{ padding: "10px" }}>
+                      <RadioGroup
+                        aria-labelledby="demo-radio-buttons-group-label"
+                        defaultValue="female"
+                        name="radio-buttons-group"
+                        value={appliedFilters?.PurchaseType?.selctedButton || ""}
+                        onChange={handleButtonType}
+                      >
+                        <FormControlLabel
+                          value="Shop Now"
+                          control={<Radio style={{ color: "#00CBFF" }} />}
+                          label="Shop Now"
+                        />
+                      </RadioGroup>
+                      {/* <Box
+                        display={"flex"}
+                        alignContent={"center"}
+                        justifyContent={"center"}
+                      >
+                        <Button
+                          variant="outlined"
+                          sx={{
+                            borderRadius: 50,
+                            fontWeight: 600,
+                            borderColor: "#00CBFF",
+                            color: "#00CBFF",
+                            height: "35px",
+                            width: "80px",
+                            borderWidth: 2,
+                          }}
+                          onClick={() => {
+                            dispatch(
+                              MediaTypevalueStart({
+                                name: "MediaType",
+                                selectedData: "Video or Photo",
+                                Message: "",
+                              })
+                            );
+                            // dispatch(applyallfilters());
+                            // searchBarData !== []
+                            //   ? dispatch(searchStart(searchBarData))
+                            //   : dispatch(applyallfilters());
+                            document.getElementById("searchbar").value
+                              ? dispatch(searchStart(searchBarData))
+                              : dispatch(applyallfilters());
+                            dispatch(SortvalueStart());
+                            // setAppliedFilters((pre) => ({
+                            //   ...pre,
+                            //   MediaType: {
+                            //     selectedData: "Video or Photo",
+                            //     Message: "",
+                            //   },
+                            // }));
+
+                            setMediaTypeAnchorel(null);
+                          }}
+                        >
+                          Reset
+                        </Button>
+                      </Box> */}
+                    </FormControl>
+                  </Box>
+                </Popover>
               </Grid>
               <Grid item lg={1} md={1}>
                 <Box
@@ -1440,6 +1806,10 @@ const Addlibrarydatabase = () => {
                             typeof appliedFilters[filter][dum] === "number"
                               ? dum === AdsRemovedElement.MIN
                                 ? 0
+                                : filter === "FacebookLikes"
+                                ? 100000
+                                : filter === "InstragramLike"
+                                ? 10000
                                 : 1000
                               : typeof appliedFilters[filter][dum] === "string"
                               ? dum === AdsRemovedElement.MEDIATYPE
