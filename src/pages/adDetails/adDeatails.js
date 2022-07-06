@@ -3,7 +3,7 @@ import { Grid, Box, Typography, Button, Stack } from "@mui/material";
 import Firstcard from "../../assets/Firstcard.svg";
 import LargePageLogo from "../../assets/largePageLogo.svg";
 import Firsrcardimg from "../../assets/FirstCardImg.svg";
-import facebook from "../../assets/facebook.svg";
+import Facebook from "../../assets/Facebook.svg";
 import instragram from "../../assets/instragram.svg";
 
 function AdDeatails({ ThumbnailData }) {
@@ -20,7 +20,11 @@ function AdDeatails({ ThumbnailData }) {
               >
                 <Box>
                   {/* <img src={Firstcard} aria-label="Add" /> */}
-                  <img src={ThumbnailData?.pageInfo?.logo} aria-label="FirstCard" style={{width:"25px"}}/>
+                  <img
+                    src={ThumbnailData?.pageInfo?.logo}
+                    aria-label="FirstCard"
+                    style={{ width: "25px" }}
+                  />
                 </Box>
                 <Typography
                   style={{
@@ -55,6 +59,9 @@ function AdDeatails({ ThumbnailData }) {
               <Box sx={{ width: "98%", height: "20%" }}>
                 {ThumbnailData?.adMediaType === "video" ? (
                   <video
+                    poster={ThumbnailData?.thumbBucketUrl}
+                    //{ThumbnailData?.thumbBucketUrl}
+                    // paused
                     src={ThumbnailData?.bucketMediaURL}
                     // autoPlay
                     controls
@@ -172,6 +179,9 @@ function AdDeatails({ ThumbnailData }) {
                     marginBottom: "15px",
                     marginRight: "6px",
                   }}
+                  onClick={() => {
+                    window.open(ThumbnailData?.purchaseURL, "_blank", "");
+                  }}
                 >
                   <Typography fontStyle={{ color: "white" }} noWrap>
                     Shop Now
@@ -193,15 +203,15 @@ function AdDeatails({ ThumbnailData }) {
                   paddingLeft: "16px",
                   paddingRight: "16px",
                 }}
-                disabled={ThumbnailData?.adMediaType === "image" ? false : true}
+                // disabled={ThumbnailData?.adMediaType === "image" ? false : true}
               >
                 <a
-                  href={ThumbnailData?.bucketMediaURL}
+                  href={ThumbnailData?.thumbBucketUrl}
                   style={{ textDecoration: "none", color: "white" }}
                   download
-                  disabled={
-                    ThumbnailData?.adMediaType === "image" ? false : true
-                  }
+                  // disabled={
+                  //   ThumbnailData?.adMediaType === "image" ? false : true
+                  // }
                 >
                   {" "}
                   Download Thumbnail
@@ -280,17 +290,61 @@ function AdDeatails({ ThumbnailData }) {
                 spacing={2}
               >
                 <Typography style={{ fontWeight: 600 }} noWrap>
-                  Best Solar Lighting
+                  {/* Best Solar Lighting */}
+                  {ThumbnailData?.pageInfo?.name}
                 </Typography>
                 <Box sx={{ width: "112px", height: "112px" }}>
                   {/* <img src={LargePageLogo} aria-label="Add" /> */}
-                  <img src={ThumbnailData?.pageInfo?.logo} aria-label="FirstCard" style={{width:"100%"}}/>
+                  <img
+                    src={ThumbnailData?.pageInfo?.logo}
+                    aria-label="FirstCard"
+                    style={{ width: "100%" }}
+                  />
                 </Box>
               </Stack>
               <Stack style={{ justifyContent: "center", marginTop: "36px" }}>
-                <Stack direction={"row"} sx={{ marginBottom: "16px" }}>
+                {ThumbnailData?.pageInfo?.platforms.map((socialMedia) => {
+                  return (
+                    <Stack
+                      direction={"row"}
+                      sx={{
+                        marginBottom: "16px",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Box sx={{ marginRight: "10px" }}>
+                        <img
+                          src={
+                            socialMedia.name === "Facebook"
+                              ? Facebook
+                              : instragram
+                          }
+                          aria-label="Add"
+                        />
+                      </Box>
+                      <Stack>
+                        <Typography
+                          style={{
+                            fontFamily: "Neue Haas Grotesk Display Pro",
+                          }}
+                        >
+                          @bestsolarlightingshop
+                        </Typography>
+                        <Typography
+                          style={{
+                            fontFamily: "Neue Haas Grotesk Display Pro",
+                          }}
+                        >
+                          {socialMedia.likes + " likes • " + socialMedia.type}
+                        </Typography>
+                      </Stack>
+                    </Stack>
+                  );
+                })}
+                {/* <Stack direction={"row"} sx={{ marginBottom: "16px" }}>
                   <Box sx={{ marginRight: "10px" }}>
-                    <img src={facebook} aria-label="Add" />
+                    <img src={Facebook} aria-label="Add" />
                   </Box>
                   <Stack>
                     <Typography
@@ -305,8 +359,9 @@ function AdDeatails({ ThumbnailData }) {
                         fontFamily: "Neue Haas Grotesk Display Pro",
                       }}
                     >
-                      {ThumbnailData?.pageInfo?.platforms[0].likes +" likes • "+ ThumbnailData?.pageInfo?.platforms[0].type}
-                       
+                      {ThumbnailData?.pageInfo?.platforms[0].likes +
+                        " likes • " +
+                        ThumbnailData?.pageInfo?.platforms[0].type}
                     </Typography>
                   </Stack>
                 </Stack>
@@ -333,7 +388,7 @@ function AdDeatails({ ThumbnailData }) {
                       21,619 likes • Retail company
                     </Typography>
                   </Stack>
-                </Stack>
+                </Stack> */}
               </Stack>
             </Grid>
           </Box>

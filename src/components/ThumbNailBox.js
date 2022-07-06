@@ -18,6 +18,7 @@ import {
   deleteSavedAdsClientSideStart,
   deleteSavedAdsClientSideSuccess,
 } from "../redux/ducks/saveAds_clientSide";
+import pauseButton from '../assets/pauseButton.svg'
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -162,8 +163,22 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
         </Box>
         <Box>
           {adInfo.adMediaType === "video" ? (
+          //   <ReactSimpleVideoPlayer
+          //   url={adInfo?.bucketMediaURL}
+          //   poster={adInfo?.thumbBucketUrl}
+          //   className={classes.AdsImageVideo}
+          //   controls
+          //   autosize
+          // />
             <video
               src={adInfo.bucketMediaURL}
+              poster={adInfo?.thumbBucketUrl}
+              // style={{
+              //   backgroundImage:
+              //     pauseButton,
+              //   backgroundRepeat: 'no-repeat',
+              //   backgroundPosition: 'center'
+              // }}
               autoPlay={false}
               className={classes.AdsImageVideo}
               controls
@@ -185,7 +200,10 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
 
         <Grid container sx={{ padding: "4px" }}>
           <Grid item sm={9}>
-            <Box className={classes.AddFooter}>
+            <Box
+              className={classes.AddFooter}
+              style={{ alignItems: "baseline" }}
+            >
               <Typography>{adInfo.status}</Typography>
               <img
                 src={Shareicon}
@@ -283,6 +301,7 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
             </Box>
           </Grid>
         </Grid>
+
         <Box sx={{ marginTop: "20px", marginBottom: "20px" }}>
           <img
             src={Addgraph}
