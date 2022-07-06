@@ -184,7 +184,8 @@ function AdDeatails({ ThumbnailData }) {
                   }}
                 >
                   <Typography fontStyle={{ color: "white" }} noWrap>
-                    Shop Now
+                    {/* Shop Now */}
+                    {ThumbnailData?.ctaStatus}
                   </Typography>
                 </Button>
               </Grid>

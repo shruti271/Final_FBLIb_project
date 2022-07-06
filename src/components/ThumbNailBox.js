@@ -133,7 +133,7 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
             <img
               src={adInfo?.pageInfo?.logo}
               aria-label="FirstCard"
-              style={{ width: "25px" }}
+              style={{ width: "25px" ,border:2,borderColor:"#EBEBEB"}}
             />
           </Box>
           <Typography
