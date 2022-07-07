@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { Box, Button, Grid, Stack, Typography } from "@mui/material";
+import { Avatar, Box, Button, Grid, Stack, Typography } from "@mui/material";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   createSavedAdsStart,
@@ -18,7 +18,7 @@ import {
   deleteSavedAdsClientSideStart,
   deleteSavedAdsClientSideSuccess,
 } from "../redux/ducks/saveAds_clientSide";
-import pauseButton from '../assets/pauseButton.svg'
+import pauseButton from "../assets/pauseButton.svg";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -129,23 +129,34 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
         }}
       >
         <Box className={classes.Addheader}>
-          <Box sx={{ border: 1,width:"35px",borderRadius: '50%',borderColor:"#EBEBEB",display:"flex",justifyContent:"center",alignItems:"center"}} >
-            <img
+          <Box
+            sx={{
+              border: 1,
+              // width: "35px",
+              borderRadius: "50%",
+              borderColor: "#EBEBEB",
+              // borderColor: "black",
+
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Avatar
               src={adInfo?.pageInfo?.logo}
               aria-label="FirstCard"
-              // sx={{}}
-              
-              style={{ width: "30px" ,borderRadius: '50%'}}
-            />
+              sx={{ width: 27, height: 27 }}
+            ></Avatar>
           </Box>
           <Typography
             sx={{
-              fontWeight: 500,
+              fontWeight: "500",
               fontSize: "16px",
               lineHeight: "24px",
               color: "#2B2F42",
               marginRight: "12px",
-              paddingLeft:"10px"
+              paddingLeft: "10px",
+              //  fontWeight: "bold"
             }}
           >
             {adInfo?.pageInfo?.name}
@@ -166,13 +177,13 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
         </Box>
         <Box>
           {adInfo.adMediaType === "video" ? (
-          //   <ReactSimpleVideoPlayer
-          //   url={adInfo?.bucketMediaURL}
-          //   poster={adInfo?.thumbBucketUrl}
-          //   className={classes.AdsImageVideo}
-          //   controls
-          //   autosize
-          // />
+            //   <ReactSimpleVideoPlayer
+            //   url={adInfo?.bucketMediaURL}
+            //   poster={adInfo?.thumbBucketUrl}
+            //   className={classes.AdsImageVideo}
+            //   controls
+            //   autosize
+            // />
             <video
               src={adInfo.bucketMediaURL}
               poster={adInfo?.thumbBucketUrl}

@@ -5,6 +5,7 @@ export const APPLIED_FILTERS = "APPLIED_FILTERS";
 export const DATEFILTER = "DATEFILTER";
 export const NOODADS_START = "NOODADS_START";
 export const MEDIATYPE_START = "MEDIATYPE_START";
+export const BUTTONTYPETYPE_START = "BUTTONTYPETYPE_START";
 export const SET_SORT_FILTER_START = "SET_SORT_FILTER_START";
 export const SORT_TYPE_START = "SORT_TYPE_START";
 export const STATUS_START = "STATUS_START";
@@ -43,6 +44,11 @@ export const AdCountvalueStart = (filter) => ({
 });
 export const MediaTypevalueStart = (filter) => ({
   type: MEDIATYPE_START,
+  payload: filter,
+});
+
+export const ButtonTypevalueStart = (filter) => ({
+  type: BUTTONTYPETYPE_START,
   payload: filter,
 });
 export const facebookLikesStart = (filter) => ({
@@ -101,11 +107,11 @@ const initialState = {
   appliedFilters: {
     StartRunningDate: { startdate: "", enddate: "", Message: "" },
     AdStatus: { status: "", Message: "" },
-    AdCount: { min: 0, max: 1000, Message: "" },
-    FacebookLikes: { min: 0, max: 100000, Message: "" },
-    InstragramLike: { min: 0, max: 10000, Message: "" },
+    AdCount: { min: 1, max: 1000, Message: "" },
+    FacebookLikes: { min: 1, max: 100000, Message: "" },
+    InstragramLike: { min: 1, max: 10000, Message: "" },
     MediaType: { selectedData: "Video or Photo", Message: "" },
-    PurchaseType:{selctedButton:'',Message:''}
+    PurchaseType: { selctedButton: "", Message: "" },
   },
   sortFilter: {
     type: "",
@@ -196,6 +202,20 @@ const FilterDataReducer = (state = initialState, action) => {
           ...state.appliedFilters,
           [`${action.payload.name}`]: {
             selectedData: action.payload.selectedData,
+            Message: action.payload.Message,
+          },
+        },
+      };
+    case BUTTONTYPETYPE_START:
+      return {
+        ...state,
+        search_loading: false,
+        filteredData: [...state.filteredData],
+
+        appliedFilters: {
+          ...state.appliedFilters,
+          [`${action.payload.name}`]: {
+            selctedButton: action.payload.selctedButton,
             Message: action.payload.Message,
           },
         },
@@ -401,22 +421,23 @@ const FilterDataReducer = (state = initialState, action) => {
         search_loading: false,
         filteredData: [
           ...state.allData.filter((ads) => {
+            console.log(ads?.pageInfo?.platforms[0]?.likes);
             console.log(ads?.pageInfo?.platforms[1]?.followers);
             console.log("#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
             return (
-              (state.appliedFilters?.AdCount?.min !== 0 ||
+              (state.appliedFilters?.AdCount?.min !== 1 ||
               state.appliedFilters?.AdCount?.max !== 1000
                 ? ads.noOfCopyAds >= state.appliedFilters?.AdCount?.min &&
                   ads.noOfCopyAds <= state.appliedFilters?.AdCount?.max
                 : true) &&
-              (state.appliedFilters?.FacebookLikes?.min !== 0 ||
+              (state.appliedFilters?.FacebookLikes?.min !== 1 ||
               state.appliedFilters?.FacebookLikes?.max !== 100000
                 ? ads?.pageInfo?.platforms[0]?.likes >=
                     state.appliedFilters?.FacebookLikes?.min &&
                   ads?.pageInfo?.platforms[0]?.likes <=
                     state.appliedFilters?.FacebookLikes?.max
                 : true) &&
-              (state.appliedFilters?.InstragramLike?.min !== 0 ||
+              (state.appliedFilters?.InstragramLike?.min !== 1 ||
               state.appliedFilters?.InstragramLike?.max !== 10000
                 ? ads?.pageInfo?.platforms[1]?.followers >=
                     state.appliedFilters?.InstragramLike?.min &&
@@ -430,6 +451,16 @@ const FilterDataReducer = (state = initialState, action) => {
                   state.appliedFilters?.MediaType?.selectedData) &&
               (state.appliedFilters?.AdStatus?.status !== ""
                 ? ads?.status === state.appliedFilters?.AdStatus?.status
+                : true) && 
+                (state.appliedFilters?.PurchaseType?.selctedButton === "" ||
+              state.appliedFilters?.PurchaseType?.selctedButton === "Shop Now"
+                ? true
+                : ads.adMediaType ===
+                  state.appliedFilters?.PurchaseType?.selctedButton) 
+                  
+                  &&
+              (state.appliedFilters?.AdStatus?.status !== ""
+                ? ads?.status === state.appliedFilters?.AdStatus?.status
                 : true) &&
               (state.appliedFilters?.StartRunningDate?.startdate &&
               state.appliedFilters?.StartRunningDate?.enddate
@@ -438,7 +469,7 @@ const FilterDataReducer = (state = initialState, action) => {
                   state.appliedFilters?.StartRunningDate?.enddate >=
                     ads?.startDate
                 : true) &&
-              (state.appliedFilters?.FacebookLikes?.min !== 0 ||
+              (state.appliedFilters?.FacebookLikes?.min !== 1 ||
               state.appliedFilters?.FacebookLikes?.max !== 1000
                 ? state.appliedFilters?.FacebookLikes?.max === 0
                   ? ads?.pageInfo?.platforms[0]?.likes >=

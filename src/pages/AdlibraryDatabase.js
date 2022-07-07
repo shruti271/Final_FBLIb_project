@@ -30,6 +30,7 @@ import ThumbNailBox from "../components/ThumbNailBox";
 import {
   AdCountvalueStart,
   applyallfilters,
+  ButtonTypevalueStart,
   clearFilteredDataStart,
   clearSingleFilteredDataStart,
   datevalueStart,
@@ -43,6 +44,7 @@ import {
   SortvalueStart,
   statusValueStart,
 } from "../redux/ducks/filtered_Data";
+import { EditText } from "react-edit-text";
 // import { escapeRegExp } from "@mui/x-data-grid/utils/utils";
 
 const useStyles = makeStyles((theme) => ({
@@ -146,12 +148,8 @@ const Addlibrarydatabase = () => {
   const focusDiv = useRef();
 
   const { allMediaAds, loading } = useSelector((state) => state.allMediaAds);
-  const {
-    filteredData,
-    appliedFilters,
-    sortFilter,
-    searchBarData,
-  } = useSelector((state) => state.filteredData);
+  const { filteredData, appliedFilters, sortFilter, searchBarData } =
+    useSelector((state) => state.filteredData);
   // const [countMin, setCountMin] = useState([]);
   // const [countMax, setCountMax] = useState(1000);
   const { savedIds } = useSelector((state) => state.savedclienads);
@@ -168,10 +166,8 @@ const Addlibrarydatabase = () => {
   const openSortByAnchorel = Boolean(sortByAnchorel);
   const [facebookLikeanchorel, setFacebookLikeAnchorEl] = React.useState(null);
   const openFaceboolLike = Boolean(facebookLikeanchorel);
-  const [
-    instragramFolloweranchorel,
-    setInstragramFollowerAnchorEl,
-  ] = React.useState(null);
+  const [instragramFolloweranchorel, setInstragramFollowerAnchorEl] =
+    React.useState(null);
   const openInstragramFollower = Boolean(instragramFolloweranchorel);
   const [ButtonTypeanchorel, setButtonTypeAnchorEl] = React.useState(null);
   const openButtonType = Boolean(ButtonTypeanchorel);
@@ -346,21 +342,24 @@ const Addlibrarydatabase = () => {
     // );
     dispatch(applyallfilters());
   };
-  const handleButtonType=(event,newValue)=>{
-    // appliedFilters?.PurchaseType?.selctedButton 
+  const handleButtonType = (event, newValue) => {
+    // appliedFilters?.PurchaseType?.selctedButton
+    // console.log("............................")
+    // console.log(newValue)
+    // console.log("............................")
     dispatch(
-      MediaTypevalueStart({
+      ButtonTypevalueStart({
         name: "PurchaseType",
         selctedButton: newValue,
         Message: `PurchaseType : ${newValue}`,
       })
     );
     document.getElementById("searchbar").value
-    ? dispatch(searchStart(searchBarData))
-    : dispatch(applyallfilters());
+      ? dispatch(searchStart(searchBarData))
+      : dispatch(applyallfilters());
 
-  dispatch(SortvalueStart());
-  }
+    dispatch(SortvalueStart());
+  };
   const handlechange = (event, newValue) => {
     console.log(newValue);
     console.log("..................................................");
@@ -831,7 +830,29 @@ const Addlibrarydatabase = () => {
                       <Box>
                         <Stack direction={"row"} spacing={1}>
                           <Typography>From</Typography>
-                          <Typography
+                          <EditText  id="minRange" type="number"
+                            defaultValue={appliedFilters?.AdCount?.min}
+                            onSave={(e) => {
+                              console.log(e);
+                              console.log("==============================");
+                              if (e.value ) {
+                                dispatch(
+                                  AdCountvalueStart({
+                                    name: "AdCount",
+                                    min: Number(
+                                      e.value
+                                    ),
+                                    max: appliedFilters?.AdCount?.max,
+                                    Message: `Ad Count: ${e.value}-${appliedFilters?.AdCount?.max}`,
+                                  })
+                                );                             
+                              document.getElementById("searchbar").value
+                                ? dispatch(searchStart(searchBarData))
+                                : dispatch(applyallfilters());
+                              }
+                            }}
+                          />
+                          {/* <Typography
                             contentEditable
                             id="minRange"
                             onInput={(newValue) => {
@@ -871,9 +892,31 @@ const Addlibrarydatabase = () => {
                             }}
                           >
                             {appliedFilters?.AdCount?.min}
-                          </Typography>
+                          </Typography> */}
                           <Typography>to</Typography>
-                          <Typography
+                          <EditText  id="minRange" type="number"
+                            defaultValue={appliedFilters?.AdCount?.max}
+                            onSave={(e) => {
+                              console.log(e);
+                              console.log("==============================");
+                              if (e.value ) {
+                                dispatch(
+                                  AdCountvalueStart({
+                                    name: "AdCount",
+                                    min: appliedFilters?.AdCount?.min,
+                                    max: Number(
+                                      e.value
+                                    ),
+                                    Message: `Ad Count: ${appliedFilters?.AdCount?.min}-${e.value}`,
+                                  })
+                                );                            
+                              document.getElementById("searchbar").value
+                                ? dispatch(searchStart(searchBarData))
+                                : dispatch(applyallfilters());
+                              }
+                            }}
+                          />
+                          {/* <Typography
                             contentEditable={true}
                             id="maxRange"
                             onInput={(newValue) => {
@@ -907,7 +950,7 @@ const Addlibrarydatabase = () => {
                           >
                             {" "}
                             {appliedFilters?.AdCount?.max}
-                          </Typography>
+                          </Typography> */}
                         </Stack>
                       </Box>
                       {/* <Typography contentEditable={true} sx={{ padding: "0px" }}>
@@ -1023,7 +1066,7 @@ const Addlibrarydatabase = () => {
                           label="Active"
                         />
                         <FormControlLabel
-                          value="inActive"
+                          value="Inactive"
                           control={<Radio style={{ color: "#00CBFF" }} />}
                           label="Inactive"
                         />
@@ -1147,76 +1190,119 @@ const Addlibrarydatabase = () => {
                       <Box>
                         <Stack direction={"row"} spacing={1}>
                           <Typography>From</Typography>
-                          <Typography
-                          contentEditable
-
-                          onInput={(newValue) => {
-                            console.log(typeof appliedFilters?.FacebookLikes?.max);
-                            console.log(
-                              "++++++++++++++++++++++++*******************************"
-                            );
-                            if (newValue.currentTarget.textContent !== "") {
-
-                              dispatch(
-                                AdCountvalueStart({
-                                  name: "FacebookLikes",
-                                  min: Number(
-                                    newValue.currentTarget.textContent
-                                  ),
-                                  max: appliedFilters?.FacebookLikes?.max,
-                                  Message: `FacebookLikes: ${newValue.currentTarget.textContent}-${appliedFilters?.FacebookLikes?.max}`,
-                                })
-                              );
+                          <EditText  id="minFacebookRange" type="number"
+                            defaultValue={appliedFilters?.FacebookLikes?.min}
+                            onSave={(e) => {
+                              // console.log(e);
+                              // console.log("==============================");
+                              if (e.value ) {
+                                dispatch(
+                                  AdCountvalueStart({
+                                    name: "FacebookLikes",
+                                    min: Number(
+                                      e.value
+                                    ),
+                                    max: appliedFilters?.FacebookLikes?.max,
+                                    Message: `FacebookLikes: ${e.value}-${appliedFilters?.FacebookLikes?.max}`,
+                                  })
+                                );                           
                               document.getElementById("searchbar").value
                                 ? dispatch(searchStart(searchBarData))
                                 : dispatch(applyallfilters());
+                              }
+                            }}
+                          />
+                          {/* <Typography
+                            contentEditable
+                            onInput={(newValue) => {
+                              console.log(
+                                typeof appliedFilters?.FacebookLikes?.max
+                              );
+                              console.log(
+                                "++++++++++++++++++++++++*******************************"
+                              );
+                              if (newValue.currentTarget.textContent !== "") {
+                                dispatch(
+                                  AdCountvalueStart({
+                                    name: "FacebookLikes",
+                                    min: Number(
+                                      newValue.currentTarget.textContent
+                                    ),
+                                    max: appliedFilters?.FacebookLikes?.max,
+                                    Message: `FacebookLikes: ${newValue.currentTarget.textContent}-${appliedFilters?.FacebookLikes?.max}`,
+                                  })
+                                );
+                                document.getElementById("searchbar").value
+                                  ? dispatch(searchStart(searchBarData))
+                                  : dispatch(applyallfilters());
 
-                              // dispatch(applyallfilters());
-                              // if (searchBarData !== [])
-                              //   dispatch(searchStart(searchBarData));
+                                // dispatch(applyallfilters());
+                                // if (searchBarData !== [])
+                                //   dispatch(searchStart(searchBarData));
 
-                              dispatch(SortvalueStart());
-                            }
-                          }}
+                                dispatch(SortvalueStart());
+                              }
+                            }}
                           >
                             {appliedFilters?.FacebookLikes?.min}
-                          </Typography>
+                          </Typography> */}
                           <Typography>to</Typography>
-                          <Typography
-                          contentEditable
-
-                          onInput={(newValue) => {
-                            // setCountMax(
-                            //   `${newValue.currentTarget.textContent}`
-                            // );
-                            if (newValue.currentTarget.textContent !== "") {
-                              dispatch(
-                                AdCountvalueStart({
-                                  name: "FacebookLikes",
-                                  min: appliedFilters?.FacebookLikes?.min,
-                                  max: Number(
-                                    newValue.currentTarget.textContent
-                                  ),
-                                  Message: `FacebookLikes : ${appliedFilters?.FacebookLikes?.min}-${newValue.currentTarget.textContent}`,
-                                })
-                              );
-                              // searchBarData!==[]?dispatch(searchStart(searchBarData)):
-                              // dispatch(applyallfilters());
+                          <EditText  id="maxFacebookRange" type="number"
+                            defaultValue={appliedFilters?.FacebookLikes?.max}
+                            onSave={(e) => {
+                              // console.log(e);
+                              // console.log("==============================");
+                              if (e.value ) {
+                                dispatch(
+                                  AdCountvalueStart({
+                                    name: "FacebookLikes",
+                                    min: appliedFilters?.FacebookLikes?.min,
+                                    max: Number(
+                                      e.value 
+                                    ),
+                                    Message: `FacebookLikes : ${appliedFilters?.FacebookLikes?.min}-${e.value }`,
+                                  })
+                                );                         
                               document.getElementById("searchbar").value
                                 ? dispatch(searchStart(searchBarData))
                                 : dispatch(applyallfilters());
+                              }
+                            }}
+                          />
+                          {/* <Typography
+                            contentEditable
+                            onInput={(newValue) => {
+                              // setCountMax(
+                              //   `${newValue.currentTarget.textContent}`
+                              // );
+                              if (newValue.currentTarget.textContent !== "") {
+                                dispatch(
+                                  AdCountvalueStart({
+                                    name: "FacebookLikes",
+                                    min: appliedFilters?.FacebookLikes?.min,
+                                    max: Number(
+                                      newValue.currentTarget.textContent
+                                    ),
+                                    Message: `FacebookLikes : ${appliedFilters?.FacebookLikes?.min}-${newValue.currentTarget.textContent}`,
+                                  })
+                                );
+                                // searchBarData!==[]?dispatch(searchStart(searchBarData)):
+                                // dispatch(applyallfilters());
+                                document.getElementById("searchbar").value
+                                  ? dispatch(searchStart(searchBarData))
+                                  : dispatch(applyallfilters());
 
-                              dispatch(SortvalueStart());
-                            }
-                            console.log(
-                              "------------------" +
-                                newValue.currentTarget.textContent
-                            );
-                          }}
+                                dispatch(SortvalueStart());
+                              }
+                              console.log(
+                                "------------------" +
+                                  newValue.currentTarget.textContent
+                              );
+                            }}
                           >
                             {" "}
                             {appliedFilters?.FacebookLikes?.max}
-                          </Typography>
+                          </Typography> */}
                         </Stack>
                       </Box>
                       {/* <Typography contentEditable={true} sx={{ padding: "0px" }}>
@@ -1346,7 +1432,29 @@ const Addlibrarydatabase = () => {
                       <Box>
                         <Stack direction={"row"} spacing={1}>
                           <Typography>From</Typography>
-                          <Typography
+                          <EditText  id="minInstragramRange" type="number"
+                            defaultValue={appliedFilters?.InstragramLike?.min}
+                            onSave={(e) => {
+                              // console.log(e);
+                              // console.log("==============================");
+                              if (e.value ) {
+                                dispatch(
+                                  AdCountvalueStart({
+                                    name: "InstragramLike",
+                                    min: Number(
+                                      e.value 
+                                    ),
+                                    max: appliedFilters?.InstragramLike?.max,
+                                    Message: `InstragramLike: ${e.value }-${appliedFilters?.InstragramLike?.max}`,
+                                  })
+                                );                        
+                              document.getElementById("searchbar").value
+                                ? dispatch(searchStart(searchBarData))
+                                : dispatch(applyallfilters());
+                              }
+                            }}
+                          />
+                          {/* <Typography
                             contentEditable
                             // id="minRange"
                             onInput={(newValue) => {
@@ -1388,9 +1496,31 @@ const Addlibrarydatabase = () => {
                             }}
                           >
                             {appliedFilters?.InstragramLike?.min}
-                          </Typography>
+                          </Typography> */}
                           <Typography>to</Typography>
-                          <Typography
+                          <EditText  id="maxFacebookRange" type="number"
+                            defaultValue={appliedFilters?.InstragramLike?.max}
+                            onSave={(e) => {
+                              // console.log(e);
+                              // console.log("==============================");
+                              if (e.value ) {
+                                dispatch(
+                                  AdCountvalueStart({
+                                    name: "InstragramLike",
+                                    min: appliedFilters?.InstragramLike?.min,
+                                    max: Number(
+                                      e.value
+                                    ),
+                                    Message: `InstragramLike: ${appliedFilters?.InstragramLike?.min}-${e.value}`,
+                                  })
+                                );                        
+                              document.getElementById("searchbar").value
+                                ? dispatch(searchStart(searchBarData))
+                                : dispatch(applyallfilters());
+                              }
+                            }}
+                          />
+                          {/* <Typography
                             contentEditable
                             // id="maxRange"
                             onInput={(newValue) => {
@@ -1424,7 +1554,7 @@ const Addlibrarydatabase = () => {
                           >
                             {" "}
                             {appliedFilters?.InstragramLike?.max}
-                          </Typography>
+                          </Typography> */}
                         </Stack>
                       </Box>
                       {/* <Typography contentEditable={true} sx={{ padding: "0px" }}>
@@ -1646,7 +1776,9 @@ const Addlibrarydatabase = () => {
                         aria-labelledby="demo-radio-buttons-group-label"
                         defaultValue="female"
                         name="radio-buttons-group"
-                        value={appliedFilters?.PurchaseType?.selctedButton || ""}
+                        value={
+                          appliedFilters?.PurchaseType?.selctedButton || ""
+                        }
                         onChange={handleButtonType}
                       >
                         <FormControlLabel
