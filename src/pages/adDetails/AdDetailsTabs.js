@@ -73,6 +73,7 @@ console.log()
         <Box
           onClick={() => {            
             navigate("/");
+           
           }}
           sx={{ cursor: "pointer" }}
         >

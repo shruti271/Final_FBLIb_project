@@ -10,6 +10,7 @@ export const SET_SORT_FILTER_START = "SET_SORT_FILTER_START";
 export const SORT_TYPE_START = "SORT_TYPE_START";
 export const STATUS_START = "STATUS_START";
 export const FACEBOOKLIKES_START = "FACEBOOKLIKES_START";
+export const SET_POSTION_SCROLL ="SET_POSTION_SCROLL";
 export const SEARCH_START = "SEARCH_START";
 export const SEARCH_SUCCESS = "SEARCH_SUCCESS";
 export const SEARCH_ERROR = "SEARCH_ERROR";
@@ -78,6 +79,10 @@ export const searchValueStart = (filter) => ({
 //   type: CREATE_FILTERDATA,
 //   payload: ads,
 // });
+export const srtPostionForScrollValueStart = (filter) => ({
+  type: SET_POSTION_SCROLL,
+  payload: filter,
+});
 
 export const clearFilteredDataStart = (ads) => ({
   type: CLEAR_FILTERDATA,
@@ -120,8 +125,9 @@ const initialState = {
     type: "",
     order: "Ascending",
   },
+  postionYoffset:0,
   searchBarData: [],
-  fluctuatedDataHistroy: [],
+  // fluctuatedDataHistroy: [],
   search_loading: false,
   error: "",
 };
@@ -199,7 +205,15 @@ const FilterDataReducer = (state = initialState, action) => {
           },
         },
       };
-    case SET_SORT_FILTER_START:
+    case SET_POSTION_SCROLL:
+      return {
+        ...state,
+        search_loading: false,
+        filteredData: [...state.filteredData],
+        appliedFilters: state.appliedFilters,
+        postionYoffset:action.payload
+      };
+      case SET_SORT_FILTER_START:
       return {
         ...state,
         search_loading: false,

@@ -5,16 +5,19 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import { Stack } from "@mui/material";
+import { Icon, Stack } from "@mui/material";
 import appLogo from "../assets/appLogo.svg";
 import libraryicon from "../assets/Vector.svg";
 import staricon from "../assets/Vectora.svg";
 import contact from "../assets/contact.svg";
 import logout from "../assets/Logout.svg";
 import { logoutUser } from "../services";
-import fbaddlogo from "../assets/fbaddlogo.svg"
+import fbaddlogo from "../assets/fbaddlogo.svg";
 
 const useStyles = makeStyles(() => ({
+  tryimg: {
+    fill: "#C12E0F",
+  },
   title: {
     fontFamily: "Neue Haas Grotesk Display Pro",
     fontStyle: "normal !important",
@@ -217,7 +220,13 @@ export const CustomSidebar = ({ isOpen }) => {
                 marginLeft: "20px",
               }}
             >
-              <img alt="staricon" src={staricon} sx={{ marginLeft: "20px" }} />
+              {/* <MdStarRate sx={{ marginLeft: "20px" ,color:"blue"}}/>
+               */}
+              {/* <staricon c/> */}
+              {/* <Icon></Icon> */}
+              {/* <img alt="staricon" src={staricon} sx={{ marginLeft: "20px" ,color:"red"}} /> */}
+              <img alt="staricon" src={staricon} className={classes.tryimg} />
+
               <Typography sx={{ marginLeft: "26px" }}>Saved Ads</Typography>
             </Stack>
           </Box>
