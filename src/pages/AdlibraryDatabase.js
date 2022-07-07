@@ -299,7 +299,7 @@ const Addlibrarydatabase = () => {
         name: "FacebookLikes",
         min: newValue[0],
         max: newValue[1],
-        Message: `FacebookLikes: ${newValue[0]}-${newValue[1]}`,
+        Message: `Facebook Page likes: ${newValue[0]}-${newValue[1]}`,
       })
     );
     // console.log("llllllllllllllllllllllllll");
@@ -328,7 +328,7 @@ const Addlibrarydatabase = () => {
         name: "InstragramLike",
         min: newValue[0],
         max: newValue[1],
-        Message: `InstragramLike: ${newValue[0]}-${newValue[1]}`,
+        Message: `Instragram Page likes: ${newValue[0]}-${newValue[1]}`,
       })
     );
     // console.log("llllllllllllllllllllllllll");
@@ -358,7 +358,7 @@ const Addlibrarydatabase = () => {
       ButtonTypevalueStart({
         name: "PurchaseType",
         selctedButton: newValue,
-        Message: `PurchaseType : ${newValue}`,
+        Message: `Button : ${newValue}`,
       })
     );
     document.getElementById("searchbar").value
