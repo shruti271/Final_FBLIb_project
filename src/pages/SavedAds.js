@@ -86,12 +86,20 @@ const SavedAds = () => {
                 ))}
               </Grid>
             ) : (
-              <img
+              <Stack direction={"column"} sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                marginTop:"50px"
+              }}>
+                <Typography>Nothing to show. Click the star icon in the adlibrary database tab to save ads here.</Typography>
+                <img
                 src={noSavedAdsImage}
                 alt="NoSavedAds"
-                style={{ width: "30%", height: "10%" }}
+                style={{ width: "50%", height: "30%" }}
                 // className={classes.saveicon}
               />
+              </Stack>
             )}
           </Stack>
 

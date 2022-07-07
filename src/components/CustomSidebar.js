@@ -8,16 +8,16 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Icon, Stack } from "@mui/material";
 import appLogo from "../assets/appLogo.svg";
 import libraryicon from "../assets/Vector.svg";
-import staricon from "../assets/Vectora.svg";
+import  staricon from "../assets/Vectora.svg";
 import contact from "../assets/contact.svg";
 import logout from "../assets/Logout.svg";
 import { logoutUser } from "../services";
 import fbaddlogo from "../assets/fbaddlogo.svg";
+// import StarOutlinedIcon from "@mui/icons-material/StarOutlined";
+// import {SvgSaveicon} from "../../src/IconComponent/saveIcon.tsx";
 
 const useStyles = makeStyles(() => ({
-  tryimg: {
-    fill: "#C12E0F",
-  },
+ 
   title: {
     fontFamily: "Neue Haas Grotesk Display Pro",
     fontStyle: "normal !important",
@@ -222,11 +222,12 @@ export const CustomSidebar = ({ isOpen }) => {
             >
               {/* <MdStarRate sx={{ marginLeft: "20px" ,color:"blue"}}/>
                */}
-              {/* <staricon c/> */}
+              {/* <staricon fill="black" stroke="yellow" /> */}
               {/* <Icon></Icon> */}
               {/* <img alt="staricon" src={staricon} sx={{ marginLeft: "20px" ,color:"red"}} /> */}
               <img alt="staricon" src={staricon} className={classes.tryimg} />
-
+              {/* <SvgSaveicon fill="red"/> */}
+              {/* <StarOutlinedIcon style={{color:"grey"}}/> */}
               <Typography sx={{ marginLeft: "26px" }}>Saved Ads</Typography>
             </Stack>
           </Box>
