@@ -15,7 +15,7 @@ import { loadSavedAdsStart } from "../redux/ducks/saveAds";
 import { CustomAppBar } from "../components/CustomAppBar";
 import { CustomSidebar } from "../components/CustomSidebar";
 import { loadAccountSettingsStart } from "./../redux/ducks/accountSettings";
-
+import Payment from "../pages/Payment"
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
@@ -58,6 +58,7 @@ const MainLayout = () => {
               path="/adDeatails/:adsId/*"
               element={<AdDeatailsTabs />}
             />
+            <Route exact path="/payment" element={<Payment />} />
           </Routes>
         </Box>
       </Box>
