@@ -1,5 +1,5 @@
 import React from "react";
-import {  Grid } from "@mui/material";
+import {  Grid, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 
 import ThumbNailBox from "../components/ThumbNailBox";
@@ -38,6 +38,7 @@ const SavedAds = () => {
           // disabled: loading ? true : false,
         }}
       >
+        {/* <Typography>Saved Ads</Typography> */}
         {savedAdsLocal.map((ads, index) => (
           <ThumbNailBox
             adInfo={ads}

@@ -246,9 +246,9 @@ const Addlibrarydatabase = () => {
   // });
 
   useEffect(()=>{
-    const position = window.pageYOffset;
+    // const position = window.pageYOffset;
     console.log("{{{{{{{{{{{{{}}}}}}}}}}}}}}}}}}}[[[[[[[[[[[[[[[[[[[]]]]]]]]]]]]]]]]]]]}}}}}}}}}}}}}")
-    console.log(position)
+    // console.log(position)
     console.log("{{{{{{{{{{{{{}}}}}}}}}}}}}}}}}}}[[[[[[[[[[[[[[[[[[[]]]]]]]]]]]]]]]]]]]}}}}}}}}}}}}}")
 
     window.scrollTo({
@@ -256,7 +256,7 @@ const Addlibrarydatabase = () => {
       behavior: "smooth",
   });
   // window.pageYOffset
-  })
+  },[postionYoffset])
   useEffect(() => {
     console.log("33333333333333333333333333333333333333333333333333");
     console.log(appliedFilters);
