@@ -99,7 +99,7 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
                 }}
                 edge="start"
                 sx={{
-                  marginRight: 5,
+                  ...isOpen && { ml:22 },
                   color: "#00CBFF",
                 }}
               >

@@ -15,9 +15,9 @@ import { loadSavedAdsStart } from "../redux/ducks/saveAds";
 import { CustomAppBar } from "../components/CustomAppBar";
 import { CustomSidebar } from "../components/CustomSidebar";
 import { loadAccountSettingsStart } from "./../redux/ducks/accountSettings";
+import Payment from "../pages/Payment"
 import { loadSavedAdsClientSideStart } from "../redux/ducks/saveAds_clientSide";
 import { useSelector } from "react-redux";
-
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
@@ -70,6 +70,7 @@ useEffect(()=>{
               path="/adDeatails/:adsId/*"
               element={<AdDeatailsTabs />}
             />
+            <Route exact path="/payment" element={<Payment />} />
           </Routes>
         </Box>
       </Box>
