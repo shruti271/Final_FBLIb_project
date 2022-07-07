@@ -47,6 +47,7 @@ import {
   statusValueStart,
 } from "../redux/ducks/filtered_Data";
 import { EditText } from "react-edit-text";
+
 // import { escapeRegExp } from "@mui/x-data-grid/utils/utils";
 
 const useStyles = makeStyles((theme) => ({
@@ -150,7 +151,7 @@ const Addlibrarydatabase = () => {
   const focusDiv = useRef();
 
   const { allMediaAds, loading } = useSelector((state) => state.allMediaAds);
-  const { filteredData, appliedFilters, sortFilter, searchBarData } =
+  const { filteredData, appliedFilters, sortFilter, searchBarData ,postionYoffset} =
     useSelector((state) => state.filteredData);
   // const [countMin, setCountMin] = useState([]);
   // const [countMax, setCountMax] = useState(1000);
@@ -244,6 +245,18 @@ const Addlibrarydatabase = () => {
   //   );
   // });
 
+  useEffect(()=>{
+    const position = window.pageYOffset;
+    console.log("{{{{{{{{{{{{{}}}}}}}}}}}}}}}}}}}[[[[[[[[[[[[[[[[[[[]]]]]]]]]]]]]]]]]]]}}}}}}}}}}}}}")
+    console.log(position)
+    console.log("{{{{{{{{{{{{{}}}}}}}}}}}}}}}}}}}[[[[[[[[[[[[[[[[[[[]]]]]]]]]]]]]]]]]]]}}}}}}}}}}}}}")
+
+    window.scrollTo({
+      top: postionYoffset,
+      behavior: "smooth",
+  });
+  // window.pageYOffset
+  })
   useEffect(() => {
     console.log("33333333333333333333333333333333333333333333333333");
     console.log(appliedFilters);

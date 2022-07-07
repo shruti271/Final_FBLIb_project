@@ -19,6 +19,7 @@ import {
   deleteSavedAdsClientSideSuccess,
 } from "../redux/ducks/saveAds_clientSide";
 import pauseButton from "../assets/pauseButton.svg";
+import { srtPostionForScrollValueStart } from "../redux/ducks/filtered_Data";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -334,6 +335,7 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
               float: "right",
             }}
             onClick={() => {
+              dispatch(srtPostionForScrollValueStart(window.pageYOffset))
               navigate(`/adDeatails/${adInfo.adID}`);
             }}
           >
