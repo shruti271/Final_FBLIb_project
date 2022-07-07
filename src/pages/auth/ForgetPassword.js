@@ -1,14 +1,25 @@
 import appLogo from "../../assets/appLogo.svg";
 import React, { useState, useEffect } from "react";
-import { makeStyles, MuiThemeProvider } from '@material-ui/core/styles';
-import { Box, Button, Card, CardContent, CircularProgress, Grid, Stack, TextField, Typography } from "@mui/material";
+import { makeStyles, MuiThemeProvider } from "@material-ui/core/styles";
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  CircularProgress,
+  Grid,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
 import Backtologin from "../../assets/Backtologinicon.svg";
 import { useNavigate } from "react-router-dom";
-import { forgetvalidationSchema, forgotPassword, isAlive } from "../../services/index";
+import { forgotPassword, isAlive } from "../../services/index";
 import { useForm } from "react-hook-form";
-import { yupResolver } from '@hookform/resolvers/yup';
+import { yupResolver } from "@hookform/resolvers/yup";
 import { themeLight, globalStyles } from "../../css/globalcss";
 import { CssBaseline } from "@material-ui/core";
+import { forgetvalidationSchema } from "./../../utils/validationSchemas";
 const useStyles = makeStyles(() => ({
   Backtologinbutton: {
     display: "flex",
@@ -19,7 +30,7 @@ const useStyles = makeStyles(() => ({
 
 const ForgetPassword = () => {
   const classes = useStyles();
-  const global = globalStyles()
+  const global = globalStyles();
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const {
@@ -38,7 +49,7 @@ const ForgetPassword = () => {
     if (response.success) {
       setLoading(false);
     }
-  }
+  };
 
   const getAlive = async () => {
     const res = await isAlive();
@@ -115,7 +126,11 @@ const ForgetPassword = () => {
                   <Button
                     variant="contained"
                     size="large"
-                    sx={{ borderRadius: "14px", textTransform: "none", fontSize: "20px" }}
+                    sx={{
+                      borderRadius: "14px",
+                      textTransform: "none",
+                      fontSize: "20px",
+                    }}
                     className={global.Crateaccountbutton}
                     onClick={handleSubmit(forgetPassword)}
                   >
@@ -133,7 +148,11 @@ const ForgetPassword = () => {
                     style={{ marginRight: "10px" }}
                     alt="bactologin"
                   />
-                  <Typography variant="h6" sx={{ cursor: "pointer", }} onClick={() => navigate("/auth/login")}>
+                  <Typography
+                    variant="h6"
+                    sx={{ cursor: "pointer" }}
+                    onClick={() => navigate("/auth/login")}
+                  >
                     Back to log in
                   </Typography>
                 </Box>
@@ -144,6 +163,6 @@ const ForgetPassword = () => {
       </Grid>
     </MuiThemeProvider>
   );
-}
+};
 
 export default ForgetPassword;

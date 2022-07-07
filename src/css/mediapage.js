@@ -31,6 +31,11 @@ const useStyles = makeStyles(() => ({
     overflowY: "none",
     outline: "none",
   },
+  profileItem: {
+    "&:hover": {
+      cursor: "pointer",
+    },
+  },
 }));
 
 export default useStyles;

@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { Box, Button, Grid, Stack, Typography } from "@mui/material";
+import { Avatar, Box, Button, Grid, Stack, Typography } from "@mui/material";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   createSavedAdsStart,
@@ -13,6 +13,12 @@ import Shareicon from "../assets/Shareicon.svg";
 import Saveicon from "../assets/Saveicon.svg";
 import Addgraph from "../assets/Addgraph.svg";
 import StarFill from "../assets/StarFill.svg";
+import {
+  createSavedAdsClientSideStart,
+  deleteSavedAdsClientSideStart,
+  deleteSavedAdsClientSideSuccess,
+} from "../redux/ducks/saveAds_clientSide";
+import pauseButton from "../assets/pauseButton.svg";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -76,6 +82,7 @@ const useStyles = makeStyles((theme) => ({
   },
   shareicon: {
     marginLeft: theme.spacing(5),
+    cursor: "pointer",
   },
   saveicon: {
     marginLeft: theme.spacing(2),
@@ -90,7 +97,6 @@ const useStyles = makeStyles((theme) => ({
   },
   Addheader: {
     display: "flex",
-    justifyContent: "space-evenly",
     padding: "6px",
     whiteSpace: "nowrap",
   },
@@ -115,7 +121,7 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
   const navigate = useNavigate();
 
   return (
-    <Grid item xs={4} key={index}>
+    <Grid item lg={3} md={4} xs={4} key={index}>
       <Stack
         sx={{
           border: "2px solid #F6F6FB",
@@ -123,15 +129,34 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
         }}
       >
         <Box className={classes.Addheader}>
-          <Box sx={{ marginRight: "12px" }}>
-            <img src={Firstcard} aria-label="FirstCard" />
+          <Box
+            sx={{
+              border: 1,
+              // width: "35px",
+              borderRadius: "50%",
+              borderColor: "#EBEBEB",
+              // borderColor: "black",
+
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Avatar
+              src={adInfo?.pageInfo?.logo}
+              aria-label="FirstCard"
+              sx={{ width: 27, height: 27 }}
+            ></Avatar>
           </Box>
           <Typography
             sx={{
-              fontWeight: 500,
+              fontWeight: "500",
               fontSize: "16px",
               lineHeight: "24px",
               color: "#2B2F42",
+              marginRight: "12px",
+              paddingLeft: "10px",
+              //  fontWeight: "bold"
             }}
           >
             {adInfo?.pageInfo?.name}
@@ -144,15 +169,30 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
               lineHeight: "24px",
               color: "#2B2F42",
               opacity: 0.6,
+              marginRight: "12px",
             }}
           >
-            (21,604 likes)
+            {`(${adInfo?.pageInfo?.platforms[0].likes} likes)`}
           </Typography>
         </Box>
         <Box>
           {adInfo.adMediaType === "video" ? (
+            //   <ReactSimpleVideoPlayer
+            //   url={adInfo?.bucketMediaURL}
+            //   poster={adInfo?.thumbBucketUrl}
+            //   className={classes.AdsImageVideo}
+            //   controls
+            //   autosize
+            // />
             <video
               src={adInfo.bucketMediaURL}
+              poster={adInfo?.thumbBucketUrl}
+              // style={{
+              //   backgroundImage:
+              //     pauseButton,
+              //   backgroundRepeat: 'no-repeat',
+              //   backgroundPosition: 'center'
+              // }}
               autoPlay={false}
               className={classes.AdsImageVideo}
               controls
@@ -174,12 +214,21 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
 
         <Grid container sx={{ padding: "4px" }}>
           <Grid item sm={9}>
-            <Box className={classes.AddFooter}>
+            <Box
+              className={classes.AddFooter}
+              style={{ alignItems: "baseline" }}
+            >
               <Typography>{adInfo.status}</Typography>
               <img
                 src={Shareicon}
                 alt="Shareicon"
                 className={classes.shareicon}
+                onClick={(e) => {
+                  e.preventDefault();
+                  window.open(adInfo?.purchaseURL, "_blank", "");
+                  // window.location.target="_blank"
+                  // window.location.href=adInfo?.purchaseURL;
+                }}
               />
               {deleteId ? (
                 <img
@@ -187,7 +236,8 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
                   alt="StarFill"
                   className={classes.saveicon}
                   onClick={() => {
-                    dispatch(deleteSavedAdsStart({ id: Number(deleteId) }));
+                    dispatch(deleteSavedAdsClientSideStart(adInfo));
+                    dispatch(deleteSavedAdsStart({ deleted_id: adInfo?.adID }));
                   }}
                 />
               ) : (
@@ -195,9 +245,11 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
                   src={Saveicon}
                   alt="Saveicon"
                   className={classes.saveicon}
-                  onClick={() => {
-                    dispatch(createSavedAdsStart({ ad: adInfo.adID }));
-                    //   deleteSavedAdsStart({ id: Number(ads.deleteId) })
+                  onClick={async () => {
+                    dispatch(
+                      createSavedAdsClientSideStart({ ad: adInfo?.adID })
+                    );
+                    await dispatch(createSavedAdsStart({ ad: adInfo.adID }));
                   }}
                 />
               )}
@@ -263,6 +315,7 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
             </Box>
           </Grid>
         </Grid>
+
         <Box sx={{ marginTop: "20px", marginBottom: "20px" }}>
           <img
             src={Addgraph}
@@ -270,21 +323,23 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
             className={classes.AdsImageVideo}
           />
         </Box>
-        <Button
-          variant="contained"
-          size="small"
-          sx={{
-            borderRadius: "17px",
-            background:
-              "linear-gradient(270deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)",
-            float: "right",
-          }}
-          onClick={() => {
-            navigate(`/adDeatails/${adInfo.adID}`);
-          }}
-        >
-          see Details
-        </Button>
+        <Box>
+          <Button
+            variant="contained"
+            size="small"
+            sx={{
+              borderRadius: "17px",
+              background:
+                "linear-gradient(270deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)",
+              float: "right",
+            }}
+            onClick={() => {
+              navigate(`/adDeatails/${adInfo.adID}`);
+            }}
+          >
+            see Details
+          </Button>
+        </Box>
       </Stack>
     </Grid>
   );

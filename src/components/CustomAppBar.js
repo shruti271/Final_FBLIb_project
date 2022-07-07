@@ -22,7 +22,8 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { logoutUser } from "../services";
 import { useSelector } from "react-redux";
 import useStyles from "../css/mediapage";
-import { drawerWidth } from "../variable";
+
+const drawerWidth = 240;
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
@@ -44,24 +45,12 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 export const CustomAppBar = ({ isOpen, setIsOpen }) => {
-  console.log("isOpen from child: ", isOpen);
   const classes = useStyles();
   const { accountSettings } = useSelector((state) => state.accountSettings);
 
-  useEffect(() => {
-    console.log("accountSettings :", accountSettings);
-  }, [accountSettings]);
-
-  const handleDrawerOpen = () => {
-    if (!isOpen) {
-      setIsOpen(true);
-    } else {
-      setIsOpen(false);
-    }
-  };
   const MenuListOptios = [
     { name: "Account Setings", icon: settings, url: "/accountSettings" },
-    { name: "Billing", icon: billing },
+    { name: "Billing", icon: billing, url: "/billing" },
     { name: "Contact Support", icon: contactUs, url: "/contactSupport" },
     { name: "Logout", icon: billing },
   ];
@@ -69,9 +58,12 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
   const navigate = useNavigate();
   const [anchoerEL, setAnchoerEL] = React.useState();
   const handleOpenMenu = (e) => {
-    console.log("first,", e.currentTarget);
     setAnchoerEL(e.currentTarget);
   };
+  useEffect(() => {
+    console.log(window.location.pathname);
+    console.log("}}}}}}}}}}}");
+  });
   const handleCloseMenu = (e) => {
     setAnchoerEL(null);
   };
@@ -82,15 +74,19 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
       navigate("/auth/login");
     }
   };
+  useEffect(() => {
+    setIsMenuOptionActive(window.location.pathname);
+  });
   return (
     <>
-      <AppBar>
+      <AppBar open={isOpen}>
         <Toolbar>
           <Stack
             direction={"row"}
             style={{
               display: "flex",
               justifyContent: "space-between",
+              alignItems: "center",
               width: "100%",
             }}
           >
@@ -98,7 +94,9 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
               <IconButton
                 color="inherit"
                 aria-label="open drawer"
-                onClick={handleDrawerOpen}
+                onClick={() => {
+                  !isOpen ? setIsOpen(true) : setIsOpen(false);
+                }}
                 edge="start"
                 sx={{
                   ...isOpen && { ml:22 },
@@ -113,11 +111,12 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
                 <Box className={classes.avtar}>
                   <NotificationsIcon />
                 </Box>
-                <Box className={classes.avtar}>
+                <Box className={classes.avtar} onClick={handleOpenMenu} sx={{cursor:"pointer"}}>
                   <PersonIcon />
                 </Box>
 
                 <Stack
+                  className={classes.profileItem}
                   sx={{
                     justifyContent: "center",
                     alignItems: "center",
@@ -166,7 +165,7 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
                         marginTop: 13,
                         maxHeight: 40 * 6,
                         width: "35ch",
-                        background: "#ebebeb",
+                        background: "white",
                       },
                     }}
                   >
@@ -184,20 +183,20 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
                     <Divider />
 
                     {MenuListOptios.map((item, index) => {
-                      // console.log(item.name.replace(' ',''));
                       return (
                         <MenuItem
                           key={index}
                           onClick={() => {
                             navigate(item.url);
                             handleCloseMenu();
-                            setIsMenuOptionActive(item.name);
+
+                            // setIsMenuOptionActive(window.location.pathname);
                           }}
                           style={{
                             background:
-                              isMenuOptionActive === item.name
-                                ? "white"
-                                : "#ebebeb",
+                              isMenuOptionActive === item.url
+                                ? "#ebebeb"
+                                : "white",
                           }}
                         >
                           <img
