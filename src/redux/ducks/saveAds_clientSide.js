@@ -33,24 +33,28 @@ const savedAdsClienSideReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         savedAdsLocal: action.payload,
-        savedIds: action.payload.map((abc) => abc.adID),
+        savedIds: action.payload.map((abc) => abc.id),
       };
     case CREATE_SAVEADSCLIENTSIDE_START:
       return {
         ...state,
         loading: false,
         savedAdsLocal: [...state.savedAdsLocal.concat(action.payload)],
-        savedIds: [...state.savedIds.concat(action.payload.ad)],
+        savedIds: [...state.savedIds.concat(action.payload.id)],
       };
     case DELETE_SAVEADSCLIENTSIDE_START:
+      console.log("???????????????????????????????????????????????????")
+      console.log(action.payload)
+      console.log("???????????????????????????????????????????????????")
+
       return {
         ...state,
         loading: false,
         savedAdsLocal: state.savedAdsLocal.filter(
-          (savedads) => savedads.adID !== action.payload.adID
+          (savedads) => savedads.id !== action.payload.id
         ),
         savedIds: state.savedIds.filter(
-          (savedads) => savedads !== action.payload.ad
+          (savedads) => savedads !== action.payload
         ),
       };
 
