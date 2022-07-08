@@ -16,7 +16,7 @@ function AdDeatails({ ThumbnailData }) {
           <Box sx={{ border: "4.97421px solid #F6F6FB" }}>
             <Stack>
               <Box
-                sx={{ display: "flex", marginTop: "13px", marginLeft: "26px" }}
+                sx={{ display: "flex", marginTop: "13px", marginLeft: "15px" }}
               >
                 <Box
                   sx={{
@@ -52,7 +52,7 @@ function AdDeatails({ ThumbnailData }) {
                     color: "#2B2F42",
                   }}
                 >
-                  {ThumbnailData?.headline ? ThumbnailData.headline : " "}
+                  {ThumbnailData?.pageInfo?.name ? ThumbnailData.pageInfo?.name : " "}
                 </Typography>
               </Box>
 
@@ -64,7 +64,7 @@ function AdDeatails({ ThumbnailData }) {
                     lineHeight: "27px",
                     letterSpacing: "0.03em",
                     color: "#2B2F42",
-                    margin: "10px 12px 10px 26px",
+                    margin: "10px 12px 10px 15px",
                   }}
                 >
                   {ThumbnailData?.adDescription
@@ -101,7 +101,7 @@ function AdDeatails({ ThumbnailData }) {
               <Box>
                 <Grid container spacing={1}>
                   <Grid item xs={10}>
-                    <Box sx={{ paddingLeft: "26px" }}>
+                    <Box sx={{ paddingLeft: "15px" }}>
                       <Typography
                         sx={{
                           lineHeight: "23px",
