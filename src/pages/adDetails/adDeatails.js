@@ -34,8 +34,8 @@ function AdDeatails({ ThumbnailData }) {
                     src={ThumbnailData?.pageInfo?.logo}
                     aria-label="FirstCard"
                     // style={{ width: "100%", height: "100%" }}
-                    style={{ width: "30px",height:"30px" }}
-                    // sx={{ width: 27, height: 27 }}
+                    style={{ width: "30px", height: "30px" }}
+                  // sx={{ width: 27, height: 27 }}
                   ></Avatar>
                   {/* <img
                     src={ThumbnailData?.pageInfo?.logo}
@@ -143,44 +143,22 @@ function AdDeatails({ ThumbnailData }) {
                     </Box>
                   </Grid>
                   <Grid item xs={2}>
-                    <Box
-                      sx={{
-                        width: "55px",
-                        height: "55px",
-                        background: "#00CBFF",
-                        borderRadius: "50%",
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        marginRight: "6px",
-                      }}
-                    >
-                      <Typography
-                        variant="div"
-                        sx={{
-                          fontWeight: 600,
-                          fontSize: "30px",
-                          lineHeight: "24px",
-                          color: "#F6F6FB",
-                        }}
-                      >
+                    <Avatar sx={{
+                      backgroundColor: '#00CBFF',
+                      display: "grid",
+                      width: "52px",
+                      height: "51px",
+                      padding: "5px 10px 10px"
+                    }}>
+                      <span style={{ fontSize: "25px", lineHeight: "24px", padding: "2px", fontWeight: "700" }}>
                         {ThumbnailData?.noOfCopyAds
                           ? ThumbnailData.noOfCopyAds
                           : " "}
-                      </Typography>
-                      <Typography
-                        variant="div"
-                        sx={{
-                          fontWeight: 600,
-                          fontSize: "10px",
-                          lineHeight: "24px",
-                          color: "#F6F6FB",
-                        }}
-                      >
+                      </span>
+                      <span style={{ fontSize: "10px", margin: "auto" }}>
                         Ads
-                      </Typography>
-                    </Box>
+                      </span>
+                    </Avatar>
                   </Grid>
                 </Grid>
               </Box>
@@ -196,7 +174,7 @@ function AdDeatails({ ThumbnailData }) {
                     color: "white",
                     marginBottom: "15px",
                     marginRight: "6px",
-                    marginTop:"10px"
+                    marginTop: "10px"
                   }}
                   onClick={() => {
                     window.open(ThumbnailData?.purchaseURL, "_blank", "");
@@ -223,15 +201,15 @@ function AdDeatails({ ThumbnailData }) {
                   paddingLeft: "16px",
                   paddingRight: "16px",
                 }}
-                // disabled={ThumbnailData?.adMediaType === "image" ? false : true}
+              // disabled={ThumbnailData?.adMediaType === "image" ? false : true}
               >
                 <a
                   href={ThumbnailData?.thumbBucketUrl}
                   style={{ textDecoration: "none", color: "white" }}
                   download
-                  // disabled={
-                  //   ThumbnailData?.adMediaType === "image" ? false : true
-                  // }
+                // disabled={
+                //   ThumbnailData?.adMediaType === "image" ? false : true
+                // }
                 >
                   {" "}
                   Download Thumbnail
@@ -331,7 +309,7 @@ function AdDeatails({ ThumbnailData }) {
                     src={ThumbnailData?.pageInfo?.logo}
                     aria-label="FirstCard"
                     style={{ width: "100%", height: "100%" }}
-                    // sx={{ width: 27, height: 27 }}
+                  // sx={{ width: 27, height: 27 }}
                   ></Avatar>
                   {/* <img
                     src={ThumbnailData?.pageInfo?.logo}
@@ -377,8 +355,8 @@ function AdDeatails({ ThumbnailData }) {
                           {socialMedia.name === "Facebook"
                             ? socialMedia.likes + " likes • " + socialMedia.type
                             : socialMedia.followers +
-                              " followers • " +
-                              socialMedia.type}
+                            " followers • " +
+                            socialMedia.type}
                         </Typography>
                       </Stack>
                     </Stack>

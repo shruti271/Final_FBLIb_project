@@ -48,6 +48,7 @@ import {
 } from "../redux/ducks/filtered_Data";
 import EditableLabel from "react-simple-editlabel";
 import { EditText } from "react-edit-text";
+import BackTotopbutton from "../pages/Backtotopbutton";
 
 // import { escapeRegExp } from "@mui/x-data-grid/utils/utils";
 
@@ -525,6 +526,7 @@ const Addlibrarydatabase = () => {
 
   return (
     <>
+    <BackTotopbutton/>
       {loading ? (
         <Box
           sx={{

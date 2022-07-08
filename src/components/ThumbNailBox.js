@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { Avatar, Box, Button, Grid, Stack, Typography } from "@mui/material";
+import { Avatar, Box, Button, Grid, Stack, Tooltip, Typography } from "@mui/material";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   createSavedAdsStart,
@@ -82,7 +82,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(1),
   },
   shareicon: {
-    marginLeft: theme.spacing(5),
+    marginLeft: theme.spacing(3),
     cursor: "pointer",
   },
   saveicon: {
@@ -219,7 +219,8 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
               className={classes.AddFooter}
               style={{ alignItems: "baseline" }}
             >
-              <Typography>{adInfo.status}</Typography>
+              <Typography sx={{ textDecoration: 'underline', }}>{adInfo.status}</Typography>
+              <Tooltip title="Redirect to shop link">
               <img
                 src={Shareicon}
                 alt="Shareicon"
@@ -231,6 +232,7 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
                   // window.location.href=adInfo?.purchaseURL;
                 }}
               />
+              </Tooltip>
               {deleteId ? (
                 <img
                   src={StarFill}
@@ -272,36 +274,21 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
               justifyContent: "center",
             }}
           >
-            <Box
-              sx={{
-                width: "55px !important",
-                height: "55px !important",
-                background: "#00CBFF",
-                borderRadius: "50%",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  flexDirection: "column",
-                  
-                }}
-              >
-                <span style={{fontSize:"30px",lineHeight:"24px",color: "#F6F6FB",}}>
+            <Avatar sx={{
+              backgroundColor: '#00CBFF',
+              display: "grid",
+              width: "52px",
+              height: "51px",
+              padding: "5px 10px 10px"
+            }}>
+              <span style={{ fontSize: "25px", lineHeight: "24px", padding: "2px", fontWeight: "700" }}>
                 {adInfo.noOfCopyAds}
-                </span>
-                <span style={{fontSize:"10px",color: "#F6F6FB",}}>
+              </span>
+              <span style={{ fontSize: "10px", margin: "auto" }}>
                 Ads
-                </span>
-              </div>
-              
-              
-            </Box>
+              </span>
+            </Avatar>
+
           </Grid>
         </Grid>
 

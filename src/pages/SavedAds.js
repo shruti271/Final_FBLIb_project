@@ -7,6 +7,7 @@ import filter from "../assets/filter.svg";
 import noSavedAdsImage from "../assets/noSavedAdsImage.svg";
 import Arrowdown from "../assets/Arrowdown.svg"
 import { Box } from "@material-ui/core";
+import BackTotopbutton from "../pages/Backtotopbutton";
 // import { loadSavedAdsStart } from "../redux/ducks/saveAds";
 
 const SavedAds = () => {
@@ -15,6 +16,7 @@ const SavedAds = () => {
 
   return (
     <>
+    <BackTotopbutton/>
       <Stack direction={"column"}>
         <Typography>
           <b>Saved Ads</b>
