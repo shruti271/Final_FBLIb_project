@@ -1,5 +1,5 @@
 import { makeStyles } from "@material-ui/core/styles";
-import { Grid, Box, Typography, Button, Stack } from "@mui/material";
+import { Grid, Box, Typography, Button, Stack, Avatar } from "@mui/material";
 import Firstcard from "../../assets/Firstcard.svg";
 import LargePageLogo from "../../assets/largePageLogo.svg";
 import Firsrcardimg from "../../assets/FirstCardImg.svg";
@@ -16,15 +16,32 @@ function AdDeatails({ ThumbnailData }) {
           <Box sx={{ border: "4.97421px solid #F6F6FB" }}>
             <Stack>
               <Box
-                sx={{ display: "flex", marginTop: "13px", marginLeft: "26px" }}
+                sx={{ display: "flex", marginTop: "13px", marginLeft: "15px" }}
               >
-                <Box>
+                <Box
+                  sx={{
+                    border: 2,
+                    borderRadius: "50%",
+                    borderColor: "#EBEBEB",
+                    // borderColor: "black",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
                   {/* <img src={Firstcard} aria-label="Add" /> */}
-                  <img
+                  <Avatar
+                    src={ThumbnailData?.pageInfo?.logo}
+                    aria-label="FirstCard"
+                    // style={{ width: "100%", height: "100%" }}
+                    style={{ width: "30px",height:"30px" }}
+                    // sx={{ width: 27, height: 27 }}
+                  ></Avatar>
+                  {/* <img
                     src={ThumbnailData?.pageInfo?.logo}
                     aria-label="FirstCard"
                     style={{ width: "25px" }}
-                  />
+                  /> */}
                 </Box>
                 <Typography
                   style={{
@@ -35,7 +52,7 @@ function AdDeatails({ ThumbnailData }) {
                     color: "#2B2F42",
                   }}
                 >
-                  {ThumbnailData?.headline ? ThumbnailData.headline : " "}
+                  {ThumbnailData?.pageInfo?.name ? ThumbnailData.pageInfo?.name : " "}
                 </Typography>
               </Box>
 
@@ -47,7 +64,7 @@ function AdDeatails({ ThumbnailData }) {
                     lineHeight: "27px",
                     letterSpacing: "0.03em",
                     color: "#2B2F42",
-                    margin: "10px 12px 10px 26px",
+                    margin: "10px 12px 10px 15px",
                   }}
                 >
                   {ThumbnailData?.adDescription
@@ -84,7 +101,7 @@ function AdDeatails({ ThumbnailData }) {
               <Box>
                 <Grid container spacing={1}>
                   <Grid item xs={10}>
-                    <Box sx={{ paddingLeft: "26px" }}>
+                    <Box sx={{ paddingLeft: "15px" }}>
                       <Typography
                         sx={{
                           lineHeight: "23px",
@@ -108,9 +125,7 @@ function AdDeatails({ ThumbnailData }) {
                         }}
                       >
                         {/* Solar Cardinal Wind Chime Light */}
-                        {ThumbnailData?.headline
-                          ? ThumbnailData.headline
-                          : " "}
+                        {ThumbnailData?.headline ? ThumbnailData.headline : " "}
                       </Typography>
                       <Typography
                         style={{
@@ -181,6 +196,7 @@ function AdDeatails({ ThumbnailData }) {
                     color: "white",
                     marginBottom: "15px",
                     marginRight: "6px",
+                    marginTop:"10px"
                   }}
                   onClick={() => {
                     window.open(ThumbnailData?.purchaseURL, "_blank", "");
@@ -297,13 +313,31 @@ function AdDeatails({ ThumbnailData }) {
                   {/* Best Solar Lighting */}
                   {ThumbnailData?.pageInfo?.name}
                 </Typography>
-                <Box sx={{ width: "112px", height: "112px" }}>
+                <Box
+                  sx={{
+                    width: "112px",
+                    height: "112px",
+                    border: 2,
+                    borderRadius: "50%",
+                    borderColor: "#EBEBEB",
+                    // borderColor: "black",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
                   {/* <img src={LargePageLogo} aria-label="Add" /> */}
-                  <img
+                  <Avatar
+                    src={ThumbnailData?.pageInfo?.logo}
+                    aria-label="FirstCard"
+                    style={{ width: "100%", height: "100%" }}
+                    // sx={{ width: 27, height: 27 }}
+                  ></Avatar>
+                  {/* <img
                     src={ThumbnailData?.pageInfo?.logo}
                     aria-label="FirstCard"
                     style={{ width: "100%" }}
-                  />
+                  /> */}
                 </Box>
               </Stack>
               <Stack style={{ justifyContent: "center", marginTop: "36px" }}>

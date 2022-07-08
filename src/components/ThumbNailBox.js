@@ -19,6 +19,7 @@ import {
   deleteSavedAdsClientSideSuccess,
 } from "../redux/ducks/saveAds_clientSide";
 import pauseButton from "../assets/pauseButton.svg";
+import { srtPostionForScrollValueStart } from "../redux/ducks/filtered_Data";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -273,8 +274,8 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
           >
             <Box
               sx={{
-                width: "55px",
-                height: "55px",
+                width: "55px !important",
+                height: "55px !important",
                 background: "#00CBFF",
                 borderRadius: "50%",
                 display: "flex",
@@ -282,36 +283,24 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
                 alignItems: "center",
               }}
             >
-              <Stack
-                sx={{
+              <div
+                style={{
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
+                  flexDirection: "column",
+                  
                 }}
               >
-                <Typography
-                  variant="div"
-                  sx={{
-                    fontWeight: 600,
-                    fontSize: "30px",
-                    lineHeight: "24px",
-                    color: "#F6F6FB",
-                  }}
-                >
-                  {adInfo.noOfCopyAds}
-                </Typography>
-                <Typography
-                  variant="div"
-                  sx={{
-                    fontWeight: 600,
-                    fontSize: "10px",
-                    lineHeight: "24px",
-                    color: "#F6F6FB",
-                  }}
-                >
-                  Ads
-                </Typography>
-              </Stack>
+                <span style={{fontSize:"30px",lineHeight:"24px",color: "#F6F6FB",}}>
+                {adInfo.noOfCopyAds}
+                </span>
+                <span style={{fontSize:"10px",color: "#F6F6FB",}}>
+                Ads
+                </span>
+              </div>
+              
+              
             </Box>
           </Grid>
         </Grid>
@@ -334,6 +323,7 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
               float: "right",
             }}
             onClick={() => {
+              dispatch(srtPostionForScrollValueStart(window.pageYOffset));
               navigate(`/adDeatails/${adInfo.adID}`);
             }}
           >

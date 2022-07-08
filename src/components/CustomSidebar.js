@@ -8,13 +8,14 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Stack } from "@mui/material";
 // import appLogo from "../assets/appLogo.svg";
 import libraryicon from "../assets/Vector.svg";
-import staricon from "../assets/Vectora.svg";
+import  staricon from "../assets/Vectora.svg";
 import contact from "../assets/contact.svg";
 import logout from "../assets/Logout.svg";
 import { logoutUser } from "../services";
 import fbaddlogo from "../assets/fbaddlogo.png"
 
 const useStyles = makeStyles(() => ({
+ 
   title: {
     fontFamily: "Neue Haas Grotesk Display Pro",
     fontStyle: "normal !important",
