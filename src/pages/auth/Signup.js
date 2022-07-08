@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { MuiThemeProvider } from "@material-ui/core/styles";
-import appLogo from "../../assets/appLogo.svg";
 import {
   Box,
   Button,
@@ -21,6 +20,7 @@ import { signUp } from "../../services/index";
 import { themeLight, globalStyles } from "../../css/globalcss";
 import { CssBaseline } from "@material-ui/core";
 // import { registerValidationSchema } from "./../../utils/validationSchemas";
+import fbaddlogo from "../../assets/fbaddlogo.png"
 
 const Signup = () => {
   const global = globalStyles();
@@ -71,17 +71,8 @@ const Signup = () => {
             }}
           >
             <CardContent>
-              <Stack
-                direction={"row"}
-                sx={{ displayl: "flex", justifyContent: "center" }}
-              >
-                <img alt="logo" src={appLogo} className={global.logo} />
-                <Typography edge="start" className={global.title}>
-                  EYE OF ECOM
-                </Typography>
-              </Stack>
+                  <img alt="logo" src={fbaddlogo} className={global.logo} />  
               <form
-                style={{ paddingTop: "50px" }}
                 onSubmit={handleSubmit(submitsigninform)}
               >
                 <Box style={{ padding: "18px 61px" }}>
@@ -98,16 +89,14 @@ const Signup = () => {
                       Signin
                     </span>
                   </Typography>
-                  <Grid container spacing={2}>
+                  <Grid container spacing={2} pt={5}>
                     <Grid xs={12} item>
                       <TextField
                         placeholder="Enter first name"
                         label="First Name"
                         variant="outlined"
                         fullWidth
-                        // required
                         name="first_name"
-                        // onChange={(e) => setFirstname(e.target.value)}
                         {...register("first_name")}
                         error={errors.first_name ? true : false}
                       />
@@ -121,8 +110,6 @@ const Signup = () => {
                         label="Last Name"
                         variant="outlined"
                         fullWidth
-                        // required
-                        // onChange={(e) => setLasttname(e.target.value)}
                         {...register("last_name")}
                         error={errors.last_name ? true : false}
                       />

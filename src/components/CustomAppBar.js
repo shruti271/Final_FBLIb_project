@@ -19,7 +19,7 @@ import contactUs from "../assets/contactUs.svg";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import PersonIcon from "@mui/icons-material/Person";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import { logoutUser } from "../services";
+// import { logoutUser } from "../services";
 import { useSelector } from "react-redux";
 import useStyles from "../css/mediapage";
 
@@ -67,16 +67,16 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
   const handleCloseMenu = (e) => {
     setAnchoerEL(null);
   };
-  const userLogout = async () => {
-    const res = await logoutUser();
-    if (res.success && res?.data?.data) {
-      localStorage.clear();
-      navigate("/auth/login");
-    }
-  };
+  // const userLogout = async () => {
+  //   const res = await logoutUser();
+  //   if (res.success && res?.data?.data) {
+  //     localStorage.clear();
+  //     navigate("/auth/login");
+  //   }
+  // };
   useEffect(() => {
     setIsMenuOptionActive(window.location.pathname);
-  });
+  },[]);
   return (
     <>
       <AppBar open={isOpen}>
@@ -99,7 +99,6 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
                 }}
                 edge="start"
                 sx={{
-                  ...isOpen && { ml:22 },
                   color: "#00CBFF",
                 }}
               >

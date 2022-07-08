@@ -17,10 +17,12 @@ export const themeLight = createTheme({
 
 const globalStyles = makeStyles((theme) => ({
   logo: {
-    height: "37px !important",
-    width: "65px !important",
-    marginRight: "10px",
-    marginTop: "4px",
+    height: 50,
+    width: '40%',
+    display: 'block',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    objectFit: 'cover'
   },
   title: {
     fontFamily: "Neue Haas Grotesk Display Pro",

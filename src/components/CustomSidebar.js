@@ -9,11 +9,10 @@ import {  Stack } from "@mui/material";
 import appLogo from "../assets/appLogo.svg";
 import logout from "../assets/Logout.svg";
 import { logoutUser } from "../services";
-import fbaddlogo from "../assets/fbaddlogo.svg";
 import SaveIcon from "../SvgIcons/SaveIcon";
 import AdLibraryDatabaseIcon from "../SvgIcons/AdLibraryDatabaseIcon";
 import ContactIcon from "../SvgIcons/ContactIcon";
-
+import fbaddlogo from "../assets/fbaddlogo.png"
 
 const useStyles = makeStyles(() => ({
   title: {
@@ -30,23 +29,12 @@ const useStyles = makeStyles(() => ({
     textFillColor: "transparent",
   },
   mainlogo: {
-    width: "210px !important",
+    width: "200px !important",
   },
-  submainlogo: {
-    marginTop: "40px",
-    height: "25px !important",
-    width: "46px !important",
-  },
-  logo: {
-    height: "25px !important",
-    width: "46px !important",
-    marginRight: "8px",
-  },
-
   selectedMenu: {
     background:
       "linear-gradient(270deg, rgba(0, 203, 255, 0.5) 0%, rgba(0, 203, 255, 0.03) 100%)",
-    borderRadius: "30px",
+    borderRadius: "33px",
   },
 }));
 
@@ -54,6 +42,7 @@ const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
   width: drawerWidth,
+  marginLeft: "8px",
   transition: theme.transitions.create("width", {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen,
@@ -62,6 +51,7 @@ const openedMixin = (theme) => ({
 });
 
 const closedMixin = (theme) => ({
+  padding: theme.spacing(0.5),
   transition: theme.transitions.create("width", {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
@@ -69,9 +59,9 @@ const closedMixin = (theme) => ({
   overflowX: "hidden",
   width: `calc(${theme.spacing(7)} + 1px)`,
   [theme.breakpoints.up("sm")]: {
-    width: `calc(${theme.spacing(8)} + 1px)`,
+    width: `calc(${theme.spacing(9)} + 1px)`,
   },
-});
+})
 
 const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
@@ -122,54 +112,23 @@ export const CustomSidebar = ({ isOpen }) => {
     } else {
       setSelectedMenuItem("");
     }
-  });
+  }, []);
   return (
     <>
       <Drawer variant="permanent" open={isOpen}>
-        <Stack sx={{ height: "100%" }}>
-          {/* <Box
-            sx={{
-              marginTop: "42px",
-              cursor: "pointer",
-            }}
+        <Stack sx={{ height: "100%"}}>
+          <Stack
+            direction={"row"}
             onClick={() => navigate("/")}
-          >
-            <Stack
-              direction={"row"}
-              sx={{
-                paddingTop: "20px",
-                paddingBottom: "20px",
-                alignItems: "center",
-                marginLeft: "12px",
-              }}
-            >
-              <img alt="logo" src={appLogo} className={classes.logo} />
-              <Typography
-                edge="start"
-                className={classes.title}
-                component="div"
-              >
-                Eye of Ecom
-              </Typography>
-            </Stack>
-          </Box> */}
-          <Box
             sx={{
-              marginTop: "13px",
-              cursor: "pointer",
-              display: "flex",
-              justifyContent: "center",
+              marginLeft: "7.5px",
             }}
-            onClick={() => navigate("/")}
           >
-            {isOpen ? (
-              <img alt="logo" src={fbaddlogo} className={classes.mainlogo} />
-            ) : (
-              <img alt="logo" src={appLogo} className={classes.submainlogo} />
-            )}
-          </Box>
+            <img alt="logo" src={fbaddlogo} className={classes.mainlogo} />
+          </Stack>
+
           <Box
-            sx={{ marginTop: "72px", cursor: "pointer" }}
+            sx={{ cursor: "pointer" }}
             className={
               selectedMenuItem === sideBarMenuItems.ADLIBSDATABASE
                 ? classes.selectedMenu
@@ -185,7 +144,7 @@ export const CustomSidebar = ({ isOpen }) => {
               sx={{
                 paddingTop: "20px",
                 paddingBottom: "20px",
-                marginLeft: "20px",
+                marginLeft: "25px",
               }}
             >              
               <AdLibraryDatabaseIcon currentColor={ selectedMenuItem === sideBarMenuItems.ADLIBSDATABASE ?"#00CBFF":"grey"} />
@@ -215,7 +174,7 @@ export const CustomSidebar = ({ isOpen }) => {
               sx={{
                 paddingTop: "20px",
                 paddingBottom: "20px",
-                marginLeft: "20px",
+                marginLeft: "23px",
               }}
             >
               
@@ -246,7 +205,7 @@ export const CustomSidebar = ({ isOpen }) => {
               sx={{
                 paddingTop: "20px",
                 paddingBottom: "20px",
-                marginLeft: "20px",
+                marginLeft: "22px",
               }}
             >
               <ContactIcon currentColor={selectedMenuItem === sideBarMenuItems.SUPPORT?"#00CBFF":"grey"}/>
@@ -277,12 +236,12 @@ export const CustomSidebar = ({ isOpen }) => {
               sx={{
                 paddingTop: "20px",
                 paddingBottom: "20px",
-                marginLeft: "20px",
+                marginLeft: "25px",
               }}
               onClick={userLogout}
             >
               <img alt="Logout" src={logout} width="17px" />
-              <Typography sx={{ marginLeft: "26px" }}>Log Out</Typography>
+              <Typography sx={{ marginLeft: "33px" }}>Log Out</Typography>
             </Stack>
           </Box>
         </Stack>
