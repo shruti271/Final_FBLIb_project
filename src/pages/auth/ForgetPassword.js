@@ -1,4 +1,4 @@
-import appLogo from "../../assets/appLogo.svg";
+import fbaddlogo from "../../assets/fbaddlogo.png"
 import React, { useState, useEffect } from "react";
 import { makeStyles, MuiThemeProvider } from "@material-ui/core/styles";
 import {
@@ -89,15 +89,7 @@ const ForgetPassword = () => {
               }}
             >
               <CardContent>
-                <Stack
-                  direction={"row"}
-                  sx={{ displayl: "flex", justifyContent: "center" }}
-                >
-                  <img alt="logo" src={appLogo} className={global.logo} />
-                  <Typography edge="start" className={global.title}>
-                    EYE OF ECOM
-                  </Typography>
-                </Stack>
+                <img alt="logo" src={fbaddlogo} className={global.logo} />
                 <Box style={{ padding: "30px 32px" }}>
                   <Grid container spacing={2}>
                     <Grid xs={12} item>

@@ -1,4 +1,4 @@
-import appLogo from "../../assets/appLogo.svg";
+import fbaddlogo from "../../assets/fbaddlogo.png"
 import React, { useState, useEffect } from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { MuiThemeProvider } from "@material-ui/core/styles";
@@ -81,16 +81,7 @@ const Login = () => {
               }}
             >
               <CardContent>
-                <Stack
-                  direction={"row"}
-                  sx={{ displayl: "flex", justifyContent: "center" }}
-                >
-                  <img alt="logo" src={appLogo} className={global.logo} />
-                  <Typography edge="start" className={global.title}>
-                    EYE OF ECOM
-                  </Typography>
-                </Stack>
-
+                <img alt="logo" src={fbaddlogo} className={global.logo} />
                 <Box style={{ padding: "30px 45px" }}>
                   <Typography variant="h5" sx={{ fontWeight: "bold" }}>
                     Log in
@@ -105,7 +96,7 @@ const Login = () => {
                       Register
                     </span>
                   </Typography>
-                  <form style={{ paddingTop: "50px" }}>
+                  <form style={{ paddingTop: "36px" }}>
                     <Grid container spacing={1}>
                       <Grid item xs={12}>
                         <TextField
