@@ -159,8 +159,7 @@ const Addlibrarydatabase = () => {
     searchBarData,
     postionYoffset,
   } = useSelector((state) => state.filteredData);
-  // const [countMin, setCountMin] = useState([]);
-  // const [countMax, setCountMax] = useState(1000);
+
   const { savedIds } = useSelector((state) => state.savedclienads);
   const [onFocusEditTextField, setOnFocusEditTextField] = React.useState(0);
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -2095,7 +2094,7 @@ const Addlibrarydatabase = () => {
                 <ThumbNailBox
                   adInfo={ads}
                   index={index}
-                  deleteId={savedIds?.includes(ads.adID) ? ads.adID : false}
+                  deleteId={savedIds?.includes(ads.id) ? ads.id : false}
                   key={index}
                 />
               ))}

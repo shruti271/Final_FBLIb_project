@@ -238,7 +238,7 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
                   className={classes.saveicon}
                   onClick={() => {
                     dispatch(deleteSavedAdsClientSideStart(adInfo));
-                    dispatch(deleteSavedAdsStart({ deleted_id: adInfo?.adID }));
+                    dispatch(deleteSavedAdsStart({ ad: adInfo?.id }));
                   }}
                 />
               ) : (
@@ -248,9 +248,9 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
                   className={classes.saveicon}
                   onClick={async () => {
                     dispatch(
-                      createSavedAdsClientSideStart({ ad: adInfo?.adID })
+                      createSavedAdsClientSideStart(adInfo)
                     );
-                    await dispatch(createSavedAdsStart({ ad: adInfo.adID }));
+                    await dispatch(createSavedAdsStart({ ad: adInfo.id }));
                   }}
                 />
               )}

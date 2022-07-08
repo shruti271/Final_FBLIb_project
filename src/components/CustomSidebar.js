@@ -9,10 +9,11 @@ import {  Stack } from "@mui/material";
 import appLogo from "../assets/appLogo.svg";
 import logout from "../assets/Logout.svg";
 import { logoutUser } from "../services";
-import SaveIcon from "../SvgIcons/SaveIcon";
+// import SaveIcon from "../SvgIcons/SaveIcon";
 import AdLibraryDatabaseIcon from "../SvgIcons/AdLibraryDatabaseIcon";
 import ContactIcon from "../SvgIcons/ContactIcon";
 import fbaddlogo from "../assets/fbaddlogo.png"
+import SaveIcon from "../SvgIcons/SaveIcon";
 
 const useStyles = makeStyles(() => ({
   title: {
@@ -147,7 +148,7 @@ export const CustomSidebar = ({ isOpen }) => {
                 marginLeft: "25px",
               }}
             >              
-              <AdLibraryDatabaseIcon currentColor={ selectedMenuItem === sideBarMenuItems.ADLIBSDATABASE ?"#00CBFF":"grey"} />
+              <AdLibraryDatabaseIcon fill={ selectedMenuItem === sideBarMenuItems.ADLIBSDATABASE ?"#00CBFF":"grey"} />
               <Typography sx={{ marginLeft: "26px" }}>
                 Adilbrary Database
               </Typography>
@@ -179,7 +180,7 @@ export const CustomSidebar = ({ isOpen }) => {
             >
               
 
-              <SaveIcon currentColor={ selectedMenuItem === sideBarMenuItems.SAVEDADS?"#00CBFF":"grey"} />
+              <SaveIcon fill={ selectedMenuItem === sideBarMenuItems.SAVEDADS?"#00CBFF":"grey"} />
 
               <Typography sx={{ marginLeft: "26px" }}>Saved Ads</Typography>
             </Stack>
@@ -208,7 +209,7 @@ export const CustomSidebar = ({ isOpen }) => {
                 marginLeft: "22px",
               }}
             >
-              <ContactIcon currentColor={selectedMenuItem === sideBarMenuItems.SUPPORT?"#00CBFF":"grey"}/>
+              <ContactIcon fill={selectedMenuItem === sideBarMenuItems.SUPPORT?"#00CBFF":"grey"}/>
               <Typography sx={{ marginLeft: "26px" }}>
                 Contact Support
               </Typography>
