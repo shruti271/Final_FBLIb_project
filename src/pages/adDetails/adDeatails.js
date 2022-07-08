@@ -57,7 +57,7 @@ function AdDeatails({ ThumbnailData }) {
               </Box>
 
               <Box>
-                <Typography
+                <Typography variant="span"
                   sx={{
                     fontWeight: 500,
                     // fontSize: "18px",

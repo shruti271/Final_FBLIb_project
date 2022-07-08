@@ -5,19 +5,17 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import { Icon, Stack } from "@mui/material";
+import {  Stack } from "@mui/material";
 import appLogo from "../assets/appLogo.svg";
-import libraryicon from "../assets/Vector.svg";
-import  staricon from "../assets/Vectora.svg";
-import contact from "../assets/contact.svg";
 import logout from "../assets/Logout.svg";
 import { logoutUser } from "../services";
 import fbaddlogo from "../assets/fbaddlogo.svg";
-// import StarOutlinedIcon from "@mui/icons-material/StarOutlined";
-// import {SvgSaveicon} from "../../src/IconComponent/saveIcon.tsx";
+import SaveIcon from "../SvgIcons/SaveIcon";
+import AdLibraryDatabaseIcon from "../SvgIcons/AdLibraryDatabaseIcon";
+import ContactIcon from "../SvgIcons/ContactIcon";
+
 
 const useStyles = makeStyles(() => ({
- 
   title: {
     fontFamily: "Neue Haas Grotesk Display Pro",
     fontStyle: "normal !important",
@@ -189,8 +187,8 @@ export const CustomSidebar = ({ isOpen }) => {
                 paddingBottom: "20px",
                 marginLeft: "20px",
               }}
-            >
-              <img alt="libraryicon" src={libraryicon} />
+            >              
+              <AdLibraryDatabaseIcon currentColor={ selectedMenuItem === sideBarMenuItems.ADLIBSDATABASE ?"#00CBFF":"grey"} />
               <Typography sx={{ marginLeft: "26px" }}>
                 Adilbrary Database
               </Typography>
@@ -220,14 +218,10 @@ export const CustomSidebar = ({ isOpen }) => {
                 marginLeft: "20px",
               }}
             >
-              {/* <MdStarRate sx={{ marginLeft: "20px" ,color:"blue"}}/>
-               */}
-              {/* <staricon fill="black" stroke="yellow" /> */}
-              {/* <Icon></Icon> */}
-              {/* <img alt="staricon" src={staricon} sx={{ marginLeft: "20px" ,color:"red"}} /> */}
-              <img alt="staricon" src={staricon} className={classes.tryimg} />
-              {/* <SvgSaveicon fill="red"/> */}
-              {/* <StarOutlinedIcon style={{color:"grey"}}/> */}
+              
+
+              <SaveIcon currentColor={ selectedMenuItem === sideBarMenuItems.SAVEDADS?"#00CBFF":"grey"} />
+
               <Typography sx={{ marginLeft: "26px" }}>Saved Ads</Typography>
             </Stack>
           </Box>
@@ -255,7 +249,7 @@ export const CustomSidebar = ({ isOpen }) => {
                 marginLeft: "20px",
               }}
             >
-              <img alt="contact support" src={contact} />
+              <ContactIcon currentColor={selectedMenuItem === sideBarMenuItems.SUPPORT?"#00CBFF":"grey"}/>
               <Typography sx={{ marginLeft: "26px" }}>
                 Contact Support
               </Typography>
