@@ -1,18 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Grid, Stack, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 
 import ThumbNailBox from "../components/ThumbNailBox";
 import filter from "../assets/filter.svg";
 import noSavedAdsImage from "../assets/noSavedAdsImage.svg";
-import Arrowdown from "../assets/Arrowdown.svg"
+import Arrowdown from "../assets/Arrowdown.svg";
 import { Box } from "@material-ui/core";
+import AllFilters from "../components/AllFilters";
+import disabledFilter from "../assets/disabledFilter.svg"
 // import { loadSavedAdsStart } from "../redux/ducks/saveAds";
+import { useDispatch } from "react-redux";
+import { putFilteredDataStart } from "../redux/ducks/filtered_Data";
 
 const SavedAds = () => {
+  const dispatch = useDispatch();
+
   const { savedAdsLocal } = useSelector((state) => state.savedclienads);
   // const { savedAds, loading } = useSelector((state) => state.savedAds);
-
+  const [filterActivate, setFilterActivate] = React.useState(false);
+useEffect(()=>{
+  dispatch(putFilteredDataStart({data:filterActivate,componentName:"savedPage"}));
+})
   return (
     <>
       <Stack direction={"column"}>
@@ -20,9 +29,12 @@ const SavedAds = () => {
           <b>Saved Ads</b>
         </Typography>
 
-        <Box>
+        <Box sx={{ marginRight: 5 }}>
           {/* <Grid  container justifyContent="flex-end"> */}
           {/* <Grid item>     */}
+          <Grid container>
+           {filterActivate? <AllFilters name={"savedPage"}/>:null}
+          </Grid>
           <Stack
             direction={"row"}
             sx={{
@@ -30,6 +42,7 @@ const SavedAds = () => {
               display: "flex",
               justifyContent: "right",
               alignItems: "right",
+              marginTop: 1,
             }}
             spacing={1}
           >
@@ -45,18 +58,42 @@ const SavedAds = () => {
                 marginRight: "2px",
               }}
             >
-              <img
-                src={filter}
-                alt="savedAds"
-                style={{ width: "20px", height: "20px", float: "right" }}
-              />
+              {filterActivate ? (
+                <img
+                  src={filter}
+                  alt="savedAds"
+                  style={{
+                    width: "20px",
+                    height: "20px",
+                    float: "right",
+                    cursor: "pointer",
+                  }}
+                  onClick={()=>{
+                    setFilterActivate(false)
+                  }}
+                />
+              ) : (
+                <img
+                  src={disabledFilter}
+                  alt="savedAds"
+                  style={{
+                    width: "20px",
+                    height: "20px",
+                    float: "right",
+                    cursor: "pointer",
+                  }}
+                  onClick={()=>{
+                    setFilterActivate(true)
+                  }}
+                />
+              )}
             </Box>
             <Typography>Sort by</Typography>
             <img
-                      alt="arrowdown"
-                      src={Arrowdown}
-                      // className={classes.DropDownArrow}
-                    />
+              alt="arrowdown"
+              src={Arrowdown}
+              // className={classes.DropDownArrow}
+            />
           </Stack>
 
           <Stack
@@ -86,19 +123,25 @@ const SavedAds = () => {
                 ))}
               </Grid>
             ) : (
-              <Stack direction={"column"} sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                marginTop:"50px"
-              }}>
-                <Typography>Nothing to show. Click the star icon in the adlibrary database tab to save ads here.</Typography>
+              <Stack
+                direction={"column"}
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginTop: "50px",
+                }}
+              >
+                <Typography>
+                  Nothing to show. Click the star icon in the adlibrary database
+                  tab to save ads here.
+                </Typography>
                 <img
-                src={noSavedAdsImage}
-                alt="NoSavedAds"
-                style={{ width: "50%", height: "30%" }}
-                // className={classes.saveicon}
-              />
+                  src={noSavedAdsImage}
+                  alt="NoSavedAds"
+                  style={{ width: "50%", height: "30%" }}
+                  // className={classes.saveicon}
+                />
               </Stack>
             )}
           </Stack>
