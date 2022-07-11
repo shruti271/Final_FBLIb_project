@@ -219,7 +219,8 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
               className={classes.AddFooter}
               style={{ alignItems: "baseline" }}
             >
-              <Typography sx={{ textDecoration: 'underline', }}>{adInfo.status}</Typography>
+              {/* <Typography sx={{ textDecoration: 'underline', }}>{adInfo.status}</Typography> */}
+              { adInfo.status ==="Active"?<Typography >{adInfo.status}</Typography>:<Typography sx={{color:"red"}}>{adInfo.status}</Typography>}
               <Tooltip title="Redirect to shop link">
               <img
                 src={Shareicon}

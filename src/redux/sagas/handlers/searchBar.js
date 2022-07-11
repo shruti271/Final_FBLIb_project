@@ -9,6 +9,9 @@ export function* handleGetSearchedData({ payload }) {
     console.log("response", response);
 
     if (response.status === 200) {
+      console.log("......................................................")
+      console.log(response?.data?.data)
+      console.log("......................................................")
       yield put(searchSuccess(response?.data?.data));      
     }
   } catch (error) {
