@@ -34,7 +34,7 @@ const Signup = () => {
   } = useForm();
 
   const submitsigninform = async (data) => {
-    console.log("first name---------------------------------");
+    // console.log("first name---------------------------------");
     console.log(data);
     // console.log(data);
     setLoading(true);

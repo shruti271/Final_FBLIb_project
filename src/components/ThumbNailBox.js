@@ -219,7 +219,7 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
               className={classes.AddFooter}
               style={{ alignItems: "baseline" }}
             >
-              <Typography>{adInfo.status}</Typography>
+              { adInfo.status ==="Active"?<Typography >{adInfo.status}</Typography>:<Typography sx={{color:"red"}}>{adInfo.status}</Typography>}
               <img
                 src={Shareicon}
                 alt="Shareicon"
