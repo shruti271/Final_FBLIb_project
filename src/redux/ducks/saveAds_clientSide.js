@@ -548,7 +548,7 @@ const savedAdsClienSideReducer = (state = initialState, action) => {
     case ALL_SAVED_ADS_SEARCH_ERROR:
       return {
         ...state,
-       
+        search_loading: false,
         error: action.payload,
       };
     case EMPTY_SAVED_SEARCH_SUCCESS:

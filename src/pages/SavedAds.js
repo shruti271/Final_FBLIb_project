@@ -40,7 +40,9 @@ const SavedAds = () => {
   // const { savedAds, loading } = useSelector((state) => state.savedAds);
   const [filterActivate, setFilterActivate] = React.useState(true);
   useEffect(() => {
-    if (!filteredData) dispatch(putSavedAdsFilteredDataStart(savedAdsLocal));
+    if (!filteredData) {dispatch(putSavedAdsFilteredDataStart(savedAdsLocal));
+    }
+    
   }, [dispatch, filteredData, savedAdsLocal]);
 
   // useEffect(()=>{

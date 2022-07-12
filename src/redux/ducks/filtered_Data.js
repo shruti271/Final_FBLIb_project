@@ -523,7 +523,7 @@ const FilterDataReducer = (state = initialState, action) => {
     case SEARCH_ERROR:
       return {
         ...state,
-        
+        search_loading: false,
         error: action.payload,
       };
     case ALL_FILTER_AFTER_SEARCH_SUCCESS:
