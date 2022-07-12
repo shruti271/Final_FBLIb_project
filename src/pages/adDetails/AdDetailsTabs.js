@@ -10,6 +10,7 @@ import LeftArrow from "../../assets/LeftArrow.svg";
 function AdDeatailsTabs() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  // const history = useHistory();
   // const { itemId, otherParam } = route.params;
   // const { state } = useLocation();
   console.log("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\?????????????");
@@ -71,8 +72,9 @@ console.log()
         }}
       >
         <Box
-          onClick={() => {            
-            navigate("/");
+          onClick={() => {   
+            // history.goBack();         
+            navigate("../");
            
           }}
           sx={{ cursor: "pointer" }}

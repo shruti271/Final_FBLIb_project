@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Chip, Grid, Stack, Typography } from "@mui/material";
+import { Chip, CircularProgress, Grid, Stack, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 import ThumbNailBox from "../components/ThumbNailBox";
 import filter from "../assets/filter.svg";
@@ -34,6 +34,7 @@ const SavedAds = () => {
     sortFilter,
     filteredData,
     searchType,
+    search_loading,
   } = useSelector((state) => state.savedclienads);
   // savedAdsClienSideReducer
   // const { savedAds, loading } = useSelector((state) => state.savedAds);
@@ -82,109 +83,143 @@ const SavedAds = () => {
                   pageFilterInfo={SavedAppliedFilters}
                   search={searchBarData}
                   search_type={searchType}
+                  loading={search_loading}
                 />
-                <Grid container sx={{ marginTop: 1 }}>
-                  {Object.keys(SavedAppliedFilters).map((filter, index) => {
-                    // console.log(filter)
-                    // console.log(Object.keys(SavedAppliedFilters))
-                    // console.log(SavedAppliedFilters[filter]);
-                    // console.log(
-                    //   "99999999999999999999999999999999999999999999999999999999"
-                    // );
-                    return (
-                      SavedAppliedFilters[filter]["Message"] &&
-                      (console.log("cominnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn"),
-                      (
-                        <Chip
-                          key={index}
-                          color="primary"
-                          label={SavedAppliedFilters[filter]["Message"]}
-                          deleteIcon={
-                            <CloseIcon
-                              style={{
-                                color: "white",
-                                backgroundColor: "#00CBFF",
-                              }}
-                            />
-                          }
-                          onDelete={() => {
-                            const filters = Object(SavedAppliedFilters[filter]);
-                            const AdsRemovedElement = {
-                              MIN: "min",
-                              MEDIATYPE: "selectedData",
-                              STATUS: "status",
-                              SELECTEDDATE: "StartRunningDate",
-                            };
-                            console.log(filter);
-
-                            console.log(";;;;;;;;;;;;;;;");
-                            const FilterRemoveData = [];
-                            for (let dum in filters) {
-                              console.log("dum" + dum);
-                              console.log(dum, filters[dum]);
-                              // console.log(typeof SavedAppliedFilters[filter][dum]);
-                              FilterRemoveData[dum] =
-                                typeof SavedAppliedFilters[filter][dum] ===
-                                "number"
-                                  ? dum === AdsRemovedElement.MIN
-                                    ? 1
-                                    : filter === "FacebookLikes"
-                                    ? 100000
-                                    : filter === "InstragramLike"
-                                    ? 10000
-                                    : 1000
-                                  : typeof SavedAppliedFilters[filter][dum] ===
-                                    "string"
-                                  ? dum === AdsRemovedElement.MEDIATYPE
-                                    ? dum === AdsRemovedElement.STATUS
-                                      ? "Active"
-                                      : "Video or Photo"
-                                    : ""
-                                  : new Date();
+                {search_loading ? (
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <CircularProgress
+                      style={{
+                        position: "relative",
+                        top: 50,
+                        left: "50%",
+                        opacity: 1,
+                        zIndex: 1,
+                        visibility: search_loading ? "visible" : "hidden",
+                      }}
+                    />
+                  </Box>
+                ) : (
+                  <Grid
+                    container
+                    sx={{
+                      marginTop: 1,
+                      // opacity: search_loading ? 0.5 : 1,
+                      // disabled: search_loading ? true : false,
+                    }}
+                  >
+                    {Object.keys(SavedAppliedFilters).map((filter, index) => {
+                      // console.log(filter)
+                      // console.log(Object.keys(SavedAppliedFilters))
+                      // console.log(SavedAppliedFilters[filter]);
+                      // console.log(
+                      //   "99999999999999999999999999999999999999999999999999999999"
+                      // );
+                      return (
+                        SavedAppliedFilters[filter]["Message"] &&
+                        (console.log(
+                          "cominnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn"
+                        ),
+                        (
+                          <Chip
+                            key={index}
+                            color="primary"
+                            label={SavedAppliedFilters[filter]["Message"]}
+                            deleteIcon={
+                              <CloseIcon
+                                style={{
+                                  color: "white",
+                                  backgroundColor: "#00CBFF",
+                                }}
+                              />
                             }
-                            console.table(FilterRemoveData);
-                            console.log(FilterRemoveData);
-                            dispatch(
-                              SavedAdsclearSingleFilteredDataStart({
-                                name: filter,
-                                data: FilterRemoveData,
-                                // componentName: "AllAdsPage",
-                              })
-                            );
-                            // dispatch(
-                            //   SetSortOrdervalueStart({
-                            //     name: "type",
-                            //     data: "",
-                            //   })
-                            // );
-                            // dispatch(applyallfilters());
-                            console.log(
-                              document.getElementById("searchbar").value
-                            );
-                            console.log(
-                              "-----------======================================"
-                            );
-                            // searchBarData !== ""
-                            //   ? dispatch(SavedAdssearchStart(searchBarData))
-                            //   : dispatch(applySavedAdsallfilters());
-                            document.getElementById("searchbar").value
-                              ? dispatch(SavedAdsFilterAfterSearchStart())
-                              : dispatch(applySavedAdsallfilters());
-                            // dispatch(SavedAdsSortvalueStart());
+                            onDelete={() => {
+                              const filters = Object(
+                                SavedAppliedFilters[filter]
+                              );
+                              const AdsRemovedElement = {
+                                MIN: "min",
+                                MEDIATYPE: "selectedData",
+                                STATUS: "status",
+                                SELECTEDDATE: "StartRunningDate",
+                              };
+                              console.log(filter);
 
-                            console.log(filter);
-                          }}
-                          sx={{
-                            borderRadius: 2,
-                            backgroundColor: "#00CBFF",
-                            // marginLeft: 1,
-                            margin: 0.5,
-                          }}
-                        />
-                      ))
-                    );
-                  })}
-                </Grid>
+                              console.log(";;;;;;;;;;;;;;;");
+                              const FilterRemoveData = [];
+                              for (let dum in filters) {
+                                console.log("dum" + dum);
+                                console.log(dum, filters[dum]);
+                                // console.log(typeof SavedAppliedFilters[filter][dum]);
+                                FilterRemoveData[dum] =
+                                  typeof SavedAppliedFilters[filter][dum] ===
+                                  "number"
+                                    ? dum === AdsRemovedElement.MIN
+                                      ? 1
+                                      : filter === "FacebookLikes"
+                                      ? 100000
+                                      : filter === "InstragramLike"
+                                      ? 10000
+                                      : 1000
+                                    : typeof SavedAppliedFilters[filter][
+                                        dum
+                                      ] === "string"
+                                    ? dum === AdsRemovedElement.MEDIATYPE
+                                      ? dum === AdsRemovedElement.STATUS
+                                        ? "Active"
+                                        : "Video or Photo"
+                                      : ""
+                                    : new Date();
+                              }
+                              console.table(FilterRemoveData);
+                              console.log(FilterRemoveData);
+                              dispatch(
+                                SavedAdsclearSingleFilteredDataStart({
+                                  name: filter,
+                                  data: FilterRemoveData,
+                                  // componentName: "AllAdsPage",
+                                })
+                              );
+                              // dispatch(
+                              //   SetSortOrdervalueStart({
+                              //     name: "type",
+                              //     data: "",
+                              //   })
+                              // );
+                              // dispatch(applyallfilters());
+                              console.log(
+                                document.getElementById("searchbar").value
+                              );
+                              console.log(
+                                "-----------======================================"
+                              );
+                              // searchBarData !== ""
+                              //   ? dispatch(SavedAdssearchStart(searchBarData))
+                              //   : dispatch(applySavedAdsallfilters());
+                              document.getElementById("searchbar").value
+                                ? dispatch(SavedAdsFilterAfterSearchStart())
+                                : dispatch(applySavedAdsallfilters());
+                              // dispatch(SavedAdsSortvalueStart());
+
+                              console.log(filter);
+                            }}
+                            sx={{
+                              borderRadius: 2,
+                              backgroundColor: "#00CBFF",
+                              // marginLeft: 1,
+                              margin: 0.5,
+                            }}
+                          />
+                        ))
+                      );
+                    })}
+                  </Grid>
+                )}
               </Grid>
             ) : null}
           </Grid>
@@ -210,6 +245,8 @@ const SavedAds = () => {
                   justifyContent: "center",
                   alignItems: "center",
                   marginRight: "2px",
+                  opacity: search_loading ? 0.5 : 1,
+                disabled: search_loading ? true : false,
                 }}
               >
                 {filterActivate ? (
@@ -227,7 +264,7 @@ const SavedAds = () => {
                     }}
                   />
                 ) : (
-                  <FilterAltOffIcon
+                  <FilterAltOffIcon 
                     style={{
                       width: "20px",
                       height: "20px",
@@ -254,7 +291,7 @@ const SavedAds = () => {
                   // />
                 )}
               </Box>
-              <SortFilter sortDetail={sortFilter} name={"SavedPage"} />
+              <SortFilter loading={search_loading} sortDetail={sortFilter} name={"SavedPage"} />
               {/* <Typography>Sort by</Typography>
             <img
               alt="arrowdown"
@@ -277,8 +314,8 @@ const SavedAds = () => {
                 spacing={2}
                 sx={{
                   marginTop: "10px",
-                  // opacity: loading ? 0.5 : 1,
-                  // disabled: loading ? true : false,
+                  opacity: search_loading ? 0.5 : 1,
+                disabled: search_loading ? true : false,
                 }}
               >
                 {filteredData.map((ads, index) => (

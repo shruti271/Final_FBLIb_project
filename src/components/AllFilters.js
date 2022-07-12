@@ -474,14 +474,14 @@ function AllFilters(props) {
         marginTop: 2,
       }}
     > */}
-      <Grid
+      <Grid 
         container
         sx={{ border: "2px solid #EBEBEB", borderRadius: "10px" }}
       >
-        <Grid item xs={2} sx={{ display: "flex" }}>
+        <Grid item xs={2} sx={{ display: "flex" }} >
           <Box sx={{ width: "100%", marginRight: "21px" }}>
             <Stack direction={"row"} sx={{ justifyContent: "space-between" }}>
-              <Button
+              <Button disabled={props.loading}
                 onClick={(event) => {
                   setSeachTypeAnchorEl(event.currentTarget);
                 }}
@@ -494,6 +494,7 @@ function AllFilters(props) {
                 }
                 label="Outlined"
                 sx={{ color: "#2B2F42" }}
+                style={{disabled:true}}
               >
                 <Typography noWrap textTransform="capitalize">
                   {props.search_type}
@@ -541,7 +542,7 @@ function AllFilters(props) {
                       alignContent={"center"}
                       justifyContent={"center"}
                     >
-                      <Button
+                      <Button disabled={props.loading}
                         variant="outlined"
                         sx={{
                           borderRadius: 50,
@@ -589,7 +590,7 @@ function AllFilters(props) {
                     }} 
                   >*/}
 
-            <InputBase
+            <InputBase disabled={props.loading}
               id="searchbar"
               // placeholder={props.search}
               // value={props.search}
@@ -708,7 +709,7 @@ function AllFilters(props) {
       </Grid>
       <Grid container>
         <Grid item lg={11} md={11}>
-          <Button
+          <Button disabled={props.loading}
             onClick={(event) => {
               setAnchorEl(event.currentTarget);
             }}
@@ -852,7 +853,7 @@ function AllFilters(props) {
             />
           </Popover>
 
-          <Button
+          <Button disabled={props.loading}
             onClick={(e) => setrangeAnchorEl(e.currentTarget)}
             variant="outlined"
             size="large"
@@ -1183,7 +1184,7 @@ function AllFilters(props) {
                   sx={{ color: "#00CBFF" }}
                   onChange={counterIncremten}
                 />
-                <Button
+                <Button disabled={props.loading}
                   variant="outlined"
                   sx={{
                     borderRadius: 50,
@@ -1238,7 +1239,7 @@ function AllFilters(props) {
             </Box>
           </Popover>
 
-          <Button
+          <Button disabled={props.loading}
             variant="outlined"
             onClick={(e) => setAdStatusAnchorel(e.currentTarget)}
             size="large"
@@ -1306,7 +1307,7 @@ function AllFilters(props) {
                   alignContent={"center"}
                   justifyContent={"center"}
                 >
-                  <Button
+                  <Button disabled={props.loading}
                     variant="outlined"
                     sx={{
                       borderRadius: 50,
@@ -1354,7 +1355,7 @@ function AllFilters(props) {
             </Box>
           </Popover>
 
-          <Button
+          <Button disabled={props.loading}
             variant="outlined"
             onClick={(e) => setFacebookLikeAnchorEl(e.currentTarget)}
             sx={{
@@ -1593,7 +1594,7 @@ function AllFilters(props) {
                   sx={{ color: "#00CBFF" }}
                   onChange={FacebookLikesIncremten}
                 />
-                <Button
+                <Button disabled={props.loading}
                   variant="outlined"
                   sx={{
                     borderRadius: 50,
@@ -1641,7 +1642,7 @@ function AllFilters(props) {
             </Box>
           </Popover>
 
-          <Button
+          <Button disabled={props.loading}
             variant="outlined"
             onClick={(e) => setInstragramFollowerAnchorEl(e.currentTarget)}
             sx={{
@@ -1897,7 +1898,7 @@ function AllFilters(props) {
                   sx={{ color: "#00CBFF" }}
                   onChange={InstragramFollowerIncremten}
                 />
-                <Button
+                <Button disabled={props.loading}
                   variant="outlined"
                   sx={{
                     borderRadius: 50,
@@ -1945,7 +1946,7 @@ function AllFilters(props) {
             </Box>
           </Popover>
 
-          <Button
+          <Button disabled={props.loading}
             variant="outlined"
             onClick={(e) => setMediaTypeAnchorel(e.currentTarget)}
             disableElevation
@@ -2018,7 +2019,7 @@ function AllFilters(props) {
                   alignContent={"center"}
                   justifyContent={"center"}
                 >
-                  <Button
+                  <Button disabled={props.loading}
                     variant="outlined"
                     sx={{
                       borderRadius: 50,
@@ -2069,7 +2070,7 @@ function AllFilters(props) {
             </Box>
           </Popover>
 
-          <Button
+          <Button disabled={props.loading}
             variant="outlined"
             onClick={(e) => setButtonTypeAnchorEl(e.currentTarget)}
             sx={{
@@ -2184,7 +2185,7 @@ function AllFilters(props) {
           >
             <Grid container>
               <Grid item sx={{ marginTop: "20px" }}>
-                <Button
+                <Button disabled={props.loading}
                   variant="outlined"
                   style={{
                     // background: "#00CBFF",
@@ -2263,7 +2264,7 @@ function AllFilters(props) {
                       // dispatch(SavedAdsSortvalueStart());
                     }
                   }}
-                  // eslint-disable-next-line array-callback-return
+                  // eslint-disabled-next-line array-callback-return
                   // if (props.name === "AllAdsPage") {
                   //   Object.keys(props?.pageFilterInfo).map(
                   //     (filter, index) => {

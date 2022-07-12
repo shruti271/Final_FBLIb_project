@@ -158,7 +158,7 @@ const FilterDataReducer = (state = initialState, action) => {
     case LOAD_FILTERDATA:
       return {
         ...state,
-        search_loading: false,
+        
         // filteredData: action.payload,
       };
     case PUT_FILTERDATA:
@@ -166,7 +166,7 @@ const FilterDataReducer = (state = initialState, action) => {
         ...state,
         // : {
         //   ...state,
-          search_loading: false,
+          
           filteredData: action.payload.data,
           allData: action.payload.data,
         // },
@@ -176,7 +176,7 @@ const FilterDataReducer = (state = initialState, action) => {
         ...state,
         // : {
         //   ...state,
-          // search_loading: false,
+          // 
           // filteredData: [
           //   ...state.filteredData,
           // ],
@@ -195,7 +195,7 @@ const FilterDataReducer = (state = initialState, action) => {
         ...state,
         // : {
         //   ...state,
-          // search_loading: false,
+          // 
           // filteredData: state.filteredData,
           appliedFilters: {
             ...state.appliedFilters,
@@ -212,7 +212,7 @@ const FilterDataReducer = (state = initialState, action) => {
         ...state,
         // : {
         //   ...state,
-          // search_loading: false,
+          // 
           // filteredData: [...state.filteredData],
           appliedFilters: {
             ...state.appliedFilters,
@@ -240,7 +240,7 @@ const FilterDataReducer = (state = initialState, action) => {
     case SET_POSTION_SCROLL:
       return {
         ...state,
-        search_loading: false,
+        
         filteredData: [...state.filteredData],
         appliedFilters: state.appliedFilters,
         postionYoffset: action.payload,
@@ -255,7 +255,7 @@ const FilterDataReducer = (state = initialState, action) => {
             [`${action.payload.name}`]: `${action.payload.data}`,
           },
         // },
-        // search_loading: false,
+        // 
         // appliedFilters: state.appliedFilters,
        
 
@@ -284,7 +284,7 @@ const FilterDataReducer = (state = initialState, action) => {
       // }
       return {
         ...state,
-        search_loading: false,
+        
         appliedFilters: state.appliedFilters,
         sortFilter: { ...state.sortFilter, type: "" },
         // filteredData: [...state.filteredData],
@@ -375,7 +375,7 @@ const FilterDataReducer = (state = initialState, action) => {
           // ...state,
           filteredData: dummy,
         // },
-        // search_loading: false,
+        // 
         // appliedFilters: state.appliedFilters,
         // sortFilter: state.sortFilter,
             
@@ -385,7 +385,7 @@ const FilterDataReducer = (state = initialState, action) => {
         ...state,
         // : {
         //   ...state,
-          // search_loading: false,
+          // 
           appliedFilters: {
             ...state.appliedFilters,
             [`${action.payload.name}`]: {
@@ -399,7 +399,7 @@ const FilterDataReducer = (state = initialState, action) => {
     // case FACEBOOKLIKES_START:
     //   return {
     //     ...state,
-    //     search_loading: false,
+    //     
     //     appliedFilters: {
     //       ...state.appliedFilters,
     //       [`${action.payload.name}`]: {
@@ -468,7 +468,7 @@ const FilterDataReducer = (state = initialState, action) => {
     // console.log("{{{{{{{{{{{{{{{{{{{{{{first}}}}}}}}}}}}}}}}}}}}}}");
     //     return {
     //       ...state,
-    //       search_loading: false,
+    //       
     //       appliedFilters: state.appliedFilters,
     //       // searchBarData: state.searchBarData,
     //       filteredData:temp_arr,        
@@ -476,7 +476,7 @@ const FilterDataReducer = (state = initialState, action) => {
     case SEARCH_SUCCESS:
       return {
         ...state,
-        search_loading: false,
+        search_loading: false,        
         appliedFilters: state.appliedFilters,
         seactBarFilterData:  action.payload,     
         filteredData:
@@ -523,7 +523,7 @@ const FilterDataReducer = (state = initialState, action) => {
     case SEARCH_ERROR:
       return {
         ...state,
-        search_loading: false,
+        
         error: action.payload,
       };
     case ALL_FILTER_AFTER_SEARCH_SUCCESS:
@@ -531,7 +531,7 @@ const FilterDataReducer = (state = initialState, action) => {
         ...state,
         // : {
         //   ...state,
-          search_loading: false,
+          
           filteredData: [
             ...state.seactBarFilterData.filter(
               (ads) => {
@@ -657,7 +657,7 @@ const FilterDataReducer = (state = initialState, action) => {
         ...state,
         // : {
         //   ...state,
-          search_loading: false,
+          
           filteredData: [
             ...state.allData.filter(
               (ads) => {
@@ -764,7 +764,7 @@ const FilterDataReducer = (state = initialState, action) => {
     case APPLIED_FILTERS:
       return {
         ...state,
-        search_loading: false,
+        
         filteredData: [...state.filteredData],
         appliedFilters: {
           ...state.filteredData,
@@ -774,7 +774,7 @@ const FilterDataReducer = (state = initialState, action) => {
     case CLEAR_FILTERDATA:
       return {
         ...state,
-        search_loading: false,
+        
         filteredData: [...state.allData],
         appliedFilters: action.payload,
       };
@@ -783,7 +783,7 @@ const FilterDataReducer = (state = initialState, action) => {
         ...state,
         // : {
         //   ...state,
-          // search_loading: false,
+          // 
           // filteredData: state.filteredData,
           appliedFilters: {
             ...state.appliedFilters,
@@ -794,13 +794,13 @@ const FilterDataReducer = (state = initialState, action) => {
     // case CREATE_FILTERDATA:
     //   return {
     //     ...state,
-    //     search_loading: false,
+    //     
     //     filteredData: [...state.filteredData.concat(action.payload)],
     //   };
     // case DELETE_FILTERDATA:
     //   return {
     //     ...state,
-    //     search_loading: false,
+    //     
     //     filteredData: state.filteredData.filter(
     //       (savedads) => savedads.adID !== action.payload.adID
     //     ),

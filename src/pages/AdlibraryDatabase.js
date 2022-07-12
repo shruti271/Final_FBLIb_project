@@ -149,10 +149,10 @@ const Addlibrarydatabase = () => {
     searchBarData,
     postionYoffset,
     search_loading,
-    searchType
+    searchType,
     // AllAdsPage,
   } = useSelector((state) => state.filteredData);
-
+  console.log("search_loading..", search_loading);
   useEffect(() => {
     // console.log(AllAdsPage);
     console.log(
@@ -262,7 +262,7 @@ const Addlibrarydatabase = () => {
 
   return (
     <>
-    <BackTotopbutton/>
+      <BackTotopbutton />
       {loading ? (
         <Box
           sx={{
@@ -275,7 +275,7 @@ const Addlibrarydatabase = () => {
             style={{
               position: "relative",
               top: 50,
-              left: 50,
+              left: "50%",
               opacity: 1,
               zIndex: 1,
               visibility: loading ? "visible" : "hidden",
@@ -323,12 +323,20 @@ const Addlibrarydatabase = () => {
               marginTop: 2,
             }}
           >
-            <AllFilters
-              name={"AllAdsPage"}
-              pageFilterInfo={appliedFilters}
-              search={searchBarData}
-              search_type={searchType}
-            />
+            <Box
+              sx={{
+                opacity: search_loading ? 0.5 : 1,
+                disabled: search_loading ? true : false,
+              }}
+            >
+              <AllFilters
+                name={"AllAdsPage"}
+                pageFilterInfo={appliedFilters}
+                search={searchBarData}
+                search_type={searchType}
+                loading={search_loading}
+              />
+            </Box>
 
             <Grid container sx={{ marginTop: 1 }}>
               {Object.keys(appliedFilters).map((filter, index) => {
@@ -396,17 +404,17 @@ const Addlibrarydatabase = () => {
                             // componentName: "AllAdsPage",
                           })
                         );
-                       
+
                         // dispatch(applyallfilters());
                         // console.log(document.getElementById("searchbar").value);
                         console.log(
-                          "-----------======================================"+searchBarData.length
+                          "-----------======================================" +
+                            searchBarData.length
                         );
                         searchBarData !== ""
-                          ? dispatch(FilterAfterSearchStart())//dispatch(searchStart(searchBarData))
-                          :
-                           dispatch(applyallfilters());
-                          
+                          ? dispatch(FilterAfterSearchStart()) //dispatch(searchStart(searchBarData))
+                          : dispatch(applyallfilters());
+
                         // dispatch(SortvalueStart());
                         // setAppliedFilters((pre) => ({
                         //   ...pre,
@@ -428,10 +436,19 @@ const Addlibrarydatabase = () => {
             </Grid>
           </Grid>
           <Grid container justifyContent="flex-end">
-            <SortFilter sortDetail={sortFilter} name={"AllAdsPage"} />
+            <SortFilter loading={search_loading} sortDetail={sortFilter} name={"AllAdsPage"} />
           </Grid>
-          {search_loading ? (
-            <Box
+          
+            <Grid
+              item
+              xs={12}
+              sx={{
+                // opacity: search_loading ? 0.5 : 1,
+                disabled: search_loading ? true : false,
+              }}
+            >
+
+              { search_loading? <Box
               sx={{
                 display: "flex",
                 justifyContent: "center",
@@ -441,24 +458,14 @@ const Addlibrarydatabase = () => {
               <CircularProgress
                 style={{
                   position: "relative",
-                  // top: 50,
-                  // left: 50,
+                  top: 50,
+                  left: 50,
                   opacity: 1,
-                  // zIndex: 1,
+                  zIndex: 1,
                   visibility: search_loading ? "visible" : "hidden",
                 }}
               />
-            </Box>
-          ) : (
-            <Grid
-              item
-              xs={12}
-              sx={{
-                // opacity: search_loading ? 0.5 : 1,
-                disabled: search_loading ? true : false,
-              }}
-            >
-              <Grid
+            </Box>:<Grid
                 container
                 spacing={2}
                 sx={{
@@ -474,9 +481,9 @@ const Addlibrarydatabase = () => {
                     key={index}
                   />
                 ))}
-              </Grid>
+              </Grid>}
             </Grid>
-          )}
+         
         </Grid>
       )}
     </>

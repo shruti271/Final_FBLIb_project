@@ -224,13 +224,13 @@ const savedAdsClienSideReducer = (state = initialState, action) => {
     case ALL_SAVED_ADS_LOAD_FILTERDATA:
       return {
         ...state,
-        search_loading: false,
+       
         // filteredData: action.payload,
       };
     case ALL_SAVED_ADS_PUT_FILTERDATA:
       return {
         ...state,
-        search_loading: false,
+       
         filteredData: action.payload,
         // allData: action.payload,
       };
@@ -239,7 +239,7 @@ const savedAdsClienSideReducer = (state = initialState, action) => {
       console.log("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\");
       return {
         ...state,
-        // search_loading: false,
+        //
         // filteredData: [...state.filteredData],
         SavedAppliedFilters: {
           ...state.SavedAppliedFilters,
@@ -253,7 +253,7 @@ const savedAdsClienSideReducer = (state = initialState, action) => {
     case ALL_SAVED_ADS_NOODADS_START:
       return {
         ...state,
-        // search_loading: false,
+        //
         // filteredData: state.filteredData,
         SavedAppliedFilters: {
           ...state.SavedAppliedFilters,
@@ -267,7 +267,7 @@ const savedAdsClienSideReducer = (state = initialState, action) => {
     case ALL_SAVED_ADS_MEDIATYPE_START:
       return {
         ...state,
-        // search_loading: false,
+        //
         // filteredData: [...state.filteredData],
 
         SavedAppliedFilters: {
@@ -281,7 +281,7 @@ const savedAdsClienSideReducer = (state = initialState, action) => {
     case ALL_SAVED_ADS_BUTTONTYPETYPE_START:
       return {
         ...state,
-        // search_loading: false,
+        //
         // filteredData: [...state.filteredData],
 
         SavedAppliedFilters: {
@@ -295,7 +295,7 @@ const savedAdsClienSideReducer = (state = initialState, action) => {
     case ALL_SAVED_ADS_SET_POSTION_SCROLL:
       return {
         ...state,
-        // search_loading: false,
+        //
         // filteredData: [...state.filteredData],
         SavedAppliedFilters: state.SavedAppliedFilters,
         postionYoffset: action.payload,
@@ -303,7 +303,7 @@ const savedAdsClienSideReducer = (state = initialState, action) => {
     case ALL_SAVED_ADS_SET_SORT_FILTER_START:
       return {
         ...state,
-        search_loading: false,
+       
         SavedAppliedFilters: state.SavedAppliedFilters,
         sortFilter: {
           ...state.sortFilter,
@@ -335,7 +335,7 @@ const savedAdsClienSideReducer = (state = initialState, action) => {
       // }
       return {
         ...state,
-        search_loading: false,
+       
         SavedAppliedFilters: state.SavedAppliedFilters,
         sortFilter: { ...state.sortFilter, type: "" },
         // filteredData: [...state.filteredData],
@@ -422,7 +422,7 @@ const savedAdsClienSideReducer = (state = initialState, action) => {
 
       return {
         ...state,
-        search_loading: false,
+       
         SavedAppliedFilters: state.SavedAppliedFilters,
         sortFilter: state.sortFilter,
         filteredData: dummy,
@@ -453,7 +453,7 @@ const savedAdsClienSideReducer = (state = initialState, action) => {
     case ALL_SAVED_ADS_STATUS_START:
       return {
         ...state,
-        search_loading: false,
+       
         SavedAppliedFilters: {
           ...state.SavedAppliedFilters,
           [`${action.payload.name}`]: {
@@ -466,7 +466,7 @@ const savedAdsClienSideReducer = (state = initialState, action) => {
     // case FACEBOOKLIKES_START:
     //   return {
     //     ...state,
-    //     search_loading: false,
+    //    
     //     SavedAppliedFilters: {
     //       ...state.SavedAppliedFilters,
     //       [`${action.payload.name}`]: {
@@ -548,7 +548,7 @@ const savedAdsClienSideReducer = (state = initialState, action) => {
     case ALL_SAVED_ADS_SEARCH_ERROR:
       return {
         ...state,
-        search_loading: false,
+       
         error: action.payload,
       };
     case EMPTY_SAVED_SEARCH_SUCCESS:
@@ -563,7 +563,7 @@ const savedAdsClienSideReducer = (state = initialState, action) => {
         ...state,
         // : {
         //   ...state,
-        search_loading: false,
+       
         filteredData: [
           ...state.searchedSavedData.filter((ads) => {
             console.log(ads?.pageInfo?.platforms[0]?.likes);
@@ -653,7 +653,7 @@ const savedAdsClienSideReducer = (state = initialState, action) => {
       console.log("..???????????????");
       return {
         ...state,
-        // search_loading: false,
+        //
         filteredData: [
           ...state.savedAdsLocal.filter((ads) => {
             console.log(ads?.pageInfo?.platforms[0]?.likes);
@@ -740,7 +740,7 @@ const savedAdsClienSideReducer = (state = initialState, action) => {
     case ALL_SAVED_ADS_APPLIED_FILTERS:
       return {
         ...state,
-        search_loading: false,
+       
         // filteredData: [...state.filteredData],
         SavedAppliedFilters: {
           ...state.SavedAppliedFilters,
@@ -750,7 +750,7 @@ const savedAdsClienSideReducer = (state = initialState, action) => {
     case ALL_SAVED_ADS_CLEAR_FILTERDATA:
       return {
         ...state,
-        search_loading: false,
+       
         filteredData:
           state.searchBarData !== ""
             ? [...state.searchedSavedData]
@@ -760,7 +760,7 @@ const savedAdsClienSideReducer = (state = initialState, action) => {
     case ALL_SAVED_ADS_CLEAR_SINGLE_FILTER:
       return {
         ...state,
-        // search_loading: false,
+        //
         // filteredData: [...state.filteredData],
         SavedAppliedFilters: {
           ...state.SavedAppliedFilters,
@@ -770,13 +770,13 @@ const savedAdsClienSideReducer = (state = initialState, action) => {
     // case CREATE_FILTERDATA:
     //   return {
     //     ...state,
-    //     search_loading: false,
+    //    
     //     filteredData: [...state.filteredData.concat(action.payload)],
     //   };
     // case DELETE_FILTERDATA:
     //   return {
     //     ...state,
-    //     search_loading: false,
+    //    
     //     filteredData: state.filteredData.filter(
     //       (savedads) => savedads.adID !== action.payload.adID
     //     ),
