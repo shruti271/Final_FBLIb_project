@@ -387,7 +387,7 @@ const Addlibrarydatabase = () => {
                                 : ""
                               : new Date();
                         }
-                        console.table(FilterRemoveData);
+                        // console.table(FilterRemoveData);
                         console.log(FilterRemoveData);
                         dispatch(
                           clearSingleFilteredDataStart({
@@ -399,14 +399,15 @@ const Addlibrarydatabase = () => {
                        
                         // dispatch(applyallfilters());
                         // console.log(document.getElementById("searchbar").value);
-                        // console.log(
-                        //   "-----------======================================"
-                        // );
-                        searchBarData.length !== 0
+                        console.log(
+                          "-----------======================================"+searchBarData.length
+                        );
+                        searchBarData !== ""
                           ? dispatch(FilterAfterSearchStart())//dispatch(searchStart(searchBarData))
-                          : dispatch(applyallfilters());
+                          :
+                           dispatch(applyallfilters());
                           
-                        dispatch(SortvalueStart());
+                        // dispatch(SortvalueStart());
                         // setAppliedFilters((pre) => ({
                         //   ...pre,
                         //   [`${filter}`]: FilterRemoveData,
@@ -441,9 +442,9 @@ const Addlibrarydatabase = () => {
                 style={{
                   position: "relative",
                   // top: 50,
-                  left: 50,
+                  // left: 50,
                   opacity: 1,
-                  zIndex: 1,
+                  // zIndex: 1,
                   visibility: search_loading ? "visible" : "hidden",
                 }}
               />
@@ -453,7 +454,7 @@ const Addlibrarydatabase = () => {
               item
               xs={12}
               sx={{
-                opacity: search_loading ? 0.5 : 1,
+                // opacity: search_loading ? 0.5 : 1,
                 disabled: search_loading ? true : false,
               }}
             >

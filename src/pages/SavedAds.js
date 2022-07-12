@@ -16,6 +16,7 @@ import {
   applySavedAdsallfilters,
   putSavedAdsFilteredDataStart,
   SavedAdsclearSingleFilteredDataStart,
+  SavedAdsFilterAfterSearchStart,
   SavedAdssearchStart,
   SavedAdsSortvalueStart,
 } from "../redux/ducks/saveAds_clientSide";
@@ -49,7 +50,7 @@ const SavedAds = () => {
   // })
   return (
     <>
-    <BackTotopbutton/>
+      <BackTotopbutton />
       <Stack direction={"column"}>
         <Typography>
           <b>Saved Ads</b>
@@ -70,6 +71,12 @@ const SavedAds = () => {
                   marginTop: 2,
                 }}
               >
+                {/* <AllFilters
+              name={"AllAdsPage"}
+              pageFilterInfo={appliedFilters}
+              search={searchBarData}
+              search_type={searchType}
+            /> */}
                 <AllFilters
                   name={"SavedPage"}
                   pageFilterInfo={SavedAppliedFilters}
@@ -157,10 +164,13 @@ const SavedAds = () => {
                             console.log(
                               "-----------======================================"
                             );
-                            document.getElementById("searchbar").value !== ""
-                              ? dispatch(SavedAdssearchStart(searchBarData))
+                            // searchBarData !== ""
+                            //   ? dispatch(SavedAdssearchStart(searchBarData))
+                            //   : dispatch(applySavedAdsallfilters());
+                            document.getElementById("searchbar").value
+                              ? dispatch(SavedAdsFilterAfterSearchStart())
                               : dispatch(applySavedAdsallfilters());
-                            dispatch(SavedAdsSortvalueStart());
+                            // dispatch(SavedAdsSortvalueStart());
 
                             console.log(filter);
                           }}
@@ -218,13 +228,13 @@ const SavedAds = () => {
                   />
                 ) : (
                   <FilterAltOffIcon
-                  style={{
-                        width: "20px",
-                        height: "20px",
-                        float: "right",
-                        cursor: "pointer",
-                        color:"white"
-                      }}
+                    style={{
+                      width: "20px",
+                      height: "20px",
+                      float: "right",
+                      cursor: "pointer",
+                      color: "white",
+                    }}
                     onClick={() => {
                       setFilterActivate(true);
                     }}
@@ -260,6 +270,7 @@ const SavedAds = () => {
               alignItems: "center",
             }}
           >
+            {console.log(savedAdsLocal)}
             {Object.keys(savedAdsLocal).length ? (
               <Grid
                 container
@@ -275,7 +286,7 @@ const SavedAds = () => {
                     adInfo={ads}
                     index={index}
                     key={index}
-                    deleteId={ads.adID}
+                    deleteId={ads.id}
                   />
                 ))}
               </Grid>

@@ -13,6 +13,7 @@ export const FACEBOOKLIKES_START = "FACEBOOKLIKES_START";
 export const SET_POSTION_SCROLL = "SET_POSTION_SCROLL";
 export const SEARCH_START = "SEARCH_START";
 export const SEARCH_SUCCESS = "SEARCH_SUCCESS";
+export const EMPTY_SEARCH_SUCCESS = "EMPTY_SEARCH_SUCCESS";
 export const SEARCH_ERROR = "SEARCH_ERROR";
 export const ALL_FILTER_AFTER_SEARCH_SUCCESS = "ALL_SEARCH_SUFILTER_AFTER_SEARCH_SUCCESSCCESS";
 export const INCREASE_DECREASE_DATA_START = "INCREASE_DECREASE_DATA_START";
@@ -30,9 +31,9 @@ export const putFilteredDataStart = (allData) => ({
   payload: allData,
 });
 
-export const applyallfilters = (pageName) => ({
+export const applyallfilters = () => ({
   type: APPLY_ALL_FILTER,
-  payload: pageName,
+  // payload: pageName,
 });
 export const applysortingfilters = () => ({
   type: SORT_TYPE_START,
@@ -79,6 +80,11 @@ export const statusValueStart = (filter) => ({
 });
 export const searchValueStart = (filter) => ({
   type: SEARCH_START,
+  payload: filter,
+});
+
+export const EmptySearchValueStart = (filter) => ({
+  type: EMPTY_SEARCH_SUCCESS,
   payload: filter,
 });
 // export const createFilteredDataStart = (ads) => ({
@@ -138,8 +144,8 @@ const initialState = {
       order: "Ascending",
     },
     postionYoffset: 0,
-    searchBarData: [],
-    searchType:"Ads Text",
+    searchBarData: "",
+    searchType:"All these words",
     seactBarFilterData:[],
     search_loading: false,
     error: "",
@@ -403,6 +409,13 @@ const FilterDataReducer = (state = initialState, action) => {
     //     },
     //     filteredData: [...state.filteredData],
     //   };
+    case EMPTY_SEARCH_SUCCESS:
+      return {
+        ...state,
+        searchBarData:"",
+        seactBarFilterData:[],
+        filteredData:state.allData
+      }
     case CHANGE_SEARCH_TYPE:
       return {
         ...state,
@@ -469,6 +482,7 @@ const FilterDataReducer = (state = initialState, action) => {
         filteredData:
           // state.searchBarData !==""
             // ?
+            action.payload?
             action.payload.filter(
                 (ads) =>
                   (state.appliedFilters?.AdCount?.min !== 0 ||
@@ -502,7 +516,7 @@ const FilterDataReducer = (state = initialState, action) => {
                         ads?.pageInfo?.platforms[0]?.likes <=
                           state.appliedFilters?.FacebookLikes?.max
                     : true)
-              )
+              ):null
             // : state.filteredData,        
       };
 
@@ -720,23 +734,7 @@ const FilterDataReducer = (state = initialState, action) => {
                         ?.StartRunningDate?.startdate <= ads?.startDate &&
                       state.appliedFilters
                         ?.StartRunningDate?.enddate >= ads?.startDate
-                    : true) &&
-                  (state.appliedFilters
-                    ?.FacebookLikes?.min !== 1 ||
-                  state.appliedFilters
-                    ?.FacebookLikes?.max !== 1000
-                    ? state.appliedFilters
-                        ?.FacebookLikes?.max === 0
-                      ? ads?.pageInfo?.platforms[0]?.likes >=
-                        state.appliedFilters
-                          ?.FacebookLikes?.min
-                      : ads?.pageInfo?.platforms[0]?.likes >=
-                          state
-                            .appliedFilters?.FacebookLikes?.min &&
-                        ads?.pageInfo?.platforms[0]?.likes <=
-                          state
-                            .appliedFilters?.FacebookLikes?.max
-                    : true) &&
+                    : true) &&                 
                   (state.sortFilter?.type ===
                   "AdCountIncrease"
                     ? Object.values(ads.history)[
@@ -759,7 +757,7 @@ const FilterDataReducer = (state = initialState, action) => {
               }
             ),
           ],
-          appliedFilters: state.appliedFilters,
+          // appliedFilters: state.appliedFilters,
         // },
       };
 
@@ -777,7 +775,7 @@ const FilterDataReducer = (state = initialState, action) => {
       return {
         ...state,
         search_loading: false,
-        filteredData: state.allData,
+        filteredData: [...state.allData],
         appliedFilters: action.payload,
       };
     case CLEAR_SINGLE_FILTER:

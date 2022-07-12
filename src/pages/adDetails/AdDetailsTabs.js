@@ -37,7 +37,7 @@ function AdDeatailsTabs() {
       setIsActiveTab(adDetailsTabs.ALLADS);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  });
   useEffect(() => {
     if (allMediaAds) {
       console.log("comin------------------");
