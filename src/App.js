@@ -6,15 +6,15 @@ import MainLayout from "./components/MainLayout";
 import Login from "./pages/auth/Login";
 import ForgetPassword from "./pages/auth/ForgetPassword";
 import Signup from "./pages/auth/Signup";
-import "./App.scss";
+import PublicRoute from "./PublicRoute";
 
 const App = () => {
   return (
     <>
       <Routes>
         {/* Public Routes */}
-        <Route path="/auth/login" exact element={<Login />} />
-        <Route path="/auth/register" exact element={<Signup />} />
+        <Route path="/auth/login" exact element={<PublicRoute><Login /></PublicRoute>} />
+        <Route path="/auth/register" exact element={<PublicRoute><Signup /></PublicRoute>} />
         <Route
           path="/auth/forgot-password"
           exact
