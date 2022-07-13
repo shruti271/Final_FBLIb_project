@@ -18,6 +18,8 @@ import { loadAccountSettingsStart } from "./../redux/ducks/accountSettings";
 import Payment from "../pages/Payment"
 import { loadSavedAdsClientSideStart } from "../redux/ducks/saveAds_clientSide";
 import { useSelector } from "react-redux";
+import { getSetCatSatus } from "../redux/ducks/filtered_Data";
+
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
@@ -44,6 +46,7 @@ const MainLayout = () => {
     dispatch(loadMediaStart());
     dispatch(loadSavedAdsStart());    
     dispatch(loadAccountSettingsStart());
+    dispatch(getSetCatSatus());
   }, [dispatch]);
 useEffect(()=>{
   dispatch(loadSavedAdsClientSideStart(savedAds))

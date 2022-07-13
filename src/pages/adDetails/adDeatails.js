@@ -5,10 +5,13 @@ import LargePageLogo from "../../assets/largePageLogo.svg";
 import Firsrcardimg from "../../assets/FirstCardImg.svg";
 import facebook from "../../assets/facebook.svg";
 import instragram from "../../assets/instragram.svg";
+import { Mychart } from "../../components/Graph";
+import MyChart from "../../components/MyChart";
 
 function AdDeatails({ ThumbnailData }) {
   const classes = useStyles();
-
+console.log(ThumbnailData?.history)
+console.log("pppppppppppppppppppppppppppppppppp)))))))))))))))))))))))))))))))))ppppppppppppppp")
   return (
     <>
       <Grid container sx={{ marginTop: "36px" }}>
@@ -409,6 +412,13 @@ function AdDeatails({ ThumbnailData }) {
                     </Typography>
                   </Stack>
                 </Stack> */}
+              </Stack>
+              
+            </Grid>
+            <Grid>
+            <Stack sx={{marginLeft:2,display:"flex",justifyContent:"center", alignItems:"center"}}>
+              <Mychart chartData={ThumbnailData?.history} />
+{/* <MyChart  chartData={ThumbnailData?.history}/> */}
               </Stack>
             </Grid>
           </Box>

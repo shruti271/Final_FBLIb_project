@@ -38,6 +38,11 @@ import { EditText } from "react-edit-text";
 import BackTotopbutton from "../pages/Backtotopbutton";
 import AllFilters from "../components/AllFilters";
 import SortFilter from "../components/SortFilter";
+import Mychart from "../components/Graph";
+
+// import MyGraph from "../components/Graph";
+
+
 
 // import { escapeRegExp } from "@mui/x-data-grid/utils/utils";
 
@@ -499,8 +504,11 @@ const Addlibrarydatabase = () => {
                   marginTop: "10px",
                 }}
               >
+                
+               
+                
                 {filteredData?.map((ads, index) => (
-                  // console.log("first", ads),
+                // console.log(O)),console.log("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\*********************")  ,// console.log("first", ads),
                   <ThumbNailBox
                     adInfo={ads}
                     index={index}

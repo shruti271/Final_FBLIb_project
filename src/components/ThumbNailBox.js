@@ -176,7 +176,8 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
             {`(${adInfo?.pageInfo?.platforms[0].likes} likes)`}
           </Typography>
         </Box>
-        <Box>
+        <Box style={{ maxHeight:"200px"}}
+        >
           {adInfo.adMediaType === "video" ? (
             //   <ReactSimpleVideoPlayer
             //   url={adInfo?.bucketMediaURL}
@@ -194,6 +195,7 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
               //   backgroundRepeat: 'no-repeat',
               //   backgroundPosition: 'center'
               // }}
+             style={{ maxHeight:"200px"}}
               autoPlay={false}
               className={classes.AdsImageVideo}
               controls
@@ -201,7 +203,7 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
           ) : adInfo?.adMediaType === "image" ? (
             <img
               src={adInfo?.bucketMediaURL}
-              alt="thumbnail"
+              alt="thumbnail" style={{maxHeight:"200px"}}
               className={classes.AdsImageVideo}
             />
           ) : (
@@ -227,7 +229,9 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
                 alt="Shareicon"
                 className={classes.shareicon}
                 onClick={(e) => {
-                  e.preventDefault();
+                  console.log(adInfo?.purchaseURL)
+                  console.log("ccccccccccujygftukytu7satdaustgdsaudwegdywgdigvajdgy")
+                  // e.preventDefault();
                   window.open(adInfo?.purchaseURL, "_blank", "");
                   // window.location.target="_blank"
                   // window.location.href=adInfo?.purchaseURL;

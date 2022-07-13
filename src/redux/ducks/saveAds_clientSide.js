@@ -154,9 +154,9 @@ export const SavedAdsFilterAfterSearchStart = () => ({
   type: ALL_FILTER_AFTER_SAVED_SEARCH_SUCCESS,
   // payload: filter,
 });
-export const EmptySavedSearchValueStart = (filter) => ({
+export const EmptySavedSearchValueStart = () => ({
   type: EMPTY_SAVED_SEARCH_SUCCESS,
-  payload: filter,
+  // payload: filter,
 });
 const initialState = {
   savedAdsLocal: [],
@@ -484,6 +484,9 @@ const savedAdsClienSideReducer = (state = initialState, action) => {
       };
 
     case ALL_SAVED_ADS_SEARCH_SUCCESS:
+      console.log("----------------------------------------------------+")
+      console.log(action.payload)
+      console.log("----------------------------------------------------+")
       return {
         ...state,
         search_loading: false,
@@ -491,8 +494,9 @@ const savedAdsClienSideReducer = (state = initialState, action) => {
         // searchBarData: state.searchBarData,
         searchedSavedData: action.payload,
         filteredData:
-          state.searchBarData !== ""
-            ? action.payload.filter(
+        action.payload.length !== 0
+            ?
+             action.payload.filter(
                 (ads) =>
                   (state.SavedAppliedFilters?.AdCount?.min !== 0 ||
                   state.SavedAppliedFilters?.AdCount?.max !== 1000

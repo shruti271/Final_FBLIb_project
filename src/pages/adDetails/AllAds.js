@@ -6,6 +6,8 @@ import ThumbNailBox from "../../components/ThumbNailBox";
 
 const AllAds = ({ AdsName }) => {
   const { subAllMedia, loading } = useSelector((state) => state.subAllMedia);
+  const { savedIds } = useSelector((state) => state.savedclienads);
+  
 
   return (
     <>
@@ -33,7 +35,8 @@ const AllAds = ({ AdsName }) => {
         }}
       >
         {subAllMedia?.map((ads, index) => (
-          <ThumbNailBox adInfo={ads} index={index} key={index} />
+                   
+                    <ThumbNailBox adInfo={ads} index={index} key={index}  deleteId={savedIds?.includes(ads.id) ? ads.id : false}/>
         ))}
       </Grid>
     </>

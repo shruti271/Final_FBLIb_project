@@ -15,12 +15,17 @@ export const SEARCH_START = "SEARCH_START";
 export const SEARCH_SUCCESS = "SEARCH_SUCCESS";
 export const EMPTY_SEARCH_SUCCESS = "EMPTY_SEARCH_SUCCESS";
 export const SEARCH_ERROR = "SEARCH_ERROR";
-export const ALL_FILTER_AFTER_SEARCH_SUCCESS = "ALL_SEARCH_SUFILTER_AFTER_SEARCH_SUCCESSCCESS";
+export const ALL_FILTER_AFTER_SEARCH_SUCCESS =
+  "ALL_SEARCH_SUFILTER_AFTER_SEARCH_SUCCESSCCESS";
 export const INCREASE_DECREASE_DATA_START = "INCREASE_DECREASE_DATA_START";
 export const CLEAR_FILTERDATA = "CLEAR_FILTERDATA";
 export const APPLY_ALL_FILTER = "APPLY_ALL_FILTER";
 export const CLEAR_SINGLE_FILTER = "CLEAR_SINGLE_FILTER";
-export const CHANGE_SEARCH_TYPE="CHANGE_SEARCH_TYPE";
+export const CHANGE_SEARCH_TYPE = "CHANGE_SEARCH_TYPE";
+
+export const ALL_STATUS_START = "ALL_STATUS_START";
+export const ALL_STATUS_SUCCESS = "ALL_STATUS_SUCCESS";
+export const ALL_STATUS_ERROR = "ALL_STATUS_ERROR";
 
 export const loadFilteredDataStart = () => ({
   type: LOAD_FILTERDATA,
@@ -83,9 +88,9 @@ export const searchValueStart = (filter) => ({
   payload: filter,
 });
 
-export const EmptySearchValueStart = (filter) => ({
+export const EmptySearchValueStart = () => ({
   type: EMPTY_SEARCH_SUCCESS,
-  payload: filter,
+  // payload: filter,
 });
 // export const createFilteredDataStart = (ads) => ({
 //   type: CREATE_FILTERDATA,
@@ -126,31 +131,44 @@ export const chnageSearchType = (data) => ({
   payload: data,
 });
 
-const initialState = {
-    allData: [],
-    filteredData: [],
-    appliedFilters: {
-      StartRunningDate: { startdate: "", enddate: "", Message: "" },
-      AdStatus: { status: "", Message: "" },
-      AdCount: { min: 1, max: 1000, Message: "" },
-      FacebookLikes: { min: 1, max: 100000, Message: "" },
-      InstragramLike: { min: 1, max: 10000, Message: "" },
-      MediaType: { selectedData: "Video or Photo", Message: "" },
-      PurchaseType: { selctedButton: "", Message: "" },
-    },
+export const getSetCatSatus = () => ({
+  type: ALL_STATUS_START,
+});
 
-    sortFilter: {
-      type: "",
-      order: "Ascending",
-    },
-    postionYoffset: 0,
-    searchBarData: "",
-    searchType:"All these words",
-    seactBarFilterData:[],
-    search_loading: false,
-    error: "",
-  
-  
+export const setCatSatusSuccess = (Ads) => ({
+  type: ALL_STATUS_SUCCESS,
+  payload: Ads,
+});
+
+export const setCatSatusError = (error) => ({
+  type: ALL_STATUS_ERROR,
+  payload: error,
+});
+
+const initialState = {
+  allData: [],
+  filteredData: [],
+  appliedFilters: {
+    StartRunningDate: { startdate: "", enddate: "", Message: "" },
+    AdStatus: { status: "", Message: "" },
+    AdCount: { min: 1, max: 1000, Message: "" },
+    FacebookLikes: { min: 1, max: 100000, Message: "" },
+    InstragramLike: { min: 1, max: 10000, Message: "" },
+    MediaType: { selectedData: "Video or Photo", Message: "" },
+    PurchaseType: { selctedButton: "", Message: "" },
+  },
+
+  sortFilter: {
+    type: "",
+    order: "Ascending",
+  },
+  postionYoffset: 0,
+  searchBarData: "",
+  searchType: "All these words",
+  seactBarFilterData: [],
+  search_loading: false,
+  ctaStatus: [],
+  error: "",
 };
 
 const FilterDataReducer = (state = initialState, action) => {
@@ -158,7 +176,7 @@ const FilterDataReducer = (state = initialState, action) => {
     case LOAD_FILTERDATA:
       return {
         ...state,
-        
+
         // filteredData: action.payload,
       };
     case PUT_FILTERDATA:
@@ -166,28 +184,28 @@ const FilterDataReducer = (state = initialState, action) => {
         ...state,
         // : {
         //   ...state,
-          
-          filteredData: action.payload.data,
-          allData: action.payload.data,
+
+        filteredData: action.payload.data,
+        allData: action.payload.data,
         // },
       };
-    case DATEFILTER:      
+    case DATEFILTER:
       return {
         ...state,
         // : {
         //   ...state,
-          // 
-          // filteredData: [
-          //   ...state.filteredData,
-          // ],
-          appliedFilters: {
-            ...state.appliedFilters,
-            [`${action.payload.name}`]: {
-              startdate: action.payload.startdate,
-              enddate: action.payload.enddate,
-              Message: action.payload.Message,
-            },
+        //
+        // filteredData: [
+        //   ...state.filteredData,
+        // ],
+        appliedFilters: {
+          ...state.appliedFilters,
+          [`${action.payload.name}`]: {
+            startdate: action.payload.startdate,
+            enddate: action.payload.enddate,
+            Message: action.payload.Message,
           },
+        },
         // },
       };
     case NOODADS_START:
@@ -195,16 +213,16 @@ const FilterDataReducer = (state = initialState, action) => {
         ...state,
         // : {
         //   ...state,
-          // 
-          // filteredData: state.filteredData,
-          appliedFilters: {
-            ...state.appliedFilters,
-            [`${action.payload.name}`]: {
-              min: action.payload.min,
-              max: action.payload.max,
-              Message: action.payload.Message,
-            },
+        //
+        // filteredData: state.filteredData,
+        appliedFilters: {
+          ...state.appliedFilters,
+          [`${action.payload.name}`]: {
+            min: action.payload.min,
+            max: action.payload.max,
+            Message: action.payload.Message,
           },
+        },
         // },
       };
     case MEDIATYPE_START:
@@ -212,35 +230,35 @@ const FilterDataReducer = (state = initialState, action) => {
         ...state,
         // : {
         //   ...state,
-          // 
-          // filteredData: [...state.filteredData],
-          appliedFilters: {
-            ...state.appliedFilters,
-            [`${action.payload.name}`]: {
-              selectedData: action.payload.selectedData,
-              Message: action.payload.Message,
-            },
+        //
+        // filteredData: [...state.filteredData],
+        appliedFilters: {
+          ...state.appliedFilters,
+          [`${action.payload.name}`]: {
+            selectedData: action.payload.selectedData,
+            Message: action.payload.Message,
           },
+        },
         // },
       };
     case BUTTONTYPETYPE_START:
       return {
         ...state,
         // : {
-        //   ...state,         
-          appliedFilters: {
-            ...state.appliedFilters,
-            [`${action.payload.name}`]: {
-              selctedButton: action.payload.selctedButton,
-              Message: action.payload.Message,
-            },
+        //   ...state,
+        appliedFilters: {
+          ...state.appliedFilters,
+          [`${action.payload.name}`]: {
+            selctedButton: action.payload.selctedButton,
+            Message: action.payload.Message,
           },
+        },
         // },
       };
     case SET_POSTION_SCROLL:
       return {
         ...state,
-        
+
         filteredData: [...state.filteredData],
         appliedFilters: state.appliedFilters,
         postionYoffset: action.payload,
@@ -249,15 +267,14 @@ const FilterDataReducer = (state = initialState, action) => {
       return {
         ...state,
         // : {
-        //   ...state,    
-          sortFilter: {
-            ...state.sortFilter,
-            [`${action.payload.name}`]: `${action.payload.data}`,
-          },
+        //   ...state,
+        sortFilter: {
+          ...state.sortFilter,
+          [`${action.payload.name}`]: `${action.payload.data}`,
+        },
         // },
-        // 
+        //
         // appliedFilters: state.appliedFilters,
-       
 
         // filteredData: [...state.filteredData],
       };
@@ -284,7 +301,7 @@ const FilterDataReducer = (state = initialState, action) => {
       // }
       return {
         ...state,
-        
+
         appliedFilters: state.appliedFilters,
         sortFilter: { ...state.sortFilter, type: "" },
         // filteredData: [...state.filteredData],
@@ -339,6 +356,11 @@ const FilterDataReducer = (state = initialState, action) => {
               (firstAd, secondAd) =>
                 firstAd["noOfCopyAds"] - secondAd["noOfCopyAds"]
             )
+          : state.sortFilter?.type === "lastUpdatedTime"
+          ? dummy?.sort(
+              (firstAd, secondAd) =>
+                secondAd["lastUpdatedTime"] - firstAd["lastUpdatedTime"]
+            )
           : dummy?.sort(
               (firstAd, secondAd) =>
                 firstAd[state.sortFilter?.type] -
@@ -362,6 +384,11 @@ const FilterDataReducer = (state = initialState, action) => {
             (firstAd, secondAd) =>
               secondAd["noOfCopyAds"] - firstAd["noOfCopyAds"]
           )
+        : state.sortFilter?.type === "lastUpdatedTime"
+        ? dummy?.sort(
+            (firstAd, secondAd) =>
+              firstAd["lastUpdatedTime"]- secondAd["lastUpdatedTime"] 
+          )
         : dummy?.sort(
             (firstAd, secondAd) =>
               secondAd[state.sortFilter?.type] - firstAd[state.sortFilter?.type]
@@ -372,34 +399,33 @@ const FilterDataReducer = (state = initialState, action) => {
       return {
         ...state,
         // : {
-          // ...state,
-          filteredData: dummy,
+        // ...state,
+        filteredData: dummy,
         // },
-        // 
+        //
         // appliedFilters: state.appliedFilters,
         // sortFilter: state.sortFilter,
-            
       };
     case STATUS_START:
       return {
         ...state,
         // : {
         //   ...state,
-          // 
-          appliedFilters: {
-            ...state.appliedFilters,
-            [`${action.payload.name}`]: {
-              status: action.payload.status,
-              Message: action.payload.Message,
-            },
+        //
+        appliedFilters: {
+          ...state.appliedFilters,
+          [`${action.payload.name}`]: {
+            status: action.payload.status,
+            Message: action.payload.Message,
           },
-          // filteredData: state.filteredData,
+        },
+        // filteredData: state.filteredData,
         // },
       };
     // case FACEBOOKLIKES_START:
     //   return {
     //     ...state,
-    //     
+    //
     //     appliedFilters: {
     //       ...state.appliedFilters,
     //       [`${action.payload.name}`]: {
@@ -412,14 +438,14 @@ const FilterDataReducer = (state = initialState, action) => {
     case EMPTY_SEARCH_SUCCESS:
       return {
         ...state,
-        searchBarData:"",
-        seactBarFilterData:[],
-        filteredData:state.allData
-      }
+        searchBarData: "",
+        seactBarFilterData: [],
+        filteredData: state.allData,
+      };
     case CHANGE_SEARCH_TYPE:
       return {
         ...state,
-        searchType:action.payload
+        searchType: action.payload,
       };
     case SEARCH_START:
       return {
@@ -468,22 +494,22 @@ const FilterDataReducer = (state = initialState, action) => {
     // console.log("{{{{{{{{{{{{{{{{{{{{{{first}}}}}}}}}}}}}}}}}}}}}}");
     //     return {
     //       ...state,
-    //       
+    //
     //       appliedFilters: state.appliedFilters,
     //       // searchBarData: state.searchBarData,
-    //       filteredData:temp_arr,        
+    //       filteredData:temp_arr,
     //     };
     case SEARCH_SUCCESS:
       return {
         ...state,
-        search_loading: false,        
+        search_loading: false,
         appliedFilters: state.appliedFilters,
-        seactBarFilterData:  action.payload,     
+        seactBarFilterData: action.payload,
         filteredData:
           // state.searchBarData !==""
-            // ?
-            action.payload?
-            action.payload.filter(
+          // ?
+          action.payload
+            ? action.payload.filter(
                 (ads) =>
                   (state.appliedFilters?.AdCount?.min !== 0 ||
                   state.appliedFilters?.AdCount?.max !== 1000
@@ -516,8 +542,9 @@ const FilterDataReducer = (state = initialState, action) => {
                         ads?.pageInfo?.platforms[0]?.likes <=
                           state.appliedFilters?.FacebookLikes?.max
                     : true)
-              ):null
-            // : state.filteredData,        
+              )
+            : null,
+        // : state.filteredData,
       };
 
     case SEARCH_ERROR:
@@ -531,240 +558,176 @@ const FilterDataReducer = (state = initialState, action) => {
         ...state,
         // : {
         //   ...state,
-          
-          filteredData: [
-            ...state.seactBarFilterData.filter(
-              (ads) => {
-                // console.log(ads?.pageInfo?.platforms[0]?.likes);
-                // console.log(ads?.pageInfo?.platforms[1]?.followers);
-                // console.log("#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-                return (
-                  (state.appliedFilters
-                    ?.AdCount?.min !== 1 ||
-                  state.appliedFilters
-                    ?.AdCount?.max !== 1000
-                    ? ads.noOfCopyAds >=
-                        state.appliedFilters
-                          ?.AdCount?.min &&
-                      ads.noOfCopyAds <=
-                        state.appliedFilters
-                          ?.AdCount?.max
-                    : true) &&
-                  (state.appliedFilters
-                    ?.FacebookLikes?.min !== 1 ||
-                  state.appliedFilters
-                    ?.FacebookLikes?.max !== 100000
-                    ? ads?.pageInfo?.platforms[0]?.likes >=
-                        state.appliedFilters
-                          ?.FacebookLikes?.min &&
-                      ads?.pageInfo?.platforms[0]?.likes <=
-                        state.appliedFilters
-                          ?.FacebookLikes?.max
-                    : true) &&
-                  (state.appliedFilters
-                    ?.InstragramLike?.min !== 1 ||
-                  state.appliedFilters
-                    ?.InstragramLike?.max !== 10000
-                    ? ads?.pageInfo?.platforms[1]?.followers >=
-                        state.appliedFilters
-                          ?.InstragramLike?.min &&
-                      ads?.pageInfo?.platforms[1]?.followers <=
-                        state.appliedFilters
-                          ?.InstragramLike?.max
-                    : true) &&
-                  (state.appliedFilters
-                    ?.MediaType?.selectedData === "" ||
-                  state.appliedFilters
-                    ?.MediaType?.selectedData === "Video or Photo"
-                    ? true
-                    : ads.adMediaType ===
-                      state.appliedFilters
-                        ?.MediaType?.selectedData) &&
-                  (state.appliedFilters
-                    ?.AdStatus?.status !== ""
-                    ? ads?.status ===
-                      state.appliedFilters
-                        ?.AdStatus?.status
-                    : true) &&
-                  (state.appliedFilters
-                    ?.PurchaseType?.selctedButton === "" ||
-                  state.appliedFilters
-                    ?.PurchaseType?.selctedButton === "Shop Now"
-                    ? true
-                    : ads.ctaStatus.toLowerCase ===
-                      state.appliedFilters
-                        ?.PurchaseType?.selctedButton.toLowerCase) &&
-                  (state.appliedFilters
-                    ?.AdStatus?.status !== ""
-                    ? ads?.status ===
-                      state.appliedFilters
-                        ?.AdStatus?.status
-                    : true) &&
-                  (state.appliedFilters
-                    ?.StartRunningDate?.startdate &&
-                  state.appliedFilters
-                    ?.StartRunningDate?.enddate
-                    ? state.appliedFilters
-                        ?.StartRunningDate?.startdate <= ads?.startDate &&
-                      state.appliedFilters
-                        ?.StartRunningDate?.enddate >= ads?.startDate
-                    : true) &&
-                  (state.appliedFilters
-                    ?.FacebookLikes?.min !== 1 ||
-                  state.appliedFilters
-                    ?.FacebookLikes?.max !== 1000
-                    ? state.appliedFilters
-                        ?.FacebookLikes?.max === 0
-                      ? ads?.pageInfo?.platforms[0]?.likes >=
-                        state.appliedFilters
-                          ?.FacebookLikes?.min
-                      : ads?.pageInfo?.platforms[0]?.likes >=
-                          state
-                            .appliedFilters?.FacebookLikes?.min &&
-                        ads?.pageInfo?.platforms[0]?.likes <=
-                          state
-                            .appliedFilters?.FacebookLikes?.max
-                    : true) &&
-                  (state.sortFilter?.type ===
-                  "AdCountIncrease"
-                    ? Object.values(ads.history)[
-                        Object.keys(ads.history).length - 1
-                      ] >
-                      Object.values(ads.history)[
-                        Object.keys(ads.history).length - 2
-                      ]
-                    : true) &&
-                  (state.sortFilter?.type ===
-                  "AdCountDecrease"
-                    ? Object.values(ads.history)[
-                        Object.keys(ads.history).length - 1
-                      ] <
-                      Object.values(ads.history)[
-                        Object.keys(ads.history).length - 2
-                      ]
-                    : true)
-                );
-              }
-            ),
-          ],
-          appliedFilters: state.appliedFilters,
+
+        filteredData: [
+          ...state.seactBarFilterData.filter((ads) => {
+            // console.log(ads?.pageInfo?.platforms[0]?.likes);
+            // console.log(ads?.pageInfo?.platforms[1]?.followers);
+            // console.log("#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+            return (
+              (state.appliedFilters?.AdCount?.min !== 1 ||
+              state.appliedFilters?.AdCount?.max !== 1000
+                ? ads.noOfCopyAds >= state.appliedFilters?.AdCount?.min &&
+                  ads.noOfCopyAds <= state.appliedFilters?.AdCount?.max
+                : true) &&
+              (state.appliedFilters?.FacebookLikes?.min !== 1 ||
+              state.appliedFilters?.FacebookLikes?.max !== 100000
+                ? ads?.pageInfo?.platforms[0]?.likes >=
+                    state.appliedFilters?.FacebookLikes?.min &&
+                  ads?.pageInfo?.platforms[0]?.likes <=
+                    state.appliedFilters?.FacebookLikes?.max
+                : true) &&
+              (state.appliedFilters?.InstragramLike?.min !== 1 ||
+              state.appliedFilters?.InstragramLike?.max !== 10000
+                ? ads?.pageInfo?.platforms[1]?.followers >=
+                    state.appliedFilters?.InstragramLike?.min &&
+                  ads?.pageInfo?.platforms[1]?.followers <=
+                    state.appliedFilters?.InstragramLike?.max
+                : true) &&
+              (state.appliedFilters?.MediaType?.selectedData === "" ||
+              state.appliedFilters?.MediaType?.selectedData === "Video or Photo"
+                ? true
+                : ads.adMediaType ===
+                  state.appliedFilters?.MediaType?.selectedData) &&
+              (state.appliedFilters?.AdStatus?.status !== ""
+                ? ads?.status === state.appliedFilters?.AdStatus?.status
+                : true) &&
+              (state.appliedFilters?.PurchaseType?.selctedButton === "" ||
+              state.appliedFilters?.PurchaseType?.selctedButton === "Shop Now"
+                ? true
+                : ads.ctaStatus.toLowerCase ===
+                  state.appliedFilters?.PurchaseType?.selctedButton
+                    .toLowerCase) &&
+              (state.appliedFilters?.AdStatus?.status !== ""
+                ? ads?.status === state.appliedFilters?.AdStatus?.status
+                : true) &&
+              (state.appliedFilters?.StartRunningDate?.startdate &&
+              state.appliedFilters?.StartRunningDate?.enddate
+                ? state.appliedFilters?.StartRunningDate?.startdate <=
+                    ads?.startDate &&
+                  state.appliedFilters?.StartRunningDate?.enddate >=
+                    ads?.startDate
+                : true) &&
+              (state.appliedFilters?.FacebookLikes?.min !== 1 ||
+              state.appliedFilters?.FacebookLikes?.max !== 1000
+                ? state.appliedFilters?.FacebookLikes?.max === 0
+                  ? ads?.pageInfo?.platforms[0]?.likes >=
+                    state.appliedFilters?.FacebookLikes?.min
+                  : ads?.pageInfo?.platforms[0]?.likes >=
+                      state.appliedFilters?.FacebookLikes?.min &&
+                    ads?.pageInfo?.platforms[0]?.likes <=
+                      state.appliedFilters?.FacebookLikes?.max
+                : true) &&
+              (state.sortFilter?.type === "AdCountIncrease"
+                ? Object.values(ads.history)[
+                    Object.keys(ads.history).length - 1
+                  ] >
+                  Object.values(ads.history)[
+                    Object.keys(ads.history).length - 2
+                  ]
+                : true) &&
+              (state.sortFilter?.type === "AdCountDecrease"
+                ? Object.values(ads.history)[
+                    Object.keys(ads.history).length - 1
+                  ] <
+                  Object.values(ads.history)[
+                    Object.keys(ads.history).length - 2
+                  ]
+                : true)
+            );
+          }),
+        ],
+        appliedFilters: state.appliedFilters,
         // },
       };
-      case APPLY_ALL_FILTER:
+    case APPLY_ALL_FILTER:
       // console.log(action.payload.componentName);
       // console.log(")))))))))))))))))))))))))000000000000000000");
       return {
         ...state,
         // : {
         //   ...state,
-          
-          filteredData: [
-            ...state.allData.filter(
-              (ads) => {
-                // console.log(ads?.pageInfo?.platforms[0]?.likes);
-                // console.log(ads?.pageInfo?.platforms[1]?.followers);
-                // console.log("#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-                return (
-                  (state.appliedFilters
-                    ?.AdCount?.min !== 1 ||
-                  state.appliedFilters
-                    ?.AdCount?.max !== 1000
-                    ? ads.noOfCopyAds >=
-                        state.appliedFilters
-                          ?.AdCount?.min &&
-                      ads.noOfCopyAds <=
-                        state.appliedFilters
-                          ?.AdCount?.max
-                    : true) &&
-                  (state.appliedFilters
-                    ?.FacebookLikes?.min !== 1 ||
-                  state.appliedFilters
-                    ?.FacebookLikes?.max !== 100000
-                    ? ads?.pageInfo?.platforms[0]?.likes >=
-                        state.appliedFilters
-                          ?.FacebookLikes?.min &&
-                      ads?.pageInfo?.platforms[0]?.likes <=
-                        state.appliedFilters
-                          ?.FacebookLikes?.max
-                    : true) &&
-                  (state.appliedFilters
-                    ?.InstragramLike?.min !== 1 ||
-                  state.appliedFilters
-                    ?.InstragramLike?.max !== 10000
-                    ? ads?.pageInfo?.platforms[1]?.followers >=
-                        state.appliedFilters
-                          ?.InstragramLike?.min &&
-                      ads?.pageInfo?.platforms[1]?.followers <=
-                        state.appliedFilters
-                          ?.InstragramLike?.max
-                    : true) &&
-                  (state.appliedFilters
-                    ?.MediaType?.selectedData === "" ||
-                  state.appliedFilters
-                    ?.MediaType?.selectedData === "Video or Photo"
-                    ? true
-                    : ads.adMediaType ===
-                      state.appliedFilters
-                        ?.MediaType?.selectedData) &&
-                  (state.appliedFilters
-                    ?.AdStatus?.status !== ""
-                    ? ads?.status ===
-                      state.appliedFilters
-                        ?.AdStatus?.status
-                    : true) &&
-                  (state.appliedFilters
-                    ?.PurchaseType?.selctedButton === "" ||
-                  state.appliedFilters
-                    ?.PurchaseType?.selctedButton === "Shop Now"
-                    ? true
-                    : ads.ctaStatus.toLowerCase ===
-                      state.appliedFilters
-                        ?.PurchaseType?.selctedButton.toLowerCase) &&
-                  (state.appliedFilters
-                    ?.AdStatus?.status !== ""
-                    ? ads?.status ===
-                      state.appliedFilters
-                        ?.AdStatus?.status
-                    : true) &&
-                  (state.appliedFilters
-                    ?.StartRunningDate?.startdate &&
-                  state.appliedFilters
-                    ?.StartRunningDate?.enddate
-                    ? state.appliedFilters
-                        ?.StartRunningDate?.startdate <= ads?.startDate &&
-                      state.appliedFilters
-                        ?.StartRunningDate?.enddate >= ads?.startDate
-                    : true) &&                 
-                  (state.sortFilter?.type ===
-                  "AdCountIncrease"
-                    ? Object.values(ads.history)[
-                        Object.keys(ads.history).length - 1
-                      ] >
-                      Object.values(ads.history)[
-                        Object.keys(ads.history).length - 2
-                      ]
-                    : true) &&
-                  (state.sortFilter?.type ===
-                  "AdCountDecrease"
-                    ? Object.values(ads.history)[
-                        Object.keys(ads.history).length - 1
-                      ] <
-                      Object.values(ads.history)[
-                        Object.keys(ads.history).length - 2
-                      ]
-                    : true)
-                );
-              }
-            ),
-          ],
-          // appliedFilters: state.appliedFilters,
+
+        filteredData: [
+          ...state.allData.filter((ads) => {
+            // console.log(ads?.pageInfo?.platforms[0]?.likes);
+            // console.log(ads?.pageInfo?.platforms[1]?.followers);
+            // console.log("#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+            return (
+              (state.appliedFilters?.AdCount?.min !== 1 ||
+              state.appliedFilters?.AdCount?.max !== 1000
+                ? ads.noOfCopyAds >= state.appliedFilters?.AdCount?.min &&
+                  ads.noOfCopyAds <= state.appliedFilters?.AdCount?.max
+                : true) &&
+              (state.appliedFilters?.PurchaseType?.selctedButton !== ""
+                ? ads.ctaStatus ===
+                  state.appliedFilters?.PurchaseType?.selctedButton
+                : true) &&
+              (state.appliedFilters?.FacebookLikes?.min !== 1 ||
+              state.appliedFilters?.FacebookLikes?.max !== 100000
+                ? ads?.pageInfo?.platforms[0]?.likes >=
+                    state.appliedFilters?.FacebookLikes?.min &&
+                  ads?.pageInfo?.platforms[0]?.likes <=
+                    state.appliedFilters?.FacebookLikes?.max
+                : true) &&
+              (state.appliedFilters?.InstragramLike?.min !== 1 ||
+              state.appliedFilters?.InstragramLike?.max !== 10000
+                ? ads?.pageInfo?.platforms[1]?.followers >=
+                    state.appliedFilters?.InstragramLike?.min &&
+                  ads?.pageInfo?.platforms[1]?.followers <=
+                    state.appliedFilters?.InstragramLike?.max
+                : true) &&
+              (state.appliedFilters?.MediaType?.selectedData === "" ||
+              state.appliedFilters?.MediaType?.selectedData === "Video or Photo"
+                ? true
+                : ads.adMediaType ===
+                  state.appliedFilters?.MediaType?.selectedData) &&
+              (state.appliedFilters?.AdStatus?.status !== ""
+                ? ads?.status === state.appliedFilters?.AdStatus?.status
+                : true) &&
+              (state.appliedFilters?.PurchaseType?.selctedButton === "" ||
+              state.appliedFilters?.PurchaseType?.selctedButton === "Shop Now"
+                ? true
+                : ads.ctaStatus.toLowerCase ===
+                  state.appliedFilters?.PurchaseType?.selctedButton
+                    .toLowerCase) &&
+              (state.appliedFilters?.AdStatus?.status !== ""
+                ? ads?.status === state.appliedFilters?.AdStatus?.status
+                : true) &&
+              (state.appliedFilters?.StartRunningDate?.startdate &&
+              state.appliedFilters?.StartRunningDate?.enddate
+                ? state.appliedFilters?.StartRunningDate?.startdate <=
+                    ads?.startDate &&
+                  state.appliedFilters?.StartRunningDate?.enddate >=
+                    ads?.startDate
+                : true) &&
+              (state.sortFilter?.type === "AdCountIncrease"
+                ? Object.values(ads.history)[
+                    Object.keys(ads.history).length - 1
+                  ] >
+                  Object.values(ads.history)[
+                    Object.keys(ads.history).length - 2
+                  ]
+                : true) &&
+              (state.sortFilter?.type === "AdCountDecrease"
+                ? Object.values(ads.history)[
+                    Object.keys(ads.history).length - 1
+                  ] <
+                  Object.values(ads.history)[
+                    Object.keys(ads.history).length - 2
+                  ]
+                : true)
+            );
+          }),
+        ],
+        // appliedFilters: state.appliedFilters,
         // },
       };
 
     case APPLIED_FILTERS:
       return {
         ...state,
-        
+
         filteredData: [...state.filteredData],
         appliedFilters: {
           ...state.filteredData,
@@ -774,7 +737,7 @@ const FilterDataReducer = (state = initialState, action) => {
     case CLEAR_FILTERDATA:
       return {
         ...state,
-        
+
         filteredData: [...state.allData],
         appliedFilters: action.payload,
       };
@@ -783,28 +746,23 @@ const FilterDataReducer = (state = initialState, action) => {
         ...state,
         // : {
         //   ...state,
-          // 
-          // filteredData: state.filteredData,
-          appliedFilters: {
-            ...state.appliedFilters,
-            [`${action.payload.name}`]: action.payload.data,
-          },
+        //
+        // filteredData: state.filteredData,
+        appliedFilters: {
+          ...state.appliedFilters,
+          [`${action.payload.name}`]: action.payload.data,
+        },
         // },
       };
-    // case CREATE_FILTERDATA:
-    //   return {
-    //     ...state,
-    //     
-    //     filteredData: [...state.filteredData.concat(action.payload)],
-    //   };
-    // case DELETE_FILTERDATA:
-    //   return {
-    //     ...state,
-    //     
-    //     filteredData: state.filteredData.filter(
-    //       (savedads) => savedads.adID !== action.payload.adID
-    //     ),
-    //   };
+    case ALL_STATUS_START:
+      return { ...state };
+    case ALL_STATUS_SUCCESS:
+      return {
+        ...state,
+        ctaStatus: action.payload,
+      };
+    case ALL_STATUS_ERROR:
+      return { ...state, error: action.payload };
 
     default:
       return state;

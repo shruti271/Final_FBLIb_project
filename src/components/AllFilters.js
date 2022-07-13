@@ -1671,11 +1671,7 @@ function AllFilters(props) {
   const {
     filteredData,
     appliedFilters,
-    sortFilter,
-    searchBarData,
-    postionYoffset,
-    search_loading,
-    searchType,
+    ctaStatus,
     allData,
     // AllAdsPage,
   } = useSelector((state) => state.filteredData);
@@ -3632,11 +3628,16 @@ function AllFilters(props) {
                   value={props?.pageFilterInfo?.PurchaseType?.selctedButton}
                   onChange={handleButtonType}
                 >
-                  <FormControlLabel
+                  {ctaStatus.map((value)=>{return <FormControlLabel
+                    value={`${value}`}
+                    control={<Radio style={{ color: "#00CBFF" }} />}
+                    label={`${value}`}
+                  />})}
+                  {/* <FormControlLabel
                     value="Shop Now"
                     control={<Radio style={{ color: "#00CBFF" }} />}
                     label="Shop Now"
-                  />
+                  /> */}
                 </RadioGroup>
                 {/* <Box
                         display={"flex"}

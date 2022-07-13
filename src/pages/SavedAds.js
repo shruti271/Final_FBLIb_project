@@ -325,7 +325,7 @@ const SavedAds = () => {
                     adInfo={ads}
                     index={index}
                     key={index}
-                    deleteId={ads.id}
+                    deleteId={ads.id}                    
                   />
                 ))}
               </Grid>

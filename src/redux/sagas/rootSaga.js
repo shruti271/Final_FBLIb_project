@@ -22,9 +22,10 @@ import {
 import { LOAD_SUBALLMEDIA_START } from "../ducks/subAllAds";
 import { handleGetSubAllMedia } from "./handlers/subAllAds";
 import { handleGetSearchedData } from "./handlers/searchBar";
-import { SEARCH_START } from "../ducks/filtered_Data";
+import { ALL_STATUS_START, SEARCH_START } from "../ducks/filtered_Data";
 import { handleGetSavedAdsSearchedData } from "./handlers/save_searchAds";
 import { ALL_SAVED_ADS_SEARCH_START } from "../ducks/saveAds_clientSide";
+import { handleGetCatStatus } from "./handlers/allSastus";
 
 function* onLoadMeida() {
   yield takeLatest(LOAD_MEDIA_START, handleGetMedia);
@@ -58,8 +59,9 @@ function* onLoadSearchedAds() {
   yield takeLatest(SEARCH_START, handleGetSearchedData);
 }
 
-
- 
+function* onLoadAllCatSatus() {
+  yield takeLatest(ALL_STATUS_START, handleGetCatStatus);
+}
 function* onLoadSavedAdSearchedAds() {
   yield takeLatest(ALL_SAVED_ADS_SEARCH_START, handleGetSavedAdsSearchedData);
 }
@@ -83,6 +85,11 @@ const searchedAdsSagas = [
   fork(onLoadSearchedAds),
 
 ];
+const allCatStatusSagas = [
+  fork(onLoadAllCatSatus
+    ),
+
+];
 export default function* watcherSaga() {
   yield all([
     ...mediaSagas,
@@ -90,6 +97,7 @@ export default function* watcherSaga() {
     ...accountSettingsSagas,
     ...suballadsSagas,
     ...searchedAdsSagas,
-    ...SavedAdSearchSagas
+    ...SavedAdSearchSagas,
+    ...allCatStatusSagas
   ]);
 }
