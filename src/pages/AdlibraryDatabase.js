@@ -152,8 +152,6 @@ const Addlibrarydatabase = () => {
     searchType,
     // AllAdsPage,
   } = useSelector((state) => state.filteredData);
-<<<<<<< HEAD
-<<<<<<< HEAD
 
   const { savedIds } = useSelector((state) => state.savedclienads);
   const [onFocusEditTextField, setOnFocusEditTextField] = React.useState(0);
@@ -174,12 +172,7 @@ const Addlibrarydatabase = () => {
   const openInstragramFollower = Boolean(instragramFolloweranchorel);
   const [ButtonTypeanchorel, setButtonTypeAnchorEl] = React.useState(null);
   const openButtonType = Boolean(ButtonTypeanchorel);
-=======
   console.log("search_loading..", search_loading);
->>>>>>> 69a5815cfeb9895109061898e57d955b461208ae
-=======
-  console.log("search_loading..", search_loading);
->>>>>>> 69a5815cfeb9895109061898e57d955b461208ae
   useEffect(() => {
     // console.log(AllAdsPage);
     console.log(
@@ -187,7 +180,6 @@ const Addlibrarydatabase = () => {
       filteredData
     );
   });
-  const { savedIds } = useSelector((state) => state.savedclienads);
 
   // useEffect(() => {
   //   // var words = ['hello', 'hi', 'howdy'];
@@ -474,8 +466,6 @@ const Addlibrarydatabase = () => {
                 disabled: search_loading ? true : false,
               }}
             >
-<<<<<<< HEAD
-<<<<<<< HEAD
               {filteredData?.map((ads, index) => (
                 <ThumbNailBox
                   adInfo={ads}
@@ -484,9 +474,6 @@ const Addlibrarydatabase = () => {
                   key={index}
                 />
               ))}
-=======
-=======
->>>>>>> 69a5815cfeb9895109061898e57d955b461208ae
 
               { search_loading? <Box
               sx={{
@@ -522,10 +509,6 @@ const Addlibrarydatabase = () => {
                   />
                 ))}
               </Grid>}
-<<<<<<< HEAD
->>>>>>> 69a5815cfeb9895109061898e57d955b461208ae
-=======
->>>>>>> 69a5815cfeb9895109061898e57d955b461208ae
             </Grid>
          
         </Grid>

@@ -99,41 +99,6 @@ export const forgotPassword = async (payload) => {
     };
   }
 };
-
-export const validationSchema = Yup.object().shape({
-  firstname: Yup.string().required('Enter your firstname'),
-  lastname: Yup.string()
-    .required('Username is required'),
-  //   .min(6, 'Username must be at least 6 characters')
-  //   .max(20, 'Username must not exceed 20 characters'),
-  email: Yup.string()
-    .required('Email is required')
-    .email('Email is invalid'),
-  password: Yup.string()
-    .required('Password is required')
-    .min(6, 'Password must be at least 6 characters')
-    .max(40, 'Password must not exceed 40 characters'),
-  acceptTerms: Yup.bool().oneOf([true], 'Accept Terms is required')
-});
-
-export const loginvalidationSchema = Yup.object().shape({
-  email: Yup.string()
-    .required('Email is required')
-    .email('Email is invalid'),
-  password: Yup.string()
-    .required('Password is required')
-    .min(6, 'Password must be at least 6 characters')
-    .max(40, 'Password must not exceed 40 characters'),
-});
-
-export const forgetvalidationSchema = Yup.object().shape({
-
-  email: Yup.string()
-    .required('Email is required')
-    .email('Email is invalid'),
-
-});
-
 export const changePassword = async (payload) => {
   let result = {};
   try {
@@ -226,7 +191,7 @@ export const contactSupport = async (payload) => {
 export const getCarddetails = async () => {
   try {
     const res = await axios.get(
-      `${appConfig.appUrl}/api/fetch_payment_method`,
+      `localhost:3000/api/fetch_payment_method`,
       { withCredentials: 'true' }
     );
     return res.data.data
@@ -273,7 +238,7 @@ export const yearsubcription = async () => {
 export const cancelusersubcription = async () => {
   try {
     const res = await axios.get(
-      `${appConfig.appUrl}/api/cancel_subscription`,
+      `localhost:3000/api/cancel_subscription`,
       { withCredentials: 'true' }
     );
     return res

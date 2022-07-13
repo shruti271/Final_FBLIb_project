@@ -21,6 +21,8 @@ function AccountSettings() {
 
   const { accountSettings } = useSelector((state) => state.accountSettings);
   const [usercardInfo, setusercardInfo] = React.useState([])
+  const [loadingname ,setLoadingname]= useState(false)
+  const [loading ,setLoading]= useState(false)
   const {
     register: personalFormRegister,
     handleSubmit: personalFormHandleSubmit,
@@ -284,52 +286,53 @@ function AccountSettings() {
                               : "hidden",
                         }}
                       />
-                    </Box>
-                    <Box
-                      border={0.5}
-                      borderRadius={5}
-                      borderColor="#EBEBEB"
-                      display="flex"
-                      justifyContent="center"
-                      alignItems="center"
-                      sx={{
-                        opacity:
-                          loadingname === "personal" ? (loading ? 0.5 : 1) : 1,
-                        disabled: loading ? true : false,
-                      }}
-                    >
-                      <Stack
-                        direction={"column"}
-                        width="90%"
-                        marginTop={3}
-                        marginBottom={3}
-                      >
-                        <form
-                          onSubmit={personalFormHandleSubmit(onPersonalFormSubmit)}
-                        >
-                          <Stack direction={"row"} spacing={2}>
-                            <Stack direction={"column"} width="50%">
-                              <Typography>First Name</Typography>
-                              <InputBase
-                                className={classes.inputField}
-                                label="outlined"
-                                variant="outlined"
-                                placeholder="firstname"
-                                {...personalFormRegister("first_name", {
-                                  required: "firstname is required",
-                                })}
-                                name="first_name"
-                                fullWidth
-                              />
-                            </Typography>
-                            <Typography style={{ marginLeft: 3 }}>
-                              {/* {usercardInfo[card].map((newcard,id)=> */}
-                              <b>Visa ending in {usercardInfo.last4}</b>
-                            </Typography>
-                          </Stack>
-                      </Stack>
-                      </fo
+                    </Stack>
                   </Stack>
+                </Box>
+                <Box
+                  border={0.5}
+                  borderRadius={5}
+                  borderColor="#EBEBEB"
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  sx={{
+                    opacity:
+                      loadingname === "personal" ? (loading ? 0.5 : 1) : 1,
+                    disabled: loading ? true : false,
+                  }}
+                >
+                  <Stack
+                    direction={"column"}
+                    width="90%"
+                    marginTop={3}
+                    marginBottom={3}
+                  >
+                    <form
+                      onSubmit={personalFormHandleSubmit(onPersonalFormSubmit)}
+                    >
+                      <Stack direction={"row"} spacing={2}>
+                        <Stack direction={"column"} width="50%">
+                          <Typography>First Name</Typography>
+                          <InputBase
+                            className={classes.inputField}
+                            label="outlined"
+                            variant="outlined"
+                            placeholder="firstname"
+                            {...personalFormRegister("first_name", {
+                              required: "firstname is required",
+                            })}
+                            name="first_name"
+                            fullWidth
+                          />
+                          <Typography style={{ marginLeft: 3 }}>
+                            {/* {usercardInfo[card].map((newcard,id)=> */}
+                            <b>Visa ending in {usercardInfo.last4}</b>
+                          </Typography>
+                        </Stack>
+                      </Stack>
+                      </form>
+                  </Stack> 
                 </Box>
               </Box>
 
@@ -385,8 +388,8 @@ function AccountSettings() {
               </Box>
             </Stack>
           </Stack>
-        </Grid>
-      </Grid>
+        </Grid >
+      </Grid >
     </>
   );
 }

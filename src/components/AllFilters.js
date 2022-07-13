@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
 // import { makeStyles } from '@material-ui/core';
 // import { Box, Button, Divider, Grid, InputBase, Popover, Stack, Typography } from '@mui/material';
 // import React, { useState } from 'react'
@@ -1513,9 +1511,6 @@
 // }
 
 // export default AllFilters
-=======
-=======
->>>>>>> 69a5815cfeb9895109061898e57d955b461208ae
 import { makeStyles } from "@material-ui/core";
 import {
   Box,
@@ -3964,7 +3959,3 @@ function AllFilters(props) {
 }
 
 export default AllFilters;
-<<<<<<< HEAD
->>>>>>> 69a5815cfeb9895109061898e57d955b461208ae
-=======
->>>>>>> 69a5815cfeb9895109061898e57d955b461208ae
