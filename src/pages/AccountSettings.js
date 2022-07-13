@@ -87,7 +87,7 @@ function AccountSettings() {
               <b>Account Settings</b>
             </Typography>
 
-            <Stack width="80%" direction={"column"} marginTop={5}>
+            <Stack  direction={"column"} marginTop={8}>
               <Box>
                 <Typography variant="h6">Personal Information</Typography>
                 <Box
