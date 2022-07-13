@@ -5,17 +5,17 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import { Stack } from "@mui/material";
-// import appLogo from "../assets/appLogo.svg";
-import libraryicon from "../assets/Vector.svg";
-import  staricon from "../assets/Vectora.svg";
-import contact from "../assets/contact.svg";
+import {  Stack } from "@mui/material";
+import appLogo from "../assets/appLogo.svg";
 import logout from "../assets/Logout.svg";
 import { logoutUser } from "../services";
+// import SaveIcon from "../SvgIcons/SaveIcon";
+import AdLibraryDatabaseIcon from "../SvgIcons/AdLibraryDatabaseIcon";
+import ContactIcon from "../SvgIcons/ContactIcon";
 import fbaddlogo from "../assets/fbaddlogo.png"
+import SaveIcon from "../SvgIcons/SaveIcon";
 
 const useStyles = makeStyles(() => ({
- 
   title: {
     fontFamily: "Neue Haas Grotesk Display Pro",
     fontStyle: "normal !important",
@@ -147,8 +147,8 @@ export const CustomSidebar = ({ isOpen }) => {
                 paddingBottom: "20px",
                 marginLeft: "25px",
               }}
-            >
-              <img alt="libraryicon" src={libraryicon} />
+            >              
+              <AdLibraryDatabaseIcon fill={ selectedMenuItem === sideBarMenuItems.ADLIBSDATABASE ?"#00CBFF":"grey"} />
               <Typography sx={{ marginLeft: "26px" }}>
                 Adilbrary Database
               </Typography>
@@ -178,8 +178,11 @@ export const CustomSidebar = ({ isOpen }) => {
                 marginLeft: "23px",
               }}
             >
-              <img alt="staricon" src={staricon} sx={{ marginLeft: "20px" }} />
-              <Typography sx={{ marginLeft: "33px" }}>Saved Ads</Typography>
+              
+
+              <SaveIcon fill={ selectedMenuItem === sideBarMenuItems.SAVEDADS?"#00CBFF":"grey"} />
+
+              <Typography sx={{ marginLeft: "26px" }}>Saved Ads</Typography>
             </Stack>
           </Box>
 
@@ -206,8 +209,8 @@ export const CustomSidebar = ({ isOpen }) => {
                 marginLeft: "22px",
               }}
             >
-              <img alt="contact support" src={contact} />
-              <Typography sx={{ marginLeft: "33px" }}>
+              <ContactIcon fill={selectedMenuItem === sideBarMenuItems.SUPPORT?"#00CBFF":"grey"}/>
+              <Typography sx={{ marginLeft: "26px" }}>
                 Contact Support
               </Typography>
             </Stack>
