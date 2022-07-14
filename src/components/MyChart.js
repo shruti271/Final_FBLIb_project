@@ -3,6 +3,7 @@ import Highcharts from "highcharts";
 import { date } from "yup";
 
 const MyChart = (props) => {
+    console.log(props.chartData?.map((a)=>a.date))
     const option = {
       chart: {
         height: "210px",
@@ -25,7 +26,10 @@ const MyChart = (props) => {
       },
       xAxis: {
         // type: "datetime",
-        caregory:props.chartData?.map((a)=>a.date)
+        // labels: {
+        //     format: "{value:%b - %e}",
+        //   },
+        categories:props.chartData?.map((a)=>a.date)
       },
       yAxis: {
         title: {
@@ -33,7 +37,7 @@ const MyChart = (props) => {
         },
         labels: {
           formatter: function () {
-            return this.value / 1000 + "%";
+            return this.value ;
           },
         },
       },
@@ -52,15 +56,16 @@ const MyChart = (props) => {
           fillColor: {
             linearGradient: {
               color:
-                "linear-gradient(180deg, rgba(250, 177, 67, 0) 0%, rgba(250, 177, 67, 0.2) 100%)",
+              "linear-gradient(360deg, rgba(181, 237, 255, 0.3) 0.17%, rgba(0, 203, 255, 0.6) 28.76%, rgba(103, 33, 255, 0.8) 85.95%)",
               x1: 0,
               y1: 0,
               x2: 0,
               y2: 1,
             },
             stops: [
-              [0, "#0070C0"],
-              [1, "#FFFFFF"],
+                [0.3, "rgba(103, 33, 255, 0.8 )"],
+                [0.6, "rgba(0, 203, 255, 0.4)"],
+                [0.8, "rgba(181, 237, 255, 0.3)"],
             ],
           },
   
@@ -78,89 +83,10 @@ const MyChart = (props) => {
         {
           type: "area",
           name: "Sentiment",
-          data: [
-            null,
-            null,
-            null,
-            null,
-            null,
-            6,
-            11,
-            32,
-            110,
-            235,
-            369,
-            640,
-            1005,
-            1436,
-            2063,
-            3057,
-            4618,
-            6444,
-            9822,
-            15468,
-            20434,
-            24126,
-            27387,
-            29459,
-            31056,
-            31982,
-            32040,
-            31233,
-            29224,
-            27342,
-            26662,
-            26956,
-            27912,
-            28999,
-            28965,
-            27826,
-            25579,
-            25722,
-            24826,
-            24605,
-            24304,
-            23464,
-            23708,
-            24099,
-            24357,
-            24237,
-            24401,
-            24344,
-            23586,
-            22380,
-            21004,
-            17287,
-            14747,
-            13076,
-            12555,
-            12144,
-            11009,
-            10950,
-            10871,
-            10824,
-            10577,
-            10527,
-            10475,
-            10421,
-            10358,
-            10295,
-            10104,
-            9914,
-            9620,
-            9326,
-            5113,
-            5113,
-            4954,
-            4804,
-            4761,
-            4717,
-            4368,
-            4018,
-          ],
+          data: props.chartData?.map((a)=>a.noOfCopyAds),
           color: "#0070C0",
-          pointStart: Date.UTC(2010, 0, 1),
-          pointInterval: 3600 * 1000 * 12,
+        //   pointStart: Date.UTC(2010, 0, 1),
+        //   pointInterval: 0.5,
         },
       ],
     };
@@ -170,6 +96,7 @@ const MyChart = (props) => {
       </>
     );
   };
+  
   
 
   export default  MyChart;

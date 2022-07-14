@@ -416,7 +416,8 @@ console.log("pppppppppppppppppppppppppppppppppp)))))))))))))))))))))))))))))))))
               
             </Grid>
             <Grid>
-            <Stack sx={{marginLeft:2,display:"flex",justifyContent:"center", alignItems:"center"}}>
+            <Stack sx={{marginTop:8, display:"flex",justifyContent:"center", alignItems:"center"}} direction="column">
+              <Typography variant="h6"><b>Ad Count Over 30 Days</b></Typography>
               {/* <Mychart chartData={ThumbnailData?.history} /> */}
 <MyChart  chartData={ThumbnailData?.history}/>
               </Stack>
