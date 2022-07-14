@@ -191,7 +191,7 @@ const savedAdsClienSideReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         savedAdsLocal: action.payload,
-        savedIds: action.payload.map((abc) => abc.id),
+        savedIds: action.payload!==""?action.payload.map((abc) => abc.id):[],
         filteredData: action.payload,
       };
     case CREATE_SAVEADSCLIENTSIDE_START:

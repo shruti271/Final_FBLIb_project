@@ -650,6 +650,8 @@ const FilterDataReducer = (state = initialState, action) => {
 
         filteredData: [
           ...state.allData.filter((ads) => {
+            console.log( Object.keys(ads.history).length -1)
+            console.log(Object.values(ads.history)[Object.keys(ads.history).length -1]['noOfCopyAds'])
             // console.log(ads?.pageInfo?.platforms[0]?.likes);
             // console.log(ads?.pageInfo?.platforms[1]?.followers);
             // console.log("#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
@@ -702,20 +704,16 @@ const FilterDataReducer = (state = initialState, action) => {
                     ads?.startDate
                 : true) &&
               (state.sortFilter?.type === "AdCountIncrease"
-                ? Object.values(ads.history)[
-                    Object.keys(ads.history).length - 1
-                  ] >
+                ? Object.values(ads.history)[Object.keys(ads.history).length -1]['noOfCopyAds'] >
                   Object.values(ads.history)[
                     Object.keys(ads.history).length - 2
-                  ]
+                  ]['noOfCopyAds']
                 : true) &&
               (state.sortFilter?.type === "AdCountDecrease"
-                ? Object.values(ads.history)[
-                    Object.keys(ads.history).length - 1
-                  ] <
+                ? Object.values(ads.history)[Object.keys(ads.history).length -1]['noOfCopyAds'] <
                   Object.values(ads.history)[
                     Object.keys(ads.history).length - 2
-                  ]
+                  ]['noOfCopyAds']
                 : true)
             );
           }),
