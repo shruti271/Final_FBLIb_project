@@ -13,13 +13,16 @@ import {
 import { Grid } from "@mui/material";
 import { CircularProgress, Stack } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { isAlive, login } from "../../services/index";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../../services/index";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { themeLight, globalStyles } from "../../css/globalcss";
 import { loginvalidationSchema } from "./../../utils/validationSchemas";
+import { setIsAlive } from "../../redux/ducks/session";
 
 const Login = () => {
+  const dispatch = useDispatch();
   const global = globalStyles();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -33,28 +36,17 @@ const Login = () => {
 
   const submitLoginform = async (data) => {
     setLoading(true);
-    try {
-      const response = await login(data);
-      if (response.success) {
-        navigate("/");
-      }
-    } catch {
-      console.log("some error occour");
-    }
+    
+    login(data).then((data)=>{
+      // dispatch(setIsAlive(true));
+      localStorage.setItem("is_alive", true);
+      navigate("/");
+    },(error)=>{
+      // dispatch(setIsAlive(false));
+      localStorage.setItem("is_alive", false);
+      setLoading(false);
+    });
   };
-  const getAlive = async () => {
-    const res = await isAlive();
-    if (res.success && res?.data?.data) {
-      if (res?.data?.data?.is_alive === true) {
-        navigate("/");
-      }
-    }
-  };
-
-  useEffect(() => {
-    setLoading(false);
-    getAlive();
-  }, []);
 
   return (
     <MuiThemeProvider theme={themeLight}>

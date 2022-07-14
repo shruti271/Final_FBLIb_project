@@ -33,8 +33,6 @@ const MainLayout = () => {
   const { savedAds } = useSelector((state) => state.savedAds);
 
   // const [isOpen, setIsOpen] = React.useState(false);
-  
-  
   const drawerOpenKey = 'drawerOpen';
   const defaultOpen = localStorage.getItem(drawerOpenKey) === 'true';
   const [isOpen, setIsOpen] = React.useState(defaultOpen);
@@ -48,9 +46,11 @@ const MainLayout = () => {
     dispatch(loadAccountSettingsStart());
     dispatch(getSetCatSatus());
   }, [dispatch]);
-useEffect(()=>{
-  dispatch(loadSavedAdsClientSideStart(savedAds))
-},[dispatch,savedAds])
+
+  useEffect(()=>{
+    dispatch(loadSavedAdsClientSideStart(savedAds))
+  },[dispatch,savedAds])
+  
   return (
     <>
       <Box sx={{ display: "flex" }}>

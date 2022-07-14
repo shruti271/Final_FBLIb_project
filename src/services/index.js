@@ -20,66 +20,33 @@ export const signUp = async (payload) => {
 };
 
 export const login = async (payload) => {
-  let result = {};
-  try {
-    const res = await axios.post(
-      `${process.env.REACT_APP_API_URL}/api/login/`,
-      payload,
-      {
-        withCredentials: true,
-      }
-    );
-    result = res.data || {};
-    localStorage.setItem("is_alive", true);
-    return { success: true, data: result, message: null };
-  } catch (err) {
-    return {
-      success: false,
-      message: err || "something went wrong",
-      data: null,
-    };
-  }
+  await axios.post(
+    `${process.env.REACT_APP_API_URL}/api/login/`,
+    payload,
+    {
+      withCredentials: true,
+    }
+  );
 };
-export const logoutUser = async () => {
-  let result = {};
-  try {
-    const res = await axios.get(
-      `${process.env.REACT_APP_API_URL}/api/logout/`,
-      {
-        withCredentials: true,
-      }
-    );
-    result = res.data || {};
-    localStorage.setItem("is_alive", false);
-    return { success: true, data: result, message: null };
-  } catch (err) {
-    return {
-      success: false,
-      message: err || "something went wrong",
-      data: null,
-    };
-  }
+export const logoutUser = () => {
+  return axios.get(
+    `${process.env.REACT_APP_API_URL}/api/logout/`,
+    {
+      withCredentials: true,
+    }
+  );
 };
 
-export const isAlive = async () => {
-  let result = {};
-  try {
-    const res = await axios.get(
-      `${process.env.REACT_APP_API_URL}/api/isalive/`,
-      {
-        withCredentials: "true",
+export const isAlive = () => {
+  return axios.get(
+    `${process.env.REACT_APP_API_URL}/api/isalive/`,
+    {
+      withCredentials: "true",
+      headers: {
+        'Content-Type': 'application/json',
       }
-    );
-    result = res.data || {};
-    localStorage.setItem("is_alive", res.data.data.is_alive);
-    return { success: true, data: result, message: null };
-  } catch (err) {
-    return {
-      success: false,
-      message: err || "something went wrong",
-      data: null,
-    };
-  }
+    }
+  );
 };
 
 export const forgotPassword = async (payload) => {

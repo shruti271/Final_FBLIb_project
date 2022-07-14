@@ -122,7 +122,7 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
   const navigate = useNavigate();
 
   return (
-    <Grid item lg={3} md={4} xs={4} key={index}>
+    <Grid item lg={4} md={3} xs={3} key={index}>
       <Stack
         sx={{
           border: "2px solid #F6F6FB",
