@@ -22,6 +22,7 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 // import { logoutUser } from "../services";
 import { useSelector } from "react-redux";
 import useStyles from "../css/mediapage";
+import { logoutUser } from "../services";
 
 const drawerWidth = 240;
 
@@ -52,7 +53,7 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
     { name: "Account Setings", icon: settings, url: "/accountSettings" },
     { name: "Billing", icon: billing, url: "/billing" },
     { name: "Contact Support", icon: contactUs, url: "/contactSupport" },
-    { name: "Logout", icon: billing },
+    { name: "Logout", icon: billing, url: "/auth/login" },
   ];
   const [isMenuOptionActive, setIsMenuOptionActive] = React.useState("");
   const navigate = useNavigate();
@@ -64,6 +65,13 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
     console.log(window.location.pathname);
     console.log("}}}}}}}}}}}");
   });
+  const userLogout = async () => {
+    const res = await logoutUser();
+    if (res.success && res?.data?.data) {
+      localStorage.clear();
+      navigate("/auth/login");
+    }
+  };
   const handleCloseMenu = (e) => {
     setAnchoerEL(null);
   };
@@ -76,7 +84,7 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
   // };
   useEffect(() => {
     setIsMenuOptionActive(window.location.pathname);
-  },[]);
+  }, []);
   return (
     <>
       <AppBar open={isOpen}>
@@ -110,7 +118,11 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
                 <Box className={classes.avtar}>
                   <NotificationsIcon />
                 </Box>
-                <Box className={classes.avtar} onClick={handleOpenMenu} sx={{cursor:"pointer"}}>
+                <Box
+                  className={classes.avtar}
+                  onClick={handleOpenMenu}
+                  sx={{ cursor: "pointer" }}
+                >
                   <PersonIcon />
                 </Box>
 
@@ -186,6 +198,11 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
                         <MenuItem
                           key={index}
                           onClick={() => {
+                            if (item.url === "/auth/login") {
+                              navigate(item.url);
+                              userLogout();
+                            }
+
                             navigate(item.url);
                             handleCloseMenu();
 
