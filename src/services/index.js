@@ -189,9 +189,10 @@ export const contactSupport = async (payload) => {
 };
 
 export const getCarddetails = async () => {
+  console.log("getCarddetails---------------------------------------->")
   try {
     const res = await axios.get(
-      `localhost:3000/api/fetch_payment_method`,
+      `${process.env.REACT_APP_API_URL}/api/fetch_payment_method`,
       { withCredentials: 'true' }
     );
     return res.data.data
@@ -211,8 +212,7 @@ export const monthsubscription = async () => {
         accept: "application/json",
       },
       withCredentials: true
-
-    }).then((res) => window.open(res.data.data.url))
+    }).then((res) => window.open(res.data.data.url,"_self"))
       .catch((error) => console.log(error))
   }
   catch {
@@ -238,10 +238,10 @@ export const yearsubcription = async () => {
 export const cancelusersubcription = async () => {
   try {
     const res = await axios.get(
-      `localhost:3000/api/cancel_subscription`,
+      `${process.env.REACT_APP_API_URL}/api/cancel_subscription`,
       { withCredentials: 'true' }
     );
-    return res
+    return res.data.data
   } catch (err) {
     return {
       success: false,

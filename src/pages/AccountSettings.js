@@ -11,18 +11,21 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import viss from "../assets/viss.svg";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { updateAccountSettingsStart } from "../redux/ducks/accountSettings";
+import { cancelusersubcription, getCarddetails } from "../services/index";
 import useStyles from "../css/mediapage";
-
+import BeatLoader from "react-spinners/BeatLoader";
 function AccountSettings() {
   const classes = useStyles();
   const dispatch = useDispatch();
-
+  var card = null
   const { accountSettings, loading } = useSelector(
     (state) => state.accountSettings
   );
   const [loadingname, setLoadingname] = useState("");
-
+  const [usercardInfo, setusercardInfo] = React.useState([])
+  const navigate = useNavigate();
   const {
     register: personalFormRegister,
     handleSubmit: personalFormHandleSubmit,
@@ -49,6 +52,7 @@ function AccountSettings() {
   useEffect(() => {
     personalFormSetValue("first_name", accountSettings?.first_name);
     personalFormSetValue("last_name", accountSettings?.last_name);
+    getData()
   }, [accountSettings, personalFormSetValue]);
 
   const onPersonalFormSubmit = async (data) => {
@@ -64,6 +68,18 @@ function AccountSettings() {
     dispatch(updateAccountSettingsStart({ data, id: accountSettings?.id }));
   };
 
+  const getData = async () => {
+    const res = await getCarddetails();
+    console.log("first----------------------***", usercardInfo);
+    setusercardInfo(res)
+  }
+  const cancelSubscription =async() => {
+    const response = await cancelusersubcription()
+    console.log("888888888888888888888",response)
+    if (response.status ==="deactivated") {
+      getData()
+    }
+  }
   return (
     <>
       <Grid container>
@@ -301,7 +317,7 @@ function AccountSettings() {
                   </Stack>
                 </Box>
               </Box>
-
+              {usercardInfo.status === "Canceled" || usercardInfo.status === "Inactive" ? "" : 
               <Box marginTop={5}>
                 <Typography variant="h6">Billing</Typography>
                 <Box
@@ -339,7 +355,9 @@ function AccountSettings() {
                               />
                             </Typography>
                             <Typography style={{ marginLeft: 3 }}>
-                              <b>Visa ending in 4436</b>
+                              {usercardInfo.last4 === "" ? (<BeatLoader />) :
+                                (<b>Visa ending in {usercardInfo.last4}</b>)
+                              }
                             </Typography>
                           </Stack>
                         </Stack>
@@ -369,7 +387,7 @@ function AccountSettings() {
                   </Stack>
                 </Box>
               </Box>
-
+}
               <Box marginTop={5}>
                 <Typography variant="h6">Subscription</Typography>
                 <Box
@@ -394,19 +412,28 @@ function AccountSettings() {
                       }}
                     >
                       <Stack direction={"column"}>
-                        <Typography variant="h6">
+                        <Typography>
                           Subscription Status:
-                          <b>true</b>
+                          {usercardInfo===[] ? (<BeatLoader />) :
+                            (<b>{usercardInfo.status}</b>)
+                          }
                         </Typography>
                       </Stack>
                       <Stack direction={"column"}>
                         <Typography>
-                          Plan:<b>PRO</b>
+                          Plan:
+                          {usercardInfo === [] ? (<BeatLoader />) :
+                            (<b>{usercardInfo.plan_type}</b>)
+                          }
                         </Typography>
                       </Stack>
                       <Stack direction={"column"}>
                         <Typography>
-                          Next Renew:<b>May 20,2022</b>
+                          Next Renew:
+                          {console.log("[[[[[[[[[[[[[]]]]]]]]]]]]]]]]]", usercardInfo)}
+                          {usercardInfo === [] ? (<BeatLoader />) :
+                            (<b>{usercardInfo.end_date}</b>)
+                          }
                         </Typography>
                       </Stack>
                       <Stack direction={"column"}>
@@ -415,19 +442,36 @@ function AccountSettings() {
                           style={{ display: "flex", justifyContent: "right" }}
                           item
                         >
-                          <Box justifyContent={"right "}>
-                            <Button
-                              type="Submit"
-                              variant="contained"
-                              color="primary"
-                              style={{
-                                borderRadius: 50,
-                                backgroundColor: "#00CBFF",
-                              }}
-                            >
-                              Change Payment Method
-                            </Button>
-                          </Box>
+                          {usercardInfo.status === "Canceled" || usercardInfo.status === "Inactive" ?
+                            (<Box justifyContent={"right "}>
+                              <Button
+                                type="Submit"
+                                variant="contained"
+                                color="primary"
+                                style={{
+                                  borderRadius: 50,
+                                  backgroundColor: "#00CBFF",
+                                }}
+                                onClick={() => navigate("/payment")}
+                              >
+                                Active Your plan
+                              </Button>
+                            </Box>) :
+                            (<Box justifyContent={"right "}>
+                              <Button
+                                type="Submit"
+                                variant="contained"
+                                color="primary"
+                                style={{
+                                  borderRadius: 50,
+                                  backgroundColor: "#00CBFF",
+                                }}
+                                onClick={cancelSubscription}
+                              >
+                                Cancel subscription
+                              </Button>
+                            </Box>)
+                          }
                         </Grid>
                       </Stack>
                     </Stack>
