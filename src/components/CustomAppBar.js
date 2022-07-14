@@ -24,12 +24,12 @@ import { useSelector } from "react-redux";
 import useStyles from "../css/mediapage";
 import { logoutUser } from "../services";
 
-const drawerWidth = 240;
+const drawerWidth = 276;
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
-  width: `calc(100% - calc(${theme.spacing(7)} + 1px))`,
+  width: `calc(100% - calc(${theme.spacing(7)} + 20px))`,
   transition: theme.transitions.create(["width", "margin"], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
