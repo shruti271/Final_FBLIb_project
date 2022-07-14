@@ -15,18 +15,16 @@ ChartJS.register(...registerables );
 // var gradient = ctx.createLinearGradient(0, 0, 0,300);
 // gradient.addColorStop(0, 'rgba(242, 153, 74, 0.5)');   
 // gradient.addColorStop(1, 'rgba(242, 153, 74, 0)');
-export const  Mychart =({chartData})=>{
- 
-
+export const  SingleLineChart =({chartData})=>{
     const state = {
         // labels: ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34"],
         labels:chartData?.map((a)=>a.date),
         datasets: [
           {
               label: 'No of Ads',
-            fill: true,
-            lineTension: 0.5,
-            // backgroundColor: "#00CBFF",
+            fill: false,
+            lineTension: 1,
+            backgroundColor:"inear-gradient(360deg, rgba(181, 237, 255, 0.3) 0.17%, rgba(0, 203, 255, 0.6) 28.76%, rgba(103, 33, 255, 0.8) 85.95%)",// ["rgba(103, 33, 255, 0.8 )","rgba(0, 203, 255, 0.4)","rgba(181, 237, 255, 0.3)"],
             pointBackgroundColor: "white",
             pointBorderColor: "black",
             borderColor: "rgba(200, 189, 255, 1)",
@@ -36,8 +34,8 @@ export const  Mychart =({chartData})=>{
             // pointHighlightStroke: "#ff6c23",
             // backgroundColor:" linear-gradient(360deg, rgba(181, 237, 255, 0.3) 0.17%, rgba(0, 203, 255, 0.6) 28.76%, rgba(103, 33, 255, 0.8) 85.95%)",
             // backgroundColor:"rgba(0, 203, 255, 0.5)",           
-            borderWidth: 2,
-            strokeColor : "#ff6c23",
+            borderWidth: 5,
+            strokeColor : "linear-gradient(360deg, rgba(181, 237, 255, 0.3) 0.17%, rgba(0, 203, 255, 0.6) 28.76%, rgba(103, 33, 255, 0.8) 85.95%)",
             color:"white",
             data: chartData?.map((a)=>a.noOfCopyAds),
           },
@@ -51,9 +49,9 @@ export const  Mychart =({chartData})=>{
     //     console.log("*************************")
     //   })
     return (
-        <Box width={"100%"}>
+        <Box width={"500px"}>
          
-        <Line id="linechart"
+        <Line 
           data={state}
           options={{
             title: {
@@ -62,11 +60,26 @@ export const  Mychart =({chartData})=>{
               fontSize: 20,
             },
             legend: {
-              display: true,
-              position: "right",
+              display: false,
+
+              position: "none",
             },
             datasetStrokeWidth : 3,
             pointDotStrokeWidth : 4,
+            scales: {
+              "x-axis-1": {
+                display: false,
+                gridLines: {
+                  display: false
+                }
+              },
+              "y-axis-1": {
+                type: "linear",
+                display: false,
+                // position: "left"
+              }
+          },
+          
             // plotOptions: {
             //     area: {
             //       fillColor: {
@@ -92,6 +105,22 @@ export const  Mychart =({chartData})=>{
             //       },
             //       threshold: null,
             //     },
+            //     // Line:{
+            //     //   fillColor: {
+            //     //     linearGradient: {
+            //     //       color:
+            //     //         "linear-gradient(360deg, rgba(181, 237, 255, 0.3) 0.17%, rgba(0, 203, 255, 0.6) 28.76%, rgba(103, 33, 255, 0.8) 85.95%)",
+            //     //       x1: 0,
+            //     //       y1: 0,
+            //     //       x2: 0,
+            //     //       y2: 1,
+            //     //     },
+            //     //     stops: [
+            //     //       [0.3, "rgba(181, 237, 255, 0.3)"],[0.6, "rgba(0, 203, 255, 0.6)"],
+            //     //       [1, "rgba(103, 33, 255, 0.8)"],
+            //     //     ],
+            //     //   },
+            //     // }
             //   },
          
           }}

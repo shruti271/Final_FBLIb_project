@@ -5,13 +5,17 @@ import LargePageLogo from "../../assets/largePageLogo.svg";
 import Firsrcardimg from "../../assets/FirstCardImg.svg";
 import facebook from "../../assets/facebook.svg";
 import instragram from "../../assets/instragram.svg";
-import { Mychart } from "../../components/Graph";
+import { Mychart, SingleLineChart } from "../../components/Graph";
 import MyChart from "../../components/MyChart";
+import { DummyChart } from "../../components/DummyChart";
+
 
 function AdDeatails({ ThumbnailData }) {
   const classes = useStyles();
-console.log(ThumbnailData?.history)
-console.log("pppppppppppppppppppppppppppppppppp)))))))))))))))))))))))))))))))))ppppppppppppppp")
+  console.log(ThumbnailData?.history);
+  console.log(
+    "pppppppppppppppppppppppppppppppppp)))))))))))))))))))))))))))))))))ppppppppppppppp"
+  );
   return (
     <>
       <Grid container sx={{ marginTop: "36px" }}>
@@ -38,7 +42,7 @@ console.log("pppppppppppppppppppppppppppppppppp)))))))))))))))))))))))))))))))))
                     aria-label="FirstCard"
                     // style={{ width: "100%", height: "100%" }}
                     style={{ width: "30px", height: "30px" }}
-                  // sx={{ width: 27, height: 27 }}
+                    // sx={{ width: 27, height: 27 }}
                   ></Avatar>
                   {/* <img
                     src={ThumbnailData?.pageInfo?.logo}
@@ -55,12 +59,15 @@ console.log("pppppppppppppppppppppppppppppppppp)))))))))))))))))))))))))))))))))
                     color: "#2B2F42",
                   }}
                 >
-                  {ThumbnailData?.pageInfo?.name ? ThumbnailData.pageInfo?.name : " "}
+                  {ThumbnailData?.pageInfo?.name
+                    ? ThumbnailData.pageInfo?.name
+                    : " "}
                 </Typography>
               </Box>
 
               <Box>
-                <Typography variant="span"
+                <Typography
+                  variant="span"
                   sx={{
                     fontWeight: 500,
                     // fontSize: "18px",
@@ -146,14 +153,23 @@ console.log("pppppppppppppppppppppppppppppppppp)))))))))))))))))))))))))))))))))
                     </Box>
                   </Grid>
                   <Grid item xs={2}>
-                    <Avatar sx={{
-                      backgroundColor: '#00CBFF',
-                      display: "grid",
-                      width: "52px",
-                      height: "51px",
-                      padding: "5px 10px 10px"
-                    }}>
-                      <span style={{ fontSize: "25px", lineHeight: "24px", padding: "2px", fontWeight: "700" }}>
+                    <Avatar
+                      sx={{
+                        backgroundColor: "#00CBFF",
+                        display: "grid",
+                        width: "52px",
+                        height: "51px",
+                        padding: "5px 10px 10px",
+                      }}
+                    >
+                      <span
+                        style={{
+                          fontSize: "25px",
+                          lineHeight: "24px",
+                          padding: "2px",
+                          fontWeight: "700",
+                        }}
+                      >
                         {ThumbnailData?.noOfCopyAds
                           ? ThumbnailData.noOfCopyAds
                           : " "}
@@ -177,7 +193,7 @@ console.log("pppppppppppppppppppppppppppppppppp)))))))))))))))))))))))))))))))))
                     color: "white",
                     marginBottom: "15px",
                     marginRight: "6px",
-                    marginTop: "10px"
+                    marginTop: "10px",
                   }}
                   onClick={() => {
                     window.open(ThumbnailData?.purchaseURL, "_blank", "");
@@ -204,15 +220,15 @@ console.log("pppppppppppppppppppppppppppppppppp)))))))))))))))))))))))))))))))))
                   paddingLeft: "16px",
                   paddingRight: "16px",
                 }}
-              // disabled={ThumbnailData?.adMediaType === "image" ? false : true}
+                // disabled={ThumbnailData?.adMediaType === "image" ? false : true}
               >
                 <a
                   href={ThumbnailData?.thumbBucketUrl}
                   style={{ textDecoration: "none", color: "white" }}
                   download
-                // disabled={
-                //   ThumbnailData?.adMediaType === "image" ? false : true
-                // }
+                  // disabled={
+                  //   ThumbnailData?.adMediaType === "image" ? false : true
+                  // }
                 >
                   {" "}
                   Download Thumbnail
@@ -312,7 +328,7 @@ console.log("pppppppppppppppppppppppppppppppppp)))))))))))))))))))))))))))))))))
                     src={ThumbnailData?.pageInfo?.logo}
                     aria-label="FirstCard"
                     style={{ width: "100%", height: "100%" }}
-                  // sx={{ width: 27, height: 27 }}
+                    // sx={{ width: 27, height: 27 }}
                   ></Avatar>
                   {/* <img
                     src={ThumbnailData?.pageInfo?.logo}
@@ -358,8 +374,8 @@ console.log("pppppppppppppppppppppppppppppppppp)))))))))))))))))))))))))))))))))
                           {socialMedia.name === "Facebook"
                             ? socialMedia.likes + " likes • " + socialMedia.type
                             : socialMedia.followers +
-                            " followers • " +
-                            socialMedia.type}
+                              " followers • " +
+                              socialMedia.type}
                         </Typography>
                       </Stack>
                     </Stack>
@@ -413,13 +429,25 @@ console.log("pppppppppppppppppppppppppppppppppp)))))))))))))))))))))))))))))))))
                   </Stack>
                 </Stack> */}
               </Stack>
-              
             </Grid>
             <Grid>
-            <Stack sx={{marginTop:8, display:"flex",justifyContent:"center", alignItems:"center"}} direction="column">
-              <Typography variant="h6"><b>Ad Count Over 30 Days</b></Typography>
-              {/* <Mychart chartData={ThumbnailData?.history} /> */}
-<MyChart  chartData={ThumbnailData?.history}/>
+              <Stack
+                sx={{
+                  // marginTop: 8,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                direction="column"
+              >
+                <Typography variant="h6">
+                  <b>Ad Count Over 30 Days</b>
+                </Typography>
+                {/* <SingleLineChart chartData={ThumbnailData?.history} /> */}
+                <Box sx={{height:"100px"}}>
+                <MyChart chartData={ThumbnailData?.history} dataBoxVisiblity={true} axisVisiblity={true} fillType={"area"} graphHeight={"400px"}/>
+                </Box>
+                {/* <DummyChart/> */}
               </Stack>
             </Grid>
           </Box>

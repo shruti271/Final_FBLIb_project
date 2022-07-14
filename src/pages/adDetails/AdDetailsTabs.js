@@ -66,6 +66,7 @@ console.log()
       <Box
         sx={{
           width: "100%",
+          marginTop:2,
           typography: "body1",
           justifyContent: "center",
           alignItems: "center",

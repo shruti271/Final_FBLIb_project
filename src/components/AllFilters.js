@@ -2431,7 +2431,7 @@ function AllFilters(props) {
                       style={{ maxWidth: "100px" }}
                       // width="30px"
 
-                      defaultValue={props?.pageFilterInfo?.AdCount?.min}
+                      defaultValue={props?.pageFilterInfo?.AdCount?.min.toString()}
                       onSave={(e) => {
                         console.log(e);
                         console.log("==============================");
@@ -2536,7 +2536,7 @@ function AllFilters(props) {
                       style={{ maxWidth: "100px" }}
                       // width="30px"
 
-                      defaultValue={props?.pageFilterInfo?.AdCount?.max}
+                      defaultValue={props?.pageFilterInfo?.AdCount?.max.toString()}
                       onSave={(e) => {
                         console.log(e);
                         console.log("==============================");
@@ -2929,7 +2929,7 @@ function AllFilters(props) {
                       style={{ maxWidth: "100px" }}
                       // width="30px"
 
-                      defaultValue={props?.pageFilterInfo?.FacebookLikes?.min}
+                      defaultValue={props?.pageFilterInfo?.FacebookLikes?.min.toString()}
                       onSave={(e) => {
                         console.log(e);
                         console.log("==============================");
@@ -3012,7 +3012,7 @@ function AllFilters(props) {
                       style={{ maxWidth: "100px" }}
                       // width="30px"
 
-                      defaultValue={props?.pageFilterInfo?.FacebookLikes?.max}
+                      defaultValue={props?.pageFilterInfo?.FacebookLikes?.max.toString()}
                       onSave={(e) => {
                         console.log(e);
                         console.log("==============================");
@@ -3232,7 +3232,7 @@ function AllFilters(props) {
                       style={{ maxWidth: "100px" }}
                       // width="30px"
 
-                      defaultValue={props?.pageFilterInfo?.InstragramLike?.min}
+                      defaultValue={props?.pageFilterInfo?.InstragramLike?.min.toString()}
                       onSave={(e) => {
                         console.log(e);
                         console.log("==============================");
@@ -3315,7 +3315,7 @@ function AllFilters(props) {
                       style={{ maxWidth: "100px" }}
                       // width="30px"
 
-                      defaultValue={props?.pageFilterInfo?.InstragramLike?.max}
+                      defaultValue={props?.pageFilterInfo?.InstragramLike?.max.toString()}
                       onSave={(e) => {
                         console.log(e);
                         console.log("==============================");

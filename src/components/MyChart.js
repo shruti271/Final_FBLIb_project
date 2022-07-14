@@ -6,8 +6,8 @@ const MyChart = (props) => {
     console.log(props.chartData?.map((a)=>a.date))
     const option = {
       chart: {
-        height: "210px",
-        zoomType: "x",
+        height: props.graphHeight,
+        zoomType: "x",        
       },
       title: {
         text: "",
@@ -24,14 +24,17 @@ const MyChart = (props) => {
       credits: {
         enabled: false,
       },
+   
       xAxis: {
+        visible:props.axisVisiblity,
         // type: "datetime",
         // labels: {
         //     format: "{value:%b - %e}",
         //   },
         categories:props.chartData?.map((a)=>a.date)
       },
-      yAxis: {
+      yAxis: {    
+        visible:props.axisVisiblity,    
         title: {
           text: "",
         },
@@ -42,7 +45,7 @@ const MyChart = (props) => {
         },
       },
       legend: {
-        enabled: true,
+        enabled: props.dataBoxVisiblity,        
         align: "right",
         verticalAlign: "top",
         padding: 0,
@@ -69,30 +72,59 @@ const MyChart = (props) => {
             ],
           },
   
-          lineWidth: 1,
+          lineWidth: 3,
+        //   color:"white",
+        //   lineTension: 0.2,
           states: {
             hover: {
               lineWidth: 1,
             },
           },
           threshold: null,
-        },
+        },      
       },
-  
+   
       series: [
         {
-          type: "area",
-          name: "Sentiment",
+          type: props.fillType,
+          name: "No of ads",
           data: props.chartData?.map((a)=>a.noOfCopyAds),
-          color: "#0070C0",
+        // data:[2,5,7,8,34,45,56,78,89,80,80,],
+        //   color: "blue",
+        
+        // lineTension: 1,
+        marker: {
+            fillColor: '#FFFFFF',
+            lineWidth: 1,
+            lineColor: "black", // inherit from series            
+            radius: 3
+        },
+          color: {
+            linearGradient: {
+                color:
+                "linear-gradient(360deg, rgba(181, 237, 255, 0.3) 0.17%, rgba(0, 203, 255, 0.6) 28.76%, rgba(103, 33, 255, 0.8) 85.95%)",
+                x1: 0,
+                y1: 0,
+                x2: 0,
+                y2: 1,
+              },
+            stops: [
+                [0.3, "rgba(181, 237, 255, 0.3)"],
+                [0.6, "rgba(0, 203, 255, 0.6)"],
+                [0.8, "rgba(103, 33, 255, 0.8)"],
+            ]
+        }
+        //   series: {
+        //     color: 'yellow'
+        // }
         //   pointStart: Date.UTC(2010, 0, 1),
-        //   pointInterval: 0.5,
+        //   pointInterval: 0.5,        
         },
       ],
     };
     return (
       <>
-        <HighchartsReact highcharts={Highcharts} options={option} />
+        <HighchartsReact highcharts={Highcharts} options={option}/>
       </>
     );
   };
