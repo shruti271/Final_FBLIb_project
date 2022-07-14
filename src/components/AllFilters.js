@@ -2441,9 +2441,9 @@ function AllFilters(props) {
                               AdCountvalueStart({
                                 name: "AdCount",
                                 // componentName: props.name,
-                                min: Number(e),
+                                min: Number(e.value),
                                 max: props?.pageFilterInfo?.AdCount?.max,
-                                Message: `Ad Count: ${e}-${props?.pageFilterInfo?.AdCount?.max}`,
+                                Message: `Ad Count: ${e.value}-${props?.pageFilterInfo?.AdCount?.max}`,
                               })
                             );
                             document.getElementById("searchbar").value
