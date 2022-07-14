@@ -1,3 +1,7 @@
+
+
+
+
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -465,20 +469,13 @@ const Addlibrarydatabase = () => {
           
             <Grid
               item
-              xs={12}
+              // xs={12}
               sx={{
                 // opacity: search_loading ? 0.5 : 1,
                 disabled: search_loading ? true : false,
               }}
             >
-              {filteredData?.map((ads, index) => (
-                <ThumbNailBox
-                  adInfo={ads}
-                  index={index}
-                  deleteId={savedIds?.includes(ads.id) ? ads.id : false}
-                  key={index}
-                />
-              ))}
+             
 
               { search_loading? <Box
               sx={{
