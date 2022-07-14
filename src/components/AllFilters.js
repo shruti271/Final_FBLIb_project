@@ -3628,7 +3628,7 @@ function AllFilters(props) {
                   value={props?.pageFilterInfo?.PurchaseType?.selctedButton}
                   onChange={handleButtonType}
                 >
-                  {ctaStatus.map((value)=>{return <FormControlLabel
+                  {ctaStatus.map((value)=>{return <FormControlLabel key={value}
                     value={`${value}`}
                     control={<Radio style={{ color: "#00CBFF" }} />}
                     label={`${value}`}
