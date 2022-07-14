@@ -20,6 +20,8 @@ import {
 } from "../redux/ducks/saveAds_clientSide";
 import pauseButton from "../assets/pauseButton.svg";
 import { srtPostionForScrollValueStart } from "../redux/ducks/filtered_Data";
+import { SingleLineChart } from "./Graph";
+import MyChart from "./MyChart";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -298,11 +300,13 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
         </Grid>
 
         <Box sx={{ marginTop: "20px", marginBottom: "20px" }}>
-          <img
+          {/* <SingleLineChart chartData={adInfo?.history}/> */}
+          <MyChart chartData={adInfo?.history} dataBoxVisiblity={false} axisVisiblity={false} fillType={"line"} graphHeight={"100px"}/>
+          {/* <img
             src={Addgraph}
             alt="addgraph"
             className={classes.AdsImageVideo}
-          />
+          /> */}
         </Box>
         <Box>
           <Button
@@ -313,13 +317,14 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
               background:
                 "linear-gradient(270deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)",
               float: "right",
+              textTransform: 'none'
             }}
             onClick={() => {
               dispatch(srtPostionForScrollValueStart(window.pageYOffset));
               navigate(`/adDeatails/${adInfo.adID}`);
             }}
           >
-            see Details
+            <b>See Details</b>
           </Button>
         </Box>
       </Stack>

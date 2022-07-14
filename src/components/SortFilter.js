@@ -66,7 +66,7 @@ function SortFilter(props) {
       if (newValue === "AdCountIncrease" || newValue === "AdCountDecrease") {
         dispatch(applyallfilters());
       } else {
-        dispatch(SortvalueStart());
+        dispatch(applySavedAdsallfilters());
       }
     } else if (props.name === "SavedPage") {
       if (
