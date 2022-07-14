@@ -16,11 +16,7 @@
     "@testing-library/react": "^13.2.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.27.2",
-<<<<<<< HEAD
-    "chart.js": "^3.8.0",
-=======
     "chart": "^0.1.2",
->>>>>>> 02b60de9c287181cc37e89d5104d79bf35969f98
     "dotenv": "^16.0.1",
     "highcharts": "^10.2.0",
     "highcharts-react-official": "^3.1.0",
