@@ -70,7 +70,7 @@ function AccountSettings() {
 
   const getData = async () => {
     const res = await getCarddetails();
-    console.log("first----------------------***", usercardInfo);
+    console.log("first----------------------------***", usercardInfo);
     setusercardInfo(res)
   }
   const cancelSubscription =async() => {
