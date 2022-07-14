@@ -417,8 +417,8 @@ console.log("pppppppppppppppppppppppppppppppppp)))))))))))))))))))))))))))))))))
             </Grid>
             <Grid>
             <Stack sx={{marginLeft:2,display:"flex",justifyContent:"center", alignItems:"center"}}>
-              <Mychart chartData={ThumbnailData?.history} />
-{/* <MyChart  chartData={ThumbnailData?.history}/> */}
+              {/* <Mychart chartData={ThumbnailData?.history} /> */}
+<MyChart  chartData={ThumbnailData?.history}/>
               </Stack>
             </Grid>
           </Box>
