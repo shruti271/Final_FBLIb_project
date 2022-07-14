@@ -189,7 +189,7 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
                             navigate(item.url);
                             handleCloseMenu();
 
-                            // setIsMenuOptionActive(window.location.pathname);
+                            setIsMenuOptionActive(window.location.pathname);
                           }}
                           style={{
                             background:
