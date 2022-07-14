@@ -278,60 +278,12 @@ const FilterDataReducer = (state = initialState, action) => {
 
         // filteredData: [...state.filteredData],
       };
-    case INCREASE_DECREASE_DATA_START:
-      // const fluctuate_date = [...state.filteredData];
-      // if (state.sortFilter.type === "AdCountIncrease") {
-      //   fluctuate_date.filter((ads) => {
-      //     var cou = Object.keys(ads.history).length;
-      //     if (cou > 1) {
-      //       console.log(
-      //         "llllllllllllllllllllllllllllllllllllllllllllll@@@@@@@@@@@@@@@@@"
-      //       );
-      //       console.log(Object.values(ads.history));
-      //       console.log(
-      //         "llllllllllllllllllllllllllllllllllllllllllllll-@@@@@@@@@@@@@@@@@---------" +
-      //           cou
-      //       );
-      //       return (
-      //         Object.values(ads.history)[Object.keys(ads.history).length - 1] <
-      //         Object.values(ads.history)[Object.keys(ads.history).length - 2]
-      //       );
-      //     }
-      //   });
-      // }
+    case INCREASE_DECREASE_DATA_START:     
       return {
         ...state,
-
         appliedFilters: state.appliedFilters,
-        sortFilter: { ...state.sortFilter, type: "" },
-        // filteredData: [...state.filteredData],
-        filteredData: state.allData,
-        // state.sortFilter.type === "AdCountIncrease"
-        // ?
-        //  [
-        //     ...state.filteredData.filter((ads) => {
-        //       // if()
-        //       var cou = Object.keys(ads.history).length;
-        //       console.log("hereeeeeeeeeeeeeeeeeeeeeeeee");
-        //       if (cou > 1) {
-        //         return (
-        //           Object.values(ads.history)[Object.keys(ads.history).length - 1] <
-        //           Object.values(ads.history)[Object.keys(ads.history).length - 2]
-        //         );
-        //       } else return false;
-        //     }),
-        //   ]
-        // : [
-        //     ...state.filteredData.filter((ads) => {
-        //       var cou = Object.keys(ads.history).length;
-        //       if (cou > 1) {
-        //         return (
-        //           ads.history[ads.history.length - 1] <
-        //           ads.history[ads.history.length - 2]
-        //         );
-        //       } else return false;
-        //     }),
-        //   ],
+        sortFilter: { ...state.sortFilter, type: "" },        
+        filteredData: state.allData,        
       };
     case SORT_TYPE_START:
       const dummy = [...state.filteredData];
@@ -618,21 +570,17 @@ const FilterDataReducer = (state = initialState, action) => {
                     ads?.pageInfo?.platforms[0]?.likes <=
                       state.appliedFilters?.FacebookLikes?.max
                 : true) &&
-              (state.sortFilter?.type === "AdCountIncrease"
-                ? Object.values(ads.history)[
-                    Object.keys(ads.history).length - 1
-                  ] >
+                (state.sortFilter?.type === "AdCountIncrease"
+                ? Object.values(ads.history)[Object.keys(ads.history).length -1]['noOfCopyAds'] >
                   Object.values(ads.history)[
                     Object.keys(ads.history).length - 2
-                  ]
+                  ]['noOfCopyAds']
                 : true) &&
               (state.sortFilter?.type === "AdCountDecrease"
-                ? Object.values(ads.history)[
-                    Object.keys(ads.history).length - 1
-                  ] <
+                ? Object.values(ads.history)[Object.keys(ads.history).length -1]['noOfCopyAds'] <
                   Object.values(ads.history)[
                     Object.keys(ads.history).length - 2
-                  ]
+                  ]['noOfCopyAds']
                 : true)
             );
           }),
@@ -640,21 +588,13 @@ const FilterDataReducer = (state = initialState, action) => {
         appliedFilters: state.appliedFilters,
         // },
       };
-    case APPLY_ALL_FILTER:
-      // console.log(action.payload.componentName);
-      // console.log(")))))))))))))))))))))))))000000000000000000");
+    case APPLY_ALL_FILTER://--done      
       return {
         ...state,
-        // : {
-        //   ...state,
-
         filteredData: [
           ...state.allData.filter((ads) => {
             console.log( Object.keys(ads.history).length -1)
-            console.log(Object.values(ads.history)[Object.keys(ads.history).length -1]['noOfCopyAds'])
-            // console.log(ads?.pageInfo?.platforms[0]?.likes);
-            // console.log(ads?.pageInfo?.platforms[1]?.followers);
-            // console.log("#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+            console.log(Object.values(ads.history)[Object.keys(ads.history).length -1]['noOfCopyAds'])           
             return (
               (state.appliedFilters?.AdCount?.min !== 1 ||
               state.appliedFilters?.AdCount?.max !== 1000
@@ -717,9 +657,7 @@ const FilterDataReducer = (state = initialState, action) => {
                 : true)
             );
           }),
-        ],
-        // appliedFilters: state.appliedFilters,
-        // },
+        ],     
       };
 
     case APPLIED_FILTERS:
