@@ -23,7 +23,7 @@ function AdDeatails({ ThumbnailData }) {
           <Box sx={{ border: "4.97421px solid #F6F6FB" }}>
             <Stack>
               <Box
-                sx={{ display: "flex", marginTop: "13px", marginLeft: "15px" }}
+                sx={{ display: "flex", marginTop: "13px", marginLeft: "20px" }}
               >
                 <Box
                   sx={{
@@ -65,7 +65,7 @@ function AdDeatails({ ThumbnailData }) {
                 </Typography>
               </Box>
 
-              <Box>
+              <Box sx={{marginLeft:2,marginRight:2}}>
                 <Typography
                   variant="span"
                   sx={{
@@ -83,7 +83,7 @@ function AdDeatails({ ThumbnailData }) {
                 </Typography>
               </Box>
 
-              <Box sx={{ width: "98%", height: "20%" }}>
+              <Box sx={{ width: "98%", height: "20%" ,marginLeft:"5px"}}>
                 {ThumbnailData?.adMediaType === "video" ? (
                   <video
                     poster={ThumbnailData?.thumbBucketUrl}
@@ -108,10 +108,10 @@ function AdDeatails({ ThumbnailData }) {
                   />
                 )}
               </Box>
-              <Box>
+              <Box sx={{marginRight:2}}>
                 <Grid container spacing={1}>
                   <Grid item xs={10}>
-                    <Box sx={{ paddingLeft: "15px" }}>
+                    <Box sx={{ paddingLeft: "20px" }}>
                       <Typography
                         sx={{
                           lineHeight: "23px",
@@ -152,7 +152,7 @@ function AdDeatails({ ThumbnailData }) {
                       </Typography>
                     </Box>
                   </Grid>
-                  <Grid item xs={2}>
+                  <Grid item xs={2} sx={{display:"flex",justifyContent:"center",alignItems:"center"}}>
                     <Avatar
                       sx={{
                         backgroundColor: "#00CBFF",
@@ -192,7 +192,7 @@ function AdDeatails({ ThumbnailData }) {
                     height: "31px",
                     color: "white",
                     marginBottom: "15px",
-                    marginRight: "6px",
+                    marginRight: "15px",
                     marginTop: "10px",
                   }}
                   onClick={() => {
@@ -201,7 +201,7 @@ function AdDeatails({ ThumbnailData }) {
                 >
                   <Typography fontStyle={{ color: "white" }} noWrap>
                     {/* Shop Now */}
-                    {ThumbnailData?.ctaStatus}
+                    <b>{ThumbnailData?.ctaStatus}</b>
                   </Typography>
                 </Button>
               </Grid>
@@ -294,7 +294,7 @@ function AdDeatails({ ThumbnailData }) {
               sx={{
                 display: "flex",
                 justifyContent: "center",
-                marginTop: "75px",
+                marginTop: "50px",
                 flexWrap: "nowrap",
               }}
             >
@@ -444,7 +444,7 @@ function AdDeatails({ ThumbnailData }) {
                   <b>Ad Count Over 30 Days</b>
                 </Typography>
                 {/* <SingleLineChart chartData={ThumbnailData?.history} /> */}
-                <Box sx={{height:"100px"}}>
+                <Box sx={{height:"400px"}}>
                 <MyChart chartData={ThumbnailData?.history} dataBoxVisiblity={false} axisVisiblity={true} fillType={"area"} graphHeight={"400px"}/>
                 </Box>
                 {/* <DummyChart/> */}
