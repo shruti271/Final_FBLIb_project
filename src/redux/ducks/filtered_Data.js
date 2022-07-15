@@ -27,6 +27,7 @@ export const ALL_STATUS_START = "ALL_STATUS_START";
 export const ALL_STATUS_SUCCESS = "ALL_STATUS_SUCCESS";
 export const ALL_STATUS_ERROR = "ALL_STATUS_ERROR";
 
+export const REFIX_MIN_MAX_RANGE_IN_SLIDER = "REFIX_MIN_MAX_RANGE_IN_SLIDER";
 export const loadFilteredDataStart = () => ({
   type: LOAD_FILTERDATA,
 });
@@ -145,10 +146,15 @@ export const setCatSatusError = (error) => ({
   payload: error,
 });
 
+export const rangerefixMinMaxSiler = (data) => ({
+  type: REFIX_MIN_MAX_RANGE_IN_SLIDER,
+  payload: data,
+});
+
 const initialState = {
   allData: [],
   filteredData: [],
-  appliedFilters: {
+  appliedFilters: { 
     StartRunningDate: { startdate: "", enddate: "", Message: "" },
     AdStatus: { status: "", Message: "" },
     AdCount: { min: 1, max: 1000, Message: "" },
@@ -156,6 +162,11 @@ const initialState = {
     InstragramLike: { min: 1, max: 10000, Message: "" },
     MediaType: { selectedData: "Video or Photo", Message: "" },
     PurchaseType: { selctedButton: "", Message: "" },
+  },
+  maxRanger: {
+    AdCount: { min: 1,  max: 1000 },
+    FacebookLikes: {  min: 1, max: 100000 },
+    InstragramLike: { min: 1, max: 10000 },
   },
 
   sortFilter: {
@@ -278,12 +289,12 @@ const FilterDataReducer = (state = initialState, action) => {
 
         // filteredData: [...state.filteredData],
       };
-    case INCREASE_DECREASE_DATA_START:     
+    case INCREASE_DECREASE_DATA_START:
       return {
         ...state,
         appliedFilters: state.appliedFilters,
-        sortFilter: { ...state.sortFilter, type: "" },        
-        filteredData: state.allData,        
+        sortFilter: { ...state.sortFilter, type: "" },
+        filteredData: state.allData,
       };
     case SORT_TYPE_START:
       const dummy = [...state.filteredData];
@@ -339,7 +350,7 @@ const FilterDataReducer = (state = initialState, action) => {
         : state.sortFilter?.type === "lastUpdatedTime"
         ? dummy?.sort(
             (firstAd, secondAd) =>
-              firstAd["lastUpdatedTime"]- secondAd["lastUpdatedTime"] 
+              firstAd["lastUpdatedTime"] - secondAd["lastUpdatedTime"]
           )
         : dummy?.sort(
             (firstAd, secondAd) =>
@@ -456,7 +467,7 @@ const FilterDataReducer = (state = initialState, action) => {
         ...state,
         search_loading: false,
         appliedFilters: state.appliedFilters,
-        seactBarFilterData: action.payload,
+        seactBarFilterData: "",
         filteredData:
           // state.searchBarData !==""
           // ?
@@ -570,17 +581,21 @@ const FilterDataReducer = (state = initialState, action) => {
                     ads?.pageInfo?.platforms[0]?.likes <=
                       state.appliedFilters?.FacebookLikes?.max
                 : true) &&
-                (state.sortFilter?.type === "AdCountIncrease"
-                ? Object.values(ads.history)[Object.keys(ads.history).length -1]['noOfCopyAds'] >
+              (state.sortFilter?.type === "AdCountIncrease"
+                ? Object.values(ads.history)[
+                    Object.keys(ads.history).length - 1
+                  ]["noOfCopyAds"] >
                   Object.values(ads.history)[
                     Object.keys(ads.history).length - 2
-                  ]['noOfCopyAds']
+                  ]["noOfCopyAds"]
                 : true) &&
               (state.sortFilter?.type === "AdCountDecrease"
-                ? Object.values(ads.history)[Object.keys(ads.history).length -1]['noOfCopyAds'] <
+                ? Object.values(ads.history)[
+                    Object.keys(ads.history).length - 1
+                  ]["noOfCopyAds"] <
                   Object.values(ads.history)[
                     Object.keys(ads.history).length - 2
-                  ]['noOfCopyAds']
+                  ]["noOfCopyAds"]
                 : true)
             );
           }),
@@ -588,13 +603,17 @@ const FilterDataReducer = (state = initialState, action) => {
         appliedFilters: state.appliedFilters,
         // },
       };
-    case APPLY_ALL_FILTER://--done      
+    case APPLY_ALL_FILTER: //--done
       return {
         ...state,
         filteredData: [
           ...state.allData.filter((ads) => {
-            console.log( Object.keys(ads.history).length -1)
-            console.log(Object.values(ads.history)[Object.keys(ads.history).length -1]['noOfCopyAds'])           
+            console.log(Object.keys(ads.history).length - 1);
+            console.log(
+              Object.values(ads.history)[Object.keys(ads.history).length - 1][
+                "noOfCopyAds"
+              ]
+            );
             return (
               (state.appliedFilters?.AdCount?.min !== 1 ||
               state.appliedFilters?.AdCount?.max !== 1000
@@ -644,20 +663,24 @@ const FilterDataReducer = (state = initialState, action) => {
                     ads?.startDate
                 : true) &&
               (state.sortFilter?.type === "AdCountIncrease"
-                ? Object.values(ads.history)[Object.keys(ads.history).length -1]['noOfCopyAds'] >
+                ? Object.values(ads.history)[
+                    Object.keys(ads.history).length - 1
+                  ]["noOfCopyAds"] >
                   Object.values(ads.history)[
                     Object.keys(ads.history).length - 2
-                  ]['noOfCopyAds']
+                  ]["noOfCopyAds"]
                 : true) &&
               (state.sortFilter?.type === "AdCountDecrease"
-                ? Object.values(ads.history)[Object.keys(ads.history).length -1]['noOfCopyAds'] <
+                ? Object.values(ads.history)[
+                    Object.keys(ads.history).length - 1
+                  ]["noOfCopyAds"] <
                   Object.values(ads.history)[
                     Object.keys(ads.history).length - 2
-                  ]['noOfCopyAds']
+                  ]["noOfCopyAds"]
                 : true)
             );
           }),
-        ],     
+        ],
       };
 
     case APPLIED_FILTERS:
@@ -671,11 +694,13 @@ const FilterDataReducer = (state = initialState, action) => {
         },
       };
     case CLEAR_FILTERDATA:
+      // console.log(action.payload.name + action.payload.type)
+      // console.log("---------------")
       return {
         ...state,
 
-        filteredData: [...state.allData],
-        appliedFilters: action.payload,
+        filteredData:state.allData,
+        appliedFilters:action.payload,
       };
     case CLEAR_SINGLE_FILTER:
       return {
@@ -699,7 +724,17 @@ const FilterDataReducer = (state = initialState, action) => {
       };
     case ALL_STATUS_ERROR:
       return { ...state, error: action.payload };
-
+    case REFIX_MIN_MAX_RANGE_IN_SLIDER:
+      return {
+        ...state,
+        maxRanger: {
+          ...state.maxRanger,
+          [`${action.payload.name}`]: {
+            min: 1,
+            max: action.payload.max,
+          },
+        },
+      };
     default:
       return state;
   }

@@ -3,7 +3,7 @@ import Highcharts from "highcharts";
 import { date } from "yup";
 
 const MyChart = (props) => {
-    console.log(props.chartData?.map((a)=>a.date))
+    // console.log(props.chartData?.map((a)=>a.date))
     const option = {
       chart: {
         height: props.graphHeight,
