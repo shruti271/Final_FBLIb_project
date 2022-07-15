@@ -59,9 +59,9 @@ function AdDeatails({ ThumbnailData }) {
                     color: "#2B2F42",
                   }}
                 >
-                  {ThumbnailData?.pageInfo?.name
+                  <b>{ThumbnailData?.pageInfo?.name
                     ? ThumbnailData.pageInfo?.name
-                    : " "}
+                    : " "}</b>
                 </Typography>
               </Box>
 
@@ -121,9 +121,9 @@ function AdDeatails({ ThumbnailData }) {
                         }}
                         noWrap
                       >
-                        {ThumbnailData?.displayURL
-                          ? ThumbnailData.displayURL
-                          : " "}
+                      <b>  {ThumbnailData?.displayURL
+                          ? ThumbnailData.displayURL.replace("HTTPS://","")
+                          : " "}</b>
                       </Typography>
                       <Typography
                         style={{
@@ -445,7 +445,7 @@ function AdDeatails({ ThumbnailData }) {
                 </Typography>
                 {/* <SingleLineChart chartData={ThumbnailData?.history} /> */}
                 <Box sx={{height:"100px"}}>
-                <MyChart chartData={ThumbnailData?.history} dataBoxVisiblity={true} axisVisiblity={true} fillType={"area"} graphHeight={"400px"}/>
+                <MyChart chartData={ThumbnailData?.history} dataBoxVisiblity={false} axisVisiblity={true} fillType={"area"} graphHeight={"400px"}/>
                 </Box>
                 {/* <DummyChart/> */}
               </Stack>

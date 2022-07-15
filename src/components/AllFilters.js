@@ -1543,6 +1543,7 @@ import {
   FilterAfterSearchStart,
   MediaTypevalueStart,
   rangerefixMinMaxSiler,
+  searchPhraseStart,
   searchStart,
   SortvalueStart,
   statusValueStart,
@@ -2119,12 +2120,16 @@ useEffect(()=>{
                 if (props.name === "AllAdsPage") {
                   if (e.key === "Enter") {
                     console.log("com indiseeeeeeeeeeeeeeeeeee");
-                    dispatch(
+                    if(props.search_type==="All these words")
+                    {dispatch(
                       searchStart({
-                        type: props.search_type,
+                        // type: props.search_type,
                         data: e.currentTarget.value,
                       })
-                    );
+                    );}
+                    else
+                    {dispatch(searchPhraseStart({data:e.currentTarget.value}))}
+
                     dispatch(FilterAfterSearchStart());
                   }
                   if (e.target.value.length === 0) {
@@ -3747,16 +3752,24 @@ useEffect(()=>{
                 <Button
                   disabled={props.loading}
                   variant="outlined"
-                  style={{
-                    // background: "#00CBFF",
-                    borderRadius: 30,
-                    fontSize: "18px",
-                    borderColor: "#00CBFF",
+                  // style={{
+                  //   // background: "#00CBFF",
+                  //   borderRadius: 30,
+                  //   fontSize: "18px",
+                  //   borderColor: "#00CBFF",
+                  //   textTransform: "none",
+                  //   paddingLeft: "16px",
+                  //   paddingRight: "16px",
+                  //   marginBottom: "10px",
+                  //   color: "#00CBFF",
+                  // }}
+                  sx={{
                     textTransform: "none",
-                    paddingLeft: "16px",
-                    paddingRight: "16px",
-                    marginBottom: "10px",
+                    borderRadius: 50,
+                    fontWeight: 600,                    
+                    borderColor: "#00CBFF",
                     color: "#00CBFF",
+                    borderWidth: 2,
                   }}
                   onClick={() => {
                     const emptyFilter = {};

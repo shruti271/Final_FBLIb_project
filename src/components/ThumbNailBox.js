@@ -175,11 +175,11 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
               marginRight: "12px",
             }}
           >
-            {`(${adInfo?.pageInfo?.platforms[0].likes} likes)`}
+            {`(${Intl.NumberFormat().format(adInfo?.pageInfo?.platforms[0]?.likes)} likes)`}
           </Typography>
         </Box>
-        <Box style={{ maxHeight:"200px"}}
-        >
+        {/* <Box style={{ maxHeight:"200px"}} */}
+        <Box>
           {adInfo.adMediaType === "video" ? (
             //   <ReactSimpleVideoPlayer
             //   url={adInfo?.bucketMediaURL}
@@ -197,7 +197,7 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
               //   backgroundRepeat: 'no-repeat',
               //   backgroundPosition: 'center'
               // }}
-             style={{ maxHeight:"200px"}}
+            //  style={{ maxHeight:"400px"}}
               autoPlay={false}
               className={classes.AdsImageVideo}
               controls
@@ -205,7 +205,7 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
           ) : adInfo?.adMediaType === "image" ? (
             <img
               src={adInfo?.bucketMediaURL}
-              alt="thumbnail" style={{maxHeight:"200px"}}
+              alt="thumbnail" style={{maxHeight:"400px"}}
               className={classes.AdsImageVideo}
             />
           ) : (

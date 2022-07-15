@@ -11,10 +11,17 @@ export const SORT_TYPE_START = "SORT_TYPE_START";
 export const STATUS_START = "STATUS_START";
 export const FACEBOOKLIKES_START = "FACEBOOKLIKES_START";
 export const SET_POSTION_SCROLL = "SET_POSTION_SCROLL";
+
 export const SEARCH_START = "SEARCH_START";
 export const SEARCH_SUCCESS = "SEARCH_SUCCESS";
 export const EMPTY_SEARCH_SUCCESS = "EMPTY_SEARCH_SUCCESS";
 export const SEARCH_ERROR = "SEARCH_ERROR";
+
+export const SEARCH_PHRASE_START = "SEARCH_PHRASE_START";
+export const SEARCH_PHRASE_SUCCESS = "SEARCH_PHRASE_SUCCESS";
+export const EMPTY_PHRASE_SEARCH_SUCCESS = "EMPTY_PHRASE_SEARCH_SUCCESS";
+export const SEARCH_PHRASE_ERROR = "SEARCH_PHRASE_ERROR";
+
 export const ALL_FILTER_AFTER_SEARCH_SUCCESS =
   "ALL_FILTER_AFTER_SEARCH_SUCCESS";
 export const INCREASE_DECREASE_DATA_START = "INCREASE_DECREASE_DATA_START";
@@ -124,6 +131,21 @@ export const searchSuccess = (Ads) => ({
 
 export const searchError = (error) => ({
   type: SEARCH_ERROR,
+  payload: error,
+});
+
+export const searchPhraseStart = (Ads) => ({
+  type: SEARCH_PHRASE_START,
+  payload: Ads,
+});
+
+export const searchPhraseSuccess = (Ads) => ({
+  type: SEARCH_PHRASE_SUCCESS,
+  payload: Ads,
+});
+
+export const searchPhraseError = (error) => ({
+  type: SEARCH_PHRASE_ERROR,
   payload: error,
 });
 
@@ -421,15 +443,17 @@ const FilterDataReducer = (state = initialState, action) => {
       };
    
     case SEARCH_SUCCESS:
+      console.log(Object.keys(action.payload).length)
+      console.log("opopopopopopopopopopoppppppppppppppppppppppppp")
       return {
         ...state,
         search_loading: false,
-        appliedFilters: state.appliedFilters,
-        seactBarFilterData: action.payload,
+        // appliedFilters: state.appliedFilters,
+        seactBarFilterData: Object.keys(action.payload).length?action.payload:[],
         filteredData:
           // state.searchBarData !==""
           // ?
-          action.payload
+          Object.keys(action.payload).length
             ? action.payload.filter(
                 (ads) =>
                   (state.appliedFilters?.AdCount?.min !== 0 ||
@@ -464,7 +488,7 @@ const FilterDataReducer = (state = initialState, action) => {
                           state.appliedFilters?.FacebookLikes?.max
                     : true)
               )
-            : null,
+            : [],
         // : state.filteredData,
       };
 
@@ -474,7 +498,72 @@ const FilterDataReducer = (state = initialState, action) => {
         search_loading: false,
         error: action.payload,
       };
-    case ALL_FILTER_AFTER_SEARCH_SUCCESS:
+   
+      case SEARCH_PHRASE_START:
+        return {
+          ...state,
+          search_loading: true,
+          searchBarData: action.payload.data,         
+        };
+     
+      case SEARCH_PHRASE_SUCCESS:
+        console.log(Object.keys(action.payload).length)
+        console.log("opopopopopopopopopopoppppppppppppppppppppppppp")
+        return {
+          ...state,
+          search_loading: false,
+          // appliedFilters: state.appliedFilters,
+          seactBarFilterData: Object.keys(action.payload).length?action.payload:[],
+          filteredData:
+            // state.searchBarData !==""
+            // ?
+            Object.keys(action.payload).length
+              ? action.payload.filter(
+                  (ads) =>
+                    (state.appliedFilters?.AdCount?.min !== 0 ||
+                    state.appliedFilters?.AdCount?.max !== 1000
+                      ? ads.noOfCopyAds >= state.appliedFilters?.AdCount?.min &&
+                        ads.noOfCopyAds <= state.appliedFilters?.AdCount?.max
+                      : true) &&
+                    (state.appliedFilters?.MediaType?.selectedData === "" ||
+                    state.appliedFilters?.MediaType?.selectedData ===
+                      "Video or Photo"
+                      ? true
+                      : ads.adMediaType ===
+                        state.appliedFilters?.MediaType?.selectedData) &&
+                    (state.appliedFilters?.AdStatus?.status !== ""
+                      ? ads?.status === state.appliedFilters?.AdStatus?.status
+                      : true) &&
+                    (state.appliedFilters?.StartRunningDate?.startdate &&
+                    state.appliedFilters?.StartRunningDate?.enddate
+                      ? state.appliedFilters?.StartRunningDate?.startdate <=
+                          ads?.startDate &&
+                        state.appliedFilters?.StartRunningDate?.enddate >=
+                          ads?.startDate
+                      : true) &&
+                    (state.appliedFilters?.FacebookLikes?.min !== 0 ||
+                    state.appliedFilters?.FacebookLikes?.max !== 1000
+                      ? state.appliedFilters?.FacebookLikes?.max === 0
+                        ? ads?.pageInfo?.platforms[0]?.likes >=
+                          state.appliedFilters?.FacebookLikes?.min
+                        : ads?.pageInfo?.platforms[0]?.likes >=
+                            state.appliedFilters?.FacebookLikes?.min &&
+                          ads?.pageInfo?.platforms[0]?.likes <=
+                            state.appliedFilters?.FacebookLikes?.max
+                      : true)
+                )
+              : [],
+          // : state.filteredData,
+        };
+  
+      case SEARCH_PHRASE_ERROR:
+        return {
+          ...state,
+          search_loading: false,
+          error: action.payload,
+        };
+     
+      case ALL_FILTER_AFTER_SEARCH_SUCCESS:
       console.log(state.seactBarFilterData);
             // console.log(ads?.pageInfo?.platforms[1]?.followers);
             console.log("#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");

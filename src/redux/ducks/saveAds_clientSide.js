@@ -456,9 +456,9 @@ const savedAdsClienSideReducer = (state = initialState, action) => {
         search_loading: false,
         // SavedAppliedFilters: state.SavedAppliedFilters,
         // searchBarData: state.searchBarData,
-        searchedSavedData: action.payload,
+        searchedSavedData: Object.keys(action.payload).length?action.payload:[],
         filteredData:
-          action.payload.length !== 0
+        Object.keys(action.payload).length
             ? action.payload.filter(
                 (ads) =>
                   (state.SavedAppliedFilters?.AdCount?.min !== 0 ||
@@ -495,7 +495,7 @@ const savedAdsClienSideReducer = (state = initialState, action) => {
                           state.SavedAppliedFilters?.FacebookLikes?.max
                     : true)
               )
-            : state.savedAdsLocal,
+            : [],
 
         // filteredData: [
         //   ...state.allData.filter((ads) => {

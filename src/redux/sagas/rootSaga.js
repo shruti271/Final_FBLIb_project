@@ -21,8 +21,8 @@ import {
 } from "./../ducks/accountSettings";
 import { LOAD_SUBALLMEDIA_START } from "../ducks/subAllAds";
 import { handleGetSubAllMedia } from "./handlers/subAllAds";
-import { handleGetSearchedData } from "./handlers/searchBar";
-import { ALL_STATUS_START, SEARCH_START } from "../ducks/filtered_Data";
+import { handleGetSearchedData, handleGetSearchedPhraseData } from "./handlers/searchBar";
+import { ALL_STATUS_START, SEARCH_PHRASE_START, SEARCH_START } from "../ducks/filtered_Data";
 import { handleGetSavedAdsSearchedData } from "./handlers/save_searchAds";
 import { ALL_SAVED_ADS_SEARCH_START } from "../ducks/saveAds_clientSide";
 import { handleGetCatStatus } from "./handlers/allSastus";
@@ -65,8 +65,11 @@ function* onLoadAllCatSatus() {
 function* onLoadSavedAdSearchedAds() {
   yield takeLatest(ALL_SAVED_ADS_SEARCH_START, handleGetSavedAdsSearchedData);
 }
+function* onLoadSavedAdSearchedPhhraseAds() {
+  yield takeLatest(SEARCH_PHRASE_START, handleGetSearchedPhraseData);
+}
 const mediaSagas = [fork(onLoadMeida)];
-const SavedAdSearchSagas = [fork(onLoadSavedAdSearchedAds)];
+const SavedAdSearchSagas = [fork(onLoadSavedAdSearchedAds),fork(onLoadSavedAdSearchedPhhraseAds)];
 
 const savedAdsSagas = [
   fork(onLoadSavedAds),
