@@ -542,7 +542,11 @@ const savedAdsClienSideReducer = (state = initialState, action) => {
               state.SavedAppliedFilters?.AdCount?.max !== 1000
                 ? ads.noOfCopyAds >= state.SavedAppliedFilters?.AdCount?.min &&
                   ads.noOfCopyAds <= state.SavedAppliedFilters?.AdCount?.max
-                : true) &&
+                : true)&&
+                (state.SavedAppliedFilters?.PurchaseType?.selctedButton !== ""
+                  ? ads.ctaStatus ===
+                    state.SavedAppliedFilters?.PurchaseType?.selctedButton
+                  : true) &&
               (state.SavedAppliedFilters?.FacebookLikes?.min !== 1 ||
               state.SavedAppliedFilters?.FacebookLikes?.max !== 100000
                 ? ads?.pageInfo?.platforms[0]?.likes >=

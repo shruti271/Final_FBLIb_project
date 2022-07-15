@@ -1564,7 +1564,6 @@ import {
   SavedAdsMediaTypevalueStart,
   SavedAdssearchStart,
   SavedAdssearchValueStart,
-  SavedAdsSortvalueStart,
   SavedAdsstatusValueStart,
   savedShnageSearchType,
 } from "../redux/ducks/saveAds_clientSide";
@@ -1945,7 +1944,7 @@ useEffect(()=>{
       );
       document.getElementById("searchbar").value
         ? dispatch(FilterAfterSearchStart()) //dispatch(searchStart(props.search))
-        : dispatch(applyallfilters());
+        : 
 
       dispatch(SortvalueStart());
     } else if (props.name === "SavedPage") {
@@ -2262,15 +2261,7 @@ useEffect(()=>{
             open={open}
             add={open ? "simple-popover" : undefined}
             onClose={() => {
-              setAnchorEl(null);
-              // document.getElementById("searchbar").value
-              //   ? dispatch(searchStart(searchBarData))
-              //   : dispatch(applyallfilters({componentName:props.name}));
-              // searchBarData?.keywords !== []
-              //   ? dispatch(searchStart(searchBarData))
-              //   : dispatch(applyallfilters());
-
-              // dispatch(SortvalueStart());
+              setAnchorEl(null);              
             }}
             transformOrigin={{
               horizontal: "left",
@@ -2294,8 +2285,7 @@ useEffect(()=>{
                       Message: `running date ${format(
                         item.selection.startDate,
                         "yyyy-MM-dd"
-                      )} to ${format(item.selection.endDate, "yyyy-MM-dd")}`,
-                      // componentName: props.name,
+                      )} to ${format(item.selection.endDate, "yyyy-MM-dd")}`,                     
                     })
                   );
 
@@ -3787,7 +3777,9 @@ useEffect(()=>{
                           PurchaseType: { selctedButton: "", Message: "" }
                         }));
                        
-                    
+                        document.getElementById("searchbar").value
+                        ? dispatch(FilterAfterSearchStart()) //dispatch(searchStart(props.search))
+                        : dispatch(applyallfilters());
                     
                     } else if (props.name === "SavedPage") {
                       dispatch(
@@ -3801,6 +3793,11 @@ useEffect(()=>{
                           PurchaseType: { selctedButton: "", Message: "" },
                         })
                       );
+                      document.getElementById("searchbar").value
+                      ? dispatch(SavedAdsFilterAfterSearchStart())
+                      : dispatch(applySavedAdsallfilters());
+
+                      // dispatch(applySavedAdsallfilters());
                       // Object.keys(props?.pageFilterInfo).map(
                       //   (filter, index) => {
                       //     const FilterRemoveDat = [];
