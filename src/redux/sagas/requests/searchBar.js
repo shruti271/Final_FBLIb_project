@@ -14,11 +14,26 @@ export function requestSearchData(payload) {
   return axiosInstance.post(
     `api/filters/`,
     // {keywords:payload.data.split(" ")},
-    {  keywords: payload.type ==="All these words"? payload.data.split(" ") :  payload.data.split(",") },
+    {  keywords:  payload.data.trim().split(" ") },//payload.type ==="All these words"? payload.data.split(" ") :  payload.data.split(",") },
     // {  keywords:  payload.data.split(",")},
 
     // { keywords: ["flash  " , "65% off"] },
 
+    {
+      withCredentials: true,
+    }
+  );
+}
+
+
+export function requestSearchPhraseData(payload) {
+  // console.log(payload.data.split(","));
+  // console.log(
+  //   "??????????????????????????????????????????????????????????????????????????????????????????" 
+  // );
+  return axiosInstance.post(
+    `api/phrase_search/`,   {phrase:payload.data} ,
+    // {  phrase: payload.type ==="All these words"? payload.data.split(" ") :  payload.data.split(",") },    
     {
       withCredentials: true,
     }

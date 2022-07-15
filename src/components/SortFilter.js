@@ -16,6 +16,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch } from "react-redux";
 import {
   applyallfilters,
+  applysortingfilters,
   fluctuatedDataEnd,
   SetSortOrdervalueStart,
   SortvalueStart,
@@ -66,7 +67,7 @@ function SortFilter(props) {
       if (newValue === "AdCountIncrease" || newValue === "AdCountDecrease") {
         dispatch(applyallfilters());
       } else {
-        dispatch(applySavedAdsallfilters());
+        dispatch(applysortingfilters());
       }
     } else if (props.name === "SavedPage") {
       if (
