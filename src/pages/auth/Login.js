@@ -93,7 +93,7 @@ const Login = () => {
                       <Grid item xs={12}>
                         <TextField
                           type="email"
-                          placeholder="Enter email"
+                          placeholder="Email adderss"
                           label="Email"
                           variant="outlined"
                           fullWidth
@@ -121,7 +121,7 @@ const Login = () => {
                             style={{ color: "#00CBFF", cursor: "pointer" }}
                           >
                             {" "}
-                            Forget Password?{" "}
+                            Forgot Password?{" "}
                           </Typography>
                         </Box>
                       </Grid>

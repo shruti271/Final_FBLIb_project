@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { Avatar, Box, Button, Grid, Stack, Tooltip, Typography } from "@mui/material";
+import { Avatar, Box, Button, Grid, Link, Stack, Tooltip, Typography } from "@mui/material";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   createSavedAdsStart,
@@ -178,7 +178,7 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
             {`(${adInfo?.pageInfo?.platforms[0].likes} likes)`}
           </Typography>
         </Box>
-        <Box style={{ maxHeight:"200px"}}
+        <Box style={{ maxHeight: "200px" }}
         >
           {adInfo.adMediaType === "video" ? (
             //   <ReactSimpleVideoPlayer
@@ -197,7 +197,7 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
               //   backgroundRepeat: 'no-repeat',
               //   backgroundPosition: 'center'
               // }}
-             style={{ maxHeight:"200px"}}
+              style={{ maxHeight: "200px" }}
               autoPlay={false}
               className={classes.AdsImageVideo}
               controls
@@ -205,7 +205,7 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
           ) : adInfo?.adMediaType === "image" ? (
             <img
               src={adInfo?.bucketMediaURL}
-              alt="thumbnail" style={{maxHeight:"200px"}}
+              alt="thumbnail" style={{ maxHeight: "200px" }}
               className={classes.AdsImageVideo}
             />
           ) : (
@@ -224,21 +224,20 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
               style={{ alignItems: "baseline" }}
             >
               {/* <Typography sx={{ textDecoration: 'underline', }}>{adInfo.status}</Typography> */}
-              { adInfo.status ==="Active"?<Typography >{adInfo.status}</Typography>:<Typography sx={{color:"red"}}>{adInfo.status}</Typography>}
+              {adInfo.status === "Active" ? <Typography >{adInfo.status}</Typography> : <Typography sx={{ color: "red" }}>{adInfo.status}</Typography>}
               <Tooltip title="Redirect to shop link">
-              <img
-                src={Shareicon}
-                alt="Shareicon"
-                className={classes.shareicon}
-                onClick={(e) => {
-                  console.log(adInfo?.purchaseURL)
-                  console.log("ccccccccccujygftukytu7satdaustgdsaudwegdywgdigvajdgy")
-                  // e.preventDefault();
-                  window.open(adInfo?.purchaseURL, "_blank", "");
-                  // window.location.target="_blank"
-                  // window.location.href=adInfo?.purchaseURL;
-                }}
-              />
+                <img
+                  src={Shareicon}
+                  alt="Shareicon"
+                  className={classes.shareicon}
+                  onClick={(e) => {
+                    console.log(adInfo?.purchaseURL)
+                    // e.preventDefault();
+                    window.open(adInfo?.purchaseURL, "_blank", "");
+                    // window.location.target="_blank"
+                    // window.location.href=adInfo?.purchaseURL;
+                  }}
+                />
               </Tooltip>
               {deleteId ? (
                 <img
@@ -263,7 +262,7 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
                   }}
                 />
               )}
-
+        
               <Typography color="#c0c0c0" className={classes.AdsText}>
                 Started Running : {adInfo.startDate}
               </Typography>
@@ -301,32 +300,30 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
 
         <Box sx={{ marginTop: "20px", marginBottom: "20px" }}>
           {/* <SingleLineChart chartData={adInfo?.history}/> */}
-          <MyChart chartData={adInfo?.history} dataBoxVisiblity={false} axisVisiblity={false} fillType={"line"} graphHeight={"100px"}/>
+          <MyChart chartData={adInfo?.history} dataBoxVisiblity={false} axisVisiblity={false} fillType={"line"} graphHeight={"100px"} />
           {/* <img
             src={Addgraph}
             alt="addgraph"
             className={classes.AdsImageVideo}
           /> */}
         </Box>
-        <Box>
-          <Button
-            variant="contained"
-            size="small"
-            sx={{
-              borderRadius: "17px",
-              background:
-                "linear-gradient(270deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)",
-              float: "right",
-              textTransform: 'none'
-            }}
-            onClick={() => {
-              dispatch(srtPostionForScrollValueStart(window.pageYOffset));
-              navigate(`/adDeatails/${adInfo.adID}`);
-            }}
-          >
-            <b>See Details</b>
-          </Button>
-        </Box>
+        <Button
+          variant="contained"
+          size="small"
+          sx={{
+            borderRadius: "17px",
+            background:
+              "linear-gradient(270deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)",
+            // minwidth:"350px",
+            textTransform: 'none',
+          }}
+          onClick={() => {
+            dispatch(srtPostionForScrollValueStart(window.pageYOffset));
+            navigate(`/adDeatails/${adInfo.adID}`);
+          }}
+        >
+          <b>See Details</b>
+        </Button>
       </Stack>
     </Grid>
   );
