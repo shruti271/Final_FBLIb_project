@@ -640,6 +640,8 @@ const FilterDataReducer = (state = initialState, action) => {
         ...state,
         filteredData: [
           ...state.allData.filter((ads) => {
+            console.log(state.appliedFilters?.PurchaseType?.selctedButton)
+            console.log("9999999999900000000000000")
             // console.log(Object.keys(ads.history).length - 1);
             // console.log(
             //   Object.values(ads.history)[Object.keys(ads.history).length - 1][
