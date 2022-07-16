@@ -159,6 +159,7 @@ const Addlibrarydatabase = () => {
     postionYoffset,
     search_loading,
     searchType,
+    maxRanger
     // AllAdsPage,
   } = useSelector((state) => state.filteredData);
 
@@ -343,6 +344,7 @@ const Addlibrarydatabase = () => {
                 search={searchBarData}
                 search_type={searchType}
                 loading={search_loading}
+                ranger={maxRanger}
               />
             </Box>
 

@@ -35,6 +35,7 @@ const SavedAds = () => {
     filteredData,
     searchType,
     search_loading,
+    maxRanger
   } = useSelector((state) => state.savedclienads);
   // savedAdsClienSideReducer
   // const { savedAds, loading } = useSelector((state) => state.savedAds);
@@ -86,6 +87,7 @@ const SavedAds = () => {
                   search={searchBarData}
                   search_type={searchType}
                   loading={search_loading}
+                  ranger={maxRanger}
                 />
                 {search_loading ? (
                   <Box
