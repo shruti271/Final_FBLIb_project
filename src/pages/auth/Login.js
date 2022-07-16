@@ -34,7 +34,7 @@ const Login = () => {
     resolver: yupResolver(loginvalidationSchema),
   });
 
-  const submitLoginform = async (data) => {
+  const submitLoginform = (data) => {
     setLoading(true);
     
     login(data).then((data)=>{

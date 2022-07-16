@@ -291,29 +291,9 @@ const Addlibrarydatabase = () => {
   return (
     <>
       <BackTotopbutton />
-      {loading ? (
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <CircularProgress
-            style={{
-              position: "relative",
-              top: 50,
-              left: 50,
-              opacity: 1,
-              zIndex: 1,
-              visibility: loading ? "visible" : "hidden",
-            }}
-          />
-        </Box>
-      ) : (
         <Grid
           container
-          sx={{ opacity: loading ? 0.5 : 1, disabled: loading ? true : false }}
+          sx={{ opacity: loading ? 0.5 : 1, disabled: loading ? true : false, paddingRight:"36px" }}
         >
           <Grid item xs={12}>
             <Box component="main">
@@ -463,61 +443,56 @@ const Addlibrarydatabase = () => {
               })}
             </Grid>
           </Grid>
-          <Grid container justifyContent="flex-end">
+          <Grid container justifyContent="flex-end" sx={{marginTop:"10px"}}>
             <SortFilter loading={search_loading} sortDetail={sortFilter} name={"AllAdsPage"} />
           </Grid>
-          
-            <Grid
-              item
-              // xs={12}
-              sx={{
-                // opacity: search_loading ? 0.5 : 1,
-                disabled: search_loading ? true : false,
-              }}
-            >
-             
+          <Grid
+            item
+            // xs={12}
+            sx={{
+              // opacity: search_loading ? 0.5 : 1,
+              disabled: loading || search_loading ? true : false,
+              width:"100%"
+            }}
+          >
+            
 
-              { search_loading? <Box
+            { loading || search_loading ? <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              width:"100%",
+            }}
+          >
+            <CircularProgress
+              style={{
+                position: "relative",
+                opacity: 1,
+                zIndex: 1,
+                visibility: loading || search_loading  ? "visible" : "hidden",
+              }}
+            />
+          </Box>:<Grid
+              container
+              spacing={2}
               sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
+                marginTop: "5px",
               }}
             >
-              <CircularProgress
-                style={{
-                  position: "relative",
-                  top: 50,
-                  left: 50,
-                  opacity: 1,
-                  zIndex: 1,
-                  visibility: search_loading ? "visible" : "hidden",
-                }}
-              />
-            </Box>:<Grid
-                container
-                spacing={2}
-                sx={{
-                  marginTop: "10px",
-                }}
-              >
-                
-               
-                
-                {filteredData?.map((ads, index) => (
-                // console.log(O)),console.log("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\*********************")  ,// console.log("first", ads),
-                  <ThumbNailBox
-                    adInfo={ads}
-                    index={index}
-                    deleteId={savedIds?.includes(ads.id) ? ads.id : false}
-                    key={index}
-                  />
-                ))}
-              </Grid>}
-            </Grid>
+              {filteredData?.map((ads, index) => (
+              // console.log(O)),console.log("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\*********************")  ,// console.log("first", ads),
+                <ThumbNailBox
+                  adInfo={ads}
+                  index={index}
+                  deleteId={savedIds?.includes(ads.id) ? ads.id : false}
+                  key={index}
+                />
+              ))}
+            </Grid>}
+          </Grid>
          
         </Grid>
-      )}
     </>
   );
 };
