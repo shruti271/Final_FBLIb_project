@@ -156,25 +156,9 @@ export const contactSupport = async (payload) => {
   }
 };
 
-export const getCarddetails = async () => {
-  console.log("getCarddetails---------------------------------------->")
-  try {
-    const res = await axios.get(
-      `${process.env.REACT_APP_API_URL}/api/fetch_payment_method`,
-      { withCredentials: 'true' }
-    );
-    return res.data.data
-  } catch (err) {
-    return {
-      success: false,
-      message: err || "something went wrong",
-    };
-  }
-}
-
 export const monthsubscription = async () => {
   try {
-    await axios.post("http://localhost:8000/api/create_checkout_session/", { lookup_key: "price_1LJcHhSDUd5CnxuZJVxj4oP9" }, {
+    await axios.post(`${process.env.REACT_APP_API_URL}/api/create_checkout_session/`, { lookup_key: "price_1LJcHhSDUd5CnxuZJVxj4oP9" }, {
       headers: {
         "Content-Type": "application/json",
         accept: "application/json",
@@ -190,7 +174,7 @@ export const monthsubscription = async () => {
 
 export const yearsubcription = async () => {
   try {
-    await axios.post("http://localhost:8000/api/create_checkout_session/", { lookup_key: "price_1LJcHhSDUd5CnxuZH9jfkvwr" }, {
+    await axios.post(`${process.env.REACT_APP_API_URL}/api/create_checkout_session/`, { lookup_key: "price_1LJcHhSDUd5CnxuZH9jfkvwr" }, {
       headers: {
         "Content-Type": "application/json",
         accept: "application/json",
