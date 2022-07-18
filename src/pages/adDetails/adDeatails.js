@@ -51,12 +51,14 @@ function AdDeatails({ ThumbnailData }) {
                   /> */}
                 </Box>
                 <Typography
+                variant="h6"
                   style={{
                     fontWeight: 500,
                     // fontSize: "19px",
                     marginLeft: "8px",
                     lineHeight: "30px",
                     color: "#2B2F42",
+                    fontWeight: "bold" 
                   }}
                 >
                   <b>{ThumbnailData?.pageInfo?.name
@@ -67,7 +69,6 @@ function AdDeatails({ ThumbnailData }) {
 
               <Box sx={{marginLeft:2,marginRight:2}}>
                 <Typography
-                  variant="span"
                   sx={{
                     fontWeight: 500,
                     // fontSize: "18px",
@@ -128,10 +129,10 @@ function AdDeatails({ ThumbnailData }) {
                       <Typography
                         style={{
                           fontWeight: 500,
-                          // fontSize: "20px",
                           lineHeight: "30px",
                           letterSpacing: "0.035em",
                           color: "#2B2F42",
+                          fontWeight: "bold" 
                         }}
                       >
                         {/* Solar Cardinal Wind Chime Light */}
@@ -199,7 +200,7 @@ function AdDeatails({ ThumbnailData }) {
                     window.open(ThumbnailData?.purchaseURL, "_blank", "");
                   }}
                 >
-                  <Typography fontStyle={{ color: "white" }} noWrap>
+                  <Typography  variant="h6" fontStyle={{ color: "white" }} noWrap>
                     {/* Shop Now */}
                     <b>{ThumbnailData?.ctaStatus}</b>
                   </Typography>

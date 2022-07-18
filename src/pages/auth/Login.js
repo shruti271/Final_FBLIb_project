@@ -9,6 +9,7 @@ import {
   TextField,
   Button,
   Box,
+  Alert,
 } from "@mui/material";
 import { Grid } from "@mui/material";
 import { CircularProgress, Stack } from "@mui/material";
@@ -26,6 +27,7 @@ const Login = () => {
   const global = globalStyles();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [errormessage,setErrormessage] = useState("")
   const {
     register,
     handleSubmit,
@@ -36,8 +38,7 @@ const Login = () => {
 
   const submitLoginform = (data) => {
     setLoading(true);
-    
-    login(data).then((data)=>{
+    login(data).then((res)=>{
       // dispatch(setIsAlive(true));
       localStorage.setItem("is_alive", true);
       navigate("/");
@@ -45,7 +46,15 @@ const Login = () => {
       // dispatch(setIsAlive(false));
       localStorage.setItem("is_alive", false);
       setLoading(false);
-    });
+      const res = login(data)
+      if(res.error="true") {
+        console.log("bdshfskfusdjfkjk")
+        setErrormessage("User does not exist with us")
+      }
+      if(res.error="true")
+      console.log("bdshfskfusdjfkjk")
+       setErrormessage("Username and Password does not match")
+    })
   };
 
   return (
@@ -144,6 +153,7 @@ const Login = () => {
                         >
                           {errors.password?.message}
                         </Typography>
+                        {errormessage &&  <Alert severity="error">{errormessage}</Alert>}
                       </Grid>
                     </Grid>
                   </form>
