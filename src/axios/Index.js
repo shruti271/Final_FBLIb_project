@@ -13,11 +13,13 @@ axiosInstance.interceptors.response.use(
     return response;
   },
   (error) => {
-    if (error.response.status === 401 ) {
+    if (error.response.status === 401) {
       console.log("----------------")
       localStorage.setItem("is_alive", false);
       window.location.href = "/auth/login";
       return Promise.reject(error);
+    }else if(error.response.status === 403){
+
     }
     return Promise.reject(error);
   }

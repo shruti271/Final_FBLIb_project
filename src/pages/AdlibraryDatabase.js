@@ -479,10 +479,12 @@ const Addlibrarydatabase = () => {
               container
               spacing={2}
               sx={{
-                marginTop: "5px",
+                marginTop: "5px"//,display:"flex",justifyContent:"center",alignItems:"center"
               }}
             >
-              {filteredData?.map((ads, index) => (
+              
+              {filteredData?.length?filteredData?.map((ads, index) => (
+                // console.log(filteredData.length),
               // console.log(O)),console.log("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\*********************")  ,// console.log("first", ads),
                 <ThumbNailBox
                   adInfo={ads}
@@ -490,7 +492,7 @@ const Addlibrarydatabase = () => {
                   deleteId={savedIds?.includes(ads.id) ? ads.id : false}
                   key={index}
                 />
-              ))}
+              )):<Box sx={{display:"flex",justifyContent:"center",alignItems:"center"}}>No Result</Box>}
             </Grid>}
           </Grid>
          

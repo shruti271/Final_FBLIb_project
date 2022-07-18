@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-computed-key */
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -22,8 +23,19 @@ import pauseButton from "../assets/pauseButton.svg";
 import { srtPostionForScrollValueStart } from "../redux/ducks/filtered_Data";
 import { SingleLineChart } from "./Graph";
 import MyChart from "./MyChart";
+import MyCharttt from "./linemy";
 
 const useStyles = makeStyles((theme) => ({
+  fixSizeImage:{
+    // eslint-disable-next-line no-useless-computed-key
+    // ['@media (min-width:780px)']:{height:"300px"},
+    // eslint-disable-next-line no-useless-computed-key
+    // ['@media (min-width:1000px)']:{height:"450px"}
+    // @media screen and (min-width: 480px) {
+    // .wrapper {
+    //   background-color: light green;
+    // }
+  },
   title: {
     background:
       "linear-gradient(270deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)",
@@ -71,10 +83,34 @@ const useStyles = makeStyles((theme) => ({
     border: "1px solid #EBEBEB",
     borderRadius: 3,
   },
-
-  AdsImageVideo: {
+AdsImageSize:{
+  // objectfit: "fill",
+  // ['@media (min-width:400px)']:{height:"190px"},  
+  ['@media (min-width:780px)']:{height:"290px"},  
+  ['@media (min-width:920px)']:{height:"250px"},  
+  // ['@media (min-width:1080px)']:{height:"300px"},
+  ['@media (min-width:1440px)']:{height:"290px"},
+  ['@media (min-width:1700px)']:{height:"410px"},
+  width: "100%",
+  padding: "0",
+  margin: "0",
+  overflowY: "none",
+  outline: "none",
+},
+AdsImage:{
+  width: "100%",
+height:"230px",
+  objectFit: 'fill',  
+  padding: "0",
+  margin: "0",
+  overflowY: "none",
+  outline: "none",
+},
+  AdsVideo: {
     width: "100%",
-    height: "auto",
+    objectFit: 'cover',
+    // objectfit: "fill",
+    // height: "auto",
     padding: "0",
     margin: "0",
     overflowY: "none",
@@ -124,7 +160,7 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
   const navigate = useNavigate();
 
   return (
-    <Grid item lg={4} md={3} xs={3} key={index}>
+    <Grid item lg={3} md={4} xs={4} key={index}>
       <Stack
         sx={{
           border: "2px solid #F6F6FB",
@@ -178,8 +214,8 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
             {`(${Intl.NumberFormat().format(adInfo?.pageInfo?.platforms[0]?.likes)} likes)`}
           </Typography>
         </Box>
-        <Box style={{ maxHeight: "200px" }}
-        >
+        {/* <Box style={{ maxHeight:"400px"}}> */}
+        <div style={{height:"300px"}}>
           {adInfo.adMediaType === "video" ? (
             //   <ReactSimpleVideoPlayer
             //   url={adInfo?.bucketMediaURL}
@@ -190,32 +226,33 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
             // />
             <video
               src={adInfo.bucketMediaURL}
-              poster={adInfo?.thumbBucketUrl}
+              poster={adInfo?.thumbBucketUrl} style={{height:"300px"}}
               // style={{
               //   backgroundImage:
               //     pauseButton,
               //   backgroundRepeat: 'no-repeat',
               //   backgroundPosition: 'center'
               // }}
-              style={{ maxHeight: "200px" }}
+              // style={{ maxHeight: "200px" }}
+            //  style={{ maxHeight:"320px"}}
               autoPlay={false}
-              className={classes.AdsImageVideo}
+              className={classes.AdsVideo}
               controls
             />
           ) : adInfo?.adMediaType === "image" ? (
             <img
               src={adInfo?.bucketMediaURL}
-              alt="thumbnail" style={{ maxHeight: "200px" }}
-              className={classes.AdsImageVideo}
+              alt="thumbnail" style={{height:"300px"}}
+              className={classes.AdsImage}
             />
           ) : (
             <img
               src={Firstcardimg}
               alt="thumbnail"
-              className={classes.AdsImageVideo}
+              className={classes.AdsImage}
             />
           )}
-        </Box>
+        </div>
 
         <Grid container sx={{ padding: "4px" }}>
           <Grid item sm={9}>
@@ -300,7 +337,8 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
 
         <Box sx={{ marginTop: "20px", marginBottom: "20px" }}>
           {/* <SingleLineChart chartData={adInfo?.history}/> */}
-          <MyChart chartData={adInfo?.history} dataBoxVisiblity={false} axisVisiblity={false} fillType={"line"} graphHeight={"100px"} />
+          {/* <MyChart chartData={adInfo?.history} dataBoxVisiblity={false} axisVisiblity={false} fillType={"line"} graphHeight={"100px"}/> */}
+          <MyCharttt chartData={adInfo?.history} dataBoxVisiblity={false} axisVisiblity={false}  graphHeight={"100px"}/>
           {/* <img
             src={Addgraph}
             alt="addgraph"
