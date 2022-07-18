@@ -69,6 +69,7 @@ function AdDeatails({ ThumbnailData }) {
 
               <Box sx={{marginLeft:2,marginRight:2}}>
                 <Typography
+                  // variant="span"
                   sx={{
                     fontWeight: 500,
                     // fontSize: "18px",

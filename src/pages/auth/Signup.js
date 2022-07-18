@@ -83,7 +83,7 @@ const Signup = () => {
                   <Typography className={global.alreadyaccount} pt={1}>
                     Already Have an account?{" "}
                     <span
-                      style={{ color: "#00CBFF", cursor: "pointer" }}
+                      style={{ color: "#00CBFF", cursor: "pointer",marginLeft:"5px" }}
                       onClick={() => navigate("/auth/login")}
                     >
                       Signin
@@ -120,7 +120,7 @@ const Signup = () => {
                     <Grid item xs={12}>
                       <TextField
                         type="email"
-                        placeholder="Enter email"
+                        placeholder="Email address"
                         label="Email"
                         variant="outlined"
                         fullWidth
@@ -139,7 +139,7 @@ const Signup = () => {
                     <Grid item xs={12}>
                       <TextField
                         placeholder="Password"
-                        label="Password(must be at least 6 charcters)"
+                        label="Password  (must be at least 6 charcters)"
                         variant="outlined"
                         type="password"
                         fullWidth
