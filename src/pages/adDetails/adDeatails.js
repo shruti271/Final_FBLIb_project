@@ -8,6 +8,7 @@ import instragram from "../../assets/instragram.svg";
 import { Mychart, SingleLineChart } from "../../components/Graph";
 import MyChart from "../../components/MyChart";
 import { DummyChart } from "../../components/DummyChart";
+import MyCharttt from "../../components/linemy";
 
 
 function AdDeatails({ ThumbnailData }) {
@@ -85,7 +86,7 @@ function AdDeatails({ ThumbnailData }) {
                 </Typography>
               </Box>
 
-              <Box sx={{ width: "98%", height: "20%" ,marginLeft:"5px"}}>
+              <Box sx={{marginLeft:"5px"}}>
                 {ThumbnailData?.adMediaType === "video" ? (
                   <video
                     poster={ThumbnailData?.thumbBucketUrl}
@@ -100,13 +101,13 @@ function AdDeatails({ ThumbnailData }) {
                   <img
                     src={ThumbnailData?.bucketMediaURL}
                     alt="img1"
-                    className={classes.AdsImageVideo}
+                    className={classes.AdsImage}
                   />
                 ) : (
                   <img
                     src={Firsrcardimg}
                     alt="img1"
-                    className={classes.AdsImageVideo}
+                    className={classes.AdsImage}
                   />
                 )}
               </Box>
@@ -446,8 +447,10 @@ function AdDeatails({ ThumbnailData }) {
                   <b>Ad Count Over 30 Days</b>
                 </Typography>
                 {/* <SingleLineChart chartData={ThumbnailData?.history} /> */}
-                <Box sx={{height:"400px"}}>
+                {/* <Box sx={{height:"400px"}}> */}
+                <Box>
                 <MyChart chartData={ThumbnailData?.history} dataBoxVisiblity={false} axisVisiblity={true} fillType={"area"} graphHeight={"400px"}/>
+                {/* <MyCharttt chartData={ThumbnailData?.history} dataBoxVisiblity={false} axisVisiblity={true}/> */}
                 </Box>
                 {/* <DummyChart/> */}
               </Stack>
@@ -463,9 +466,19 @@ export default AdDeatails;
 
 const useStyles = makeStyles(() => ({
   AdsImageVideo: {
-    objectFit: "contain",
-    resizeMode: "Startch",
-    height: "100%",
-    width: "100%",
+    objectFit: "fill",
+    // resizeMode: "Startch",
+    height: "600px",
+    width: "90%",
+  },
+  AdsImage:{
+    width: "70%",
+    // width:"100%",
+  height:"400px",
+    objectFit: 'fill',  
+    padding: "0",
+    margin: "0",
+    // overflowY: "none",
+    // outline: "none",
   },
 }));

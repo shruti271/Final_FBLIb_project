@@ -2063,6 +2063,7 @@ useEffect(()=>{
                         variant="outlined"
                         sx={{
                           borderRadius: 50,
+                          textTransform: "none",
                           fontWeight: 600,
                           borderColor: "#00CBFF",
                           color: "#00CBFF",
@@ -2715,6 +2716,7 @@ useEffect(()=>{
                   variant="outlined"
                   sx={{
                     borderRadius: 50,
+                    textTransform: "none",
                     fontWeight: 600,
                     borderColor: "#00CBFF",
                     color: "#00CBFF",
@@ -2842,6 +2844,7 @@ useEffect(()=>{
                       borderRadius: 50,
                       fontWeight: 600,
                       borderColor: "#00CBFF",
+                      textTransform: "none",
                       color: "#00CBFF",
                       height: "35px",
                       width: "80px",
@@ -3138,7 +3141,7 @@ useEffect(()=>{
                   variant="outlined"
                   sx={{
                     borderRadius: 50,
-                    fontWeight: 600,
+                    fontWeight: 600,textTransform: "none",
                     borderColor: "#00CBFF",
                     color: "#00CBFF",
                     borderWidth: 2,
@@ -3452,7 +3455,7 @@ useEffect(()=>{
                   disabled={props.loading}
                   variant="outlined"
                   sx={{
-                    borderRadius: 50,
+                    borderRadius: 50,textTransform: "none",
                     fontWeight: 600,
                     borderColor: "#00CBFF",
                     color: "#00CBFF",
@@ -3576,7 +3579,7 @@ useEffect(()=>{
                     variant="outlined"
                     sx={{
                       borderRadius: 50,
-                      fontWeight: 600,
+                      fontWeight: 600,textTransform: "none",
                       borderColor: "#00CBFF",
                       color: "#00CBFF",
                       height: "35px",
@@ -3760,8 +3763,9 @@ useEffect(()=>{
                     color: "#00CBFF",
                     height: "35px",
                     width: "80px",
-                    borderWidth: 2,
+                    borderWidth: 3,
                     texttransform: "none"
+                    
                   }}
                   onClick={() => {
                     const emptyFilter = {};
