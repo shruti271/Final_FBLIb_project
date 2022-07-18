@@ -1945,7 +1945,7 @@ useEffect(()=>{
       );
       document.getElementById("searchbar").value
         ? dispatch(FilterAfterSearchStart()) //dispatch(searchStart(props.search))
-        : 
+        : dispatch(applyallfilters());
 
       dispatch(SortvalueStart());
     } else if (props.name === "SavedPage") {
@@ -3752,24 +3752,16 @@ useEffect(()=>{
                 <Button
                   disabled={props.loading}
                   variant="outlined"
-                  // style={{
-                  //   // background: "#00CBFF",
-                  //   borderRadius: 30,
-                  //   fontSize: "18px",
-                  //   borderColor: "#00CBFF",
-                  //   textTransform: "none",
-                  //   paddingLeft: "16px",
-                  //   paddingRight: "16px",
-                  //   marginBottom: "10px",
-                  //   color: "#00CBFF",
-                  // }}
-                  sx={{
-                    textTransform: "none",
+                  style={{
+                    // background: "#00CBFF",
                     borderRadius: 50,
-                    fontWeight: 600,                    
+                    fontWeight: 600,
                     borderColor: "#00CBFF",
                     color: "#00CBFF",
+                    height: "35px",
+                    width: "80px",
                     borderWidth: 2,
+                    texttransform: "none"
                   }}
                   onClick={() => {
                     const emptyFilter = {};
@@ -3845,7 +3837,7 @@ useEffect(()=>{
                   }}
                   
                 >
-                  clear
+                  Clear
                 </Button>
               </Grid>
             </Grid>

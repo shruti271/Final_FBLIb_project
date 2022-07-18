@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import settings from "../assets/settings.svg";
-import billing from "../assets/billing.svg";
+import logout from "../assets/Logout.svg";
 import contactUs from "../assets/contactUs.svg";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import PersonIcon from "@mui/icons-material/Person";
@@ -51,9 +51,8 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
 
   const MenuListOptios = [
     { name: "Account Setings", icon: settings, url: "/accountSettings" },
-    { name: "Billing", icon: billing, url: "/billing" },
     { name: "Contact Support", icon: contactUs, url: "/contactSupport" },
-    { name: "Logout", icon: billing, url: "" },
+    { name: "Logout", icon: logout, url: "/auth/login" }
   ];
   const [isMenuOptionActive, setIsMenuOptionActive] = React.useState("");
   const navigate = useNavigate();
