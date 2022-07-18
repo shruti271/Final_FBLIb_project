@@ -1945,7 +1945,7 @@ useEffect(()=>{
       );
       document.getElementById("searchbar").value
         ? dispatch(FilterAfterSearchStart()) //dispatch(searchStart(props.search))
-        : 
+        : dispatch(applyallfilters());
 
       dispatch(SortvalueStart());
     } else if (props.name === "SavedPage") {
