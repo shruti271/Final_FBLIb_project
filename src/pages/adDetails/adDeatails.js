@@ -110,7 +110,7 @@ function AdDeatails({ ThumbnailData }) {
                   />
                 )}
               </Box>
-              <Box sx={{marginRight:2}}>
+              <Box sx={{ marginRight: 2 }}>
                 <Grid container spacing={1}>
                   <Grid item xs={10}>
                     <Box sx={{ paddingLeft: "20px" }}>
@@ -210,7 +210,7 @@ function AdDeatails({ ThumbnailData }) {
             </Stack>
           </Box>
         </Grid>
-        <Grid item xs={12} lg={8} md={8} sm={12}>
+        <Grid item xs={12} lg={8} md={8} sm={12} p={4}>
           <Box>
             <Grid container sx={{ justifyContent: "space-around" }}>
               <Button
@@ -446,9 +446,13 @@ function AdDeatails({ ThumbnailData }) {
                   <b>Ad Count Over 30 Days</b>
                 </Typography>
                 {/* <SingleLineChart chartData={ThumbnailData?.history} /> */}
-                <Box sx={{height:"400px"}}>
-                <MyChart chartData={ThumbnailData?.history} dataBoxVisiblity={false} axisVisiblity={true} fillType={"area"} graphHeight={"400px"}/>
-                </Box>
+                {/* <Box sx={{height:"400px"}}> */}
+                <Grid container>
+                  <Grid item xs={12}>
+                    <MyChart chartData={ThumbnailData?.history} dataBoxVisiblity={false} axisVisiblity={true} fillType={"area"} />
+                  </Grid>
+                </Grid>
+                {/* </Box> */}
                 {/* <DummyChart/> */}
               </Stack>
             </Grid>

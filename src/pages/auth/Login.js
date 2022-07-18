@@ -97,6 +97,9 @@ const Login = () => {
                       Register
                     </span>
                   </Typography>
+                  <Box mt={2}>
+                  {errormessage &&  <Alert severity="error" >{errormessage}</Alert>}
+                  </Box>
                   <form style={{ paddingTop: "36px" }}>
                     <Grid container spacing={1}>
                       <Grid item xs={12}>
@@ -153,7 +156,6 @@ const Login = () => {
                         >
                           {errors.password?.message}
                         </Typography>
-                        {errormessage &&  <Alert severity="error">{errormessage}</Alert>}
                       </Grid>
                     </Grid>
                   </form>
