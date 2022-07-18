@@ -27,7 +27,9 @@ import { handleGetSavedAdsSearchedData } from "./handlers/save_searchAds";
 import { ALL_SAVED_ADS_SEARCH_START } from "../ducks/saveAds_clientSide";
 import { handleGetCatStatus } from "./handlers/allSastus";
 import { handleGetIsAlive } from "./handlers/session";
+import { handleGetSubscription } from "./handlers/subscription";
 import { LOAD_ISALIVE_START } from "../ducks/session";
+import { LOAD_SUBSCRIPTION_START } from "../ducks/subscription";
 
 function* onLoadMeida() {
   yield takeLatest(LOAD_MEDIA_START, handleGetMedia);
@@ -35,6 +37,10 @@ function* onLoadMeida() {
 
 function* onLoadIsAlive() {
   yield takeLatest(LOAD_ISALIVE_START, handleGetIsAlive);
+}
+
+function* onLoadSubscription() {
+  yield takeLatest(LOAD_SUBSCRIPTION_START, handleGetSubscription);
 }
 
 function* onLoadSavedAds() {
@@ -77,6 +83,8 @@ function* onLoadSavedAdSearchedPhhraseAds() {
 const mediaSagas = [fork(onLoadMeida)];
 const isAliveSagas = [fork(onLoadIsAlive)];
 
+const subscriptionSagas = [fork(onLoadSubscription)];
+
 const SavedAdSearchSagas = [fork(onLoadSavedAdSearchedAds),fork(onLoadSavedAdSearchedPhhraseAds)];
 
 const savedAdsSagas = [
@@ -110,6 +118,7 @@ export default function* watcherSaga() {
     ...searchedAdsSagas,
     ...SavedAdSearchSagas,
     ...allCatStatusSagas,
-    ...isAliveSagas
+    ...isAliveSagas,
+    ...subscriptionSagas
   ]);
 }

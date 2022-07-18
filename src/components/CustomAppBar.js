@@ -53,7 +53,7 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
     { name: "Account Setings", icon: settings, url: "/accountSettings" },
     { name: "Billing", icon: billing, url: "/billing" },
     { name: "Contact Support", icon: contactUs, url: "/contactSupport" },
-    { name: "Logout", icon: billing, url: "/auth/login" },
+    { name: "Logout", icon: billing, url: "" },
   ];
   const [isMenuOptionActive, setIsMenuOptionActive] = React.useState("");
   const navigate = useNavigate();
@@ -66,11 +66,15 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
     console.log("}}}}}}}}}}}");
   });
   const userLogout = async () => {
-    const res = await logoutUser();
-    if (res.success && res?.data?.data) {
-      localStorage.clear();
+    logoutUser().then((data)=>{
+      // dispatch(setIsAlive(false));
+      localStorage.setItem("is_alive", false);
+      handleCloseMenu();
       navigate("/auth/login");
-    }
+    }, (error)=>{
+      handleCloseMenu();
+      console.log("Error While LogOut", error)
+    });
   };
   const handleCloseMenu = (e) => {
     setAnchoerEL(null);
@@ -198,14 +202,12 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
                         <MenuItem
                           key={index}
                           onClick={() => {
-                            if (item.url === "/auth/login") {
-                              navigate(item.url);
+                            if (item.name === "Logout") {
                               userLogout();
+                            }else{
+                              handleCloseMenu();
+                              navigate(item.url);
                             }
-
-                            navigate(item.url);
-                            handleCloseMenu();
-
                             setIsMenuOptionActive(window.location.pathname);
                           }}
                           style={{

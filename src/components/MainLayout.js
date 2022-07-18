@@ -11,14 +11,18 @@ import AccountSettings from "../pages/AccountSettings";
 import AdDeatailsTabs from "../pages/adDetails/AdDetailsTabs";
 import { useDispatch } from "react-redux";
 import { loadMediaStart } from "../redux/ducks/mediaAds";
+import { loadSubscriptionStart } from "../redux/ducks/subscription";
 import { loadSavedAdsStart } from "../redux/ducks/saveAds";
 import { CustomAppBar } from "../components/CustomAppBar";
 import { CustomSidebar } from "../components/CustomSidebar";
 import { loadAccountSettingsStart } from "./../redux/ducks/accountSettings";
-import Payment from "../pages/Payment"
+import Payment from "../pages/Plans"
 import { loadSavedAdsClientSideStart } from "../redux/ducks/saveAds_clientSide";
 import { useSelector } from "react-redux";
 import { getSetCatSatus } from "../redux/ducks/filtered_Data";
+import ActiveSubScription from "../ActiveSubScription";
+import InActiveSubScription from "../InActiveSubScription";
+import { CircularProgress } from "@mui/material";
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
@@ -31,25 +35,20 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 const MainLayout = () => {
   const dispatch = useDispatch();
   const { savedAds } = useSelector((state) => state.savedAds);
-
-  // const [isOpen, setIsOpen] = React.useState(false);
-  const drawerOpenKey = 'drawerOpen';
-  const defaultOpen = localStorage.getItem(drawerOpenKey) === 'true';
-  const [isOpen, setIsOpen] = React.useState(defaultOpen);
-  React.useEffect(() => {
-    localStorage.setItem(drawerOpenKey, isOpen);
-  }, [isOpen]);
+  const { loading } = useSelector((state) => state.subscriptionData);
+  const [isOpen, setIsOpen] = React.useState(true);
 
   useEffect(() => {
+    dispatch(loadSubscriptionStart());
     dispatch(loadMediaStart());
     dispatch(loadSavedAdsStart());    
     dispatch(loadAccountSettingsStart());
     dispatch(getSetCatSatus());
-  }, [dispatch]);
+  },[dispatch]);
 
   useEffect(()=>{
     dispatch(loadSavedAdsClientSideStart(savedAds))
-  },[dispatch,savedAds])
+  },[dispatch, savedAds])
   
   return (
     <>
@@ -59,9 +58,26 @@ const MainLayout = () => {
         <CustomAppBar isOpen={isOpen} setIsOpen={setIsOpen} />
         <Box component="main" sx={{ flexGrow: 1, paddingLeft:4 }}>
           <DrawerHeader />
+          { loading ? <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              width:"100%",
+            }}
+          >
+            <CircularProgress
+              style={{
+                position: "relative",
+                opacity: 1,
+                zIndex: 1,
+                visibility: loading  ? "visible" : "hidden",
+              }}
+            />
+          </Box> :
           <Routes>
-            <Route exact path="/" element={<Addlibrarydatabase />} />
-            <Route exact path="/savedAds" element={<SavedAds />} />
+            <Route exact path="/" element={<ActiveSubScription><Addlibrarydatabase /></ActiveSubScription>} />
+            <Route exact path="/savedAds" element={<ActiveSubScription><SavedAds /></ActiveSubScription>} />
             <Route exact path="/contactSupport" element={<ContactSupport />} />
             <Route
               exact
@@ -71,10 +87,10 @@ const MainLayout = () => {
             <Route
               exact
               path="/adDeatails/:adsId/*"
-              element={<AdDeatailsTabs />}
+              element={<ActiveSubScription><AdDeatailsTabs /></ActiveSubScription>}
             />
-            <Route exact path="/payment" element={<Payment />} />
-          </Routes>
+            <Route exact path="/plans" element={<InActiveSubScription><Payment /></InActiveSubScription>} />
+          </Routes>}
         </Box>
       </Box>
     </>

@@ -13,19 +13,35 @@ import viss from "../assets/viss.svg";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { updateAccountSettingsStart } from "../redux/ducks/accountSettings";
-import { cancelusersubcription, getCarddetails } from "../services/index";
 import useStyles from "../css/mediapage";
 import BeatLoader from "react-spinners/BeatLoader";
+import { cancelusersubcription, fetch_payment_method } from "../services";
+import { setSubscription } from "../redux/ducks/subscription";
+
+const LoadingFor = {
+  PersonalInfo: "personalInfo",
+  Password: "password",
+  Subscription: "subscription",
+};
+
 function AccountSettings() {
   const classes = useStyles();
   const dispatch = useDispatch();
-  var card = null
+  const navigate = useNavigate();
+  const [subLoading, setSubLoading] = useState(false);
+
   const { accountSettings, loading } = useSelector(
     (state) => state.accountSettings
   );
-  const [loadingname, setLoadingname] = useState("");
-  const [usercardInfo, setusercardInfo] = React.useState([])
-  const navigate = useNavigate();
+
+  const subscriptionData = useSelector((state) => state.subscriptionData);
+
+  useEffect(() => {
+    console.log("subscriptionData :", subscriptionData);
+  }, [subscriptionData]);
+
+  const [loadingFor, setLoadingFor] = useState("");
+
   const {
     register: personalFormRegister,
     handleSubmit: personalFormHandleSubmit,
@@ -52,34 +68,42 @@ function AccountSettings() {
   useEffect(() => {
     personalFormSetValue("first_name", accountSettings?.first_name);
     personalFormSetValue("last_name", accountSettings?.last_name);
-    getData()
   }, [accountSettings, personalFormSetValue]);
 
-  const onPersonalFormSubmit = async (data) => {
-    // setLoading(true)
-    setLoadingname("personal");
-    dispatch(updateAccountSettingsStart({ data, id: accountSettings?.id }));
-    // setLoading(false)
-  };
-
-  const onSecurityFormSubmit = async (data) => {
-    setLoadingname("security");
-    console.table("onSecurityFormSubmit data:", data);
+  const onPersonalFormSubmit = (data) => {
+    setLoadingFor(LoadingFor.PersonalInfo);
     dispatch(updateAccountSettingsStart({ data, id: accountSettings?.id }));
   };
 
-  const getData = async () => {
-    const res = await getCarddetails();
-    console.log("first----------------------------***", usercardInfo);
-    setusercardInfo(res)
-  }
-  const cancelSubscription =async() => {
-    const response = await cancelusersubcription()
-    console.log("888888888888888888888",response)
-    if (response.status ==="deactivated") {
-      getData()
-    }
-  }
+  const onSecurityFormSubmit = (data) => {
+    setLoadingFor(LoadingFor.Password);
+    dispatch(updateAccountSettingsStart({ data, id: accountSettings?.id }));
+  };
+
+  const cancelSubscription = () => {
+    setLoadingFor(LoadingFor.Subscription);
+    setSubLoading(true);
+    cancelusersubcription().then(
+      (response) => {
+        fetch_payment_method().then(
+          (response) => {
+            setSubLoading(false);
+            console.log("fetch_payment_method response: ", response);
+            dispatch(setSubscription(response.data.data));
+          },
+          (error) => {
+            setSubLoading(false);
+            console.log("fetch_payment_method Error: ", error);
+          }
+        );
+        console.log("cancelusersubcription Response:", response);
+      },
+      (error) => {
+        setSubLoading(false);
+        console.log("cancelSubscription Error: ", error);
+      }
+    );
+  };
   return (
     <>
       <Grid container>
@@ -93,40 +117,12 @@ function AccountSettings() {
               <Box>
                 <Typography variant="h6">Personal Information</Typography>
                 <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <CircularProgress
-                    style={{
-                      position: "relative",
-                      top: 100,
-                      left: 30,
-                      opacity: 1,
-                      zIndex: 1,
-                      visibility:
-                        loadingname === "personal"
-                          ? loading
-                            ? "visible"
-                            : "hidden"
-                          : "hidden",
-                    }}
-                  />
-                </Box>
-                <Box
                   border={0.5}
                   borderRadius={5}
                   borderColor="#EBEBEB"
                   display="flex"
                   justifyContent="center"
                   alignItems="center"
-                  sx={{
-                    opacity:
-                      loadingname === "personal" ? (loading ? 0.5 : 1) : 1,
-                    disabled: loading ? true : false,
-                  }}
                 >
                   <Stack
                     direction={"column"}
@@ -137,7 +133,20 @@ function AccountSettings() {
                     <form
                       onSubmit={personalFormHandleSubmit(onPersonalFormSubmit)}
                     >
-                      <Stack direction={"row"} spacing={2}>
+                      <Stack
+                        direction={"row"}
+                        spacing={2}
+                        sx={{
+                          opacity:
+                            loading && loadingFor === LoadingFor.PersonalInfo
+                              ? 0.5
+                              : 1,
+                          disabled:
+                            loading && loadingFor === LoadingFor.PersonalInfo
+                              ? true
+                              : false,
+                        }}
+                      >
                         <Stack direction={"column"} width="50%">
                           <Typography>First Name</Typography>
                           <InputBase
@@ -192,9 +201,26 @@ function AccountSettings() {
                               style={{
                                 borderRadius: 50,
                                 backgroundColor: "#00CBFF",
+                                whiteSpace:"nowrap"
                               }}
                             >
-                              Save
+                              {loading && LoadingFor.PersonalInfo ? (
+                                <CircularProgress
+                                  size="1.5rem"
+                                  sx={{
+                                    color: "white",
+                                  }}
+                                  // style={{
+                                  //   position: "relative",
+                                  //   top: 100,
+                                  //   left: 30,
+                                  //   opacity: 1,
+                                  //   zIndex: 1,
+                                  // }}
+                                />
+                              ) : (
+                                <>Save</>
+                              )}
                             </Button>
                           </Box>
                         </Grid>
@@ -207,40 +233,12 @@ function AccountSettings() {
               <Box marginTop={5}>
                 <Typography variant="h6">Security</Typography>
                 <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <CircularProgress
-                    style={{
-                      position: "relative",
-                      top: 100,
-                      left: 40,
-                      opacity: 1,
-                      zIndex: 1,
-                      visibility:
-                        loadingname === "security"
-                          ? loading
-                            ? "visible"
-                            : "hidden"
-                          : "hidden",
-                    }}
-                  />
-                </Box>
-                <Box
                   border={0.5}
                   borderRadius={5}
                   borderColor="#EBEBEB"
                   display="flex"
                   justifyContent="center"
                   alignItems="center"
-                  sx={{
-                    opacity:
-                      loadingname === "security" ? (loading ? 0.5 : 1) : 1,
-                    disabled: loading ? true : false,
-                  }}
                 >
                   <Stack
                     direction={"column"}
@@ -251,7 +249,15 @@ function AccountSettings() {
                     <form
                       onSubmit={securityFormHandleSubmit(onSecurityFormSubmit)}
                     >
-                      <Stack direction={"row"} spacing={2}>
+                      <Stack
+                        direction={"row"}
+                        spacing={2}
+                        sx={{
+                          opacity: loadingFor === LoadingFor.Password ? 0.5 : 1,
+                          disabled:
+                            loading && LoadingFor.Password ? true : false,
+                        }}
+                      >
                         <Stack direction={"column"} width="50%">
                           <Typography>Current Password</Typography>
                           <InputBase
@@ -306,9 +312,26 @@ function AccountSettings() {
                               style={{
                                 borderRadius: 50,
                                 backgroundColor: "#00CBFF",
+                                whiteSpace:"nowrap"
                               }}
                             >
-                              Change password
+                              {loading && LoadingFor.Password ? (
+                                <CircularProgress
+                                  size="1.5rem"
+                                  sx={{
+                                    color: "white",
+                                  }}
+                                  // style={{
+                                  //   position: "relative",
+                                  //   top: 100,
+                                  //   left: 30,
+                                  //   opacity: 1,
+                                  //   zIndex: 1,
+                                  // }}
+                                />
+                              ) : (
+                                <>Change Password</>
+                              )}
                             </Button>
                           </Box>
                         </Grid>
@@ -317,7 +340,6 @@ function AccountSettings() {
                   </Stack>
                 </Box>
               </Box>
-              {usercardInfo.status === "Canceled" || usercardInfo.status === "Inactive" ? "" : 
               <Box marginTop={5}>
                 <Typography variant="h6">Billing</Typography>
                 <Box
@@ -355,14 +377,20 @@ function AccountSettings() {
                               />
                             </Typography>
                             <Typography style={{ marginLeft: 3 }}>
-                              {usercardInfo.last4 === "" ? (<BeatLoader />) :
-                                (<b>Visa ending in {usercardInfo.last4}</b>)
-                              }
+                              {subscriptionData?.loading ? (
+                                <BeatLoader />
+                              ) : subscriptionData?.data?.last4 ? (
+                                <b>
+                                  Visa ending in {subscriptionData?.data?.last4}
+                                </b>
+                              ) : (
+                                "Not Provided"
+                              )}
                             </Typography>
                           </Stack>
                         </Stack>
                       </Stack>
-                      <Stack direction={"row"}>
+                      {/* <Stack direction={"row"}>
                         <Grid
                           container
                           style={{ display: "flex", justifyContent: "right" }}
@@ -382,12 +410,11 @@ function AccountSettings() {
                             </Button>
                           </Box>
                         </Grid>
-                      </Stack>
+                      </Stack> */}
                     </Stack>
                   </Stack>
                 </Box>
               </Box>
-}
               <Box marginTop={5}>
                 <Typography variant="h6">Subscription</Typography>
                 <Box
@@ -414,26 +441,35 @@ function AccountSettings() {
                       <Stack direction={"column"}>
                         <Typography>
                           Subscription Status:
-                          {usercardInfo===[] ? (<BeatLoader />) :
-                            (<b>{usercardInfo.status}</b>)
-                          }
+                          {subscriptionData?.loading ? (
+                            <BeatLoader />
+                          ) : (
+                            <b>{subscriptionData?.data?.status}</b>
+                          )}
                         </Typography>
                       </Stack>
                       <Stack direction={"column"}>
                         <Typography>
                           Plan:
-                          {usercardInfo === [] ? (<BeatLoader />) :
-                            (<b>{usercardInfo.plan_type}</b>)
-                          }
+                          {subscriptionData?.loading ? (
+                            <BeatLoader />
+                          ) : (
+                            <b>{subscriptionData?.data?.paydement_method_id}</b>
+                          )}
                         </Typography>
                       </Stack>
                       <Stack direction={"column"}>
                         <Typography>
-                          Next Renew:
-                          {console.log("[[[[[[[[[[[[[]]]]]]]]]]]]]]]]]", usercardInfo)}
-                          {usercardInfo === [] ? (<BeatLoader />) :
-                            (<b>{usercardInfo.end_date}</b>)
-                          }
+                          {subscriptionData?.loading ? (
+                            <BeatLoader />
+                          ) : (
+                            subscriptionData?.data?.end_date && (
+                              <>
+                                Next Renew:{" "}
+                                <b>{subscriptionData?.data?.end_date}</b>
+                              </>
+                            )
+                          )}
                         </Typography>
                       </Stack>
                       <Stack direction={"column"}>
@@ -442,36 +478,46 @@ function AccountSettings() {
                           style={{ display: "flex", justifyContent: "right" }}
                           item
                         >
-                          {usercardInfo.status === "Canceled" || usercardInfo.status === "Inactive" ?
-                            (<Box justifyContent={"right "}>
-                              <Button
-                                type="Submit"
-                                variant="contained"
-                                color="primary"
-                                style={{
-                                  borderRadius: 50,
-                                  backgroundColor: "#00CBFF",
-                                }}
-                                onClick={() => navigate("/payment")}
-                              >
-                                Active Your plan
-                              </Button>
-                            </Box>) :
-                            (<Box justifyContent={"right "}>
-                              <Button
-                                type="Submit"
-                                variant="contained"
-                                color="primary"
-                                style={{
-                                  borderRadius: 50,
-                                  backgroundColor: "#00CBFF",
-                                }}
-                                onClick={cancelSubscription}
-                              >
-                                Cancel subscription
-                              </Button>
-                            </Box>)
-                          }
+                          <Box justifyContent={"right"}>
+                            <Button
+                              type="Submit"
+                              variant="contained"
+                              color="primary"
+                              style={{
+                                borderRadius: 50,
+                                backgroundColor: "#00CBFF",
+                                whiteSpace:"nowrap"
+                              }}
+                              onClick={
+                                subscriptionData?.data?.status === "Canceled" ||
+                                subscriptionData?.data?.status === "Inactive"
+                                  ? () => navigate("/plans")
+                                  : cancelSubscription
+                              }
+                            >
+                              {subLoading && LoadingFor.Subscription ? (
+                                <CircularProgress
+                                  size="1.5rem"
+                                  sx={{
+                                    color: "white",
+                                  }}
+                                  // style={{
+                                  //   position: "relative",
+                                  //   top: 100,
+                                  //   left: 30,
+                                  //   opacity: 1,
+                                  //   zIndex: 1,
+                                  // }}
+                                />
+                              ) : (
+                                <>{subscriptionData?.data?.status === "Canceled" ||
+                                subscriptionData?.data?.status === "Inactive"
+                                  ? "Active Your plan"
+                                  : "Cancel Subscription"}</>
+                              )}
+                              
+                            </Button>
+                          </Box>
                         </Grid>
                       </Stack>
                     </Stack>

@@ -9,6 +9,7 @@ import subAllMediaReducer from "./ducks/subAllAds";
 import savedAdsClienSideReducer from "./ducks/saveAds_clientSide";
 import FilterDataReducer from "./ducks/filtered_Data";
 import isAliveReducer from "./ducks/session";
+import subscriptionReducer from "./ducks/subscription";
 
 const reducer = combineReducers({
   allMediaAds: mediaReducer,
@@ -17,7 +18,8 @@ const reducer = combineReducers({
   subAllMedia: subAllMediaReducer,
   savedclienads: savedAdsClienSideReducer,
   filteredData: FilterDataReducer,
-  isAliveData: isAliveReducer
+  isAliveData: isAliveReducer,
+  subscriptionData: subscriptionReducer
 });
 
 const composeEnhancers =
