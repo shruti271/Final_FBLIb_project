@@ -61,8 +61,6 @@ const SavedAds = () => {
         </Typography>
 
         <Box sx={{ marginRight: 5 }}>
-          {/* <Grid  container justifyContent="flex-end"> */}
-          {/* <Grid item>     */}
           <Grid container>
             {filterActivate ? (
               <Grid
@@ -75,12 +73,7 @@ const SavedAds = () => {
                   marginTop: 2,
                 }}
               >
-                {/* <AllFilters
-              name={"AllAdsPage"}
-              pageFilterInfo={appliedFilters}
-              search={searchBarData}
-              search_type={searchType}
-            /> */}
+                
                 <AllFilters
                   name={"SavedPage"}
                   pageFilterInfo={SavedAppliedFilters}
@@ -221,7 +214,7 @@ const SavedAds = () => {
                           />
                         ))
                       );
-                    })}
+                    })  }
                   </Grid>
                 )}
               </Grid>
@@ -309,9 +302,10 @@ const SavedAds = () => {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
+              width:"100%"
             }}
           >
-            {console.log(savedAdsLocal)}
+            {/* {console.log(savedAdsLocal)} */}
             {Object.keys(savedAdsLocal).length ? (
               <Grid
                 container
@@ -320,17 +314,20 @@ const SavedAds = () => {
                   marginTop: "10px",
                   opacity: search_loading ? 0.5 : 1,
                 disabled: search_loading ? true : false,
+                width:"100%"
                 }}
               >
-                {filteredData.map((ads, index) => (
+                
+                {filteredData.length ?filteredData.map((ads, index) => (
                   <ThumbNailBox
                     adInfo={ads}
                     index={index}
                     key={index}
                     deleteId={ads.id}                    
                   />
-                ))}
-              </Grid>
+                )):<Box sx={{display:"flex",justifyContent:"center",alignItems:"center" , width:"100%"}}>No Result</Box>}
+                </Grid>
+              
             ) : (
               <Stack
                 direction={"column"}

@@ -52,7 +52,7 @@ function AdDeatailsTabs() {
 
       setAdDetail(() => singleAds);
       console.log(singleAds);
-console.log()
+      console.log();
       if (subAllMedia[0]?.pageInfo?.name === singleAds?.pageInfo?.name) {
         console.log("dont callllllllllllllllllllllllll");
       } else {
@@ -66,17 +66,16 @@ console.log()
       <Box
         sx={{
           width: "100%",
-          marginTop:2,
+          marginTop: 2,
           typography: "body1",
           justifyContent: "center",
           alignItems: "center",
         }}
       >
         <Box
-          onClick={() => {   
-            // history.goBack();         
-            navigate("../");
-           
+          onClick={() => {
+            // history.goBack();
+            navigate("/");
           }}
           sx={{ cursor: "pointer" }}
         >
@@ -84,7 +83,9 @@ console.log()
             <Box sx={{ marginRight: "12px" }}>
               <img src={LeftArrow} aria-label="FirstCard" />
             </Box>
-            <Typography><b>Search Results</b></Typography>
+            <Typography>
+              <b>Search Results</b>
+            </Typography>
           </Stack>
         </Box>
         <Box

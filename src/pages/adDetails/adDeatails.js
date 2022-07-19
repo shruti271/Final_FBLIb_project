@@ -17,6 +17,11 @@ function AdDeatails({ ThumbnailData }) {
   console.log(
     "pppppppppppppppppppppppppppppppppp)))))))))))))))))))))))))))))))))ppppppppppppppp"
   );
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  },[]);
+
   return (
     <>
       <Grid container sx={{ marginTop: "36px" }}>
@@ -41,21 +46,16 @@ function AdDeatails({ ThumbnailData }) {
                   <Avatar
                     src={ThumbnailData?.pageInfo?.logo}
                     aria-label="FirstCard"
-                    // style={{ width: "100%", height: "100%" }}
+                
                     style={{ width: "30px", height: "30px" }}
-                    // sx={{ width: 27, height: 27 }}
+                 
                   ></Avatar>
-                  {/* <img
-                    src={ThumbnailData?.pageInfo?.logo}
-                    aria-label="FirstCard"
-                    style={{ width: "25px" }}
-                  /> */}
+                 
                 </Box>
                 <Typography
                 variant="h6"
                   style={{
-                    fontWeight: 500,
-                    // fontSize: "19px",
+                   
                     marginLeft: "8px",
                     lineHeight: "30px",
                     color: "#2B2F42",
@@ -68,12 +68,12 @@ function AdDeatails({ ThumbnailData }) {
                 </Typography>
               </Box>
 
-              <Box sx={{marginLeft:2,marginRight:2}}>
+              <Box sx={{marginLeft:2,marginRight:2 , }}>
                 <Typography
-                  // variant="span"
+                 
                   sx={{
                     fontWeight: 500,
-                    // fontSize: "18px",
+                  
                     lineHeight: "27px",
                     letterSpacing: "0.03em",
                     color: "#2B2F42",
@@ -86,7 +86,7 @@ function AdDeatails({ ThumbnailData }) {
                 </Typography>
               </Box>
 
-              <Box sx={{marginLeft:"5px"}}>
+              <Box sx={{marginLeft:"5px",display:"flex",justifyContent:"center",alignItems:"center"}}>
                 {ThumbnailData?.adMediaType === "video" ? (
                   <video
                     poster={ThumbnailData?.thumbBucketUrl}
@@ -111,7 +111,7 @@ function AdDeatails({ ThumbnailData }) {
                   />
                 )}
               </Box>
-              <Box sx={{ marginRight: 2 }}>
+              <Box sx={{ marginRight: 2 ,marginTop:1}}>
                 <Grid container spacing={1}>
                   <Grid item xs={10}>
                     <Box sx={{ paddingLeft: "20px" }}>
@@ -297,7 +297,7 @@ function AdDeatails({ ThumbnailData }) {
               sx={{
                 display: "flex",
                 justifyContent: "center",
-                marginTop: "50px",
+                marginTop: "10px",
                 flexWrap: "nowrap",
               }}
             >
@@ -341,9 +341,9 @@ function AdDeatails({ ThumbnailData }) {
                 </Box>
               </Stack>
               <Stack style={{ justifyContent: "center", marginTop: "36px" }}>
-                {ThumbnailData?.pageInfo?.platforms.map((socialMedia) => {
+                {ThumbnailData?.pageInfo?.platforms.map((socialMedia,index) => {
                   return (
-                    <Stack
+                    <Stack key={index}
                       direction={"row"}
                       sx={{
                         marginBottom: "16px",
@@ -384,59 +384,13 @@ function AdDeatails({ ThumbnailData }) {
                     </Stack>
                   );
                 })}
-                {/* <Stack direction={"row"} sx={{ marginBottom: "16px" }}>
-                  <Box sx={{ marginRight: "10px" }}>
-                    <img src={Facebook} aria-label="Add" />
-                  </Box>
-                  <Stack>
-                    <Typography
-                      style={{
-                        fontFamily: "Neue Haas Grotesk Display Pro",
-                      }}
-                    >
-                      @bestsolarlightingshop
-                    </Typography>
-                    <Typography
-                      style={{
-                        fontFamily: "Neue Haas Grotesk Display Pro",
-                      }}
-                    >
-                      {ThumbnailData?.pageInfo?.platforms[0].likes +
-                        " likes • " +
-                        ThumbnailData?.pageInfo?.platforms[0].type}
-                    </Typography>
-                  </Stack>
-                </Stack>
-                <Stack
-                  direction={"row"}
-                  sx={{ justifyContent: "center", alignItems: "center" }}
-                >
-                  <Box sx={{ marginRight: "10px" }}>
-                    <img src={instragram} aria-label="Add" />
-                  </Box>
-                  <Stack>
-                    <Typography
-                      style={{
-                        fontFamily: "Neue Haas Grotesk Display Pro",
-                      }}
-                    >
-                      @bestsolarlightingshop
-                    </Typography>
-                    <Typography
-                      style={{
-                        fontFamily: "Neue Haas Grotesk Display Pro",
-                      }}
-                    >
-                      21,619 likes • Retail company
-                    </Typography>
-                  </Stack>
-                </Stack> */}
+                
               </Stack>
             </Grid>
             <Grid>
               <Stack
                 sx={{
-                  // marginTop: 8,
+                  marginTop: 1,
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
@@ -446,15 +400,14 @@ function AdDeatails({ ThumbnailData }) {
                 <Typography variant="h6">
                   <b>Ad Count Over 30 Days</b>
                 </Typography>
-                {/* <SingleLineChart chartData={ThumbnailData?.history} /> */}
-                {/* <Box sx={{height:"400px"}}> */}
-                <Grid container>
-                  <Grid item xs={12}>
-                    <MyChart chartData={ThumbnailData?.history} dataBoxVisiblity={false} axisVisiblity={true} fillType={"area"} />
+               
+
+                <Grid container >
+                  <Grid item xs={12} lg={12} sm={12}>
+                    <MyChart chartData={ThumbnailData?.history} dataBoxVisiblity={false} axisVisiblity={true} fillType={"area"} graphHeight={350}/>
                   </Grid>
                 </Grid>
-                {/* </Box> */}
-                {/* <DummyChart/> */}
+               
               </Stack>
             </Grid>
           </Box>
@@ -470,11 +423,11 @@ const useStyles = makeStyles(() => ({
   AdsImageVideo: {
     objectFit: "fill",
     // resizeMode: "Startch",
-    height: "600px",
-    width: "90%",
+    height: "400px",
+    width: "95%",
   },
   AdsImage:{
-    width: "70%",
+    width: "95%",
     // width:"100%",
   height:"400px",
     objectFit: 'fill',  

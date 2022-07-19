@@ -7,8 +7,7 @@ const MyChart = (props) => {
     // console.log(props.chartData?.map((a)=>a.date))
     const option = {
       chart: {
-        height: props.graphHeight,      
-        width:"",  
+        height: props.graphHeight,              
         zoomType: "x",        
       },
       title: {

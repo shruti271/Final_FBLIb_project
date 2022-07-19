@@ -148,7 +148,6 @@ const useStyles = makeStyles((theme) => ({
 const Addlibrarydatabase = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  // const focusDiv = useRef();
 
   const { allMediaAds, loading } = useSelector((state) => state.allMediaAds);
   const {
@@ -159,37 +158,19 @@ const Addlibrarydatabase = () => {
     postionYoffset,
     search_loading,
     searchType,
-    maxRanger
-    // AllAdsPage,
+    maxRanger    
   } = useSelector((state) => state.filteredData);
 
-  const { savedIds } = useSelector((state) => state.savedclienads);
-  const [onFocusEditTextField, setOnFocusEditTextField] = React.useState(0);
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
-  const [rangeanchorel, setrangeAnchorEl] = React.useState(null);
-  const addcounteropen = Boolean(rangeanchorel);
-  const [mediaTypeAnchorel, setMediaTypeAnchorel] = React.useState(null);
-  const openMediaTypeAnchorel = Boolean(mediaTypeAnchorel);
-  const [adStatusAnchorel, setAdStatusAnchorel] = React.useState(null);
-  const openAdStatusAnchorel = Boolean(adStatusAnchorel);
-  const [sortByAnchorel, setSortByAnchorel] = React.useState(null);
-  const openSortByAnchorel = Boolean(sortByAnchorel);
-  const [facebookLikeanchorel, setFacebookLikeAnchorEl] = React.useState(null);
-  const openFaceboolLike = Boolean(facebookLikeanchorel);
-  const [instragramFolloweranchorel, setInstragramFollowerAnchorEl] =
-    React.useState(null);
-  const openInstragramFollower = Boolean(instragramFolloweranchorel);
-  const [ButtonTypeanchorel, setButtonTypeAnchorEl] = React.useState(null);
-  const openButtonType = Boolean(ButtonTypeanchorel);
-  console.log("search_loading..", search_loading);
-  useEffect(() => {
-    // console.log(AllAdsPage);
-    console.log(
-      "....................................................",
-      filteredData
-    );
-  });
+  const { savedIds,savedAdsLocal } = useSelector((state) => state.savedclienads);
+  
+  // console.log("search_loading..", search_loading);
+  // useEffect(() => {
+  //   // console.log(AllAdsPage);
+  //   console.log(
+  //     "....................................................",
+  //     filteredData
+  //   );
+  // });
 
   // useEffect(() => {
   //   // var words = ['hello', 'hi', 'howdy'];
@@ -261,29 +242,16 @@ const Addlibrarydatabase = () => {
       behavior: "smooth",
     });
   }, [postionYoffset]);
-
-  // useEffect(() => {
-  //   console.log("33333333333333333333333333333333333333333333333333");
-  //   console.log(appliedFilters);
-  //   console.log(filteredData);
-  //   console.log(appliedFilters);
-  //   console.log(searchBarData);
-  //   console.log("33333333333333333333333333333333333333333333333333");
-  //   console.log(filteredData);
-  //   console.log("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
-  // });
-
+ useEffect(()=>{
+  console.log(savedIds)
+  console.log(savedAdsLocal)
+  console.log("------------------------------00000000000000")
+ })
   useEffect(() => {
-    console.log(filteredData);
-    console.log(
-      "hhhhhhhhhhhhhhhh:::::::::::::::::::::",
-      Object(filteredData).length
-    );
-    if (Object(filteredData).length) {
-      console.log("come here 111111");
+   
+    if (Object(filteredData)?.length) {    
       dispatch(loadFilteredDataStart());
-    } else {
-      console.log("come here 2");
+    } else {      
       dispatch(putFilteredDataStart({ data: allMediaAds[1]?.all_ads }));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -479,20 +447,18 @@ const Addlibrarydatabase = () => {
               container
               spacing={2}
               sx={{
-                marginTop: "5px"//,display:"flex",justifyContent:"center",alignItems:"center"
+                marginTop: "5px"                 
               }}
             >
               
-              {filteredData?.length?filteredData?.map((ads, index) => (
-                // console.log(filteredData.length),
-              // console.log(O)),console.log("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\*********************")  ,// console.log("first", ads),
+              {filteredData?.length?filteredData?.map((ads, index) => (                
                 <ThumbNailBox
                   adInfo={ads}
                   index={index}
                   deleteId={savedIds?.includes(ads.id) ? ads.id : false}
                   key={index}
                 />
-              )):<Box sx={{display:"flex",justifyContent:"center",alignItems:"center"}}>No Result</Box>}
+              )):<Box sx={{display:"flex",justifyContent:"center",alignItems:"center" , width:"100%"}}>No Result</Box>}
             </Grid>}
           </Grid>
          
