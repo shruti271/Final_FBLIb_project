@@ -164,24 +164,7 @@ const Addlibrarydatabase = () => {
   } = useSelector((state) => state.filteredData);
 
   const { savedIds } = useSelector((state) => state.savedclienads);
-  const [onFocusEditTextField, setOnFocusEditTextField] = React.useState(0);
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
-  const [rangeanchorel, setrangeAnchorEl] = React.useState(null);
-  const addcounteropen = Boolean(rangeanchorel);
-  const [mediaTypeAnchorel, setMediaTypeAnchorel] = React.useState(null);
-  const openMediaTypeAnchorel = Boolean(mediaTypeAnchorel);
-  const [adStatusAnchorel, setAdStatusAnchorel] = React.useState(null);
-  const openAdStatusAnchorel = Boolean(adStatusAnchorel);
-  const [sortByAnchorel, setSortByAnchorel] = React.useState(null);
-  const openSortByAnchorel = Boolean(sortByAnchorel);
-  const [facebookLikeanchorel, setFacebookLikeAnchorEl] = React.useState(null);
-  const openFaceboolLike = Boolean(facebookLikeanchorel);
-  const [instragramFolloweranchorel, setInstragramFollowerAnchorEl] =
-    React.useState(null);
-  const openInstragramFollower = Boolean(instragramFolloweranchorel);
-  const [ButtonTypeanchorel, setButtonTypeAnchorEl] = React.useState(null);
-  const openButtonType = Boolean(ButtonTypeanchorel);
+  
   console.log("search_loading..", search_loading);
   useEffect(() => {
     // console.log(AllAdsPage);
@@ -261,18 +244,7 @@ const Addlibrarydatabase = () => {
       behavior: "smooth",
     });
   }, [postionYoffset]);
-
-  // useEffect(() => {
-  //   console.log("33333333333333333333333333333333333333333333333333");
-  //   console.log(appliedFilters);
-  //   console.log(filteredData);
-  //   console.log(appliedFilters);
-  //   console.log(searchBarData);
-  //   console.log("33333333333333333333333333333333333333333333333333");
-  //   console.log(filteredData);
-  //   console.log("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
-  // });
-
+ 
   useEffect(() => {
     console.log(filteredData);
     console.log(
@@ -479,7 +451,8 @@ const Addlibrarydatabase = () => {
               container
               spacing={2}
               sx={{
-                marginTop: "5px"//,display:"flex",justifyContent:"center",alignItems:"center"
+                marginTop: "5px" 
+                
               }}
             >
               
@@ -492,7 +465,7 @@ const Addlibrarydatabase = () => {
                   deleteId={savedIds?.includes(ads.id) ? ads.id : false}
                   key={index}
                 />
-              )):<Box sx={{display:"flex",justifyContent:"center",alignItems:"center"}}>No Result</Box>}
+              )):<Box sx={{display:"flex",justifyContent:"center",alignItems:"center" , width:"100%"}}>No Result</Box>}
             </Grid>}
           </Grid>
          
