@@ -173,7 +173,7 @@ const Login = () => {
                     onClick={handleSubmit(submitLoginform)}
                   >
                     {loading ? (
-                      <CircularProgress style={{ color: "#F6F6FB" }} />
+                      <CircularProgress  size={36} style={{ color: "#F6F6FB" }} />
                     ) : (
                       "Log in"
                     )}

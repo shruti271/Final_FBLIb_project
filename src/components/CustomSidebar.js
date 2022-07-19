@@ -5,7 +5,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import {  Stack } from "@mui/material";
+import { Stack } from "@mui/material";
 import { useDispatch } from "react-redux";
 import appLogo from "../assets/appLogo.svg";
 import logout from "../assets/Logout.svg";
@@ -18,7 +18,12 @@ import fbEyelogo from "../assets/eye_logo.svg"
 import fbEyelogoText from "../assets/logo_text.svg"
 import SaveIcon from "../SvgIcons/SaveIcon";
 import { setIsAlive } from "../redux/ducks/session"
-
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Button from '@mui/material/Button';
 const useStyles = makeStyles(() => ({
   title: {
     fontFamily: "Neue Haas Grotesk Display Pro",
@@ -50,19 +55,19 @@ const useStyles = makeStyles(() => ({
       "linear-gradient(270deg, rgba(0, 203, 255, 0.5) 0%, rgba(0, 203, 255, 0.03) 100%)",
     borderRadius: "33px",
   },
-  openDrawerItemWrapper:{
-    paddingRight:"6px",
-    paddingLeft:"6px"
+  openDrawerItemWrapper: {
+    paddingRight: "6px",
+    paddingLeft: "6px"
   },
-  closeDrawerItemWrapper:{
+  closeDrawerItemWrapper: {
     padding: "0px"
   },
-  openDrawerItem:{
+  openDrawerItem: {
     marginLeft: "28px",
     paddingTop: "20px",
     paddingBottom: "20px",
   },
-  closeDrawerItem:{
+  closeDrawerItem: {
     marginLeft: "22px",
     paddingTop: "20px",
     paddingBottom: "20px",
@@ -109,6 +114,7 @@ const Drawer = styled(MuiDrawer, {
     ...closedMixin(theme),
     "& .MuiDrawer-paper": closedMixin(theme),
   }),
+
 }));
 
 const sideBarMenuItems = {
@@ -125,13 +131,21 @@ export const CustomSidebar = ({ isOpen }) => {
   const [selectedMenuItem, setSelectedMenuItem] = useState(
     sideBarMenuItems.ADLIBSDATABASE
   );
+  const [open, setOpen] = React.useState(false);
 
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
   const userLogout = async () => {
-    logoutUser().then((data)=>{
+    logoutUser().then((data) => {
       // dispatch(setIsAlive(false));
       localStorage.setItem("is_alive", false);
       navigate("/auth/login");
-    }, (error)=>{
+    }, (error) => {
       console.log("Error While LogOut", error)
     });
   };
@@ -150,126 +164,165 @@ export const CustomSidebar = ({ isOpen }) => {
   return (
     <>
       <Drawer variant="permanent" open={isOpen}>
-        <Stack sx={{ height: "100%"}}>
+        <Stack sx={{ height: "100%" }}>
           <Box
             onClick={() => navigate("/")}
             sx={{
-              display:"flex",
-              marginLeft: "7.5px",
-              alignItems:"center",
-              marginTop:"28px",
-              marginBottom:"48px"
-            }}
-          >
-            <Box sx={{marginRight: "8px"}}><img alt="small-logo" src={fbEyelogo} /></Box> 
-            <Box><img alt="small-logo" src={fbEyelogoText} height="20"/></Box>
-            
-          </Box>
-          <Box className={!isOpen ? classes.openDrawerItemWrapper : classes.closeDrawerItemWrapper}>
-          <Box
-            sx={{ cursor: "pointer"}}
-            className={
-              selectedMenuItem === sideBarMenuItems.ADLIBSDATABASE
-                ? classes.selectedMenu
-                : ""
-            }
-            onClick={() => {
-              setSelectedMenuItem(sideBarMenuItems.ADLIBSDATABASE);
-              navigate("/");
-            }}
-          >
-            <Stack
-              direction={"row"}
-              className={isOpen ? classes.openDrawerItem : classes.closeDrawerItem}
-            >              
-              <AdLibraryDatabaseIcon fill={ selectedMenuItem === sideBarMenuItems.ADLIBSDATABASE ?"#00CBFF":"grey"} />
-              <Typography sx={{ marginLeft: "26px" }}>
-                Adilbrary Database
-              </Typography>
-            </Stack>
-          </Box>
-          </Box>
-          
-          <Box className={!isOpen ? classes.openDrawerItemWrapper : classes.closeDrawerItemWrapper}>
-          <Box
-            sx={{
-              marginTop: "6px",
-              cursor: "pointer",
-            }}
-            className={
-              selectedMenuItem === sideBarMenuItems.SAVEDADS
-                ? classes.selectedMenu
-                : ""
-            }
-            onClick={() => {
-              setSelectedMenuItem(sideBarMenuItems.SAVEDADS);
-              navigate("/savedAds");
-            }}
-          >
-            <Stack
-              direction={"row"}
-              className={isOpen ? classes.openDrawerItem : classes.closeDrawerItem}
-            >
-              
-
-              <SaveIcon fill={ selectedMenuItem === sideBarMenuItems.SAVEDADS?"#00CBFF":"grey"} />
-
-              <Typography sx={{ marginLeft: "26px" }}>Saved Ads</Typography>
-            </Stack>
-          </Box>
-          </Box>
-          <Box className={!isOpen ? classes.openDrawerItemWrapper : classes.closeDrawerItemWrapper} sx={{marginTop: "auto"}}>
-          <Box
-            sx={{
-              cursor: "pointer",
-            }}
-            className={
-              selectedMenuItem === sideBarMenuItems.SUPPORT
-                ? classes.selectedMenu
-                : ""
-            }
-            onClick={() => {
-              setSelectedMenuItem(sideBarMenuItems.SUPPORT);
-              navigate("/ContactSupport");
-            }}
-          >
-            <Stack
-              direction={"row"}
-              className={isOpen ? classes.openDrawerItem : classes.closeDrawerItem}
-            >
-              <ContactIcon fill={selectedMenuItem === sideBarMenuItems.SUPPORT?"#00CBFF":"grey"}/>
-              <Typography sx={{ marginLeft: "26px" }}>
-                Contact Support
-              </Typography>
-            </Stack>
-          </Box>
-          </Box>
-          <Box className={!isOpen ? classes.openDrawerItemWrapper : classes.closeDrawerItemWrapper}>
-          <Box
-            sx={{
-              marginTop: "3px",
               display: "flex",
-              marginBottom: "60px",
-              cursor: "pointer",
-            }}
-            className={
-              selectedMenuItem === sideBarMenuItems.LOGOUT
-                ? classes.selectedMenu
-                : ""
-            }
-            onClick={() => {
-              setSelectedMenuItem(sideBarMenuItems.LOGOUT);
+              marginLeft: "7.5px",
+              alignItems: "center",
+              marginTop: "28px",
+              marginBottom: "48px"
             }}
           >
-            <Stack
-              direction={"row"}
-              className={isOpen ? classes.openDrawerItem : classes.closeDrawerItem}
-              onClick={userLogout}
-            >
-              <img alt="Logout" src={logout} width="17px" />
-              <Typography sx={{ marginLeft: "33px" }}>Log Out</Typography>
-            </Stack>
+            <Box sx={{ marginRight: "8px" }}><img alt="small-logo" src={fbEyelogo} /></Box>
+            <Box><img alt="small-logo" src={fbEyelogoText} height="20" /></Box>
+
           </Box>
+          <Box className={!isOpen ? classes.openDrawerItemWrapper : classes.closeDrawerItemWrapper}>
+            <Box
+              sx={{ cursor: "pointer" }}
+              className={
+                selectedMenuItem === sideBarMenuItems.ADLIBSDATABASE
+                  ? classes.selectedMenu
+                  : ""
+              }
+              onClick={() => {
+                setSelectedMenuItem(sideBarMenuItems.ADLIBSDATABASE);
+                navigate("/");
+              }}
+            >
+              <Stack
+                direction={"row"}
+                className={isOpen ? classes.openDrawerItem : classes.closeDrawerItem}
+              >
+                <AdLibraryDatabaseIcon fill={selectedMenuItem === sideBarMenuItems.ADLIBSDATABASE ? "#00CBFF" : "grey"} />
+                <Typography sx={{ marginLeft: "26px" }}>
+                  Adilbrary Database
+                </Typography>
+              </Stack>
+            </Box>
+          </Box>
+
+          <Box className={!isOpen ? classes.openDrawerItemWrapper : classes.closeDrawerItemWrapper}>
+            <Box
+              sx={{
+                marginTop: "6px",
+                cursor: "pointer",
+              }}
+              className={
+                selectedMenuItem === sideBarMenuItems.SAVEDADS
+                  ? classes.selectedMenu
+                  : ""
+              }
+              onClick={() => {
+                setSelectedMenuItem(sideBarMenuItems.SAVEDADS);
+                navigate("/savedAds");
+              }}
+            >
+              <Stack
+                direction={"row"}
+                className={isOpen ? classes.openDrawerItem : classes.closeDrawerItem}
+              >
+
+
+                <SaveIcon fill={selectedMenuItem === sideBarMenuItems.SAVEDADS ? "#00CBFF" : "grey"} />
+
+                <Typography sx={{ marginLeft: "26px" }}>Saved Ads</Typography>
+              </Stack>
+            </Box>
+          </Box>
+          <Box className={!isOpen ? classes.openDrawerItemWrapper : classes.closeDrawerItemWrapper} sx={{ marginTop: "auto" }}>
+            <Box
+              sx={{
+                cursor: "pointer",
+              }}
+              className={
+                selectedMenuItem === sideBarMenuItems.SUPPORT
+                  ? classes.selectedMenu
+                  : ""
+              }
+              onClick={() => {
+                setSelectedMenuItem(sideBarMenuItems.SUPPORT);
+                navigate("/ContactSupport");
+              }}
+            >
+              <Stack
+                direction={"row"}
+                className={isOpen ? classes.openDrawerItem : classes.closeDrawerItem}
+              >
+                <ContactIcon fill={selectedMenuItem === sideBarMenuItems.SUPPORT ? "#00CBFF" : "grey"} />
+                <Typography sx={{ marginLeft: "26px" }}>
+                  Contact Support
+                </Typography>
+              </Stack>
+            </Box>
+          </Box>
+          <Box className={!isOpen ? classes.openDrawerItemWrapper : classes.closeDrawerItemWrapper}>
+            <Box
+              sx={{
+                marginTop: "3px",
+                display: "flex",
+                marginBottom: "60px",
+                cursor: "pointer",
+              }}
+              className={
+                selectedMenuItem === sideBarMenuItems.LOGOUT
+                  ? classes.selectedMenu
+                  : ""
+              }
+              onClick={() => {
+                setSelectedMenuItem(sideBarMenuItems.LOGOUT);
+              }}
+            >
+              <Stack
+                direction={"row"}
+                className={isOpen ? classes.openDrawerItem : classes.closeDrawerItem}
+                onClick={handleClickOpen}
+              >
+                <img alt="Logout" src={logout} width="17px" />
+                <Typography sx={{ marginLeft: "33px" }}>Log Out</Typography>
+              </Stack>
+              <Box p={2}>
+                <Dialog
+                  open={open}
+                  onClose={handleClose}
+                  aria-labelledby="alert-dialog-title"
+                  aria-describedby="alert-dialog-description"
+                >
+                  <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                      <Typography variant="h5" p={2}
+                        sx={{ fontWeight: "bold", color: "#2B2F42" }}>
+                        Are You Sure For Logout ?
+                      </Typography>
+                    </DialogContentText>
+                  </DialogContent>
+                  <DialogActions sx={{ marginRight: "inherit", paddingBottom: "16px" }}>
+                    <Button onClick={handleClose}
+                      variant="contained"
+                      color="primary"
+                      style={{
+                        borderRadius: 50,
+                        backgroundColor: "#00CBFF",
+                        whiteSpace: "nowrap"
+                      }}
+                    >Cancel</Button>
+                    <Button onClick={userLogout}
+                      variant="contained"
+                      color="primary"
+                      style={{
+                        borderRadius: 50,
+                        backgroundColor: "#00CBFF",
+                        whiteSpace: "nowrap"
+                      }}
+                    >
+                      Yes
+                    </Button>
+                  </DialogActions>
+                </Dialog>
+              </Box>
+            </Box>
           </Box>
         </Stack>
       </Drawer>

@@ -12,35 +12,39 @@ import {
   Typography,
   CardContent,
   Grid,
+  Alert,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
-// import { yupResolver } from "@hookform/resolvers/yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { signUp } from "../../services/index";
 import { themeLight, globalStyles } from "../../css/globalcss";
 import { CssBaseline } from "@material-ui/core";
-// import { registerValidationSchema } from "./../../utils/validationSchemas";
+import { registerValidationSchema } from "./../../utils/validationSchemas";
 import fbaddlogo from "../../assets/fbaddlogo.png"
 
 const Signup = () => {
   const global = globalStyles();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [errormessage, setErrormessage] = useState("")
   const {
     register,
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    resolver: yupResolver(registerValidationSchema),
+  });
 
   const submitsigninform = async (data) => {
-    // console.log("first name---------------------------------");
-    console.log(data);
-    // console.log(data);
     setLoading(true);
     try {
       const response = await signUp(data);
-      if (response.success) {
+      if (response.data.message === "User already exist") {
+        setLoading(false)
+        setErrormessage("The email address is already in used")
+      } else if (response.success) {
         navigate("/auth/login");
       }
     } catch {
@@ -71,7 +75,7 @@ const Signup = () => {
             }}
           >
             <CardContent>
-                  <img alt="logo" src={fbaddlogo} className={global.logo} />  
+              <img alt="logo" src={fbaddlogo} className={global.logo} />
               <form
                 onSubmit={handleSubmit(submitsigninform)}
               >
@@ -83,13 +87,16 @@ const Signup = () => {
                   <Typography className={global.alreadyaccount} pt={1}>
                     Already Have an account?{" "}
                     <span
-                      style={{ color: "#00CBFF", cursor: "pointer",marginLeft:"5px" }}
+                      style={{ color: "#00CBFF", cursor: "pointer", marginLeft: "5px" }}
                       onClick={() => navigate("/auth/login")}
                     >
                       Signin
                     </span>
+                    <Box mt={2}>
+                      {errormessage && <Alert severity="error" >{errormessage}</Alert>}
+                    </Box>
                   </Typography>
-                  <Grid container spacing={2} pt={5}>
+                  <Grid container spacing={2} pt={4} >
                     <Grid xs={12} item>
                       <TextField
                         placeholder="Enter first name"
@@ -97,12 +104,7 @@ const Signup = () => {
                         variant="outlined"
                         fullWidth
                         name="first_name"
-                        {...register("first_name")}
-                        error={errors.first_name ? true : false}
                       />
-                      <Typography variant="inherit" color="textSecondary">
-                        {errors.first_name?.message}
-                      </Typography>
                     </Grid>
                     <Grid xs={12} item>
                       <TextField
@@ -110,12 +112,7 @@ const Signup = () => {
                         label="Last Name"
                         variant="outlined"
                         fullWidth
-                        {...register("last_name")}
-                        error={errors.last_name ? true : false}
                       />
-                      <Typography variant="inherit" color="textSecondary">
-                        {errors.last_name?.message}
-                      </Typography>
                     </Grid>
                     <Grid item xs={12}>
                       <TextField
@@ -173,30 +170,19 @@ const Signup = () => {
                         }
                         label={
                           <Typography
-                            color={errors.acceptTerms ? "error" : "inherit"}
+                            color={errors.acceptTerms ? "error" : "inherit"} 
                             className={global.termsandcondition}
                           >
-                            I agree to the{" "}
-                            <span style={{ color: "#00CBFF" }}>
-                              Terms of service
-                            </span>{" "}
-                            and{" "}
-                            <span style={{ color: "#00CBFF" }}>
-                              Privacy Policy
-                            </span>
+                            I agree to the
+                            <Typography component={'span'} style={{ color: "#00CBFF" }}>   Terms of service </Typography>
+                            {""}and {""}
+                             <Typography component={'span'} style={{ color: "#00CBFF" }}>
+                               Privacy Policy
+                            </Typography>
                           </Typography>
                         }
                       />
                       <br />
-                      <Typography
-                        variant="inherit"
-                        color="textSecondary"
-                        mr={2}
-                      >
-                        {errors.acceptTerms
-                          ? "(" + errors.acceptTerms.message + ")"
-                          : ""}
-                      </Typography>
                     </Grid>
                   </Grid>
                 </Box>
@@ -213,7 +199,7 @@ const Signup = () => {
                     onClick={handleSubmit(submitsigninform)}
                   >
                     {loading ? (
-                      <CircularProgress style={{ color: "#F6F6FB" }} />
+                      <CircularProgress size={36} style={{ color: "#F6F6FB" }} />
                     ) : (
                       "Create Account"
                     )}
