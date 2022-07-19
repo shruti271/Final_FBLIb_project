@@ -9,9 +9,9 @@ export function* handleGetSearchedData({ payload }) {
     console.log("response", response);
 
     if (response.status === 200) {
-      console.log("....................................................okkkkk..")
-      console.log(response?.data?.data)
-      console.log("..................................................okkk....")
+      // console.log("....................................................okkkkk..")
+      // console.log(response?.data?.data)
+      // console.log("..................................................okkk....")
       yield put(searchSuccess(response?.data?.data));      
     }
   } catch (error) {
@@ -25,9 +25,9 @@ export function* handleGetSearchedPhraseData({ payload }) {
     console.log("response", response);
 
     if (response.status === 200) {
-      console.log("....................................................okkkkk..")
-      console.log(response?.data?.data)
-      console.log("..................................................okkk....")
+      // console.log("....................................................okkkkk..")
+      // console.log(response?.data?.data)
+      // console.log("..................................................okkk....")
       yield put(searchPhraseSuccess(response?.data?.data));      
     }
   } catch (error) {

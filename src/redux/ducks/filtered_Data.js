@@ -378,8 +378,8 @@ const FilterDataReducer = (state = initialState, action) => {
             (firstAd, secondAd) =>
               secondAd[state.sortFilter?.type] - firstAd[state.sortFilter?.type]
           );
-      console.log(dummy);
-      console.log("..............................................");
+      // console.log(dummy);
+      // console.log("..............................................");
 
       return {
         ...state,
@@ -450,20 +450,34 @@ const FilterDataReducer = (state = initialState, action) => {
         search_loading: false,
         // appliedFilters: state.appliedFilters,
         seactBarFilterData: Object.keys(action.payload).length?action.payload:[],
-        filteredData:
-          // state.searchBarData !==""
-          // ?
+        filteredData:                    
           Object.keys(action.payload).length
             ? action.payload.filter(
                 (ads) =>
-                  (state.appliedFilters?.AdCount?.min !== 0 ||
-                  state.appliedFilters?.AdCount?.max !== 1000
+                (state.appliedFilters?.AdCount?.Message !== ""                  
                     ? ads.noOfCopyAds >= state.appliedFilters?.AdCount?.min &&
                       ads.noOfCopyAds <= state.appliedFilters?.AdCount?.max
                     : true) &&
+                  (state.appliedFilters?.PurchaseType?.selctedButton !== ""
+                    ? ads.ctaStatus ===
+                      state.appliedFilters?.PurchaseType?.selctedButton
+                    : true) &&
+                  (state.appliedFilters?.FacebookLikes?.min !== 1 ||
+                  state.appliedFilters?.FacebookLikes?.max !== 100000
+                    ? ads?.pageInfo?.platforms[0]?.likes >=
+                        state.appliedFilters?.FacebookLikes?.min &&
+                      ads?.pageInfo?.platforms[0]?.likes <=
+                        state.appliedFilters?.FacebookLikes?.max
+                    : true) &&
+                  (state.appliedFilters?.InstragramLike?.min !== 1 ||
+                  state.appliedFilters?.InstragramLike?.max !== 10000
+                    ? ads?.pageInfo?.platforms[1]?.followers >=
+                        state.appliedFilters?.InstragramLike?.min &&
+                      ads?.pageInfo?.platforms[1]?.followers <=
+                        state.appliedFilters?.InstragramLike?.max
+                    : true) &&
                   (state.appliedFilters?.MediaType?.selectedData === "" ||
-                  state.appliedFilters?.MediaType?.selectedData ===
-                    "Video or Photo"
+                  state.appliedFilters?.MediaType?.selectedData === "Video or Photo"
                     ? true
                     : ads.adMediaType ===
                       state.appliedFilters?.MediaType?.selectedData) &&
@@ -477,19 +491,24 @@ const FilterDataReducer = (state = initialState, action) => {
                       state.appliedFilters?.StartRunningDate?.enddate >=
                         ads?.startDate
                     : true) &&
-                  (state.appliedFilters?.FacebookLikes?.min !== 0 ||
-                  state.appliedFilters?.FacebookLikes?.max !== 1000
-                    ? state.appliedFilters?.FacebookLikes?.max === 0
-                      ? ads?.pageInfo?.platforms[0]?.likes >=
-                        state.appliedFilters?.FacebookLikes?.min
-                      : ads?.pageInfo?.platforms[0]?.likes >=
-                          state.appliedFilters?.FacebookLikes?.min &&
-                        ads?.pageInfo?.platforms[0]?.likes <=
-                          state.appliedFilters?.FacebookLikes?.max
+                  (state.sortFilter?.type === "AdCountIncrease"
+                    ? Object.values(ads.history)[
+                        Object.keys(ads.history).length - 1
+                      ]["noOfCopyAds"] >
+                      Object.values(ads.history)[
+                        Object.keys(ads.history).length - 2
+                      ]["noOfCopyAds"]
+                    : true) &&
+                  (state.sortFilter?.type === "AdCountDecrease"
+                    ? Object.values(ads.history)[
+                        Object.keys(ads.history).length - 1
+                      ]["noOfCopyAds"] <
+                      Object.values(ads.history)[
+                        Object.keys(ads.history).length - 2
+                      ]["noOfCopyAds"]
                     : true)
               )
-            : [],
-        // : state.filteredData,
+            : [],        
       };
 
     case SEARCH_ERROR:
@@ -513,21 +532,38 @@ const FilterDataReducer = (state = initialState, action) => {
           ...state,
           search_loading: false,
           // appliedFilters: state.appliedFilters,
-          seactBarFilterData: Object.keys(action.payload).length?action.payload:[],
+          seactBarFilterData: Object.keys(action.payload)?.length?action.payload:[],
           filteredData:
             // state.searchBarData !==""
             // ?
             Object.keys(action.payload).length
               ? action.payload.filter(
                   (ads) =>
-                    (state.appliedFilters?.AdCount?.min !== 0 ||
+                  (state.appliedFilters?.AdCount?.min !== 1 ||
                     state.appliedFilters?.AdCount?.max !== 1000
                       ? ads.noOfCopyAds >= state.appliedFilters?.AdCount?.min &&
                         ads.noOfCopyAds <= state.appliedFilters?.AdCount?.max
                       : true) &&
+                    (state.appliedFilters?.PurchaseType?.selctedButton !== ""
+                      ? ads.ctaStatus ===
+                        state.appliedFilters?.PurchaseType?.selctedButton
+                      : true) &&
+                    (state.appliedFilters?.FacebookLikes?.min !== 1 ||
+                    state.appliedFilters?.FacebookLikes?.max !== 100000
+                      ? ads?.pageInfo?.platforms[0]?.likes >=
+                          state.appliedFilters?.FacebookLikes?.min &&
+                        ads?.pageInfo?.platforms[0]?.likes <=
+                          state.appliedFilters?.FacebookLikes?.max
+                      : true) &&
+                    (state.appliedFilters?.InstragramLike?.min !== 1 ||
+                    state.appliedFilters?.InstragramLike?.max !== 10000
+                      ? ads?.pageInfo?.platforms[1]?.followers >=
+                          state.appliedFilters?.InstragramLike?.min &&
+                        ads?.pageInfo?.platforms[1]?.followers <=
+                          state.appliedFilters?.InstragramLike?.max
+                      : true) &&
                     (state.appliedFilters?.MediaType?.selectedData === "" ||
-                    state.appliedFilters?.MediaType?.selectedData ===
-                      "Video or Photo"
+                    state.appliedFilters?.MediaType?.selectedData === "Video or Photo"
                       ? true
                       : ads.adMediaType ===
                         state.appliedFilters?.MediaType?.selectedData) &&
@@ -541,15 +577,21 @@ const FilterDataReducer = (state = initialState, action) => {
                         state.appliedFilters?.StartRunningDate?.enddate >=
                           ads?.startDate
                       : true) &&
-                    (state.appliedFilters?.FacebookLikes?.min !== 0 ||
-                    state.appliedFilters?.FacebookLikes?.max !== 1000
-                      ? state.appliedFilters?.FacebookLikes?.max === 0
-                        ? ads?.pageInfo?.platforms[0]?.likes >=
-                          state.appliedFilters?.FacebookLikes?.min
-                        : ads?.pageInfo?.platforms[0]?.likes >=
-                            state.appliedFilters?.FacebookLikes?.min &&
-                          ads?.pageInfo?.platforms[0]?.likes <=
-                            state.appliedFilters?.FacebookLikes?.max
+                    (state.sortFilter?.type === "AdCountIncrease"
+                      ? Object.values(ads.history)[
+                          Object.keys(ads.history).length - 1
+                        ]["noOfCopyAds"] >
+                        Object.values(ads.history)[
+                          Object.keys(ads.history).length - 2
+                        ]["noOfCopyAds"]
+                      : true) &&
+                    (state.sortFilter?.type === "AdCountDecrease"
+                      ? Object.values(ads.history)[
+                          Object.keys(ads.history).length - 1
+                        ]["noOfCopyAds"] <
+                        Object.values(ads.history)[
+                          Object.keys(ads.history).length - 2
+                        ]["noOfCopyAds"]
                       : true)
                 )
               : [],

@@ -56,37 +56,37 @@ const MyCharttt = (props) => {
         },
       },
       plotOptions: {
-        area: {
-          fillColor: {
-            linearGradient: {
-              color:
-              "linear-gradient(360deg, rgba(181, 237, 255, 0.3) 0.17%, rgba(0, 203, 255, 0.6) 28.76%, rgba(103, 33, 255, 0.8) 85.95%)",
-              x1: 0,
-              y1: 0,
-              x2: 0,
-              y2: 1,
-            },
-            stops: [
-                // [0.3, "rgba(103, 33, 255, 0.8 )"],
-                // [0.6, "rgba(0, 203, 255, 0.4)"],
-                // [0.8, "rgba(103, 33, 255, 0.3)"],
-                [0, " #B5EDFF"],
-                [0.3, "#00CBFF"],
-                [0.8, "#6721FF"],
-                [0.104,"#C8BDFF"]
-            ],
-          },
+        // area: {
+        //   fillColor: {
+        //     linearGradient: {
+        //       color:
+        //       "linear-gradient(360deg, rgba(181, 237, 255, 0.3) 0.17%, rgba(0, 203, 255, 0.6) 28.76%, rgba(103, 33, 255, 0.8) 85.95%)",
+        //       x1: 0,
+        //       y1: 0,
+        //       x2: 0,
+        //       y2: 1,
+        //     },
+        //     stops: [
+        //         // [0.3, "rgba(103, 33, 255, 0.8 )"],
+        //         // [0.6, "rgba(0, 203, 255, 0.4)"],
+        //         // [0.8, "rgba(103, 33, 255, 0.3)"],
+        //         [0, " #B5EDFF"],
+        //         [0.3, "#00CBFF"],
+        //         [0.8, "#6721FF"],
+        //         [0.104,"#C8BDFF"]
+        //     ],
+        //   },
   
-          lineWidth: 9,
-        //   color:"white",
-        //   lineTension: 0.2,
-          states: {
-            hover: {
-              lineWidth: 10,
-            },
-          },
-          threshold: null,
-        },      
+        //   lineWidth: 9,
+        // //   color:"white",
+        // //   lineTension: 0.2,
+        //   states: {
+        //     hover: {
+        //       lineWidth: 10,
+        //     },
+        //   },
+        //   threshold: null,
+        // },      
       },
    
       series: [
@@ -103,7 +103,7 @@ const MyCharttt = (props) => {
             fillColor: '#FFFFFF',
             lineWidth: 1,            
             lineColor: "black", // inherit from series            
-            radius: 5,            
+            radius: 3,            
         },
           color: {
             linearGradient: {

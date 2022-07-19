@@ -148,7 +148,6 @@ const useStyles = makeStyles((theme) => ({
 const Addlibrarydatabase = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  // const focusDiv = useRef();
 
   const { allMediaAds, loading } = useSelector((state) => state.allMediaAds);
   const {
@@ -159,20 +158,19 @@ const Addlibrarydatabase = () => {
     postionYoffset,
     search_loading,
     searchType,
-    maxRanger
-    // AllAdsPage,
+    maxRanger    
   } = useSelector((state) => state.filteredData);
 
-  const { savedIds } = useSelector((state) => state.savedclienads);
+  const { savedIds,savedAdsLocal } = useSelector((state) => state.savedclienads);
   
-  console.log("search_loading..", search_loading);
-  useEffect(() => {
-    // console.log(AllAdsPage);
-    console.log(
-      "....................................................",
-      filteredData
-    );
-  });
+  // console.log("search_loading..", search_loading);
+  // useEffect(() => {
+  //   // console.log(AllAdsPage);
+  //   console.log(
+  //     "....................................................",
+  //     filteredData
+  //   );
+  // });
 
   // useEffect(() => {
   //   // var words = ['hello', 'hi', 'howdy'];
@@ -244,18 +242,16 @@ const Addlibrarydatabase = () => {
       behavior: "smooth",
     });
   }, [postionYoffset]);
- 
+ useEffect(()=>{
+  console.log(savedIds)
+  console.log(savedAdsLocal)
+  console.log("------------------------------00000000000000")
+ })
   useEffect(() => {
-    console.log(filteredData);
-    console.log(
-      "hhhhhhhhhhhhhhhh:::::::::::::::::::::",
-      Object(filteredData).length
-    );
-    if (Object(filteredData).length) {
-      console.log("come here 111111");
+   
+    if (Object(filteredData)?.length) {    
       dispatch(loadFilteredDataStart());
-    } else {
-      console.log("come here 2");
+    } else {      
       dispatch(putFilteredDataStart({ data: allMediaAds[1]?.all_ads }));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -451,14 +447,11 @@ const Addlibrarydatabase = () => {
               container
               spacing={2}
               sx={{
-                marginTop: "5px" 
-                
+                marginTop: "5px"                 
               }}
             >
               
-              {filteredData?.length?filteredData?.map((ads, index) => (
-                // console.log(filteredData.length),
-              // console.log(O)),console.log("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\*********************")  ,// console.log("first", ads),
+              {filteredData?.length?filteredData?.map((ads, index) => (                
                 <ThumbNailBox
                   adInfo={ads}
                   index={index}

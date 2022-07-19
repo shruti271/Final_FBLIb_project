@@ -17,6 +17,11 @@ function AdDeatails({ ThumbnailData }) {
   console.log(
     "pppppppppppppppppppppppppppppppppp)))))))))))))))))))))))))))))))))ppppppppppppppp"
   );
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  },[]);
+
   return (
     <>
       <Grid container sx={{ marginTop: "36px" }}>
@@ -41,21 +46,16 @@ function AdDeatails({ ThumbnailData }) {
                   <Avatar
                     src={ThumbnailData?.pageInfo?.logo}
                     aria-label="FirstCard"
-                    // style={{ width: "100%", height: "100%" }}
+                
                     style={{ width: "30px", height: "30px" }}
-                    // sx={{ width: 27, height: 27 }}
+                 
                   ></Avatar>
-                  {/* <img
-                    src={ThumbnailData?.pageInfo?.logo}
-                    aria-label="FirstCard"
-                    style={{ width: "25px" }}
-                  /> */}
+                 
                 </Box>
                 <Typography
                 variant="h6"
                   style={{
-                    // fontWeight: 500,
-                    // fontSize: "19px",
+                   
                     marginLeft: "8px",
                     lineHeight: "30px",
                     color: "#2B2F42",
@@ -70,10 +70,10 @@ function AdDeatails({ ThumbnailData }) {
 
               <Box sx={{marginLeft:2,marginRight:2 , }}>
                 <Typography
-                  // variant="span"
+                 
                   sx={{
                     fontWeight: 500,
-                    // fontSize: "18px",
+                  
                     lineHeight: "27px",
                     letterSpacing: "0.03em",
                     color: "#2B2F42",
@@ -341,9 +341,9 @@ function AdDeatails({ ThumbnailData }) {
                 </Box>
               </Stack>
               <Stack style={{ justifyContent: "center", marginTop: "36px" }}>
-                {ThumbnailData?.pageInfo?.platforms.map((socialMedia) => {
+                {ThumbnailData?.pageInfo?.platforms.map((socialMedia,index) => {
                   return (
-                    <Stack
+                    <Stack key={index}
                       direction={"row"}
                       sx={{
                         marginBottom: "16px",
@@ -423,7 +423,7 @@ const useStyles = makeStyles(() => ({
   AdsImageVideo: {
     objectFit: "fill",
     // resizeMode: "Startch",
-    height: "420px",
+    height: "400px",
     width: "95%",
   },
   AdsImage:{

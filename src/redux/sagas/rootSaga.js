@@ -23,13 +23,14 @@ import { LOAD_SUBALLMEDIA_START } from "../ducks/subAllAds";
 import { handleGetSubAllMedia } from "./handlers/subAllAds";
 import { handleGetSearchedData, handleGetSearchedPhraseData } from "./handlers/searchBar";
 import { ALL_STATUS_START, SEARCH_PHRASE_START, SEARCH_START } from "../ducks/filtered_Data";
-import { handleGetSavedAdsSearchedData } from "./handlers/save_searchAds";
-import { ALL_SAVED_ADS_SEARCH_START } from "../ducks/saveAds_clientSide";
+import { handleGetSavedAdsSearchedData, handleGetSavedSearchedPhraseData } from "./handlers/save_searchAds";
+import { ALL_SAVED_ADS_SEARCH_START, SAVED_SEARCH_PHRASE_START } from "../ducks/saveAds_clientSide";
 import { handleGetCatStatus } from "./handlers/allSastus";
 import { handleGetIsAlive } from "./handlers/session";
 import { handleGetSubscription } from "./handlers/subscription";
 import { LOAD_ISALIVE_START } from "../ducks/session";
 import { LOAD_SUBSCRIPTION_START } from "../ducks/subscription";
+import { requestSearchPhraseData } from "./requests/searchBar";
 
 function* onLoadMeida() {
   yield takeLatest(LOAD_MEDIA_START, handleGetMedia);
@@ -67,18 +68,23 @@ function* onLoadSubAllMeida() {
   yield takeLatest(LOAD_SUBALLMEDIA_START, handleGetSubAllMedia);
 }
 
-function* onLoadSearchedAds() {
-  yield takeLatest(SEARCH_START, handleGetSearchedData);
-}
-
 function* onLoadAllCatSatus() {
   yield takeLatest(ALL_STATUS_START, handleGetCatStatus);
 }
+
+function* onLoadSearchedAds() {
+  yield takeLatest(SEARCH_START, handleGetSearchedPhraseData);
+}
+
+function* onLoadPhraseSearchedAds() {
+  yield takeLatest(SEARCH_PHRASE_START, handleGetSearchedPhraseData);
+}
+
 function* onLoadSavedAdSearchedAds() {
   yield takeLatest(ALL_SAVED_ADS_SEARCH_START, handleGetSavedAdsSearchedData);
 }
 function* onLoadSavedAdSearchedPhhraseAds() {
-  yield takeLatest(SEARCH_PHRASE_START, handleGetSearchedPhraseData);
+  yield takeLatest(SAVED_SEARCH_PHRASE_START, handleGetSavedSearchedPhraseData);
 }
 const mediaSagas = [fork(onLoadMeida)];
 const isAliveSagas = [fork(onLoadIsAlive)];
@@ -101,7 +107,7 @@ const accountSettingsSagas = [
 const suballadsSagas = [fork(onLoadSubAllMeida)];
 
 const searchedAdsSagas = [
-  fork(onLoadSearchedAds),
+  fork(onLoadSearchedAds), fork(onLoadPhraseSearchedAds)
 
 ];
 const allCatStatusSagas = [

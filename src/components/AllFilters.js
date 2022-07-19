@@ -1566,6 +1566,7 @@ import {
   SavedAdssearchStart,
   SavedAdssearchValueStart,
   SavedAdsstatusValueStart,
+  savedSearchPhraseStart,
   savedShnageSearchType,
 } from "../redux/ducks/saveAds_clientSide";
 import { EditText } from "react-edit-text";
@@ -1744,11 +1745,11 @@ useEffect(()=>{
     console.log("ccccccccccccccccccccccccccccc");
   });
   const counterIncremten = (event, newValue) => {
-    console.log("++++++++++++++" + document.getElementById("searchbar").value);
-    console.log(newValue);
-    console.log("............................................................");
+    // console.log("++++++++++++++" + document.getElementById("searchbar").value);
+    // console.log(newValue);
+    // console.log("............................................................");
     // console.log(event.type);
-    console.log("............................................................");
+    // console.log("............................................................");
     // if(event.type!=="mousedown" && event.type!=="mousemove"){
 
     if (props.name === "AllAdsPage") {
@@ -1890,8 +1891,8 @@ useEffect(()=>{
     }
   };
   const handlechange = (event, newValue) => {
-    console.log(newValue);
-    console.log("..................................................");
+    // console.log(newValue);
+    // console.log("..................................................");
     if (props.name === "AllAdsPage") {
       dispatch(
         MediaTypevalueStart({
@@ -2148,12 +2149,17 @@ useEffect(()=>{
                 } else if (props.name === "SavedPage") {
                   if (e.key === "Enter") {
                     console.log("com indiseeeeeeeeeeeeeeeeeee");
-                    dispatch(
+                    if(props.search_type==="All these words")
+                    {dispatch(
                       SavedAdssearchValueStart({
-                        type: props.search_type,
+                        // type: props.search_type,
                         data: e.currentTarget.value,
                       })
-                    );
+                    );}
+                    else
+                    {dispatch(savedSearchPhraseStart({data:e.currentTarget.value}))}
+
+                    
                     dispatch(SavedAdsFilterAfterSearchStart());
                   }
                   if (e.target.value.length === 0) {

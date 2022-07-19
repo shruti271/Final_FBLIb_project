@@ -36,7 +36,9 @@ export const ALL_FILTER_AFTER_SAVED_SEARCH_SUCCESS =
   "ALL_FILTER_AFTER_SAVED_SEARCH_SUCCESS";
 export const EMPTY_SAVED_SEARCH_SUCCESS = "EMPTY_SAVED_SEARCH_SUCCESS";
 export const SAVED_REFIX_MIN_MAX_RANGE_IN_SLIDER="SAVED_REFIX_MIN_MAX_RANGE_IN_SLIDER";
-
+export const SAVED_SEARCH_PHRASE_START="SAVED_SEARCH_PHRASE_START";
+export const SAVED_SEARCH_PHRASE_SUCCESS="SAVED_SEARCH_PHRASE_SUCCESS";
+export const SAVED_SEARCH_PHRASE_ERROR="SAVED_SEARCH_PHRASE_ERROR";
 export const loadSavedAdsClientSideStart = (allData) => ({
   type: LOAD_SAVEADSCLIENTSIDE_START,
   payload: allData,
@@ -144,6 +146,21 @@ export const SavedAdsearchError = (error) => ({
 export const savedShnageSearchType = (data) => ({
   type: SAVED_CHANGE_SEARCH_TYPE,
   payload: data,
+});
+
+export const savedSearchPhraseStart = (Ads) => ({
+  type: SAVED_SEARCH_PHRASE_START,
+  payload: Ads,
+});
+
+export const savedSearchPhraseSuccess = (Ads) => ({
+  type: SAVED_SEARCH_PHRASE_SUCCESS,
+  payload: Ads,
+});
+
+export const savedSearchPhraseError = (error) => ({
+  type: SAVED_SEARCH_PHRASE_ERROR,
+  payload: error,
 });
 
 export const savedAdschnageSearchType = (data) => ({
@@ -381,8 +398,8 @@ const savedAdsClienSideReducer = (state = initialState, action) => {
             (firstAd, secondAd) =>
               secondAd[state.sortFilter?.type] - firstAd[state.sortFilter?.type]
           );
-      console.log(dummy);
-      console.log("..............................................");
+      // console.log(dummy);
+      // console.log("..............................................");
 
       return {
         ...state,
@@ -427,19 +444,103 @@ const savedAdsClienSideReducer = (state = initialState, action) => {
         },
         // filteredData: [...state.filteredData],
       };
-    // case FACEBOOKLIKES_START:
-    //   return {
-    //     ...state,
-    //
-    //     SavedAppliedFilters: {
-    //       ...state.SavedAppliedFilters,
-    //       [`${action.payload.name}`]: {
-    //         status: action.payload.status,
-    //         Message: action.payload.Message,
-    //       },
-    //     },
-    //     filteredData: [...state.filteredData],
-    //   };
+    case SAVED_SEARCH_PHRASE_START:
+      return {
+        ...state,
+        search_loading: true,
+        searchBarData: action.payload.data,
+      };
+      case SAVED_SEARCH_PHRASE_SUCCESS:
+      console.log("----------------------------------------------------+");
+      console.log(action.payload);
+      console.log("----------------------------------------------------+");
+      return {
+        ...state,
+        search_loading: false,
+        // SavedAppliedFilters: state.SavedAppliedFilters,
+        // searchBarData: state.searchBarData,
+        searchedSavedData: Object.keys(action.payload).length?action.payload:[],
+        filteredData:
+        Object.keys(action.payload).length
+            ? action.payload.filter(
+                (ads) =>
+                (state.SavedAppliedFilters?.AdCount?.min !== 1 ||
+                  state.SavedAppliedFilters?.AdCount?.max !== 1000
+                    ? ads.noOfCopyAds >= state.SavedAppliedFilters?.AdCount?.min &&
+                      ads.noOfCopyAds <= state.SavedAppliedFilters?.AdCount?.max
+                    : true)&&
+                    (state.SavedAppliedFilters?.PurchaseType?.selctedButton !== ""
+                      ? ads.ctaStatus ===
+                        state.SavedAppliedFilters?.PurchaseType?.selctedButton
+                      : true) &&
+                  (state.SavedAppliedFilters?.FacebookLikes?.min !== 1 ||
+                  state.SavedAppliedFilters?.FacebookLikes?.max !== 100000
+                    ? ads?.pageInfo?.platforms[0]?.likes >=
+                        state.SavedAppliedFilters?.FacebookLikes?.min &&
+                      ads?.pageInfo?.platforms[0]?.likes <=
+                        state.SavedAppliedFilters?.FacebookLikes?.max
+                    : true) &&
+                  (state.SavedAppliedFilters?.InstragramLike?.min !== 1 ||
+                  state.SavedAppliedFilters?.InstragramLike?.max !== 10000
+                    ? ads?.pageInfo?.platforms[1]?.followers >=
+                        state.SavedAppliedFilters?.InstragramLike?.min &&
+                      ads?.pageInfo?.platforms[1]?.followers <=
+                        state.SavedAppliedFilters?.InstragramLike?.max
+                    : true) &&
+                  (state.SavedAppliedFilters?.MediaType?.selectedData === "" ||
+                  state.SavedAppliedFilters?.MediaType?.selectedData ===
+                    "Video or Photo"
+                    ? true
+                    : ads.adMediaType ===
+                      state.SavedAppliedFilters?.MediaType?.selectedData) &&
+                  (state.SavedAppliedFilters?.AdStatus?.status !== ""
+                    ? ads?.status === state.SavedAppliedFilters?.AdStatus?.status
+                    : true) &&
+                  (state.SavedAppliedFilters?.PurchaseType?.selctedButton === "" ||
+                  state.SavedAppliedFilters?.PurchaseType?.selctedButton ===
+                    "Shop Now"
+                    ? true
+                    : ads.ctaStatus.toLowerCase ===
+                      state.SavedAppliedFilters?.PurchaseType?.selctedButton
+                        .toLowerCase) &&
+                  (state.SavedAppliedFilters?.AdStatus?.status !== ""
+                    ? ads?.status === state.SavedAppliedFilters?.AdStatus?.status
+                    : true) &&
+                  (state.SavedAppliedFilters?.StartRunningDate?.startdate &&
+                  state.SavedAppliedFilters?.StartRunningDate?.enddate
+                    ? state.SavedAppliedFilters?.StartRunningDate?.startdate <=
+                        ads?.startDate &&
+                      state.SavedAppliedFilters?.StartRunningDate?.enddate >=
+                        ads?.startDate
+                    : true) &&
+                  (state.sortFilter?.type === "AdCountIncrease"
+                    ? Object.values(ads.history)[
+                        Object.keys(ads.history).length - 1
+                      ]["noOfCopyAds"] >
+                      Object.values(ads.history)[
+                        Object.keys(ads.history).length - 2
+                      ]["noOfCopyAds"]
+                    : true) &&
+                  (state.sortFilter?.type === "AdCountDecrease"
+                    ? Object.values(ads.history)[
+                        Object.keys(ads.history).length - 1
+                      ]["noOfCopyAds"] <
+                      Object.values(ads.history)[
+                        Object.keys(ads.history).length - 2
+                      ]["noOfCopyAds"]
+                    : true)
+              )
+            : [],
+
+       
+      };
+      case SAVED_SEARCH_PHRASE_ERROR:
+        return {
+          ...state,
+          search_loading: false,
+          error: action.payload,
+        };
+     
     case ALL_SAVED_ADS_SEARCH_START:
       return {
         ...state,
@@ -461,11 +562,28 @@ const savedAdsClienSideReducer = (state = initialState, action) => {
         Object.keys(action.payload).length
             ? action.payload.filter(
                 (ads) =>
-                  (state.SavedAppliedFilters?.AdCount?.min !== 0 ||
+                (state.SavedAppliedFilters?.AdCount?.min !== 1 ||
                   state.SavedAppliedFilters?.AdCount?.max !== 1000
-                    ? ads.noOfCopyAds >=
-                        state.SavedAppliedFilters?.AdCount?.min &&
+                    ? ads.noOfCopyAds >= state.SavedAppliedFilters?.AdCount?.min &&
                       ads.noOfCopyAds <= state.SavedAppliedFilters?.AdCount?.max
+                    : true)&&
+                    (state.SavedAppliedFilters?.PurchaseType?.selctedButton !== ""
+                      ? ads.ctaStatus ===
+                        state.SavedAppliedFilters?.PurchaseType?.selctedButton
+                      : true) &&
+                  (state.SavedAppliedFilters?.FacebookLikes?.min !== 1 ||
+                  state.SavedAppliedFilters?.FacebookLikes?.max !== 100000
+                    ? ads?.pageInfo?.platforms[0]?.likes >=
+                        state.SavedAppliedFilters?.FacebookLikes?.min &&
+                      ads?.pageInfo?.platforms[0]?.likes <=
+                        state.SavedAppliedFilters?.FacebookLikes?.max
+                    : true) &&
+                  (state.SavedAppliedFilters?.InstragramLike?.min !== 1 ||
+                  state.SavedAppliedFilters?.InstragramLike?.max !== 10000
+                    ? ads?.pageInfo?.platforms[1]?.followers >=
+                        state.SavedAppliedFilters?.InstragramLike?.min &&
+                      ads?.pageInfo?.platforms[1]?.followers <=
+                        state.SavedAppliedFilters?.InstragramLike?.max
                     : true) &&
                   (state.SavedAppliedFilters?.MediaType?.selectedData === "" ||
                   state.SavedAppliedFilters?.MediaType?.selectedData ===
@@ -474,8 +592,17 @@ const savedAdsClienSideReducer = (state = initialState, action) => {
                     : ads.adMediaType ===
                       state.SavedAppliedFilters?.MediaType?.selectedData) &&
                   (state.SavedAppliedFilters?.AdStatus?.status !== ""
-                    ? ads?.status ===
-                      state.SavedAppliedFilters?.AdStatus?.status
+                    ? ads?.status === state.SavedAppliedFilters?.AdStatus?.status
+                    : true) &&
+                  (state.SavedAppliedFilters?.PurchaseType?.selctedButton === "" ||
+                  state.SavedAppliedFilters?.PurchaseType?.selctedButton ===
+                    "Shop Now"
+                    ? true
+                    : ads.ctaStatus.toLowerCase ===
+                      state.SavedAppliedFilters?.PurchaseType?.selctedButton
+                        .toLowerCase) &&
+                  (state.SavedAppliedFilters?.AdStatus?.status !== ""
+                    ? ads?.status === state.SavedAppliedFilters?.AdStatus?.status
                     : true) &&
                   (state.SavedAppliedFilters?.StartRunningDate?.startdate &&
                   state.SavedAppliedFilters?.StartRunningDate?.enddate
@@ -484,32 +611,26 @@ const savedAdsClienSideReducer = (state = initialState, action) => {
                       state.SavedAppliedFilters?.StartRunningDate?.enddate >=
                         ads?.startDate
                     : true) &&
-                  (state.SavedAppliedFilters?.FacebookLikes?.min !== 0 ||
-                  state.SavedAppliedFilters?.FacebookLikes?.max !== 1000
-                    ? state.SavedAppliedFilters?.FacebookLikes?.max === 0
-                      ? ads?.pageInfo?.platforms[0]?.likes >=
-                        state.SavedAppliedFilters?.FacebookLikes?.min
-                      : ads?.pageInfo?.platforms[0]?.likes >=
-                          state.SavedAppliedFilters?.FacebookLikes?.min &&
-                        ads?.pageInfo?.platforms[0]?.likes <=
-                          state.SavedAppliedFilters?.FacebookLikes?.max
+                  (state.sortFilter?.type === "AdCountIncrease"
+                    ? Object.values(ads.history)[
+                        Object.keys(ads.history).length - 1
+                      ]["noOfCopyAds"] >
+                      Object.values(ads.history)[
+                        Object.keys(ads.history).length - 2
+                      ]["noOfCopyAds"]
+                    : true) &&
+                  (state.sortFilter?.type === "AdCountDecrease"
+                    ? Object.values(ads.history)[
+                        Object.keys(ads.history).length - 1
+                      ]["noOfCopyAds"] <
+                      Object.values(ads.history)[
+                        Object.keys(ads.history).length - 2
+                      ]["noOfCopyAds"]
                     : true)
               )
             : [],
 
-        // filteredData: [
-        //   ...state.allData.filter((ads) => {
-        //     console.log(action.payload)
-        //     const dummyData = JSON.stringify(Object.values(ads)).toLowerCase();
-        //     console.log(dummyData)
-        //     const darr = action.payload.split(" ").join(",").toLowerCase();
-        //     // console.log(darr);
-        //     console.log("|^ darr;;;;;" + dummyData.includes(...darr));
-        //     // console.log(ads);
-        //     console.log("000000000000000000000000000000000000")
-        //     return dummyData.includes(...darr);
-        //   }),
-        // ],
+       
       };
 
     case ALL_SAVED_ADS_SEARCH_ERROR:
@@ -587,16 +708,6 @@ const savedAdsClienSideReducer = (state = initialState, action) => {
                   state.SavedAppliedFilters?.StartRunningDate?.enddate >=
                     ads?.startDate
                 : true) &&
-              // (state.SavedAppliedFilters?.FacebookLikes?.min !== 1 ||
-              // state.SavedAppliedFilters?.FacebookLikes?.max !== 1000
-              //   ? state.SavedAppliedFilters?.FacebookLikes?.max === 0
-              //     ? ads?.pageInfo?.platforms[0]?.likes >=
-              //       state.SavedAppliedFilters?.FacebookLikes?.min
-              //     : ads?.pageInfo?.platforms[0]?.likes >=
-              //         state.SavedAppliedFilters?.FacebookLikes?.min &&
-              //       ads?.pageInfo?.platforms[0]?.likes <=
-              //         state.SavedAppliedFilters?.FacebookLikes?.max
-              //   : true) &&
               (state.sortFilter?.type === "AdCountIncrease"
                 ? Object.values(ads.history)[
                     Object.keys(ads.history).length - 1
