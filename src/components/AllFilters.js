@@ -1413,7 +1413,7 @@
 //                           dispatch(SortvalueStart());
 //                         }}
 //                       >
-//                         clear
+//                         
 //                       </Button>
 //                     </Grid>
 //                   </Grid>
@@ -1630,6 +1630,9 @@ const useStyles = makeStyles((theme) => ({
   },
   DropDownArrow: {
     marginLeft: theme.spacing(1),
+  },
+  DropDownArrow2:{
+    marginLeft: theme.spacing(8),
   },
   shareicon: {
     marginLeft: theme.spacing(5),
@@ -2006,7 +2009,7 @@ useEffect(()=>{
                   <img
                     alt="arrowdown"
                     src={Arrowdown}
-                    className={classes.DropDownArrow}
+                    className={classes.DropDownArrow2}
                   />
                 }
                 label="Outlined"
@@ -2070,7 +2073,7 @@ useEffect(()=>{
                           color: "#00CBFF",
                           height: "35px",
                           width: "80px",
-                          borderWidth: 2,
+                          borderWidth: 2
                         }}
                         onClick={() => {
                           if (props.name === "AllAdsPage") {
@@ -3757,7 +3760,7 @@ useEffect(()=>{
             }}
           >
             <Grid container>
-              <Grid item sx={{ marginTop: "20px" }}>
+              <Grid item sx={{ marginTop: "23px" }}>
                 <Button
                   disabled={props.loading}
                   variant="outlined"
@@ -3769,9 +3772,9 @@ useEffect(()=>{
                     color: "#00CBFF",
                     height: "35px",
                     width: "80px",
-                    borderWidth: 3,
-                    texttransform: "none"
-                    
+                    borderWidth: 2,
+                    textTransform: "none",
+                    // letterSpacing:"1px"
                   }}
                   onClick={() => {
                     const emptyFilter = {};

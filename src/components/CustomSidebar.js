@@ -6,23 +6,17 @@ import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { Stack } from "@mui/material";
-import { useDispatch } from "react-redux";
-import appLogo from "../assets/appLogo.svg";
 import logout from "../assets/Logout.svg";
 import { logoutUser } from "../services";
-// import SaveIcon from "../SvgIcons/SaveIcon";
 import AdLibraryDatabaseIcon from "../SvgIcons/AdLibraryDatabaseIcon";
 import ContactIcon from "../SvgIcons/ContactIcon";
-import fbaddlogo from "../assets/fbaddlogo.png"
 import fbEyelogo from "../assets/eye_logo.svg"
 import fbEyelogoText from "../assets/logo_text.svg"
 import SaveIcon from "../SvgIcons/SaveIcon";
-import { setIsAlive } from "../redux/ducks/session"
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
 const useStyles = makeStyles(() => ({
   title: {
@@ -78,7 +72,6 @@ const drawerWidth = 276;
 
 const openedMixin = (theme) => ({
   width: drawerWidth,
-  // marginLeft: "8px",
   transition: theme.transitions.create("width", {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen,
@@ -87,7 +80,6 @@ const openedMixin = (theme) => ({
 });
 
 const closedMixin = (theme) => ({
-  // padding: theme.spacing(0.5),
   transition: theme.transitions.create("width", {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
@@ -125,7 +117,6 @@ const sideBarMenuItems = {
 };
 
 export const CustomSidebar = ({ isOpen }) => {
-  const dispatch = useDispatch();
   const classes = useStyles();
   const navigate = useNavigate();
   const [selectedMenuItem, setSelectedMenuItem] = useState(
@@ -134,7 +125,7 @@ export const CustomSidebar = ({ isOpen }) => {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
-    setOpen(true);
+    setOpen(true);  
   };
 
   const handleClose = () => {
@@ -142,7 +133,6 @@ export const CustomSidebar = ({ isOpen }) => {
   };
   const userLogout = async () => {
     logoutUser().then((data) => {
-      // dispatch(setIsAlive(false));
       localStorage.setItem("is_alive", false);
       navigate("/auth/login");
     }, (error) => {
