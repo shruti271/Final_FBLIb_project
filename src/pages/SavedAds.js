@@ -35,16 +35,17 @@ const SavedAds = () => {
     filteredData,
     searchType,
     search_loading,
-    maxRanger
+    save_loading,
+    maxRanger,
   } = useSelector((state) => state.savedclienads);
   // savedAdsClienSideReducer
   // const { savedAds, loading } = useSelector((state) => state.savedAds);
   const [filterActivate, setFilterActivate] = React.useState(true);
-  useEffect(() => {
-    if (!filteredData) {dispatch(putSavedAdsFilteredDataStart(savedAdsLocal));
-    }
-    
-  }, [dispatch, filteredData, savedAdsLocal]);
+  // useEffect(() => {
+  //   if (!filteredData) {dispatch(putSavedAdsFilteredDataStart(savedAdsLocal));
+  //   }
+
+  // }, [dispatch, filteredData, savedAdsLocal]);
 
   // useEffect(()=>{
   //   console.log(".............................++++++++++++++")
@@ -73,7 +74,6 @@ const SavedAds = () => {
                   marginTop: 2,
                 }}
               >
-                
                 <AllFilters
                   name={"SavedPage"}
                   pageFilterInfo={SavedAppliedFilters}
@@ -214,7 +214,7 @@ const SavedAds = () => {
                           />
                         ))
                       );
-                    })  }
+                    })}
                   </Grid>
                 )}
               </Grid>
@@ -243,7 +243,7 @@ const SavedAds = () => {
                   alignItems: "center",
                   marginRight: "2px",
                   opacity: search_loading ? 0.5 : 1,
-                disabled: search_loading ? true : false,
+                  disabled: search_loading ? true : false,
                 }}
               >
                 {filterActivate ? (
@@ -261,7 +261,7 @@ const SavedAds = () => {
                     }}
                   />
                 ) : (
-                  <FilterAltOffIcon 
+                  <FilterAltOffIcon
                     style={{
                       width: "20px",
                       height: "20px",
@@ -288,7 +288,11 @@ const SavedAds = () => {
                   // />
                 )}
               </Box>
-              <SortFilter loading={search_loading} sortDetail={sortFilter} name={"SavedPage"} />
+              <SortFilter
+                loading={search_loading}
+                sortDetail={sortFilter}
+                name={"SavedPage"}
+              />
               {/* <Typography>Sort by</Typography>
             <img
               alt="arrowdown"
@@ -302,32 +306,72 @@ const SavedAds = () => {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              width:"100%"
+              width: "100%",
             }}
           >
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                width: "100%",
+                visibility:
+                     search_loading ||save_loading
+                      ? "visible"
+                      : "hidden",
+              }}
+            >
+              <CircularProgress
+                style={{
+                  position: "relative",
+                  top:window.pageYOffset,
+                  opacity: 1,
+                  zIndex: 1,
+                  visibility:
+                     search_loading ||save_loading
+                      ? "visible"
+                      : "hidden",
+                }}
+              />
+            </Box>
             {/* {console.log(savedAdsLocal)} */}
-            {Object.keys(savedAdsLocal).length ? (
+            {
+            // save_loading ? (
+              
+            // ) : 
+            Object.keys(savedAdsLocal).length ? (
               <Grid
                 container
                 spacing={2}
                 sx={{
                   marginTop: "10px",
-                  opacity: search_loading ? 0.5 : 1,
-                disabled: search_loading ? true : false,
-                width:"100%"
+                  opacity: save_loading ? 0.5 : 1,
+                  disabled: save_loading ? true : false,
+                  width: "100%",
                 }}
               >
-                
-                {filteredData.length ?filteredData.map((ads, index) => (
-                  <ThumbNailBox
-                    adInfo={ads}
-                    index={index}
-                    key={index}
-                    deleteId={ads.id}                    
-                  />
-                )):<Box sx={{display:"flex",justifyContent:"center",alignItems:"center" , width:"100%"}}>No Result</Box>}
-                </Grid>
-              
+                {filteredData.length ? (
+                  filteredData.map((ads, index) => (
+                    <ThumbNailBox
+                      adInfo={ads}
+                      index={index}
+                      key={index}
+                      deleteId={ads.id}
+                    />
+                  ))
+                ) : (
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      width: "100%",
+                    }}
+                  >
+                    No Result
+                  </Box>
+                )}
+              </Grid>
             ) : (
               <Stack
                 direction={"column"}

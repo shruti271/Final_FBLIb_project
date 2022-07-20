@@ -14,8 +14,8 @@ import {
 } from "@mui/material";
 import { makeStyles } from "@material-ui/core/styles";
 import {
-  createSavedAdsStart,
-  deleteSavedAdsStart,
+  // createSavedAdsStart,
+  // deleteSavedAdsStart,
 } from "../redux/ducks/saveAds";
 import Firstcard from "../assets/Firstcard.svg";
 import Firstcardimg from "../assets/FirstCardImg.svg";
@@ -25,8 +25,10 @@ import Addgraph from "../assets/Addgraph.svg";
 import StarFill from "../assets/StarFill.svg";
 import {
   createSavedAdsClientSideStart,
+  createSavedAdsStart,
   deleteSavedAdsClientSideStart,
   deleteSavedAdsClientSideSuccess,
+  deleteSavedAdsStart,
 } from "../redux/ducks/saveAds_clientSide";
 import pauseButton from "../assets/pauseButton.svg";
 import { srtPostionForScrollValueStart } from "../redux/ducks/filtered_Data";
@@ -304,7 +306,7 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
                       alt="StarFill"
                       className={classes.saveicon}
                       onClick={() => {
-                        dispatch(deleteSavedAdsClientSideStart(adInfo));
+                        // dispatch(deleteSavedAdsClientSideStart(adInfo));
                         dispatch(deleteSavedAdsStart({ ad: adInfo?.id }));
                       }}
                     />
@@ -314,7 +316,7 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
                       alt="Saveicon"
                       className={classes.saveicon}
                       onClick={async () => {
-                        dispatch(createSavedAdsClientSideStart(adInfo));
+                        // dispatch(createSavedAdsClientSideStart(adInfo));
                         await dispatch(createSavedAdsStart({ ad: adInfo.id }));
                       }}
                     />

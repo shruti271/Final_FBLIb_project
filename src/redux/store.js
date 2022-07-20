@@ -3,7 +3,7 @@ import logger from "redux-logger";
 import createSagaMiddleware from "redux-saga";
 import mediaReducer from "./ducks/mediaAds";
 import watcherSaga from "./sagas/rootSaga";
-import savedAdsReducer from "./ducks/saveAds";
+// import savedAdsReducer from "./ducks/saveAds";
 import accountSettingsReducer from "./ducks/accountSettings";
 import subAllMediaReducer from "./ducks/subAllAds";
 import savedAdsClienSideReducer from "./ducks/saveAds_clientSide";
@@ -13,7 +13,7 @@ import subscriptionReducer from "./ducks/subscription";
 
 const reducer = combineReducers({
   allMediaAds: mediaReducer,
-  savedAds: savedAdsReducer,
+  // savedAds: savedAdsReducer,
   accountSettings: accountSettingsReducer,
   subAllMedia: subAllMediaReducer,
   savedclienads: savedAdsClienSideReducer,
