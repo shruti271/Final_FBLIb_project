@@ -1,7 +1,3 @@
-
-
-
-
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -45,8 +41,6 @@ import SortFilter from "../components/SortFilter";
 import Mychart from "../components/Graph";
 
 // import MyGraph from "../components/Graph";
-
-
 
 // import { escapeRegExp } from "@mui/x-data-grid/utils/utils";
 
@@ -158,11 +152,13 @@ const Addlibrarydatabase = () => {
     postionYoffset,
     search_loading,
     searchType,
-    maxRanger    
+    maxRanger,
   } = useSelector((state) => state.filteredData);
 
-  const { savedIds,savedAdsLocal } = useSelector((state) => state.savedclienads);
-  
+  const { savedIds, savedAdsLocal, save_loading } = useSelector(
+    (state) => state.savedclienads
+  );
+
   // console.log("search_loading..", search_loading);
   // useEffect(() => {
   //   // console.log(AllAdsPage);
@@ -242,16 +238,15 @@ const Addlibrarydatabase = () => {
       behavior: "smooth",
     });
   }, [postionYoffset]);
- useEffect(()=>{
-  console.log(savedIds)
-  console.log(savedAdsLocal)
-  console.log("------------------------------00000000000000")
- })
   useEffect(() => {
-   
-    if (Object(filteredData)?.length) {    
+    console.log(savedIds);
+    console.log(savedAdsLocal);
+    console.log("------------------------------00000000000000");
+  });
+  useEffect(() => {
+    if (Object(filteredData)?.length) {
       dispatch(loadFilteredDataStart());
-    } else {      
+    } else {
       dispatch(putFilteredDataStart({ data: allMediaAds[1]?.all_ads }));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -260,209 +255,241 @@ const Addlibrarydatabase = () => {
   return (
     <>
       <BackTotopbutton />
-        <Grid
-          container
-          sx={{ opacity: loading ? 0.5 : 1, disabled: loading ? true : false, paddingRight:"36px" }}
-        >
-          <Grid item xs={12}>
-            <Box component="main">
-              <Typography
-                className={classes.titleHome}
-                variant="h5"
-                sx={{ fontWeight: "bold" }}
-              >
-                Welcome to the All-Seeing Eye!
-              </Typography>
-              <Typography
-                // className={classes.subTitleHome}
-                sx={{
-                  fontWeight: 500,
-                  fontSize: "18px",
-                  // lineHeight: "24px",
-                  color: "#2B2F42",
-                  // marginTop: "8px",
-                  // marginBottom: "18px",
-                }}
-              >
-                Spy on 100% of the ads ran by over 30,000 active dropshipping
-                stores.
-              </Typography>
-            </Box>
-          </Grid>
-
-          <Grid
-            item
-            xs={12}
-            sx={{
-              border: "1px solid #EBEBEB",
-              borderRadius: "15px",
-              padding: "16px 36px",
-              marginTop: 2,
-            }}
-          >
-            <Box
+      <Grid
+        container
+        sx={{
+          opacity: loading ? 0.5 : 1,
+          disabled: loading ? true : false,
+          paddingRight: "36px",
+        }}
+      >
+        <Grid item xs={12}>
+          <Box component="main">
+            <Typography
+              className={classes.titleHome}
+              variant="h5"
+              sx={{ fontWeight: "bold" }}
+            >
+              Welcome to the All-Seeing Eye!
+            </Typography>
+            <Typography
+              // className={classes.subTitleHome}
               sx={{
-                opacity: search_loading ? 0.5 : 1,
-                disabled: search_loading ? true : false,
+                fontWeight: 500,
+                fontSize: "18px",
+                // lineHeight: "24px",
+                color: "#2B2F42",
+                // marginTop: "8px",
+                // marginBottom: "18px",
               }}
             >
-              <AllFilters
-                name={"AllAdsPage"}
-                pageFilterInfo={appliedFilters}
-                search={searchBarData}
-                search_type={searchType}
-                loading={search_loading}
-                ranger={maxRanger}
+              Spy on 100% of the ads ran by over 30,000 active dropshipping
+              stores.
+            </Typography>
+          </Box>
+        </Grid>
+
+        <Grid
+          item
+          xs={12}
+          sx={{
+            border: "1px solid #EBEBEB",
+            borderRadius: "15px",
+            padding: "16px 36px",
+            marginTop: 2,
+          }}
+        >
+          <Box
+            sx={{
+              opacity: search_loading ? 0.5 : 1,
+              disabled: search_loading ? true : false,
+            }}
+          >
+            <AllFilters
+              name={"AllAdsPage"}
+              pageFilterInfo={appliedFilters}
+              search={searchBarData}
+              search_type={searchType}
+              loading={search_loading}
+              ranger={maxRanger}
+            />
+          </Box>
+
+          <Grid container sx={{ marginTop: 1 }}>
+            {Object.keys(appliedFilters).map((filter, index) => {
+              // console.log(filter)
+              // console.log(Object.keys(AllAdsPage["appliedFilters"]))
+              // console.log(AllAdsPage["appliedFilters"][filter]);
+              // console.log(
+              //   "99999999999999999999999999999999999999999999999999999999"
+              // );
+              return (
+                appliedFilters[filter]["Message"] &&
+                (console.log("cominnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn"),
+                (
+                  <Chip
+                    key={index}
+                    color="primary"
+                    label={appliedFilters[filter]["Message"]}
+                    deleteIcon={
+                      <CloseIcon
+                        style={{
+                          color: "white",
+                          backgroundColor: "#00CBFF",
+                        }}
+                      />
+                    }
+                    onDelete={() => {
+                      const filters = Object(appliedFilters[filter]);
+                      const AdsRemovedElement = {
+                        MIN: "min",
+                        MEDIATYPE: "selectedData",
+                        STATUS: "status",
+                        SELECTEDDATE: "StartRunningDate",
+                      };
+                      console.log(filter);
+
+                      console.log(";;;;;;;;;;;;;;;");
+                      const FilterRemoveData = [];
+                      for (let dum in filters) {
+                        console.log("dum" + dum);
+                        console.log(dum, filters[dum]);
+                        // console.log(typeof appliedFilters[filter][dum]);
+                        FilterRemoveData[dum] =
+                          typeof appliedFilters[filter][dum] === "number"
+                            ? dum === AdsRemovedElement.MIN
+                              ? 1
+                              : filter === "FacebookLikes"
+                              ? 100000
+                              : filter === "InstragramLike"
+                              ? 10000
+                              : 1000
+                            : typeof appliedFilters[filter][dum] === "string"
+                            ? dum === AdsRemovedElement.MEDIATYPE
+                              ? dum === AdsRemovedElement.STATUS
+                                ? "Active"
+                                : "Video or Photo"
+                              : ""
+                            : new Date();
+                      }
+                      // console.table(FilterRemoveData);
+                      console.log(FilterRemoveData);
+                      dispatch(
+                        clearSingleFilteredDataStart({
+                          name: filter,
+                          data: FilterRemoveData,
+                          // componentName: "AllAdsPage",
+                        })
+                      );
+
+                      // dispatch(applyallfilters());
+                      // console.log(document.getElementById("searchbar").value);
+                      console.log(
+                        "-----------======================================" +
+                          searchBarData.length
+                      );
+                      searchBarData !== ""
+                        ? dispatch(FilterAfterSearchStart()) //dispatch(searchStart(searchBarData))
+                        : dispatch(applyallfilters());
+
+                      // dispatch(SortvalueStart());
+                      // setAppliedFilters((pre) => ({
+                      //   ...pre,
+                      //   [`${filter}`]: FilterRemoveData,
+                      // }));
+
+                      console.log(filter);
+                    }}
+                    sx={{
+                      borderRadius: 2,
+                      backgroundColor: "#00CBFF",
+                      // marginLeft: 1,
+                      margin: 0.5,
+                    }}
+                  />
+                ))
+              );
+            })}
+          </Grid>
+        </Grid>
+        <Grid container justifyContent="flex-end" sx={{ marginTop: "10px" }}>
+          <SortFilter
+            loading={search_loading}
+            sortDetail={sortFilter}
+            name={"AllAdsPage"}
+          />
+        </Grid>
+        <Grid
+          item
+          // xs={12}
+          sx={{
+            // opacity: search_loading ? 0.5 : 1,
+            // disabled: loading || search_loading || save_loading? true : false,
+            width: "100%",
+          }}
+        >
+          {/* {loading || search_loading  || save_loading?  */}
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                width: "100%",
+                visibility:
+                    loading || search_loading ||save_loading
+                      ? "visible"
+                      : "hidden",
+              }}
+            >
+              <CircularProgress
+                style={{
+                  position: "relative",
+                  top:window.pageYOffset,
+                  opacity: 1,
+                  zIndex: 1,
+                  visibility:
+                    loading || search_loading ||save_loading
+                      ? "visible"
+                      : "hidden",
+                }}
               />
             </Box>
-
-            <Grid container sx={{ marginTop: 1 }}>
-              {Object.keys(appliedFilters).map((filter, index) => {
-                // console.log(filter)
-                // console.log(Object.keys(AllAdsPage["appliedFilters"]))
-                // console.log(AllAdsPage["appliedFilters"][filter]);
-                // console.log(
-                //   "99999999999999999999999999999999999999999999999999999999"
-                // );
-                return (
-                  appliedFilters[filter]["Message"] &&
-                  (console.log("cominnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn"),
-                  (
-                    <Chip
-                      key={index}
-                      color="primary"
-                      label={appliedFilters[filter]["Message"]}
-                      deleteIcon={
-                        <CloseIcon
-                          style={{
-                            color: "white",
-                            backgroundColor: "#00CBFF",
-                          }}
-                        />
-                      }
-                      onDelete={() => {
-                        const filters = Object(appliedFilters[filter]);
-                        const AdsRemovedElement = {
-                          MIN: "min",
-                          MEDIATYPE: "selectedData",
-                          STATUS: "status",
-                          SELECTEDDATE: "StartRunningDate",
-                        };
-                        console.log(filter);
-
-                        console.log(";;;;;;;;;;;;;;;");
-                        const FilterRemoveData = [];
-                        for (let dum in filters) {
-                          console.log("dum" + dum);
-                          console.log(dum, filters[dum]);
-                          // console.log(typeof appliedFilters[filter][dum]);
-                          FilterRemoveData[dum] =
-                            typeof appliedFilters[filter][dum] === "number"
-                              ? dum === AdsRemovedElement.MIN
-                                ? 1
-                                : filter === "FacebookLikes"
-                                ? 100000
-                                : filter === "InstragramLike"
-                                ? 10000
-                                : 1000
-                              : typeof appliedFilters[filter][dum] === "string"
-                              ? dum === AdsRemovedElement.MEDIATYPE
-                                ? dum === AdsRemovedElement.STATUS
-                                  ? "Active"
-                                  : "Video or Photo"
-                                : ""
-                              : new Date();
-                        }
-                        // console.table(FilterRemoveData);
-                        console.log(FilterRemoveData);
-                        dispatch(
-                          clearSingleFilteredDataStart({
-                            name: filter,
-                            data: FilterRemoveData,
-                            // componentName: "AllAdsPage",
-                          })
-                        );
-
-                        // dispatch(applyallfilters());
-                        // console.log(document.getElementById("searchbar").value);
-                        console.log(
-                          "-----------======================================" +
-                            searchBarData.length
-                        );
-                        searchBarData !== ""
-                          ? dispatch(FilterAfterSearchStart()) //dispatch(searchStart(searchBarData))
-                          : dispatch(applyallfilters());
-
-                        // dispatch(SortvalueStart());
-                        // setAppliedFilters((pre) => ({
-                        //   ...pre,
-                        //   [`${filter}`]: FilterRemoveData,
-                        // }));
-
-                        console.log(filter);
-                      }}
-                      sx={{
-                        borderRadius: 2,
-                        backgroundColor: "#00CBFF",
-                        // marginLeft: 1,
-                        margin: 0.5,
-                      }}
-                    />
-                  ))
-                );
-              })}
-            </Grid>
-          </Grid>
-          <Grid container justifyContent="flex-end" sx={{marginTop:"10px"}}>
-            <SortFilter loading={search_loading} sortDetail={sortFilter} name={"AllAdsPage"} />
-          </Grid>
-          <Grid
-            item
-            // xs={12}
-            sx={{
-              // opacity: search_loading ? 0.5 : 1,
-              disabled: loading || search_loading ? true : false,
-              width:"100%"
-            }}
-          >
-            
-
-            { loading || search_loading ? <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              width:"100%",
-            }}
-          >
-            <CircularProgress
-              style={{
-                position: "relative",
-                opacity: 1,
-                zIndex: 1,
-                visibility: loading || search_loading  ? "visible" : "hidden",
-              }}
-            />
-          </Box>:<Grid
+            {/* :null} */}
+          {/* // ) : ( */}
+            <Grid
               container
               spacing={2}
               sx={{
-                marginTop: "5px"                 
+                marginTop: "5px",
+                opacity: save_loading ? 0.5 : 1,
+                // disabled: save_loading ? true : false,
               }}
             >
-              
-              {filteredData?.length?filteredData?.map((ads, index) => (                
-                <ThumbNailBox
-                  adInfo={ads}
-                  index={index}
-                  deleteId={savedIds?.includes(ads.id) ? ads.id : false}
-                  key={index}
-                />
-              )):<Box sx={{display:"flex",justifyContent:"center",alignItems:"center" , width:"100%"}}>No Result</Box>}
-            </Grid>}
-          </Grid>
-         
+              {filteredData?.length? (
+                filteredData?.map((ads, index) => (
+                  <ThumbNailBox
+                    adInfo={ads}
+                    index={index}
+                    deleteId={savedIds?.includes(ads.id) ? ads.id : false}
+                    key={index}
+                  />
+                ))
+              ) : (
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    width: "100%",
+                  }}
+                >
+                  No Result
+                </Box>
+              )}
+            </Grid>
+          {/* // )} */}
         </Grid>
+      </Grid>
     </>
   );
 };

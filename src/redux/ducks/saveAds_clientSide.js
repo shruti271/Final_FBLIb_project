@@ -39,15 +39,73 @@ export const SAVED_REFIX_MIN_MAX_RANGE_IN_SLIDER="SAVED_REFIX_MIN_MAX_RANGE_IN_S
 export const SAVED_SEARCH_PHRASE_START="SAVED_SEARCH_PHRASE_START";
 export const SAVED_SEARCH_PHRASE_SUCCESS="SAVED_SEARCH_PHRASE_SUCCESS";
 export const SAVED_SEARCH_PHRASE_ERROR="SAVED_SEARCH_PHRASE_ERROR";
+
+export const LOAD_SAVEADS_START = "LOAD_SAVEADS_START";
+export const LOAD_SAVEADS_SUCCESS = "LOAD_SAVEADS_SUCCESS";
+export const LOAD_SAVEADS_ERROR = "LOAD_SAVEADS_ERROR";
+
+export const CREATE_SAVEADS_START = "CREATE_SAVEADS_START";
+export const CREATE_SAVEADS_SUCCESS = "CREATE_SAVEADS_SUCCESS";
+export const CREATE_SAVEADS_ERROR = "CREATE_SAVEADS_ERROR";
+
+export const DELETE_SAVEADS_START = "DELETE_SAVEADS_START";
+export const DELETE_SAVEADS_SUCCESS = "DELETE_SAVEADS_SUCCESS";
+export const DELETE_SAVEADS_ERROR = "DELETE_SAVEADS_ERROR";
+
+export const loadSavedAdsStart = () => ({
+  type: LOAD_SAVEADS_START,
+});
+
+export const loadSavedAdsSuccess = (savedMediaAds) => ({
+  type: LOAD_SAVEADS_SUCCESS,
+  payload: savedMediaAds,
+});
+
+export const loadSavedAdsError = (error) => ({
+  type: LOAD_SAVEADS_ERROR,
+  payload: error,
+});
+
+export const createSavedAdsStart = (addAd) => ({
+  type: CREATE_SAVEADS_START,
+  payload: addAd,
+});
+
+export const createSavedAdsSuccess = (addAd) => ({
+  type: CREATE_SAVEADS_SUCCESS,
+  payload: addAd,
+});
+
+export const createSavedAdsError = (error) => ({
+  type: CREATE_SAVEADS_ERROR,
+  payload: error,
+});
+
+export const deleteSavedAdsStart = (saveId) => ({
+  type: DELETE_SAVEADS_START,
+  payload: saveId,
+});
+
+export const deleteSavedAdsSuccess = (saveId) => ({
+  type: DELETE_SAVEADS_SUCCESS,
+  payload: saveId,
+});
+
+export const deleteSavedAdsError = (error) => ({
+  type: DELETE_SAVEADS_ERROR,
+  payload: error,
+});
+// --------------------
+
 export const loadSavedAdsClientSideStart = (allData) => ({
   type: LOAD_SAVEADSCLIENTSIDE_START,
   payload: allData,
 });
 
-export const createSavedAdsClientSideStart = (ads) => ({
-  type: CREATE_SAVEADSCLIENTSIDE_START,
-  payload: ads,
-});
+// export const createSavedAdsClientSideStart = (ads) => ({
+//   type: CREATE_SAVEADSCLIENTSIDE_START,
+//   payload: ads,
+// });
 
 export const deleteSavedAdsClientSideStart = (ads) => ({
   type: DELETE_SAVEADSCLIENTSIDE_START,
@@ -208,6 +266,7 @@ const initialState = {
   searchBarData: "",
   searchedSavedData: [],
   search_loading: false,
+  save_loading:false,
   searchType: "All these words",
   error: "",
 };
@@ -217,11 +276,11 @@ const savedAdsClienSideReducer = (state = initialState, action) => {
     case LOAD_SAVEADSCLIENTSIDE_START:
       return {
         ...state,
-        loading: false,
-        savedAdsLocal: action.payload,
+        // loading: false,
+        // savedAdsLocal: action.payload,
         savedIds:
           action.payload !== "" ? action.payload.map((abc) => abc.id) : [],
-        filteredData: action.payload,
+        // filteredData: action.payload,
       };
     case CREATE_SAVEADSCLIENTSIDE_START:
       return {
@@ -852,7 +911,53 @@ const savedAdsClienSideReducer = (state = initialState, action) => {
           max: action.payload.max,
         },
       },
-    }
+    };
+    // ----------------------------
+    case LOAD_SAVEADS_START:
+    case CREATE_SAVEADS_START:
+    case DELETE_SAVEADS_START:
+      return {
+        ...state,
+        save_loading: true,
+      };
+    case LOAD_SAVEADS_SUCCESS:
+      console.log("++++++++++++++++++++++++++++++++++")
+      console.log(action.payload)
+      return {
+        ...state,
+        save_loading: false,
+        savedAdsLocal: action.payload,
+        savedIds:
+        action.payload !== "" ? action.payload.map((abc) => abc.id) : [],
+        filteredData:action.payload
+      };
+    case CREATE_SAVEADS_SUCCESS:
+      console.log("999999999999999999999999")
+      console.log(action.payload[0].id)
+      return {
+        ...state,
+        save_loading: false,
+        savedAdsLocal: [...state.savedAdsLocal.concat(action.payload)],                 
+        savedIds: [...state.savedIds.concat(action.payload[0].id)],     
+        filteredData:  [...state.filteredData.concat(action.payload)],
+      };
+    case LOAD_SAVEADS_ERROR:
+    case CREATE_SAVEADS_ERROR:
+      return {
+        ...state,
+        save_loading: false,
+        error: action.payload,
+      };
+      case DELETE_SAVEADS_SUCCESS: {
+        return {
+          ...state,
+          save_loading: false,
+          savedAdsLocal: state.savedAdsLocal.filter((savedads) => savedads.id !== action.payload.id),
+          savedIds: [...state.savedIds.filter((savedads) => savedads !== action.payload.id)],
+            // .concat(action.payload.id)],   
+            filteredData: state.filteredData.filter((savedads) => savedads.id !== action.payload.id),
+        };
+      }
     default:
       return state;
   }
