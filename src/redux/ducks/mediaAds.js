@@ -6,8 +6,9 @@ export const UPDATE_MEDIA_START = "UPDATE_MEDIA_START";
 export const UPDATE_MEDIA_SUCCESS = "UPDATE_MEDIA_SUCCESS";
 export const UPDATE_MEDIA_ERROR = "UPDATE_MEDIA_ERROR";
 
-export const loadMediaStart = () => ({
+export const loadMediaStart = (allMediaAds) => ({
   type: LOAD_MEDIA_START,
+  payload:allMediaAds,
 });
 
 export const loadMediaSuccess = (allMediaAds) => ({
@@ -38,6 +39,7 @@ export const updateMediaError = (error) => ({
 const initialState = {
   allMediaAds: [],
   // savedIds:[],
+  page_index:-1,
   loading: false,
   error: "",
 };
@@ -48,6 +50,11 @@ const mediaReducer = (state = initialState, action) => {
   // console.log("88888888888888888888888888888888888888888");
   switch (action.type) {
     case LOAD_MEDIA_START:
+      return {
+        ...state,
+        loading: true,
+        page_index:action.payload.page_index,
+      };
     case UPDATE_MEDIA_START:
       return {
         ...state,

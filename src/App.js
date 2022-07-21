@@ -41,9 +41,9 @@ const App = () => {
           exact
           path="/*"
           element={
-            <PrivateRoute>
+            // <PrivateRoute>
               <MainLayout />
-            </PrivateRoute>
+            // </PrivateRoute>
           }
         />
 

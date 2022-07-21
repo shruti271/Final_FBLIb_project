@@ -38,9 +38,25 @@ const MainLayout = () => {
   const { loading } = useSelector((state) => state.subscriptionData);
   const [isOpen, setIsOpen] = React.useState(true);
 
+  // window.onscroll = function(){
+  //   if(
+  //     window.innerHeight +document.documentElement.scrollTop===
+  //     document.documentElement.offsetHeight
+  //   )
+  //   {
+  //     scrollToEnd()
+  //   }
+  // }
+  
+  const pageScrolldataload = () =>{
+
+    dispatch(loadMediaStart({
+      page_index:0,
+    }));
+  }
   useEffect(() => {
     dispatch(loadSubscriptionStart());
-    dispatch(loadMediaStart());
+    pageScrolldataload()
     dispatch(loadSavedAdsStart());    
     dispatch(loadAccountSettingsStart());
     dispatch(getSetCatSatus());

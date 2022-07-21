@@ -39,6 +39,7 @@ import BackTotopbutton from "../pages/Backtotopbutton";
 import AllFilters from "../components/AllFilters";
 import SortFilter from "../components/SortFilter";
 import Mychart from "../components/Graph";
+import { loadMediaStart } from "../redux/ducks/mediaAds";
 
 // import MyGraph from "../components/Graph";
 
@@ -143,7 +144,8 @@ const Addlibrarydatabase = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const { allMediaAds, loading } = useSelector((state) => state.allMediaAds);
+ 
+  const { allMediaAds,page_index, loading } = useSelector((state) => state.allMediaAds);
   const {
     filteredData,
     appliedFilters,
@@ -155,9 +157,13 @@ const Addlibrarydatabase = () => {
     maxRanger,
   } = useSelector((state) => state.filteredData);
 
-  const { savedIds, savedAdsLocal, save_loading } = useSelector(
-    (state) => state.savedclienads
-  );
+  const { savedIds,savedAdsLocal ,save_loading} = useSelector((state) => state.savedclienads);
+  
+  useEffect(()=>{
+    dispatch(loadMediaStart({
+      page_index:page_index+1,
+    }));
+  },[])
 
   // console.log("search_loading..", search_loading);
   // useEffect(() => {
