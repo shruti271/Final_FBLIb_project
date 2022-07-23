@@ -9,7 +9,7 @@ export function* handleGetMedia({payload}) {
     console.log("response****************", response);
 
     if (response.status === 200) {
-      yield put(loadMediaSuccess(response?.data?.data));
+      yield put(loadMediaSuccess(response?.data));
     }
   } catch (error) {
     yield put(loadMediaError(error));

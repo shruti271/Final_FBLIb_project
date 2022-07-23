@@ -1,5 +1,5 @@
 import { all, fork, takeLatest } from "redux-saga/effects";
-import { LOAD_MEDIA_START } from "../ducks/mediaAds";
+import { ALL_STATUS_START, LOAD_MEDIA_START } from "../ducks/mediaAds";
 // import {
 //   CREATE_SAVEADS_START,
 //   DELETE_SAVEADS_START,
@@ -22,7 +22,7 @@ import {
 import { LOAD_SUBALLMEDIA_START } from "../ducks/subAllAds";
 import { handleGetSubAllMedia } from "./handlers/subAllAds";
 import { handleGetSearchedData, handleGetSearchedPhraseData } from "./handlers/searchBar";
-import { ALL_STATUS_START, SEARCH_PHRASE_START, SEARCH_START } from "../ducks/filtered_Data";
+import {  SEARCH_PHRASE_START, SEARCH_START } from "../ducks/filtered_Data";
 import { handleGetSavedAdsSearchedData, handleGetSavedSearchedPhraseData } from "./handlers/save_searchAds";
 import { ALL_SAVED_ADS_SEARCH_START, CREATE_SAVEADS_START, DELETE_SAVEADS_START, LOAD_SAVEADS_START, SAVED_SEARCH_PHRASE_START } from "../ducks/saveAds_clientSide";
 import { handleGetCatStatus } from "./handlers/allSastus";

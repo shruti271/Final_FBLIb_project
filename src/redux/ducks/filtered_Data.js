@@ -30,9 +30,9 @@ export const APPLY_ALL_FILTER = "APPLY_ALL_FILTER";
 export const CLEAR_SINGLE_FILTER = "CLEAR_SINGLE_FILTER";
 export const CHANGE_SEARCH_TYPE = "CHANGE_SEARCH_TYPE";
 
-export const ALL_STATUS_START = "ALL_STATUS_START";
-export const ALL_STATUS_SUCCESS = "ALL_STATUS_SUCCESS";
-export const ALL_STATUS_ERROR = "ALL_STATUS_ERROR";
+// export const ALL_STATUS_START = "ALL_STATUS_START";
+// export const ALL_STATUS_SUCCESS = "ALL_STATUS_SUCCESS";
+// export const ALL_STATUS_ERROR = "ALL_STATUS_ERROR";
 
 export const REFIX_MIN_MAX_RANGE_IN_SLIDER = "REFIX_MIN_MAX_RANGE_IN_SLIDER";
 export const loadFilteredDataStart = () => ({
@@ -56,22 +56,22 @@ export const datevalueStart = (filter) => ({
   payload: filter,
 });
 
-export const AdCountvalueStart = (filter) => ({
-  type: NOODADS_START,
-  payload: filter,
-});
-export const MediaTypevalueStart = (filter) => ({
-  type: MEDIATYPE_START,
-  payload: filter,
-});
+// export const AdCountvalueStart = (filter) => ({
+//   type: NOODADS_START,
+//   payload: filter,
+// });
+// export const MediaTypevalueStart = (filter) => ({
+//   type: MEDIATYPE_START,
+//   payload: filter,
+// });
 export const FilterAfterSearchStart = () => ({
   type: ALL_FILTER_AFTER_SEARCH_SUCCESS,
   // payload: filter,
 });
-export const ButtonTypevalueStart = (filter) => ({
-  type: BUTTONTYPETYPE_START,
-  payload: filter,
-});
+// export const ButtonTypevalueStart = (filter) => ({
+//   type: BUTTONTYPETYPE_START,
+//   payload: filter,
+// });
 export const facebookLikesStart = (filter) => ({
   type: FACEBOOKLIKES_START,
   payload: filter,
@@ -87,10 +87,10 @@ export const SortvalueStart = () => ({
   type: SORT_TYPE_START,
   // payload: filter,
 });
-export const statusValueStart = (filter) => ({
-  type: STATUS_START,
-  payload: filter,
-});
+// export const statusValueStart = (filter) => ({
+//   type: STATUS_START,
+//   payload: filter,
+// });
 export const searchValueStart = (filter) => ({
   type: SEARCH_START,
   payload: filter,
@@ -114,10 +114,10 @@ export const clearFilteredDataStart = (ads) => ({
   payload: ads,
 });
 
-export const clearSingleFilteredDataStart = (ads) => ({
-  type: CLEAR_SINGLE_FILTER,
-  payload: ads,
-});
+// export const clearSingleFilteredDataStart = (ads) => ({
+//   type: CLEAR_SINGLE_FILTER,
+//   payload: ads,
+// });
 
 export const searchStart = (Ads) => ({
   type: SEARCH_START,
@@ -154,24 +154,24 @@ export const chnageSearchType = (data) => ({
   payload: data,
 });
 
-export const getSetCatSatus = () => ({
-  type: ALL_STATUS_START,
-});
+// export const getSetCatSatus = () => ({
+//   type: ALL_STATUS_START,
+// });
 
-export const setCatSatusSuccess = (Ads) => ({
-  type: ALL_STATUS_SUCCESS,
-  payload: Ads,
-});
+// export const setCatSatusSuccess = (Ads) => ({
+//   type: ALL_STATUS_SUCCESS,
+//   payload: Ads,
+// });
 
-export const setCatSatusError = (error) => ({
-  type: ALL_STATUS_ERROR,
-  payload: error,
-});
+// export const setCatSatusError = (error) => ({
+//   type: ALL_STATUS_ERROR,
+//   payload: error,
+// });
 
-export const rangerefixMinMaxSiler = (data) => ({
-  type: REFIX_MIN_MAX_RANGE_IN_SLIDER,
-  payload: data,
-});
+// export const rangerefixMinMaxSiler = (data) => ({
+//   type: REFIX_MIN_MAX_RANGE_IN_SLIDER,
+//   payload: data,
+// });
 
 const initialState = {
   allData: [],
@@ -782,15 +782,15 @@ const FilterDataReducer = (state = initialState, action) => {
         },
         // },
       };
-    case ALL_STATUS_START:
-      return { ...state };
-    case ALL_STATUS_SUCCESS:
-      return {
-        ...state,
-        ctaStatus: action.payload,
-      };
-    case ALL_STATUS_ERROR:
-      return { ...state, error: action.payload };
+    // case ALL_STATUS_START:
+    //   return { ...state };
+    // case ALL_STATUS_SUCCESS:
+    //   return {
+    //     ...state,
+    //     ctaStatus: action.payload,
+    //   };
+    // case ALL_STATUS_ERROR:
+    //   return { ...state, error: action.payload };
     case REFIX_MIN_MAX_RANGE_IN_SLIDER:
       return {
         ...state,

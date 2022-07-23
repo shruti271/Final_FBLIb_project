@@ -1,5 +1,6 @@
 import { call, put } from "redux-saga/effects";
-import {  setCatSatusError, setCatSatusSuccess } from "../../ducks/filtered_Data";
+import { setCatSatusError, setCatSatusSuccess } from "../../ducks/mediaAds";
+// import {  setCatSatusError, setCatSatusSuccess } from "../../ducks/filtered_Data";
 import { requestCatSatusData } from "../requests/allStatus";
 
 

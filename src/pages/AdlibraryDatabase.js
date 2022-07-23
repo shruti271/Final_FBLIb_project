@@ -26,7 +26,7 @@ import "react-date-range/dist/theme/default.css";
 import ThumbNailBox from "../components/ThumbNailBox";
 import {
   applyallfilters,
-  clearSingleFilteredDataStart,
+  // clearSingleFilteredDataStart,
   FilterAfterSearchStart,
   loadFilteredDataStart,
   putFilteredDataStart,
@@ -39,7 +39,7 @@ import BackTotopbutton from "../pages/Backtotopbutton";
 import AllFilters from "../components/AllFilters";
 import SortFilter from "../components/SortFilter";
 import Mychart from "../components/Graph";
-import { loadMediaStart } from "../redux/ducks/mediaAds";
+import { clearSingleFilteredDataStart, loadMediaStart } from "../redux/ducks/mediaAds";
 import InfiniteScroll from "react-infinite-scroll-component";
 // import MyGraph from "../components/Graph";
 
@@ -143,16 +143,16 @@ const useStyles = makeStyles((theme) => ({
 const Addlibrarydatabase = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { allMediaAds, page_index, loading, } = useSelector((state) => state.allMediaAds);
+  const { allMediaAdsData,allMediaAds,appliedFilters,maxRanger, page_index, loading, } = useSelector((state) => state.allMediaAds);
   const {
     filteredData,
-    appliedFilters,
+    // appliedFilters,
     sortFilter,
     searchBarData,
     postionYoffset,
     search_loading,
     searchType,
-    maxRanger,
+    // maxRanger,
   } = useSelector((state) => state.filteredData);
 
   console.log("--------------------------------------------------------------------------------")
@@ -170,81 +170,40 @@ const Addlibrarydatabase = () => {
     console.log("::::::::::::::::::::::")
     dispatch(loadMediaStart({
       page_index: page_index+1,
+      startdate:appliedFilters?.StartRunningDate?.startdate,
+      enddate: appliedFilters?.StartRunningDate?.enddate,
+      adcount:
+        appliedFilters?.AdCount?.min > maxRanger.AdCount.min ||
+        appliedFilters?.AdCount?.max < maxRanger.AdCount.max
+          ? [
+              appliedFilters?.AdCount?.min,
+              appliedFilters?.AdCount?.max,
+            ]
+          : [],
+      adstatus: appliedFilters?.AdStatus?.status,
+      fb_likes:
+        appliedFilters?.FacebookLikes?.min > maxRanger.FacebookLikes.min ||
+        appliedFilters?.FacebookLikes?.max < maxRanger.FacebookLikes.max
+          ? [
+              appliedFilters?.FacebookLikes?.min,
+              appliedFilters?.FacebookLikes?.max,
+            ]
+          : [],
+      insta_followers:
+        appliedFilters?.InstragramLike?.min > maxRanger.InstragramLike.min ||
+        appliedFilters?.InstragramLike?.max < maxRanger.InstragramLike.max
+          ? [
+              appliedFilters?.InstragramLike?.min,
+              appliedFilters?.InstragramLike?.max,
+            ]
+          : [],
+      media_type:appliedFilters?.MediaType?.selectedData,
+      cta_status:
+        appliedFilters?.PurchaseType?.selctedButton,
+
+      // increaseCount: false,
     }));
   };
-
-  // console.log("search_loading..", search_loading);
-  // useEffect(() => {
-  //   // console.log(AllAdsPage);
-  //   console.log(
-  //     "....................................................",
-  //     filteredData
-  //   );
-  // });
-
-  // useEffect(() => {
-  //   // var words = ['hello', 'hi', 'howdy'];
-  //   var words = ["cool", "4"];
-
-  //   var strmy = "hello hi bas";
-  //   // var value = new RegExp(words.join('|'));
-  //   console.log(
-  //     ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;"
-  //   );
-  //   // console.log(value);
-  //   // Object.values()
-  //   // filteredData?.map(a=>{
-  //   // console.log(Object.values(a).toString().includes('cool'))
-  //   // words.forEach((dum) => {
-  //   var tarr = filteredData;
-  //   tarr.filter((fil) => {
-  //     let dum = 0;
-  //     for (dum; words.length < dum; dum++) {
-  //       console.log(words[dum]);
-  //       if (Object.values(fil).toString().includes(words[dum])) {
-  //         console.log(words[dum]);
-  //         // console.log(Object.values(filteredData[0]).toString())
-  //         console.log("0000000000");
-  //         console.log(fil);
-  //         // console.log("yesssssssssssss")
-  //       } else {
-  //         console.log("break........................................");
-  //         return null;
-  //         // return false;
-  //       }
-  //     }
-  //     // if(words.length === dum+1){
-  //     return true;
-  //     // }else return false;
-  //   });
-  //   console.log(tarr);
-  //   console.log("{{{{{{{{{{{{{{{{{{{{{{first}}}}}}}}}}}}}}}}}}}}}}");
-  //   // for (let dat in filteredData) {
-  //     // let dum=0;
-  //     // for (dum in words) {
-  //     //   console.log(words[dum]);
-  //     //   if (Object.values(filteredData[0]).toString().includes(words[dum])) {
-  //     //     console.log(words[dum]);
-  //     //     // console.log(Object.values(filteredData[0]).toString())
-  //     //     console.log("0000000000");
-  //     //     console.log(filteredData[0]);
-  //     //     // console.log("yesssssssssssss")
-  //     //   } else {
-  //     //     console.log("break........................................");
-  //     //     // break;
-  //     //     // return false;
-  //     //   }
-  //     // }
-  //     // if(words.length === dum+1){
-  //     // }
-  //   // }
-  //   // });
-
-  //   // })
-  //   console.log(
-  //     ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;"
-  //   );
-  // });
 
   useEffect(() => {
     window.scrollTo({
@@ -252,6 +211,7 @@ const Addlibrarydatabase = () => {
       behavior: "smooth",
     });
   }, [postionYoffset]);
+
   useEffect(() => {
     console.log(savedIds);
     console.log(savedAdsLocal);
@@ -269,17 +229,17 @@ const Addlibrarydatabase = () => {
   return (
     <>
       <BackTotopbutton />
-      <InfiniteScroll
-        dataLength={allMediaAds.length} //This is important field to render the next data
+      {/* <InfiniteScroll
+        dataLength={allMediaAdsData.length} //This is important field to render the next data
         next={fetchData}
         hasMore={true}
-        loader={<h4>Loading...</h4>}
-        >
+        loader={<Box sx={{display:"flex",justifyContent:"center"}}>{loading?<h4>Loading...</h4>:null}</Box>}
+        > */}
         <Grid
           container
           sx={{
-            opacity: loading ? 0.5 : 1,
-            disabled: loading ? true : false,
+            // opacity: loading ? 0.5 : 1,
+            // disabled: loading ? true : false,
             paddingRight: "36px",
           }}
         >
@@ -399,22 +359,13 @@ const Addlibrarydatabase = () => {
                               // componentName: "AllAdsPage",
                             })
                           );
+                          fetchData();
+                         
+                          // searchBarData !== ""
+                          //   ? dispatch(FilterAfterSearchStart()) //dispatch(searchStart(searchBarData))
+                          //   : dispatch(applyallfilters());
 
-                          // dispatch(applyallfilters());
-                          // console.log(document.getElementById("searchbar").value);
-                          console.log(
-                            "-----------======================================" +
-                            searchBarData.length
-                          );
-                          searchBarData !== ""
-                            ? dispatch(FilterAfterSearchStart()) //dispatch(searchStart(searchBarData))
-                            : dispatch(applyallfilters());
-
-                          // dispatch(SortvalueStart());
-                          // setAppliedFilters((pre) => ({
-                          //   ...pre,
-                          //   [`${filter}`]: FilterRemoveData,
-                          // }));
+                         
 
                           console.log(filter);
                         }}
@@ -437,6 +388,12 @@ const Addlibrarydatabase = () => {
               name={"AllAdsPage"}
             />
           </Grid>
+          <InfiniteScroll
+        dataLength={allMediaAdsData.length} //This is important field to render the next data
+        next={fetchData}
+        hasMore={true}
+        loader={<Box sx={{display:"flex",justifyContent:"center"}}>{loading?<h4>Loading...</h4>:null}</Box>}
+        >
           <Grid
             item
             // xs={12}
@@ -446,34 +403,7 @@ const Addlibrarydatabase = () => {
               width: "100%",
             }}
           >
-            {/* {loading || search_loading  || save_loading?  */}
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                width: "100%",
-                visibility:
-                  loading || search_loading || save_loading
-                    ? "visible"
-                    : "hidden",
-              }}
-            >
-              <CircularProgress
-                style={{
-                  position: "relative",
-                  top: window.pageYOffset,
-                  opacity: 1,
-                  zIndex: 1,
-                  visibility:
-                    loading || search_loading || save_loading
-                      ? "visible"
-                      : "hidden",
-                }}
-              />
-            </Box>
-            {/* :null} */}
-            {/* // ) : ( */}
+           
             <Grid
               container
               spacing={2}
@@ -483,8 +413,8 @@ const Addlibrarydatabase = () => {
                 // disabled: save_loading ? true : false,
               }}
             >
-              {filteredData?.length ? (
-                filteredData?.map((ads, index) => (
+              {allMediaAdsData?.length ? (
+                allMediaAdsData?.map((ads, index) => (
                   <ThumbNailBox
                     adInfo={ads}
                     index={index}
@@ -507,8 +437,9 @@ const Addlibrarydatabase = () => {
             </Grid>
             {/* // )} */}
           </Grid>
+          </InfiniteScroll>
         </Grid>
-      </InfiniteScroll>
+      {/* </InfiniteScroll> */}
     </>
   );
 };

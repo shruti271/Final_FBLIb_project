@@ -10,7 +10,7 @@ import ContactSupport from "../pages/ContactSupport";
 import AccountSettings from "../pages/AccountSettings";
 import AdDeatailsTabs from "../pages/adDetails/AdDetailsTabs";
 import { useDispatch } from "react-redux";
-import { loadMediaStart } from "../redux/ducks/mediaAds";
+import { getSetCatSatus, loadMediaStart } from "../redux/ducks/mediaAds";
 import { loadSubscriptionStart } from "../redux/ducks/subscription";
 // import { loadSavedAdsStart } from "../redux/ducks/saveAds";
 import { CustomAppBar } from "../components/CustomAppBar";
@@ -19,7 +19,7 @@ import { loadAccountSettingsStart } from "./../redux/ducks/accountSettings";
 import Payment from "../pages/Plans"
 import { loadSavedAdsClientSideStart, loadSavedAdsStart } from "../redux/ducks/saveAds_clientSide";
 import { useSelector } from "react-redux";
-import { getSetCatSatus } from "../redux/ducks/filtered_Data";
+// import { getSetCatSatus } from "../redux/ducks/filtered_Data";
 import ActiveSubScription from "../ActiveSubScription";
 import InActiveSubScription from "../InActiveSubScription";
 import { CircularProgress } from "@mui/material";
