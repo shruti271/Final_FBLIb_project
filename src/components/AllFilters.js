@@ -1373,9 +1373,10 @@ function AllFilters(props) {
                             Message: "",
                           })
                         );
-                        document.getElementById("searchbar").value
-                          ? dispatch(SavedAdsFilterAfterSearchStart())
-                          : dispatch(applySavedAdsallfilters());
+                        callFilters();
+                        // document.getElementById("searchbar").value
+                        //   ? dispatch(SavedAdsFilterAfterSearchStart())
+                        //   : dispatch(applySavedAdsallfilters());
                       }
                     }}
                   >
@@ -1595,9 +1596,10 @@ function AllFilters(props) {
                           Message: "",
                         })
                       );
-                      document.getElementById("searchbar").value
-                        ? dispatch(SavedAdsFilterAfterSearchStart())
-                        : dispatch(applySavedAdsallfilters());
+                      callFilters();
+                      // document.getElementById("searchbar").value
+                      //   ? dispatch(SavedAdsFilterAfterSearchStart())
+                      //   : dispatch(applySavedAdsallfilters());
                     }
 
                     setFacebookLikeAnchorEl(null);
@@ -1931,7 +1933,7 @@ function AllFilters(props) {
                             Message: "",
                           })
                         );
-
+                        callFilters();
                         // document.getElementById("searchbar").value
                         //   ? dispatch(FilterAfterSearchStart()) //dispatch(searchStart(props.search))
                         //   : dispatch(applyallfilters());
@@ -1945,10 +1947,10 @@ function AllFilters(props) {
                             Message: "",
                           })
                         );
-
-                        document.getElementById("searchbar").value
-                          ? dispatch(SavedAdsFilterAfterSearchStart())
-                          : dispatch(applySavedAdsallfilters());
+                        callFilters();
+                        // document.getElementById("searchbar").value
+                        //   ? dispatch(SavedAdsFilterAfterSearchStart())
+                        //   : dispatch(applySavedAdsallfilters());
                       }
 
                       setMediaTypeAnchorel(null);

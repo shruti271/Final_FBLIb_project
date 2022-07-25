@@ -22,7 +22,7 @@ export function* handleGetSavedAds({payload}) {
     if (response.status === 200) {
       console.log(response?.data?.data)
       console.log("pppppppppppppppppppppppppppppp")
-      yield put(loadSavedAdsSuccess(response?.data?.data));
+      yield put(loadSavedAdsSuccess(response?.data));
     }
   } catch (error) {
     yield put(loadSavedAdsError(error));

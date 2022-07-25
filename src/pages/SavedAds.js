@@ -224,8 +224,8 @@ const SavedAds = () => {
                                       ] === "string"
                                     ? dum === AdsRemovedElement.MEDIATYPE
                                       ? dum === AdsRemovedElement.STATUS
-                                        ? "Active"
-                                        : "Video or Photo"
+                                        ? ""
+                                        : ""
                                       : ""
                                     : new Date();
                               }
@@ -236,6 +236,45 @@ const SavedAds = () => {
                                   name: filter,
                                   data: FilterRemoveData,
                                   // componentName: "AllAdsPage",
+                                })
+                              );
+                              dispatch(
+                                loadSavedAdsStart({
+                                  page_index: 0,
+                                  startdate: SavedAppliedFilters?.StartRunningDate?.startdate,
+                                  enddate: SavedAppliedFilters?.StartRunningDate?.enddate,
+                                  adcount:
+                                    SavedAppliedFilters?.AdCount?.min > maxRanger.AdCount.min ||
+                                    SavedAppliedFilters?.AdCount?.max < maxRanger.AdCount.max
+                                      ? [
+                                          SavedAppliedFilters?.AdCount?.min,
+                                          SavedAppliedFilters?.AdCount?.max,
+                                        ]
+                                      : [],
+                                  adstatus: SavedAppliedFilters?.AdStatus?.status,
+                                  fb_likes:
+                                    SavedAppliedFilters?.FacebookLikes?.min >
+                                      maxRanger.FacebookLikes.min ||
+                                    SavedAppliedFilters?.FacebookLikes?.max < maxRanger.FacebookLikes.max
+                                      ? [
+                                          SavedAppliedFilters?.FacebookLikes?.min,
+                                          SavedAppliedFilters?.FacebookLikes?.max,
+                                        ]
+                                      : [],
+                                  insta_followers:
+                                    SavedAppliedFilters?.InstragramLike?.min >
+                                      maxRanger.InstragramLike.min ||
+                                    SavedAppliedFilters?.InstragramLike?.max <
+                                      maxRanger.InstragramLike.max
+                                      ? [
+                                          SavedAppliedFilters?.InstragramLike?.min,
+                                          SavedAppliedFilters?.InstragramLike?.max,
+                                        ]
+                                      : [],
+                                  media_type: SavedAppliedFilters?.MediaType?.selectedData,
+                                  cta_status: SavedAppliedFilters?.PurchaseType?.selctedButton,
+                          
+                                  // increaseCount: false,
                                 })
                               );
                               // dispatch(

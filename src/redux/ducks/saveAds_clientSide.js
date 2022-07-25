@@ -898,7 +898,7 @@ const savedAdsClienSideReducer = (state = initialState, action) => {
       };
     case ALL_SAVED_ADS_CLEAR_SINGLE_FILTER:
       return {
-        ...state,                
+        ...state,                        
         SavedAppliedFilters: {
           ...state.SavedAppliedFilters,
           [`${action.payload.name}`]: action.payload.data,
@@ -918,8 +918,21 @@ const savedAdsClienSideReducer = (state = initialState, action) => {
     case LOAD_SAVEADS_START:
       return {
         ...state,
+        save_loading:true,
         page_index:action.payload.page_index,                
         savedAdsLocal:action.payload.page_index===0?[]:state.savedAdsLocal,
+            // savedIds:action.payload.error ===false?state.savedIds.concat(action.payload.data[0].id):state.savedIds,
+
+            // page_index: action.payload.page_index,
+            // allMediaAdsData:action.payload.page_index===0?[]:state.allMediaAdsData,
+        // loading: false,
+        // allMediaAdsData: action.payload.error ===false?state.allMediaAdsData.concat(
+        //   action.payload.data[1]?.all_ads
+        // ):state.allMediaAdsData,
+        // savedIds:action.payload.error ===false?state.savedIds.concat(action.payload.saved_ads):state.savedIds,
+        // allAds:action.payload.error ===false?state.allMediaAdsData.concat(
+        //   action.payload.data[1]?.all_ads
+        // ):state.allMediaAdsData,
       }
     case CREATE_SAVEADS_START:
     case DELETE_SAVEADS_START:
@@ -933,10 +946,21 @@ const savedAdsClienSideReducer = (state = initialState, action) => {
       return {
         ...state,
         save_loading: false,
-        savedAdsLocal: state.savedAdsLocal.concat(action.payload),
+        savedAdsLocal:action.payload.error ===false?state.savedAdsLocal.concat(
+          action.payload.data
+        ):state.savedAdsLocal,
         savedIds:
-        action.payload !== "" ? state.savedIds.concat(action.payload.map((abc) => abc.id)) : [],
+        action.payload !== "" ? state.savedIds.concat(action.payload?.data.map((abc) => abc.id)) : [],
         // filteredData:action.payload
+
+        // loading: false,
+        // allMediaAdsData: action.payload.error ===false?state.allMediaAdsData.concat(
+        //   action.payload.data[1]?.all_ads
+        // ):state.allMediaAdsData,
+        // savedIds:action.payload.error ===false?state.savedIds.concat(action.payload.saved_ads):state.savedIds,
+        // allAds:action.payload.error ===false?state.allMediaAdsData.concat(
+        //   action.payload.data[1]?.all_ads
+        // ):state.allMediaAdsData,
       };
     case CREATE_SAVEADS_SUCCESS:
       console.log("999999999999999999999999")
@@ -944,9 +968,9 @@ const savedAdsClienSideReducer = (state = initialState, action) => {
       return {
         ...state,
         save_loading: false,
-        savedAdsLocal: [...state.savedAdsLocal.concat(action.payload)],                 
-        savedIds: [...state.savedIds.concat(action.payload[0].id)],     
-        filteredData:  [...state.filteredData.concat(action.payload)],
+        savedAdsLocal: action.payload.error ===false && state.savedAdsLocal.concat(action.payload),                 
+        savedIds: state.savedIds.concat(action.payload[0].id),     
+        // filteredData:  [...state.filteredData.concat(action.payload)],
       };
     case LOAD_SAVEADS_ERROR:
     case CREATE_SAVEADS_ERROR:
