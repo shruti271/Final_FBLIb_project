@@ -1,4 +1,3 @@
-/* eslint-disable no-useless-computed-key */
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -7,46 +6,20 @@ import {
   Box,
   Button,
   Grid,
-  Link,
   Stack,
   Tooltip,
   Typography,
 } from "@mui/material";
 import { makeStyles } from "@material-ui/core/styles";
-import {
-  // createSavedAdsStart,
-  // deleteSavedAdsStart,
-} from "../redux/ducks/saveAds";
-import Firstcard from "../assets/Firstcard.svg";
 import Firstcardimg from "../assets/FirstCardImg.svg";
 import Shareicon from "../assets/Shareicon.svg";
 import Saveicon from "../assets/Saveicon.svg";
-import Addgraph from "../assets/Addgraph.svg";
 import StarFill from "../assets/StarFill.svg";
-import {
-  createSavedAdsClientSideStart,
-  createSavedAdsStart,
-  deleteSavedAdsClientSideStart,
-  deleteSavedAdsClientSideSuccess,
-  deleteSavedAdsStart,
-} from "../redux/ducks/saveAds_clientSide";
-import pauseButton from "../assets/pauseButton.svg";
+import { createSavedAdsStart,deleteSavedAdsStart} from "../redux/ducks/saveAds_clientSide";
 import { srtPostionForScrollValueStart } from "../redux/ducks/filtered_Data";
-import { SingleLineChart } from "./Graph";
-import MyChart from "./MyChart";
 import MyCharttt from "./linemy";
 
 const useStyles = makeStyles((theme) => ({
-  fixSizeImage: {
-    // eslint-disable-next-line no-useless-computed-key
-    // ['@media (min-width:780px)']:{height:"300px"},
-    // eslint-disable-next-line no-useless-computed-key
-    // ['@media (min-width:1000px)']:{height:"450px"}
-    // @media screen and (min-width: 480px) {
-    // .wrapper {
-    //   background-color: light green;
-    // }
-  },
   title: {
     background:
       "linear-gradient(270deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)",
@@ -54,9 +27,6 @@ const useStyles = makeStyles((theme) => ({
     WebkitTextFillColor: "transparent",
   },
   titleHome: {
-    // height: "37px !important",
-    // width: "41px !important",
-    // marginRight: "10px",
     fontWeight: 600,
     fontSize: "24px",
     lineHeight: "24px",
@@ -95,11 +65,8 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 3,
   },
   AdsImageSize: {
-    // objectfit: "fill",
-    // ['@media (min-width:400px)']:{height:"190px"},
     ["@media (min-width:780px)"]: { height: "290px" },
     ["@media (min-width:920px)"]: { height: "250px" },
-    // ['@media (min-width:1080px)']:{height:"300px"},
     ["@media (min-width:1440px)"]: { height: "290px" },
     ["@media (min-width:1700px)"]: { height: "410px" },
     width: "100%",
@@ -120,8 +87,6 @@ const useStyles = makeStyles((theme) => ({
   AdsVideo: {
     width: "100%",
     objectFit: "cover",
-    // objectfit: "fill",
-    // height: "auto",
     padding: "0",
     margin: "0",
     overflowY: "none",
@@ -173,21 +138,18 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
   return (
     <Grid item lg={3} md={4} xs={5} key={index}>
       <Stack
-        sx={{          
+        sx={{
           border: "2px solid #F6F6FB",
           padding: "10px",
-          justifyContent:"space-between"
+          justifyContent: "space-between"
         }}
       >
         <Box className={classes.Addheader}>
           <Box
             sx={{
               border: 1,
-              // width: "35px",
               borderRadius: "50%",
               borderColor: "#EBEBEB",
-              // borderColor: "black",
-
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
@@ -207,7 +169,6 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
               color: "#2B2F42",
               marginRight: "12px",
               paddingLeft: "10px",
-              //  fontWeight: "bold"
             }}
           >
             {adInfo?.pageInfo?.name}
@@ -228,28 +189,12 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
             )} likes)`}
           </Typography>
         </Box>
-        {/* <Box style={{ maxHeight:"400px"}}> */}
         <div style={{ height: "300px" }}>
           {adInfo.adMediaType === "video" ? (
-            //   <ReactSimpleVideoPlayer
-            //   url={adInfo?.bucketMediaURL}
-            //   poster={adInfo?.thumbBucketUrl}
-            //   className={classes.AdsImageVideo}
-            //   controls
-            //   autosize
-            // />
             <video
               src={adInfo.bucketMediaURL}
               poster={adInfo?.thumbBucketUrl}
               style={{ height: "300px" }}
-              // style={{
-              //   backgroundImage:
-              //     pauseButton,
-              //   backgroundRepeat: 'no-repeat',
-              //   backgroundPosition: 'center'
-              // }}
-              // style={{ maxHeight: "200px" }}
-              //  style={{ maxHeight:"320px"}}
               autoPlay={false}
               className={classes.AdsVideo}
               controls
@@ -272,68 +217,54 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
 
         <Grid container sx={{ padding: "4px" }}>
           <Grid item sm={9} md={9} lg={9} >
-            {/* <Box
-              className={classes.AddFooter}
-              style={{ alignItems: "baseline" }}
-            > */}
-              <Stack direction={"column"}>
-                <Stack direction={"row"}>
-                  {/* <Typography sx={{ textDecoration: 'underline', }}>{adInfo.status}</Typography> */}
-                  {adInfo.status === "Active" ? (
-                    <Typography>{adInfo.status}</Typography>
-                  ) : (
-                    <Typography sx={{ color: "red" }}>
-                      {adInfo.status}
-                    </Typography>
-                  )}
-                  <Tooltip title="Redirect to shop link">
-                    <img
-                      src={Shareicon}
-                      alt="Shareicon"
-                      className={classes.shareicon}
-                      onClick={(e) => {
-                        console.log(adInfo?.purchaseURL);
-                        // e.preventDefault();
-                        window.open(adInfo?.purchaseURL, "_blank", "");
-                        // window.location.target="_blank"
-                        // window.location.href=adInfo?.purchaseURL;
-                      }}
-                    />
-                  </Tooltip>
-                  {deleteId ? (
-                    <img
-                      src={StarFill}
-                      alt="StarFill"
-                      className={classes.saveicon}
-                      onClick={() => {
-                        // dispatch(deleteSavedAdsClientSideStart(adInfo));
-                        dispatch(deleteSavedAdsStart({ ad: adInfo?.id }));
-                      }}
-                    />
-                  ) : (
-                    <img
-                      src={Saveicon}
-                      alt="Saveicon"
-                      className={classes.saveicon}
-                      onClick={async () => {
-                        // dispatch(createSavedAdsClientSideStart(adInfo));
-                        await dispatch(createSavedAdsStart({ ad: adInfo.id }));
-                      }}
-                    />
-                  )}
-                </Stack>
-                
-                  <Typography color="#c0c0c0" className={classes.AdsText} noWrap>
-                    Started Running : {adInfo.startDate}
+            <Stack direction={"column"}>
+              <Stack direction={"row"}>
+                {adInfo.status === "Active" ? (
+                  <Typography>{adInfo.status}</Typography>
+                ) : (
+                  <Typography sx={{ color: "red" }}>
+                    {adInfo.status}
                   </Typography>
-                  {/* <Grid> */}
-                  <Typography color="#2B2F42" className={classes.AdsText} noWrap>
-                    {adInfo.headline}
-                  </Typography>
-                  {/* </Grid> */}
-                </Stack>
-              {/* </Stack> */}
-            {/* </Box> */}
+                )}
+                <Tooltip title="Redirect to shop link">
+                  <img
+                    src={Shareicon}
+                    alt="Shareicon"
+                    className={classes.shareicon}
+                    onClick={(e) => {
+                      console.log(adInfo?.purchaseURL);
+                      window.open(adInfo?.purchaseURL, "_blank", "");
+                    }}
+                  />
+                </Tooltip>
+                {deleteId ? (
+                  <img
+                    src={StarFill}
+                    alt="StarFill"
+                    className={classes.saveicon}
+                    onClick={() => {
+                      dispatch(deleteSavedAdsStart({ ad: adInfo?.id }));
+                    }}
+                  />
+                ) : (
+                  <img
+                    src={Saveicon}
+                    alt="Saveicon"
+                    className={classes.saveicon}
+                    onClick={async () => {
+                      await dispatch(createSavedAdsStart({ ad: adInfo.id }));
+                    }}
+                  />
+                )}
+              </Stack>
+
+              <Typography color="#c0c0c0" className={classes.AdsText} noWrap>
+                Started Running : {adInfo.startDate}
+              </Typography>
+              <Typography color="#2B2F42" className={classes.AdsText} noWrap>
+                {adInfo.headline}
+              </Typography>
+            </Stack>
           </Grid>
           <Grid
             item
@@ -368,21 +299,14 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
           </Grid>
         </Grid>
 
-        
-        <Box sx={{ marginTop: "20px", marginBottom: "20px" , height:"100px"}}>
-          {/* <SingleLineChart chartData={adInfo?.history}/> */}
-          {/* <MyChart chartData={adInfo?.history} dataBoxVisiblity={false} axisVisiblity={false} fillType={"line"} graphHeight={"100px"}/> */}
+
+        <Box sx={{ marginTop: "20px", marginBottom: "20px", height: "100px" }}>
           <MyCharttt
             chartData={adInfo?.history}
             dataBoxVisiblity={false}
             axisVisiblity={false}
             graphHeight={"100px"}
           />
-          {/* <img
-            src={Addgraph}
-            alt="addgraph"
-            className={classes.AdsImageVideo}
-          /> */}
         </Box>
         <Button
           variant="contained"
@@ -391,7 +315,6 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
             borderRadius: "17px",
             background:
               "linear-gradient(270deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)",
-            // minwidth:"350px",
             textTransform: "none",
           }}
           onClick={() => {

@@ -10,20 +10,10 @@ import LeftArrow from "../../assets/LeftArrow.svg";
 function AdDeatailsTabs() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // const history = useHistory();
-  // const { itemId, otherParam } = route.params;
-  // const { state } = useLocation();
-  console.log("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\?????????????");
-  // console.log(state.adName);
-  console.log("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\");
   const adID = useParams();
 
   const { allMediaAds } = useSelector((state) => state.allMediaAds);
   const { subAllMedia } = useSelector((state) => state.subAllMedia);
-  console.log(adID);
-  console.log("11111111111111111");
-  console.log(subAllMedia[0]?.pageInfo?.name);
-  console.log("11111111111111111");
 
   const adDetailsTabs = {
     ADOVERVIEW: "Ad Overview",
@@ -37,13 +27,11 @@ function AdDeatailsTabs() {
     } else {
       setIsActiveTab(adDetailsTabs.ALLADS);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   });
   useEffect(() => {
     if (allMediaAds) {
       console.log("comin------------------");
       console.log(allMediaAds[1]?.all_ads);
-      // eslint-disable-next-line array-callback-return
       const singleAds = allMediaAds[1]?.all_ads.find((ad) => {
         if (ad.adID === adID.adsId) {
           return ad;
@@ -74,7 +62,6 @@ function AdDeatailsTabs() {
       >
         <Box
           onClick={() => {
-            // history.goBack();
             navigate("/");
           }}
           sx={{ cursor: "pointer" }}

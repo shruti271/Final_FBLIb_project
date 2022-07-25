@@ -59,22 +59,16 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
   const handleOpenMenu = (e) => {
     setAnchoerEL(e.currentTarget);
   };
-  useEffect(() => {
-    console.log(window.location.pathname);
-    console.log("}}}}}}}}}}}");
-  });
   const userLogout = async () => {
     logoutUser().then((data)=>{
-      // dispatch(setIsAlive(false));
       localStorage.setItem("is_alive", false);
       handleCloseMenu();
       navigate("/auth/login");
     }, (error)=>{
       handleCloseMenu();
-      console.log("Error While LogOut", error)
     });
   };
-  const handleCloseMenu = (e) => {
+  const handleCloseMenu = () => {
     setAnchoerEL(null);
   };
   useEffect(() => {
@@ -165,7 +159,6 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
                     anchorEl={anchoerEL}
                     open={Boolean(anchoerEL)}
                     onClose={handleCloseMenu}
-                    // onClick={userLogout}
                     PaperProps={{
                       style: {
                         marginTop: 13,

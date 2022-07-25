@@ -3,14 +3,13 @@ import {
   Divider,
   FormControl,
   FormControlLabel,
-  Grid,
   Popover,
   Radio,
   RadioGroup,
-  Typography,
+  Typography, 
 } from "@mui/material";
 import { Box } from "@mui/system";
-import React, { useEffect } from "react";
+import React from "react";
 import Arrowdown from "../assets/Arrowdown.svg";
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch } from "react-redux";
@@ -39,15 +38,8 @@ function SortFilter(props) {
 
   const [sortByAnchorel, setSortByAnchorel] = React.useState(null);
   const openSortByAnchorel = Boolean(sortByAnchorel);
-
-  useEffect(() => {
-    console.log("-------------------------------");
-    console.log(props);
-    console.log("-------------------------------");
-  });
+  
   const handleChangeSortType = (event, newValue) => {
-    // console.log(newValue);
-    // console.log("11111111111111111111111111111111111------------------");
     if (props.name === "AllAdsPage") {
       if (
         props.sortDetail.type === "AdCountIncrease" ||

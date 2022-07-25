@@ -12,12 +12,11 @@ import AdDeatailsTabs from "../pages/adDetails/AdDetailsTabs";
 import { useDispatch } from "react-redux";
 import { loadMediaStart } from "../redux/ducks/mediaAds";
 import { loadSubscriptionStart } from "../redux/ducks/subscription";
-// import { loadSavedAdsStart } from "../redux/ducks/saveAds";
 import { CustomAppBar } from "../components/CustomAppBar";
 import { CustomSidebar } from "../components/CustomSidebar";
 import { loadAccountSettingsStart } from "./../redux/ducks/accountSettings";
 import Payment from "../pages/Plans"
-import { loadSavedAdsClientSideStart, loadSavedAdsStart } from "../redux/ducks/saveAds_clientSide";
+import {  loadSavedAdsStart } from "../redux/ducks/saveAds_clientSide";
 import { useSelector } from "react-redux";
 import { getSetCatSatus } from "../redux/ducks/filtered_Data";
 import ActiveSubScription from "../ActiveSubScription";
@@ -34,7 +33,6 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 
 const MainLayout = () => {
   const dispatch = useDispatch();
-  // const { savedAds } = useSelector((state) => state.savedAds);
   const { loading } = useSelector((state) => state.subscriptionData);
   const [isOpen, setIsOpen] = React.useState(true);
 
@@ -45,10 +43,6 @@ const MainLayout = () => {
     dispatch(loadAccountSettingsStart());
     dispatch(getSetCatSatus());
   },[dispatch]);
-
-  // useEffect(()=>{
-  //   dispatch(loadSavedAdsClientSideStart(savedAds))
-  // },[dispatch, savedAds])
   
   return (
     <>
