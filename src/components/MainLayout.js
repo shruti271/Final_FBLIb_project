@@ -57,7 +57,9 @@ const MainLayout = () => {
   useEffect(() => {
     dispatch(loadSubscriptionStart());
     pageScrolldataload()
-    dispatch(loadSavedAdsStart());    
+    dispatch(loadSavedAdsStart({
+      page_index:0,
+    }));    
     dispatch(loadAccountSettingsStart());
     dispatch(getSetCatSatus());
   },[dispatch]);

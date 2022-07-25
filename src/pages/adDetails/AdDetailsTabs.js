@@ -18,7 +18,7 @@ function AdDeatailsTabs() {
   console.log("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\");
   const adID = useParams();
 
-  const { allMediaAds } = useSelector((state) => state.allMediaAds);
+  const { allMediaAds,allMediaAdsData } = useSelector((state) => state.allMediaAds);
   const { subAllMedia } = useSelector((state) => state.subAllMedia);
   console.log(adID);
   console.log("11111111111111111");
@@ -40,11 +40,11 @@ function AdDeatailsTabs() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   });
   useEffect(() => {
-    if (allMediaAds) {
+    if (allMediaAdsData) {
       console.log("comin------------------");
-      console.log(allMediaAds[1]?.all_ads);
+      console.log(allMediaAdsData);
       // eslint-disable-next-line array-callback-return
-      const singleAds = allMediaAds[1]?.all_ads.find((ad) => {
+      const singleAds = allMediaAdsData.find((ad) => {
         if (ad.adID === adID.adsId) {
           return ad;
         }
@@ -59,7 +59,7 @@ function AdDeatailsTabs() {
         dispatch(loadSubAllMediaStart({ ad_name: singleAds?.pageInfo?.name }));
       }
     }
-  }, [allMediaAds, adID.adsId, adDetail, subAllMedia, dispatch]);
+  }, [allMediaAds, adID.adsId, adDetail, subAllMedia, dispatch, allMediaAdsData]);
 
   return (
     <>

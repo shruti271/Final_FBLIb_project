@@ -1,3 +1,7 @@
+
+
+
+
 import React, { useEffect } from "react";
 import { Chip, CircularProgress, Grid, Stack, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
@@ -14,6 +18,7 @@ import { useDispatch } from "react-redux";
 // import { putFilteredDataStart } from "../redux/ducks/filtered_Data";
 import {
   applySavedAdsallfilters,
+  loadSavedAdsStart,
   putSavedAdsFilteredDataStart,
   SavedAdsclearSingleFilteredDataStart,
   SavedAdsFilterAfterSearchStart,
@@ -23,6 +28,7 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 import SortFilter from "../components/SortFilter";
 import FilterAltOffIcon from "@mui/icons-material/FilterAltOff";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 const SavedAds = () => {
   const dispatch = useDispatch();
@@ -37,6 +43,7 @@ const SavedAds = () => {
     search_loading,
     save_loading,
     maxRanger,
+    page_index,
   } = useSelector((state) => state.savedclienads);
   // savedAdsClienSideReducer
   // const { savedAds, loading } = useSelector((state) => state.savedAds);
@@ -53,17 +60,66 @@ const SavedAds = () => {
   //   console.log(filteredData)
   //   console.log(".............................++++++++++++++")
   // })
+  const fetchData = () => {
+    console.log("::::::::::::::::::::::");
+    dispatch(
+      loadSavedAdsStart({
+        page_index: page_index + 1,
+        startdate: SavedAppliedFilters?.StartRunningDate?.startdate,
+        enddate: SavedAppliedFilters?.StartRunningDate?.enddate,
+        adcount:
+          SavedAppliedFilters?.AdCount?.min > maxRanger.AdCount.min ||
+          SavedAppliedFilters?.AdCount?.max < maxRanger.AdCount.max
+            ? [
+                SavedAppliedFilters?.AdCount?.min,
+                SavedAppliedFilters?.AdCount?.max,
+              ]
+            : [],
+        adstatus: SavedAppliedFilters?.AdStatus?.status,
+        fb_likes:
+          SavedAppliedFilters?.FacebookLikes?.min >
+            maxRanger.FacebookLikes.min ||
+          SavedAppliedFilters?.FacebookLikes?.max < maxRanger.FacebookLikes.max
+            ? [
+                SavedAppliedFilters?.FacebookLikes?.min,
+                SavedAppliedFilters?.FacebookLikes?.max,
+              ]
+            : [],
+        insta_followers:
+          SavedAppliedFilters?.InstragramLike?.min >
+            maxRanger.InstragramLike.min ||
+          SavedAppliedFilters?.InstragramLike?.max <
+            maxRanger.InstragramLike.max
+            ? [
+                SavedAppliedFilters?.InstragramLike?.min,
+                SavedAppliedFilters?.InstragramLike?.max,
+              ]
+            : [],
+        media_type: SavedAppliedFilters?.MediaType?.selectedData,
+        cta_status: SavedAppliedFilters?.PurchaseType?.selctedButton,
+
+        // increaseCount: false,
+      })
+    );
+  };
   return (
     <>
       <BackTotopbutton />
-      <Stack direction={"column"}>
+      {/* <Stack direction={"column"}> */}
         <Typography>
           <b>Saved Ads</b>
         </Typography>
-
-        <Box sx={{ marginRight: 5 }}>
-          <Grid container>
-            {filterActivate ? (
+        {/* <Grid
+          container
+          sx={{
+            // opacity: loading ? 0.5 : 1,
+            // disabled: loading ? true : false,
+            paddingRight: "36px",
+          }}
+        > */}
+        <Grid container sx={{ marginRight: 5 }}>
+          <Grid item>
+            {filterActivate && (
               <Grid
                 item
                 xs={12}
@@ -168,8 +224,8 @@ const SavedAds = () => {
                                       ] === "string"
                                     ? dum === AdsRemovedElement.MEDIATYPE
                                       ? dum === AdsRemovedElement.STATUS
-                                        ? "Active"
-                                        : "Video or Photo"
+                                        ? ""
+                                        : ""
                                       : ""
                                     : new Date();
                               }
@@ -180,6 +236,45 @@ const SavedAds = () => {
                                   name: filter,
                                   data: FilterRemoveData,
                                   // componentName: "AllAdsPage",
+                                })
+                              );
+                              dispatch(
+                                loadSavedAdsStart({
+                                  page_index: 0,
+                                  startdate: SavedAppliedFilters?.StartRunningDate?.startdate,
+                                  enddate: SavedAppliedFilters?.StartRunningDate?.enddate,
+                                  adcount:
+                                    SavedAppliedFilters?.AdCount?.min > maxRanger.AdCount.min ||
+                                    SavedAppliedFilters?.AdCount?.max < maxRanger.AdCount.max
+                                      ? [
+                                          SavedAppliedFilters?.AdCount?.min,
+                                          SavedAppliedFilters?.AdCount?.max,
+                                        ]
+                                      : [],
+                                  adstatus: SavedAppliedFilters?.AdStatus?.status,
+                                  fb_likes:
+                                    SavedAppliedFilters?.FacebookLikes?.min >
+                                      maxRanger.FacebookLikes.min ||
+                                    SavedAppliedFilters?.FacebookLikes?.max < maxRanger.FacebookLikes.max
+                                      ? [
+                                          SavedAppliedFilters?.FacebookLikes?.min,
+                                          SavedAppliedFilters?.FacebookLikes?.max,
+                                        ]
+                                      : [],
+                                  insta_followers:
+                                    SavedAppliedFilters?.InstragramLike?.min >
+                                      maxRanger.InstragramLike.min ||
+                                    SavedAppliedFilters?.InstragramLike?.max <
+                                      maxRanger.InstragramLike.max
+                                      ? [
+                                          SavedAppliedFilters?.InstragramLike?.min,
+                                          SavedAppliedFilters?.InstragramLike?.max,
+                                        ]
+                                      : [],
+                                  media_type: SavedAppliedFilters?.MediaType?.selectedData,
+                                  cta_status: SavedAppliedFilters?.PurchaseType?.selctedButton,
+                          
+                                  // increaseCount: false,
                                 })
                               );
                               // dispatch(
@@ -218,7 +313,7 @@ const SavedAds = () => {
                   </Grid>
                 )}
               </Grid>
-            ) : null}
+            ) }
           </Grid>
           <Grid container justifyContent="flex-end">
             <Stack
@@ -293,86 +388,44 @@ const SavedAds = () => {
                 sortDetail={sortFilter}
                 name={"SavedPage"}
               />
-              {/* <Typography>Sort by</Typography>
-            <img
-              alt="arrowdown"
-              src={Arrowdown}
-              // className={classes.DropDownArrow}
-            /> */}
             </Stack>
           </Grid>
-          <Stack
+          <Grid item >
+          <InfiniteScroll
+        dataLength={savedAdsLocal.length} //This is important field to render the next data
+        next={fetchData}
+        hasMore={true}
+        loader={<Box sx={{display:"flex",justifyContent:"center",alignItems:"center"}}>{save_loading?<h4>Loading...</h4>:null}</Box>}
+        >
+          <Grid
+            item
+            // xs={12}
             sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
+           
               width: "100%",
             }}
           >
-            <Box
+           
+            <Grid
+              container
+              // spacing={2}
               sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                width: "100%",
-                visibility:
-                     search_loading ||save_loading
-                      ? "visible"
-                      : "hidden",
+                marginTop: "5px",
+                width:"100%"
+                // opacity: save_loading ? 0.5 : 1,
+                // disabled: save_loading ? true : false,
               }}
             >
-              <CircularProgress
-                style={{
-                  position: "relative",
-                  top:window.pageYOffset,
-                  opacity: 1,
-                  zIndex: 1,
-                  visibility:
-                     search_loading ||save_loading
-                      ? "visible"
-                      : "hidden",
-                }}
-              />
-            </Box>
-            {/* {console.log(savedAdsLocal)} */}
-            {
-            // save_loading ? (
-              
-            // ) : 
-            Object.keys(savedAdsLocal).length ? (
-              <Grid
-                container
-                spacing={2}
-                sx={{
-                  marginTop: "10px",
-                  opacity: save_loading ? 0.5 : 1,
-                  disabled: save_loading ? true : false,
-                  width: "100%",
-                }}
-              >
-                {filteredData.length ? (
-                  filteredData.map((ads, index) => (
-                    <ThumbNailBox
-                      adInfo={ads}
-                      index={index}
-                      key={index}
-                      deleteId={ads.id}
-                    />
-                  ))
-                ) : (
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      width: "100%",
-                    }}
-                  >
-                    No Result
-                  </Box>
-                )}
-              </Grid>
-            ) : (
+              {savedAdsLocal?.length !==0 && (
+                savedAdsLocal?.map((ads, index) => (console.log(ads),                  <ThumbNailBox
+                    adInfo={ads}
+                    index={index}
+                    deleteId={ads.id}
+                    key={index}
+                  />
+                ))
+              ) }
+                {savedAdsLocal?.length === 0 && save_loading === false && <Grid>
               <Stack
                 direction={"column"}
                 sx={{
@@ -393,12 +446,15 @@ const SavedAds = () => {
                   // className={classes.saveicon}
                 />
               </Stack>
-            )}
-          </Stack>
-
-          {/* </Grid> */}
-        </Box>
-      </Stack>
+              </Grid>
+              }
+            </Grid>
+            {/* // )} */}
+          </Grid>
+          </InfiniteScroll>
+          </Grid>
+        </Grid>
+      {/* </Stack> */}
     </>
   );
 };

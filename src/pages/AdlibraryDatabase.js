@@ -165,7 +165,43 @@ const Addlibrarydatabase = () => {
   //     document.documentElement.offsetHeight
   //   )
   // }
+// useEffect(()=>{
+//   dispatch(loadMediaStart({
+//     page_index: page_index+1,
+//     startdate:appliedFilters?.StartRunningDate?.startdate,
+//     enddate: appliedFilters?.StartRunningDate?.enddate,
+//     adcount:
+//       appliedFilters?.AdCount?.min > maxRanger.AdCount.min ||
+//       appliedFilters?.AdCount?.max < maxRanger.AdCount.max
+//         ? [
+//             appliedFilters?.AdCount?.min,
+//             appliedFilters?.AdCount?.max,
+//           ]
+//         : [],
+//     adstatus: appliedFilters?.AdStatus?.status,
+//     fb_likes:
+//       appliedFilters?.FacebookLikes?.min > maxRanger.FacebookLikes.min ||
+//       appliedFilters?.FacebookLikes?.max < maxRanger.FacebookLikes.max
+//         ? [
+//             appliedFilters?.FacebookLikes?.min,
+//             appliedFilters?.FacebookLikes?.max,
+//           ]
+//         : [],
+//     insta_followers:
+//       appliedFilters?.InstragramLike?.min > maxRanger.InstragramLike.min ||
+//       appliedFilters?.InstragramLike?.max < maxRanger.InstragramLike.max
+//         ? [
+//             appliedFilters?.InstragramLike?.min,
+//             appliedFilters?.InstragramLike?.max,
+//           ]
+//         : [],
+//     media_type:appliedFilters?.MediaType?.selectedData,
+//     cta_status:
+//       appliedFilters?.PurchaseType?.selctedButton,
 
+//     // increaseCount: false,
+//   }));
+// },[appliedFilters])
   const fetchData = () => {
     console.log("::::::::::::::::::::::")
     dispatch(loadMediaStart({
@@ -346,7 +382,7 @@ const Addlibrarydatabase = () => {
                                   ? dum === AdsRemovedElement.MEDIATYPE
                                     ? dum === AdsRemovedElement.STATUS
                                       ? "Active"
-                                      : "Video or Photo"
+                                      : ""
                                     : ""
                                   : new Date();
                           }
@@ -359,7 +395,7 @@ const Addlibrarydatabase = () => {
                               // componentName: "AllAdsPage",
                             })
                           );
-                          fetchData();
+                          // fetchData();
                          
                           // searchBarData !== ""
                           //   ? dispatch(FilterAfterSearchStart()) //dispatch(searchStart(searchBarData))
@@ -392,7 +428,7 @@ const Addlibrarydatabase = () => {
         dataLength={allMediaAdsData.length} //This is important field to render the next data
         next={fetchData}
         hasMore={true}
-        loader={<Box sx={{display:"flex",justifyContent:"center"}}>{loading?<h4>Loading...</h4>:null}</Box>}
+        loader={<Box sx={{display:"flex",justifyContent:"center",alignItems:"center"}}>{loading?<h4>Loading...</h4>:null}</Box>}
         >
           <Grid
             item
@@ -406,14 +442,15 @@ const Addlibrarydatabase = () => {
            
             <Grid
               container
-              spacing={2}
+              // spacing={2}
               sx={{
                 marginTop: "5px",
-                opacity: save_loading ? 0.5 : 1,
+                width:"100%"
+                // opacity: save_loading ? 0.5 : 1,
                 // disabled: save_loading ? true : false,
               }}
             >
-              {allMediaAdsData?.length ? (
+              {allMediaAdsData?.length !==0 && (
                 allMediaAdsData?.map((ads, index) => (
                   <ThumbNailBox
                     adInfo={ads}
@@ -422,8 +459,8 @@ const Addlibrarydatabase = () => {
                     key={index}
                   />
                 ))
-              ) : (
-                <Box
+              ) }
+                {allMediaAdsData?.length === 0 && loading === false && <Box
                   sx={{
                     display: "flex",
                     justifyContent: "center",
@@ -431,9 +468,9 @@ const Addlibrarydatabase = () => {
                     width: "100%",
                   }}
                 >
-                  No Result
+                <Typography>No Result</Typography> 
                 </Box>
-              )}
+              }
             </Grid>
             {/* // )} */}
           </Grid>
