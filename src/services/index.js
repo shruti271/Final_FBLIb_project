@@ -74,9 +74,6 @@ export const changePassword = async (payload) => {
       `http://localhost:8000/api/usermanager/`, //http://127.0.0.1:8000/api/usermanager/      
       { withCredentials: true }
     );
-    console.log(userid.data.data);
-    console.log("---------------- payload", payload)
-    // console.log(payload);
     const res = await axios.put(
       `http://localhost:8000/api/usermanager/${userid?.data?.data?.id}/`, //http://127.0.0.1:8000/api/usermanager/
       payload,
@@ -116,9 +113,6 @@ export const changeName = async (payload) => {
       `http://localhost:8000/api/usermanager/`, //http://127.0.0.1:8000/api/usermanager/      
       { withCredentials: true }
     );
-    console.log(userid.data.data);
-    console.log("---------------- payload", payload)
-    console.log(payload);
     const res = await axios.put(
       `http://localhost:8000/api/usermanager/${userid?.data?.data?.id}/`, //http://127.0.0.1:8000/api/usermanager/
       payload,

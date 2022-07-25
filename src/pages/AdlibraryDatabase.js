@@ -143,7 +143,7 @@ const useStyles = makeStyles((theme) => ({
 const Addlibrarydatabase = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { allMediaAdsData,allMediaAds,appliedFilters,maxRanger, page_index, loading, } = useSelector((state) => state.allMediaAds);
+  const { allMediaAds, loading } = useSelector((state) => state.allMediaAds);
   const {
     filteredData,
     // appliedFilters,

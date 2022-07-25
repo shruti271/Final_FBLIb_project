@@ -10,14 +10,14 @@ import logout from "../assets/Logout.svg";
 import { logoutUser } from "../services";
 import AdLibraryDatabaseIcon from "../SvgIcons/AdLibraryDatabaseIcon";
 import ContactIcon from "../SvgIcons/ContactIcon";
-import fbEyelogo from "../assets/eye_logo.svg"
-import fbEyelogoText from "../assets/logo_text.svg"
+import fbEyelogo from "../assets/eye_logo.svg";
+import fbEyelogoText from "../assets/logo_text.svg";
 import SaveIcon from "../SvgIcons/SaveIcon";
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import Button from '@mui/material/Button';
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import Button from "@mui/material/Button";
 const useStyles = makeStyles(() => ({
   title: {
     fontFamily: "Neue Haas Grotesk Display Pro",
@@ -33,16 +33,17 @@ const useStyles = makeStyles(() => ({
     textFillColor: "transparent",
   },
   logoText: {
-    fontFamily: 'Neue Haas Grotesk Display Pro',
+    fontFamily: "Neue Haas Grotesk Display Pro",
     fontStyle: "normal",
     fontWeight: 900,
     fontSize: "32.5271px",
     lineHeight: "43px",
-    background: "linear-gradient(270deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)",
+    background:
+      "linear-gradient(270deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)",
     WebkitBackgroundClip: "text",
     WebkitTextFillColor: "transparent",
     backgroundClip: "text",
-    texFillColor: "transparent"
+    texFillColor: "transparent",
   },
   selectedMenu: {
     background:
@@ -51,10 +52,10 @@ const useStyles = makeStyles(() => ({
   },
   openDrawerItemWrapper: {
     paddingRight: "6px",
-    paddingLeft: "6px"
+    paddingLeft: "6px",
   },
   closeDrawerItemWrapper: {
-    padding: "0px"
+    padding: "0px",
   },
   openDrawerItem: {
     marginLeft: "28px",
@@ -65,7 +66,7 @@ const useStyles = makeStyles(() => ({
     marginLeft: "22px",
     paddingTop: "20px",
     paddingBottom: "20px",
-  }
+  },
 }));
 
 const drawerWidth = 276;
@@ -89,7 +90,7 @@ const closedMixin = (theme) => ({
   [theme.breakpoints.up("sm")]: {
     width: `calc(${theme.spacing(9)} + 5px)`,
   },
-})
+});
 
 const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
@@ -106,7 +107,6 @@ const Drawer = styled(MuiDrawer, {
     ...closedMixin(theme),
     "& .MuiDrawer-paper": closedMixin(theme),
   }),
-
 }));
 
 const sideBarMenuItems = {
@@ -125,19 +125,22 @@ export const CustomSidebar = ({ isOpen }) => {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
-    setOpen(true);  
+    setOpen(true);
   };
 
   const handleClose = () => {
     setOpen(false);
   };
   const userLogout = async () => {
-    logoutUser().then((data) => {
-      localStorage.setItem("is_alive", false);
-      navigate("/auth/login");
-    }, (error) => {
-      console.log("Error While LogOut", error)
-    });
+    logoutUser().then(
+      (data) => {
+        localStorage.setItem("is_alive", false);
+        navigate("/auth/login");
+      },
+      (error) => {
+        console.log("Error While LogOut", error);
+      }
+    );
   };
 
   useEffect(() => {
@@ -162,14 +165,23 @@ export const CustomSidebar = ({ isOpen }) => {
               marginLeft: "7.5px",
               alignItems: "center",
               marginTop: "28px",
-              marginBottom: "48px"
+              marginBottom: "48px",
             }}
           >
-            <Box sx={{ marginRight: "8px" }}><img alt="small-logo" src={fbEyelogo} /></Box>
-            <Box><img alt="small-logo" src={fbEyelogoText} height="20" /></Box>
-
+            <Box sx={{ marginRight: "8px" }}>
+              <img alt="small-logo" src={fbEyelogo} />
+            </Box>
+            <Box>
+              <img alt="small-logo" src={fbEyelogoText} height="20" />
+            </Box>
           </Box>
-          <Box className={!isOpen ? classes.openDrawerItemWrapper : classes.closeDrawerItemWrapper}>
+          <Box
+            className={
+              !isOpen
+                ? classes.openDrawerItemWrapper
+                : classes.closeDrawerItemWrapper
+            }
+          >
             <Box
               sx={{ cursor: "pointer" }}
               className={
@@ -184,9 +196,17 @@ export const CustomSidebar = ({ isOpen }) => {
             >
               <Stack
                 direction={"row"}
-                className={isOpen ? classes.openDrawerItem : classes.closeDrawerItem}
+                className={
+                  isOpen ? classes.openDrawerItem : classes.closeDrawerItem
+                }
               >
-                <AdLibraryDatabaseIcon fill={selectedMenuItem === sideBarMenuItems.ADLIBSDATABASE ? "#00CBFF" : "grey"} />
+                <AdLibraryDatabaseIcon
+                  fill={
+                    selectedMenuItem === sideBarMenuItems.ADLIBSDATABASE
+                      ? "#00CBFF"
+                      : "grey"
+                  }
+                />
                 <Typography sx={{ marginLeft: "26px" }}>
                   Adilbrary Database
                 </Typography>
@@ -194,7 +214,13 @@ export const CustomSidebar = ({ isOpen }) => {
             </Box>
           </Box>
 
-          <Box className={!isOpen ? classes.openDrawerItemWrapper : classes.closeDrawerItemWrapper}>
+          <Box
+            className={
+              !isOpen
+                ? classes.openDrawerItemWrapper
+                : classes.closeDrawerItemWrapper
+            }
+          >
             <Box
               sx={{
                 marginTop: "6px",
@@ -212,17 +238,30 @@ export const CustomSidebar = ({ isOpen }) => {
             >
               <Stack
                 direction={"row"}
-                className={isOpen ? classes.openDrawerItem : classes.closeDrawerItem}
+                className={
+                  isOpen ? classes.openDrawerItem : classes.closeDrawerItem
+                }
               >
-
-
-                <SaveIcon fill={selectedMenuItem === sideBarMenuItems.SAVEDADS ? "#00CBFF" : "grey"} />
+                <SaveIcon
+                  fill={
+                    selectedMenuItem === sideBarMenuItems.SAVEDADS
+                      ? "#00CBFF"
+                      : "grey"
+                  }
+                />
 
                 <Typography sx={{ marginLeft: "26px" }}>Saved Ads</Typography>
               </Stack>
             </Box>
           </Box>
-          <Box className={!isOpen ? classes.openDrawerItemWrapper : classes.closeDrawerItemWrapper} sx={{ marginTop: "auto" }}>
+          <Box
+            className={
+              !isOpen
+                ? classes.openDrawerItemWrapper
+                : classes.closeDrawerItemWrapper
+            }
+            sx={{ marginTop: "auto" }}
+          >
             <Box
               sx={{
                 cursor: "pointer",
@@ -239,16 +278,30 @@ export const CustomSidebar = ({ isOpen }) => {
             >
               <Stack
                 direction={"row"}
-                className={isOpen ? classes.openDrawerItem : classes.closeDrawerItem}
+                className={
+                  isOpen ? classes.openDrawerItem : classes.closeDrawerItem
+                }
               >
-                <ContactIcon fill={selectedMenuItem === sideBarMenuItems.SUPPORT ? "#00CBFF" : "grey"} />
+                <ContactIcon
+                  fill={
+                    selectedMenuItem === sideBarMenuItems.SUPPORT
+                      ? "#00CBFF"
+                      : "grey"
+                  }
+                />
                 <Typography sx={{ marginLeft: "26px" }}>
                   Contact Support
                 </Typography>
               </Stack>
             </Box>
           </Box>
-          <Box className={!isOpen ? classes.openDrawerItemWrapper : classes.closeDrawerItemWrapper}>
+          <Box
+            className={
+              !isOpen
+                ? classes.openDrawerItemWrapper
+                : classes.closeDrawerItemWrapper
+            }
+          >
             <Box
               sx={{
                 marginTop: "3px",
@@ -267,7 +320,9 @@ export const CustomSidebar = ({ isOpen }) => {
             >
               <Stack
                 direction={"row"}
-                className={isOpen ? classes.openDrawerItem : classes.closeDrawerItem}
+                className={
+                  isOpen ? classes.openDrawerItem : classes.closeDrawerItem
+                }
                 onClick={handleClickOpen}
               >
                 <img alt="Logout" src={logout} width="17px" />
@@ -282,29 +337,38 @@ export const CustomSidebar = ({ isOpen }) => {
                 >
                   <DialogContent>
                     <DialogContentText id="alert-dialog-description">
-                      <Typography variant="h5" p={2}
-                        sx={{ fontWeight: "bold", color: "#2B2F42" }}>
+                      <Typography
+                        variant="h5"
+                        p={2}
+                        sx={{ fontWeight: "bold", color: "#2B2F42" }}
+                      >
                         Are You Sure For Logout ?
                       </Typography>
                     </DialogContentText>
                   </DialogContent>
-                  <DialogActions sx={{ marginRight: "inherit", paddingBottom: "16px" }}>
-                    <Button onClick={handleClose}
+                  <DialogActions
+                    sx={{ marginRight: "inherit", paddingBottom: "16px" }}
+                  >
+                    <Button
+                      onClick={handleClose}
                       variant="contained"
                       color="primary"
                       style={{
                         borderRadius: 50,
                         backgroundColor: "#00CBFF",
-                        whiteSpace: "nowrap"
+                        whiteSpace: "nowrap",
                       }}
-                    >Cancel</Button>
-                    <Button onClick={userLogout}
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      onClick={userLogout}
                       variant="contained"
                       color="primary"
                       style={{
                         borderRadius: 50,
                         backgroundColor: "#00CBFF",
-                        whiteSpace: "nowrap"
+                        whiteSpace: "nowrap",
                       }}
                     >
                       Yes

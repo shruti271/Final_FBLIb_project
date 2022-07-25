@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { Routes, Route } from "react-router-dom";
 import Pagenotfound from "./components/PageNotFound";
 import PrivateRoute from "./PrivateRoute";
 import MainLayout from "./components/MainLayout";
@@ -9,21 +8,8 @@ import ForgetPassword from "./pages/auth/ForgetPassword";
 import Signup from "./pages/auth/Signup";
 import PublicRoute from "./PublicRoute";
 import './App.scss'
-// import { loadIsAliveStart } from "./redux/ducks/session";
-// import {
-//   Box,
-//   CircularProgress,
-// } from "@mui/material";
 
 const App = () => {
-  // const dispatch = useDispatch();
-
-  // const { loading } = useSelector((state) => state.isAliveData);
-
-  // useEffect(() => {
-  //   dispatch(loadIsAliveStart());
-  // }, []);
-  
   return (
     <>
       <Routes>

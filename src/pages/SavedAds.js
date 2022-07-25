@@ -8,7 +8,6 @@ import { useSelector } from "react-redux";
 import ThumbNailBox from "../components/ThumbNailBox";
 import filter from "../assets/filter.svg";
 import noSavedAdsImage from "../assets/noSavedAdsImage.svg";
-import Arrowdown from "../assets/Arrowdown.svg";
 import { Box } from "@material-ui/core";
 import BackTotopbutton from "../pages/Backtotopbutton";
 import AllFilters from "../components/AllFilters";

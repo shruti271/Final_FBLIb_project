@@ -1,13 +1,11 @@
 import React from "react";
 import { Box, CircularProgress, Grid } from "@mui/material";
 import { useSelector } from "react-redux";
-// import { loadSubAllMediaStart } from "../../redux/ducks/subAllAds";
 import ThumbNailBox from "../../components/ThumbNailBox";
 
-const AllAds = ({ AdsName }) => {
+const AllAds = () => {
   const { subAllMedia, loading } = useSelector((state) => state.subAllMedia);
   const { savedIds } = useSelector((state) => state.savedclienads);
-  
 
   return (
     <>
@@ -35,8 +33,12 @@ const AllAds = ({ AdsName }) => {
         }}
       >
         {subAllMedia?.map((ads, index) => (
-                   
-                    <ThumbNailBox adInfo={ads} index={index} key={index}  deleteId={savedIds?.includes(ads.id) ? ads.id : false}/>
+          <ThumbNailBox
+            adInfo={ads}
+            index={index}
+            key={index}
+            deleteId={savedIds?.includes(ads.id) ? ads.id : false}
+          />
         ))}
       </Grid>
     </>
