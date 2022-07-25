@@ -417,8 +417,7 @@ const SavedAds = () => {
               }}
             >
               {savedAdsLocal?.length !==0 && (
-                savedAdsLocal?.map((ads, index) => (
-                  <ThumbNailBox
+                savedAdsLocal?.map((ads, index) => (console.log(ads),                  <ThumbNailBox
                     adInfo={ads}
                     index={index}
                     deleteId={ads.id}
