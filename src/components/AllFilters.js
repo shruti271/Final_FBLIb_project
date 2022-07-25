@@ -23,7 +23,7 @@ import {
   applyallfilters,
   // ButtonTypevalueStart,
   chnageSearchType,
-  clearFilteredDataStart,
+  // clearFilteredDataStart,
   datevalueStart,
   EmptySearchValueStart,
   FilterAfterSearchStart,
@@ -42,6 +42,7 @@ import EditableLabel from "react-simple-editlabel";
 import {
   applySavedAdsallfilters,
   EmptySavedSearchValueStart,
+  loadSavedAdsStart,
   SavedAdsAdCountvalueStart,
   SavedAdsButtonTypevalueStart,
   savedAdschnageSearchType,
@@ -56,7 +57,15 @@ import {
   savedShnageSearchType,
 } from "../redux/ducks/saveAds_clientSide";
 import { EditText } from "react-edit-text";
-import { AdCountvalueStart, ButtonTypevalueStart, loadMediaStart, MediaTypevalueStart, rangerefixMinMaxSiler, statusValueStart } from "../redux/ducks/mediaAds";
+import {
+  AdCountvalueStart,
+  ButtonTypevalueStart,
+  clearFilteredDataStart,
+  loadMediaStart,
+  MediaTypevalueStart,
+  rangerefixMinMaxSiler,
+  statusValueStart,
+} from "../redux/ducks/mediaAds";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -162,7 +171,6 @@ function AllFilters(props) {
 
   const { ctaStatus } = useSelector((state) => state.allMediaAds);
 
-
   const {
     filteredData,
     appliedFilters,
@@ -226,7 +234,7 @@ function AllFilters(props) {
     }
     console.log("ccccccccccccccccccccccccccccc");
   });
-  const counterIncremten = (event, newValue) => {    
+  const counterIncremten = (event, newValue) => {
     if (props.name === "AllAdsPage") {
       // setRangeEditTextField((pre) => {
       //   return {
@@ -279,6 +287,7 @@ function AllFilters(props) {
     //   ? dispatch(searchStart(searchBarData))
     //   : dispatch(applyallfilters());
   };
+
   const handleChangeStatus = (event, newValue) => {
     if (props.name === "AllAdsPage") {
       dispatch(
@@ -304,9 +313,9 @@ function AllFilters(props) {
           Message: `Ad Status:${newValue}`,
         })
       );
-      document.getElementById("searchbar").value
-        ? dispatch(SavedAdsFilterAfterSearchStart())
-        : dispatch(applySavedAdsallfilters());
+      // document.getElementById("searchbar").value
+      //   ? dispatch(SavedAdsFilterAfterSearchStart())
+      //   : dispatch(applySavedAdsallfilters());
     }
   };
   const FacebookLikesIncremten = (event, newValue) => {
@@ -331,9 +340,9 @@ function AllFilters(props) {
           Message: `Facebook Page likes: ${newValue[0]}-${newValue[1]}`,
         })
       );
-      document.getElementById("searchbar").value
-        ? dispatch(SavedAdsFilterAfterSearchStart())
-        : dispatch(applySavedAdsallfilters());
+      // document.getElementById("searchbar").value
+      //   ? dispatch(SavedAdsFilterAfterSearchStart())
+      //   : dispatch(applySavedAdsallfilters());
     }
   };
   const InstragramFollowerIncremten = (event, newValue) => {
@@ -378,10 +387,10 @@ function AllFilters(props) {
         })
       );
 
-      document.getElementById("searchbar").value
-        ? dispatch(FilterAfterSearchStart()) // dispatch(searchStart(props.search))
-        : dispatch(applyallfilters());
-      dispatch(SortvalueStart());
+      // document.getElementById("searchbar").value
+      //   ? dispatch(FilterAfterSearchStart()) // dispatch(searchStart(props.search))
+      //   : dispatch(applyallfilters());
+      // dispatch(SortvalueStart());
     } else if (props.name === "SavedPage") {
       dispatch(
         SavedAdsMediaTypevalueStart({
@@ -392,9 +401,9 @@ function AllFilters(props) {
         })
       );
 
-      document.getElementById("searchbar").value
-        ? dispatch(SavedAdsFilterAfterSearchStart())
-        : dispatch(applySavedAdsallfilters());
+      // document.getElementById("searchbar").value
+      //   ? dispatch(SavedAdsFilterAfterSearchStart())
+      //   : dispatch(applySavedAdsallfilters());
     }
 
     // setAppliedFilters((pre) => ({
@@ -429,9 +438,9 @@ function AllFilters(props) {
           Message: `Button : ${newValue}`,
         })
       );
-      document.getElementById("searchbar").value
-        ? dispatch(SavedAdsFilterAfterSearchStart())
-        : dispatch(applySavedAdsallfilters());
+      // document.getElementById("searchbar").value
+      //   ? dispatch(SavedAdsFilterAfterSearchStart())
+      //   : dispatch(applySavedAdsallfilters());
     }
   };
 
@@ -442,49 +451,179 @@ function AllFilters(props) {
       dispatch(savedAdschnageSearchType(newValue));
     }
   };
-const callFilters=()=>{
-  dispatch(
-    loadMediaStart({
-      page_index: 0,
-      startdate: props.pageFilterInfo?.StartRunningDate?.startdate,
-      enddate: props.pageFilterInfo?.StartRunningDate?.enddate,
-      adcount:
-        props.pageFilterInfo?.AdCount?.min > props.ranger.AdCount.min ||
-        props.pageFilterInfo?.AdCount?.max < props.ranger.AdCount.max
-          ? [
-              props.pageFilterInfo?.AdCount?.min,
-              props.pageFilterInfo?.AdCount?.max,
-            ]
-          : [],
-      adstatus: props?.pageFilterInfo?.AdStatus?.status,
-      fb_likes:
-        props.pageFilterInfo?.FacebookLikes?.min > props.ranger.FacebookLikes.min ||
-        props.pageFilterInfo?.FacebookLikes?.max <props.ranger.FacebookLikes.max
-          ? [
-              props.pageFilterInfo?.FacebookLikes?.min,
-              props.pageFilterInfo?.FacebookLikes?.max,
-            ]
-          : [],
-      insta_followers:
-        props.pageFilterInfo?.InstragramLike?.min > props.ranger.InstragramLike.min ||
-        props.pageFilterInfo?.InstragramLike?.max <props.ranger.InstragramLike.max
-          ? [
-              props.pageFilterInfo?.InstragramLike?.min,
-              props.pageFilterInfo?.InstragramLike?.max,
-            ]
-          : [],
-      media_type: props?.pageFilterInfo?.MediaType?.selectedData,
-      cta_status:
-        props?.pageFilterInfo?.PurchaseType?.selctedButton,
+  const callFilters = () => {
+    if(props.name === "AllAdsPage")
+    {dispatch(
+      loadMediaStart({
+        page_index: 0,
+        startdate: props.pageFilterInfo?.StartRunningDate?.startdate,
+        enddate: props.pageFilterInfo?.StartRunningDate?.enddate,
+        adcount:
+          props.pageFilterInfo?.AdCount?.min > props.ranger.AdCount.min ||
+          props.pageFilterInfo?.AdCount?.max < props.ranger.AdCount.max
+            ? [
+                props.pageFilterInfo?.AdCount?.min,
+                props.pageFilterInfo?.AdCount?.max,
+              ]
+            : [],
+        adstatus: props?.pageFilterInfo?.AdStatus?.status,
+        fb_likes:
+          props.pageFilterInfo?.FacebookLikes?.min >
+            props.ranger.FacebookLikes.min ||
+          props.pageFilterInfo?.FacebookLikes?.max <
+            props.ranger.FacebookLikes.max
+            ? [
+                props.pageFilterInfo?.FacebookLikes?.min,
+                props.pageFilterInfo?.FacebookLikes?.max,
+              ]
+            : [],
+        insta_followers:
+          props.pageFilterInfo?.InstragramLike?.min >
+            props.ranger.InstragramLike.min ||
+          props.pageFilterInfo?.InstragramLike?.max <
+            props.ranger.InstragramLike.max
+            ? [
+                props.pageFilterInfo?.InstragramLike?.min,
+                props.pageFilterInfo?.InstragramLike?.max,
+              ]
+            : [],
+        media_type: props?.pageFilterInfo?.MediaType?.selectedData,
+        cta_status: props?.pageFilterInfo?.PurchaseType?.selctedButton,
 
-      // increaseCount: false,
-    })
-  );
-}
+        // increaseCount: false,
+      })
+    );} else if (props.name === "SavedPage"){
+      dispatch(
+        loadSavedAdsStart({
+          page_index: 0,
+        startdate: props.pageFilterInfo?.StartRunningDate?.startdate,
+        enddate: props.pageFilterInfo?.StartRunningDate?.enddate,
+        adcount:
+          props.pageFilterInfo?.AdCount?.min > props.ranger.AdCount.min ||
+          props.pageFilterInfo?.AdCount?.max < props.ranger.AdCount.max
+            ? [
+                props.pageFilterInfo?.AdCount?.min,
+                props.pageFilterInfo?.AdCount?.max,
+              ]
+            : [],
+        adstatus: props?.pageFilterInfo?.AdStatus?.status,
+        fb_likes:
+          props.pageFilterInfo?.FacebookLikes?.min >
+            props.ranger.FacebookLikes.min ||
+          props.pageFilterInfo?.FacebookLikes?.max <
+            props.ranger.FacebookLikes.max
+            ? [
+                props.pageFilterInfo?.FacebookLikes?.min,
+                props.pageFilterInfo?.FacebookLikes?.max,
+              ]
+            : [],
+        insta_followers:
+          props.pageFilterInfo?.InstragramLike?.min >
+            props.ranger.InstragramLike.min ||
+          props.pageFilterInfo?.InstragramLike?.max <
+            props.ranger.InstragramLike.max
+            ? [
+                props.pageFilterInfo?.InstragramLike?.min,
+                props.pageFilterInfo?.InstragramLike?.max,
+              ]
+            : [],
+        media_type: props?.pageFilterInfo?.MediaType?.selectedData,
+        cta_status: props?.pageFilterInfo?.PurchaseType?.selctedButton,
+
+          // increaseCount: false,
+        })
+      );
+    }
+  };
+  const clearFilters = async () => {
+    const emptyFilter = {};
+    console.log("00000000000000000000000000000");
+    console.log(appliedFilters);
+    console.log("1111111111111111111111111111111111111111");
+    if (props.name === "AllAdsPage") {
+      console.log("first");
+      await dispatch(
+        clearFilteredDataStart({
+          StartRunningDate: {
+            startdate: "",
+            enddate: "",
+            Message: "",
+          },
+          AdStatus: { status: "", Message: "" },
+          AdCount: { min: 1, max: 1000, Message: "" },
+          FacebookLikes: { min: 1, max: 100000, Message: "" },
+          InstragramLike: { min: 1, max: 10000, Message: "" },
+          MediaType: { selectedData: "", Message: "" },
+          PurchaseType: { selctedButton: "", Message: "" },
+        })
+      );
+      console.log("first1");
+
+      await callFilters();
+      console.log("first2");
+
+      // clearFilteredDataStart()
+      // document.getElementById("searchbar").value
+      //   ? dispatch(FilterAfterSearchStart()) //dispatch(searchStart(props.search))
+      //   : dispatch(applyallfilters());
+    } else if (props.name === "SavedPage") {
+      dispatch(
+        SavedAdsclearFilteredDataStart({
+          StartRunningDate: {
+            startdate: "",
+            enddate: "",
+            Message: "",
+          },
+          AdStatus: { status: "", Message: "" },
+          AdCount: { min: 1, max: 1000, Message: "" },
+          FacebookLikes: { min: 1, max: 100000, Message: "" },
+          InstragramLike: { min: 1, max: 10000, Message: "" },
+          MediaType: {
+            selectedData: "",
+            Message: "",
+          },
+          PurchaseType: { selctedButton: "", Message: "" },
+        })
+      );
+      document.getElementById("searchbar").value
+        ? dispatch(SavedAdsFilterAfterSearchStart())
+        : dispatch(applySavedAdsallfilters());
+
+      // dispatch(applySavedAdsallfilters());
+      // Object.keys(props?.pageFilterInfo).map(
+      //   (filter, index) => {
+      //     const FilterRemoveDat = [];
+      //     for (let dum in props?.pageFilterInfo[filter]) {
+      //       FilterRemoveDat[dum] =
+      //         typeof props?.pageFilterInfo[filter][dum] ===
+      //         "number"
+      //           ? dum === "min"
+      //             ? 1
+      //             : 1000
+      //           : typeof props?.pageFilterInfo[filter][dum] ===
+      //             "string"
+      //           ? dum === "Mediatype"
+      //             ? "Video or Photo"
+      //             : dum === "status"
+      //             ? ""
+      //             : ""
+      //           : new Date();
+      //     }
+
+      //     // setAppliedFilters((pre) => ({
+      //     //   ...pre,
+      //     //   [`${filter}`]: FilterRemoveDat,
+      //     // }));
+      //     emptyFilter[filter] = FilterRemoveDat;
+      //     // setAdsFilteredData(() => allMediaAds[1]?.all_ads);
+      //   }
+      // );
+      // dispatch(SavedAdsclearFilteredDataStart(emptyFilter));
+    }
+  };
 
   return (
     <>
-     
       <Grid
         container
         sx={{ border: "2px solid #EBEBEB", borderRadius: "10px" }}
@@ -954,7 +1093,7 @@ const callFilters=()=>{
                           if (props.name === "AllAdsPage") {
                             dispatch(
                               AdCountvalueStart({
-                                name: "AdCount",                                
+                                name: "AdCount",
                                 min: Number(e.value),
                                 max: props?.pageFilterInfo?.AdCount?.max,
                                 Message: `Ad Count: ${e.value}-${props?.pageFilterInfo?.AdCount?.max}`,
@@ -964,7 +1103,6 @@ const callFilters=()=>{
                             //   ? dispatch(FilterAfterSearchStart()) // dispatch(searchStart(props.search))
                             //   : dispatch(applyallfilters());
                           } else if (props.name === "SavedPage") {
-                           
                             dispatch(
                               SavedAdsAdCountvalueStart({
                                 name: "AdCount",
@@ -977,11 +1115,9 @@ const callFilters=()=>{
                             //   ? dispatch(SavedAdsFilterAfterSearchStart())
                             //   : dispatch(applySavedAdsallfilters());
                           }
-                         
                         }
                       }}
                     />
-                   
 
                     <Typography>to</Typography>
                     <EditText
@@ -1058,10 +1194,9 @@ const callFilters=()=>{
                         }
                       }}
                     />
-                  
                   </Stack>
                 </Box>
-              
+
                 <Slider
                   id="adcount"
                   size="small"
@@ -1096,9 +1231,9 @@ const callFilters=()=>{
                           Message: "",
                         })
                       );
-                      document.getElementById("searchbar").value
-                        ? dispatch(FilterAfterSearchStart())
-                        : dispatch(applyallfilters());
+                      // document.getElementById("searchbar").value
+                      //   ? dispatch(FilterAfterSearchStart())
+                      //   : dispatch(applyallfilters());
                     } else if (props.name === "SavedPage") {
                       dispatch(
                         SavedAdsAdCountvalueStart({
@@ -1109,9 +1244,9 @@ const callFilters=()=>{
                           Message: "",
                         })
                       );
-                      document.getElementById("searchbar").value
-                        ? dispatch(SavedAdsFilterAfterSearchStart())
-                        : dispatch(applySavedAdsallfilters());
+                      // document.getElementById("searchbar").value
+                      //   ? dispatch(SavedAdsFilterAfterSearchStart())
+                      //   : dispatch(applySavedAdsallfilters());
                     }
                     // dispatch(applyallfilters());
                     // searchBarData !== []
@@ -1353,7 +1488,7 @@ const callFilters=()=>{
                         }
                       }}
                     />
-                 
+
                     <Typography>to</Typography>
                     <EditText
                       id="minRange"
@@ -1401,15 +1536,13 @@ const callFilters=()=>{
                                 Message: `FacebookLikes : ${props?.pageFilterInfo?.FacebookLikes?.min}-${e.value}`,
                               })
                             );
-                            document.getElementById("searchbar").value
-                              ? dispatch(SavedAdsFilterAfterSearchStart())
-                              : dispatch(applySavedAdsallfilters());
+                            // document.getElementById("searchbar").value
+                            //   ? dispatch(SavedAdsFilterAfterSearchStart())
+                            //   : dispatch(applySavedAdsallfilters());
                           }
                         }
                       }}
                     />
-
-                   
                   </Stack>
                 </Box>
 
@@ -1507,7 +1640,7 @@ const callFilters=()=>{
             add={openInstragramFollower ? "simple-popover" : undefined}
             onClose={() => {
               callFilters();
-              setInstragramFollowerAnchorEl(null);            
+              setInstragramFollowerAnchorEl(null);
             }}
             transformOrigin={{
               horizontal: "left",
@@ -1571,14 +1704,14 @@ const callFilters=()=>{
                                 Message: `InstragramLike: ${e.value}-${props?.pageFilterInfo?.InstragramLike?.max}`,
                               })
                             );
-                            document.getElementById("searchbar").value
-                              ? dispatch(SavedAdsFilterAfterSearchStart())
-                              : dispatch(applySavedAdsallfilters());
+                            // document.getElementById("searchbar").value
+                            //   ? dispatch(SavedAdsFilterAfterSearchStart())
+                            //   : dispatch(applySavedAdsallfilters());
                           }
                         }
                       }}
                     />
-                   
+
                     <Typography>to</Typography>
                     <EditText
                       id="minRange"
@@ -1625,14 +1758,13 @@ const callFilters=()=>{
                                 Message: `InstragramLike: ${props?.pageFilterInfo?.InstragramLike?.min}-${e.value}`,
                               })
                             );
-                            document.getElementById("searchbar").value
-                              ? dispatch(SavedAdsFilterAfterSearchStart())
-                              : dispatch(applySavedAdsallfilters());
+                            // document.getElementById("searchbar").value
+                            //   ? dispatch(SavedAdsFilterAfterSearchStart())
+                            //   : dispatch(applySavedAdsallfilters());
                           }
                         }
                       }}
                     />
-                  
                   </Stack>
                 </Box>
 
@@ -1686,9 +1818,9 @@ const callFilters=()=>{
                         })
                       );
 
-                      document.getElementById("searchbar").value
-                        ? dispatch(SavedAdsFilterAfterSearchStart())
-                        : dispatch(applySavedAdsallfilters());
+                      // document.getElementById("searchbar").value
+                      //   ? dispatch(SavedAdsFilterAfterSearchStart())
+                      //   : dispatch(applySavedAdsallfilters());
                     }
 
                     setInstragramFollowerAnchorEl(null);
@@ -1756,7 +1888,7 @@ const callFilters=()=>{
                   onChange={handlechange}
                 >
                   <FormControlLabel
-                    value="Video or Photo"
+                    value=""
                     control={<Radio style={{ color: "#00CBFF" }} />}
                     label="Video or Photo"
                   />
@@ -1795,7 +1927,7 @@ const callFilters=()=>{
                           MediaTypevalueStart({
                             name: "MediaType",
                             // componentName: props.name,
-                            selectedData: "Video or Photo",
+                            selectedData: "",
                             Message: "",
                           })
                         );
@@ -1809,7 +1941,7 @@ const callFilters=()=>{
                           SavedAdsMediaTypevalueStart({
                             name: "MediaType",
                             // componentName: props.name,
-                            selectedData: "Video or Photo",
+                            selectedData: "",
                             Message: "",
                           })
                         );
@@ -1890,9 +2022,7 @@ const callFilters=()=>{
                       />
                     );
                   })}
-                 
                 </RadioGroup>
-               
               </FormControl>
             </Box>
           </Popover>
@@ -1928,6 +2058,7 @@ const callFilters=()=>{
                     console.log(appliedFilters);
                     console.log("1111111111111111111111111111111111111111");
                     if (props.name === "AllAdsPage") {
+                      console.log("first");
                       dispatch(
                         clearFilteredDataStart({
                           StartRunningDate: {
@@ -1939,14 +2070,30 @@ const callFilters=()=>{
                           AdCount: { min: 1, max: 1000, Message: "" },
                           FacebookLikes: { min: 1, max: 100000, Message: "" },
                           InstragramLike: { min: 1, max: 10000, Message: "" },
-                          MediaType: {
-                            selectedData: "",
-                            Message: "",
-                          },
+                          MediaType: { selectedData: "", Message: "" },
                           PurchaseType: { selctedButton: "", Message: "" },
                         })
                       );
-                      callFilters();
+                      console.log("first1");
+                      // dispatch(
+                      //   loadMediaStart({
+                      //     page_index: 0,
+                      //     startdate: "",
+                      //     enddate: "",
+                      //     adcount: [],
+                      //     adstatus: "",
+                      //     fb_likes: [],
+                      //     insta_followers: [],
+                      //     media_type: "",
+                      //     cta_status: "",
+
+                      //     // "increaseCount":false
+                      //   })
+                      // );
+                      // await callFilters();
+                      console.log("first2");
+
+                      // clearFilteredDataStart()
                       // document.getElementById("searchbar").value
                       //   ? dispatch(FilterAfterSearchStart()) //dispatch(searchStart(props.search))
                       //   : dispatch(applyallfilters());
@@ -1963,15 +2110,15 @@ const callFilters=()=>{
                           FacebookLikes: { min: 1, max: 100000, Message: "" },
                           InstragramLike: { min: 1, max: 10000, Message: "" },
                           MediaType: {
-                            selectedData: "Video or Photo",
+                            selectedData: "",
                             Message: "",
                           },
                           PurchaseType: { selctedButton: "", Message: "" },
                         })
                       );
-                      document.getElementById("searchbar").value
-                        ? dispatch(SavedAdsFilterAfterSearchStart())
-                        : dispatch(applySavedAdsallfilters());
+                      // document.getElementById("searchbar").value
+                      //   ? dispatch(SavedAdsFilterAfterSearchStart())
+                      //   : dispatch(applySavedAdsallfilters());
 
                       // dispatch(applySavedAdsallfilters());
                       // Object.keys(props?.pageFilterInfo).map(

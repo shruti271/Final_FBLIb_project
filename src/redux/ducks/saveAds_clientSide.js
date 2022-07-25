@@ -52,8 +52,9 @@ export const DELETE_SAVEADS_START = "DELETE_SAVEADS_START";
 export const DELETE_SAVEADS_SUCCESS = "DELETE_SAVEADS_SUCCESS";
 export const DELETE_SAVEADS_ERROR = "DELETE_SAVEADS_ERROR";
 
-export const loadSavedAdsStart = () => ({
+export const loadSavedAdsStart = (data) => ({
   type: LOAD_SAVEADS_START,
+  payload:data,
 });
 
 export const loadSavedAdsSuccess = (savedMediaAds) => ({
@@ -250,18 +251,19 @@ const initialState = {
     AdCount: { min: 1, max: 1000, Message: "" },
     FacebookLikes: { min: 1, max: 100000, Message: "" },
     InstragramLike: { min: 1, max: 10000, Message: "" },
-    MediaType: { selectedData: "Video or Photo", Message: "" },
+    MediaType: { selectedData: "", Message: "" },
     PurchaseType: { selctedButton: "", Message: "" },
   },
   sortFilter: {
     type: "",
     order: "Ascending",
-  },
+  }, 
   maxRanger: {
-    Adcount: { min: 0, max: 1000 },
-    FacebookLikes: { min: 0, max: 100000 },
-    InstragramLike: { min: 0, max: 10000 },
+    AdCount: { min: 1,  max: 1000 },
+    FacebookLikes: {  min: 1, max: 100000 },
+    InstragramLike: { min: 1, max: 10000 },
   },
+  page_index:-1,
   postionYoffset: 0,
   searchBarData: "",
   searchedSavedData: [],
@@ -914,6 +916,11 @@ const savedAdsClienSideReducer = (state = initialState, action) => {
     };
     // ----------------------------
     case LOAD_SAVEADS_START:
+      return {
+        ...state,
+        page_index:action.payload.page_index,                
+        savedAdsLocal:action.payload.page_index===0?[]:state.savedAdsLocal,
+      }
     case CREATE_SAVEADS_START:
     case DELETE_SAVEADS_START:
       return {
@@ -926,10 +933,10 @@ const savedAdsClienSideReducer = (state = initialState, action) => {
       return {
         ...state,
         save_loading: false,
-        savedAdsLocal: action.payload,
+        savedAdsLocal: state.savedAdsLocal.concat(action.payload),
         savedIds:
-        action.payload !== "" ? action.payload.map((abc) => abc.id) : [],
-        filteredData:action.payload
+        action.payload !== "" ? state.savedIds.concat(action.payload.map((abc) => abc.id)) : [],
+        // filteredData:action.payload
       };
     case CREATE_SAVEADS_SUCCESS:
       console.log("999999999999999999999999")

@@ -18,6 +18,8 @@ export const ALL_STATUS_START = "ALL_STATUS_START";
 export const ALL_STATUS_SUCCESS = "ALL_STATUS_SUCCESS";
 export const ALL_STATUS_ERROR = "ALL_STATUS_ERROR";
 
+export const CLEAR_FILTERDATA = "CLEAR_FILTERDATA";
+
 export const loadMediaStart = (allMediaAds) => ({
   type: LOAD_MEDIA_START,
   payload: allMediaAds,
@@ -92,7 +94,14 @@ export const setCatSatusError = (error) => ({
   payload: error,
 });
 
+export const clearFilteredDataStart = (ads) => ({
+  type: CLEAR_FILTERDATA,
+  payload: ads,
+});
+
+
 const initialState = {
+  allAds:[],
   allMediaAds: [],
   allMediaAdsData: [],
   endOfData:false,
@@ -162,7 +171,10 @@ const mediaReducer = (state = initialState, action) => {
         allMediaAdsData: action.payload.error ===false?state.allMediaAdsData.concat(
           action.payload.data[1]?.all_ads
         ):state.allMediaAdsData,
-        // savedIds:state.savedIds.concat(action.payload.saved_ads),
+        savedIds:action.payload.error ===false?state.savedIds.concat(action.payload.saved_ads):state.savedIds,
+        allAds:action.payload.error ===false?state.allMediaAdsData.concat(
+          action.payload.data[1]?.all_ads
+        ):state.allMediaAdsData,
       };
     case UPDATE_MEDIA_SUCCESS:
       const index = state.allMediaAds.findIndex(
@@ -300,6 +312,15 @@ const mediaReducer = (state = initialState, action) => {
           };
         case ALL_STATUS_ERROR:
           return { ...state, error: action.payload };
+
+        case CLEAR_FILTERDATA:
+            // console.log(action.payload.name + action.payload.type)
+            // console.log("---------------")
+            return {
+              ...state,      
+              // allMediaAdsData:state.allAds,
+              appliedFilters:action.payload,
+            };
     default:
       return state;
   }
