@@ -31,10 +31,11 @@ import {
   deleteSavedAdsStart,
 } from "../redux/ducks/saveAds_clientSide";
 import pauseButton from "../assets/pauseButton.svg";
-import { srtPostionForScrollValueStart } from "../redux/ducks/filtered_Data";
+// import { srtPostionForScrollValueStart } from "../redux/ducks/filtered_Data";
 import { SingleLineChart } from "./Graph";
 import MyChart from "./MyChart";
 import MyCharttt from "./linemy";
+import { srtPostionForScrollValueStart } from "../redux/ducks/mediaAds";
 
 const useStyles = makeStyles((theme) => ({
   fixSizeImage: {

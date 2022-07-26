@@ -142,6 +142,7 @@ const filterReducer = (state = initialState, action) => {
           },
         };
       case NOODADS_START:
+        console.log("--------------",action.payload)
         return {
           ...state,
           // : {

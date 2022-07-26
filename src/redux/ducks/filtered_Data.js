@@ -104,10 +104,10 @@ export const EmptySearchValueStart = () => ({
 //   type: CREATE_FILTERDATA,
 //   payload: ads,
 // });
-export const srtPostionForScrollValueStart = (filter) => ({
-  type: SET_POSTION_SCROLL,
-  payload: filter,
-});
+// export const srtPostionForScrollValueStart = (filter) => ({
+//   type: SET_POSTION_SCROLL,
+//   payload: filter,
+// });
 
 export const clearFilteredDataStart = (ads) => ({
   type: CLEAR_FILTERDATA,

@@ -65,7 +65,7 @@ const MainLayout = () => {
     dispatch(loadAccountSettingsStart());
     dispatch(getSetCatSatus());
   
-  },[dispatch]);
+  },[]);
 
   // useEffect(()=>{
   //   dispatch(loadSavedAdsClientSideStart(savedAds))

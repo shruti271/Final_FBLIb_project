@@ -213,7 +213,7 @@ function AllFilters(props) {
   const { appliedFilters } = useSelector((state) => state.appliedFilterData);
 
   const { SavedAppliedFilters } = useSelector((state) => state.saveFilterData);
-  
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const [rangeanchorel, setrangeAnchorEl] = React.useState(null);
@@ -250,7 +250,8 @@ function AllFilters(props) {
           Message: `Ad Count: ${newValue[0]}-${newValue[1]}`,
         })
       );
-    } else if (props.name === "SavedPage") {
+    }
+    if (props.name === "SavedPage") {
       dispatch(
         savedAdCountvalueStart({
           name: "AdCount",
@@ -910,7 +911,8 @@ function AllFilters(props) {
                                 Message: `Ad Count: ${props?.pageFilterInfo?.AdCount?.min}-${e.value}`,
                               })
                             );
-                          } else if (props.name === "SavedPage") {
+                          }
+                          if (props.name === "SavedPage") {
                             if (Number(e.value) > props?.ranger?.AdCount?.max) {
                               dispatch(
                                 savedrangerefixMinMaxSiler({

@@ -18,12 +18,10 @@ function AdDeatailsTabs() {
   console.log("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\");
   const adID = useParams();
 
-  const { allMediaAds,allMediaAdsData } = useSelector((state) => state.allMediaAds);
+  const { allMediaAdsData } = useSelector((state) => state.allMediaAds);
   const { subAllMedia } = useSelector((state) => state.subAllMedia);
   console.log(adID);
-  console.log("11111111111111111");
-  console.log(subAllMedia[0]?.pageInfo?.name);
-  console.log("11111111111111111");
+  console.log("11111111111111111",subAllMedia[0]?.pageInfo?.name);    
 
   const adDetailsTabs = {
     ADOVERVIEW: "Ad Overview",
@@ -51,15 +49,13 @@ function AdDeatailsTabs() {
       });
 
       setAdDetail(() => singleAds);
-      console.log(singleAds);
-      console.log();
       if (subAllMedia[0]?.pageInfo?.name === singleAds?.pageInfo?.name) {
-        console.log("dont callllllllllllllllllllllllll");
+        // console.log("dont callllllllllllllllllllllllll");
       } else {
         dispatch(loadSubAllMediaStart({ ad_name: singleAds?.pageInfo?.name }));
       }
     }
-  }, [allMediaAds, adID.adsId, adDetail, subAllMedia, dispatch]);
+  }, [adID.adsId, adDetail, subAllMedia, dispatch]);
 
   return (
     <>

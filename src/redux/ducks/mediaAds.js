@@ -5,6 +5,9 @@ export const LOAD_MEDIA_ERROR = "LOAD_MEDIA_ERROR";
 export const UPDATE_MEDIA_START = "UPDATE_MEDIA_START";
 export const UPDATE_MEDIA_SUCCESS = "UPDATE_MEDIA_SUCCESS";
 export const UPDATE_MEDIA_ERROR = "UPDATE_MEDIA_ERROR";
+
+export const SET_POSTION_SCROLL = "SET_POSTION_SCROLL";
+
 // ?---------------filters
 // export const DATEFILTER = "DATEFILTER";
 // export const CLEAR_SINGLE_FILTER = "CLEAR_SINGLE_FILTER";
@@ -54,6 +57,11 @@ export const updateMediaSuccess = (updatead) => ({
 export const updateMediaError = (error) => ({
   type: UPDATE_MEDIA_ERROR,
   payload: error,
+});
+
+export const srtPostionForScrollValueStart = (filter) => ({
+  type: SET_POSTION_SCROLL,
+  payload: filter,
 });
 
 // -----------------filters
@@ -227,6 +235,14 @@ const mediaReducer = (state = initialState, action) => {
         loading: false,
         error: action.payload,
       };
+      case SET_POSTION_SCROLL:
+        return {
+          ...state,
+  
+          filteredData: state.filteredData,
+          appliedFilters: state.appliedFilters,
+          postionYoffset: action.payload,
+        };
     default:
       return state;
   }

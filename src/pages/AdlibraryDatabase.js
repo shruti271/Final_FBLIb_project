@@ -152,14 +152,8 @@ const Addlibrarydatabase = () => {
   const {
     search_loading,
     allMediaAdsData,
-    // allMediaAds,
     loading,
-    // appliedFilters,
-    // maxRanger,
     page_index,
-    // sortFilter,
-    // searchType,
-    // searchBarData,
     postionYoffset,
   } = useSelector((state) => state.allMediaAds);
 
@@ -180,7 +174,6 @@ const Addlibrarydatabase = () => {
   const { savedIds } = useSelector((state) => state.savedclienads);
 
   const fetchData = () => {
-  
     dispatch(
       loadMediaStart({
         page_index: page_index + 1,
@@ -248,7 +241,7 @@ const Addlibrarydatabase = () => {
   //     dispatch(putFilteredDataStart({ data: allMediaAdsData }));
   //   }
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [allMediaAdsData]);
+  // }, []);
 
   return (
     <>
@@ -257,7 +250,7 @@ const Addlibrarydatabase = () => {
       <Grid
         container
         sx={{
-          paddingRight: "36px",
+          paddingRight: "36px",          
         }}
       >
         <Grid item xs={12}>
@@ -368,10 +361,10 @@ const Addlibrarydatabase = () => {
                       dispatch(
                         clearSingleFilteredDataStart({
                           name: filter,
-                          data: FilterRemoveData,                        
+                          data: FilterRemoveData,
                         })
                       );
-                      // fetchData();                      
+                      // fetchData();
                     }}
                     sx={{
                       borderRadius: 2,
@@ -396,19 +389,20 @@ const Addlibrarydatabase = () => {
             search_type={searchType}
           />
         </Grid>
+        <Grid item sx={{ width: "100%" }}>
         <InfiniteScroll
           dataLength={allMediaAdsData.length} //This is important field to render the next data
-          next={fetchData}
+          next={postionYoffset === 0 && fetchData}
           hasMore={true}
           loader={
             <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              textAlign: "center",
-            }}
-          >
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                textAlign: "center",
+              }}
+            >
               {loading ? <h4>Loading...</h4> : null}
             </div>
           }
@@ -457,6 +451,7 @@ const Addlibrarydatabase = () => {
             {/* // )} */}
           </Grid>
         </InfiniteScroll>
+        </Grid>
       </Grid>
       {/* </InfiniteScroll> */}
     </>

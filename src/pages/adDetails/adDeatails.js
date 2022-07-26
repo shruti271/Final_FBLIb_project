@@ -13,10 +13,7 @@ import MyCharttt from "../../components/linemy";
 
 function AdDeatails({ ThumbnailData }) {
   const classes = useStyles();
-  console.log(ThumbnailData?.history);
-  console.log(
-    "pppppppppppppppppppppppppppppppppp)))))))))))))))))))))))))))))))))ppppppppppppppp"
-  );
+ 
   window.scrollTo({
     top: 0,
     behavior: "smooth",

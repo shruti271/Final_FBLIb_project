@@ -1,83 +1,83 @@
-export const DATEFILTER = "DATEFILTER";
-export const CLEAR_SINGLE_FILTER = "CLEAR_SINGLE_FILTER";
-export const NOODADS_START = "NOODADS_START";
-export const STATUS_START = "STATUS_START";
-export const REFIX_MIN_MAX_RANGE_IN_SLIDER = "REFIX_MIN_MAX_RANGE_IN_SLIDER";
-export const BUTTONTYPETYPE_START = "BUTTONTYPETYPE_START";
-export const MEDIATYPE_START = "MEDIATYPE_START";
+export const SAVED_DATEFILTER = "SAVED_DATEFILTER";
+export const SAVED_CLEAR_SINGLE_FILTER = "SAVED_CLEAR_SINGLE_FILTER";
+export const SAVED_NOODADS_START = "SAVED_SAVED_NOODADS_START";
+export const SAVED_STATUS_START = "SAVED_STATUS_START";
+export const SAVED_REFIX_MIN_MAX_RANGE_IN_SLIDER = "SAVED_REFIX_MIN_MAX_RANGE_IN_SLIDER";
+export const SAVED_BUTTONTYPETYPE_START = "SAVED_BUTTONTYPETYPE_START";
+export const SAVED_MEDIATYPE_START = "SAVED_MEDIATYPE_START";
 
-export const ALL_STATUS_START = "ALL_STATUS_START";
-export const ALL_STATUS_SUCCESS = "ALL_STATUS_SUCCESS";
-export const ALL_STATUS_ERROR = "ALL_STATUS_ERROR";
+export const SAVED_ALL_STATUS_START = "SAVED_ALL_STATUS_START";
+export const SAVED_ALL_STATUS_SUCCESS = "SAVED_ALL_STATUS_SUCCESS";
+export const SAVED_ALL_STATUS_ERROR = "SAVED_ALL_STATUS_ERROR";
 
-export const CLEAR_FILTERDATA = "CLEAR_FILTERDATA";
-export const SET_SORT_FILTER_START = "SET_SORT_FILTER_START";
-export const CHANGE_SEARCH_TYPE = "CHANGE_SEARCH_TYPE";
-export const SEARCH_START = "SEARCH_START";
-
+export const SAVED_CLEAR_FILTERDATA = "SAVED_CLEAR_FILTERDATA";
+export const SAVED_SET_SORT_FILTER_START = "SAVED_SET_SORT_FILTER_START";
 export const SAVED_CHANGE_SEARCH_TYPE = "SAVED_CHANGE_SEARCH_TYPE";
-export const SEARCH_PHRASE_START = "SEARCH_PHRASE_START";
+export const SAVED_SEARCH_START = "SEARCH_START";
+
+// export const SAVED_CHANGE_SEARCH_TYPE = "SAVED_SAVED_CHANGE_SEARCH_TYPE";
+export const SAVED_SEARCH_PHRASE_START = "SAVED_SAVED_SEARCH_PHRASE_START";
 
 export const saveddatevalueStart = (filter) => ({
-    type: DATEFILTER,
+    type: SAVED_DATEFILTER,
     payload: filter,
   });
   export const savedclearSingleFilteredDataStart = (ads) => ({
-    type: CLEAR_SINGLE_FILTER,
+    type: SAVED_CLEAR_SINGLE_FILTER,
     payload: ads,
   });
   export const savedAdCountvalueStart = (filter) => ({
-    type: NOODADS_START,
+    type: SAVED_NOODADS_START,
     payload: filter,
   });
   
   export const savedstatusValueStart = (filter) => ({
-    type: STATUS_START,
+    type: SAVED_STATUS_START,
     payload: filter,
   });
   export const savedrangerefixMinMaxSiler = (data) => ({
-    type: REFIX_MIN_MAX_RANGE_IN_SLIDER,
+    type: SAVED_REFIX_MIN_MAX_RANGE_IN_SLIDER,
     payload: data,
   });
   export const savedButtonTypevalueStart = (filter) => ({
-    type: BUTTONTYPETYPE_START,
+    type: SAVED_BUTTONTYPETYPE_START,
     payload: filter,
   });
   export const savedMediaTypevalueStart = (filter) => ({
-    type: MEDIATYPE_START,
+    type: SAVED_MEDIATYPE_START,
     payload: filter,
   });
   
   export const savedgetSetCatSatus = () => ({
-    type: ALL_STATUS_START,
+    type: SAVED_ALL_STATUS_START,
   });
   export const savedsetCatSatusSuccess = (Ads) => ({
-    type: ALL_STATUS_SUCCESS,
+    type: SAVED_ALL_STATUS_SUCCESS,
     payload: Ads,
   });
   
   export const savedsetCatSatusError = (error) => ({
-    type: ALL_STATUS_ERROR,
+    type: SAVED_ALL_STATUS_ERROR,
     payload: error,
   });
   
   export const savedclearFilteredDataStart = (ads) => ({
-    type: CLEAR_FILTERDATA,
+    type: SAVED_CLEAR_FILTERDATA,
     payload: ads,
   });
   
   export const savedSetSortOrdervalueStart = (filter) => ({
-    type: SET_SORT_FILTER_START,
+    type: SAVED_SET_SORT_FILTER_START,
     payload: filter,
   });
   export const savedchnageSearchType = (data) => ({
-    type: CHANGE_SEARCH_TYPE,
+    type: SAVED_CHANGE_SEARCH_TYPE,
     payload: data,
   });
 //   -----------------------
 
   export const savedsearchStart = (Ads) => ({
-    type: SEARCH_START,
+    type: SAVED_SEARCH_START,
     payload: Ads,
   });
 //   -----------------------
@@ -86,7 +86,7 @@ export const saveddatevalueStart = (filter) => ({
     payload: data,
   });
   export const savedsearchPhraseStart = (Ads) => ({
-    type: SEARCH_PHRASE_START,
+    type: SAVED_SEARCH_PHRASE_START,
     payload: Ads,
   });
 
@@ -114,7 +114,7 @@ const initialState = {SavedAppliedFilters: {
 
 const saveFilterReducer = (state = initialState, action) => {
     switch (action.type) {  
-      case DATEFILTER:
+      case SAVED_DATEFILTER:
         return {
           ...state,
           // : {
@@ -133,7 +133,7 @@ const saveFilterReducer = (state = initialState, action) => {
           },
           // },
         };
-      case CLEAR_SINGLE_FILTER:
+      case SAVED_CLEAR_SINGLE_FILTER:
         return {
           ...state,
           SavedAppliedFilters: {
@@ -141,7 +141,7 @@ const saveFilterReducer = (state = initialState, action) => {
             [`${action.payload.name}`]: action.payload.data,
           },
         };
-      case NOODADS_START:
+      case SAVED_NOODADS_START:
         return {
           ...state,
           SavedAppliedFilters: {
@@ -153,7 +153,7 @@ const saveFilterReducer = (state = initialState, action) => {
             },
           },          
         };
-      case STATUS_START:
+      case SAVED_STATUS_START:
         return {
           ...state,
           // : {
@@ -169,7 +169,7 @@ const saveFilterReducer = (state = initialState, action) => {
           // filteredData: state.filteredData,
           // },
         };
-      case REFIX_MIN_MAX_RANGE_IN_SLIDER:
+      case SAVED_REFIX_MIN_MAX_RANGE_IN_SLIDER:
         return {
           ...state,
           maxRanger: {
@@ -180,7 +180,7 @@ const saveFilterReducer = (state = initialState, action) => {
             },
           },
         };
-      case BUTTONTYPETYPE_START:
+      case SAVED_BUTTONTYPETYPE_START:
         return {
           ...state,
           // : {
@@ -194,7 +194,7 @@ const saveFilterReducer = (state = initialState, action) => {
           },
           // },
         };
-      case MEDIATYPE_START:
+      case SAVED_MEDIATYPE_START:
         return {
           ...state,
           SavedAppliedFilters: {
@@ -206,17 +206,17 @@ const saveFilterReducer = (state = initialState, action) => {
           },
           // },
         };
-      case ALL_STATUS_START:
+      case SAVED_ALL_STATUS_START:
         return { ...state };
-      case ALL_STATUS_SUCCESS:
+      case SAVED_ALL_STATUS_SUCCESS:
         return {
           ...state,
           ctaStatus: action.payload,
         };
-      case ALL_STATUS_ERROR:
+      case SAVED_ALL_STATUS_ERROR:
         return { ...state, error: action.payload };
   
-      case CLEAR_FILTERDATA:
+      case SAVED_CLEAR_FILTERDATA:
         // console.log(action.payload.name + action.payload.type)
         // console.log("---------------")
         return {
@@ -224,7 +224,7 @@ const saveFilterReducer = (state = initialState, action) => {
           // allMediaAdsData:state.allAds,
           SavedAppliedFilters: action.payload,
         };
-      case SET_SORT_FILTER_START:
+      case SAVED_SET_SORT_FILTER_START:
         return {
           ...state,
           // : {
@@ -239,22 +239,18 @@ const saveFilterReducer = (state = initialState, action) => {
   
           // filteredData: [...state.filteredData],
         };
-      case CHANGE_SEARCH_TYPE:
-        return {
-          ...state,
-          searchType: action.payload,
-        };
-      case SEARCH_START:
-        return {
-          ...state,          
-          searchBarData: action.payload.data,
-        };
       case SAVED_CHANGE_SEARCH_TYPE:
         return {
           ...state,
           searchType: action.payload,
         };
-      case SEARCH_PHRASE_START:
+      case SAVED_SEARCH_START:
+        return {
+          ...state,          
+          searchBarData: action.payload.data,
+        };
+      
+      case SAVED_SEARCH_PHRASE_START:
         return {
           ...state,
           // search_loading: true,
