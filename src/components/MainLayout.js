@@ -10,7 +10,7 @@ import ContactSupport from "../pages/ContactSupport";
 import AccountSettings from "../pages/AccountSettings";
 import AdDeatailsTabs from "../pages/adDetails/AdDetailsTabs";
 import { useDispatch } from "react-redux";
-import { getSetCatSatus, loadMediaStart } from "../redux/ducks/mediaAds";
+import {  loadMediaStart } from "../redux/ducks/mediaAds";
 import { loadSubscriptionStart } from "../redux/ducks/subscription";
 import { CustomAppBar } from "../components/CustomAppBar";
 import { CustomSidebar } from "../components/CustomSidebar";
@@ -22,6 +22,9 @@ import { useSelector } from "react-redux";
 import ActiveSubScription from "../ActiveSubScription";
 import InActiveSubScription from "../InActiveSubScription";
 import FadeLoader from "react-spinners/FadeLoader";
+import { CircularProgress } from "@mui/material";
+import { getSetCatSatus } from "../redux/ducks/appliedFilterData";
+// import { getSetCatSatus } from "../redux/ducks/filterData";
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
@@ -41,24 +44,32 @@ const MainLayout = () => {
     localStorage.setItem(drawerOpenKey, isOpen);
   }, [isOpen]);
 
-  const pageScrolldataload = () => {
-    dispatch(
-      loadMediaStart({
-        page_index: 0,
-      })
-    );
-  };
+  // window.onscroll = function(){
+  //   if(
+  //     window.innerHeight +document.documentElement.scrollTop===
+  //     document.documentElement.offsetHeight
+  //   )
+  //   {
+  //     scrollToEnd()
+  //   }
+  // }
+  
+  const pageScrolldataload = () =>{
+
+    
+  }
   useEffect(() => {
     dispatch(loadSubscriptionStart());
-    pageScrolldataload();
-    dispatch(
-      loadSavedAdsStart({
-        page_index: 0,
-      })
-    );
+    dispatch(loadMediaStart({
+      page_index:0,
+    }));
+    dispatch(loadSavedAdsStart({
+      page_index:0,
+    }));    
     dispatch(loadAccountSettingsStart());
     dispatch(getSetCatSatus());
-  }, [dispatch]);
+  
+  },[]);
 
   return (
     <>

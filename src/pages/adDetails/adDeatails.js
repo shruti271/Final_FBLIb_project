@@ -8,6 +8,7 @@ import MyChart from "../../components/MyChart";
 
 function AdDeatails({ ThumbnailData }) {
   const classes = useStyles();
+ 
   window.scrollTo({
     top: 0,
     behavior: "smooth",

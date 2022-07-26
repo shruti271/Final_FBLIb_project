@@ -7,9 +7,22 @@ import Login from "./pages/auth/Login";
 import ForgetPassword from "./pages/auth/ForgetPassword";
 import Signup from "./pages/auth/Signup";
 import PublicRoute from "./PublicRoute";
-import './App.scss'
+import "./App.scss";
+// import { loadIsAliveStart } from "./redux/ducks/session";
+// import {
+//   Box,
+//   CircularProgress,
+// } from "@mui/material";
 
 const App = () => {
+  // const dispatch = useDispatch();
+
+  // const { loading } = useSelector((state) => state.isAliveData);
+
+  // useEffect(() => {
+  //   dispatch(loadIsAliveStart());
+  // }, []);
+
   return (
     <>
       <Routes>

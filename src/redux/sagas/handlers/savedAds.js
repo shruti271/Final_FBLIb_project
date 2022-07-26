@@ -5,14 +5,6 @@ import {
   requestDeleteSavedAds,
   requestGetSavedAds,
 } from "../requests/savedAds";
-// import {
-//   createSavedAdsError,
-//   createSavedAdsSuccess,
-//   deleteSavedAdsError,
-//   deleteSavedAdsSuccess,
-//   loadSavedAdsError,
-//   loadSavedAdsSuccess,
-// } from "../../ducks/saveAds";
 
 export function* handleGetSavedAds({payload}) {
   try {
@@ -20,8 +12,7 @@ export function* handleGetSavedAds({payload}) {
     console.log("response", response);
 
     if (response.status === 200) {
-      console.log(response?.data?.data)
-      console.log("pppppppppppppppppppppppppppppp")
+      // console.log(response?.data?.data)      
       yield put(loadSavedAdsSuccess(response?.data));
     }
   } catch (error) {

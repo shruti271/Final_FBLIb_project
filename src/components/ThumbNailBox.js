@@ -16,8 +16,20 @@ import Shareicon from "../assets/Shareicon.svg";
 import Saveicon from "../assets/Saveicon.svg";
 import StarFill from "../assets/StarFill.svg";
 import { createSavedAdsStart,deleteSavedAdsStart} from "../redux/ducks/saveAds_clientSide";
-import { srtPostionForScrollValueStart } from "../redux/ducks/filtered_Data";
+// import { srtPostionForScrollValueStart } from "../redux/ducks/filtered_Data";
+// import {
+//   createSavedAdsClientSideStart,
+//   createSavedAdsStart,
+//   deleteSavedAdsClientSideStart,
+//   deleteSavedAdsClientSideSuccess,
+//   deleteSavedAdsStart,
+// } from "../redux/ducks/saveAds_clientSide";
+// import pauseButton from "../assets/pauseButton.svg";
+// import { srtPostionForScrollValueStart } from "../redux/ducks/filtered_Data";
+import { SingleLineChart } from "./Graph";
+import MyChart from "./MyChart";
 import MyCharttt from "./linemy";
+import { srtPostionForScrollValueStart } from "../redux/ducks/mediaAds";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -134,10 +146,10 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-console.log("000000000000000000000000000000")
+// console.log("000000000000000000000000000000")
 
-console.log(adInfo)
-console.log("000000000000000000000000000000")
+// console.log(adInfo)
+// console.log("000000000000000000000000000000")
   return (
     <Grid item lg={3} md={4} xs={5} key={index}>
       <Stack

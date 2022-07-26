@@ -12,7 +12,7 @@ function AdDeatailsTabs() {
   const dispatch = useDispatch();
   const adID = useParams();
 
-  const { allMediaAds,allMediaAdsData } = useSelector((state) => state.allMediaAds);
+  const { allMediaAdsData } = useSelector((state) => state.allMediaAds);
   const { subAllMedia } = useSelector((state) => state.subAllMedia);
 
   const adDetailsTabs = {
@@ -40,15 +40,13 @@ function AdDeatailsTabs() {
       });
 
       setAdDetail(() => singleAds);
-      console.log(singleAds);
-      console.log();
       if (subAllMedia[0]?.pageInfo?.name === singleAds?.pageInfo?.name) {
-        console.log("dont callllllllllllllllllllllllll");
+        // console.log("dont callllllllllllllllllllllllll");
       } else {
         dispatch(loadSubAllMediaStart({ ad_name: singleAds?.pageInfo?.name }));
       }
     }
-  }, [allMediaAds, adID.adsId, adDetail, subAllMedia, dispatch, allMediaAdsData]);
+  }, [adID.adsId, adDetail, subAllMedia, dispatch]);
 
   return (
     <>
