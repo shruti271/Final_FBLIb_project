@@ -14,12 +14,32 @@ const App = () => {
     <>
       <Routes>
         {/* Public Routes */}
-        <Route path="/auth/login" exact element={<PublicRoute><Login /></PublicRoute>} />
-        <Route path="/auth/register" exact element={<PublicRoute><Signup /></PublicRoute>} />
+        <Route
+          path="/auth/login"
+          exact
+          element={
+            <PublicRoute>
+              <Login />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/auth/register"
+          exact
+          element={
+            <PublicRoute>
+              <Signup />
+            </PublicRoute>
+          }
+        />
         <Route
           path="/auth/forgot-password"
           exact
-          element={<PublicRoute><ForgetPassword /></PublicRoute>}
+          element={
+            <PublicRoute>
+              <ForgetPassword />
+            </PublicRoute>
+          }
         />
 
         {/* Private Routes */}
@@ -27,16 +47,15 @@ const App = () => {
           exact
           path="/*"
           element={
-            // <PrivateRoute>
+            <PrivateRoute>
               <MainLayout />
-            // </PrivateRoute>
+            </PrivateRoute>
           }
         />
 
         {/* unknown Routes */}
         <Route path="*" element={<Pagenotfound />} />
       </Routes>
-      
     </>
   );
 };

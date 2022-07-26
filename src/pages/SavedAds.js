@@ -1,8 +1,4 @@
-
-
-
-
-import React, { useEffect } from "react";
+import React from "react";
 import { Chip, CircularProgress, Grid, Stack, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 import ThumbNailBox from "../components/ThumbNailBox";
@@ -28,6 +24,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import SortFilter from "../components/SortFilter";
 import FilterAltOffIcon from "@mui/icons-material/FilterAltOff";
 import InfiniteScroll from "react-infinite-scroll-component";
+import ScrollToTop from "../utils/scrollToTop";
 
 const SavedAds = () => {
   const dispatch = useDispatch();
@@ -103,6 +100,7 @@ const SavedAds = () => {
   };
   return (
     <>
+     <ScrollToTop />
       <BackTotopbutton />
       {/* <Stack direction={"column"}> */}
         <Typography>
