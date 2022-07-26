@@ -169,10 +169,10 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-console.log("000000000000000000000000000000")
+// console.log("000000000000000000000000000000")
 
-console.log(adInfo)
-console.log("000000000000000000000000000000")
+// console.log(adInfo)
+// console.log("000000000000000000000000000000")
   return (
     <Grid item lg={3} md={4} xs={5} key={index}>
       <Stack

@@ -10,7 +10,7 @@ import ContactSupport from "../pages/ContactSupport";
 import AccountSettings from "../pages/AccountSettings";
 import AdDeatailsTabs from "../pages/adDetails/AdDetailsTabs";
 import { useDispatch } from "react-redux";
-import { getSetCatSatus, loadMediaStart } from "../redux/ducks/mediaAds";
+import {  loadMediaStart } from "../redux/ducks/mediaAds";
 import { loadSubscriptionStart } from "../redux/ducks/subscription";
 // import { loadSavedAdsStart } from "../redux/ducks/saveAds";
 import { CustomAppBar } from "../components/CustomAppBar";
@@ -23,6 +23,8 @@ import { useSelector } from "react-redux";
 import ActiveSubScription from "../ActiveSubScription";
 import InActiveSubScription from "../InActiveSubScription";
 import { CircularProgress } from "@mui/material";
+import { getSetCatSatus } from "../redux/ducks/appliedFilterData";
+// import { getSetCatSatus } from "../redux/ducks/filterData";
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
@@ -50,18 +52,19 @@ const MainLayout = () => {
   
   const pageScrolldataload = () =>{
 
-    dispatch(loadMediaStart({
-      page_index:0,
-    }));
+    
   }
   useEffect(() => {
     dispatch(loadSubscriptionStart());
-    pageScrolldataload()
+    dispatch(loadMediaStart({
+      page_index:0,
+    }));
     dispatch(loadSavedAdsStart({
       page_index:0,
     }));    
     dispatch(loadAccountSettingsStart());
     dispatch(getSetCatSatus());
+  
   },[dispatch]);
 
   // useEffect(()=>{

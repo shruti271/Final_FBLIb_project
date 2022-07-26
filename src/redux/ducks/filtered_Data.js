@@ -51,10 +51,10 @@ export const applyallfilters = () => ({
 export const applysortingfilters = () => ({
   type: SORT_TYPE_START,
 });
-export const datevalueStart = (filter) => ({
-  type: DATEFILTER,
-  payload: filter,
-});
+// export const datevalueStart = (filter) => ({
+//   type: DATEFILTER,
+//   payload: filter,
+// });
 
 // export const AdCountvalueStart = (filter) => ({
 //   type: NOODADS_START,
@@ -425,21 +425,7 @@ const FilterDataReducer = (state = initialState, action) => {
         ...state,
         search_loading: true,
         searchBarData: action.payload.data,
-        // appliedFilters: state.appliedFilters,
-        // searchBarData: action.payload,
-        // filteredData: [
-        //   ...state.allData.filter((ads) => {
-        //     console.log(action.payload)
-        //     const dummyData = JSON.stringify(Object.values(ads)).toLowerCase();
-        //     console.log(dummyData)
-        //     const darr = action.payload.split(" ").join(",").toLowerCase();
-        //     // console.log(darr);
-        //     console.log("|^ darr;;;;;" + dummyData.includes(...darr));
-        //     // console.log(ads);
-        //     console.log("000000000000000000000000000000000000")
-        //     return dummyData.includes(...darr);
-        //   }),
-        // ],
+     
       };
    
     case SEARCH_SUCCESS:

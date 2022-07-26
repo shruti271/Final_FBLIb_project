@@ -22,15 +22,15 @@ import {
   // AdCountvalueStart,
   applyallfilters,
   // ButtonTypevalueStart,
-  chnageSearchType,
+  // chnageSearchType,
   // clearFilteredDataStart,
-  datevalueStart,
+  // datevalueStart,
   EmptySearchValueStart,
   FilterAfterSearchStart,
   // MediaTypevalueStart,
   // rangerefixMinMaxSiler,
-  searchPhraseStart,
-  searchStart,
+  // searchPhraseStart,
+  // searchStart,
   SortvalueStart,
   // statusValueStart,
 } from "../redux/ducks/filtered_Data";
@@ -54,18 +54,58 @@ import {
   SavedAdssearchValueStart,
   SavedAdsstatusValueStart,
   savedSearchPhraseStart,
-  savedShnageSearchType,
+  // savedShnageSearchType,
 } from "../redux/ducks/saveAds_clientSide";
 import { EditText } from "react-edit-text";
 import {
+  // AdCountvalueStart,
+  // ButtonTypevalueStart,
+  // chnageSearchType,
+  // clearFilteredDataStart,
+  // datevalueStart,
+  // AdCountvalueStart,
+  // ButtonTypevalueStart,
+  // chnageSearchType,
+  // clearFilteredDataStart,
+  loadMediaStart,
+  // MediaTypevalueStart,
+  // rangerefixMinMaxSiler,
+  // savedShnageSearchType,
+  // searchPhraseStart,
+  // searchStart,
+  // statusValueStart,
+  // MediaTypevalueStart,
+  // // rangerefixMinMaxSiler,
+  // savedShnageSearchType,
+  // searchPhraseStart,
+  // searchStart,
+  // statusValueStart,
+} from "../redux/ducks/mediaAds";
+import {
   AdCountvalueStart,
   ButtonTypevalueStart,
+  chnageSearchType,
   clearFilteredDataStart,
-  loadMediaStart,
+  datevalueStart,
   MediaTypevalueStart,
   rangerefixMinMaxSiler,
+  savedShnageSearchType,
+  searchPhraseStart,
+  searchStart,
   statusValueStart,
-} from "../redux/ducks/mediaAds";
+} from "../redux/ducks/appliedFilterData";
+import {
+  savedAdCountvalueStart,
+  savedButtonTypevalueStart,
+  savedchnageSearchType,
+  savedclearFilteredDataStart,
+  saveddatevalueStart,
+  savedMediaTypevalueStart,
+  savedrangerefixMinMaxSiler,
+  savedsearchStart,
+  savedstatusValueStart,
+} from "../redux/ducks/saveAppliedFilters";
+// import { AdCountvalueStart, clearFilteredDataStart, MediaTypevalueStart, rangerefixMinMaxSiler, searchStart, statusValueStart } from "../redux/ducks/filterData";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -170,22 +210,10 @@ function AllFilters(props) {
   const dispatch = useDispatch();
 
   const { ctaStatus } = useSelector((state) => state.allMediaAds);
+  const { appliedFilters } = useSelector((state) => state.appliedFilterData);
 
-  const {
-    filteredData,
-    appliedFilters,
-    // ctaStatus,
-    allData,
-    // maxRanger,
-    // AllAdsPage,
-  } = useSelector((state) => state.filteredData);
-
-  // const [rangeEditTextField, setRangeEditTextField] = React.useState({
-  //   min: 0,
-  //   max: 1000,
-  // });
-
-  const [onFocusEditTextField, setOnFocusEditTextField] = React.useState(0);
+  const { SavedAppliedFilters } = useSelector((state) => state.saveFilterData);
+  
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const [rangeanchorel, setrangeAnchorEl] = React.useState(null);
@@ -194,8 +222,6 @@ function AllFilters(props) {
   const openMediaTypeAnchorel = Boolean(mediaTypeAnchorel);
   const [adStatusAnchorel, setAdStatusAnchorel] = React.useState(null);
   const openAdStatusAnchorel = Boolean(adStatusAnchorel);
-  // const [sortByAnchorel, setSortByAnchorel] = React.useState(null);
-  // const openSortByAnchorel = Boolean(sortByAnchorel);
   const [facebookLikeanchorel, setFacebookLikeAnchorEl] = React.useState(null);
   const openFaceboolLike = Boolean(facebookLikeanchorel);
   const [instragramFolloweranchorel, setInstragramFollowerAnchorEl] =
@@ -213,38 +239,9 @@ function AllFilters(props) {
       key: "selection",
     },
   ]);
-  useEffect(() => {
-    console.log(
-      "-----------------------------------------------------------------------------------"
-    );
-    console.log(props.ranger);
-    console.log(
-      "-----------------------------------------------------------------------------------"
-    );
-  });
-  useEffect(() => {
-    console.log("ccccccccccccccccccccccccccccc");
-    console.log(props.name);
-    console.log(props.search);
-    if (props.search) {
-      // console.log(props.search);
-      console.log("-----------");
-    } else {
-      console.log("else");
-    }
-    console.log("ccccccccccccccccccccccccccccc");
-  });
+
   const counterIncremten = (event, newValue) => {
     if (props.name === "AllAdsPage") {
-      // setRangeEditTextField((pre) => {
-      //   return {
-      //     max: Number(newValue[1]),
-      //     min: Number(newValue[0]),
-      //   };
-      // });
-      // console.log(rangeEditTextField);
-      // console.log("insideeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
-
       dispatch(
         AdCountvalueStart({
           name: "AdCount",
@@ -253,39 +250,16 @@ function AllFilters(props) {
           Message: `Ad Count: ${newValue[0]}-${newValue[1]}`,
         })
       );
-      // document.getElementById("searchbar").value
-      //   ? dispatch(FilterAfterSearchStart()) //dispatch(searchStart(props.search))
-      //   : dispatch(applyallfilters());
     } else if (props.name === "SavedPage") {
       dispatch(
-        SavedAdsAdCountvalueStart({
+        savedAdCountvalueStart({
           name: "AdCount",
           min: newValue[0],
           max: newValue[1],
           Message: `Ad Count: ${newValue[0]}-${newValue[1]}`,
         })
       );
-      // document.getElementById("searchbar").value
-      //   ? dispatch(SavedAdsFilterAfterSearchStart())
-      //   : dispatch(applySavedAdsallfilters());
     }
-
-    // dispatch(
-    //   AdCountvalueStart({
-    //     name: "AdCount",
-    //     min: newValue[0],
-    //     max: newValue[1],
-    //     Message: `Ad Count: ${newValue[0]}-${newValue[1]}`,
-    //   })
-    // );
-    // searchBarData!==[]?dispatch(searchStart(searchBarData)):
-    // dispatch(applyallfilters());
-
-    // }
-    // dispatch(applyallfilters());
-    // searchBarData !== []
-    //   ? dispatch(searchStart(searchBarData))
-    //   : dispatch(applyallfilters());
   };
 
   const handleChangeStatus = (event, newValue) => {
@@ -298,24 +272,14 @@ function AllFilters(props) {
           Message: `Ad Status:${newValue}`,
         })
       );
-      // callFilters();
-      // document.getElementById("searchbar").value
-      //   ? dispatch(FilterAfterSearchStart()) //dispatch(searchStart(props.search))
-      //   : dispatch(applyallfilters());
-
-      // dispatch(SortvalueStart());
     } else if (props.name === "SavedPage") {
       dispatch(
-        SavedAdsstatusValueStart({
+        savedstatusValueStart({
           name: "AdStatus",
-          // componentName: props.name,
           status: newValue,
           Message: `Ad Status:${newValue}`,
         })
       );
-      // document.getElementById("searchbar").value
-      //   ? dispatch(SavedAdsFilterAfterSearchStart())
-      //   : dispatch(applySavedAdsallfilters());
     }
   };
   const FacebookLikesIncremten = (event, newValue) => {
@@ -328,21 +292,15 @@ function AllFilters(props) {
           Message: `Facebook Page likes: ${newValue[0]}-${newValue[1]}`,
         })
       );
-      // document.getElementById("searchbar").value
-      //   ? dispatch(FilterAfterSearchStart()) //dispatch(searchStart(props.search))
-      //   : dispatch(applyallfilters());
     } else if (props.name === "SavedPage") {
       dispatch(
-        SavedAdsAdCountvalueStart({
+        savedAdCountvalueStart({
           name: "FacebookLikes",
           min: newValue[0],
           max: newValue[1],
           Message: `Facebook Page likes: ${newValue[0]}-${newValue[1]}`,
         })
       );
-      // document.getElementById("searchbar").value
-      //   ? dispatch(SavedAdsFilterAfterSearchStart())
-      //   : dispatch(applySavedAdsallfilters());
     }
   };
   const InstragramFollowerIncremten = (event, newValue) => {
@@ -357,62 +315,36 @@ function AllFilters(props) {
           Message: `Instragram Page likes: ${newValue[0]}-${newValue[1]}`,
         })
       );
-      // document.getElementById("searchbar").value
-      //   ? dispatch(FilterAfterSearchStart()) //dispatch(searchStart(props.search))
-      //   : dispatch(applyallfilters());
     } else if (props.name === "SavedPage") {
       dispatch(
-        SavedAdsAdCountvalueStart({
+        savedAdCountvalueStart({
           name: "InstragramLike",
           min: newValue[0],
           max: newValue[1],
           Message: `Instragram Page likes: ${newValue[0]}-${newValue[1]}`,
         })
       );
-      document.getElementById("searchbar").value
-        ? dispatch(SavedAdsFilterAfterSearchStart())
-        : dispatch(applySavedAdsallfilters());
     }
   };
   const handlechange = (event, newValue) => {
-    // console.log(newValue);
-    // console.log("..................................................");
     if (props.name === "AllAdsPage") {
       dispatch(
         MediaTypevalueStart({
           name: "MediaType",
-          // componentName: props.name,
           selectedData: newValue,
           Message: `MediaType : ${newValue}`,
         })
       );
-
-      // document.getElementById("searchbar").value
-      //   ? dispatch(FilterAfterSearchStart()) // dispatch(searchStart(props.search))
-      //   : dispatch(applyallfilters());
-      // dispatch(SortvalueStart());
     } else if (props.name === "SavedPage") {
       dispatch(
-        SavedAdsMediaTypevalueStart({
+        savedMediaTypevalueStart({
           name: "MediaType",
           // componentName: props.name,
           selectedData: newValue,
           Message: `MediaType : ${newValue}`,
         })
       );
-
-      // document.getElementById("searchbar").value
-      //   ? dispatch(SavedAdsFilterAfterSearchStart())
-      //   : dispatch(applySavedAdsallfilters());
     }
-
-    // setAppliedFilters((pre) => ({
-    //   ...pre,
-    //   MediaType: {
-    // selectedData: newValue,
-    // Message: `MediaType:${newValue}`,
-    //   },
-    // }));
   };
   const handleButtonType = (event, newValue) => {
     if (props.name === "AllAdsPage") {
@@ -424,23 +356,15 @@ function AllFilters(props) {
           Message: `Button : ${newValue}`,
         })
       );
-      // document.getElementById("searchbar").value
-      //   ? dispatch(FilterAfterSearchStart()) //dispatch(searchStart(props.search))
-      //   : dispatch(applyallfilters());
-
-      // dispatch(SortvalueStart());
     } else if (props.name === "SavedPage") {
       dispatch(
-        SavedAdsButtonTypevalueStart({
+        savedButtonTypevalueStart({
           name: "PurchaseType",
           // componentName: props.name,
           selctedButton: newValue,
           Message: `Button : ${newValue}`,
         })
       );
-      // document.getElementById("searchbar").value
-      //   ? dispatch(SavedAdsFilterAfterSearchStart())
-      //   : dispatch(applySavedAdsallfilters());
     }
   };
 
@@ -448,177 +372,142 @@ function AllFilters(props) {
     if (props.name === "AllAdsPage") {
       dispatch(chnageSearchType(newValue));
     } else if (props.name === "SavedPage") {
-      dispatch(savedAdschnageSearchType(newValue));
+      dispatch(savedchnageSearchType(newValue));
     }
   };
-  const callFilters = () => {
-    if(props.name === "AllAdsPage")
-    {dispatch(
-      loadMediaStart({
-        page_index: 0,
-        startdate: props.pageFilterInfo?.StartRunningDate?.startdate,
-        enddate: props.pageFilterInfo?.StartRunningDate?.enddate,
-        adcount:
-          props.pageFilterInfo?.AdCount?.min > props.ranger.AdCount.min ||
-          props.pageFilterInfo?.AdCount?.max < props.ranger.AdCount.max
-            ? [
-                props.pageFilterInfo?.AdCount?.min,
-                props.pageFilterInfo?.AdCount?.max,
-              ]
-            : [],
-        adstatus: props?.pageFilterInfo?.AdStatus?.status,
-        fb_likes:
-          props.pageFilterInfo?.FacebookLikes?.min >
-            props.ranger.FacebookLikes.min ||
-          props.pageFilterInfo?.FacebookLikes?.max <
-            props.ranger.FacebookLikes.max
-            ? [
-                props.pageFilterInfo?.FacebookLikes?.min,
-                props.pageFilterInfo?.FacebookLikes?.max,
-              ]
-            : [],
-        insta_followers:
-          props.pageFilterInfo?.InstragramLike?.min >
-            props.ranger.InstragramLike.min ||
-          props.pageFilterInfo?.InstragramLike?.max <
-            props.ranger.InstragramLike.max
-            ? [
-                props.pageFilterInfo?.InstragramLike?.min,
-                props.pageFilterInfo?.InstragramLike?.max,
-              ]
-            : [],
-        media_type: props?.pageFilterInfo?.MediaType?.selectedData,
-        cta_status: props?.pageFilterInfo?.PurchaseType?.selctedButton,
 
-        // increaseCount: false,
-      })
-    );} else if (props.name === "SavedPage"){
+  useEffect(() => {
+    callFilters();
+  }, [appliedFilters, SavedAppliedFilters]);
+
+  const callFilters = () => {
+    // console.log("111",searchbar , media);
+    if (props.name === "AllAdsPage") {
+      dispatch(
+        loadMediaStart({
+          page_index: 0,
+          startdate: props.pageFilterInfo?.StartRunningDate?.startdate,
+          enddate: props.pageFilterInfo?.StartRunningDate?.enddate,
+          adcount:
+            props.pageFilterInfo?.AdCount?.min > props.ranger.AdCount.min ||
+            props.pageFilterInfo?.AdCount?.max < props.ranger.AdCount.max
+              ? [
+                  props.pageFilterInfo?.AdCount?.min,
+                  props.pageFilterInfo?.AdCount?.max,
+                ]
+              : [],
+          adstatus: props?.pageFilterInfo?.AdStatus?.status,
+          fb_likes:
+            props.pageFilterInfo?.FacebookLikes?.min >
+              props.ranger.FacebookLikes.min ||
+            props.pageFilterInfo?.FacebookLikes?.max <
+              props.ranger.FacebookLikes.max
+              ? [
+                  props.pageFilterInfo?.FacebookLikes?.min,
+                  props.pageFilterInfo?.FacebookLikes?.max,
+                ]
+              : [],
+          insta_followers:
+            props.pageFilterInfo?.InstragramLike?.min >
+              props.ranger.InstragramLike.min ||
+            props.pageFilterInfo?.InstragramLike?.max <
+              props.ranger.InstragramLike.max
+              ? [
+                  props.pageFilterInfo?.InstragramLike?.min,
+                  props.pageFilterInfo?.InstragramLike?.max,
+                ]
+              : [],
+          media_type: props?.pageFilterInfo?.MediaType?.selectedData,
+          cta_status: props?.pageFilterInfo?.PurchaseType?.selctedButton,
+          sort_by:
+            props?.sortDetail?.type === "true" ||
+            props?.sortDetail?.type === "false"
+              ? ""
+              : props?.sortDetail?.type,
+          order_by:
+            props?.sortDetail?.type === "true" ||
+            props?.sortDetail?.type === "false"
+              ? ""
+              : props?.sortDetail?.order,
+          increaseCount:
+            props?.sortDetail?.type === "true" ||
+            props?.sortDetail?.type === "false"
+              ? props?.sortDetail?.type
+              : "",
+          keywords:
+            props?.search_type === "All these words"
+              ? props?.search.split(" ") //document.getElementById("searchbar").value.split(" ")
+              : null,
+
+          phrase:
+            props.search_type === "Exact Phrase"
+              ? props?.search.split(",") //document.getElementById("searchbar").value.split(",")
+              : null,
+        })
+      );
+    } else if (props.name === "SavedPage") {
       dispatch(
         loadSavedAdsStart({
           page_index: 0,
-        startdate: props.pageFilterInfo?.StartRunningDate?.startdate,
-        enddate: props.pageFilterInfo?.StartRunningDate?.enddate,
-        adcount:
-          props.pageFilterInfo?.AdCount?.min > props.ranger.AdCount.min ||
-          props.pageFilterInfo?.AdCount?.max < props.ranger.AdCount.max
-            ? [
-                props.pageFilterInfo?.AdCount?.min,
-                props.pageFilterInfo?.AdCount?.max,
-              ]
-            : [],
-        adstatus: props?.pageFilterInfo?.AdStatus?.status,
-        fb_likes:
-          props.pageFilterInfo?.FacebookLikes?.min >
-            props.ranger.FacebookLikes.min ||
-          props.pageFilterInfo?.FacebookLikes?.max <
-            props.ranger.FacebookLikes.max
-            ? [
-                props.pageFilterInfo?.FacebookLikes?.min,
-                props.pageFilterInfo?.FacebookLikes?.max,
-              ]
-            : [],
-        insta_followers:
-          props.pageFilterInfo?.InstragramLike?.min >
-            props.ranger.InstragramLike.min ||
-          props.pageFilterInfo?.InstragramLike?.max <
-            props.ranger.InstragramLike.max
-            ? [
-                props.pageFilterInfo?.InstragramLike?.min,
-                props.pageFilterInfo?.InstragramLike?.max,
-              ]
-            : [],
-        media_type: props?.pageFilterInfo?.MediaType?.selectedData,
-        cta_status: props?.pageFilterInfo?.PurchaseType?.selctedButton,
+          startdate: props.pageFilterInfo?.StartRunningDate?.startdate,
+          enddate: props.pageFilterInfo?.StartRunningDate?.enddate,
+          adcount:
+            props.pageFilterInfo?.AdCount?.min > props.ranger.AdCount.min ||
+            props.pageFilterInfo?.AdCount?.max < props.ranger.AdCount.max
+              ? [
+                  props.pageFilterInfo?.AdCount?.min,
+                  props.pageFilterInfo?.AdCount?.max,
+                ]
+              : [],
+          adstatus: props?.pageFilterInfo?.AdStatus?.status,
+          fb_likes:
+            props.pageFilterInfo?.FacebookLikes?.min >
+              props.ranger.FacebookLikes.min ||
+            props.pageFilterInfo?.FacebookLikes?.max <
+              props.ranger.FacebookLikes.max
+              ? [
+                  props.pageFilterInfo?.FacebookLikes?.min,
+                  props.pageFilterInfo?.FacebookLikes?.max,
+                ]
+              : [],
+          insta_followers:
+            props.pageFilterInfo?.InstragramLike?.min >
+              props.ranger.InstragramLike.min ||
+            props.pageFilterInfo?.InstragramLike?.max <
+              props.ranger.InstragramLike.max
+              ? [
+                  props.pageFilterInfo?.InstragramLike?.min,
+                  props.pageFilterInfo?.InstragramLike?.max,
+                ]
+              : [],
+          media_type: props?.pageFilterInfo?.MediaType?.selectedData,
+          cta_status: props?.pageFilterInfo?.PurchaseType?.selctedButton,
+          sort_by:
+            props?.sortDetail?.type === "true" ||
+            props?.sortDetail?.type === "false"
+              ? ""
+              : props?.sortDetail?.type,
+          order_by:
+            props?.sortDetail?.type === "true" ||
+            props?.sortDetail?.type === "false"
+              ? ""
+              : props?.sortDetail?.order,
+          increaseCount:
+            props?.sortDetail?.type === "true" ||
+            props?.sortDetail?.type === "false"
+              ? props?.sortDetail?.type
+              : "",
+          keywords:
+            props?.search_type === "All these words"
+              ? props?.search.split(" ") //document.getElementById("searchbar").value.split(" ")
+              : null,
 
-          // increaseCount: false,
+          phrase:
+            props.search_type === "Exact Phrase"
+              ? props?.search.split(",") //document.getElementById("searchbar").value.split(",")
+              : null,
         })
       );
-    }
-  };
-  const clearFilters = async () => {
-    const emptyFilter = {};
-    console.log("00000000000000000000000000000");
-    console.log(appliedFilters);
-    console.log("1111111111111111111111111111111111111111");
-    if (props.name === "AllAdsPage") {
-      console.log("first");
-      await dispatch(
-        clearFilteredDataStart({
-          StartRunningDate: {
-            startdate: "",
-            enddate: "",
-            Message: "",
-          },
-          AdStatus: { status: "", Message: "" },
-          AdCount: { min: 1, max: 1000, Message: "" },
-          FacebookLikes: { min: 1, max: 100000, Message: "" },
-          InstragramLike: { min: 1, max: 10000, Message: "" },
-          MediaType: { selectedData: "", Message: "" },
-          PurchaseType: { selctedButton: "", Message: "" },
-        })
-      );
-      console.log("first1");
-
-      await callFilters();
-      console.log("first2");
-
-      // clearFilteredDataStart()
-      // document.getElementById("searchbar").value
-      //   ? dispatch(FilterAfterSearchStart()) //dispatch(searchStart(props.search))
-      //   : dispatch(applyallfilters());
-    } else if (props.name === "SavedPage") {
-      dispatch(
-        SavedAdsclearFilteredDataStart({
-          StartRunningDate: {
-            startdate: "",
-            enddate: "",
-            Message: "",
-          },
-          AdStatus: { status: "", Message: "" },
-          AdCount: { min: 1, max: 1000, Message: "" },
-          FacebookLikes: { min: 1, max: 100000, Message: "" },
-          InstragramLike: { min: 1, max: 10000, Message: "" },
-          MediaType: {
-            selectedData: "",
-            Message: "",
-          },
-          PurchaseType: { selctedButton: "", Message: "" },
-        })
-      );
-      document.getElementById("searchbar").value
-        ? dispatch(SavedAdsFilterAfterSearchStart())
-        : dispatch(applySavedAdsallfilters());
-
-      // dispatch(applySavedAdsallfilters());
-      // Object.keys(props?.pageFilterInfo).map(
-      //   (filter, index) => {
-      //     const FilterRemoveDat = [];
-      //     for (let dum in props?.pageFilterInfo[filter]) {
-      //       FilterRemoveDat[dum] =
-      //         typeof props?.pageFilterInfo[filter][dum] ===
-      //         "number"
-      //           ? dum === "min"
-      //             ? 1
-      //             : 1000
-      //           : typeof props?.pageFilterInfo[filter][dum] ===
-      //             "string"
-      //           ? dum === "Mediatype"
-      //             ? "Video or Photo"
-      //             : dum === "status"
-      //             ? ""
-      //             : ""
-      //           : new Date();
-      //     }
-
-      //     // setAppliedFilters((pre) => ({
-      //     //   ...pre,
-      //     //   [`${filter}`]: FilterRemoveDat,
-      //     // }));
-      //     emptyFilter[filter] = FilterRemoveDat;
-      //     // setAdsFilteredData(() => allMediaAds[1]?.all_ads);
-      //   }
-      // );
-      // dispatch(SavedAdsclearFilteredDataStart(emptyFilter));
     }
   };
 
@@ -632,7 +521,7 @@ function AllFilters(props) {
           <Box sx={{ width: "100%", marginRight: "21px" }}>
             <Stack direction={"row"} sx={{ justifyContent: "space-between" }}>
               <Button
-                disabled={props.loading}
+                // disabled={props.loading}
                 onClick={(event) => {
                   setSeachTypeAnchorEl(event.currentTarget);
                 }}
@@ -645,7 +534,7 @@ function AllFilters(props) {
                 }
                 label="Outlined"
                 sx={{ color: "#2B2F42" }}
-                style={{ disabled: true }}
+                // style={{  disabled: true }}
               >
                 <Typography noWrap textTransform="capitalize">
                   {props.search_type}
@@ -694,7 +583,7 @@ function AllFilters(props) {
                       justifyContent={"center"}
                     >
                       <Button
-                        disabled={props.loading}
+                        // disabled={props.loading}
                         variant="outlined"
                         sx={{
                           borderRadius: 50,
@@ -709,16 +598,8 @@ function AllFilters(props) {
                         onClick={() => {
                           if (props.name === "AllAdsPage") {
                             dispatch(chnageSearchType("All these words"));
-
-                            document.getElementById("searchbar").value
-                              ? dispatch(FilterAfterSearchStart()) // dispatch(searchStart(props.search))
-                              : dispatch(applyallfilters());
-                            dispatch(SortvalueStart());
                           } else if (props.name === "SavedPage") {
                             dispatch(savedShnageSearchType("All these words"));
-                            document.getElementById("searchbar").value
-                              ? dispatch(SavedAdssearchStart(props.search))
-                              : dispatch(applySavedAdsallfilters());
                           }
                         }}
                       >
@@ -734,151 +615,53 @@ function AllFilters(props) {
         </Grid>
         <Grid item xs={10}>
           <Box sx={{ marginLeft: "21px" }}>
-            {/* <form
-                    onSubmit={(value) => {
-                      console.log(value);
-                      console.log(
-                        "--------------------------???????????????????????"
-                      );
-                    }} 
-                  >*/}
-
             <InputBase
-              disabled={props.loading}
-              id="searchbar"
-              // placeholder={props.search}
-              // value={props.search}
               defaultValue={props.search}
               fullWidth
               onKeyUp={(e) => {
-                console.log("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
-                console.log(e.target.value);
                 if (props.name === "AllAdsPage") {
+                  console.log("come in-=-----------");
                   if (e.key === "Enter") {
-                    console.log("com indiseeeeeeeeeeeeeeeeeee");
-                    if (props.search_type === "All these words") {
-                      dispatch(
-                        searchStart({
-                          // type: props.search_type,
-                          data: e.currentTarget.value,
-                        })
-                      );
-                    } else {
-                      dispatch(
-                        searchPhraseStart({ data: e.currentTarget.value })
-                      );
-                    }
-
-                    dispatch(FilterAfterSearchStart());
+                    dispatch(
+                      searchStart({
+                        data: e.currentTarget.value,
+                      })
+                    );
                   }
                   if (e.target.value.length === 0) {
-                    // dispatch(
-                    //   searchStart({
-                    //     type: props.search_type,
-                    //     data: e.currentTarget.value,
-                    //   })
-                    // );
-                    console.log(allData);
-
-                    dispatch(EmptySearchValueStart());
-                    dispatch(applyallfilters());
+                    dispatch(
+                      searchStart({
+                        data: "",
+                      })
+                    );
                   }
                 } else if (props.name === "SavedPage") {
                   if (e.key === "Enter") {
-                    console.log("com indiseeeeeeeeeeeeeeeeeee");
-                    if (props.search_type === "All these words") {
-                      dispatch(
-                        SavedAdssearchValueStart({
-                          // type: props.search_type,
-                          data: e.currentTarget.value,
-                        })
-                      );
-                    } else {
-                      dispatch(
-                        savedSearchPhraseStart({ data: e.currentTarget.value })
-                      );
-                    }
-
-                    dispatch(SavedAdsFilterAfterSearchStart());
+                    dispatch(
+                      savedsearchStart({
+                        data: e.currentTarget.value,
+                      })
+                    );
                   }
                   if (e.target.value.length === 0) {
-                    dispatch(EmptySavedSearchValueStart());
-                    dispatch(applySavedAdsallfilters());
+                    dispatch(
+                      savedsearchStart({
+                        data: "",
+                      })
+                    );
                   }
                 }
               }}
-              // onKeyDown={(e) => {
-              //   // console.log(e)
-              //   // console.log(";;;;;;;;;;;;;;;;;;;;;;;;;")
-              //   if (e.key === "Enter") {
-              //     dispatch(
-              //       searchStart({
-              //         type: props.search_type,
-              //         data: e.currentTarget.value,
-              //       })
-              //     );
-              //     // dispatch(FilterAfterSearchStart());
-
-              //     // dispatch(
-              //     //   searchStart({
-              //     //     keywords: e.currentTarget.value.split(" "),
-              //     //   })
-              //     // );
-              //     // dispatch(applyallfilters())
-              //     // const dum = Object.values(filteredData[2]).flat();
-              //     // console.log(Object.values(filteredData[2]).flat());
-              //     // // console.log(dum.includes("2022-06-10"));
-
-              //     // filteredData.map((ads) => {
-              //     //   // Object.values(ads).flat()
-              //     //   const rarr = e.currentTarget.value.split(" ");
-              //     //   console.log(rarr);
-              //     //   e.currentTarget.value
-              //     //     .split(" ")
-              //     //     .every((a) =>
-              //     //       Object.values(ads).flat().includes(a)
-              //     //     );
-              //     //   console.log(
-              //     //     Object.values(ads).flat().includes("2022-06-10")
-              //     //   );
-              //     //   return true;
-              //     // });
-              //   }
-              //   console.log("||||||||||||||||||||||||||||||||||||||||||");
-              //   console.log(e.currentTarget.value === "");
-              //   console.table(e.currentTarget.value);
-              //   console.log("||||||||||||||||||||||||||||||||||||||||||");
-              //   if (e.currentTarget.value === "") {
-              //     dispatch(applyallfilters());
-              //     dispatch(
-              //       searchStart({
-              //         keywords: "",
-              //       })
-              //     );
-              //     // dispatch(applyallfilters());
-              //     // document.getElementById("searchbar").value
-              //     // dispatch(searchStart(props.search));
-              //     dispatch(FilterAfterSearchStart());
-              //     // : dispatch(applyallfilters());
-              //   }
-              // }}
               margin="dense"
               size="large"
-              // onSubmit={(value) => {
-              //   console.log(value);
-              //   console.log(
-              //     "--------------------------???????????????????????"
-              //   );
-              // }}
             />
-            {/* </form> */}
           </Box>
         </Grid>
       </Grid>
       <Grid container>
         <Grid item lg={11} md={11}>
           <Button
-            disabled={props.loading}
+            // disabled={props.loading}
             onClick={(event) => {
               setAnchorEl(event.currentTarget);
             }}
@@ -912,7 +695,7 @@ function AllFilters(props) {
             open={open}
             add={open ? "simple-popover" : undefined}
             onClose={() => {
-              callFilters();
+              // callFilters();
               setAnchorEl(null);
             }}
             transformOrigin={{
@@ -925,69 +708,57 @@ function AllFilters(props) {
             }}
           >
             <DateRange
-              onClick={(item) => {
-                console.log(item);
-                console.log("ffffffffffffffffffffffffffffffffffffffffffffffff");
-                if (props.name === "AllAdsPage") {
-                  dispatch(
-                    datevalueStart({
-                      name: "StartRunningDate",
-                      startdate: format(item.selection.startDate, "yyyy-MM-dd"),
-                      enddate: format(item.selection.endDate, "yyyy-MM-dd"),
-                      Message: `running date ${format(
-                        item.selection.startDate,
-                        "yyyy-MM-dd"
-                      )} to ${format(item.selection.endDate, "yyyy-MM-dd")}`,
-                    })
-                  );
+              id="datepicker"
+              // onClick={(item) => {
 
-                  // document.getElementById("searchbar").value
-                  //   ? dispatch(FilterAfterSearchStart())
-                  //   : dispatch(applyallfilters());
-                } else if (props.name === "SavedPage") {
-                  dispatch(
-                    SavedAdsdatevalueStart({
-                      name: "StartRunningDate",
-                      startdate: format(item.selection.startDate, "yyyy-MM-dd"),
-                      enddate: format(item.selection.endDate, "yyyy-MM-dd"),
-                      Message: `running date ${format(
-                        item.selection.startDate,
-                        "yyyy-MM-dd"
-                      )} to ${format(item.selection.endDate, "yyyy-MM-dd")}`,
-                      // componentName: props.name,
-                    })
-                  );
+              //   if (props.name === "AllAdsPage") {
+              //     dispatch(
+              //       datevalueStart({
+              //         name: "StartRunningDate",
+              //         startdate: format(item.selection.startDate, "yyyy-MM-dd"),
+              //         enddate: format(item.selection.endDate, "yyyy-MM-dd"),
+              //         Message: `running date ${format(
+              //           item.selection.startDate,
+              //           "yyyy-MM-dd"
+              //         )} to ${format(item.selection.endDate, "yyyy-MM-dd")}`,
+              //       })
+              //     );
+              //   } else if (props.name === "SavedPage") {
+              //     dispatch(
+              //       SavedAdsdatevalueStart({
+              //         name: "StartRunningDate",
+              //         startdate: format(item.selection.startDate, "yyyy-MM-dd"),
+              //         enddate: format(item.selection.endDate, "yyyy-MM-dd"),
+              //         Message: `running date ${format(
+              //           item.selection.startDate,
+              //           "yyyy-MM-dd"
+              //         )} to ${format(item.selection.endDate, "yyyy-MM-dd")}`,
+              //         // componentName: props.name,
+              //       })
+              //     );
+              //   }
 
-                  // document.getElementById("searchbar").value
-                  //   ? dispatch(SavedAdsFilterAfterSearchStart())
-                  //   : dispatch(applySavedAdsallfilters());
-                }
-
-                setRange([item.selection]);
-              }}
+              //   setRange([item.selection]);
+              // }}
               onChange={(item) => {
                 console.log(item);
                 if (props.name === "AllAdsPage") {
+                  // setPreValue(true);
                   dispatch(
                     datevalueStart({
                       name: "StartRunningDate",
-
                       startdate: format(item.selection.startDate, "yyyy-MM-dd"),
                       enddate: format(item.selection.endDate, "yyyy-MM-dd"),
                       Message: `running date ${format(
                         item.selection.startDate,
                         "yyyy-MM-dd"
                       )} to ${format(item.selection.endDate, "yyyy-MM-dd")}`,
-                      // componentName: props.name,
                     })
                   );
-
-                  // document.getElementById("searchbar").value
-                  //   ? dispatch(FilterAfterSearchStart()) //dispatch(searchStart(props.search))
-                  //   : dispatch(applyallfilters());
+                  // callFilters();
                 } else {
                   dispatch(
-                    SavedAdsdatevalueStart({
+                    saveddatevalueStart({
                       name: "StartRunningDate",
                       startdate: format(item.selection.startDate, "yyyy-MM-dd"),
                       enddate: format(item.selection.endDate, "yyyy-MM-dd"),
@@ -995,13 +766,8 @@ function AllFilters(props) {
                         item.selection.startDate,
                         "yyyy-MM-dd"
                       )} to ${format(item.selection.endDate, "yyyy-MM-dd")}`,
-                      // componentName: props.name,
                     })
                   );
-
-                  // document.getElementById("searchbar").value
-                  //   ? dispatch(SavedAdsFilterAfterSearchStart()) //dispatch(SavedAdssearchStart(props.search))
-                  //   : dispatch(applySavedAdsallfilters());
                 }
 
                 setRange([item.selection]);
@@ -1015,7 +781,7 @@ function AllFilters(props) {
           </Popover>
 
           <Button
-            disabled={props.loading}
+            // disabled={props.loading}
             onClick={(e) => setrangeAnchorEl(e.currentTarget)}
             variant="outlined"
             size="large"
@@ -1047,7 +813,7 @@ function AllFilters(props) {
             open={addcounteropen}
             anchorEl={rangeanchorel}
             onClose={() => {
-              callFilters();
+              // callFilters();
               setrangeAnchorEl(null);
             }}
             add={open ? "simple-popover" : undefined}
@@ -1099,21 +865,15 @@ function AllFilters(props) {
                                 Message: `Ad Count: ${e.value}-${props?.pageFilterInfo?.AdCount?.max}`,
                               })
                             );
-                            // document.getElementById("searchbar").value
-                            //   ? dispatch(FilterAfterSearchStart()) // dispatch(searchStart(props.search))
-                            //   : dispatch(applyallfilters());
                           } else if (props.name === "SavedPage") {
                             dispatch(
-                              SavedAdsAdCountvalueStart({
+                              savedAdCountvalueStart({
                                 name: "AdCount",
                                 min: Number(e.value),
                                 max: props?.pageFilterInfo?.AdCount?.max,
                                 Message: `Ad Count: ${e.value}-${props?.pageFilterInfo?.AdCount?.max}`,
                               })
                             );
-                            // document.getElementById("searchbar").value
-                            //   ? dispatch(SavedAdsFilterAfterSearchStart())
-                            //   : dispatch(applySavedAdsallfilters());
                           }
                         }
                       }}
@@ -1132,13 +892,6 @@ function AllFilters(props) {
                         console.log("==============================");
                         if (Number(e.value) !== e.previousValue) {
                           if (props.name === "AllAdsPage") {
-                            // setRangeEditTextField((pre) => {
-                            //   return { ...pre, max: Number(e) };
-                            // });
-                            console.log(
-                              props?.ranger?.AdCount?.max +
-                                "-------------------------++++++++++++++++"
-                            );
                             if (Number(e.value) > props?.ranger?.AdCount?.max) {
                               dispatch(
                                 rangerefixMinMaxSiler({
@@ -1157,16 +910,17 @@ function AllFilters(props) {
                                 Message: `Ad Count: ${props?.pageFilterInfo?.AdCount?.min}-${e.value}`,
                               })
                             );
-                            // document.getElementById("searchbar").value
-                            //   ? dispatch(FilterAfterSearchStart()) //dispatch(searchStart(props.search))
-                            //   : dispatch(applyallfilters());
                           } else if (props.name === "SavedPage") {
-                            console.log(
-                              "ssssssssssssssssssssssaaaaaaaaaaaaaaaaavvvvvvvvvvvveeeeeeeeeeeeeddddddddddd" +
-                                document.getElementById("searchbar").value
-                            );
+                            if (Number(e.value) > props?.ranger?.AdCount?.max) {
+                              dispatch(
+                                savedrangerefixMinMaxSiler({
+                                  name: "AdCount",
+                                  max: Number(e.value),
+                                })
+                              );
+                            }
                             dispatch(
-                              SavedAdsAdCountvalueStart({
+                              savedAdCountvalueStart({
                                 name: "AdCount",
                                 // componentName: props.name,
                                 min: props?.pageFilterInfo?.AdCount?.min,
@@ -1174,23 +928,7 @@ function AllFilters(props) {
                                 Message: `Ad Count: ${props?.pageFilterInfo?.AdCount?.min}-${e.value}`,
                               })
                             );
-
-                            // props.search!==""
-                            // document.getElementById("searchbar").value
-                            //   ? dispatch(SavedAdsFilterAfterSearchStart())
-                            //   : dispatch(applySavedAdsallfilters());
                           }
-                          // dispatch(
-                          //   AdCountvalueStart({
-                          //     name: "AdCount",
-                          //     min: Number(e.value),
-                          //     max: appliedFilters?.AdCount?.max,
-                          //     Message: `Ad Count: ${e.value}-${appliedFilters?.AdCount?.max}`,
-                          //   })
-                          // );
-                          // document.getElementById("searchbar").value
-                          //   ? dispatch(searchStart(searchBarData))
-                          //   : dispatch(applyallfilters());
                         }
                       }}
                     />
@@ -1210,7 +948,7 @@ function AllFilters(props) {
                   onChange={counterIncremten}
                 />
                 <Button
-                  disabled={props.loading}
+                  // disabled={props.loading}
                   variant="outlined"
                   sx={{
                     borderRadius: 50,
@@ -1231,9 +969,6 @@ function AllFilters(props) {
                           Message: "",
                         })
                       );
-                      // document.getElementById("searchbar").value
-                      //   ? dispatch(FilterAfterSearchStart())
-                      //   : dispatch(applyallfilters());
                     } else if (props.name === "SavedPage") {
                       dispatch(
                         SavedAdsAdCountvalueStart({
@@ -1244,18 +979,7 @@ function AllFilters(props) {
                           Message: "",
                         })
                       );
-                      // document.getElementById("searchbar").value
-                      //   ? dispatch(SavedAdsFilterAfterSearchStart())
-                      //   : dispatch(applySavedAdsallfilters());
                     }
-                    // dispatch(applyallfilters());
-                    // searchBarData !== []
-                    //   ? dispatch(searchStart(searchBarData))
-                    //   : dispatch(applyallfilters());
-                    // setAppliedFilters((pre) => ({
-                    //   ...pre,
-                    //   AdCount: { min: 0, max: 1000, Message: "" },
-                    // }));
 
                     setrangeAnchorEl(null);
                   }}
@@ -1267,7 +991,7 @@ function AllFilters(props) {
           </Popover>
 
           <Button
-            disabled={props.loading}
+            // disabled={props.loading}
             variant="outlined"
             onClick={(e) => setAdStatusAnchorel(e.currentTarget)}
             size="large"
@@ -1298,7 +1022,7 @@ function AllFilters(props) {
             anchorEl={adStatusAnchorel}
             add={openAdStatusAnchorel ? "simple-popover" : undefined}
             onClose={() => {
-              callFilters();
+              // callFilters();
               setAdStatusAnchorel(null);
             }}
             open={openAdStatusAnchorel}
@@ -1337,7 +1061,7 @@ function AllFilters(props) {
                   justifyContent={"center"}
                 >
                   <Button
-                    disabled={props.loading}
+                    // disabled={props.loading}
                     variant="outlined"
                     sx={{
                       borderRadius: 50,
@@ -1359,11 +1083,7 @@ function AllFilters(props) {
                             Message: "",
                           })
                         );
-                        callFilters();
-                        // document.getElementById("searchbar").value
-                        //   ? dispatch(FilterAfterSearchStart()) // dispatch(searchStart(props.search))
-                        //   : dispatch(applyallfilters());
-                        // dispatch(SortvalueStart());
+                        // callFilters();
                       } else if (props.name === "SavedPage") {
                         dispatch(
                           SavedAdsstatusValueStart({
@@ -1373,10 +1093,7 @@ function AllFilters(props) {
                             Message: "",
                           })
                         );
-                        callFilters();
-                        // document.getElementById("searchbar").value
-                        //   ? dispatch(SavedAdsFilterAfterSearchStart())
-                        //   : dispatch(applySavedAdsallfilters());
+                        // callFilters();
                       }
                     }}
                   >
@@ -1388,7 +1105,7 @@ function AllFilters(props) {
           </Popover>
 
           <Button
-            disabled={props.loading}
+            // disabled={props.loading}
             variant="outlined"
             onClick={(e) => setFacebookLikeAnchorEl(e.currentTarget)}
             sx={{
@@ -1417,7 +1134,7 @@ function AllFilters(props) {
             anchorEl={facebookLikeanchorel}
             add={openFaceboolLike ? "simple-popover" : undefined}
             onClose={() => {
-              callFilters();
+              // callFilters();
               setFacebookLikeAnchorEl(null);
             }}
             transformOrigin={{
@@ -1456,35 +1173,25 @@ function AllFilters(props) {
 
                       defaultValue={props?.pageFilterInfo?.FacebookLikes?.min.toString()}
                       onSave={(e) => {
-                        console.log(e);
-                        console.log("==============================");
                         if (Number(e.value) !== e.previousValue) {
                           if (props.name === "AllAdsPage") {
                             dispatch(
                               AdCountvalueStart({
                                 name: "FacebookLikes",
-                                // componentName: props.name,
                                 min: Number(e.value),
                                 max: props?.pageFilterInfo?.FacebookLikes?.max,
                                 Message: `FacebookLikes: ${e.value}-${props?.pageFilterInfo?.FacebookLikes?.max}`,
                               })
                             );
-                            // document.getElementById("searchbar").value
-                            //   ? dispatch(FilterAfterSearchStart()) // dispatch(searchStart(props.search))
-                            //   : dispatch(applyallfilters());
                           } else if (props.name === "SavedPage") {
                             dispatch(
-                              SavedAdsAdCountvalueStart({
+                              savedAdCountvalueStart({
                                 name: "FacebookLikes",
-                                // componentName: props.name,
                                 min: Number(e.value),
                                 max: props?.pageFilterInfo?.FacebookLikes?.max,
                                 Message: `Facebook Likes page: ${e.value}-${props?.pageFilterInfo?.FacebookLikes?.max}`,
                               })
                             );
-                            // document.getElementById("searchbar").value
-                            //   ? dispatch(SavedAdsFilterAfterSearchStart())
-                            //   : dispatch(applySavedAdsallfilters());
                           }
                         }
                       }}
@@ -1518,28 +1225,32 @@ function AllFilters(props) {
                             dispatch(
                               AdCountvalueStart({
                                 name: "FacebookLikes",
-                                // componentName: props.name,
                                 min: props?.pageFilterInfo?.FacebookLikes?.min,
                                 max: Number(e.value),
                                 Message: `FacebookLikes : ${props?.pageFilterInfo?.FacebookLikes?.min}-${e.value}`,
                               })
                             );
-                            // document.getElementById("searchbar").value
-                            //   ? dispatch(FilterAfterSearchStart()) // dispatch(searchStart(props.search))
-                            //   : dispatch(applyallfilters());
                           } else if (props.name === "SavedPage") {
+                            if (
+                              Number(e.value) >
+                              props?.ranger?.FacebookLikes?.max
+                            ) {
+                              dispatch(
+                                savedrangerefixMinMaxSiler({
+                                  name: "FacebookLikes",
+                                  max: Number(e.value),
+                                })
+                              );
+                            }
+
                             dispatch(
-                              SavedAdsAdCountvalueStart({
+                              savedAdCountvalueStart({
                                 name: "FacebookLikes",
-                                // componentName: props.name,
                                 min: props?.pageFilterInfo?.FacebookLikes?.min,
                                 max: Number(e.value),
                                 Message: `FacebookLikes : ${props?.pageFilterInfo?.FacebookLikes?.min}-${e.value}`,
                               })
                             );
-                            // document.getElementById("searchbar").value
-                            //   ? dispatch(SavedAdsFilterAfterSearchStart())
-                            //   : dispatch(applySavedAdsallfilters());
                           }
                         }
                       }}
@@ -1560,7 +1271,7 @@ function AllFilters(props) {
                   onChange={FacebookLikesIncremten}
                 />
                 <Button
-                  disabled={props.loading}
+                  // disabled={props.loading}
                   variant="outlined"
                   sx={{
                     borderRadius: 50,
@@ -1581,11 +1292,7 @@ function AllFilters(props) {
                           Message: "",
                         })
                       );
-                      callFilters();
-
-                      // document.getElementById("searchbar").value
-                      //   ? dispatch(FilterAfterSearchStart()) //dispatch(searchStart(props.search))
-                      //   : dispatch(applyallfilters());
+                      // callFilters();
                     } else if (props.name === "SavedPage") {
                       dispatch(
                         SavedAdsAdCountvalueStart({
@@ -1596,10 +1303,7 @@ function AllFilters(props) {
                           Message: "",
                         })
                       );
-                      callFilters();
-                      // document.getElementById("searchbar").value
-                      //   ? dispatch(SavedAdsFilterAfterSearchStart())
-                      //   : dispatch(applySavedAdsallfilters());
+                      // callFilters();
                     }
 
                     setFacebookLikeAnchorEl(null);
@@ -1612,7 +1316,7 @@ function AllFilters(props) {
           </Popover>
 
           <Button
-            disabled={props.loading}
+            // disabled={props.loading}
             variant="outlined"
             onClick={(e) => setInstragramFollowerAnchorEl(e.currentTarget)}
             sx={{
@@ -1641,7 +1345,7 @@ function AllFilters(props) {
             anchorEl={instragramFolloweranchorel}
             add={openInstragramFollower ? "simple-popover" : undefined}
             onClose={() => {
-              callFilters();
+              // callFilters();
               setInstragramFollowerAnchorEl(null);
             }}
             transformOrigin={{
@@ -1693,12 +1397,9 @@ function AllFilters(props) {
                                 Message: `InstragramLike: ${e.value}-${props?.pageFilterInfo?.InstragramLike?.max}`,
                               })
                             );
-                            // document.getElementById("searchbar").value
-                            //   ? dispatch(FilterAfterSearchStart()) //dispatch(searchStart(props.search))
-                            //   : dispatch(applyallfilters());
                           } else if (props.name === "SavedPage") {
                             dispatch(
-                              SavedAdsAdCountvalueStart({
+                              savedAdCountvalueStart({
                                 name: "InstragramLike",
                                 // componentName: props.name,
                                 min: Number(e.value),
@@ -1706,9 +1407,6 @@ function AllFilters(props) {
                                 Message: `InstragramLike: ${e.value}-${props?.pageFilterInfo?.InstragramLike?.max}`,
                               })
                             );
-                            // document.getElementById("searchbar").value
-                            //   ? dispatch(SavedAdsFilterAfterSearchStart())
-                            //   : dispatch(applySavedAdsallfilters());
                           }
                         }
                       }}
@@ -1747,22 +1445,25 @@ function AllFilters(props) {
                                 Message: `InstragramLike: ${props?.pageFilterInfo?.InstragramLike?.min}-${e.value}`,
                               })
                             );
-                            // document.getElementById("searchbar").value
-                            //   ? dispatch(FilterAfterSearchStart()) //dispatch(searchStart(props.search))
-                            //   : dispatch(applyallfilters());
                           } else if (props.name === "SavedPage") {
+                            if (
+                              Number(e.value) > props.ranger.InstragramLike.max
+                            ) {
+                              dispatch(
+                                savedrangerefixMinMaxSiler({
+                                  name: "InstragramLike",
+                                  max: Number(e.value),
+                                })
+                              );
+                            }
                             dispatch(
-                              SavedAdsAdCountvalueStart({
+                              savedAdCountvalueStart({
                                 name: "InstragramLike",
-                                // componentName: props.name,
                                 min: props?.pageFilterInfo?.InstragramLike?.min,
                                 max: Number(e.value),
                                 Message: `InstragramLike: ${props?.pageFilterInfo?.InstragramLike?.min}-${e.value}`,
                               })
                             );
-                            // document.getElementById("searchbar").value
-                            //   ? dispatch(SavedAdsFilterAfterSearchStart())
-                            //   : dispatch(applySavedAdsallfilters());
                           }
                         }
                       }}
@@ -1783,7 +1484,7 @@ function AllFilters(props) {
                   onChange={InstragramFollowerIncremten}
                 />
                 <Button
-                  disabled={props.loading}
+                  // disabled={props.loading}
                   variant="outlined"
                   sx={{
                     borderRadius: 50,
@@ -1804,25 +1505,16 @@ function AllFilters(props) {
                           Message: "",
                         })
                       );
-                      callFilters();
-
-                      // document.getElementById("searchbar").value
-                      //   ? dispatch(FilterAfterSearchStart()) //dispatch(searchStart(props.search))
-                      //   : dispatch(applyallfilters());
+                      // callFilters();
                     } else if (props.name === "SavedPage") {
                       dispatch(
-                        SavedAdsAdCountvalueStart({
+                        savedAdCountvalueStart({
                           name: "InstragramLike",
-                          // componentName: props.name,
                           min: 1,
                           max: 10000,
                           Message: "",
                         })
                       );
-
-                      // document.getElementById("searchbar").value
-                      //   ? dispatch(SavedAdsFilterAfterSearchStart())
-                      //   : dispatch(applySavedAdsallfilters());
                     }
 
                     setInstragramFollowerAnchorEl(null);
@@ -1835,7 +1527,7 @@ function AllFilters(props) {
           </Popover>
 
           <Button
-            disabled={props.loading}
+            // disabled={props.loading}
             variant="outlined"
             onClick={(e) => setMediaTypeAnchorel(e.currentTarget)}
             disableElevation
@@ -1866,8 +1558,7 @@ function AllFilters(props) {
             anchorEl={mediaTypeAnchorel}
             add={openMediaTypeAnchorel ? "simple-popover" : undefined}
             onClose={() => {
-              callFilters();
-
+              // callFilters();
               setMediaTypeAnchorel(null);
             }}
             open={openMediaTypeAnchorel}
@@ -1911,7 +1602,7 @@ function AllFilters(props) {
                   justifyContent={"center"}
                 >
                   <Button
-                    disabled={props.loading}
+                    // disabled={props.loading}
                     variant="outlined"
                     sx={{
                       borderRadius: 50,
@@ -1928,29 +1619,18 @@ function AllFilters(props) {
                         dispatch(
                           MediaTypevalueStart({
                             name: "MediaType",
-                            // componentName: props.name,
                             selectedData: "",
                             Message: "",
                           })
                         );
-                        callFilters();
-                        // document.getElementById("searchbar").value
-                        //   ? dispatch(FilterAfterSearchStart()) //dispatch(searchStart(props.search))
-                        //   : dispatch(applyallfilters());
-                        // dispatch(SortvalueStart());
                       } else if (props.name === "SavedPage") {
                         dispatch(
-                          SavedAdsMediaTypevalueStart({
+                          savedMediaTypevalueStart({
                             name: "MediaType",
-                            // componentName: props.name,
                             selectedData: "",
                             Message: "",
                           })
                         );
-                        callFilters();
-                        // document.getElementById("searchbar").value
-                        //   ? dispatch(SavedAdsFilterAfterSearchStart())
-                        //   : dispatch(applySavedAdsallfilters());
                       }
 
                       setMediaTypeAnchorel(null);
@@ -1964,7 +1644,7 @@ function AllFilters(props) {
           </Popover>
 
           <Button
-            disabled={props.loading}
+            // disabled={props.loading}
             variant="outlined"
             onClick={(e) => setButtonTypeAnchorEl(e.currentTarget)}
             sx={{
@@ -1992,7 +1672,7 @@ function AllFilters(props) {
             anchorEl={ButtonTypeanchorel}
             add={openButtonType ? "simple-popover" : undefined}
             onClose={() => {
-              callFilters();
+              // callFilters();
               setButtonTypeAnchorEl(null);
             }}
             open={openButtonType}
@@ -2040,7 +1720,7 @@ function AllFilters(props) {
             <Grid container>
               <Grid item sx={{ marginTop: "23px" }}>
                 <Button
-                  disabled={props.loading}
+                  // disabled={props.loading}
                   variant="outlined"
                   style={{
                     // background: "#00CBFF",
@@ -2057,7 +1737,7 @@ function AllFilters(props) {
                   onClick={() => {
                     const emptyFilter = {};
                     console.log("00000000000000000000000000000");
-                    console.log(appliedFilters);
+                    // console.log(appliedFilters);
                     console.log("1111111111111111111111111111111111111111");
                     if (props.name === "AllAdsPage") {
                       console.log("first");
@@ -2077,31 +1757,12 @@ function AllFilters(props) {
                         })
                       );
                       console.log("first1");
-                      // dispatch(
-                      //   loadMediaStart({
-                      //     page_index: 0,
-                      //     startdate: "",
-                      //     enddate: "",
-                      //     adcount: [],
-                      //     adstatus: "",
-                      //     fb_likes: [],
-                      //     insta_followers: [],
-                      //     media_type: "",
-                      //     cta_status: "",
 
-                      //     // "increaseCount":false
-                      //   })
-                      // );
                       // await callFilters();
                       console.log("first2");
-
-                      // clearFilteredDataStart()
-                      // document.getElementById("searchbar").value
-                      //   ? dispatch(FilterAfterSearchStart()) //dispatch(searchStart(props.search))
-                      //   : dispatch(applyallfilters());
                     } else if (props.name === "SavedPage") {
                       dispatch(
-                        SavedAdsclearFilteredDataStart({
+                        savedclearFilteredDataStart({
                           StartRunningDate: {
                             startdate: "",
                             enddate: "",
@@ -2118,40 +1779,6 @@ function AllFilters(props) {
                           PurchaseType: { selctedButton: "", Message: "" },
                         })
                       );
-                      // document.getElementById("searchbar").value
-                      //   ? dispatch(SavedAdsFilterAfterSearchStart())
-                      //   : dispatch(applySavedAdsallfilters());
-
-                      // dispatch(applySavedAdsallfilters());
-                      // Object.keys(props?.pageFilterInfo).map(
-                      //   (filter, index) => {
-                      //     const FilterRemoveDat = [];
-                      //     for (let dum in props?.pageFilterInfo[filter]) {
-                      //       FilterRemoveDat[dum] =
-                      //         typeof props?.pageFilterInfo[filter][dum] ===
-                      //         "number"
-                      //           ? dum === "min"
-                      //             ? 1
-                      //             : 1000
-                      //           : typeof props?.pageFilterInfo[filter][dum] ===
-                      //             "string"
-                      //           ? dum === "Mediatype"
-                      //             ? "Video or Photo"
-                      //             : dum === "status"
-                      //             ? ""
-                      //             : ""
-                      //           : new Date();
-                      //     }
-
-                      //     // setAppliedFilters((pre) => ({
-                      //     //   ...pre,
-                      //     //   [`${filter}`]: FilterRemoveDat,
-                      //     // }));
-                      //     emptyFilter[filter] = FilterRemoveDat;
-                      //     // setAdsFilteredData(() => allMediaAds[1]?.all_ads);
-                      //   }
-                      // );
-                      // dispatch(SavedAdsclearFilteredDataStart(emptyFilter));
                     }
                   }}
                 >
@@ -2162,93 +1789,6 @@ function AllFilters(props) {
           </Box>
         </Grid>
       </Grid>
-      {/* <Grid container sx={{ marginTop: 1 }}>
-        {Object.keys(appliedFilters).map((filter, index) => {
-          return (
-            appliedFilters[filter]["Message"] && (
-              <Chip
-                key={index}
-                color="primary"
-                label={appliedFilters[filter]["Message"]}
-                deleteIcon={
-                  <CloseIcon
-                    style={{ color: "white", backgroundColor: "#00CBFF" }}
-                  />
-                }
-                onDelete={() => {
-                  const filters = Object(appliedFilters[filter]);
-                  const AdsRemovedElement = {
-                    MIN: "min",
-                    MEDIATYPE: "selectedData",
-                    STATUS: "status",
-                    SELECTEDDATE: "StartRunningDate",
-                  };
-                  console.log(filter);
-
-                  console.log(";;;;;;;;;;;;;;;");
-                  const FilterRemoveData = [];
-                  for (let dum in filters) {
-                    console.log("dum" + dum);
-                    console.log(dum, filters[dum]);
-                    // console.log(typeof appliedFilters[filter][dum]);
-                    FilterRemoveData[dum] =
-                      typeof appliedFilters[filter][dum] === "number"
-                        ? dum === AdsRemovedElement.MIN
-                          ? 1
-                          : filter === "FacebookLikes"
-                          ? 100000
-                          : filter === "InstragramLike"
-                          ? 10000
-                          : 1000
-                        : typeof appliedFilters[filter][dum] === "string"
-                        ? dum === AdsRemovedElement.MEDIATYPE
-                          ? dum === AdsRemovedElement.STATUS
-                            ? "Active"
-                            : "Video or Photo"
-                          : ""
-                        : new Date();
-                  }
-                  console.table(FilterRemoveData);
-                  console.log(FilterRemoveData);
-                  dispatch(
-                    clearSingleFilteredDataStart({
-                      name: filter,
-                      data: FilterRemoveData,
-                    })
-                  );
-                  // dispatch(
-                  //   SetSortOrdervalueStart({
-                  //     name: "type",
-                  //     data: "",
-                  //   })
-                  // );
-                  // dispatch(applyallfilters());
-                  console.log(document.getElementById("searchbar").value);
-                  console.log(
-                    "-----------======================================"
-                  );
-                  document.getElementById("searchbar").value !== ""
-                    ? dispatch(searchStart(searchBarData))
-                    : dispatch(applyallfilters({ componentName: props.name }));
-                  dispatch(SortvalueStart());
-                  // setAppliedFilters((pre) => ({
-                  //   ...pre,
-                  //   [`${filter}`]: FilterRemoveData,
-                  // }));
-
-                  console.log(filter);
-                }}
-                sx={{
-                  borderRadius: 2,
-                  backgroundColor: "#00CBFF",
-                  marginLeft: 1,
-                }}
-              />
-            )
-          );
-        })}
-      </Grid> */}
-      {/* </Grid> */}
     </>
   );
 }

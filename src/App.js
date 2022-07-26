@@ -8,7 +8,7 @@ import Login from "./pages/auth/Login";
 import ForgetPassword from "./pages/auth/ForgetPassword";
 import Signup from "./pages/auth/Signup";
 import PublicRoute from "./PublicRoute";
-import './App.scss'
+import "./App.scss";
 // import { loadIsAliveStart } from "./redux/ducks/session";
 // import {
 //   Box,
@@ -23,17 +23,37 @@ const App = () => {
   // useEffect(() => {
   //   dispatch(loadIsAliveStart());
   // }, []);
-  
+
   return (
     <>
       <Routes>
         {/* Public Routes */}
-        <Route path="/auth/login" exact element={<PublicRoute><Login /></PublicRoute>} />
-        <Route path="/auth/register" exact element={<PublicRoute><Signup /></PublicRoute>} />
+        <Route
+          path="/auth/login"
+          exact
+          element={
+            <PublicRoute>
+              <Login />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/auth/register"
+          exact
+          element={
+            <PublicRoute>
+              <Signup />
+            </PublicRoute>
+          }
+        />
         <Route
           path="/auth/forgot-password"
           exact
-          element={<PublicRoute><ForgetPassword /></PublicRoute>}
+          element={
+            <PublicRoute>
+              <ForgetPassword />
+            </PublicRoute>
+          }
         />
 
         {/* Private Routes */}
@@ -41,16 +61,15 @@ const App = () => {
           exact
           path="/*"
           element={
-            // <PrivateRoute>
+            <PrivateRoute>
               <MainLayout />
-            // </PrivateRoute>
+            </PrivateRoute>
           }
         />
 
         {/* unknown Routes */}
         <Route path="*" element={<Pagenotfound />} />
       </Routes>
-      
     </>
   );
 };

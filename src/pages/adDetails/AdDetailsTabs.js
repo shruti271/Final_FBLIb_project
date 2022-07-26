@@ -59,7 +59,7 @@ function AdDeatailsTabs() {
         dispatch(loadSubAllMediaStart({ ad_name: singleAds?.pageInfo?.name }));
       }
     }
-  }, [allMediaAds, adID.adsId, adDetail, subAllMedia, dispatch, allMediaAdsData]);
+  }, [allMediaAds, adID.adsId, adDetail, subAllMedia, dispatch]);
 
   return (
     <>

@@ -55,12 +55,12 @@ export const DELETE_SAVEADS_ERROR = "DELETE_SAVEADS_ERROR";
 export const loadSavedAdsStart = (data) => ({
   type: LOAD_SAVEADS_START,
   payload:data,
-});
+});//DONE
 
 export const loadSavedAdsSuccess = (savedMediaAds) => ({
   type: LOAD_SAVEADS_SUCCESS,
   payload: savedMediaAds,
-});
+});//DONE
 
 export const loadSavedAdsError = (error) => ({
   type: LOAD_SAVEADS_ERROR,
@@ -202,10 +202,10 @@ export const SavedAdsearchError = (error) => ({
   type: ALL_SAVED_ADS_SEARCH_ERROR,
   payload: error,
 });
-export const savedShnageSearchType = (data) => ({
-  type: SAVED_CHANGE_SEARCH_TYPE,
-  payload: data,
-});
+// export const savedShnageSearchType = (data) => ({
+//   type: SAVED_CHANGE_SEARCH_TYPE,
+//   payload: data,
+// });
 
 export const savedSearchPhraseStart = (Ads) => ({
   type: SAVED_SEARCH_PHRASE_START,
@@ -256,7 +256,7 @@ const initialState = {
   },
   sortFilter: {
     type: "",
-    order: "Ascending",
+    order: "",
   }, 
   maxRanger: {
     AdCount: { min: 1,  max: 1000 },
@@ -279,9 +279,9 @@ const savedAdsClienSideReducer = (state = initialState, action) => {
       return {
         ...state,
         // loading: false,
-        // savedAdsLocal: action.payload,
+        savedAdsLocal: action.payload.data,
         savedIds:
-          action.payload !== "" ? action.payload.map((abc) => abc.id) : [],
+          action.payload !== "" ? action?.payload?.data?.map((abc) => abc.id) : [],
         // filteredData: action.payload,
       };
     case CREATE_SAVEADSCLIENTSIDE_START:
@@ -940,9 +940,7 @@ const savedAdsClienSideReducer = (state = initialState, action) => {
         ...state,
         save_loading: true,
       };
-    case LOAD_SAVEADS_SUCCESS:
-      console.log("++++++++++++++++++++++++++++++++++")
-      console.log(action.payload)
+    case LOAD_SAVEADS_SUCCESS:      
       return {
         ...state,
         save_loading: false,
