@@ -111,7 +111,7 @@ const Payment = () => {
                             <Stack direction={"row"} >
                                 <img src={paymentCheckboxicon} alt="paymentchekbox" />
                                 <Typography m={2}>
-                                    Addlibrary Database With Over 30,000 Acctive dropshipping sites
+                                    Adlibrary Database With Over 30,000 Active Dropshipping Sites
                                 </Typography>
                             </Stack>
                             <Stack direction={"row"}>
@@ -181,18 +181,18 @@ const Payment = () => {
                                 <Typography variant="h3" gutterBottom component="div" className={classes.fontcolor} > $29</Typography>
                                 <Typography variant="h6" m={2.7} className={classes.month}>/MONTH</Typography>
                             </Box>
-                            <Typography className={classes.fontcolor}>Save 40% By Paying Annually</Typography>
+                            <Typography className={classes.fontcolor}>Get 5 Months Free By Paying Annually</Typography>
                             <Divider variant='fullWidth' className={classes.dividerColor} />
                             <Stack direction={"row"}>
                                 <img src={annualplancheckboxicon} alt="paymentchekbox" />
                                 <Typography m={2} sx={{ borderStyle: "linear-gradient(270deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)" }} className={classes.fontcolor}>
-                                    Addlibrary Database With Over 30,000 Active dropshipping sites
+                                    Adlibrary Database With Over 30,000 Active Dropshipping Sites
                                 </Typography>
                             </Stack>
                             <Stack direction={"row"}>
                                 <img src={annualplancheckboxicon} alt="paymentchekbox" />
                                 <Typography m={2} className={classes.fontcolor}>
-                                    Early Access to the Most Powerfull Ecom Spy Tool
+                                    Early Access to the Most Powerful Ecom Spy Tool
                                 </Typography>
                             </Stack>
                             <Stack direction={"row"}>

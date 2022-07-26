@@ -10,7 +10,7 @@ import { Box } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import viss from "../assets/viss.svg";
-import mastercard from "../assets/master-card.svg"
+import mastercard from "../assets/master-card.svg";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { updateAccountSettingsStart } from "../redux/ducks/accountSettings";
@@ -37,7 +37,7 @@ function AccountSettings() {
   const subscriptionData = useSelector((state) => state.subscriptionData);
 
   useEffect(() => {
-    console.log("subscriptionData :", subscriptionData);
+    
   }, [subscriptionData]);
 
   const [loadingFor, setLoadingFor] = useState("");
@@ -88,25 +88,21 @@ function AccountSettings() {
         fetch_payment_method().then(
           (response) => {
             setSubLoading(false);
-            console.log("fetch_payment_method response: ", response);
             dispatch(setSubscription(response.data.data));
           },
           (error) => {
             setSubLoading(false);
-            console.log("fetch_payment_method Error: ", error);
           }
         );
-        console.log("cancelusersubcription Response:", response);
       },
       (error) => {
         setSubLoading(false);
-        console.log("cancelSubscription Error: ", error);
       }
     );
   };
   return (
     <>
-      <Grid container >
+      <Grid container>
         <Grid item xs={12} pr={5}>
           <Stack>
             <Typography variant="h5">
@@ -201,7 +197,7 @@ function AccountSettings() {
                               style={{
                                 borderRadius: 50,
                                 backgroundColor: "#00CBFF",
-                                whiteSpace: "nowrap"
+                                whiteSpace: "nowrap",
                               }}
                             >
                               {loading && LoadingFor.PersonalInfo ? (
@@ -210,13 +206,6 @@ function AccountSettings() {
                                   sx={{
                                     color: "white",
                                   }}
-                                // style={{
-                                //   position: "relative",
-                                //   top: 100,
-                                //   left: 30,
-                                //   opacity: 1,
-                                //   zIndex: 1,
-                                // }}
                                 />
                               ) : (
                                 <>Save</>
@@ -298,7 +287,6 @@ function AccountSettings() {
                         </Stack>
                       </Stack>
                       <Stack direction={"row"} marginTop={2}>
-                        {/* <Button variant="contained">submit</Button> */}
                         <Grid
                           container
                           style={{ display: "flex", justifyContent: "right" }}
@@ -312,7 +300,7 @@ function AccountSettings() {
                               style={{
                                 borderRadius: 50,
                                 backgroundColor: "#00CBFF",
-                                whiteSpace: "nowrap"
+                                whiteSpace: "nowrap",
                               }}
                             >
                               {loading && LoadingFor.Password ? (
@@ -321,13 +309,6 @@ function AccountSettings() {
                                   sx={{
                                     color: "white",
                                   }}
-                                // style={{
-                                //   position: "relative",
-                                //   top: 100,
-                                //   left: 30,
-                                //   opacity: 1,
-                                //   zIndex: 1,
-                                // }}
                                 />
                               ) : (
                                 <>Change Password</>
@@ -370,48 +351,29 @@ function AccountSettings() {
                         <Stack direction={"column"}>
                           <Stack direction={"row"} ml={13}>
                             <Typography>
-                              {subscriptionData?.data?.card_brand === "mastercard" ?
+                              {subscriptionData?.data?.card_brand ===
+                              "mastercard" ? (
                                 <img
                                   src={mastercard}
                                   alt="mastercard"
                                   style={{ height: "25px" }}
-                                ></img> :
+                                ></img>
+                              ) : (
                                 <img
                                   src={viss}
                                   alt="viss"
                                   style={{ height: "20px", width: "30px" }}
-                                />}
+                                />
+                              )}
                             </Typography>
                             <Typography style={{ marginLeft: 3 }}>
                               <b>
                                 Visa ending in {subscriptionData?.data?.last4}
                               </b>
-
                             </Typography>
                           </Stack>
                         </Stack>
                       </Stack>
-                      {/* <Stack direction={"row"}>
-                        <Grid
-                          container
-                          style={{ display: "flex", justifyContent: "right" }}
-                          item
-                        >
-                          <Box justifyContent={"right "}>
-                            <Button
-                              type="Submit"
-                              variant="contained"
-                              color="primary"
-                              style={{
-                                borderRadius: 50,
-                                backgroundColor: "#00CBFF",
-                              }}
-                            >
-                              Change Payment Method
-                            </Button>
-                          </Box>
-                        </Grid>
-                      </Stack> */}
                     </Stack>
                   </Stack>
                 </Box>
@@ -453,8 +415,7 @@ function AccountSettings() {
                       </Stack>
                       <Stack direction={"column"}>
                         <Typography>
-                          Next Renew:{" "}
-                          <b>{subscriptionData?.data?.end_date}</b>
+                          Next Renew: <b>{subscriptionData?.data?.end_date}</b>
                         </Typography>
                       </Stack>
                       <Stack direction={"column"}>
@@ -475,7 +436,7 @@ function AccountSettings() {
                               }}
                               onClick={
                                 subscriptionData?.data?.status === "Canceled" ||
-                                  subscriptionData?.data?.status === "Inactive"
+                                subscriptionData?.data?.status === "Inactive"
                                   ? () => navigate("/plans")
                                   : cancelSubscription
                               }
@@ -486,21 +447,16 @@ function AccountSettings() {
                                   sx={{
                                     color: "white",
                                   }}
-                                // style={{
-                                //   position: "relative",
-                                //   top: 100,
-                                //   left: 30,
-                                //   opacity: 1,
-                                //   zIndex: 1,
-                                // }}
                                 />
                               ) : (
-                                <>{subscriptionData?.data?.status === "Canceled" ||
+                                <>
+                                  {subscriptionData?.data?.status ===
+                                    "Canceled" ||
                                   subscriptionData?.data?.status === "Inactive"
-                                  ? "Active Your plan"
-                                  : "Cancel Subscription"}</>
+                                    ? "Active Your plan"
+                                    : "Cancel Subscription"}
+                                </>
                               )}
-
                             </Button>
                           </Box>
                         </Grid>

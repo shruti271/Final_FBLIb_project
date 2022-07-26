@@ -1,7 +1,7 @@
 import axiosInstance from "./../../../axios/Index";
 
-export function requestGetSavedAds() {
-  return axiosInstance.get("api/saveadmanager/", { withCredentials: true });
+export function requestGetSavedAds(payload) {
+  return axiosInstance.post("api/allsavedads/",payload, { withCredentials: true });
 }
 
 export function requestCreateSavedAds(SavedAds) {

@@ -60,7 +60,7 @@ const Login = () => {
     setLoading(true);
     login(data).then((res) => {
       localStorage.setItem("is_alive", true);
-      // navigate("/");
+      navigate("/");
     }, (error) => {
       localStorage.setItem("is_alive", false);
       setLoading(false);

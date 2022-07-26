@@ -12,17 +12,16 @@ import AdDeatailsTabs from "../pages/adDetails/AdDetailsTabs";
 import { useDispatch } from "react-redux";
 import { getSetCatSatus, loadMediaStart } from "../redux/ducks/mediaAds";
 import { loadSubscriptionStart } from "../redux/ducks/subscription";
-// import { loadSavedAdsStart } from "../redux/ducks/saveAds";
 import { CustomAppBar } from "../components/CustomAppBar";
 import { CustomSidebar } from "../components/CustomSidebar";
 import { loadAccountSettingsStart } from "./../redux/ducks/accountSettings";
 import Payment from "../pages/Plans"
-import { loadSavedAdsClientSideStart, loadSavedAdsStart } from "../redux/ducks/saveAds_clientSide";
+import {  loadSavedAdsStart } from "../redux/ducks/saveAds_clientSide";
 import { useSelector } from "react-redux";
 // import { getSetCatSatus } from "../redux/ducks/filtered_Data";
 import ActiveSubScription from "../ActiveSubScription";
 import InActiveSubScription from "../InActiveSubScription";
-import { CircularProgress } from "@mui/material";
+import FadeLoader from "react-spinners/FadeLoader";
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
@@ -34,79 +33,111 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 
 const MainLayout = () => {
   const dispatch = useDispatch();
-  // const { savedAds } = useSelector((state) => state.savedAds);
   const { loading } = useSelector((state) => state.subscriptionData);
-  const [isOpen, setIsOpen] = React.useState(true);
+  const drawerOpenKey = "drawerOpen";
+  const defaultOpen = localStorage.getItem(drawerOpenKey) === "true";
+  const [isOpen, setIsOpen] = React.useState(defaultOpen);
+  React.useEffect(() => {
+    localStorage.setItem(drawerOpenKey, isOpen);
+  }, [isOpen]);
 
-  // window.onscroll = function(){
-  //   if(
-  //     window.innerHeight +document.documentElement.scrollTop===
-  //     document.documentElement.offsetHeight
-  //   )
-  //   {
-  //     scrollToEnd()
-  //   }
-  // }
-  
-  const pageScrolldataload = () =>{
-
-    dispatch(loadMediaStart({
-      page_index:0,
-    }));
-  }
+  const pageScrolldataload = () => {
+    dispatch(
+      loadMediaStart({
+        page_index: 0,
+      })
+    );
+  };
   useEffect(() => {
     dispatch(loadSubscriptionStart());
-    pageScrolldataload()
-    dispatch(loadSavedAdsStart());    
+    pageScrolldataload();
+    dispatch(
+      loadSavedAdsStart({
+        page_index: 0,
+      })
+    );
     dispatch(loadAccountSettingsStart());
     dispatch(getSetCatSatus());
-  },[dispatch]);
+  }, [dispatch]);
 
-  // useEffect(()=>{
-  //   dispatch(loadSavedAdsClientSideStart(savedAds))
-  // },[dispatch, savedAds])
-  
   return (
     <>
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
         <CustomSidebar isOpen={isOpen} />
         <CustomAppBar isOpen={isOpen} setIsOpen={setIsOpen} />
-        <Box component="main" sx={{ flexGrow: 1, paddingLeft:4 }}>
+        <Box component="main" sx={{ flexGrow: 1, paddingLeft: 4 }}>
           <DrawerHeader />
-          { loading ? <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              width:"100%",
-            }}
-          >
-            <CircularProgress
-              style={{
-                position: "relative",
-                opacity: 1,
-                zIndex: 1,
-                visibility: loading  ? "visible" : "hidden",
+          {loading ? (
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                width: "100%",
               }}
-            />
-          </Box> :
-          <Routes>
-            <Route exact path="/" element={<ActiveSubScription><Addlibrarydatabase /></ActiveSubScription>} />
-            <Route exact path="/savedAds" element={<ActiveSubScription><SavedAds /></ActiveSubScription>} />
-            <Route exact path="/contactSupport" element={<ContactSupport />} />
-            <Route
-              exact
-              path="/accountSettings"
-              element={<AccountSettings />}
-            />
-            <Route
-              exact
-              path="/adDeatails/:adsId/*"
-              element={<ActiveSubScription><AdDeatailsTabs /></ActiveSubScription>}
-            />
-            <Route exact path="/plans" element={<InActiveSubScription><Payment /></InActiveSubScription>} />
-          </Routes>}
+            >
+              <FadeLoader
+                style={{
+                  position: "relative",
+                  opacity: 1,
+                  zIndex: 1,
+                  visibility: loading ? "visible" : "hidden",
+                  marginTop: "250px",
+                }}
+                color="#00BFFF"
+              />
+            </Box>
+          ) : (
+            <Routes>
+              <Route
+                exact
+                path="/"
+                element={
+                  <ActiveSubScription>
+                    <Addlibrarydatabase />
+                  </ActiveSubScription>
+                }
+              />
+              <Route
+                exact
+                path="/savedAds"
+                element={
+                  <ActiveSubScription>
+                    <SavedAds />
+                  </ActiveSubScription>
+                }
+              />
+              <Route
+                exact
+                path="/contactSupport"
+                element={<ContactSupport />}
+              />
+              <Route
+                exact
+                path="/accountSettings"
+                element={<AccountSettings />}
+              />
+              <Route
+                exact
+                path="/adDeatails/:adsId/*"
+                element={
+                  <ActiveSubScription>
+                    <AdDeatailsTabs />
+                  </ActiveSubScription>
+                }
+              />
+              <Route
+                exact
+                path="/plans"
+                element={
+                  <InActiveSubScription>
+                    <Payment />
+                  </InActiveSubScription>
+                }
+              />
+            </Routes>
+          )}
         </Box>
       </Box>
     </>

@@ -23,11 +23,8 @@ const ContactSupport = () => {
     const response = await contactSupport(data);
     if (!response.success) {
       setLoading(false);
-      console.log("SuccessFull!!", response);
-      // navigate("/");
     } else {
       setLoading(false);
-      console.log("Failure!!", response);
       navigate("/");
     }
   };
@@ -126,7 +123,6 @@ const ContactSupport = () => {
                   multiline
                   rows={10}
                   name="message"
-                  // required
                 />
                 {errors.message?.message && (
                   <span style={{ color: "#00CBFF" }}>

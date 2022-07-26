@@ -14,13 +14,15 @@ import {
 //   loadSavedAdsSuccess,
 // } from "../../ducks/saveAds";
 
-export function* handleGetSavedAds() {
+export function* handleGetSavedAds({payload}) {
   try {
-    const response = yield call(requestGetSavedAds);
+    const response = yield call(requestGetSavedAds,payload);
     console.log("response", response);
 
     if (response.status === 200) {
-      yield put(loadSavedAdsSuccess(response?.data?.data));
+      console.log(response?.data?.data)
+      console.log("pppppppppppppppppppppppppppppp")
+      yield put(loadSavedAdsSuccess(response?.data));
     }
   } catch (error) {
     yield put(loadSavedAdsError(error));
