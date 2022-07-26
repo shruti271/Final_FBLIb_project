@@ -379,7 +379,7 @@ function AllFilters(props) {
 
   useEffect(() => {
     callFilters();
-  }, [appliedFilters, SavedAppliedFilters]);
+  }, [appliedFilters, SavedAppliedFilters,props.search]);
 
   const callFilters = () => {
     // console.log("111",searchbar , media);
