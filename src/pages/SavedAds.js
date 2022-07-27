@@ -105,8 +105,8 @@ const SavedAds = () => {
             paddingRight: "36px",
           }}
         > */}
-      <Grid container sx={{ marginRight: 5 }}>
-        <Grid item>
+      <Grid container p={2} sx={{ marginRight: 5 }}>
+        <Grid item width="inherit" sx={{width:"98%"}}>
           {filterActivate && (
             <Grid
               item
@@ -385,7 +385,7 @@ const SavedAds = () => {
             >
               <Grid
                 container
-                // spacing={2}
+                spacing={4}
                 sx={{
                   marginTop: "5px",
                   width: "100%",
@@ -406,14 +406,14 @@ const SavedAds = () => {
                     )
                   )}
                 {savedAdsLocal?.length === 0 && save_loading === false && (
-                  <Grid>
+                  <Grid  marginInline="auto">
                     <Stack
                       direction={"column"}
                       sx={{
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
-                        marginTop: "50px",
+                        marginTop: "35px",
                       }}
                     >
                       <Typography>
