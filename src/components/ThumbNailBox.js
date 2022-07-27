@@ -185,6 +185,7 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
               marginRight: "12px",
               paddingLeft: "10px",
             }}
+            // noWrap
           >
             {adInfo?.pageInfo?.name}
           </Typography>

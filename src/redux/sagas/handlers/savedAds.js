@@ -25,7 +25,7 @@ export function* handleCreateSavedAds({ payload }) {
     const response = yield call(requestCreateSavedAds, payload);
 
     if (response.status === 200) {
-      yield put(createSavedAdsSuccess(response.data.data));
+      yield put(createSavedAdsSuccess(response.data));
     }
   } catch (error) {
     yield put(createSavedAdsError(error));

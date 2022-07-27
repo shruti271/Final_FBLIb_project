@@ -143,45 +143,25 @@ const initialState = {
   page_index: 0,
   loading: false,
   error: "",
-  // appliedFilters: {
-  //   StartRunningDate: { startdate: "", enddate: "", Message: "" },
-  //   AdStatus: { status: "", Message: "" },
-  //   AdCount: { min: 1, max: 1000, Message: "" },
-  //   FacebookLikes: { min: 1, max: 100000, Message: "" },
-  //   InstragramLike: { min: 1, max: 10000, Message: "" },
-  //   MediaType: { selectedData: "", Message: "" },
-  //   PurchaseType: { selctedButton: "", Message: "" },
-  // },
-  // maxRanger: {
-  //   AdCount: { min: 1, max: 1000 },
-  //   FacebookLikes: { min: 1, max: 100000 },
-  //   InstragramLike: { min: 1, max: 10000 },
-  // },
-
-  // sortFilter: {
-  //   type: "",
-  //   order: "",
-  // },
   postionYoffset: 0,
   // searchBarData: "",
   // searchType: "All these words",
   // seactBarFilterData: [],
   // search_loading: false,
-  ctaStatus: [],
+  // ctaStatus: [],
   // error: "",
 };
 const mediaReducer = (state = initialState, action) => {
   switch (action.type) {
-    case LOAD_MEDIA_START:
-      // console.log("11111--------", action.payload.initialState);
+    case LOAD_MEDIA_START:      
       return {
-        ...state,
-        // initialState:action.payload,
+        ...state,        
         loading: true,
         page_index: action.payload.page_index,
-        allMediaAdsData:
-          action.payload.page_index === 0 ? [] : state.allMediaAdsData,
-        // initialState: [...state.action.payload, ...action.allMediaAds],
+        // allMediaAds:state.allMediaAdsData,
+        // allMediaAdsData:
+        //   action.payload.page_index === 0 ? [] : state.allMediaAdsData,
+        
       };
 
     case UPDATE_MEDIA_START:
@@ -190,18 +170,13 @@ const mediaReducer = (state = initialState, action) => {
         loading: false,
       };
     case LOAD_MEDIA_SUCCESS:
-      // const updateData = [...state.allMediaAds,action.payload]
-      console.log(
-        ":::::1111111111111111111111111111111111111111111111111111111111111111111111111111111111",
-        action.payload === {},
-        action.payload === ""
-      );
+     
       return {
         ...state,
         loading: false,
         allMediaAdsData:
           action.payload.error === false
-            ? state.allMediaAdsData.concat(action.payload.data[1]?.all_ads)
+            ? state.page_index===0?action.payload.data[1]?.all_ads: state.allMediaAdsData.concat(action.payload.data[1]?.all_ads)
             : state.allMediaAdsData,
         savedIds:
           action.payload.error === false

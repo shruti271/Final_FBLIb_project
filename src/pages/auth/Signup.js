@@ -136,6 +136,8 @@ const Signup = () => {
                         label="First Name"
                         variant="outlined"
                         fullWidth
+                        {...register("first_name")}
+
                         name="first_name"
                       />
                     </Grid>
@@ -144,6 +146,7 @@ const Signup = () => {
                         placeholder="Enter last name"
                         label="Last Name"
                         variant="outlined"
+                        {...register("last_name")}
                         fullWidth
                       />
                     </Grid>

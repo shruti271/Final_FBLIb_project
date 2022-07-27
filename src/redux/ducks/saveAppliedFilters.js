@@ -81,10 +81,10 @@ export const saveddatevalueStart = (filter) => ({
     payload: Ads,
   });
 //   -----------------------
-  export const savedsavedShnageSearchType = (data) => ({
-    type: SAVED_CHANGE_SEARCH_TYPE,
-    payload: data,
-  });
+  // export const savedsavedShnageSearchType = (data) => ({
+  //   type: SAVED_CHANGE_SEARCH_TYPE,
+  //   payload: data,
+  // });
   export const savedsearchPhraseStart = (Ads) => ({
     type: SAVED_SEARCH_PHRASE_START,
     payload: Ads,
@@ -109,6 +109,9 @@ const initialState = {SavedAppliedFilters: {
     type: "",
     order: "",
   },
+  searchType:"All these words",
+  searchBarData: "",
+  ctaStatus: [],
 };
 
 
