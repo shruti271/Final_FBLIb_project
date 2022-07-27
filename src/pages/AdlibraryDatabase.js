@@ -250,7 +250,7 @@ const Addlibrarydatabase = () => {
       <Grid
         container
         sx={{
-          paddingRight: "36px",          
+          paddingRight: "36px",
         }}
       >
         <Grid item xs={12}>
@@ -390,13 +390,27 @@ const Addlibrarydatabase = () => {
           />
         </Grid>
         <Grid item sx={{ width: "100%" }}>
-        <InfiniteScroll
-          dataLength={allMediaAdsData.length} //This is important field to render the next data
-          next={postionYoffset === 0 && fetchData}
-          hasMore={true}
-          loader={
+          <div
+            style={{
+              position: "relative",
+              top: window.postionYoffset,
+              left: "50%",
+              opacity:loading && page_index===0? 1:0,
+              zIndex: 1,
+            }}
+          >
+            <CircularProgress />
+          </div>
+
+          <InfiniteScroll
+            // style={{ opacity: loading ? 0.5 : 1 }}
+            dataLength={allMediaAdsData.length} //This is important field to render the next data
+            next={fetchData}
+            hasMore={true}
+            loader={
             <div
               style={{
+                // opacity:0.5,
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
@@ -405,52 +419,50 @@ const Addlibrarydatabase = () => {
             >
               {loading ? <h4>Loading...</h4> : null}
             </div>
-          }
-        >
-          <Grid
-            item
-            // xs={12}
-            sx={{
-              // opacity: search_loading ? 0.5 : 1,
-              // disabled: loading || search_loading || save_loading? true : false,
-              width: "100%",
-            }}
-          >
+            }
+          >{console.log(":::::::::::::::::::",window.innerHeight)}
             <Grid
-              container
-              // spacing={2}
+              item             
               sx={{
-                marginTop: "5px",
+                opacity:window.pageYOffset <= window.innerHeight && loading  ? 0.5 : 1,                
                 width: "100%",
-                // opacity: save_loading ? 0.5 : 1,
-                // disabled: save_loading ? true : false,
               }}
             >
-              {allMediaAdsData?.length !== 0 &&
-                allMediaAdsData?.map((ads, index) => (
-                  <ThumbNailBox
-                    adInfo={ads}
-                    index={index}
-                    deleteId={savedIds?.includes(ads.id) ? ads.id : false}
-                    key={index}
-                  />
-                ))}
-              {allMediaAdsData?.length === 0 && loading === false && (
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    width: "100%",
-                  }}
-                >
-                  <Typography>No Result</Typography>
-                </Box>
-              )}
+              <Grid
+                container
+                // spacing={2}
+                sx={{
+                  marginTop: "5px",
+                  width: "100%",
+                  // opacity: save_loading ? 0.5 : 1,
+                  // disabled: save_loading ? true : false,
+                }}
+              >
+                {allMediaAdsData?.length !== 0 &&
+                  allMediaAdsData?.map((ads, index) => (
+                    <ThumbNailBox
+                      adInfo={ads}
+                      index={index}
+                      deleteId={savedIds?.includes(ads.id) ? ads.id : false}
+                      key={index}
+                    />
+                  ))}
+                {allMediaAdsData?.length === 0 && loading === false && (
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      width: "100%",
+                    }}
+                  >
+                    <Typography>No Result</Typography>
+                  </Box>
+                )}
+              </Grid>
+              {/* // )} */}
             </Grid>
-            {/* // )} */}
-          </Grid>
-        </InfiniteScroll>
+          </InfiniteScroll>
         </Grid>
       </Grid>
       {/* </InfiniteScroll> */}

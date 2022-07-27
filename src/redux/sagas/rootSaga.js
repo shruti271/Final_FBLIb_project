@@ -16,17 +16,17 @@ import {
 } from "./../ducks/accountSettings";
 import { LOAD_SUBALLMEDIA_START } from "../ducks/subAllAds";
 import { handleGetSubAllMedia } from "./handlers/subAllAds";
-import { handleGetSearchedData, handleGetSearchedPhraseData } from "./handlers/searchBar";
+import {  handleGetSearchedPhraseData } from "./handlers/searchBar";
 import {  SEARCH_PHRASE_START } from "../ducks/filtered_Data";
-import { handleGetSavedAdsSearchedData, handleGetSavedSearchedPhraseData } from "./handlers/save_searchAds";
-import { ALL_SAVED_ADS_SEARCH_START, CREATE_SAVEADS_START, DELETE_SAVEADS_START, LOAD_SAVEADS_START, SAVED_SEARCH_PHRASE_START } from "../ducks/saveAds_clientSide";
+
+import {  CREATE_SAVEADS_START, DELETE_SAVEADS_START, LOAD_SAVEADS_START } from "../ducks/saveAds_clientSide";
 import { handleGetCatStatus } from "./handlers/allSastus";
 import { handleGetIsAlive } from "./handlers/session";
 import { handleGetSubscription } from "./handlers/subscription";
 import { LOAD_ISALIVE_START } from "../ducks/session";
 import { LOAD_SUBSCRIPTION_START } from "../ducks/subscription";
-import { requestSearchPhraseData } from "./requests/searchBar";
-import { ALL_STATUS_START, SEARCH_START } from "../ducks/appliedFilterData";
+
+import { ALL_STATUS_START } from "../ducks/appliedFilterData";
 
 function* onLoadMeida() {
   yield takeLatest(LOAD_MEDIA_START, handleGetMedia);
@@ -76,18 +76,20 @@ function* onLoadPhraseSearchedAds() {
   yield takeLatest(SEARCH_PHRASE_START, handleGetSearchedPhraseData);
 }
 
-function* onLoadSavedAdSearchedAds() {
-  yield takeLatest(ALL_SAVED_ADS_SEARCH_START, handleGetSavedAdsSearchedData);
-}
-function* onLoadSavedAdSearchedPhhraseAds() {
-  yield takeLatest(SAVED_SEARCH_PHRASE_START, handleGetSavedSearchedPhraseData);
-}
+// function* onLoadSavedAdSearchedAds() {
+//   yield takeLatest(ALL_SAVED_ADS_SEARCH_START, handleGetSavedAdsSearchedData);
+// }
+// function* onLoadSavedAdSearchedPhhraseAds() {
+//   yield takeLatest(SAVED_SEARCH_PHRASE_START, handleGetSavedSearchedPhraseData);
+// }
 const mediaSagas = [fork(onLoadMeida)];
 const isAliveSagas = [fork(onLoadIsAlive)];
 
 const subscriptionSagas = [fork(onLoadSubscription)];
 
-const SavedAdSearchSagas = [fork(onLoadSavedAdSearchedAds),fork(onLoadSavedAdSearchedPhhraseAds)];
+const SavedAdSearchSagas = [//fork(onLoadSavedAdSearchedAds),
+  //fork(onLoadSavedAdSearchedPhhraseAds)
+];
 
 const savedAdsSagas = [
   fork(onLoadSavedAds),

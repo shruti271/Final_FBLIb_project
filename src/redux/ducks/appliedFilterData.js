@@ -109,6 +109,9 @@ const initialState = {appliedFilters: {
     type: "",
     order: "",
   },
+  searchType:"All these words",
+  searchBarData: "",
+  ctaStatus: [],
 };
 
 

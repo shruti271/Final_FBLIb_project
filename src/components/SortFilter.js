@@ -170,7 +170,7 @@ function SortFilter(props) {
   };
   useEffect(() => {    
     callFilters();
-  }, [sortFilter]);
+  }, [props.sortDetail]);
   const handleChangeSortType = (event, newValue) => {
     if (props.name === "AllAdsPage") {
       dispatch(

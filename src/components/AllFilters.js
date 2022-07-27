@@ -43,7 +43,7 @@ import {
   applySavedAdsallfilters,
   EmptySavedSearchValueStart,
   loadSavedAdsStart,
-  SavedAdsAdCountvalueStart,
+  // SavedAdsAdCountvalueStart,
   SavedAdsButtonTypevalueStart,
   savedAdschnageSearchType,
   SavedAdsclearFilteredDataStart,
@@ -52,7 +52,7 @@ import {
   SavedAdsMediaTypevalueStart,
   SavedAdssearchStart,
   SavedAdssearchValueStart,
-  SavedAdsstatusValueStart,
+  // SavedAdsstatusValueStart,
   savedSearchPhraseStart,
   // savedShnageSearchType,
 } from "../redux/ducks/saveAds_clientSide";
@@ -209,8 +209,8 @@ function AllFilters(props) {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const { ctaStatus } = useSelector((state) => state.allMediaAds);
-  const { appliedFilters } = useSelector((state) => state.appliedFilterData);
+  // const {  } = useSelector((state) => state.allMediaAds);
+  const { appliedFilters,ctaStatus } = useSelector((state) => state.appliedFilterData);
 
   const { SavedAppliedFilters } = useSelector((state) => state.saveFilterData);
 
@@ -378,7 +378,8 @@ function AllFilters(props) {
   };
 
   useEffect(() => {
-    callFilters();
+    if(props.loading === false)
+     callFilters();
   }, [appliedFilters, SavedAppliedFilters,props.search]);
 
   const callFilters = () => {
@@ -518,10 +519,40 @@ function AllFilters(props) {
         container
         sx={{ border: "2px solid #EBEBEB", borderRadius: "10px" }}
       >
-        <Grid item xs={2} sx={{ display: "flex" }}>
-          <Box sx={{ width: "100%", marginRight: "21px" }}>
-            <Stack direction={"row"} sx={{ justifyContent: "space-between" }}>
-              <Button
+        <Grid item  sx={{ display: "flex" }}>
+          {/* <Box sx={{ width: "100%", marginRight: "21px" }}> */}
+            {/* <Stack direction={"row"} > */}
+            <Button
+            // disabled={props.loading}
+            onClick={(event) => {
+              setSeachTypeAnchorEl(event.currentTarget);
+            }}
+            size="large"
+            variant="outlined"
+            disableElevation
+            disableRipple
+            sx={{
+              color: "#2B2F42",
+              whiteSpace: "nowrap",
+              border: "1px solid #EBEBEB",
+              // borderRadius: "10px",
+              // marginRight: "14px",
+              // marginTop: "22px",
+            }}
+            // className={classes.FilterBox}
+            endIcon={
+              <img
+                alt="arrowdown"
+                src={Arrowdown}
+                className={classes.DropDownArrow}
+              />
+            }
+          >
+            <Typography noWrap textTransform="capitalize">
+            {props.search_type}
+            </Typography>
+          </Button>
+              {/* <Button
                 // disabled={props.loading}
                 onClick={(event) => {
                   setSeachTypeAnchorEl(event.currentTarget);
@@ -533,14 +564,19 @@ function AllFilters(props) {
                     className={classes.DropDownArrow2}
                   />
                 }
-                label="Outlined"
-                sx={{ color: "#2B2F42" }}
-                // style={{  disabled: true }}
+                variant="outlined"
+                // size="large"
+                // disableElevation
+                // disableRipple
+                
+                // label="Outlined"
+                // sx={{ color: "#2B2F42" }}
+                
               >
                 <Typography noWrap textTransform="capitalize">
                   {props.search_type}
                 </Typography>
-              </Button>
+              </Button> */}
 
               <Popover
                 anchorEl={seachTypeanchorel}
@@ -610,11 +646,11 @@ function AllFilters(props) {
                   </FormControl>
                 </Box>
               </Popover>
-            </Stack>
-          </Box>
+            {/* </Stack> */}
+          {/* </Box> */}
           <Divider orientation="vertical" sx={{ marginLeft: "auto" }} />
         </Grid>
-        <Grid item xs={10}>
+        <Grid item >
           <Box sx={{ marginLeft: "21px" }}>
             <InputBase
               defaultValue={props.search}
@@ -973,7 +1009,7 @@ function AllFilters(props) {
                       );
                     } else if (props.name === "SavedPage") {
                       dispatch(
-                        SavedAdsAdCountvalueStart({
+                        savedAdCountvalueStart({
                           name: "AdCount",
                           // componentName: props.name,
                           min: 1,
@@ -1088,7 +1124,7 @@ function AllFilters(props) {
                         // callFilters();
                       } else if (props.name === "SavedPage") {
                         dispatch(
-                          SavedAdsstatusValueStart({
+                          savedstatusValueStart({
                             name: "AdStatus",
                             // componentName: props.name,
                             status: "",
@@ -1297,7 +1333,7 @@ function AllFilters(props) {
                       // callFilters();
                     } else if (props.name === "SavedPage") {
                       dispatch(
-                        SavedAdsAdCountvalueStart({
+                        savedAdCountvalueStart({
                           name: "FacebookLikes",
                           // componentName: props.name,
                           min: 1,

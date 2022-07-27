@@ -30,7 +30,7 @@ import { savedclearSingleFilteredDataStart } from "../redux/ducks/saveAppliedFil
 const SavedAds = () => {
   const dispatch = useDispatch();
 
-  const { savedAdsLocal, save_loading } = useSelector(
+  const { savedAdsLocal, save_loading ,page_index} = useSelector(
     (state) => state.savedclienads
   );
 
@@ -42,7 +42,7 @@ const SavedAds = () => {
     search_loading,
     // save_loading,
     maxRanger,
-    page_index,
+    
   } = useSelector((state) => state.saveFilterData);
 
   const [filterActivate, setFilterActivate] = React.useState(true);
@@ -105,8 +105,8 @@ const SavedAds = () => {
             paddingRight: "36px",
           }}
         > */}
-      <Grid container sx={{ marginRight: 5 }}>
-        <Grid item>
+      <Grid container>
+        <Grid container xs={12}>
           {filterActivate && (
             <Grid
               item
@@ -282,7 +282,7 @@ const SavedAds = () => {
             </Grid>
           )}
         </Grid>
-        <Grid container justifyContent="flex-end">
+        <Grid container  xs={12} justifyContent="flex-end">
           <Stack
             direction={"row"}
             sx={{
@@ -406,7 +406,12 @@ const SavedAds = () => {
                     )
                   )}
                 {savedAdsLocal?.length === 0 && save_loading === false && (
-                  <Grid>
+                  <Grid sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    // marginTop: "50px",
+                  }}>
                     <Stack
                       direction={"column"}
                       sx={{

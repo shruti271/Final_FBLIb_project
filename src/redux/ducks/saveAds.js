@@ -39,10 +39,10 @@ export const createSavedAdsError = (error) => ({
   payload: error,
 });
 
-export const deleteSavedAdsStart = (saveId) => ({
-  type: DELETE_SAVEADS_START,
-  payload: saveId,
-});
+// export const deleteSavedAdsStart = (saveId) => ({
+//   type: DELETE_SAVEADS_START,
+//   payload: saveId,
+// });
 
 export const deleteSavedAdsSuccess = (saveId) => ({
   type: DELETE_SAVEADS_SUCCESS,
@@ -63,12 +63,7 @@ const initialState = {
 const savedAdsReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOAD_SAVEADS_START:
-    case CREATE_SAVEADS_START:
-    case DELETE_SAVEADS_START:
-      return {
-        ...state,
-        save_loading: true,
-      };
+    case CREATE_SAVEADS_START:   
     case LOAD_SAVEADS_SUCCESS:
       return {
         ...state,
