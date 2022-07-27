@@ -1,18 +1,41 @@
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, Box, Typography, Button, Stack, Avatar } from "@mui/material";
 import Firsrcardimg from "../../assets/FirstCardImg.svg";
 import facebook from "../../assets/facebook.svg";
 import instragram from "../../assets/instragram.svg";
 import MyChart from "../../components/MyChart";
-
+const ReadMore = ({ children }) => {
+  const text = children;
+  const [isReadMore, setIsReadMore] = React.useState(true);
+  const toggleReadMore = () => {
+    setIsReadMore(!isReadMore);
+  };
+  return (
+    <p className="text">
+      {isReadMore ? text.slice(0, 150) : text}
+      <Typography
+        variant="h7"
+        style={{ color: "#B5EDFF", cursor: "pointer" }}
+        onClick={toggleReadMore}
+        className="read-or-hide"
+      >
+        {isReadMore ? "...Read more" : " Show less"}
+      </Typography>
+    </p>
+  );
+};
 
 function AdDeatails({ ThumbnailData }) {
   const classes = useStyles();
- 
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth",
-  }, []);
+
+  window.scrollTo(
+    {
+      top: 0,
+      behavior: "smooth",
+    },
+    []
+  );
 
   return (
     <>
@@ -36,31 +59,28 @@ function AdDeatails({ ThumbnailData }) {
                   <Avatar
                     src={ThumbnailData?.pageInfo?.logo}
                     aria-label="FirstCard"
-
                     style={{ width: "30px", height: "30px" }}
-
                   ></Avatar>
-
                 </Box>
                 <Typography
                   variant="h6"
                   style={{
-
                     marginLeft: "8px",
                     lineHeight: "30px",
                     color: "#2B2F42",
-                    fontWeight: "bold"
+                    fontWeight: "bold",
                   }}
                 >
-                  <b>{ThumbnailData?.pageInfo?.name
-                    ? ThumbnailData.pageInfo?.name
-                    : " "}</b>
+                  <b>
+                    {ThumbnailData?.pageInfo?.name
+                      ? ThumbnailData.pageInfo?.name
+                      : " "}
+                  </b>
                 </Typography>
               </Box>
 
-              <Box sx={{ marginLeft: 2, marginRight: 2, }}>
+              <Box sx={{ marginLeft: 2, marginRight: 2 }}>
                 <Typography
-
                   sx={{
                     fontWeight: 500,
 
@@ -70,13 +90,22 @@ function AdDeatails({ ThumbnailData }) {
                     margin: "10px 12px 10px 15px",
                   }}
                 >
-                  {ThumbnailData?.adDescription
-                    ? ThumbnailData.adDescription
-                    : " "}
+                  <ReadMore>
+                    {ThumbnailData?.adDescription
+                      ? ThumbnailData.adDescription
+                      : " "}
+                  </ReadMore>
                 </Typography>
               </Box>
 
-              <Box sx={{ marginLeft: "5px", display: "flex", justifyContent: "center", alignItems: "center" }}>
+              <Box
+                sx={{
+                  marginLeft: "5px",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
                 {ThumbnailData?.adMediaType === "video" ? (
                   <video
                     poster={ThumbnailData?.thumbBucketUrl}
@@ -111,9 +140,12 @@ function AdDeatails({ ThumbnailData }) {
                         }}
                         noWrap
                       >
-                        <b>  {ThumbnailData?.displayURL
-                          ? ThumbnailData.displayURL.replace("HTTPS://", "")
-                          : " "}</b>
+                        <b>
+                          {" "}
+                          {ThumbnailData?.displayURL
+                            ? ThumbnailData.displayURL.replace("HTTPS://", "")
+                            : " "}
+                        </b>
                       </Typography>
                       <Typography
                         style={{
@@ -121,7 +153,7 @@ function AdDeatails({ ThumbnailData }) {
                           lineHeight: "30px",
                           letterSpacing: "0.035em",
                           color: "#2B2F42",
-                          fontWeight: "bold" 
+                          fontWeight: "bold",
                         }}
                       >
                         {ThumbnailData?.headline ? ThumbnailData.headline : " "}
@@ -141,7 +173,15 @@ function AdDeatails({ ThumbnailData }) {
                       </Typography>
                     </Box>
                   </Grid>
-                  <Grid item xs={2} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                  <Grid
+                    item
+                    xs={2}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
                     <Avatar
                       sx={{
                         backgroundColor: "#00CBFF",
@@ -188,7 +228,11 @@ function AdDeatails({ ThumbnailData }) {
                     window.open(ThumbnailData?.purchaseURL, "_blank", "");
                   }}
                 >
-                  <Typography variant="h6" fontStyle={{ color: "white" }} noWrap>
+                  <Typography
+                    variant="h6"
+                    fontStyle={{ color: "white" }}
+                    noWrap
+                  >
                     <b>{ThumbnailData?.ctaStatus}</b>
                   </Typography>
                 </Button>
@@ -313,48 +357,52 @@ function AdDeatails({ ThumbnailData }) {
                 </Box>
               </Stack>
               <Stack style={{ justifyContent: "center", marginTop: "36px" }}>
-                {ThumbnailData?.pageInfo?.platforms.map((socialMedia, index) => {
-                  return (
-                    <Stack key={index}
-                      direction={"row"}
-                      sx={{
-                        marginBottom: "16px",
-                      }}
-                    >
-                      <Box sx={{ marginRight: "10px" }}>
-                        <img
-                          src={
-                            socialMedia.name === "Facebook"
-                              ? facebook
-                              : instragram
-                          }
-                          aria-label="Add"
-                        />
-                      </Box>
-                      <Stack>
-                        <Typography
-                          style={{
-                            fontFamily: "Neue Haas Grotesk Display Pro",
-                          }}
-                        >
-                          {socialMedia?.other}
-                        </Typography>
-                        <Typography
-                          style={{
-                            fontFamily: "Neue Haas Grotesk Display Pro",
-                          }}
-                        >
-                          {socialMedia.name === "Facebook"
-                            ? socialMedia.likes + " likes • " + socialMedia.type
-                            : socialMedia.followers +
-                            " followers • " +
-                            socialMedia.type}
-                        </Typography>
+                {ThumbnailData?.pageInfo?.platforms.map(
+                  (socialMedia, index) => {
+                    return (
+                      <Stack
+                        key={index}
+                        direction={"row"}
+                        sx={{
+                          marginBottom: "16px",
+                        }}
+                      >
+                        <Box sx={{ marginRight: "10px" }}>
+                          <img
+                            src={
+                              socialMedia.name === "Facebook"
+                                ? facebook
+                                : instragram
+                            }
+                            aria-label="Add"
+                          />
+                        </Box>
+                        <Stack>
+                          <Typography
+                            style={{
+                              fontFamily: "Neue Haas Grotesk Display Pro",
+                            }}
+                          >
+                            {socialMedia?.other}
+                          </Typography>
+                          <Typography
+                            style={{
+                              fontFamily: "Neue Haas Grotesk Display Pro",
+                            }}
+                          >
+                            {socialMedia.name === "Facebook"
+                              ? socialMedia.likes +
+                                " likes • " +
+                                socialMedia.type
+                              : socialMedia.followers +
+                                " followers • " +
+                                socialMedia.type}
+                          </Typography>
+                        </Stack>
                       </Stack>
-                    </Stack>
-                  );
-                })}
-
+                    );
+                  }
+                )}
               </Stack>
             </Grid>
             <Grid>
@@ -371,13 +419,17 @@ function AdDeatails({ ThumbnailData }) {
                   <b>Ad Count Over 30 Days</b>
                 </Typography>
 
-
-                <Grid container >
+                <Grid container>
                   <Grid item xs={12} lg={12} sm={12}>
-                    <MyChart chartData={ThumbnailData?.history} dataBoxVisiblity={false} axisVisiblity={true} fillType={"area"} graphHeight={350} />
+                    <MyChart
+                      chartData={ThumbnailData?.history}
+                      dataBoxVisiblity={false}
+                      axisVisiblity={true}
+                      fillType={"area"}
+                      graphHeight={350}
+                    />
                   </Grid>
                 </Grid>
-
               </Stack>
             </Grid>
           </Box>
@@ -398,7 +450,7 @@ const useStyles = makeStyles(() => ({
   AdsImage: {
     width: "95%",
     height: "400px",
-    objectFit: 'fill',
+    objectFit: "fill",
     padding: "0",
     margin: "0",
   },

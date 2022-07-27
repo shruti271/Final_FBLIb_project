@@ -422,7 +422,8 @@ const Addlibrarydatabase = () => {
             }
           >{console.log(":::::::::::::::::::",window.innerHeight)}
             <Grid
-              item             
+              container
+              spacing={3}
               sx={{
                 opacity:window.pageYOffset <= window.innerHeight && loading  ? 0.5 : 1,                
                 width: "100%",

@@ -5,6 +5,7 @@ import {
   Avatar,
   Box,
   Button,
+  Card,
   Grid,
   Stack,
   Tooltip,
@@ -152,6 +153,12 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
 // console.log("000000000000000000000000000000")
   return (
     <Grid item lg={3} md={4} xs={5} key={index}>
+      <Card
+      sx={{
+        transition: "transform 0.45s ease-in-out",
+        "&:hover": { transform: "scale3d(1.05, 1.05, 1)" },
+      }}
+      >
       <Stack
         sx={{
           border: "2px solid #F6F6FB",
@@ -185,7 +192,7 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
               marginRight: "12px",
               paddingLeft: "10px",
             }}
-            // noWrap
+            noWrap
           >
             {adInfo?.pageInfo?.name}
           </Typography>
@@ -341,6 +348,7 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
           <b>See Details</b>
         </Button>
       </Stack>
+      </Card>
     </Grid>
   );
 };
