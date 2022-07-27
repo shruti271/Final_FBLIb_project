@@ -33,6 +33,8 @@ const AllAds = () => {
         }}
       >
         {subAllMedia?.map((ads, index) => (
+          console.log(ads.id),
+          console.log("@@@@@@@@@@@@@@@@@@@@@@@"),
           <ThumbNailBox
             adInfo={ads}
             index={index}

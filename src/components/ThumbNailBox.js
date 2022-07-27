@@ -185,7 +185,7 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
               marginRight: "12px",
               paddingLeft: "10px",
             }}
-            // noWrap
+            noWrap
           >
             {adInfo?.pageInfo?.name}
           </Typography>
@@ -335,7 +335,7 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
           }}
           onClick={() => {
             dispatch(srtPostionForScrollValueStart(window.pageYOffset));
-            navigate(`/adDeatails/${adInfo.adID}`);
+            navigate(`/adDeatails/${adInfo.id}`,{ state: { SingleAds: adInfo} });
           }}
         >
           <b>See Details</b>
