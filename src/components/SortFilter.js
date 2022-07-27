@@ -44,7 +44,8 @@ function SortFilter(props) {
   const [sortByAnchorel, setSortByAnchorel] = React.useState(null);
   const openSortByAnchorel = Boolean(sortByAnchorel);
 
-  const { sortFilter } = useSelector((state) => state.appliedFilterData);
+  // const { sortFilter } = useSelector((state) => state.appliedFilterData);
+  // const { sortFilter } = useSelector((state) => state.saveFilterData);
   const callFilters = () => {
     if (props.name === "AllAdsPage") {
       dispatch(
@@ -100,10 +101,11 @@ function SortFilter(props) {
               : null,
           keywords:
             props.search_type === "All these words"
-              ? props.search.split(" ")
-              : "",
+              ? "props.search" ==="" ? props.search.split(" ")
+              : null:null,
+              
           phrase:
-            props.search_type === "Exact Phrase" ? props.search.split(",") : "",
+            props.search_type === "Exact Phrase" ? "props.search" ==="" ? props.search.split(",") : null :null,
         })
       );
     } else if (props.name === "SavedPage") {
@@ -169,8 +171,9 @@ function SortFilter(props) {
     }
   };
   useEffect(() => {    
+    if(props.loading===false)
     callFilters();
-  }, [props.sortDetail]);
+  }, [ props.sortDetail]);
   const handleChangeSortType = (event, newValue) => {
     if (props.name === "AllAdsPage") {
       dispatch(
@@ -219,7 +222,7 @@ function SortFilter(props) {
       {/* <Grid container justifyContent="flex-end">
        <Box> */}
       <Button
-        disabled={props.loading}
+        // disabled={props.loading}
         onClick={(event) => {
           setSortByAnchorel(event.currentTarget);
         }}

@@ -30,7 +30,7 @@ import { savedclearSingleFilteredDataStart } from "../redux/ducks/saveAppliedFil
 const SavedAds = () => {
   const dispatch = useDispatch();
 
-  const { savedAdsLocal, save_loading ,page_index} = useSelector(
+  const { savedAdsLocal, save_loading ,page_index,savedIds} = useSelector(
     (state) => state.savedclienads
   );
 

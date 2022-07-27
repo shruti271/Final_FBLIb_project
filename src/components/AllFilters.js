@@ -380,7 +380,8 @@ function AllFilters(props) {
   useEffect(() => {
     if(props.loading === false)
      callFilters();
-  }, [appliedFilters, SavedAppliedFilters,props.search]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [appliedFilters, SavedAppliedFilters]);
 
   const callFilters = () => {
     // console.log("111",searchbar , media);
@@ -435,15 +436,15 @@ function AllFilters(props) {
             props?.sortDetail?.type === "true" ||
             props?.sortDetail?.type === "false"
               ? props?.sortDetail?.type
-              : "",
+              : null,
           keywords:
             props?.search_type === "All these words"
-              ? props?.search.split(" ") //document.getElementById("searchbar").value.split(" ")
+              ? props?.search!==""?props?.search.split(" "):null //document.getElementById("searchbar").value.split(" ")
               : null,
 
           phrase:
             props.search_type === "Exact Phrase"
-              ? props?.search.split(",") //document.getElementById("searchbar").value.split(",")
+              ? props?.search!==""? props?.search.split(","):null //document.getElementById("searchbar").value.split(",")
               : null,
         })
       );
@@ -498,15 +499,15 @@ function AllFilters(props) {
             props?.sortDetail?.type === "true" ||
             props?.sortDetail?.type === "false"
               ? props?.sortDetail?.type
-              : "",
+              : null,
           keywords:
             props?.search_type === "All these words"
-              ? props?.search.split(" ") //document.getElementById("searchbar").value.split(" ")
+              ? document.getElementById("searchbar").value ==="" ? props?.search.split(" "):null //document.getElementById("searchbar").value.split(" ")
               : null,
 
           phrase:
             props.search_type === "Exact Phrase"
-              ? props?.search.split(",") //document.getElementById("searchbar").value.split(",")
+              ? document.getElementById("searchbar").value ==="" ?props?.search.split(","):null //document.getElementById("searchbar").value.split(",")
               : null,
         })
       );
@@ -552,32 +553,7 @@ function AllFilters(props) {
             {props.search_type}
             </Typography>
           </Button>
-              {/* <Button
-                // disabled={props.loading}
-                onClick={(event) => {
-                  setSeachTypeAnchorEl(event.currentTarget);
-                }}
-                endIcon={
-                  <img
-                    alt="arrowdown"
-                    src={Arrowdown}
-                    className={classes.DropDownArrow2}
-                  />
-                }
-                variant="outlined"
-                // size="large"
-                // disableElevation
-                // disableRipple
-                
-                // label="Outlined"
-                // sx={{ color: "#2B2F42" }}
-                
-              >
-                <Typography noWrap textTransform="capitalize">
-                  {props.search_type}
-                </Typography>
-              </Button> */}
-
+             
               <Popover
                 anchorEl={seachTypeanchorel}
                 add={openSearchType ? "simple-popover" : undefined}
@@ -665,13 +641,13 @@ function AllFilters(props) {
                       })
                     );
                   }
-                  if (e.target.value.length === 0) {
-                    dispatch(
-                      searchStart({
-                        data: "",
-                      })
-                    );
-                  }
+                  // if (e.target.value.length === 0) {
+                  //   dispatch(
+                  //     searchStart({
+                  //       data: "",
+                  //     })
+                  //   );
+                  // }
                 } else if (props.name === "SavedPage") {
                   if (e.key === "Enter") {
                     dispatch(
@@ -680,13 +656,13 @@ function AllFilters(props) {
                       })
                     );
                   }
-                  if (e.target.value.length === 0) {
-                    dispatch(
-                      savedsearchStart({
-                        data: "",
-                      })
-                    );
-                  }
+                  // if (e.target.value.length === 0) {
+                  //   dispatch(
+                  //     savedsearchStart({
+                  //       data: "",
+                  //     })
+                  //   );
+                  // }
                 }
               }}
               margin="dense"

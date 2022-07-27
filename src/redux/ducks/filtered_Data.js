@@ -76,10 +76,10 @@ export const facebookLikesStart = (filter) => ({
   type: FACEBOOKLIKES_START,
   payload: filter,
 });
-export const SetSortOrdervalueStart = (filter) => ({
-  type: SET_SORT_FILTER_START,
-  payload: filter,
-});
+// export const SetSortOrdervalueStart = (filter) => ({
+//   type: SET_SORT_FILTER_START,
+//   payload: filter,
+// });
 export const fluctuatedDataEnd = () => ({
   type: INCREASE_DECREASE_DATA_START,
 });

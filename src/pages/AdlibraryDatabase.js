@@ -46,6 +46,7 @@ import {
 } from "../redux/ducks/mediaAds";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { clearSingleFilteredDataStart } from "../redux/ducks/appliedFilterData";
+import { FadeLoader } from "react-spinners";
 // import { clearSingleFilteredDataStart } from "../redux/ducks/filterData";
 // import MyGraph from "../components/Graph";
 
@@ -233,15 +234,17 @@ const Addlibrarydatabase = () => {
       behavior: "smooth",
     });
   }, [postionYoffset]);
-
-  // useEffect(() => {
-  //   if (Object(allMediaAdsData)?.length) {
-  //     dispatch(loadFilteredDataStart());
-  //   } else {
-  //     dispatch(putFilteredDataStart({ data: allMediaAdsData }));
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
+  console.log(allMediaAdsData?.length, "+++++++++++++++++++++++");
+  
+  
+  useEffect(() => {
+    if (allMediaAdsData?.length) {
+      dispatch(loadFilteredDataStart());
+    } else {
+      dispatch(putFilteredDataStart({ data: allMediaAdsData }));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
@@ -380,7 +383,7 @@ const Addlibrarydatabase = () => {
         </Grid>
         <Grid container justifyContent="flex-end" sx={{ marginTop: "10px" }}>
           <SortFilter
-            loading={search_loading}
+            loading={loading}
             sortDetail={sortFilter}
             pageFilterInfo={appliedFilters}
             ranger={maxRanger}
@@ -389,54 +392,61 @@ const Addlibrarydatabase = () => {
             search_type={searchType}
           />
         </Grid>
-        <Grid item sx={{ width: "100%" }}>
-          <div
-            style={{
-              position: "relative",
-              top: window.postionYoffset,
-              left: "50%",
-              opacity:loading && page_index===0? 1:0,
-              zIndex: 1,
+
+        <Grid item>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              visibility: loading && page_index === 0 ? "visible" : "hidden",
+              // width: "100%",
             }}
           >
-            <CircularProgress />
-          </div>
-
+            <FadeLoader
+              style={{
+                position: "relative",
+                opacity: 1,
+                zIndex: 1,
+                visibility: loading && page_index === 0 ? "visible" : "hidden",
+                // marginTop: "250px",
+              }}
+              color="#00BFFF"
+            />
+          </Box>
           <InfiniteScroll
-            // style={{ opacity: loading ? 0.5 : 1 }}
             dataLength={allMediaAdsData.length} //This is important field to render the next data
             next={fetchData}
             hasMore={true}
             loader={
-            <div
-              style={{
-                // opacity:0.5,
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                textAlign: "center",
-              }}
-            >
-              {loading ? <h4>Loading...</h4> : null}
-            </div>
+              <div
+                style={{
+                  // opacity:0.5,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  textAlign: "center",
+                }}
+              >
+                {<h4>Loading...</h4>}
+              </div>
             }
-          >{console.log(":::::::::::::::::::",window.innerHeight)}
+          >
             <Grid
-              container
-              spacing={3}
+              item
               sx={{
-                opacity:window.pageYOffset <= window.innerHeight && loading  ? 0.5 : 1,                
+                opacity:
+                page_index === 0 && loading
+                    ? 0.5
+                    : 1,
                 width: "100%",
               }}
             >
               <Grid
                 container
-                // spacing={2}
                 sx={{
                   marginTop: "5px",
                   width: "100%",
-                  // opacity: save_loading ? 0.5 : 1,
-                  // disabled: save_loading ? true : false,
                 }}
               >
                 {allMediaAdsData?.length !== 0 &&
