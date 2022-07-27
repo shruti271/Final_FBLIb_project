@@ -444,6 +444,7 @@ const Addlibrarydatabase = () => {
             >
               <Grid
                 container
+                spacing={3}
                 sx={{
                   marginTop: "5px",
                   width: "100%",
