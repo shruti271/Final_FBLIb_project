@@ -216,8 +216,8 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
             </Stack>
           </Stack>
         </Toolbar>
+        <Divider/>
       </AppBar>
-      ;
     </>
   );
 };

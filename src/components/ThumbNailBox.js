@@ -27,8 +27,6 @@ import { createSavedAdsStart,deleteSavedAdsStart} from "../redux/ducks/saveAds_c
 // } from "../redux/ducks/saveAds_clientSide";
 // import pauseButton from "../assets/pauseButton.svg";
 // import { srtPostionForScrollValueStart } from "../redux/ducks/filtered_Data";
-import { SingleLineChart } from "./Graph";
-import MyChart from "./MyChart";
 import MyCharttt from "./linemy";
 import { srtPostionForScrollValueStart } from "../redux/ducks/mediaAds";
 
@@ -157,6 +155,8 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
       sx={{
         transition: "transform 0.45s ease-in-out",
         "&:hover": { transform: "scale3d(1.05, 1.05, 1)" },
+        
+        borderRadius:"20px"
       }}
       >
       <Stack
@@ -300,7 +300,7 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
           >
             <Avatar
               sx={{
-                backgroundColor: "#00CBFF",
+                background: "linear-gradient(45deg, #00CBFF 0%, #72E2FF 100%)",
                 display: "grid",
                 width: "52px",
                 height: "51px",
@@ -321,7 +321,6 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
             </Avatar>
           </Grid>
         </Grid>
-
 
         <Box sx={{ marginTop: "20px", marginBottom: "20px", height: "100px" }}>
           <MyCharttt

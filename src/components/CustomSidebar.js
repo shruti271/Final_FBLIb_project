@@ -46,9 +46,9 @@ const useStyles = makeStyles(() => ({
     texFillColor: "transparent",
   },
   selectedMenu: {
-    background:
-      "linear-gradient(270deg, rgba(0, 203, 255, 0.5) 0%, rgba(0, 203, 255, 0.03) 100%)",
-    borderRadius: "33px",
+    background:"rgba(0, 203, 255, 0.05)",
+    borderRight: "4px solid #00C9FD",
+    borderRadius:"32px 0px 0px 32px"
   },
   openDrawerItemWrapper: {
     paddingRight: "6px",

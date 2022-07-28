@@ -41,7 +41,7 @@ function AdDeatails({ ThumbnailData }) {
     <>
       <Grid container sx={{ marginTop: "36px" }}>
         <Grid item xs={12} lg={4} md={4} sm={12}>
-          <Box sx={{ border: "4.97421px solid #F6F6FB" }}>
+          <Box sx={{ border: "4.97421px solid #F6F6FB",borderRadius:"15px" }}>
             <Stack>
               <Box
                 sx={{ display: "flex", marginTop: "13px", marginLeft: "20px" }}
@@ -149,7 +149,6 @@ function AdDeatails({ ThumbnailData }) {
                       </Typography>
                       <Typography
                         style={{
-                          fontWeight: 500,
                           lineHeight: "30px",
                           letterSpacing: "0.035em",
                           color: "#2B2F42",
@@ -167,9 +166,11 @@ function AdDeatails({ ThumbnailData }) {
                           color: "#2B2F42",
                         }}
                       >
-                        {ThumbnailData?.purchaseDescription
-                          ? ThumbnailData.purchaseDescription
-                          : " "}
+                        <ReadMore>
+                          {ThumbnailData?.purchaseDescription
+                            ? ThumbnailData.purchaseDescription
+                            : " "}
+                        </ReadMore>
                       </Typography>
                     </Box>
                   </Grid>
@@ -240,7 +241,7 @@ function AdDeatails({ ThumbnailData }) {
             </Stack>
           </Box>
         </Grid>
-        <Grid item xs={12} lg={8} md={8} sm={12} p={4}>
+        <Grid item xs={12} lg={8} md={8} sm={12} p={2}>
           <Box>
             <Grid container sx={{ justifyContent: "space-around" }}>
               <Button
@@ -288,14 +289,14 @@ function AdDeatails({ ThumbnailData }) {
               sx={{ justifyContent: "space-around", marginTop: "40px" }}
             >
               <Stack sx={{ alignItems: "center" }}>
-                <Typography className={classes.textdeco}>Ad Status</Typography>
+                <Typography className={classes.textdeco}>Ad Status:</Typography>
                 <Typography className={classes.textdeco}>
                   <b> {ThumbnailData?.status ? ThumbnailData.status : " "}</b>
                 </Typography>
               </Stack>
               <Stack sx={{ alignItems: "center" }}>
                 <Typography className={classes.textdeco}>
-                  Started Running On
+                  Started Running On:
                 </Typography>
                 <Typography className={classes.textdeco}>
                   <b>
@@ -308,7 +309,7 @@ function AdDeatails({ ThumbnailData }) {
                 </Typography>
               </Stack>
               <Stack sx={{ alignItems: "center" }}>
-                <Typography className={classes.textdeco}>Placements</Typography>
+                <Typography className={classes.textdeco}>Placements:</Typography>
                 {ThumbnailData?.platforms.map((ads, index) => (
                   <Typography className={classes.textdeco} key={index}>
                     {" "}
