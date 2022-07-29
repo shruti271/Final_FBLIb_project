@@ -1,6 +1,6 @@
 import { all, fork, takeLatest } from "redux-saga/effects";
-import {  LOAD_MEDIA_START } from "../ducks/mediaAds";
-import { handleGetMedia } from "./handlers/mediaAds";
+import {  LOAD_FILTERED_ADS_START, LOAD_MORE_FILTERED_ADS_START } from "../ducks/filteredAds";
+import { handleGetFilteredAds, handleGetMoreFilteredAds } from "./handlers/filteredAds";
 import {
   handleGetAccountSettings,
   handleUpdateAccountSettings,
@@ -18,18 +18,20 @@ import { LOAD_SUBALLMEDIA_START } from "../ducks/subAllAds";
 import { handleGetSubAllMedia } from "./handlers/subAllAds";
 import {  handleGetSearchedPhraseData } from "./handlers/searchBar";
 import {  SEARCH_PHRASE_START } from "../ducks/filtered_Data";
-
 import {  CREATE_SAVEADS_START, DELETE_SAVEADS_START, LOAD_SAVEADS_START } from "../ducks/saveAds_clientSide";
 import { handleGetCatStatus } from "./handlers/allSastus";
 import { handleGetIsAlive } from "./handlers/session";
 import { handleGetSubscription } from "./handlers/subscription";
 import { LOAD_ISALIVE_START } from "../ducks/session";
 import { LOAD_SUBSCRIPTION_START } from "../ducks/subscription";
-
 import { ALL_STATUS_START } from "../ducks/appliedFilterData";
 
-function* onLoadMeida() {
-  yield takeLatest(LOAD_MEDIA_START, handleGetMedia);
+function* onLoadFilteredAds() {
+  yield takeLatest(LOAD_FILTERED_ADS_START, handleGetFilteredAds);
+}
+
+function* onLoadMoreFilteredAds() {
+  yield takeLatest(LOAD_MORE_FILTERED_ADS_START, handleGetMoreFilteredAds);
 }
 
 function* onLoadIsAlive() {
@@ -82,7 +84,7 @@ function* onLoadPhraseSearchedAds() {
 // function* onLoadSavedAdSearchedPhhraseAds() {
 //   yield takeLatest(SAVED_SEARCH_PHRASE_START, handleGetSavedSearchedPhraseData);
 // }
-const mediaSagas = [fork(onLoadMeida)];
+const filteredAdsSagas = [fork(onLoadFilteredAds), fork(onLoadMoreFilteredAds)];
 const isAliveSagas = [fork(onLoadIsAlive)];
 
 const subscriptionSagas = [fork(onLoadSubscription)];
@@ -116,7 +118,7 @@ const allCatStatusSagas = [
 ];
 export default function* watcherSaga() {
   yield all([
-    ...mediaSagas,
+    ...filteredAdsSagas,
     ...savedAdsSagas,
     ...accountSettingsSagas,
     ...suballadsSagas,

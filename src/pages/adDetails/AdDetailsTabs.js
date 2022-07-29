@@ -8,11 +8,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { loadSubAllMediaStart } from "../../redux/ducks/subAllAds";
 import LeftArrow from "../../assets/LeftArrow.svg";
 function AdDeatailsTabs() {
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const adID = useParams();
 
-  const { allMediaAdsData } = useSelector((state) => state.allMediaAds);
+  const filteredAds  = useSelector((state) => state.filteredAdsReducer);
   const { subAllMedia } = useSelector((state) => state.subAllMedia);
 
   const adDetailsTabs = {
@@ -21,32 +22,30 @@ function AdDeatailsTabs() {
   };
   const [isActiveTab, setIsActiveTab] = useState(adDetailsTabs.ADOVERVIEW);
   const [adDetail, setAdDetail] = useState();
+
   useEffect(() => {
     if (window.location.pathname === `/adDeatails/${adID.adsId}`) {
       setIsActiveTab(adDetailsTabs.ADOVERVIEW);
     } else {
       setIsActiveTab(adDetailsTabs.ALLADS);
     }
-  });
+  },[window.location.pathname]);
+
   useEffect(() => {
-    if (allMediaAdsData) {
-      console.log("comin------------------");
-      console.log(allMediaAdsData);
+    console.log("subAllMedia :", subAllMedia)
+    if (filteredAds.filteredAds.length > 0) {
       // eslint-disable-next-line array-callback-return
-      const singleAds = allMediaAdsData.find((ad) => {
+      const singleAds = filteredAds.filteredAds.find((ad) => {
         if (ad.adID === adID.adsId) {
           return ad;
         }
       });
-
       setAdDetail(() => singleAds);
       if (subAllMedia[0]?.pageInfo?.name === singleAds?.pageInfo?.name) {
-        // console.log("dont callllllllllllllllllllllllll");
-      } else {
         dispatch(loadSubAllMediaStart({ ad_name: singleAds?.pageInfo?.name }));
       }
     }
-  }, [adID.adsId, adDetail, subAllMedia, dispatch]);
+  }, [adID.adsId, adDetail, subAllMedia, dispatch, filteredAds.filteredAds]);
 
   return (
     <>

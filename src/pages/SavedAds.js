@@ -26,11 +26,14 @@ import FilterAltOffIcon from "@mui/icons-material/FilterAltOff";
 import InfiniteScroll from "react-infinite-scroll-component";
 import ScrollToTop from "../utils/scrollToTop";
 import { savedclearSingleFilteredDataStart } from "../redux/ducks/saveAppliedFilters";
+import { PageNameEnum } from "../utils/enums";
 
 const SavedAds = () => {
   const dispatch = useDispatch();
 
-  const { savedAdsLocal, save_loading ,page_index} = useSelector(
+  const savedAdsPerams = useSelector((state) => state.savedAdsPerams);
+
+  const { savedAdsLocal, save_loading, page_index } = useSelector(
     (state) => state.savedclienads
   );
 
@@ -42,7 +45,6 @@ const SavedAds = () => {
     search_loading,
     // save_loading,
     maxRanger,
-    
   } = useSelector((state) => state.saveFilterData);
 
   const [filterActivate, setFilterActivate] = React.useState(true);
@@ -91,7 +93,7 @@ const SavedAds = () => {
   };
   return (
     <>
-     <ScrollToTop />
+      <ScrollToTop />
       <BackTotopbutton />
       {/* <Stack direction={"column"}> */}
       <Typography>
@@ -118,15 +120,7 @@ const SavedAds = () => {
                 marginTop: 2,
               }}
             >
-              <AllFilters
-                name={"SavedPage"}
-                pageFilterInfo={SavedAppliedFilters}
-                search={searchBarData}
-                search_type={searchType}
-                loading={search_loading}
-                sortDetail={sortFilter}
-                ranger={maxRanger}
-              />
+              <AllFilters />
 
               {search_loading ? (
                 <Box
@@ -156,133 +150,48 @@ const SavedAds = () => {
                     // disabled: search_loading ? true : false,
                   }}
                 >
-                  {Object.keys(SavedAppliedFilters).map((filter, index) => {
-                    return (
-                      SavedAppliedFilters[filter]["Message"] &&
-                      (console.log("cominnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn"),
-                      (
-                        <Chip
-                          key={index}
-                          color="primary"
-                          label={SavedAppliedFilters[filter]["Message"]}
-                          deleteIcon={
-                            <CloseIcon
-                              style={{
-                                color: "white",
-                                backgroundColor: "#00CBFF",
-                              }}
-                            />
-                          }
-                          onDelete={() => {
-                            const filters = Object(SavedAppliedFilters[filter]);
-                            const AdsRemovedElement = {
-                              MIN: "min",
-                              MEDIATYPE: "selectedData",
-                              STATUS: "status",
-                              SELECTEDDATE: "StartRunningDate",
-                            };
-                            console.log(filter);
-
-                            console.log(";;;;;;;;;;;;;;;");
-                            const FilterRemoveData = [];
-                            for (let dum in filters) {
-                              console.log("dum" + dum);
-                              console.log(dum, filters[dum]);
-                              // console.log(typeof SavedAppliedFilters[filter][dum]);
-                              FilterRemoveData[dum] =
-                                typeof SavedAppliedFilters[filter][dum] ===
-                                "number"
-                                  ? dum === AdsRemovedElement.MIN
-                                    ? 1
-                                    : filter === "FacebookLikes"
-                                    ? 100000
-                                    : filter === "InstragramLike"
-                                    ? 10000
-                                    : 1000
-                                  : typeof SavedAppliedFilters[filter][dum] ===
-                                    "string"
-                                  ? dum === AdsRemovedElement.MEDIATYPE
-                                    ? dum === AdsRemovedElement.STATUS
-                                      ? ""
-                                      : ""
-                                    : ""
-                                  : new Date();
+                  {Object.keys(savedAdsPerams.appliedFilters).map(
+                    (filter, index) => {
+                      return (
+                        savedAdsPerams.appliedFilters[filter]["isApplied"] && (
+                          <Chip
+                            key={index}
+                            color="primary"
+                            label={
+                              savedAdsPerams.appliedFilters[filter]["chipText"]
                             }
-                            dispatch(
-                              savedclearSingleFilteredDataStart({
-                                name: filter,
-                                data: FilterRemoveData,
-                                // componentName: "AllAdsPage",
-                              })
-                            );
-                            // dispatch(
-                            //   loadSavedAdsStart({
-                            //     page_index: 0,
-                            //     startdate:
-                            //       SavedAppliedFilters?.StartRunningDate
-                            //         ?.startdate,
-                            //     enddate:
-                            //       SavedAppliedFilters?.StartRunningDate
-                            //         ?.enddate,
-                            //     adcount:
-                            //       SavedAppliedFilters?.AdCount?.min >
-                            //         maxRanger.AdCount.min ||
-                            //       SavedAppliedFilters?.AdCount?.max <
-                            //         maxRanger.AdCount.max
-                            //         ? [
-                            //             SavedAppliedFilters?.AdCount?.min,
-                            //             SavedAppliedFilters?.AdCount?.max,
-                            //           ]
-                            //         : [],
-                            //     adstatus: SavedAppliedFilters?.AdStatus?.status,
-                            //     fb_likes:
-                            //       SavedAppliedFilters?.FacebookLikes?.min >
-                            //         maxRanger.FacebookLikes.min ||
-                            //       SavedAppliedFilters?.FacebookLikes?.max <
-                            //         maxRanger.FacebookLikes.max
-                            //         ? [
-                            //             SavedAppliedFilters?.FacebookLikes?.min,
-                            //             SavedAppliedFilters?.FacebookLikes?.max,
-                            //           ]
-                            //         : [],
-                            //     insta_followers:
-                            //       SavedAppliedFilters?.InstragramLike?.min >
-                            //         maxRanger.InstragramLike.min ||
-                            //       SavedAppliedFilters?.InstragramLike?.max <
-                            //         maxRanger.InstragramLike.max
-                            //         ? [
-                            //             SavedAppliedFilters?.InstragramLike
-                            //               ?.min,
-                            //             SavedAppliedFilters?.InstragramLike
-                            //               ?.max,
-                            //           ]
-                            //         : [],
-                            //     media_type:
-                            //       SavedAppliedFilters?.MediaType?.selectedData,
-                            //     cta_status:
-                            //       SavedAppliedFilters?.PurchaseType
-                            //         ?.selctedButton,
-
-                            //     // increaseCount: false,
-                            //   })
-                            // );
-                          }}
-                          sx={{
-                            borderRadius: 2,
-                            backgroundColor: "#00CBFF",
-                            // marginLeft: 1,
-                            margin: 0.5,
-                          }}
-                        />
-                      ))
-                    );
-                  })}
+                            deleteIcon={
+                              <CloseIcon
+                                style={{
+                                  color: "white",
+                                  backgroundColor: "#00CBFF",
+                                }}
+                              />
+                            }
+                            onDelete={() => {
+                              dispatch(
+                                savedAdsPerams.clearSingleFilter({
+                                  key: filter,
+                                })
+                              );
+                            }}
+                            sx={{
+                              borderRadius: 2,
+                              backgroundColor: "#00CBFF",
+                              // marginLeft: 1,
+                              margin: 0.5,
+                            }}
+                          />
+                        )
+                      );
+                    }
+                  )}
                 </Grid>
               )}
             </Grid>
           )}
         </Grid>
-        <Grid container  xs={12} justifyContent="flex-end">
+        <Grid container xs={12} justifyContent="flex-end">
           <Stack
             direction={"row"}
             sx={{
@@ -337,15 +246,7 @@ const SavedAds = () => {
                 />
               )}
             </Box>
-            <SortFilter
-              loading={search_loading}
-              sortDetail={sortFilter}
-              pageFilterInfo={SavedAppliedFilters}
-              ranger={maxRanger}
-              name={"SavedPage"}
-              search={searchBarData}
-              search_type={searchType}
-            />
+            <SortFilter/>
           </Stack>
         </Grid>
         <Grid item sx={{ width: "100%" }}>
@@ -406,12 +307,14 @@ const SavedAds = () => {
                     )
                   )}
                 {savedAdsLocal?.length === 0 && save_loading === false && (
-                  <Grid sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    // marginTop: "50px",
-                  }}>
+                  <Grid
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      // marginTop: "50px",
+                    }}
+                  >
                     <Stack
                       direction={"column"}
                       sx={{
