@@ -118,7 +118,8 @@ function AdDeatails() {
         <Grid container sx={{ marginTop: "36px" }}>
           <Grid item xs={12} lg={4} md={4} sm={12}>
             <Box
-              sx={{ border: "4.97421px solid #F6F6FB", borderRadius: "15px" }}
+              sx={{ border: "1px solid #EBEBEB",
+                borderRadius: "10px" }}
             >
               <Stack>
                 <Box

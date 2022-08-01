@@ -88,11 +88,6 @@ const AdsList = () => {
         }
         
     }, [dispatch, allAdsPerams]);
-    const abc=()=>{
-      dispatch(
-        allAdsPeramsDuck.setDatabasePageIndex(allAdsPerams?.pageIndex + 1)
-      )
-    }
 // console.log("1123", filteredAds?.filteredAds)
   return (
     <InfiniteScroll
@@ -134,7 +129,7 @@ const AdsList = () => {
             width: "100%",
             // opacity: save_loading ? 0.5 : 1,
             // disabled: save_loading ? true : false,
-          }}spacing={1}
+          }}
         >
           {filteredAds?.filteredAds?.length !== 0 &&
             filteredAds?.filteredAds?.map((ads, index) => (

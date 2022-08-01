@@ -213,18 +213,19 @@ const ThumbNailBox = ({ adInfo, index }) => {
   },[savedAdsPerams])
   
   return (
-    <Grid item lg={3} md={4} xs={5} key={index}>
+    <Grid item lg={3} md={4} xs={5} key={index} sx={{padding:"10px"}}>
       <Card
       sx={{
           // transition: "transform 0.45s ease-in-out",
           // "&:hover": { transform: "scale3d(1.05, 1.05, 1)" },
         
-        borderRadius:"20px"
+        borderRadius:"16px",
+        boxShadow:"none",
+        border:"1px solid #EBEBEB"
       }}
       >
       <Stack
         sx={{
-          border: "2px solid #F6F6FB",
           padding: "10px",
           justifyContent: "space-between"
         }}
@@ -382,7 +383,7 @@ const ThumbNailBox = ({ adInfo, index }) => {
           </Grid>
         </Grid>
 
-        <Box sx={{ marginTop: "20px", marginBottom: "20px", height: "100px" }}>
+        <Box sx={{ height: "100px" }}>
           <MyChart
             chartData={adInfo?.history}
             dataBoxVisiblity={false}
