@@ -9,7 +9,19 @@ import FilterAltOffIcon from "@mui/icons-material/FilterAltOff";
 import ScrollToTop from "../utils/scrollToTop";
 import FilterChips from "../components/FilterChips";
 import SavedAdsList from "../components/SavedAdsList";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  titleHome: {
+    fontWeight: 600,
+    fontSize: "24px",
+    lineHeight: "24px",
+    color: "#2B2F42",
+  },
+}));
+
 const SavedAds = () => {
+  const classes = useStyles();
 
   const [filterActivate, setFilterActivate] = React.useState(true);
 
@@ -17,33 +29,45 @@ const SavedAds = () => {
     <>
       <ScrollToTop />
       <BackTotopbutton />
-      {/* <Stack direction={"column"}> */}
-      <Typography>
-        <b>Saved Ads</b>
-      </Typography>
-      {/* <Grid
-          container
-          sx={{
-            // opacity: loading ? 0.5 : 1,
-            // disabled: loading ? true : false,
-            paddingRight: "36px",
-          }}
-        > */}
-      <Grid container>
+      <Grid
+        container
+        sx={{
+          paddingRight: "36px",
+        }}
+      >
+        <Grid item xs={12}>
+          <Box component="main">
+            <Typography
+              className={classes.titleHome}
+              variant="h5"
+              ml={1}
+              sx={{ fontWeight: "bold", color: "#3A3D4B" }}
+            >
+              Saved Ads
+            </Typography>
+          </Box>
+        </Grid>
         <Grid item xs={12}>
           {filterActivate && (
-            <Stack sx={{
-              border: "1px solid #EBEBEB",
-              borderRadius: "15px",
-              padding: "16px 36px",
-              marginTop: 2,
-            }}>
+            <Stack
+              sx={{
+                border: "1px solid #EBEBEB",
+                borderRadius: "15px",
+                padding: "16px 36px",
+                marginTop: 2,
+              }}
+            >
               <AllFilters />
               <FilterChips />
             </Stack>
           )}
         </Grid>
-        <Grid item xs={12} justifyContent="flex-end" sx={{marginRight:"10px", marginTop:"10px", marginBottom:"15px"}}>
+        <Grid
+          item
+          xs={12}
+          justifyContent="flex-end"
+          sx={{  marginTop: "10px", marginBottom: "15px" }}
+        >
           <Stack
             direction={"row"}
             sx={{
@@ -95,7 +119,7 @@ const SavedAds = () => {
               )}
             </Box>
             <Box>
-              <SortFilter/>
+              <SortFilter />
             </Box>
           </Stack>
         </Grid>

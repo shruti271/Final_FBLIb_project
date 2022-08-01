@@ -149,7 +149,7 @@ const Addlibrarydatabase = () => {
             <FilterChips />
           </Box>
         </Grid>
-        <Grid container justifyContent="flex-end" sx={{ marginTop: "10px" }}>
+        <Grid container justifyContent="flex-end" sx={{ marginTop: "10px", marginBottom:"15px" }}>
           <SortFilter />
         </Grid>
         <Grid item sx={{ width: "100%" }}>

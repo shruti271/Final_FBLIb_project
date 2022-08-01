@@ -110,10 +110,12 @@ const filteredSavedAdsReducer = (state = initialState, action) => {
         }),
       };
     case ADD_TO_SAVED_FILTERED_AD_LOCAL_SUCCESS:
+      const filterdListToBeUpdated = [...state.filteredSavedAds]
+      filterdListToBeUpdated.unshift(action.payload?.AdDetails)
       return {
         ...state,
         filteredSavedAds: action.payload?.valid
-          ? [...state.filteredSavedAds, action.payload?.AdDetails]
+          ? filterdListToBeUpdated
           : state.filteredSavedAds,
       };
     default:
