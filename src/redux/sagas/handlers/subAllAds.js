@@ -1,20 +1,36 @@
 import { call, put } from "redux-saga/effects";
 import {
-  loadSubAllMediaError,
-  loadSubAllMediaSuccess,
+  loadSubAllAdsSuccess,
+  loadSubAllAdsError,
+  loadMoreSubAllAdsSuccess,
+  loadMoreSubAllAdsError
 } from "../../ducks/subAllAds";
-import { requestGetSubAllMedia } from "../requests/subAllAds";
+import { requestGetSubAllAds } from "../requests/subAllAds";
 
-export function* handleGetSubAllMedia({ payload }) {
+export function* handleGetSubAllAds({ payload }) {
   try {
-    const response = yield call(requestGetSubAllMedia, payload);
+    const response = yield call(requestGetSubAllAds, payload);
     console.log("response", response);
 
     if (response.status === 200) {
-      yield put(loadSubAllMediaSuccess(response?.data?.data));
+      yield put(loadSubAllAdsSuccess(response?.data?.data));
       // yield put(loadMediaStart);
     }
   } catch (error) {
-    yield put(loadSubAllMediaError(error));
+    yield put(loadSubAllAdsError(error));
+  }
+}
+
+export function* handleGetMoreSubAllAds({ payload }) {
+  try {
+    const response = yield call(requestGetSubAllAds, payload);
+    console.log("response", response);
+
+    if (response.status === 200) {
+      yield put(loadMoreSubAllAdsSuccess(response?.data?.data));
+      // yield put(loadMediaStart);
+    }
+  } catch (error) {
+    yield put(loadMoreSubAllAdsError(error));
   }
 }

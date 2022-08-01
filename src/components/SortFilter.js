@@ -13,26 +13,8 @@ import React, { useEffect, useState } from "react";
 import Arrowdown from "../assets/Arrowdown.svg";
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
-// import {
-//   applyallfilters,
-//   applysortingfilters,
-//   fluctuatedDataEnd,
-//   // SetSortOrdervalueStart,
-//   SortvalueStart,
-// } from "../redux/ducks/filtered_Data";
-import {
-  applySavedAdsallfilters,
-  loadSavedAdsStart,
-  SavedAdsSetSortOrdervalueStart,
-  SavedAdsSortvalueStart,
-  SavedfluctuatedDataEnd,
-} from "../redux/ducks/saveAds_clientSide";
-import { loadMediaStart } from "../redux/ducks/mediaAds";
-import { SetSortOrdervalueStart } from "../redux/ducks/appliedFilterData";
-import { savedSetSortOrdervalueStart } from "../redux/ducks/saveAppliedFilters";
 import { useLocation } from "react-router-dom";
 import { PageNameEnum } from "../utils/enums";
-// import { SetSortOrdervalueStart } from "../redux/ducks/filterData";
 import * as allAdsPeramsDuck from "../redux/ducks/allAdsPerams";
 import * as savedAdsPeramsDuck from "../redux/ducks/savedAdsPerams";
 

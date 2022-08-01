@@ -1,96 +1,18 @@
-import React, { useEffect } from "react";
-import { Chip, CircularProgress, Grid, Stack, Typography } from "@mui/material";
-import { useSelector } from "react-redux";
-import ThumbNailBox from "../components/ThumbNailBox";
+import React from "react";
+import { Grid, Stack, Typography } from "@mui/material";
 import filter from "../assets/filter.svg";
-import noSavedAdsImage from "../assets/noSavedAdsImage.svg";
 import { Box } from "@material-ui/core";
 import BackTotopbutton from "../pages/Backtotopbutton";
 import AllFilters from "../components/AllFilters";
-import disabledFilter from "../assets/disabledFilter.svg";
-// import { loadSavedAdsStart } from "../redux/ducks/saveAds";
-import { useDispatch } from "react-redux";
-// import { putFilteredDataStart } from "../redux/ducks/filtered_Data";
-import {
-  // applySavedAdsallfilters,
-  loadSavedAdsStart,
-  // putSavedAdsFilteredDataStart,
-  SavedAdsclearSingleFilteredDataStart,
-  // SavedAdsFilterAfterSearchStart,
-  // SavedAdssearchStart,
-  // SavedAdsSortvalueStart,
-} from "../redux/ducks/saveAds_clientSide";
-import CloseIcon from "@mui/icons-material/Close";
 import SortFilter from "../components/SortFilter";
 import FilterAltOffIcon from "@mui/icons-material/FilterAltOff";
-import InfiniteScroll from "react-infinite-scroll-component";
 import ScrollToTop from "../utils/scrollToTop";
-import { savedclearSingleFilteredDataStart } from "../redux/ducks/saveAppliedFilters";
-import { PageNameEnum } from "../utils/enums";
-
+import FilterChips from "../components/FilterChips";
+import SavedAdsList from "../components/SavedAdsList";
 const SavedAds = () => {
-  const dispatch = useDispatch();
-
-  const savedAdsPerams = useSelector((state) => state.savedAdsPerams);
-
-  const { savedAdsLocal, save_loading, page_index } = useSelector(
-    (state) => state.savedclienads
-  );
-
-  const {
-    SavedAppliedFilters,
-    searchBarData,
-    sortFilter,
-    searchType,
-    search_loading,
-    // save_loading,
-    maxRanger,
-  } = useSelector((state) => state.saveFilterData);
 
   const [filterActivate, setFilterActivate] = React.useState(true);
 
-  const fetchData = () => {
-    console.log("::::::::::::::::::::::");
-    dispatch(
-      loadSavedAdsStart({
-        page_index: page_index + 1,
-        startdate: SavedAppliedFilters?.StartRunningDate?.startdate,
-        enddate: SavedAppliedFilters?.StartRunningDate?.enddate,
-        adcount:
-          SavedAppliedFilters?.AdCount?.min > maxRanger.AdCount.min ||
-          SavedAppliedFilters?.AdCount?.max < maxRanger.AdCount.max
-            ? [
-                SavedAppliedFilters?.AdCount?.min,
-                SavedAppliedFilters?.AdCount?.max,
-              ]
-            : [],
-        adstatus: SavedAppliedFilters?.AdStatus?.status,
-        fb_likes:
-          SavedAppliedFilters?.FacebookLikes?.min >
-            maxRanger.FacebookLikes.min ||
-          SavedAppliedFilters?.FacebookLikes?.max < maxRanger.FacebookLikes.max
-            ? [
-                SavedAppliedFilters?.FacebookLikes?.min,
-                SavedAppliedFilters?.FacebookLikes?.max,
-              ]
-            : [],
-        insta_followers:
-          SavedAppliedFilters?.InstragramLike?.min >
-            maxRanger.InstragramLike.min ||
-          SavedAppliedFilters?.InstragramLike?.max <
-            maxRanger.InstragramLike.max
-            ? [
-                SavedAppliedFilters?.InstragramLike?.min,
-                SavedAppliedFilters?.InstragramLike?.max,
-              ]
-            : [],
-        media_type: SavedAppliedFilters?.MediaType?.selectedData,
-        cta_status: SavedAppliedFilters?.PurchaseType?.selctedButton,
-
-        // increaseCount: false,
-      })
-    );
-  };
   return (
     <>
       <ScrollToTop />
@@ -108,98 +30,26 @@ const SavedAds = () => {
           }}
         > */}
       <Grid container>
-        <Grid container xs={12}>
+        <Grid item xs={12}>
           {filterActivate && (
-            <Grid
-              item
-              xs={12}
-              sx={{
-                border: "1px solid #EBEBEB",
-                borderRadius: "15px",
-                padding: "16px 36px",
-                marginTop: 2,
-              }}
-            >
+            <Stack sx={{
+              border: "1px solid #EBEBEB",
+              borderRadius: "15px",
+              padding: "16px 36px",
+              marginTop: 2,
+            }}>
               <AllFilters />
-
-              {search_loading ? (
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <CircularProgress
-                    style={{
-                      position: "relative",
-                      top: 50,
-                      left: "50%",
-                      opacity: 1,
-                      zIndex: 1,
-                      visibility: search_loading ? "visible" : "hidden",
-                    }}
-                  />
-                </Box>
-              ) : (
-                <Grid
-                  container
-                  sx={{
-                    marginTop: 1,
-                    // opacity: search_loading ? 0.5 : 1,
-                    // disabled: search_loading ? true : false,
-                  }}
-                >
-                  {Object.keys(savedAdsPerams.appliedFilters).map(
-                    (filter, index) => {
-                      return (
-                        savedAdsPerams.appliedFilters[filter]["isApplied"] && (
-                          <Chip
-                            key={index}
-                            color="primary"
-                            label={
-                              savedAdsPerams.appliedFilters[filter]["chipText"]
-                            }
-                            deleteIcon={
-                              <CloseIcon
-                                style={{
-                                  color: "white",
-                                  backgroundColor: "#00CBFF",
-                                }}
-                              />
-                            }
-                            onDelete={() => {
-                              dispatch(
-                                savedAdsPerams.clearSingleFilter({
-                                  key: filter,
-                                })
-                              );
-                            }}
-                            sx={{
-                              borderRadius: 2,
-                              backgroundColor: "#00CBFF",
-                              // marginLeft: 1,
-                              margin: 0.5,
-                            }}
-                          />
-                        )
-                      );
-                    }
-                  )}
-                </Grid>
-              )}
-            </Grid>
+              <FilterChips />
+            </Stack>
           )}
         </Grid>
-        <Grid container xs={12} justifyContent="flex-end">
+        <Grid item xs={12} justifyContent="flex-end" sx={{marginRight:"10px", marginTop:"10px", marginBottom:"15px"}}>
           <Stack
             direction={"row"}
             sx={{
-              marginRight: "30px",
               display: "flex",
               justifyContent: "right",
               alignItems: "center",
-              marginTop: 1,
             }}
             spacing={1}
           >
@@ -213,8 +63,6 @@ const SavedAds = () => {
                 justifyContent: "center",
                 alignItems: "center",
                 marginRight: "2px",
-                opacity: search_loading ? 0.5 : 1,
-                disabled: search_loading ? true : false,
               }}
             >
               {filterActivate ? (
@@ -246,101 +94,13 @@ const SavedAds = () => {
                 />
               )}
             </Box>
-            <SortFilter/>
+            <Box>
+              <SortFilter/>
+            </Box>
           </Stack>
         </Grid>
-        <Grid item sx={{ width: "100%" }}>
-          <InfiniteScroll
-            dataLength={savedAdsLocal.length} //This is important field to render the next data
-            next={fetchData}
-            hasMore={true}
-            loader={
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  textAlign: "center",
-                }}
-              >
-                {save_loading ? <h4>Loading...</h4> : null}
-              </div>
-              // <Box
-              //   sx={{
-              //     display: "flex",
-              //     justifyContent: "center",
-              //     alignItems: "center",
-              //     textAlign: "center",
-              //     width: "100%",
-              //     paddingLeft: "35%",
-              //   }}
-              // >
-              //   {save_loading ? <h4>Loading...</h4> : null}
-              // </Box>
-            }
-          >
-            <Grid
-              item
-              // xs={12}
-              sx={{}}
-            >
-              <Grid
-                container
-                // spacing={2}
-                sx={{
-                  marginTop: "5px",
-                  width: "100%",
-                }}
-              >
-                {savedAdsLocal?.length !== 0 &&
-                  savedAdsLocal?.map(
-                    (ads, index) => (
-                      console.log(ads),
-                      (
-                        <ThumbNailBox
-                          adInfo={ads}
-                          index={index}
-                          deleteId={ads.id}
-                          key={index}
-                        />
-                      )
-                    )
-                  )}
-                {savedAdsLocal?.length === 0 && save_loading === false && (
-                  <Grid
-                    sx={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      // marginTop: "50px",
-                    }}
-                  >
-                    <Stack
-                      direction={"column"}
-                      sx={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        marginTop: "50px",
-                      }}
-                    >
-                      <Typography>
-                        Nothing to show. Click the star icon in the adlibrary
-                        database tab to save ads here.
-                      </Typography>
-                      <img
-                        src={noSavedAdsImage}
-                        alt="NoSavedAds"
-                        style={{ width: "50%", height: "30%" }}
-                        // className={classes.saveicon}
-                      />
-                    </Stack>
-                  </Grid>
-                )}
-              </Grid>
-              {/* // )} */}
-            </Grid>
-          </InfiniteScroll>
+        <Grid item xs={12}>
+          <SavedAdsList />
         </Grid>
       </Grid>
       {/* </Stack> */}

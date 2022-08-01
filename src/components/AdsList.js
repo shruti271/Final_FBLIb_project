@@ -6,11 +6,12 @@ import { useDispatch, useSelector } from "react-redux";
 import * as allAdsPeramsDuck from "../redux/ducks/allAdsPerams";
 import { loadFilteredAdsStart, loadMoreFilteredAdsStart } from "../redux/ducks/filteredAds";
 import { useSkipInitialEffect } from "../utils/customHooks";
+import { FadeLoader } from "react-spinners";
 
 const AdsList = () => {
 
     const dispatch     = useDispatch();
-    const filteredAds  = useSelector((state) => state.filteredAdsReducer);
+    const filteredAds  = useSelector((state) => state.filteredAds);
     const allAdsPerams = useSelector((state) => state.allAdsPerams);
 
     useSkipInitialEffect(() => {
@@ -90,7 +91,7 @@ const AdsList = () => {
   return (
     <InfiniteScroll
       // style={{ opacity: loading ? 0.5 : 1 }}
-      dataLength={filteredAds.filteredAds.length} //This is important field to render the next data
+      dataLength={filteredAds?.filteredAds.length} //This is important field to render the next data
       next={() =>
         dispatch(
           allAdsPeramsDuck.setDatabasePageIndex(allAdsPerams?.pageIndex + 1)
@@ -98,7 +99,9 @@ const AdsList = () => {
       }
       hasMore={true}
       loader={
-        <div
+        filteredAds?.loading ?
+        <Box
+          className="loader"
           style={{
             // opacity:0.5,
             display: "flex",
@@ -107,8 +110,8 @@ const AdsList = () => {
             textAlign: "center",
           }}
         >
-          {filteredAds.loading ? <h4>Loading...</h4> : null}
-        </div>
+          <FadeLoader color="#00BFFF" cssOverride={{top:"0px", marginTop:"35px"}}/>
+        </Box> : null
       }
     >
       <Grid
@@ -127,19 +130,16 @@ const AdsList = () => {
             // disabled: save_loading ? true : false,
           }}
         >
-          {filteredAds.filteredAds?.length !== 0 &&
-            filteredAds.filteredAds?.map((ads, index) => (
+          {filteredAds?.filteredAds?.length !== 0 &&
+            filteredAds?.filteredAds?.map((ads, index) => (
               <ThumbNailBox
                 adInfo={ads}
                 index={index}
-                deleteId={
-                  filteredAds.savedAdsIds?.includes(ads.id) ? ads.id : false
-                }
                 key={index}
               />
             ))}
-          {filteredAds.filteredAds?.length === 0 &&
-            filteredAds.loading === false && (
+          {filteredAds?.filteredAds?.length === 0 &&
+            filteredAds?.loading === false && (
               <Box
                 sx={{
                   display: "flex",

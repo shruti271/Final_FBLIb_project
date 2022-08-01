@@ -1,29 +1,55 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Chip, Grid } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { useDispatch, useSelector } from "react-redux";
 import * as allAdsPeramsDuck from "../redux/ducks/allAdsPerams";
-
+import * as savedAdsPeramsDuck from "../redux/ducks/savedAdsPerams";
+import { useLocation } from "react-router-dom";
+import { PageNameEnum } from "../utils/enums";
 
 const FilterChips = () => {
   const dispatch = useDispatch();
+  const location = useLocation();
+
+  const [dataSource, setDataSource] = useState({});
+  const [pageName, setPageName] = useState("");
 
   const allAdsPerams = useSelector((state) => state.allAdsPerams);
+  const savedAdsPerams = useSelector((state) => state.savedAdsPerams);
+
+  useEffect(() => {
+    switch (location.pathname) {
+      case "/":
+        setDataSource(allAdsPerams);
+        setPageName(PageNameEnum.AdlibraryDatabase);
+        break;
+      case "/savedAds":
+        setDataSource(savedAdsPerams);
+        setPageName(PageNameEnum.SavedAds);
+        break;
+      default:
+        setDataSource({});
+    }
+  }, [allAdsPerams, location.pathname, savedAdsPerams]);
 
   useEffect(()=>{
-    console.log("In FilterChips :", allAdsPerams)
+    console.log("In FilterChips allAdsPerams :", allAdsPerams)
   },[allAdsPerams]);
+
+  useEffect(()=>{
+    console.log("In FilterChips savedAdsPerams :", savedAdsPerams)
+  },[savedAdsPerams]);
 
   return (
     <Grid container sx={{ marginTop: 1 }}>
-      {Object.keys(allAdsPerams?.appliedFilters).map((filter, index) => {
+      { dataSource?.appliedFilters && Object.keys(dataSource?.appliedFilters).map((filter, index) => {
         return (
-          allAdsPerams?.appliedFilters[filter]["isApplied"] && (
+          dataSource?.appliedFilters[filter]["isApplied"] && (
             <Chip
               key={index}
               color="primary"
               label={
-                allAdsPerams?.appliedFilters[filter]["chipText"]
+                dataSource?.appliedFilters[filter]["chipText"]
               }
               deleteIcon={
                 <CloseIcon
@@ -35,7 +61,11 @@ const FilterChips = () => {
               }
               onDelete={() => {
                 dispatch(
+                  pageName === PageNameEnum.AdlibraryDatabase ?
                   allAdsPeramsDuck.clearSingleFilter({
+                    key: filter,
+                  }) :
+                  savedAdsPeramsDuck.clearSavedSingleFilter({
                     key: filter,
                   })
                 );

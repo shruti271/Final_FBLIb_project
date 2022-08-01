@@ -6,9 +6,12 @@ export const LOAD_MORE_FILTERED_ADS_START = "LOAD_MORE_FILTERED_ADS_START";
 export const LOAD_MORE_FILTERED_ADS_SUCCESS = "LOAD_MORE_FILTERED_ADS_SUCCESS";
 export const LOAD_MORE_FILTERED_ADS_ERROR = "LOAD_MORE_FILTERED_ADS_ERROR";
 
-export const UPDATE_FILTERED_ADS_START = "UPDATE_FILTERED_ADS_START";
-export const UPDATE_FILTERED_ADS_SUCCESS = "UPDATE_FILTERED_ADS_SUCCESS";
-export const UPDATE_FILTERED_ADS_ERROR = "UPDATE_FILTERED_ADS_ERROR";
+export const REMOVE_FILTERED_AD = "REMOVE_FILTERED_AD";
+
+export const removeFilteredAd = (adToBeRemoved) => ({
+  type: REMOVE_FILTERED_AD,
+  payload:adToBeRemoved,
+});
 
 export const loadFilteredAdsStart = (filters) => ({
   type: LOAD_FILTERED_ADS_START,
@@ -40,22 +43,6 @@ export const loadMoreFilteredAdsError = (error) => ({
   payload: error,
 });
 
-
-export const updateAdsStart = (updatead) => ({
-  type: UPDATE_FILTERED_ADS_START,
-  payload: updatead,
-});
-
-export const updateAdsSuccess = (updatead) => ({
-  type: UPDATE_FILTERED_ADS_SUCCESS,
-  payload: updatead,
-});
-
-export const updateAdsError = (error) => ({
-  type: UPDATE_FILTERED_ADS_ERROR,
-  payload: error,
-});
-
 const initialState = {
   filteredAds: [],
   savedAdsIds:[],
@@ -68,6 +55,12 @@ const filteredAdsReducer = (state = initialState, action) => {
   switch (action.type) {
 
     case LOAD_FILTERED_ADS_START:
+      return {
+        ...state,
+        filteredAds: [],
+        savedAdsIds:[],
+        loading: true,
+      };
     case LOAD_MORE_FILTERED_ADS_START:
       return {
         ...state,
@@ -96,6 +89,14 @@ const filteredAdsReducer = (state = initialState, action) => {
         loading: false,
         error: action.payload?.data?.error,
       };
+
+    case REMOVE_FILTERED_AD:
+      return {
+        ...state,
+        filteredAds: state.filteredAds.filter(function (ad) {
+          return ad.id !== action.payload?.id;
+      })
+      }
     default:
       return state;
   }

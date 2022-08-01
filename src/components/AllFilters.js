@@ -146,7 +146,7 @@ function AllFilters() {
     }
   }, [location.pathname]);
 
-  const { ctaStatus } = useSelector((state) => state.appliedFilterData);
+  const { buttonTypes } = useSelector((state) => state.buttonTypes);
 
   const allAdsPerams = useSelector((state) => state.allAdsPerams);
   const savedAdsPerams = useSelector((state) => state.savedAdsPerams);
@@ -1418,7 +1418,7 @@ function AllFilters() {
                     setButtonTypeAnchorEl(null);
                   }}
                 >
-                  {ctaStatus.map((value) => {
+                  {buttonTypes.map((value) => {
                     return (
                       <FormControlLabel
                         key={value}

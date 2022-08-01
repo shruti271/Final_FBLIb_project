@@ -6,6 +6,13 @@ export const SAVED_CHANGE_SEARCHBARDATA = "SAVED_CHANGE_SEARCHBARDATA";
 export const SAVED_CLEAR_SINGLE_FILTER = "SAVED_CLEAR_SINGLE_FILTER";
 export const SAVED_REFIX_MIN_MAX_RANGE_IN_SLIDER = "SAVED_REFIX_MIN_MAX_RANGE_IN_SLIDER";
 export const SAVED_CLEAR_FILTERDATA = "SAVED_CLEAR_FILTERDATA";
+export const SET_SAVED_ADS_PAGE_INDEX =
+  "SET_SAVED_ADS_PAGE_INDEX";
+
+export const setSavedAdsPageIndex = (pageIndex) => ({
+  type: SET_SAVED_ADS_PAGE_INDEX,
+  payload: pageIndex,
+});
 
 export const changeSavedAppliedFilters = (filter) => ({
     type: SAVED_CHANGE_APPLIEDFILTERS,
@@ -32,7 +39,7 @@ export const changeSavedSearchBarData = (filter) => ({
     payload: filter,
 });
 
-export const changeSavedSingleFilter = (filter) => ({
+export const clearSavedSingleFilter = (filter) => ({
     type: SAVED_CLEAR_SINGLE_FILTER,
     payload: filter,
 });
@@ -47,6 +54,7 @@ export const clearSavedFilterData = () => ({
 });
 
 const initialState = {
+  pageIndex: 0,
   appliedFilters: {
     StartRunningDate: {
       startdate: "",
@@ -79,6 +87,7 @@ const savedAdsPeramsReducer = (state = initialState, action) => {
     case SAVED_CHANGE_APPLIEDFILTERS:
       return {
         ...state,
+        pageIndex: 0,
         appliedFilters: {
           ...state.appliedFilters,
           [`${action.payload.key}`]: {
@@ -88,20 +97,65 @@ const savedAdsPeramsReducer = (state = initialState, action) => {
       };
 
     case SAVED_CLEAR_SINGLE_FILTER:
-      return {
-        ...state,
-        appliedFilters: {
-          ...state.appliedFilters,
-          [`${action.payload.key}`]: {
-            ...state.appliedFilters[action.payload.key],
-            isApplied: false,
-          },
-        },
+      switch (action.payload.key) {
+        case "AdStatus":
+        case "MediaType":
+        case "ButtonStatus":
+          return {
+            ...state,
+            pageIndex: 0,
+            appliedFilters: {
+              ...state.appliedFilters,
+              [`${action.payload.key}`]: {
+                selectedValue: "",
+                chipText: "",
+                isApplied: false,
+              },
+            },
+          };
+        case "StartRunningDate":
+          return {
+            ...state,
+            pageIndex: 0,
+            appliedFilters: {
+              ...state.appliedFilters,
+              [`${action.payload.key}`]: {
+                StartRunningDate: {
+                  startdate: "",
+                  enddate: "",
+                  chipText: "",
+                  isApplied: false,
+                },
+            }
+          }
+        }
+        case "FacebookLikes":
+        case "InstagramFollowers":
+          return {
+            ...state,
+            pageIndex: 0,
+            appliedFilters: {
+              ...state.appliedFilters,
+              [`${action.payload.key}`]: { min: 1, max: 100000, chipText: "", isApplied: false },
+            },
+          };
+        case "AdCount":
+          return {
+            ...state,
+            pageIndex: 0,
+            appliedFilters: {
+              ...state.appliedFilters,
+              [`${action.payload.key}`]: { min: 1, max: 1000, chipText: "", isApplied: false },
+            },
+          };
+        default:
+          return state;
       };
       
     case SAVED_REFIX_MIN_MAX_RANGE_IN_SLIDER:
       return {
         ...state,
+        pageIndex: 0,
         maxRanger: {
           ...state.maxRanger,
           [`${action.payload.key}`]: {
@@ -114,6 +168,7 @@ const savedAdsPeramsReducer = (state = initialState, action) => {
       console.log("CLEAR_FILTERDATA");
       return {
         ...state,
+        pageIndex: 0,
         appliedFilters: {
           ...state.appliedFilters,
           StartRunningDate: {
@@ -149,16 +204,23 @@ const savedAdsPeramsReducer = (state = initialState, action) => {
     case SAVED_CHANGE_SORTFILTERS:
       return {
         ...state,
+        pageIndex: 0,
         sortFilter: {
           ...state.sortFilter,
           [`${action.payload.key}`]: action.payload.value,
         },
       };
     case SAVED_CHANGE_SEARCHTYPE:
-      case SAVED_CHANGE_SEARCHBARDATA:
+    case SAVED_CHANGE_SEARCHBARDATA:
       return {
         ...state,
+        pageIndex: 0,
         [`${action.payload.key}`]: `${action.payload.value}`,
+      };
+    case SET_SAVED_ADS_PAGE_INDEX:
+      return {
+        ...state,
+        pageIndex: action.payload,
       };
     default:
       return state;

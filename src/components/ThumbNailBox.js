@@ -1,5 +1,5 @@
-import React from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
   Avatar,
@@ -15,21 +15,9 @@ import Firstcardimg from "../assets/FirstCardImg.svg";
 import Shareicon from "../assets/Shareicon.svg";
 import Saveicon from "../assets/Saveicon.svg";
 import StarFill from "../assets/StarFill.svg";
-import { createSavedAdsStart,deleteSavedAdsStart} from "../redux/ducks/saveAds_clientSide";
-// import { srtPostionForScrollValueStart } from "../redux/ducks/filtered_Data";
-// import {
-//   createSavedAdsClientSideStart,
-//   createSavedAdsStart,
-//   deleteSavedAdsClientSideStart,
-//   deleteSavedAdsClientSideSuccess,
-//   deleteSavedAdsStart,
-// } from "../redux/ducks/saveAds_clientSide";
-// import pauseButton from "../assets/pauseButton.svg";
-// import { srtPostionForScrollValueStart } from "../redux/ducks/filtered_Data";
-import { SingleLineChart } from "./Graph";
-import MyChart from "./MyChart";
 import MyCharttt from "./linemy";
-import { srtPostionForScrollValueStart } from "../redux/ducks/mediaAds";
+import { addToSavedAdsStart, removeFromSavedAdsStart, addSavedAdsIdsLocal, removeSavedAdsIdsLocal } from "../redux/ducks/savedAdsManager";
+import { addToSavedAdsFilterLocalStart, removesavedFilteredAdLocal } from "../redux/ducks/filteredSavedAds";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -142,14 +130,85 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ThumbNailBox = ({ adInfo, index, deleteId }) => {
+const ThumbNailBox = ({ adInfo, index }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-// console.log("000000000000000000000000000000")
 
-// console.log(adInfo)
-// console.log("000000000000000000000000000000")
+  const [queryObject, setQueryObject] = useState({});
+
+  const savedAdsManager = useSelector((state) => state.savedAdsManager);
+  const savedAdsPerams = useSelector((state) => state.savedAdsPerams);
+
+  useEffect(()=>{
+    const queryObject = {
+      startdate: savedAdsPerams?.appliedFilters?.StartRunningDate?.startdate,
+      enddate: savedAdsPerams?.appliedFilters?.StartRunningDate?.enddate,
+      adcount:
+        savedAdsPerams?.appliedFilters?.AdCount?.min >
+          savedAdsPerams?.maxRanger.AdCount?.min ||
+        savedAdsPerams?.appliedFilters?.AdCount?.max <
+          savedAdsPerams?.maxRanger.AdCount?.max
+          ? [
+              savedAdsPerams?.appliedFilters?.AdCount?.min,
+              savedAdsPerams?.appliedFilters?.AdCount?.max,
+            ]
+          : [],
+      adstatus: savedAdsPerams?.appliedFilters?.AdStatus?.status?.selectedValue,
+      fb_likes:
+        savedAdsPerams?.appliedFilters?.FacebookLikes?.min >
+          savedAdsPerams?.maxRanger.FacebookLikes?.min ||
+        savedAdsPerams?.appliedFilters?.FacebookLikes?.max <
+          savedAdsPerams?.maxRanger.FacebookLikes?.max
+          ? [
+              savedAdsPerams?.appliedFilters?.FacebookLikes?.min,
+              savedAdsPerams?.appliedFilters?.FacebookLikes?.max,
+            ]
+          : [],
+      insta_followers:
+        savedAdsPerams?.appliedFilters?.InstragramLike?.min >
+          savedAdsPerams?.maxRanger.InstragramLike?.min ||
+        savedAdsPerams?.appliedFilters?.InstragramLike?.max <
+          savedAdsPerams?.maxRanger.InstragramLike?.max
+          ? [
+              savedAdsPerams?.appliedFilters?.InstragramLike?.min,
+              savedAdsPerams?.appliedFilters?.InstragramLike?.max,
+            ]
+          : [],
+      media_type: savedAdsPerams?.appliedFilters?.MediaType?.selectedValue,
+      cta_status: savedAdsPerams?.appliedFilters?.ButtonStatus?.selectedValue,
+
+      sort_by:
+        savedAdsPerams?.sortFilter?.type?.selectedValue === "true" ||
+        savedAdsPerams?.sortFilter?.type?.selectedValue === "false"
+          ? ""
+          : savedAdsPerams?.sortFilter?.type?.selectedValue,
+
+      increaseCount:
+        savedAdsPerams?.sortFilter?.type?.selectedValue === "true" ||
+        savedAdsPerams?.sortFilter?.type?.selectedValue === "false"
+          ? savedAdsPerams?.sortFilter?.type?.selectedValue
+          : null,
+
+      order_by:
+        savedAdsPerams?.sortFilter?.type?.selectedValue === "true" ||
+        savedAdsPerams?.sortFilter?.type?.selectedValue === "false"
+          ? ""
+          : savedAdsPerams?.sortFilter?.order?.selectedValue,
+
+      keywords:
+        savedAdsPerams?.searchType === "All these words"
+          ? savedAdsPerams?.searchBarData.split(" ")
+          : [],
+
+      phrase:
+        savedAdsPerams?.searchType === "Exact Phrase"
+          ? savedAdsPerams?.searchBarData.split(",")
+          : [],
+    };
+    setQueryObject(queryObject)
+  },[savedAdsPerams])
+  
   return (
     <Grid item lg={3} md={4} xs={5} key={index}>
       <Stack
@@ -253,25 +312,22 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
                     }}
                   />
                 </Tooltip>
-                {deleteId ? (
-                  <img
-                    src={StarFill}
-                    alt="StarFill"
+                <img
+                    src={savedAdsManager.savedAdsIds.includes(adInfo?.id) ? StarFill : Saveicon}
+                    alt="saved-icon"
                     className={classes.saveicon}
                     onClick={() => {
-                      dispatch(deleteSavedAdsStart({ ad: adInfo?.id }));
+                      if(savedAdsManager.savedAdsIds.includes(adInfo?.id)){
+                        dispatch(removesavedFilteredAdLocal(adInfo));
+                        dispatch(removeSavedAdsIdsLocal(adInfo.id));
+                        dispatch(removeFromSavedAdsStart({ ad: adInfo?.id }));
+                      } else{
+                        dispatch(addSavedAdsIdsLocal(adInfo.id));
+                        dispatch(addToSavedAdsStart({ ad: adInfo.id }));
+                        dispatch(addToSavedAdsFilterLocalStart({ ...queryObject, adId: adInfo.id }));
+                      }
                     }}
                   />
-                ) : (
-                  <img
-                    src={Saveicon}
-                    alt="Saveicon"
-                    className={classes.saveicon}
-                    onClick={async () => {
-                      await dispatch(createSavedAdsStart({ ad: adInfo.id }));
-                    }}
-                  />
-                )}
               </Stack>
 
               <Typography color="#c0c0c0" className={classes.AdsText} noWrap>
@@ -334,7 +390,7 @@ const ThumbNailBox = ({ adInfo, index, deleteId }) => {
             textTransform: "none",
           }}
           onClick={() => {
-            dispatch(srtPostionForScrollValueStart(window.pageYOffset));
+            // dispatch(srtPostionForScrollValueStart(window.pageYOffset));
             navigate(`/adDeatails/${adInfo.adID}`);
           }}
         >
