@@ -4,27 +4,24 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { Routes } from "react-router-dom";
 import { Route } from "react-router-dom";
 import { styled } from "@mui/material/styles";
+import { useSelector, useDispatch } from "react-redux";
+import FadeLoader from "react-spinners/FadeLoader";
 import Addlibrarydatabase from "../pages/AdlibraryDatabase";
 import SavedAds from "../pages/SavedAds";
 import ContactSupport from "../pages/ContactSupport";
 import AccountSettings from "../pages/AccountSettings";
 import AdDeatailsTabs from "../pages/adDetails/AdDetailsTabs";
-import { useDispatch } from "react-redux";
-import {  loadMediaStart } from "../redux/ducks/mediaAds";
 import { loadSubscriptionStart } from "../redux/ducks/subscription";
 import { CustomAppBar } from "../components/CustomAppBar";
 import { CustomSidebar } from "../components/CustomSidebar";
 import { loadAccountSettingsStart } from "./../redux/ducks/accountSettings";
-import Payment from "../pages/Plans"
-import {  loadSavedAdsStart } from "../redux/ducks/saveAds_clientSide";
-import { useSelector } from "react-redux";
-// import { getSetCatSatus } from "../redux/ducks/filtered_Data";
+import Payment from "../pages/Plans";
 import ActiveSubScription from "../ActiveSubScription";
 import InActiveSubScription from "../InActiveSubScription";
-import FadeLoader from "react-spinners/FadeLoader";
-import { CircularProgress } from "@mui/material";
-import { getSetCatSatus } from "../redux/ducks/appliedFilterData";
-// import { getSetCatSatus } from "../redux/ducks/filterData";
+import { loadFilteredAdsStart } from "../redux/ducks/filteredAds";
+import { loadsavedFilteredAdsStart } from "../redux/ducks/filteredSavedAds";
+import { getButtonTypes } from "../redux/ducks/buttonType";
+import { loadSavedAdsIdsLocal } from "../redux/ducks/savedAdsManager";
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
@@ -37,39 +34,30 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 const MainLayout = () => {
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.subscriptionData);
-  const drawerOpenKey = "drawerOpen";
-  const defaultOpen = localStorage.getItem(drawerOpenKey) === "true";
-  const [isOpen, setIsOpen] = React.useState(defaultOpen);
-  React.useEffect(() => {
-    localStorage.setItem(drawerOpenKey, isOpen);
-  }, [isOpen]);
+  const [isOpen, setIsOpen] = React.useState(true);
 
-  // window.onscroll = function(){
-  //   if(
-  //     window.innerHeight +document.documentElement.scrollTop===
-  //     document.documentElement.offsetHeight
-  //   )
-  //   {
-  //     scrollToEnd()
-  //   }
-  // }
-  
-  const pageScrolldataload = () =>{
+  const filteredAds  = useSelector((state) => state.filteredAds);
 
-    
-  }
-  useEffect(() => {
+  useEffect(()=>{
     dispatch(loadSubscriptionStart());
-    dispatch(loadMediaStart({
-      page_index:0,
-    }));
-    dispatch(loadSavedAdsStart({
-      page_index:0,
-    }));    
+    dispatch(
+      loadFilteredAdsStart({
+        page_index: 0,
+      })
+    );
+    dispatch(
+      loadsavedFilteredAdsStart({
+        page_index: 0,
+      })
+    );
     dispatch(loadAccountSettingsStart());
-    dispatch(getSetCatSatus());
-  
-  },[]);
+    dispatch(getButtonTypes());
+  },[dispatch])
+
+
+  useEffect(()=>{
+    dispatch(loadSavedAdsIdsLocal(filteredAds.savedAdsIds))
+  },[filteredAds.savedAdsIds])
 
   return (
     <>

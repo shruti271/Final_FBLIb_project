@@ -6,31 +6,17 @@ import {
   Popover,
   Radio,
   RadioGroup,
-  Typography, 
+  Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Arrowdown from "../assets/Arrowdown.svg";
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
-// import {
-//   applyallfilters,
-//   applysortingfilters,
-//   fluctuatedDataEnd,
-//   // SetSortOrdervalueStart,
-//   SortvalueStart,
-// } from "../redux/ducks/filtered_Data";
-import {
-  applySavedAdsallfilters,
-  loadSavedAdsStart,
-  SavedAdsSetSortOrdervalueStart,
-  SavedAdsSortvalueStart,
-  SavedfluctuatedDataEnd,
-} from "../redux/ducks/saveAds_clientSide";
-import { loadMediaStart } from "../redux/ducks/mediaAds";
-import { SetSortOrdervalueStart } from "../redux/ducks/appliedFilterData";
-import { savedSetSortOrdervalueStart } from "../redux/ducks/saveAppliedFilters";
-// import { SetSortOrdervalueStart } from "../redux/ducks/filterData";
+import { useLocation } from "react-router-dom";
+import { PageNameEnum } from "../utils/enums";
+import * as allAdsPeramsDuck from "../redux/ducks/allAdsPerams";
+import * as savedAdsPeramsDuck from "../redux/ducks/savedAdsPerams";
 
 const useStyles = makeStyles((theme) => ({
   DropDownArrow: {
@@ -40,181 +26,190 @@ const useStyles = makeStyles((theme) => ({
 function SortFilter(props) {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const [pageName, setPageName] = useState("");
+  const location = useLocation();
+
+  useEffect(() => {
+    switch (location.pathname) {
+      case "/":
+        setPageName(PageNameEnum.AdlibraryDatabase);
+        break;
+      case "/savedAds":
+        setPageName(PageNameEnum.SavedAds);
+        break;
+      default:
+        setPageName("");
+    }
+  }, [location.pathname]);
+
+  const allAdsPerams = useSelector((state) => state.allAdsPerams);
+  const savedAdsPerams = useSelector((state) => state.savedAdsPerams);
 
   const [sortByAnchorel, setSortByAnchorel] = React.useState(null);
   const openSortByAnchorel = Boolean(sortByAnchorel);
 
-  // const { sortFilter } = useSelector((state) => state.appliedFilterData);
-  // const { sortFilter } = useSelector((state) => state.saveFilterData);
-  const callFilters = () => {
-    if (props.name === "AllAdsPage") {
-      dispatch(
-        loadMediaStart({
-          page_index: 0,
-          startdate: props.pageFilterInfo?.StartRunningDate?.startdate,
-          enddate: props.pageFilterInfo?.StartRunningDate?.enddate,
-          adcount:
-            props.pageFilterInfo?.AdCount?.min > props.ranger.AdCount.min ||
-            props.pageFilterInfo?.AdCount?.max < props.ranger.AdCount.max
-              ? [
-                  props.pageFilterInfo?.AdCount?.min,
-                  props.pageFilterInfo?.AdCount?.max,
-                ]
-              : [],
-          adstatus: props?.pageFilterInfo?.AdStatus?.status,
-          fb_likes:
-            props.pageFilterInfo?.FacebookLikes?.min >
-              props.ranger.FacebookLikes.min ||
-            props.pageFilterInfo?.FacebookLikes?.max <
-              props.ranger.FacebookLikes.max
-              ? [
-                  props.pageFilterInfo?.FacebookLikes?.min,
-                  props.pageFilterInfo?.FacebookLikes?.max,
-                ]
-              : [],
-          insta_followers:
-            props.pageFilterInfo?.InstragramLike?.min >
-              props.ranger.InstragramLike.min ||
-            props.pageFilterInfo?.InstragramLike?.max <
-              props.ranger.InstragramLike.max
-              ? [
-                  props.pageFilterInfo?.InstragramLike?.min,
-                  props.pageFilterInfo?.InstragramLike?.max,
-                ]
-              : [],
-          media_type: props?.pageFilterInfo?.MediaType?.selectedData,
-          cta_status: props?.pageFilterInfo?.PurchaseType?.selctedButton,
-          sort_by:
-            props?.sortDetail?.type === "true" ||
-            props?.sortDetail?.type === "false"
-              ? ""
-              : props?.sortDetail?.type,
-          order_by:
-            props?.sortDetail?.type === "true" ||
-            props?.sortDetail?.type === "false"
-              ? ""
-              : props?.sortDetail?.order,
-          increaseCount:
-            props?.sortDetail?.type === "true" ||
-            props?.sortDetail?.type === "false"
-              ? props?.sortDetail?.type
-              : null,
-          keywords:
-            props.search_type === "All these words"
-              ? "props.search" ==="" ? props.search.split(" ")
-              : null:null,
-              
-          phrase:
-            props.search_type === "Exact Phrase" ? "props.search" ==="" ? props.search.split(",") : null :null,
-        })
-      );
-    } else if (props.name === "SavedPage") {
-      dispatch(
-        loadSavedAdsStart({
-          page_index: 0,
-          startdate: props.pageFilterInfo?.StartRunningDate?.startdate,
-          enddate: props.pageFilterInfo?.StartRunningDate?.enddate,
-          adcount:
-            props.pageFilterInfo?.AdCount?.min > props.ranger.AdCount.min ||
-            props.pageFilterInfo?.AdCount?.max < props.ranger.AdCount.max
-              ? [
-                  props.pageFilterInfo?.AdCount?.min,
-                  props.pageFilterInfo?.AdCount?.max,
-                ]
-              : [],
-          adstatus: props?.pageFilterInfo?.AdStatus?.status,
-          fb_likes:
-            props.pageFilterInfo?.FacebookLikes?.min >
-              props.ranger.FacebookLikes.min ||
-            props.pageFilterInfo?.FacebookLikes?.max <
-              props.ranger.FacebookLikes.max
-              ? [
-                  props.pageFilterInfo?.FacebookLikes?.min,
-                  props.pageFilterInfo?.FacebookLikes?.max,
-                ]
-              : [],
-          insta_followers:
-            props.pageFilterInfo?.InstragramLike?.min >
-              props.ranger.InstragramLike.min ||
-            props.pageFilterInfo?.InstragramLike?.max <
-              props.ranger.InstragramLike.max
-              ? [
-                  props.pageFilterInfo?.InstragramLike?.min,
-                  props.pageFilterInfo?.InstragramLike?.max,
-                ]
-              : [],
-          media_type: props?.pageFilterInfo?.MediaType?.selectedData,
-          cta_status: props?.pageFilterInfo?.PurchaseType?.selctedButton,
-          sort_by:
-          props?.sortDetail?.type === "true" ||
-          props?.sortDetail?.type === "false"
-            ? ""
-            : props?.sortDetail?.type,
-        order_by:
-          props?.sortDetail?.type === "true" ||
-          props?.sortDetail?.type === "false"
-            ? ""
-            : props?.sortDetail?.order,
-        increaseCount:
-          props?.sortDetail?.type === "true" ||
-          props?.sortDetail?.type === "false"
-            ? props?.sortDetail?.type
-            : null,
-        keywords:
-          props.search_type === "All these words"
-            ? props.search.split(" ")
-            : "",
-        phrase:
-          props.search_type === "Exact Phrase" ? props.search.split(",") : "",
-        })
-      );
-    }
-  };
-  useEffect(() => {    
-    if(props.loading===false)
-    callFilters();
-  }, [ props.sortDetail]);
-  const handleChangeSortType = (event, newValue) => {
-    if (props.name === "AllAdsPage") {
-      dispatch(
-        SetSortOrdervalueStart({
-          name: "type",
-          data: newValue,
-          componentName: props.name,
-        })
-      );
-    } else if (props.name === "SavedPage") {
-      dispatch(
-        savedSetSortOrdervalueStart({
-          name: "type",
-          data: newValue,
-          componentName: props.name,
-        })
-      );
-      
+  // const callFilters = () => {
+  //   if (props.name === "AllAdsPage") {
+  //     dispatch(
+  //       loadMediaStart({
+  //         page_index: 0,
+  //         startdate: props.pageFilterInfo?.StartRunningDate?.startdate,
+  //         enddate: props.pageFilterInfo?.StartRunningDate?.enddate,
+  //         adcount:
+  //           props.pageFilterInfo?.AdCount?.min > props.ranger.AdCount.min ||
+  //           props.pageFilterInfo?.AdCount?.max < props.ranger.AdCount.max
+  //             ? [
+  //                 props.pageFilterInfo?.AdCount?.min,
+  //                 props.pageFilterInfo?.AdCount?.max,
+  //               ]
+  //             : [],
+  //         adstatus: props?.pageFilterInfo?.AdStatus?.status,
+  //         fb_likes:
+  //           props.pageFilterInfo?.FacebookLikes?.min >
+  //             props.ranger.FacebookLikes.min ||
+  //           props.pageFilterInfo?.FacebookLikes?.max <
+  //             props.ranger.FacebookLikes.max
+  //             ? [
+  //                 props.pageFilterInfo?.FacebookLikes?.min,
+  //                 props.pageFilterInfo?.FacebookLikes?.max,
+  //               ]
+  //             : [],
+  //         insta_followers:
+  //           props.pageFilterInfo?.InstragramLike?.min >
+  //             props.ranger.InstragramLike.min ||
+  //           props.pageFilterInfo?.InstragramLike?.max <
+  //             props.ranger.InstragramLike.max
+  //             ? [
+  //                 props.pageFilterInfo?.InstragramLike?.min,
+  //                 props.pageFilterInfo?.InstragramLike?.max,
+  //               ]
+  //             : [],
+  //         media_type: props?.pageFilterInfo?.MediaType?.selectedData,
+  //         cta_status: props?.pageFilterInfo?.PurchaseType?.selctedButton,
+  //         sort_by:
+  //           props?.sortDetail?.type === "true" ||
+  //           props?.sortDetail?.type === "false"
+  //             ? ""
+  //             : props?.sortDetail?.type,
+  //         order_by:
+  //           props?.sortDetail?.type === "true" ||
+  //           props?.sortDetail?.type === "false"
+  //             ? ""
+  //             : props?.sortDetail?.order,
+  //         increaseCount:
+  //           props?.sortDetail?.type === "true" ||
+  //           props?.sortDetail?.type === "false"
+  //             ? props?.sortDetail?.type
+  //             : null,
+  //         keywords:
+  //           props.search_type === "All these words"
+  //             ? props.search.split(" ")
+  //             : "",
+  //         phrase:
+  //           props.search_type === "Exact Phrase" ? props.search.split(",") : "",
+  //       })
+  //     );
+  //   } else if (props.name === "SavedPage") {
+  //     dispatch(
+  //       loadSavedAdsStart({
+  //         page_index: 0,
+  //         startdate: props.pageFilterInfo?.StartRunningDate?.startdate,
+  //         enddate: props.pageFilterInfo?.StartRunningDate?.enddate,
+  //         adcount:
+  //           props.pageFilterInfo?.AdCount?.min > props.ranger.AdCount.min ||
+  //           props.pageFilterInfo?.AdCount?.max < props.ranger.AdCount.max
+  //             ? [
+  //                 props.pageFilterInfo?.AdCount?.min,
+  //                 props.pageFilterInfo?.AdCount?.max,
+  //               ]
+  //             : [],
+  //         adstatus: props?.pageFilterInfo?.AdStatus?.status,
+  //         fb_likes:
+  //           props.pageFilterInfo?.FacebookLikes?.min >
+  //             props.ranger.FacebookLikes.min ||
+  //           props.pageFilterInfo?.FacebookLikes?.max <
+  //             props.ranger.FacebookLikes.max
+  //             ? [
+  //                 props.pageFilterInfo?.FacebookLikes?.min,
+  //                 props.pageFilterInfo?.FacebookLikes?.max,
+  //               ]
+  //             : [],
+  //         insta_followers:
+  //           props.pageFilterInfo?.InstragramLike?.min >
+  //             props.ranger.InstragramLike.min ||
+  //           props.pageFilterInfo?.InstragramLike?.max <
+  //             props.ranger.InstragramLike.max
+  //             ? [
+  //                 props.pageFilterInfo?.InstragramLike?.min,
+  //                 props.pageFilterInfo?.InstragramLike?.max,
+  //               ]
+  //             : [],
+  //         media_type: props?.pageFilterInfo?.MediaType?.selectedData,
+  //         cta_status: props?.pageFilterInfo?.PurchaseType?.selctedButton,
+  //         sort_by:
+  //         props?.sortDetail?.type === "true" ||
+  //         props?.sortDetail?.type === "false"
+  //           ? ""
+  //           : props?.sortDetail?.type,
+  //       order_by:
+  //         props?.sortDetail?.type === "true" ||
+  //         props?.sortDetail?.type === "false"
+  //           ? ""
+  //           : props?.sortDetail?.order,
+  //       increaseCount:
+  //         props?.sortDetail?.type === "true" ||
+  //         props?.sortDetail?.type === "false"
+  //           ? props?.sortDetail?.type
+  //           : null,
+  //       keywords:
+  //         props.search_type === "All these words"
+  //           ? props.search.split(" ")
+  //           : "",
+  //       phrase:
+  //         props.search_type === "Exact Phrase" ? props.search.split(",") : "",
+  //       })
+  //     );
+  //   }
+  // };
 
-      
-    }
+  // useEffect(() => {
+  //   callFilters();
+  // }, [props.sortDetail]);
+
+  const handleChangeSortType = (event, newValue) => {
+    dispatch(
+      pageName === PageNameEnum.AdlibraryDatabase
+        ? allAdsPeramsDuck.changeSortFilters({
+            key: "type",
+            value: {
+              selectedValue: newValue,
+            },
+          })
+        : savedAdsPeramsDuck.changeSavedSortFilters({
+            key: "type",
+            value: {
+              selectedValue: newValue,
+            },
+          })
+    );
   };
+
   const handleChangeAceOrDes = (event, newValue) => {
-    if (props.name === "AllAdsPage") {
-      dispatch(
-        SetSortOrdervalueStart({
-          name: "order",
-          data: newValue,
-          componentName: props.name,
-        })
-      );      
-    } else if (props.name === "SavedPage") {
-      dispatch(
-        savedSetSortOrdervalueStart({
-          name: "order",
-          data: newValue,
-          componentName: props.name,
-        })
-      );    
-    }
-    
+    dispatch(
+      pageName === PageNameEnum.AdlibraryDatabase
+        ? allAdsPeramsDuck.changeSortFilters({
+            key: "order",
+            value: {
+              selectedValue: newValue,
+            },
+          })
+        : savedAdsPeramsDuck.changeSavedSortFilters({
+            key: "order",
+            value: {
+              selectedValue: newValue,
+            },
+          })
+    );
   };
 
   return (
@@ -272,10 +267,13 @@ function SortFilter(props) {
         <Box>
           <FormControl sx={{ padding: "10px" }}>
             <RadioGroup
-              aria-labelledby="demo-radio-buttons-group-label"
-              defaultValue="female"
-              name="radio-buttons-group"
-              value={props.sortDetail.type}
+              aria-labelledby="sort-selector-label"
+              name="sort-selector"
+              value={
+                pageName === PageNameEnum.AdlibraryDatabase
+                  ? allAdsPerams?.sortFilter?.type?.selectedValue
+                  : savedAdsPerams?.sortFilter?.type?.selectedValue
+              }
               onChange={handleChangeSortType}
             >
               <FormControlLabel
@@ -313,18 +311,25 @@ function SortFilter(props) {
           <Divider />
           <FormControl sx={{ padding: "10px" }}>
             <RadioGroup
-              aria-labelledby="demo-radio-buttons-group-label"
-              defaultValue="female"
-              name="radio-buttons-group"
-              value={props.sortDetail.order}
+              aria-labelledby="order-selector-label"
+              name="order-selector"
+              value={
+                pageName === PageNameEnum.AdlibraryDatabase
+                  ? allAdsPerams?.sortFilter?.order?.selectedValue
+                  : savedAdsPerams?.sortFilter?.order?.selectedValue
+              }
               onChange={handleChangeAceOrDes}
             >
               <FormControlLabel
                 disabled={
-                  props.sortDetail.type === "false" ||
-                  props.sortDetail.type === "true"
-                    ? true
-                    : false
+                  pageName === PageNameEnum.AdlibraryDatabase
+                  ? 
+                  ((allAdsPerams?.sortFilter?.type?.selectedValue === "false" ||
+                  allAdsPerams?.sortFilter?.type?.selectedValue === "true"
+                  ) ? true : false)
+                  : ((savedAdsPerams?.sortFilter?.type?.selectedValue === "false" ||
+                  savedAdsPerams?.sortFilter?.type?.selectedValue === "true"
+                  ) ? true : false)
                 }
                 value="asc"
                 control={<Radio style={{ color: "#00CBFF" }} />}
@@ -332,10 +337,14 @@ function SortFilter(props) {
               />
               <FormControlLabel
                 disabled={
-                  props.sortDetail.type === "false" ||
-                  props.sortDetail.type === "true"
-                    ? true
-                    : false
+                  pageName === PageNameEnum.AdlibraryDatabase
+                  ? 
+                  ((allAdsPerams?.sortFilter?.type?.selectedValue === "false" ||
+                  allAdsPerams?.sortFilter?.type?.selectedValue === "true"
+                  ) ? true : false)
+                  : ((savedAdsPerams?.sortFilter?.type?.selectedValue === "false" ||
+                  savedAdsPerams?.sortFilter?.type?.selectedValue === "true"
+                  ) ? true : false)
                 }
                 value="desc"
                 control={<Radio style={{ color: "#00CBFF" }} />}
@@ -343,31 +352,8 @@ function SortFilter(props) {
               />
             </RadioGroup>
           </FormControl>
-
-          {/* <Box
-                  display={"flex"}
-                  alignContent={"center"}
-                  justifyContent={"center"}
-                >
-                  <Button
-                    variant="outlined"
-                    sx={{
-                      borderRadius: 50,
-                      fontWeight: 600,
-                      borderColor: "#00CBFF",
-                      color: "#00CBFF",
-                      height: "35px",
-                      width: "80px",
-                      borderWidth: 2,
-                    }}
-                  >
-                    Reset
-                  </Button>
-                </Box> */}
         </Box>
       </Popover>
-      {/* </Box>
-     </Grid> */}
     </>
   );
 }

@@ -1,42 +1,78 @@
-export const LOAD_SUBALLMEDIA_START = "LOAD_SUBALLMEDIA_START";
-export const LOAD_SUBALLMEDIA_SUCCESS = "LOAD_SUBALLMEDIA_SUCCESS";
-export const LOAD_SUBALLMEDIA_ERROR = "LOAD_SUBALLMEDIA_ERROR";
+export const LOAD_SUBALLADS_START = "LOAD_SUBALLADS_START";
+export const LOAD_SUBALLADS_SUCCESS = "LOAD_SUBALLADS_SUCCESS";
+export const LOAD_SUBALLADS_ERROR = "LOAD_SUBALLADS_ERROR";
 
-export const loadSubAllMediaStart = (adname) => ({
-  type: LOAD_SUBALLMEDIA_START,
-  payload: adname,
+export const LOAD_MORE_SUBALLADS_START = "LOAD_MORE_SUBALLADS_START";
+export const LOAD_MORE_SUBALLADS_SUCCESS = "LOAD_MORE_SUBALLADS_SUCCESS";
+export const LOAD_MORE_SUBALLADS_ERROR = "LOAD_MORE_SUBALLADS_ERROR";
+
+export const loadSubAllAdsStart = (subAdsInfo) => ({
+  type: LOAD_SUBALLADS_START,
+  payload: subAdsInfo,
 });
 
-export const loadSubAllMediaSuccess = (subAllMedia) => ({
-  type: LOAD_SUBALLMEDIA_SUCCESS,
-  payload: subAllMedia,
+export const loadSubAllAdsSuccess = (subAllAds) => ({
+  type: LOAD_SUBALLADS_SUCCESS,
+  payload: subAllAds,
 });
 
-export const loadSubAllMediaError = (error) => ({
-  type: LOAD_SUBALLMEDIA_ERROR,
+export const loadSubAllAdsError = (error) => ({
+  type: LOAD_SUBALLADS_ERROR,
+  payload: error,
+});
+
+export const loadMoreSubAllAdsStart = (subAdsInfo) => ({
+  type: LOAD_MORE_SUBALLADS_START,
+  payload: subAdsInfo,
+});
+
+export const loadMoreSubAllAdsSuccess = (subAllAds) => ({
+  type: LOAD_MORE_SUBALLADS_SUCCESS,
+  payload: subAllAds,
+});
+
+export const loadMoreSubAllAdsError = (error) => ({
+  type: LOAD_MORE_SUBALLADS_ERROR,
   payload: error,
 });
 
 const initialState = {
-  subAllMedia: [],
+  pageIndex:0,
+  pageName:"",
+  subAllAds: [],
   loading: false,
   error: "",
 };
 
-const subAllMediaReducer = (state = initialState, action) => {
+const subAllAdsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case LOAD_SUBALLMEDIA_START:
+    case LOAD_SUBALLADS_START:
       return {
         ...state,
+        pageIndex: action.payload.page_index,
+        pageName: action.payload.page_name,
         loading: true,
       };
-    case LOAD_SUBALLMEDIA_SUCCESS:
+    case LOAD_MORE_SUBALLADS_START:
+      return {
+        ...state,
+        pageIndex: action.payload.page_index,
+        loading: true,
+      };
+    case LOAD_SUBALLADS_SUCCESS:
       return {
         ...state,
         loading: false,
-        subAllMedia: action.payload,
+        subAllAds: action.payload,
       };
-    case LOAD_SUBALLMEDIA_ERROR:
+    case LOAD_MORE_SUBALLADS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        subAllAds: [...state.subAllAds].concat(action.payload),
+      }
+    case LOAD_SUBALLADS_ERROR:
+    case LOAD_MORE_SUBALLADS_ERROR:
       return {
         ...state,
         loading: false,
@@ -47,4 +83,4 @@ const subAllMediaReducer = (state = initialState, action) => {
   }
 };
 
-export default subAllMediaReducer;
+export default subAllAdsReducer;

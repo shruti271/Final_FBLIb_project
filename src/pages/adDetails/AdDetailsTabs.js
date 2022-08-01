@@ -11,38 +11,67 @@ import {
 import AllAds from "./AllAds";
 import AdDeatails from "./adDeatails";
 import { useDispatch, useSelector } from "react-redux";
-import { loadSubAllMediaStart } from "../../redux/ducks/subAllAds";
+import { loadSubAllAdsStart } from "../../redux/ducks/subAllAds";
 import LeftArrow from "../../assets/LeftArrow.svg";
 function AdDeatailsTabs() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const adID = useParams();
+  const { adsId: peramsAdId } = useParams();
 
-  const { allMediaAdsData } = useSelector((state) => state.allMediaAds);
-  const { subAllMedia } = useSelector((state) => state.subAllMedia);
-  // const { subAllMedia, loading } = useSelector((state) => state.subAllMedia);
+  const filteredAds = useSelector((state) => state.filteredAds);
+  const subAllAds = useSelector((state) => state.subAllAds);
 
   const adDetailsTabs = {
     ADOVERVIEW: "Ad Overview",
     ALLADS: "All Ads",
   };
   const [isActiveTab, setIsActiveTab] = useState(adDetailsTabs.ADOVERVIEW);
+  const [adDetail, setAdDetail] = useState();
   const { state } = useLocation();
 
   useEffect(() => {
-    if (window.location.pathname === `/adDeatails/${adID.adsId}`) {
+    if (window.location.pathname === `/adDeatails/${peramsAdId}`) {
       setIsActiveTab(adDetailsTabs.ADOVERVIEW);
     } else {
       setIsActiveTab(adDetailsTabs.ALLADS);
     }
-  });
-  useEffect(() => {    
-    if (allMediaAdsData) {      
-      if (subAllMedia[0]?.pageInfo?.name === state.singleAds?.pageInfo?.name) {
-        dispatch(loadSubAllMediaStart({ ad_name: state.SingleAds?.pageInfo?.name }));}
-      
+  }, [window.location.pathname]);
+
+  useEffect(() => {
+    if (filteredAds.filteredAds.length > 0) {
+      // eslint-disable-next-line array-callback-return
+      const adTobeDisplay = filteredAds.filteredAds.find((ad) => {
+        if (ad.adID === peramsAdId) {
+          return ad;
+        }
+      });
+      setAdDetail(adTobeDisplay);
     }
-  }, []);
+  }, [dispatch, filteredAds, peramsAdId]);
+
+  useEffect(() => {
+    if (adDetail?.pageInfo?.name) {
+      if (subAllAds.subAllAds.length > 0) {
+        if (
+          subAllAds.subAllAds[0]?.pageInfo?.name !== adDetail?.pageInfo?.name
+        ) {
+          dispatch(
+            loadSubAllAdsStart({
+              page_name: adDetail?.pageInfo?.name,
+              page_index: 0,
+            })
+          );
+        }
+      } else {
+        dispatch(
+          loadSubAllAdsStart({
+            page_name: adDetail?.pageInfo?.name,
+            page_index: 0,
+          })
+        );
+      }
+    }
+  }, [dispatch, adDetail]);
 
   return (
     <>
