@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, Box, Typography, Button, Stack, Avatar } from "@mui/material";
 import Firsrcardimg from "../../assets/FirstCardImg.svg";
 import facebook from "../../assets/facebook.svg";
 import instragram from "../../assets/instragram.svg";
 import MyChart from "../../components/MyChart";
+import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 const ReadMore = ({ children }) => {
   const text = children;
   const [isReadMore, setIsReadMore] = React.useState(true);
@@ -12,22 +14,29 @@ const ReadMore = ({ children }) => {
     setIsReadMore(!isReadMore);
   };
   return (
-    <p className="text">
-      {isReadMore ? text.slice(0, 150) : text}
-      <Typography
-        variant="h7"
-        style={{ color: "#B5EDFF", cursor: "pointer" }}
-        onClick={toggleReadMore}
-        className="read-or-hide"
-      >
-        {isReadMore ? "...Read more" : " Show less"}
+    <>
+      <Typography variant="p" className="text">
+        {isReadMore ? text.slice(0, 150) : text}
+        <Typography
+          variant="h7"
+          style={{ color: "#B5EDFF", cursor: "pointer" }}
+          onClick={toggleReadMore}
+          className="read-or-hide"
+        >
+          {isReadMore ? "...Read more" : " Show less"}
+        </Typography>
       </Typography>
-    </p>
+    </>
   );
 };
 
-function AdDeatails({ ThumbnailData }) {
+function AdDeatails() {
   const classes = useStyles();
+
+  const dispatch = useDispatch();
+  const { adId } = useParams();
+  const filteredAds = useSelector((state) => state.filteredAds);
+  const [adDetail, setAdDetail] = useState();
 
   window.scrollTo(
     {
@@ -37,11 +46,23 @@ function AdDeatails({ ThumbnailData }) {
     []
   );
 
+  useEffect(() => {
+    if (filteredAds.filteredAds.length > 0) {
+      // eslint-disable-next-line array-callback-return
+      const adTobeDisplay = filteredAds.filteredAds.find((ad) => {
+        if (ad.id === adId) {
+          return ad;
+        }
+      });
+      setAdDetail(adTobeDisplay);
+    }
+  }, [dispatch, filteredAds, adId]);
+
   return (
     <>
       <Grid container sx={{ marginTop: "36px" }}>
         <Grid item xs={12} lg={4} md={4} sm={12}>
-          <Box sx={{ border: "4.97421px solid #F6F6FB",borderRadius:"15px" }}>
+          <Box sx={{ border: "4.97421px solid #F6F6FB", borderRadius: "15px" }}>
             <Stack>
               <Box
                 sx={{ display: "flex", marginTop: "13px", marginLeft: "20px" }}
@@ -57,7 +78,7 @@ function AdDeatails({ ThumbnailData }) {
                   }}
                 >
                   <Avatar
-                    src={ThumbnailData?.pageInfo?.logo}
+                    src={adDetail?.pageInfo?.logo}
                     aria-label="FirstCard"
                     style={{ width: "30px", height: "30px" }}
                   ></Avatar>
@@ -72,8 +93,8 @@ function AdDeatails({ ThumbnailData }) {
                   }}
                 >
                   <b>
-                    {ThumbnailData?.pageInfo?.name
-                      ? ThumbnailData.pageInfo?.name
+                    {adDetail?.pageInfo?.name
+                      ? adDetail.pageInfo?.name
                       : " "}
                   </b>
                 </Typography>
@@ -91,8 +112,8 @@ function AdDeatails({ ThumbnailData }) {
                   }}
                 >
                   <ReadMore>
-                    {ThumbnailData?.adDescription
-                      ? ThumbnailData.adDescription
+                    {adDetail?.adDescription
+                      ? adDetail.adDescription
                       : " "}
                   </ReadMore>
                 </Typography>
@@ -106,16 +127,16 @@ function AdDeatails({ ThumbnailData }) {
                   alignItems: "center",
                 }}
               >
-                {ThumbnailData?.adMediaType === "video" ? (
+                {adDetail?.adMediaType === "video" ? (
                   <video
-                    poster={ThumbnailData?.thumbBucketUrl}
-                    src={ThumbnailData?.bucketMediaURL}
+                    poster={adDetail?.thumbBucketUrl}
+                    src={adDetail?.bucketMediaURL}
                     controls
                     className={classes.AdsImageVideo}
                   />
-                ) : ThumbnailData?.adMediaType === "image" ? (
+                ) : adDetail?.adMediaType === "image" ? (
                   <img
-                    src={ThumbnailData?.bucketMediaURL}
+                    src={adDetail?.bucketMediaURL}
                     alt="img1"
                     className={classes.AdsImage}
                   />
@@ -142,8 +163,8 @@ function AdDeatails({ ThumbnailData }) {
                       >
                         <b>
                           {" "}
-                          {ThumbnailData?.displayURL
-                            ? ThumbnailData.displayURL.replace("HTTPS://", "")
+                          {adDetail?.displayURL
+                            ? adDetail.displayURL.replace("HTTPS://", "")
                             : " "}
                         </b>
                       </Typography>
@@ -155,7 +176,7 @@ function AdDeatails({ ThumbnailData }) {
                           fontWeight: "bold",
                         }}
                       >
-                        {ThumbnailData?.headline ? ThumbnailData.headline : " "}
+                        {adDetail?.headline ? adDetail.headline : " "}
                       </Typography>
                       <Typography
                         style={{
@@ -167,8 +188,8 @@ function AdDeatails({ ThumbnailData }) {
                         }}
                       >
                         <ReadMore>
-                          {ThumbnailData?.purchaseDescription
-                            ? ThumbnailData.purchaseDescription
+                          {adDetail?.purchaseDescription
+                            ? adDetail.purchaseDescription
                             : " "}
                         </ReadMore>
                       </Typography>
@@ -200,8 +221,8 @@ function AdDeatails({ ThumbnailData }) {
                           fontWeight: "700",
                         }}
                       >
-                        {ThumbnailData?.noOfCopyAds
-                          ? ThumbnailData.noOfCopyAds
+                        {adDetail?.noOfCopyAds
+                          ? adDetail.noOfCopyAds
                           : " "}
                       </span>
                       <span style={{ fontSize: "10px", margin: "auto" }}>
@@ -226,7 +247,7 @@ function AdDeatails({ ThumbnailData }) {
                     marginTop: "10px",
                   }}
                   onClick={() => {
-                    window.open(ThumbnailData?.purchaseURL, "_blank", "");
+                    window.open(adDetail?.purchaseURL, "_blank", "");
                   }}
                 >
                   <Typography
@@ -234,7 +255,7 @@ function AdDeatails({ ThumbnailData }) {
                     fontStyle={{ color: "white" }}
                     noWrap
                   >
-                    <b>{ThumbnailData?.ctaStatus}</b>
+                    <b>{adDetail?.ctaStatus}</b>
                   </Typography>
                 </Button>
               </Grid>
@@ -255,7 +276,7 @@ function AdDeatails({ ThumbnailData }) {
                 }}
               >
                 <a
-                  href={ThumbnailData?.thumbBucketUrl}
+                  href={adDetail?.thumbBucketUrl}
                   style={{ textDecoration: "none", color: "white" }}
                   download
                 >
@@ -272,10 +293,10 @@ function AdDeatails({ ThumbnailData }) {
                   paddingLeft: "16px",
                   paddingRight: "16px",
                 }}
-                disabled={ThumbnailData?.adMediaType === "video" ? false : true}
+                disabled={adDetail?.adMediaType === "video" ? false : true}
               >
                 <a
-                  href={ThumbnailData?.bucketMediaURL}
+                  href={adDetail?.bucketMediaURL}
                   style={{ textDecoration: "none", color: "white" }}
                   download
                 >
@@ -291,7 +312,7 @@ function AdDeatails({ ThumbnailData }) {
               <Stack sx={{ alignItems: "center" }}>
                 <Typography className={classes.textdeco}>Ad Status:</Typography>
                 <Typography className={classes.textdeco}>
-                  <b> {ThumbnailData?.status ? ThumbnailData.status : " "}</b>
+                  <b> {adDetail?.status ? adDetail.status : " "}</b>
                 </Typography>
               </Stack>
               <Stack sx={{ alignItems: "center" }}>
@@ -301,7 +322,7 @@ function AdDeatails({ ThumbnailData }) {
                 <Typography className={classes.textdeco}>
                   <b>
                     {" "}
-                    {ThumbnailData?.startDate ? ThumbnailData.startDate : " "}
+                    {adDetail?.startDate ? adDetail.startDate : " "}
                   </b>
                 </Typography>
                 <Typography className={classes.textdeco}>
@@ -309,8 +330,10 @@ function AdDeatails({ ThumbnailData }) {
                 </Typography>
               </Stack>
               <Stack sx={{ alignItems: "center" }}>
-                <Typography className={classes.textdeco}>Placements:</Typography>
-                {ThumbnailData?.platforms.map((ads, index) => (
+                <Typography className={classes.textdeco}>
+                  Placements:
+                </Typography>
+                {adDetail?.platforms.map((ads, index) => (
                   <Typography className={classes.textdeco} key={index}>
                     {" "}
                     <b>{ads}</b>
@@ -336,7 +359,7 @@ function AdDeatails({ ThumbnailData }) {
                 spacing={2}
               >
                 <Typography style={{ fontWeight: 600 }} noWrap>
-                  {ThumbnailData?.pageInfo?.name}
+                  {adDetail?.pageInfo?.name}
                 </Typography>
                 <Box
                   sx={{
@@ -351,14 +374,14 @@ function AdDeatails({ ThumbnailData }) {
                   }}
                 >
                   <Avatar
-                    src={ThumbnailData?.pageInfo?.logo}
+                    src={adDetail?.pageInfo?.logo}
                     aria-label="FirstCard"
                     style={{ width: "100%", height: "100%" }}
                   ></Avatar>
                 </Box>
               </Stack>
               <Stack style={{ justifyContent: "center", marginTop: "36px" }}>
-                {ThumbnailData?.pageInfo?.platforms.map(
+                {adDetail?.pageInfo?.platforms.map(
                   (socialMedia, index) => {
                     return (
                       <Stack
@@ -423,7 +446,7 @@ function AdDeatails({ ThumbnailData }) {
                 <Grid container>
                   <Grid item xs={12} lg={12} sm={12}>
                     <MyChart
-                      chartData={ThumbnailData?.history}
+                      chartData={adDetail?.history}
                       dataBoxVisiblity={false}
                       axisVisiblity={true}
                       fillType={"area"}

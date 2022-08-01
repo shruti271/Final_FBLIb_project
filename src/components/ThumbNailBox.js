@@ -399,7 +399,7 @@ const ThumbNailBox = ({ adInfo, index }) => {
           }}
           onClick={() => {
             // dispatch(srtPostionForScrollValueStart(window.pageYOffset));
-            navigate(`/adDeatails/${adInfo.adID}`);
+            navigate(`/adDeatails/${adInfo.id}`);
           }}
         >
           <b>See Details</b>

@@ -119,7 +119,7 @@ const MainLayout = () => {
               />
               <Route
                 exact
-                path="/adDeatails/:adsId/*"
+                path="/adDeatails/:adId/*"
                 element={
                   <ActiveSubScription>
                     <AdDeatailsTabs />

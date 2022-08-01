@@ -16,21 +16,20 @@ import LeftArrow from "../../assets/LeftArrow.svg";
 function AdDeatailsTabs() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { adsId: peramsAdId } = useParams();
+  const { adId } = useParams();
 
-  const filteredAds = useSelector((state) => state.filteredAds);
   const subAllAds = useSelector((state) => state.subAllAds);
 
   const adDetailsTabs = {
     ADOVERVIEW: "Ad Overview",
     ALLADS: "All Ads",
   };
+  const filteredAds = useSelector((state) => state.filteredAds);
   const [isActiveTab, setIsActiveTab] = useState(adDetailsTabs.ADOVERVIEW);
   const [adDetail, setAdDetail] = useState();
-  const { state } = useLocation();
 
   useEffect(() => {
-    if (window.location.pathname === `/adDeatails/${peramsAdId}`) {
+    if (window.location.pathname === `/adDeatails/${adId}`) {
       setIsActiveTab(adDetailsTabs.ADOVERVIEW);
     } else {
       setIsActiveTab(adDetailsTabs.ALLADS);
@@ -41,13 +40,13 @@ function AdDeatailsTabs() {
     if (filteredAds.filteredAds.length > 0) {
       // eslint-disable-next-line array-callback-return
       const adTobeDisplay = filteredAds.filteredAds.find((ad) => {
-        if (ad.adID === peramsAdId) {
+        if (ad.id === adId) {
           return ad;
         }
       });
       setAdDetail(adTobeDisplay);
     }
-  }, [dispatch, filteredAds, peramsAdId]);
+  }, [dispatch, filteredAds, adId]);
 
   useEffect(() => {
     if (adDetail?.pageInfo?.name) {
@@ -118,7 +117,7 @@ function AdDeatailsTabs() {
               }}
               onClick={() => {
                 setIsActiveTab(adDetailsTabs.ADOVERVIEW);
-                navigate("",{ state: {SingleAds: state.SingleAds } });
+                navigate("");
               }}
             >
               Ad Overview
@@ -134,7 +133,7 @@ function AdDeatailsTabs() {
               }}
               onClick={() => {
                 setIsActiveTab(adDetailsTabs.ALLADS);
-                navigate("allAds",{ state: { SingleAds: state.SingleAds } });
+                navigate("allAds");
               }}
             >
               All Ads
@@ -146,7 +145,7 @@ function AdDeatailsTabs() {
         <Route
           exact
           path=""
-          element={<AdDeatails ThumbnailData={state.SingleAds} />}
+          element={<AdDeatails />}
         />
         <Route exact path="allAds" element={<AllAds />} />
       </Routes>
