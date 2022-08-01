@@ -41,6 +41,8 @@ import { GET_BUTTON_TYPES_START } from "../ducks/buttonType";
 import { handleGetButtonType } from "../sagas/handlers/buttonType";
 import { ADD_TO_SAVED_ADS_START, REMOVED_FROM_SAVED_ADS_START } from "../ducks/savedAdsManager";
 import { handleAddToSavedAds, handleRemoveFromSavedAds } from "../sagas/handlers/savedAdsManager";
+import { LOAD_SINGLEAD_START } from "../ducks/singleAdsData";
+import { handleGetSingleAdData } from "./handlers/singleAdsData";
 
 function* onAddToSavedFilterLocal() {
   yield takeLatest(ADD_TO_SAVED_FILTERED_AD_LOCAL_START, handleCheckAdByFilter);
@@ -100,6 +102,9 @@ function* onLoadMoreSubAllAds() {
 function* onGetButtonTypes() {
   yield takeLatest(GET_BUTTON_TYPES_START, handleGetButtonType);
 }
+function* onGetSingleAdData() {
+  yield takeLatest(LOAD_SINGLEAD_START, handleGetSingleAdData);
+}
 
 const filteredAdsSagas = [fork(onLoadFilteredAds), fork(onLoadMoreFilteredAds)];
 const filteredSavedAdsSagas = [
@@ -117,6 +122,7 @@ const accountSettingsSagas = [
   fork(onUpdateAccountSettings),
 ];
 const suballadsSagas = [fork(onLoadSubAllAds), fork(onLoadMoreSubAllAds)];
+const singleAdDataSagas = [fork(onGetSingleAdData)];
 
 export default function* watcherSaga() {
   yield all([
@@ -127,5 +133,6 @@ export default function* watcherSaga() {
     ...suballadsSagas,
     ...isAliveSagas,
     ...subscriptionSagas,
+    ...singleAdDataSagas
   ]);
 }

@@ -16,12 +16,12 @@ export const removeFilteredAd = (adToBeRemoved) => ({
 export const loadFilteredAdsStart = (filters) => ({
   type: LOAD_FILTERED_ADS_START,
   payload:filters,
-});
+});//done
 
 export const loadFilteredAdsSuccess = (filteredAds) => ({
   type: LOAD_FILTERED_ADS_SUCCESS,
   payload: filteredAds,
-});
+});//done
 
 export const loadFilteredAdsError = (error) => ({
   type: LOAD_FILTERED_ADS_ERROR,
@@ -46,6 +46,7 @@ export const loadMoreFilteredAdsError = (error) => ({
 const initialState = {
   filteredAds: [],
   savedAdsIds:[],
+  hasMoreData:true,
   loading: false,
   error: "",
 };
@@ -68,18 +69,24 @@ const filteredAdsReducer = (state = initialState, action) => {
       };
                                                                   
     case LOAD_FILTERED_ADS_SUCCESS:
+      console.log("11111",action.payload , state.filteredAds)
+      // console.log(action.payload?.data[0]?.saved_ads)
       return {
         ...state,
         loading: false,
-        filteredAds: action.payload?.data?.all_ads,
-        savedAdsIds:action.payload?.data?.saved_ads
+        filteredAds:action.payload?.error === true ? [] : action.payload?.data?.all_ads,
+        savedAdsIds:action.payload?.error === true ? [] : action.payload?.data?.saved_ads ,
+        hasMoreData: action.payload?.data?.all_ads?.length < 8 ? false : true
       };
 
-    case LOAD_MORE_FILTERED_ADS_SUCCESS:
+    case LOAD_MORE_FILTERED_ADS_SUCCESS:console.log("..... ",action.payload?.data?.all_ads)
       return {
         ...state,
         loading: false,
-        filteredAds: [...state.filteredAds].concat(action.payload?.data?.all_ads),
+        filteredAds: action.payload?.error === true ? state.filteredAds : [...state.filteredAds].concat(action.payload?.data?.all_ads),
+        savedAdsIds:action.payload?.error === true ? state.savedAdsIds : [...state.savedAdsIds].concat(action.payload?.data?.saved_ads),
+
+        hasMoreData: action.payload?.data?.all_ads?.length < 8 ? false : true
       };
 
     case LOAD_FILTERED_ADS_ERROR:
