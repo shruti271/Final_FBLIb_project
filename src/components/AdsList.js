@@ -18,35 +18,36 @@ const AdsList = () => {
         const queryObject = {
           startdate: allAdsPerams?.appliedFilters?.StartRunningDate?.startdate,
           enddate: allAdsPerams?.appliedFilters?.StartRunningDate?.enddate,
-          adcount:
-            allAdsPerams?.appliedFilters?.AdCount?.min >
-              allAdsPerams?.maxRanger.AdCount?.min ||
-            allAdsPerams?.appliedFilters?.AdCount?.max <
-              allAdsPerams?.maxRanger.AdCount?.max
+          adcount:allAdsPerams?.appliedFilters?.AdCount?.chipText !==""
+            // allAdsPerams?.appliedFilters?.AdCount?.min >
+            //   allAdsPerams?.maxRanger.AdCount?.min ||
+            // allAdsPerams?.appliedFilters?.AdCount?.max <
+            //   allAdsPerams?.maxRanger.AdCount?.max
               ? [
                   allAdsPerams?.appliedFilters?.AdCount?.min,
                   allAdsPerams?.appliedFilters?.AdCount?.max,
                 ]
               : [],
-          adstatus: allAdsPerams?.appliedFilters?.AdStatus?.status?.selectedValue,
+          adstatus: allAdsPerams?.appliedFilters?.AdStatus?.selectedValue,
           fb_likes:
-            allAdsPerams?.appliedFilters?.FacebookLikes?.min >
-              allAdsPerams?.maxRanger.FacebookLikes?.min ||
-            allAdsPerams?.appliedFilters?.FacebookLikes?.max <
-              allAdsPerams?.maxRanger.FacebookLikes?.max
+          allAdsPerams?.appliedFilters?.FacebookLikes?.chipText !==""
+            // allAdsPerams?.appliedFilters?.FacebookLikes?.min >
+            //   allAdsPerams?.maxRanger.FacebookLikes?.min ||
+            // allAdsPerams?.appliedFilters?.FacebookLikes?.max <
+            //   allAdsPerams?.maxRanger.FacebookLikes?.max
               ? [
                   allAdsPerams?.appliedFilters?.FacebookLikes?.min,
                   allAdsPerams?.appliedFilters?.FacebookLikes?.max,
                 ]
               : [],
-          insta_followers:
-            allAdsPerams?.appliedFilters?.InstragramLike?.min >
-              allAdsPerams?.maxRanger.InstragramLike?.min ||
-            allAdsPerams?.appliedFilters?.InstragramLike?.max <
-              allAdsPerams?.maxRanger.InstragramLike?.max
+          insta_followers:allAdsPerams?.appliedFilters?.InstagramFollowers?.chipText !==""
+            // allAdsPerams?.appliedFilters?.InstagramFollowers?.min >
+            //   allAdsPerams?.maxRanger.InstagramFollowers?.min ||
+            // allAdsPerams?.appliedFilters?.InstagramFollowers?.max <
+            //   allAdsPerams?.maxRanger.InstagramFollowers?.max
               ? [
-                  allAdsPerams?.appliedFilters?.InstragramLike?.min,
-                  allAdsPerams?.appliedFilters?.InstragramLike?.max,
+                  allAdsPerams?.appliedFilters?.InstagramFollowers?.min,
+                  allAdsPerams?.appliedFilters?.InstagramFollowers?.max,
                 ]
               : [],
           media_type: allAdsPerams?.appliedFilters?.MediaType?.selectedValue,
@@ -79,15 +80,20 @@ const AdsList = () => {
             allAdsPerams?.searchType === "Exact Phrase"
               ? allAdsPerams?.searchBarData.split(",")
               : [],
-        };
-        if(allAdsPerams?.pageIndex > 0){
+        };console.log("comeinnnnnnnnnnn",allAdsPerams?.pageIndex)
+        if(allAdsPerams?.pageIndex > 0){console.log("comeinnnnnnnnnnnnnnnnnnnnnnn")
             dispatch(loadMoreFilteredAdsStart({ ...queryObject, page_index : allAdsPerams?.pageIndex}));
-        }else{
+        }else{console.log("comeinnnnnnnnnnnnnnnnnnnnnnn---------index 0")
             dispatch(loadFilteredAdsStart({ ...queryObject, page_index : 0}));
         }
         
     }, [dispatch, allAdsPerams]);
-
+    const abc=()=>{
+      dispatch(
+        allAdsPeramsDuck.setDatabasePageIndex(allAdsPerams?.pageIndex + 1)
+      )
+    }
+// console.log("1123", filteredAds?.filteredAds)
   return (
     <InfiniteScroll
       // style={{ opacity: loading ? 0.5 : 1 }}
@@ -97,7 +103,7 @@ const AdsList = () => {
           allAdsPeramsDuck.setDatabasePageIndex(allAdsPerams?.pageIndex + 1)
         )
       }
-      hasMore={true}
+      hasMore={filteredAds.hasMoreData}
       loader={
         filteredAds?.loading ?
         <Box

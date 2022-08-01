@@ -213,8 +213,7 @@ function AllFilters() {
       pageName === PageNameEnum.AdlibraryDatabase
         ? allAdsPeramsDuck.changeAppliedFilters({
             key: "AdStatus",
-            value: {
-              // componentName: pageName,
+            value: {              
               selectedValue: newValue,
               chipText: `Adstatus : ${newValue}`,
               isApplied: isReset ? false : true,
@@ -669,6 +668,7 @@ function AllFilters() {
                       }
                       onSave={(e) => {
                         if (Number(e.value) !== e.previousValue) {
+                          console.log("222",e.value)
                           handleAdsCountChange([
                             Number(e.value),
                             pageName === PageNameEnum.AdlibraryDatabase
@@ -690,12 +690,14 @@ function AllFilters() {
                           : savedAdsPerams?.appliedFilters?.AdCount?.max.toString()
                       }
                       onSave={(e) => {
+                        console.log("222 prv data ",e.previousValue)
                         if (Number(e.value) !== e.previousValue) {
+                          console.log("222",e.value)
                           if (
                             Number(e.value) >
                             (pageName === PageNameEnum.AdlibraryDatabase
-                              ? allAdsPerams?.appliedFilters?.AdCount?.max
-                              : savedAdsPerams?.appliedFilters?.AdCount?.max)
+                              ? allAdsPerams?.maxRanger?.AdCount?.max
+                              : savedAdsPerams?.maxRanger?.AdCount?.max)
                           ) {
                             dispatch(
                               pageName === PageNameEnum.AdlibraryDatabase
@@ -750,6 +752,8 @@ function AllFilters() {
                       : savedAdsPerams?.maxRanger?.AdCount?.max
                   }
                   sx={{ color: "#00CBFF" }}
+                  // onChangeCommitted={console.log("55 data")}    
+                  // onkeyPress={()=>console.log("ccccccc")}              
                   onChange={(e) => handleAdsCountChange(e.target.value)}
                 />
                 <Button
@@ -1163,19 +1167,19 @@ function AllFilters() {
                       }
                       onSave={(e) => {
                         console.log(e);
-                        console.log("==============================");
+                      
                         if (Number(e.value) !== e.previousValue) {
                           if (
                             Number(e.value) >
                             (pageName === PageNameEnum.AdlibraryDatabase
-                              ? allAdsPerams?.appliedFilters?.InstagramFollowers
+                              ? allAdsPerams?.maxRanger?.InstagramFollowers
                                   ?.max
-                              : savedAdsPerams?.appliedFilters
+                              : savedAdsPerams?.maxRanger
                                   ?.InstagramFollowers?.max)
-                          ) {
+                          ) {  console.log("444", PageNameEnum.AdlibraryDatabase);
                             dispatch(
                               pageName === PageNameEnum.AdlibraryDatabase
-                                ? allAdsPerams.refixMinMaxRange({
+                                ? allAdsPeramsDuck.refixMinMaxRange({
                                     key: "InstagramFollowers",
                                     value: {
                                       max: Number(e.value),
@@ -1188,7 +1192,7 @@ function AllFilters() {
                                     },
                                   })
                             );
-                          }
+                          } console.log("4445", PageNameEnum.AdlibraryDatabase);
                           handleInstagramFollowersChange([
                             pageName === PageNameEnum.AdlibraryDatabase
                               ? allAdsPerams?.appliedFilters?.InstagramFollowers

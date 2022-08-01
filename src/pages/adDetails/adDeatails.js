@@ -4,9 +4,11 @@ import { Grid, Box, Typography, Button, Stack, Avatar } from "@mui/material";
 import Firsrcardimg from "../../assets/FirstCardImg.svg";
 import facebook from "../../assets/facebook.svg";
 import instragram from "../../assets/instragram.svg";
-import MyChart from "../../components/MyChart";
-import { useParams } from "react-router-dom";
+import MyChart from "../../components/linemy";
 import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { loadSingleAdDataStart } from "../../redux/ducks/singleAdsData";
+
 const ReadMore = ({ children }) => {
   const text = children;
   const [isReadMore, setIsReadMore] = React.useState(true);
@@ -36,6 +38,10 @@ function AdDeatails() {
   const dispatch = useDispatch();
   const { adId } = useParams();
   const filteredAds = useSelector((state) => state.filteredAds);
+  const subAllAds = useSelector((state) => state.subAllAds);
+  const savedAds = useSelector((state) => state.savedAds);
+  const singleAdData = useSelector((state) => state.singleAdData);
+
   const [adDetail, setAdDetail] = useState();
 
   window.scrollTo(
@@ -49,14 +55,30 @@ function AdDeatails() {
   useEffect(() => {
     if (filteredAds.filteredAds.length > 0) {
       // eslint-disable-next-line array-callback-return
-      const adTobeDisplay = filteredAds.filteredAds.find((ad) => {
+      let adTobeDisplay = filteredAds.filteredAds.find((ad) => {
+        if (ad.id === adId) {
+          return ad;
+        }
+      }) || subAllAds.subAllAds.find((ad) => {
+        if (ad.id === adId) {
+          return ad;
+        }
+      }) ||  savedAds.savedAds.find((ad) => {
         if (ad.id === adId) {
           return ad;
         }
       });
+      
+      // if (adTobeDisplay === undefined) {
+      //   console.log("888 apis");
+      //   dispatch(loadSingleAdDataStart({id:adId}));      
+      // }
+
+   
       setAdDetail(adTobeDisplay);
     }
   }, [dispatch, filteredAds, adId]);
+
 
   return (
     <>
@@ -93,9 +115,7 @@ function AdDeatails() {
                   }}
                 >
                   <b>
-                    {adDetail?.pageInfo?.name
-                      ? adDetail.pageInfo?.name
-                      : " "}
+                    {adDetail?.pageInfo?.name ? adDetail.pageInfo?.name : " "}
                   </b>
                 </Typography>
               </Box>
@@ -112,9 +132,7 @@ function AdDeatails() {
                   }}
                 >
                   <ReadMore>
-                    {adDetail?.adDescription
-                      ? adDetail.adDescription
-                      : " "}
+                    {adDetail?.adDescription ? adDetail.adDescription : " "}
                   </ReadMore>
                 </Typography>
               </Box>
@@ -221,9 +239,7 @@ function AdDeatails() {
                           fontWeight: "700",
                         }}
                       >
-                        {adDetail?.noOfCopyAds
-                          ? adDetail.noOfCopyAds
-                          : " "}
+                        {adDetail?.noOfCopyAds ? adDetail.noOfCopyAds : " "}
                       </span>
                       <span style={{ fontSize: "10px", margin: "auto" }}>
                         Ads
@@ -320,10 +336,7 @@ function AdDeatails() {
                   Started Running On:
                 </Typography>
                 <Typography className={classes.textdeco}>
-                  <b>
-                    {" "}
-                    {adDetail?.startDate ? adDetail.startDate : " "}
-                  </b>
+                  <b> {adDetail?.startDate ? adDetail.startDate : " "}</b>
                 </Typography>
                 <Typography className={classes.textdeco}>
                   <b> 3 Days</b>
@@ -381,52 +394,48 @@ function AdDeatails() {
                 </Box>
               </Stack>
               <Stack style={{ justifyContent: "center", marginTop: "36px" }}>
-                {adDetail?.pageInfo?.platforms.map(
-                  (socialMedia, index) => {
-                    return (
-                      <Stack
-                        key={index}
-                        direction={"row"}
-                        sx={{
-                          marginBottom: "16px",
-                        }}
-                      >
-                        <Box sx={{ marginRight: "10px" }}>
-                          <img
-                            src={
-                              socialMedia.name === "Facebook"
-                                ? facebook
-                                : instragram
-                            }
-                            aria-label="Add"
-                          />
-                        </Box>
-                        <Stack>
-                          <Typography
-                            style={{
-                              fontFamily: "Neue Haas Grotesk Display Pro",
-                            }}
-                          >
-                            {socialMedia?.other}
-                          </Typography>
-                          <Typography
-                            style={{
-                              fontFamily: "Neue Haas Grotesk Display Pro",
-                            }}
-                          >
-                            {socialMedia.name === "Facebook"
-                              ? socialMedia.likes +
-                                " likes • " +
-                                socialMedia.type
-                              : socialMedia.followers +
-                                " followers • " +
-                                socialMedia.type}
-                          </Typography>
-                        </Stack>
+                {adDetail?.pageInfo?.platforms.map((socialMedia, index) => {
+                  return (
+                    <Stack
+                      key={index}
+                      direction={"row"}
+                      sx={{
+                        marginBottom: "16px",
+                      }}
+                    >
+                      <Box sx={{ marginRight: "10px" }}>
+                        <img
+                          src={
+                            socialMedia.name === "Facebook"
+                              ? facebook
+                              : instragram
+                          }
+                          aria-label="Add"
+                        />
+                      </Box>
+                      <Stack>
+                        <Typography
+                          style={{
+                            fontFamily: "Neue Haas Grotesk Display Pro",
+                          }}
+                        >
+                          {socialMedia?.other}
+                        </Typography>
+                        <Typography
+                          style={{
+                            fontFamily: "Neue Haas Grotesk Display Pro",
+                          }}
+                        >
+                          {socialMedia.name === "Facebook"
+                            ? socialMedia.likes + " likes • " + socialMedia.type
+                            : socialMedia.followers +
+                              " followers • " +
+                              socialMedia.type}
+                        </Typography>
                       </Stack>
-                    );
-                  }
-                )}
+                    </Stack>
+                  );
+                })}
               </Stack>
             </Grid>
             <Grid>

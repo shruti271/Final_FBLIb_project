@@ -159,7 +159,8 @@ const allAdsPeramsReducer = (state = initialState, action) => {
         maxRanger: {
           ...state.maxRanger,
           [`${action.payload.key}`]: {
-            ...state.appliedFilters[action.payload.key],
+            // ...state.maxRanger[action.payload.key],
+            min:1,
             max: action.payload.value.max,
           },
         },
@@ -221,7 +222,7 @@ const allAdsPeramsReducer = (state = initialState, action) => {
         [`${action.payload.key}`]: `${action.payload.value}`,
       };
 
-    case SET_ADLIBRARY_DATABASE_PAGE_INDEX:
+    case SET_ADLIBRARY_DATABASE_PAGE_INDEX:console.log("index inc ",action.payload)
       return {
         ...state,
         pageIndex: action.payload,

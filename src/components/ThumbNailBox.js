@@ -16,9 +16,11 @@ import Firstcardimg from "../assets/FirstCardImg.svg";
 import Shareicon from "../assets/Shareicon.svg";
 import Saveicon from "../assets/Saveicon.svg";
 import StarFill from "../assets/StarFill.svg";
-import MyCharttt from "./linemy";
-import { addToSavedAdsStart, removeFromSavedAdsStart, addSavedAdsIdsLocal, removeSavedAdsIdsLocal } from "../redux/ducks/savedAdsManager";
+import MyChart from "./linemy";
+
+// import { srtPostionForScrollValueStart } from "../redux/ducks/mediaAds";
 import { addToSavedAdsFilterLocalStart, removesavedFilteredAdLocal } from "../redux/ducks/filteredSavedAds";
+import { addSavedAdsIdsLocal, addToSavedAdsStart, removeFromSavedAdsStart, removeSavedAdsIdsLocal } from "../redux/ducks/savedAdsManager";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -381,7 +383,7 @@ const ThumbNailBox = ({ adInfo, index }) => {
         </Grid>
 
         <Box sx={{ marginTop: "20px", marginBottom: "20px", height: "100px" }}>
-          <MyCharttt
+          <MyChart
             chartData={adInfo?.history}
             dataBoxVisiblity={false}
             axisVisiblity={false}
@@ -399,7 +401,8 @@ const ThumbNailBox = ({ adInfo, index }) => {
           }}
           onClick={() => {
             // dispatch(srtPostionForScrollValueStart(window.pageYOffset));
-            navigate(`/adDeatails/${adInfo.id}`);
+            // navigate(`/adDeatails/${adInfo.id}`);
+            navigate(`/adDeatails/${adInfo.id}`,{ state: { SingleAds: adInfo} });
           }}
         >
           <b>See Details</b>

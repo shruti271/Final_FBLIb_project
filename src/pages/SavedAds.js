@@ -4,11 +4,13 @@ import filter from "../assets/filter.svg";
 import { Box } from "@material-ui/core";
 import BackTotopbutton from "../pages/Backtotopbutton";
 import AllFilters from "../components/AllFilters";
+import CloseIcon from "@mui/icons-material/Close";
 import SortFilter from "../components/SortFilter";
 import FilterAltOffIcon from "@mui/icons-material/FilterAltOff";
 import ScrollToTop from "../utils/scrollToTop";
 import FilterChips from "../components/FilterChips";
 import SavedAdsList from "../components/SavedAdsList";
+
 const SavedAds = () => {
 
   const [filterActivate, setFilterActivate] = React.useState(true);
