@@ -5,7 +5,7 @@ import { loadSingleAdDataError, loadSingleAdDataSuccess } from "../../ducks/sing
 export function* handleGetSingleAdData({ payload }) {
     try {
       const response = yield call(requestGetSingleAdData, payload);
-      console.log("response", response);
+      console.log("response 111", response);
   
       if (response.status === 200) {
         yield put(loadSingleAdDataSuccess(response?.data?.data));

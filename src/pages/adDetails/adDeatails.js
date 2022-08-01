@@ -63,16 +63,16 @@ function AdDeatails() {
         if (ad.id === adId) {
           return ad;
         }
-      }) ||  savedAds.savedAds.find((ad) => {
+      }) ||  savedAds.data.find((ad) => {
         if (ad.id === adId) {
           return ad;
         }
       });
       
-      // if (adTobeDisplay === undefined) {
-      //   console.log("888 apis");
-      //   dispatch(loadSingleAdDataStart({id:adId}));      
-      // }
+      if (adTobeDisplay === undefined) {
+        console.log("888 apis");
+        dispatch(loadSingleAdDataStart({id:adId}));      
+      }
 
    
       setAdDetail(adTobeDisplay);
