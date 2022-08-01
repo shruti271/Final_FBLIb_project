@@ -39,7 +39,7 @@ function AdDeatails() {
   const { adId } = useParams();
   const filteredAds = useSelector((state) => state.filteredAds);
   const subAllAds = useSelector((state) => state.subAllAds);
-  const savedAds = useSelector((state) => state.savedAds);
+  const {savedAds} = useSelector((state) => state.savedAds);
   const singleAdData = useSelector((state) => state.singleAdData);
 
   const [adDetail, setAdDetail] = useState();
@@ -63,7 +63,7 @@ function AdDeatails() {
         if (ad.id === adId) {
           return ad;
         }
-      }) ||  savedAds.data.find((ad) => {
+      }) ||  savedAds.find((ad) => {
         if (ad.id === adId) {
           return ad;
         }
