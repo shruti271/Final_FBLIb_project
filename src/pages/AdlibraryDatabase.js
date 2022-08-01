@@ -152,7 +152,7 @@ const Addlibrarydatabase = () => {
         <Grid container justifyContent="flex-end" sx={{ marginTop: "10px" }}>
           <SortFilter />
         </Grid>
-        <Grid item sx={{ width: "100%" }}>
+        <Grid item sx={{ width: "100%" }} >
           <AdsList />
         </Grid>
       </Grid>

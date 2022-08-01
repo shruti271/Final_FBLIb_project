@@ -123,7 +123,7 @@ const AdsList = () => {
       <Grid
         item
         sx={{
-          width: "100%",
+          width: "90%",
         }}
       >
         <Grid
@@ -134,7 +134,7 @@ const AdsList = () => {
             width: "100%",
             // opacity: save_loading ? 0.5 : 1,
             // disabled: save_loading ? true : false,
-          }}
+          }}spacing={1}
         >
           {filteredAds?.filteredAds?.length !== 0 &&
             filteredAds?.filteredAds?.map((ads, index) => (

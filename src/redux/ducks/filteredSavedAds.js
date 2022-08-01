@@ -71,6 +71,7 @@ export const loadMoresavedFilteredAdsError = (error) => ({
 const initialState = {
   filteredSavedAds: [],
   savedAdsIds: [],
+  hasMoreData:true,
   loading: false,
   error: "",
 };
@@ -94,6 +95,7 @@ const filteredSavedAdsReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         filteredSavedAds: [...state.filteredSavedAds].concat(action.payload),
+        // hasMoreData:filteredSavedAds.length < 8
       };
     case LOAD_SAVED_FILTERED_ADS_ERROR:
     case LOAD_MORE_SAVED_FILTERED_ADS_ERROR:

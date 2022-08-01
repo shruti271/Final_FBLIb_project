@@ -13,12 +13,13 @@ import AdDeatails from "./adDeatails";
 import { useDispatch, useSelector } from "react-redux";
 import { loadSubAllAdsStart } from "../../redux/ducks/subAllAds";
 import LeftArrow from "../../assets/LeftArrow.svg";
+import { loadSingleAdDataClear, loadSingleAdDataStart } from "../../redux/ducks/singleAdsData";
 function AdDeatailsTabs() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { adId } = useParams();
 
-  const subAllAds = useSelector((state) => state.subAllAds);
+  // const subAllAds = useSelector((state) => state.subAllAds);
 
   const adDetailsTabs = {
     ADOVERVIEW: "Ad Overview",
@@ -27,6 +28,10 @@ function AdDeatailsTabs() {
   const filteredAds = useSelector((state) => state.filteredAds);
   const [isActiveTab, setIsActiveTab] = useState(adDetailsTabs.ADOVERVIEW);
   const [adDetail, setAdDetail] = useState();
+  
+  const subAllAds = useSelector((state) => state.subAllAds);
+  const {filteredSavedAds} = useSelector((state) => state.filteredSavedAds);
+  const { singleAdData, loading } = useSelector((state) => state.singleAdData);
 
   useEffect(() => {
     if (window.location.pathname === `/adDeatails/${adId}`) {
@@ -39,14 +44,37 @@ function AdDeatailsTabs() {
   useEffect(() => {
     if (filteredAds.filteredAds.length > 0) {
       // eslint-disable-next-line array-callback-return
-      const adTobeDisplay = filteredAds.filteredAds.find((ad) => {
-        if (ad.id === adId) {
-          return ad;
+      const adTobeDisplay =
+        filteredAds.filteredAds.find((ad) => {
+          if (ad.id === adId) {
+            return ad;
+          }
+        }) ||
+        subAllAds.subAllAds.find((ad) => {
+          if (ad.id === adId) {
+            return ad;
+          }
+        }) ||
+        filteredSavedAds?.find((ad) => {
+          if (ad.id === adId) {
+            return ad;
+          }
+        });
+
+        if(!adTobeDisplay){          
+          dispatch(loadSingleAdDataStart({ id: adId }));                  
         }
-      });
       setAdDetail(adTobeDisplay);
     }
   }, [dispatch, filteredAds, adId]);
+
+  
+  useEffect(() => {    
+    if (!adDetail && Object.keys(singleAdData).length) {      
+      setAdDetail(singleAdData);
+      dispatch(loadSingleAdDataClear());  
+    }
+  }, [singleAdData]);
 
   useEffect(() => {
     if (adDetail?.pageInfo?.name) {
@@ -142,11 +170,7 @@ function AdDeatailsTabs() {
         </Box>
       </Box>
       <Routes>
-        <Route
-          exact
-          path=""
-          element={<AdDeatails />}
-        />
+        <Route exact path="" element={<AdDeatails />} />
         <Route exact path="allAds" element={<AllAds />} />
       </Routes>
     </>

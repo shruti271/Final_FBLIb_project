@@ -122,7 +122,7 @@ const SavedAdsList = () => {
             )
           )
         }
-        hasMore={true}
+        hasMore={filteredSavedAds?.hasMoreData}
         loader={
           filteredSavedAds?.loading ? (
             <Box

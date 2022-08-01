@@ -2,6 +2,8 @@ export const LOAD_SINGLEAD_START = "LOAD_SINGLEAD_START";
 export const LOAD_SINGLEAD_SUCCESS = "LOAD_SINGLEAD_SUCCESS";
 export const LOAD_SINGLEAD_ERROR = "LOAD_SINGLEAD_ERROR";
 
+export const CLEAR_SINGLEAD = "CLEAR_SINGLEAD";
+
 export const loadSingleAdDataStart = (subAdsInfo) => ({
     type: LOAD_SINGLEAD_START,
     payload: subAdsInfo,
@@ -17,6 +19,10 @@ export const loadSingleAdDataStart = (subAdsInfo) => ({
     payload: error,
   });
 
+  export const loadSingleAdDataClear = () => ({
+    type: CLEAR_SINGLEAD,
+    // payload: subAdsInfo,
+  });
   const initialState = {
     
     singleAdData: [],
@@ -46,6 +52,13 @@ export const loadSingleAdDataStart = (subAdsInfo) => ({
           loading: false,
           error: action.payload,
         };
+        case CLEAR_SINGLEAD:
+            return {
+                ...state,
+                singleAdData:[]
+                // loading: false,
+                // error: action.payload,
+              };
       default:
         return state;
     }
