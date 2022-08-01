@@ -217,7 +217,7 @@ function SortFilter(props) {
       {/* <Grid container justifyContent="flex-end">
        <Box> */}
       <Button
-        disabled={props.loading}
+        // disabled={props.loading}
         onClick={(event) => {
           setSortByAnchorel(event.currentTarget);
         }}

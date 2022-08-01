@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Button, Stack, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { Route, Routes, useNavigate, useParams } from "react-router-dom";
+import {
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 import AllAds from "./AllAds";
 import AdDeatails from "./adDeatails";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,6 +27,7 @@ function AdDeatailsTabs() {
   };
   const [isActiveTab, setIsActiveTab] = useState(adDetailsTabs.ADOVERVIEW);
   const [adDetail, setAdDetail] = useState();
+  const { state } = useLocation();
 
   useEffect(() => {
     if (window.location.pathname === `/adDeatails/${peramsAdId}`) {
@@ -111,7 +118,7 @@ function AdDeatailsTabs() {
               }}
               onClick={() => {
                 setIsActiveTab(adDetailsTabs.ADOVERVIEW);
-                navigate("");
+                navigate("",{ state: {SingleAds: state.SingleAds } });
               }}
             >
               Ad Overview
@@ -127,7 +134,7 @@ function AdDeatailsTabs() {
               }}
               onClick={() => {
                 setIsActiveTab(adDetailsTabs.ALLADS);
-                navigate("allAds");
+                navigate("allAds",{ state: { SingleAds: state.SingleAds } });
               }}
             >
               All Ads
@@ -139,7 +146,7 @@ function AdDeatailsTabs() {
         <Route
           exact
           path=""
-          element={<AdDeatails ThumbnailData={adDetail} />}
+          element={<AdDeatails ThumbnailData={state.SingleAds} />}
         />
         <Route exact path="allAds" element={<AllAds />} />
       </Routes>

@@ -125,23 +125,10 @@ const Addlibrarydatabase = () => {
             <Typography
               className={classes.titleHome}
               variant="h5"
-              sx={{ fontWeight: "bold" }}
+              ml={1}
+              sx={{ fontWeight: "bold",color:"#3A3D4B" }}
             >
-              Welcome to the All-Seeing Eye!
-            </Typography>
-            <Typography
-              // className={classes.subTitleHome}
-              sx={{
-                fontWeight: 500,
-                fontSize: "18px",
-                // lineHeight: "24px",
-                color: "#2B2F42",
-                // marginTop: "8px",
-                // marginBottom: "18px",
-              }}
-            >
-              Spy on 100% of the ads ran by over 30,000 active dropshipping
-              stores.
+              Adlibrary Database
             </Typography>
           </Box>
         </Grid>

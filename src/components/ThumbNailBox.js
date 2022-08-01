@@ -5,6 +5,7 @@ import {
   Avatar,
   Box,
   Button,
+  Card,
   Grid,
   Stack,
   Tooltip,
@@ -211,6 +212,14 @@ const ThumbNailBox = ({ adInfo, index }) => {
   
   return (
     <Grid item lg={3} md={4} xs={5} key={index}>
+      <Card
+      sx={{
+        transition: "transform 0.45s ease-in-out",
+        "&:hover": { transform: "scale3d(1.05, 1.05, 1)" },
+        
+        borderRadius:"20px"
+      }}
+      >
       <Stack
         sx={{
           border: "2px solid #F6F6FB",
@@ -244,7 +253,7 @@ const ThumbNailBox = ({ adInfo, index }) => {
               marginRight: "12px",
               paddingLeft: "10px",
             }}
-            // noWrap
+            noWrap
           >
             {adInfo?.pageInfo?.name}
           </Typography>
@@ -349,7 +358,7 @@ const ThumbNailBox = ({ adInfo, index }) => {
           >
             <Avatar
               sx={{
-                backgroundColor: "#00CBFF",
+                background: "linear-gradient(45deg, #00CBFF 0%, #72E2FF 100%)",
                 display: "grid",
                 width: "52px",
                 height: "51px",
@@ -370,7 +379,6 @@ const ThumbNailBox = ({ adInfo, index }) => {
             </Avatar>
           </Grid>
         </Grid>
-
 
         <Box sx={{ marginTop: "20px", marginBottom: "20px", height: "100px" }}>
           <MyCharttt
@@ -397,6 +405,7 @@ const ThumbNailBox = ({ adInfo, index }) => {
           <b>See Details</b>
         </Button>
       </Stack>
+      </Card>
     </Grid>
   );
 };

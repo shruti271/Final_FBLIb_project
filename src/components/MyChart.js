@@ -1,7 +1,5 @@
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
-import { date } from "yup";
-import { Grid } from "@material-ui/core";
 
 const MyChart = (props) => {
     // console.log(props.chartData?.map((a)=>a.date))
@@ -133,11 +131,7 @@ const MyChart = (props) => {
       ],
     };
     return (
-      // <Grid container>
-      //   <Grid item>
         <HighchartsReact highcharts={Highcharts} options={option}/>
-      //   </Grid>
-      // </Grid>
     );
   };
   
