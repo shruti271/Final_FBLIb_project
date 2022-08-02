@@ -26,7 +26,10 @@ import * as savedAdsPeramsDuck from "../redux/ducks/savedAdsPerams";
 import { PageNameEnum } from "../utils/enums";
 import { useLocation } from "react-router-dom";
 import { loadFilteredAdsStart } from "../redux/ducks/filteredAds";
-import { useSkipInitialEffect, useInitialOnlyEffect } from "../utils/customHooks";
+import {
+  useSkipInitialEffect,
+  useInitialOnlyEffect,
+} from "../utils/customHooks";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -128,6 +131,7 @@ const useStyles = makeStyles((theme) => ({
 
 function AllFilters() {
   const [pageName, setPageName] = useState("");
+
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -168,6 +172,35 @@ function AllFilters() {
   const openButtonType = Boolean(ButtonTypeanchorel);
   const [seachTypeanchorel, setSeachTypeAnchorEl] = React.useState(null);
   const openSearchType = Boolean(seachTypeanchorel);
+
+  const [rangeAdcountValue, setRangeAdcountValue] = useState({
+    min: allAdsPerams?.appliedFilters?.AdCount?.min,
+    max: allAdsPerams?.appliedFilters?.AdCount?.max,
+  });
+  const [rangeFacebookValue, setRangeFacebookValue] = useState({
+    min: allAdsPerams?.appliedFilters?.FacebookLikes?.min,
+    max: allAdsPerams?.appliedFilters?.FacebookLikes?.max,
+  });
+  const [rangeInstragramValue, setRangeInstragramValue] = useState({
+    min: allAdsPerams?.appliedFilters?.InstagramFollowers?.min,
+    max: allAdsPerams?.appliedFilters?.InstagramFollowers?.max,
+  });
+
+  const [savedPageRangeAdcountValue, setSavedPageRangeAdcountValue] = useState({
+    min: savedAdsPerams?.appliedFilters?.AdCount?.min,
+    max: savedAdsPerams?.appliedFilters?.AdCount?.max,
+  });
+  const [savedPageRangeFacebookValue, setSavedPageRangeFacebookValue] =
+    useState({
+      min: savedAdsPerams?.appliedFilters?.FacebookLikes?.min,
+      max: savedAdsPerams?.appliedFilters?.FacebookLikes?.max,
+    });
+
+  const [savedPageRangeInstragramValue, setSavedPageRangeInstragramValue] =
+    useState({
+      min: savedAdsPerams?.appliedFilters?.InstagramFollowers?.min,
+      max: savedAdsPerams?.appliedFilters?.InstagramFollowers?.max,
+    });
 
   useEffect(() => {
     console.log("allAdsPerams :", allAdsPerams);
@@ -213,7 +246,7 @@ function AllFilters() {
       pageName === PageNameEnum.AdlibraryDatabase
         ? allAdsPeramsDuck.changeAppliedFilters({
             key: "AdStatus",
-            value: {              
+            value: {
               selectedValue: newValue,
               chipText: `Adstatus : ${newValue}`,
               isApplied: isReset ? false : true,
@@ -386,14 +419,58 @@ function AllFilters() {
     );
   };
 
+  useEffect(() => {
+    allAdsPerams?.appliedFilters?.AdCount?.chipText === "" &&
+      setRangeAdcountValue({
+        min: 1,
+        max: 1000,
+      });
+    allAdsPerams?.appliedFilters?.FacebookLikes?.chipText === "" &&
+      setRangeFacebookValue({
+        min: 1,
+        max: 100000,
+      });
+
+    allAdsPerams?.appliedFilters?.InstagramFollowers?.chipText === "" &&
+      setRangeInstragramValue({
+        min: 1,
+        max: 100000,
+      });
+
+    savedAdsPerams?.appliedFilters?.AdCount?.chipText === "" &&
+      setSavedPageRangeAdcountValue({
+        min: 1,
+        max: 1000,
+      });
+
+    savedAdsPerams?.appliedFilters?.FacebookLikes?.chipText === "" &&
+      setSavedPageRangeFacebookValue({
+        min: 1,
+        max: 100000,
+      });
+
+    savedAdsPerams?.appliedFilters?.InstagramFollowers?.chipText === "" &&
+      setSavedPageRangeInstragramValue({
+        min: 1,
+        max: 100000,
+      });
+  }, [
+    allAdsPerams?.appliedFilters?.AdCount?.chipText,
+    allAdsPerams?.appliedFilters?.FacebookLikes?.chipText,
+    allAdsPerams?.appliedFilters?.InstagramFollowers?.chipText,
+    savedAdsPerams?.appliedFilters?.AdCount?.chipText,
+    savedAdsPerams?.appliedFilters?.FacebookLikes?.chipText,
+    savedAdsPerams?.appliedFilters?.InstagramFollowers?.chipText,
+  ]);
   return (
     <>
       {pageName === PageNameEnum.AdlibraryDatabase
         ? allAdsPerams?.searchBarData
         : savedAdsPerams?.searchBarData}
-      <Grid
-        container
-        sx={{ border: "2px solid #EBEBEB", borderRadius: "10px" }}
+      <Stack
+        direction={"row"}
+        // container
+        sx={{ border: "2px solid #EBEBEB" ,borderRadius:2}}
       >
         <Grid item sx={{ display: "flex" }}>
           {/* Select Search Type Start  */}
@@ -500,31 +577,30 @@ function AllFilters() {
           <Divider orientation="vertical" sx={{ marginLeft: "auto" }} />
         </Grid>
 
-        <Grid item>
-          {/* Searchbar Start  */}
-          <Box sx={{ marginLeft: "21px" }}>
-            <InputBase
-              defaultValue={
-                pageName === PageNameEnum.AdlibraryDatabase
-                  ? allAdsPerams?.searchBarData
-                  : savedAdsPerams?.searchBarData
-              }
-              fullWidth
-              onKeyUp={(e) => {
-                if (e.key === "Enter") {
-                  handleChangeSearchBar(e.currentTarget.value);
-                }
-                if (e.target.value.length === 0) {
-                  handleChangeSearchBar("");
-                }
-              }}
-              margin="dense"
-              size="large"
-            />
-          </Box>
-          {/* Searchbar End  */}
-        </Grid>
-      </Grid>
+        
+        {/* Searchbar Start  */}
+        {/* <Box sx={{ marginLeft: "21px",justifyContent:"bottom", alignItems:"end" ,width:"100%"}}> */}
+        <InputBase
+          defaultValue={
+            pageName === PageNameEnum.AdlibraryDatabase
+              ? allAdsPerams?.searchBarData
+              : savedAdsPerams?.searchBarData
+          }
+          fullWidth
+          onKeyUp={(e) => {
+            if (e.key === "Enter") {
+              handleChangeSearchBar(e.currentTarget.value);
+            }
+            if (e.target.value.length === 0) {
+              handleChangeSearchBar("");
+            }
+          }}
+          size="large"
+        />
+        {/* </Box> */}
+        {/* Searchbar End  */}
+        
+      </Stack>
       <Grid container>
         <Grid item lg={11} md={11}>
           {/* Date Filter Start */}
@@ -663,12 +739,27 @@ function AllFilters() {
                       style={{ maxWidth: "100px" }}
                       defaultValue={
                         pageName === PageNameEnum.AdlibraryDatabase
-                          ? allAdsPerams?.appliedFilters?.AdCount?.min.toString()
-                          : savedAdsPerams?.appliedFilters?.AdCount?.min.toString()
+                          ? rangeAdcountValue.min.toString()
+                          : savedPageRangeAdcountValue.min.toString()
+                        // pageName === PageNameEnum.AdlibraryDatabase
+                        //   ? allAdsPerams?.appliedFilters?.AdCount?.min.toString()
+                        //   : savedAdsPerams?.appliedFilters?.AdCount?.min.toString()
                       }
                       onSave={(e) => {
                         if (Number(e.value) !== e.previousValue) {
-                          console.log("222",e.value)
+                          console.log("222", e.value);
+                          if (pageName === PageNameEnum.AdlibraryDatabase) {
+                            setRangeAdcountValue({
+                              min: Number(e.value),
+                              max: rangeAdcountValue.max,
+                            });
+                          } else {
+                            setSavedPageRangeAdcountValue({
+                              min: Number(e.value),
+                              max: savedPageRangeAdcountValue.max,
+                            });
+                          }
+
                           handleAdsCountChange([
                             Number(e.value),
                             pageName === PageNameEnum.AdlibraryDatabase
@@ -686,13 +777,27 @@ function AllFilters() {
                       style={{ maxWidth: "100px" }}
                       defaultValue={
                         pageName === PageNameEnum.AdlibraryDatabase
-                          ? allAdsPerams?.appliedFilters?.AdCount?.max.toString()
-                          : savedAdsPerams?.appliedFilters?.AdCount?.max.toString()
+                          ? rangeAdcountValue.max.toString()
+                          : savedPageRangeAdcountValue.max.toString()
+                        // pageName === PageNameEnum.AdlibraryDatabase
+                        //   ? allAdsPerams?.appliedFilters?.AdCount?.max.toString()
+                        //   : savedAdsPerams?.appliedFilters?.AdCount?.max.toString()
                       }
                       onSave={(e) => {
-                        console.log("222 prv data ",e.previousValue)
+                        console.log("222 prv data ", e.previousValue);
                         if (Number(e.value) !== e.previousValue) {
-                          console.log("222",e.value)
+                          console.log("222", e.value);
+                          if (pageName === PageNameEnum.AdlibraryDatabase) {
+                            setRangeAdcountValue({
+                              min: rangeAdcountValue.min,
+                              max: Number(e.value),
+                            });
+                          } else {
+                            setSavedPageRangeAdcountValue({
+                              min: savedPageRangeAdcountValue.min,
+                              max: Number(e.value),
+                            });
+                          }
                           if (
                             Number(e.value) >
                             (pageName === PageNameEnum.AdlibraryDatabase
@@ -732,14 +837,21 @@ function AllFilters() {
                   size="small"
                   value={
                     pageName === PageNameEnum.AdlibraryDatabase
-                      ? [
-                          allAdsPerams?.appliedFilters?.AdCount?.min,
-                          allAdsPerams?.appliedFilters?.AdCount?.max,
-                        ]
+                      ? [rangeAdcountValue.min, rangeAdcountValue.max]
                       : [
-                          savedAdsPerams?.appliedFilters?.AdCount?.min,
-                          savedAdsPerams?.appliedFilters?.AdCount?.max,
+                          savedPageRangeAdcountValue.min,
+                          savedPageRangeAdcountValue.max,
                         ]
+                    // [rangeAdcountValue.min, rangeAdcountValue.max]
+                    // pageName === PageNameEnum.AdlibraryDatabase
+                    //   ? [
+                    //       allAdsPerams?.appliedFilters?.AdCount?.min,
+                    //       allAdsPerams?.appliedFilters?.AdCount?.max,
+                    //     ]
+                    //   : [
+                    //       savedAdsPerams?.appliedFilters?.AdCount?.min,
+                    //       savedAdsPerams?.appliedFilters?.AdCount?.max,
+                    //     ]
                   }
                   min={
                     pageName === PageNameEnum.AdlibraryDatabase
@@ -752,9 +864,38 @@ function AllFilters() {
                       : savedAdsPerams?.maxRanger?.AdCount?.max
                   }
                   sx={{ color: "#00CBFF" }}
-                  // onChangeCommitted={console.log("55 data")}    
-                  // onkeyPress={()=>console.log("ccccccc")}              
-                  onChange={(e) => handleAdsCountChange(e.target.value)}
+                  onChangeCommitted={(e) => {
+                    console.log("55 data", e);
+                    pageName === PageNameEnum.AdlibraryDatabase
+                      ? handleAdsCountChange([
+                          rangeAdcountValue.min,
+                          rangeAdcountValue.max,
+                        ])
+                      : handleAdsCountChange([
+                          savedPageRangeAdcountValue.min,
+                          savedPageRangeAdcountValue.max,
+                        ]);
+                  }}
+                  onChange={(e) => {
+                    if (pageName === PageNameEnum.AdlibraryDatabase) {
+                      setRangeAdcountValue({
+                        min: e.target.value[0],
+                        max: e.target.value[1],
+                      });
+                    } else {
+                      setSavedPageRangeAdcountValue({
+                        min: e.target.value[0],
+                        max: e.target.value[1],
+                      });
+                    }
+                    console.log(
+                      "55 data ---",
+                      e.target.value,
+                      rangeAdcountValue,
+                      savedPageRangeAdcountValue
+                    );
+                  }}
+                  // onChange={(e) => handleAdsCountChange(e.target.value)}
                 />
                 <Button
                   // disabled={props.loading}
@@ -768,6 +909,15 @@ function AllFilters() {
                     borderWidth: 2,
                   }}
                   onClick={() => {
+                    pageName === PageNameEnum.AdlibraryDatabase
+                      ? setRangeAdcountValue({
+                          min: 1,
+                          max: allAdsPerams?.maxRanger?.AdCount?.max,
+                        })
+                      : setSavedPageRangeAdcountValue({
+                          min: 1,
+                          max: savedAdsPerams?.maxRanger?.AdCount?.max,
+                        });
                     handleAdsCountChange([1, 1000], true);
                     setrangeAnchorEl(null);
                   }}
@@ -950,11 +1100,27 @@ function AllFilters() {
                       style={{ maxWidth: "100px" }}
                       defaultValue={
                         pageName === PageNameEnum.AdlibraryDatabase
-                          ? allAdsPerams?.appliedFilters?.FacebookLikes?.min.toString()
-                          : savedAdsPerams?.appliedFilters?.FacebookLikes?.min.toString()
+                          ? rangeFacebookValue.min.toString()
+                          : savedPageRangeFacebookValue.min.toString()
+
+                        // pageName === PageNameEnum.AdlibraryDatabase
+                        //   ? allAdsPerams?.appliedFilters?.FacebookLikes?.min.toString()
+                        //   : savedAdsPerams?.appliedFilters?.FacebookLikes?.min.toString()
                       }
                       onSave={(e) => {
                         if (Number(e.value) !== e.previousValue) {
+                          if (pageName === PageNameEnum.AdlibraryDatabase) {
+                            setRangeFacebookValue({
+                              min: Number(e.value),
+                              max: rangeFacebookValue.max,
+                            });
+                          } else {
+                            setSavedPageRangeFacebookValue({
+                              min: Number(e.value),
+                              max: savedPageRangeFacebookValue.max,
+                            });
+                          }
+
                           handleFacebookLikesChange([
                             Number(e.value),
                             pageName === PageNameEnum.AdlibraryDatabase
@@ -973,11 +1139,26 @@ function AllFilters() {
                       style={{ maxWidth: "100px" }}
                       defaultValue={
                         pageName === PageNameEnum.AdlibraryDatabase
-                          ? allAdsPerams?.appliedFilters?.FacebookLikes?.max.toString()
-                          : savedAdsPerams?.appliedFilters?.FacebookLikes?.max.toString()
+                          ? rangeFacebookValue.max.toString()
+                          : savedPageRangeFacebookValue.max.toString()
+                        // pageName === PageNameEnum.AdlibraryDatabase
+                        //   ? allAdsPerams?.appliedFilters?.FacebookLikes?.max.toString()
+                        //   : savedAdsPerams?.appliedFilters?.FacebookLikes?.max.toString()
                       }
                       onSave={(e) => {
                         if (Number(e.value) !== e.previousValue) {
+                          if (pageName === PageNameEnum.AdlibraryDatabase) {
+                            setRangeFacebookValue({
+                              min: rangeFacebookValue.min,
+                              max: Number(e.value),
+                            });
+                          } else {
+                            setSavedPageRangeFacebookValue({
+                              min: savedPageRangeFacebookValue.min,
+                              max: Number(e.value),
+                            });
+                          }
+
                           if (
                             Number(e.value) >
                             (pageName === PageNameEnum.AdlibraryDatabase
@@ -1019,14 +1200,20 @@ function AllFilters() {
                   size="small"
                   value={
                     pageName === PageNameEnum.AdlibraryDatabase
-                      ? [
-                          allAdsPerams?.appliedFilters?.FacebookLikes?.min,
-                          allAdsPerams?.appliedFilters?.FacebookLikes?.max,
-                        ]
+                      ? [rangeFacebookValue.min, rangeFacebookValue.max]
                       : [
-                          savedAdsPerams?.appliedFilters?.FacebookLikes?.min,
-                          savedAdsPerams?.appliedFilters?.FacebookLikes?.max,
+                          savedPageRangeFacebookValue.min,
+                          savedPageRangeFacebookValue.max,
                         ]
+                    // pageName === PageNameEnum.AdlibraryDatabase
+                    //   ? [
+                    //       allAdsPerams?.appliedFilters?.FacebookLikes?.min,
+                    //       allAdsPerams?.appliedFilters?.FacebookLikes?.max,
+                    //     ]
+                    //   : [
+                    //       savedAdsPerams?.appliedFilters?.FacebookLikes?.min,
+                    //       savedAdsPerams?.appliedFilters?.FacebookLikes?.max,
+                    //     ]
                   }
                   min={
                     pageName === PageNameEnum.AdlibraryDatabase
@@ -1039,7 +1226,33 @@ function AllFilters() {
                       : savedAdsPerams?.maxRanger?.FacebookLikes?.max
                   }
                   sx={{ color: "#00CBFF" }}
-                  onChange={(e) => handleFacebookLikesChange(e.target.value)}
+                  onChangeCommitted={(e) => {
+                    console.log("55 data", e);
+                    pageName === PageNameEnum.AdlibraryDatabase
+                      ? handleFacebookLikesChange([
+                          rangeFacebookValue.min,
+                          rangeFacebookValue.max,
+                        ])
+                      : handleFacebookLikesChange([
+                          savedPageRangeFacebookValue.min,
+                          savedPageRangeFacebookValue.max,
+                        ]);
+                  }}
+                  onChange={(e) => {
+                    if (pageName === PageNameEnum.AdlibraryDatabase) {
+                      setRangeFacebookValue({
+                        min: e.target.value[0],
+                        max: e.target.value[1],
+                      });
+                    } else {
+                      setSavedPageRangeFacebookValue({
+                        min: e.target.value[0],
+                        max: e.target.value[1],
+                      });
+                    }
+
+                    // handleFacebookLikesChange(e.target.value)
+                  }}
                 />
                 <Button
                   // disabled={props.loading}
@@ -1053,6 +1266,16 @@ function AllFilters() {
                     borderWidth: 2,
                   }}
                   onClick={() => {
+                    pageName === PageNameEnum.AdlibraryDatabase
+                      ? setRangeFacebookValue({
+                          min: 1,
+                          max: allAdsPerams?.maxRanger?.FacebookLikes?.max,
+                        })
+                      : setSavedPageRangeFacebookValue({
+                          min: 1,
+                          max: savedAdsPerams?.maxRanger?.FacebookLikes?.max,
+                        });
+
                     handleFacebookLikesChange([1, 100000], true);
                     setFacebookLikeAnchorEl(null);
                   }}
@@ -1134,13 +1357,28 @@ function AllFilters() {
 
                       defaultValue={
                         pageName === PageNameEnum.AdlibraryDatabase
-                          ? allAdsPerams?.appliedFilters?.InstagramFollowers?.min.toString()
-                          : savedAdsPerams?.appliedFilters?.InstagramFollowers?.min.toString()
+                          ? rangeInstragramValue.min.toString()
+                          : savedPageRangeInstragramValue.min.toString()
+                        // pageName === PageNameEnum.AdlibraryDatabase
+                        //   ? allAdsPerams?.appliedFilters?.InstagramFollowers?.min.toString()
+                        //   : savedAdsPerams?.appliedFilters?.InstagramFollowers?.min.toString()
                       }
                       onSave={(e) => {
                         console.log(e);
                         console.log("==============================");
                         if (Number(e.value) !== e.previousValue) {
+                          if (pageName === PageNameEnum.AdlibraryDatabase) {
+                            setRangeInstragramValue({
+                              min: Number(e.value),
+                              max: rangeInstragramValue.max,
+                            });
+                          } else {
+                            setSavedPageRangeInstragramValue({
+                              min: Number(e.value),
+                              max: savedPageRangeInstragramValue.max,
+                            });
+                          }
+
                           handleInstagramFollowersChange([
                             Number(e.value),
                             pageName === PageNameEnum.AdlibraryDatabase
@@ -1162,21 +1400,36 @@ function AllFilters() {
 
                       defaultValue={
                         pageName === PageNameEnum.AdlibraryDatabase
-                          ? allAdsPerams?.appliedFilters?.InstagramFollowers?.max.toString()
-                          : savedAdsPerams?.appliedFilters?.InstagramFollowers?.max.toString()
+                          ? rangeInstragramValue.max.toString()
+                          : savedPageRangeInstragramValue.max.toString()
+                        // pageName === PageNameEnum.AdlibraryDatabase
+                        //   ? allAdsPerams?.appliedFilters?.InstagramFollowers?.max.toString()
+                        //   : savedAdsPerams?.appliedFilters?.InstagramFollowers?.max.toString()
                       }
                       onSave={(e) => {
                         console.log(e);
-                      
+
                         if (Number(e.value) !== e.previousValue) {
+                          if (pageName === PageNameEnum.AdlibraryDatabase) {
+                            setRangeInstragramValue({
+                              min: rangeInstragramValue.min,
+                              max: Number(e.value),
+                            });
+                          } else {
+                            setSavedPageRangeInstragramValue({
+                              min: savedPageRangeInstragramValue.min,
+                              max: Number(e.value),
+                            });
+                          }
+
                           if (
                             Number(e.value) >
                             (pageName === PageNameEnum.AdlibraryDatabase
-                              ? allAdsPerams?.maxRanger?.InstagramFollowers
-                                  ?.max
-                              : savedAdsPerams?.maxRanger
-                                  ?.InstagramFollowers?.max)
-                          ) {  console.log("444", PageNameEnum.AdlibraryDatabase);
+                              ? allAdsPerams?.maxRanger?.InstagramFollowers?.max
+                              : savedAdsPerams?.maxRanger?.InstagramFollowers
+                                  ?.max)
+                          ) {
+                            console.log("444", PageNameEnum.AdlibraryDatabase);
                             dispatch(
                               pageName === PageNameEnum.AdlibraryDatabase
                                 ? allAdsPeramsDuck.refixMinMaxRange({
@@ -1192,7 +1445,8 @@ function AllFilters() {
                                     },
                                   })
                             );
-                          } console.log("4445", PageNameEnum.AdlibraryDatabase);
+                          }
+                          console.log("4445", PageNameEnum.AdlibraryDatabase);
                           handleInstagramFollowersChange([
                             pageName === PageNameEnum.AdlibraryDatabase
                               ? allAdsPerams?.appliedFilters?.InstagramFollowers
@@ -1212,16 +1466,23 @@ function AllFilters() {
                   size="small"
                   value={
                     pageName === PageNameEnum.AdlibraryDatabase
-                      ? [
-                          allAdsPerams?.appliedFilters?.InstagramFollowers?.min,
-                          allAdsPerams?.appliedFilters?.InstagramFollowers?.max,
-                        ]
+                      ? [rangeInstragramValue.min, rangeInstragramValue.max]
                       : [
-                          savedAdsPerams?.appliedFilters?.InstagramFollowers
-                            ?.min,
-                          savedAdsPerams?.appliedFilters?.InstagramFollowers
-                            ?.max,
+                          savedPageRangeInstragramValue.min,
+                          savedPageRangeInstragramValue.max,
                         ]
+
+                    // pageName === PageNameEnum.AdlibraryDatabase
+                    //   ? [
+                    //       allAdsPerams?.appliedFilters?.InstagramFollowers?.min,
+                    //       allAdsPerams?.appliedFilters?.InstagramFollowers?.max,
+                    //     ]
+                    //   : [
+                    //       savedAdsPerams?.appliedFilters?.InstagramFollowers
+                    //         ?.min,
+                    //       savedAdsPerams?.appliedFilters?.InstagramFollowers
+                    //         ?.max,
+                    //     ]
                   }
                   min={
                     pageName === PageNameEnum.AdlibraryDatabase
@@ -1234,9 +1495,32 @@ function AllFilters() {
                       : savedAdsPerams?.maxRanger?.InstagramFollowers?.max
                   }
                   sx={{ color: "#00CBFF" }}
-                  onChange={(e) =>
-                    handleInstagramFollowersChange(e.target.value)
-                  }
+                  onChangeCommitted={(e) => {
+                    console.log("55 data", e);
+                    pageName === PageNameEnum.AdlibraryDatabase
+                      ? handleInstagramFollowersChange([
+                          rangeInstragramValue.min,
+                          rangeInstragramValue.max,
+                        ])
+                      : handleInstagramFollowersChange([
+                          savedPageRangeInstragramValue.min,
+                          savedPageRangeInstragramValue.max,
+                        ]);
+                  }}
+                  onChange={(e) => {
+                    if (pageName === PageNameEnum.AdlibraryDatabase) {
+                      setRangeInstragramValue({
+                        min: e.target.value[0],
+                        max: e.target.value[1],
+                      });
+                    } else {
+                      setSavedPageRangeInstragramValue({
+                        min: e.target.value[0],
+                        max: e.target.value[1],
+                      });
+                    }
+                    // handleInstagramFollowersChange(e.target.value)
+                  }}
                 />
                 <Button
                   // disabled={props.loading}
@@ -1250,6 +1534,16 @@ function AllFilters() {
                     borderWidth: 2,
                   }}
                   onClick={() => {
+                    pageName === PageNameEnum.AdlibraryDatabase
+                      ? setRangeInstragramValue({
+                          min: 1,
+                          max: allAdsPerams?.maxRanger?.InstagramFollowers?.max,
+                        })
+                      : setSavedPageRangeInstragramValue({
+                          min: 1,
+                          max: savedAdsPerams?.maxRanger?.InstagramFollowers
+                            ?.max,
+                        });
                     handleInstagramFollowersChange([1, 10000], true);
                     setInstragramFollowerAnchorEl(null);
                   }}
@@ -1490,7 +1784,7 @@ function AllFilters() {
                   onClick={() => {
                     if (pageName === PageNameEnum.AdlibraryDatabase) {
                       dispatch(allAdsPeramsDuck.clearFilterData());
-                    } else if (pageName === "SavedPage") {
+                    } else {
                       dispatch(savedAdsPeramsDuck.clearSavedFilterData());
                     }
                   }}

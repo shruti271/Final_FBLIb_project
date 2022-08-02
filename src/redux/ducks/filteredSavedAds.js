@@ -83,6 +83,10 @@ const filteredSavedAdsReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: true,
+        // ...state,
+        filteredSavedAds: [],
+        // savedAdsIds:[],
+        // loading: true,
       };
     case LOAD_SAVED_FILTERED_ADS_SUCCESS:
       return {

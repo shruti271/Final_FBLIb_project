@@ -100,20 +100,9 @@ const SavedAdsList = () => {
   }, [dispatch, savedAdsPerams]);
 
   return (
-    // <Box
-    //   style={{
-    //     // opacity:0.5,
-    //     display: "flex",
-    //     justifyContent: "center",
-    //     alignItems: "center",
-    //     textAlign: "center",
-    //   }}
-    // >
-    //   <FadeLoader color="#00BFFF" />
-    // </Box>
+   
     <Box>
-      <InfiniteScroll
-        // style={{ opacity: loading ? 0.5 : 1 }}
+      <InfiniteScroll        
         dataLength={filteredSavedAds?.filteredSavedAds.length} //This is important field to render the next data
         next={() =>
           dispatch(
