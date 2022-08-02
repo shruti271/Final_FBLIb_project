@@ -2,6 +2,8 @@ import {
   Button,
   CircularProgress,
   Grid,
+  IconButton,
+  InputAdornment,
   InputBase,
   Stack,
   Typography,
@@ -17,6 +19,8 @@ import { updateAccountSettingsStart } from "../redux/ducks/accountSettings";
 import useStyles from "../css/mediapage";
 import { cancelusersubcription, fetch_payment_method } from "../services";
 import { setSubscription } from "../redux/ducks/subscription";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import Visibility from "@mui/icons-material/Visibility";
 
 const LoadingFor = {
   PersonalInfo: "personalInfo",
@@ -29,6 +33,11 @@ function AccountSettings() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [subLoading, setSubLoading] = useState(false);
+  const [values, setValues] = React.useState({
+    showPassword: false,
+    isShowCurrentPassword: false,
+    isShowNewPassword: false,
+  });
 
   const { accountSettings, loading } = useSelector(
     (state) => state.accountSettings
@@ -36,9 +45,7 @@ function AccountSettings() {
 
   const subscriptionData = useSelector((state) => state.subscriptionData);
 
-  useEffect(() => {
-    
-  }, [subscriptionData]);
+  useEffect(() => {}, [subscriptionData]);
 
   const [loadingFor, setLoadingFor] = useState("");
 
@@ -100,6 +107,15 @@ function AccountSettings() {
       }
     );
   };
+  const handleClickShowPassword = () => {
+    setValues({
+      ...values,
+      isShowCurrentPassword: !values.isShowCurrentPassword,
+    });
+  };
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
   return (
     <>
       <Grid container>
@@ -114,6 +130,7 @@ function AccountSettings() {
                 <Typography variant="h6">Personal Information</Typography>
                 <Box
                   border={0.5}
+                  marginTop={1}
                   borderRadius={5}
                   borderColor="#EBEBEB"
                   display="flex"
@@ -147,6 +164,11 @@ function AccountSettings() {
                           <Typography>First Name</Typography>
                           <InputBase
                             className={classes.inputField}
+                            disabled={
+                              loading && LoadingFor.PersonalInfo === loadingFor
+                                ? true
+                                : false
+                            }
                             label="outlined"
                             variant="outlined"
                             placeholder="firstname"
@@ -167,6 +189,11 @@ function AccountSettings() {
 
                           <InputBase
                             className={classes.inputField}
+                            disabled={
+                              loading && LoadingFor.PersonalInfo === loadingFor
+                                ? true
+                                : false
+                            }
                             label="outlined"
                             variant="outlined"
                             placeholder="lastname"
@@ -200,7 +227,8 @@ function AccountSettings() {
                                 whiteSpace: "nowrap",
                               }}
                             >
-                              {loading && LoadingFor.PersonalInfo ? (
+                              {loading &&
+                              LoadingFor.PersonalInfo === loadingFor ? (
                                 <CircularProgress
                                   size="1.5rem"
                                   sx={{
@@ -219,9 +247,10 @@ function AccountSettings() {
                 </Box>
               </Box>
 
-              <Box marginTop={5}>
+              <Box marginTop={3}>
                 <Typography variant="h6">Security</Typography>
                 <Box
+                  marginTop={1}
                   border={0.5}
                   borderRadius={5}
                   borderColor="#EBEBEB"
@@ -242,15 +271,25 @@ function AccountSettings() {
                         direction={"row"}
                         spacing={2}
                         sx={{
-                          opacity: loadingFor === LoadingFor.Password ? 0.5 : 1,
-                          disabled:
-                            loading && LoadingFor.Password ? true : false,
+                          opacity:
+                            loading && loadingFor === LoadingFor.Password
+                              ? 0.5
+                              : 1,
                         }}
                       >
                         <Stack direction={"column"} width="50%">
                           <Typography>Current Password</Typography>
                           <InputBase
+                            type={
+                              values.isShowCurrentPassword ? "text" : "password"
+                            }
+                            // value={values.password}
                             className={classes.inputField}
+                            disabled={
+                              loading && LoadingFor.Password === loadingFor
+                                ? true
+                                : false
+                            }
                             label="outlined"
                             variant="outlined"
                             placeholder="Type in your current password"
@@ -258,6 +297,31 @@ function AccountSettings() {
                             {...securityFormRegister("c_password", {
                               required: "currentpassword is required",
                             })}
+                            endAdornment={
+                              <InputAdornment
+                                position="end"
+                                sx={{ marginRight: 2 }}
+                              >
+                                <IconButton
+                                  aria-label="toggle password visibility"
+                                  onClick={() =>
+                                    setValues({
+                                      ...values,
+                                      isShowCurrentPassword:
+                                        !values.isShowCurrentPassword,
+                                    })
+                                  }
+                                  onMouseDown={handleMouseDownPassword}
+                                  edge="end"
+                                >
+                                  {!values.isShowCurrentPassword ? (
+                                    <VisibilityOff />
+                                  ) : (
+                                    <Visibility />
+                                  )}
+                                </IconButton>
+                              </InputAdornment>
+                            }
                             fullWidth
                           />
                           {securityFormErrors?.currentpassword?.message && (
@@ -269,7 +333,16 @@ function AccountSettings() {
                         <Stack direction={"column"} width="50%">
                           <Typography>New Password</Typography>
                           <InputBase
+                            type={
+                              values.isShowNewPassword ? "text" : "password"
+                            }
+                            //  value={values.password}
                             className={classes.inputField}
+                            disabled={
+                              loading && LoadingFor.Password === loadingFor
+                                ? true
+                                : false
+                            }
                             label="outlined"
                             variant="outlined"
                             name="newPassword"
@@ -277,6 +350,31 @@ function AccountSettings() {
                             {...securityFormRegister("n_password", {
                               required: "newpassword is required",
                             })}
+                            endAdornment={
+                              <InputAdornment
+                                position="end"
+                                sx={{ marginRight: 2 }}
+                              >
+                                <IconButton
+                                  aria-label="toggle password visibility"
+                                  onClick={() =>
+                                    setValues({
+                                      ...values,
+                                      isShowNewPassword:
+                                        !values.isShowNewPassword,
+                                    })
+                                  }
+                                  onMouseDown={handleMouseDownPassword}
+                                  edge="end"
+                                >
+                                  {!values.isShowNewPassword ? (
+                                    <VisibilityOff />
+                                  ) : (
+                                    <Visibility />
+                                  )}
+                                </IconButton>
+                              </InputAdornment>
+                            }
                             fullWidth
                           />
                           {securityFormErrors?.newpassword?.message && (
@@ -303,7 +401,7 @@ function AccountSettings() {
                                 whiteSpace: "nowrap",
                               }}
                             >
-                              {loading && LoadingFor.Password ? (
+                              {loading && LoadingFor.Password === loadingFor ? (
                                 <CircularProgress
                                   size="1.5rem"
                                   sx={{
@@ -321,9 +419,10 @@ function AccountSettings() {
                   </Stack>
                 </Box>
               </Box>
-              <Box marginTop={5}>
+              <Box marginTop={3}>
                 <Typography variant="h6">Billing</Typography>
                 <Box
+                  marginTop={1}
                   border={0.5}
                   borderRadius={5}
                   borderColor="#EBEBEB"
@@ -378,9 +477,10 @@ function AccountSettings() {
                   </Stack>
                 </Box>
               </Box>
-              <Box marginTop={5}>
+              <Box marginTop={3}>
                 <Typography variant="h6">Subscription</Typography>
                 <Box
+                  marginTop={1}
                   border={0.5}
                   borderRadius={5}
                   borderColor="#EBEBEB"

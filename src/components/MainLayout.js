@@ -43,11 +43,15 @@ const MainLayout = () => {
     dispatch(
       loadFilteredAdsStart({
         page_index: 0,
+        sort_by:"lastUpdatedTime",
+        order_by:"asc",
       })
     );
     dispatch(
       loadsavedFilteredAdsStart({
         page_index: 0,
+        sort_by:"lastUpdatedTime",
+        order_by:"asc",
       })
     );
     dispatch(loadAccountSettingsStart());

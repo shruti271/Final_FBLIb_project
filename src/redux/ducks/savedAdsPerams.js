@@ -75,8 +75,8 @@ const initialState = {
     InstagramFollowers: { min: 1, max: 10000 },
   },
   sortFilter: {
-    type: { selectedValue: ""},
-    order: { selectedValue: ""},
+    type: { selectedValue: "lastUpdatedTime"},
+    order: { selectedValue: "asc"},
   },
   searchType: "All these words",
   searchBarData: "",

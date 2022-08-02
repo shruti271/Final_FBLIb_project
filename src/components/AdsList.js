@@ -19,10 +19,6 @@ const AdsList = () => {
           startdate: allAdsPerams?.appliedFilters?.StartRunningDate?.startdate,
           enddate: allAdsPerams?.appliedFilters?.StartRunningDate?.enddate,
           adcount:allAdsPerams?.appliedFilters?.AdCount?.chipText !==""
-            // allAdsPerams?.appliedFilters?.AdCount?.min >
-            //   allAdsPerams?.maxRanger.AdCount?.min ||
-            // allAdsPerams?.appliedFilters?.AdCount?.max <
-            //   allAdsPerams?.maxRanger.AdCount?.max
               ? [
                   allAdsPerams?.appliedFilters?.AdCount?.min,
                   allAdsPerams?.appliedFilters?.AdCount?.max,
@@ -30,21 +26,13 @@ const AdsList = () => {
               : [],
           adstatus: allAdsPerams?.appliedFilters?.AdStatus?.selectedValue,
           fb_likes:
-          allAdsPerams?.appliedFilters?.FacebookLikes?.chipText !==""
-            // allAdsPerams?.appliedFilters?.FacebookLikes?.min >
-            //   allAdsPerams?.maxRanger.FacebookLikes?.min ||
-            // allAdsPerams?.appliedFilters?.FacebookLikes?.max <
-            //   allAdsPerams?.maxRanger.FacebookLikes?.max
+          allAdsPerams?.appliedFilters?.FacebookLikes?.chipText !==""          
               ? [
                   allAdsPerams?.appliedFilters?.FacebookLikes?.min,
                   allAdsPerams?.appliedFilters?.FacebookLikes?.max,
                 ]
               : [],
           insta_followers:allAdsPerams?.appliedFilters?.InstagramFollowers?.chipText !==""
-            // allAdsPerams?.appliedFilters?.InstagramFollowers?.min >
-            //   allAdsPerams?.maxRanger.InstagramFollowers?.min ||
-            // allAdsPerams?.appliedFilters?.InstagramFollowers?.max <
-            //   allAdsPerams?.maxRanger.InstagramFollowers?.max
               ? [
                   allAdsPerams?.appliedFilters?.InstagramFollowers?.min,
                   allAdsPerams?.appliedFilters?.InstagramFollowers?.max,
@@ -72,26 +60,24 @@ const AdsList = () => {
               : allAdsPerams?.sortFilter?.order?.selectedValue,
     
           keywords:
-            allAdsPerams?.searchType === "All these words"
+          allAdsPerams?.searchBarData !==""? allAdsPerams?.searchType === "All these words"
               ? allAdsPerams?.searchBarData.split(" ")
-              : [],
+              : []:[],
     
           phrase:
-            allAdsPerams?.searchType === "Exact Phrase"
+          allAdsPerams?.searchBarData !==""? allAdsPerams?.searchType === "Exact Phrase"
               ? allAdsPerams?.searchBarData.split(",")
-              : [],
-        };console.log("comeinnnnnnnnnnn",allAdsPerams?.pageIndex)
-        if(allAdsPerams?.pageIndex > 0){console.log("comeinnnnnnnnnnnnnnnnnnnnnnn")
+              : []:[],
+        };
+        if(allAdsPerams?.pageIndex > 0){
             dispatch(loadMoreFilteredAdsStart({ ...queryObject, page_index : allAdsPerams?.pageIndex}));
-        }else{console.log("comeinnnnnnnnnnnnnnnnnnnnnnn---------index 0")
+        }else{
             dispatch(loadFilteredAdsStart({ ...queryObject, page_index : 0}));
-        }
-        
-    }, [dispatch, allAdsPerams]);
+        }        
+    }, [dispatch, allAdsPerams.appliedFilters, allAdsPerams.sortFilter, allAdsPerams.searchBarData, allAdsPerams.pageIndex]);
 // console.log("1123", filteredAds?.filteredAds)
   return (
-    <InfiniteScroll
-      // style={{ opacity: loading ? 0.5 : 1 }}
+    <InfiniteScroll      
       dataLength={filteredAds?.filteredAds.length} //This is important field to render the next data
       next={() =>
         dispatch(

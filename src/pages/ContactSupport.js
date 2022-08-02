@@ -31,48 +31,35 @@ const ContactSupport = () => {
 
   return (
     <>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <CircularProgress
-          style={{
-            position: "relative",
-            top: 50,
-            left: 50,
-            opacity: 1,
-            zIndex: 1,
-            visibility: loading ? "visible" : "hidden",
-          }}
-        />
-      </Box>
+
       <Box
         clone
         style={{
           alignItems: "center",
-          justifyContent: "center",
-          opacity: loading ? 0.5 : 1,
+          justifyContent: "center",         
           disabled: loading ? true : false,
-        }}
-        margin={5}
-      >
-        <Typography fontSize={{ lg: 25, md: 25, sm: 25 }}>
+        }}        
+      >        
+        <Typography
+              className={classes.titleHome}
+              variant="h5"
+              ml={1}
+              sx={{ fontWeight: "bold",color:"#3A3D4B" }}
+            >
           <b>Contact Support</b>
         </Typography>
-
-        <Box
+        
+        <Box sx={{ opacity: loading ? 0.5 : 1,}}
           width={{ lg: "60%", md: "90%", sm: "90%" }}
           border={0.5}
           borderRadius={5}
+          marginTop={3}
           borderColor="#ebebeb"
         >
           <form onSubmit={handleSubmit(onFormSubmit)}>
             <Grid item xs={10} container spacing={2} margin={2}>
               <Grid xs={6} sm={6} lg={6} item>
-                <InputBase
+                <InputBase disabled={loading?true:false}
                   className={classes.inputField}
                   label="outlined"
                   variant="outlined"
@@ -90,7 +77,7 @@ const ContactSupport = () => {
               </Grid>
 
               <Grid xs={6} sm={6} lg={6} item>
-                <InputBase
+                <InputBase disabled={loading?true:false}
                   className={classes.inputField}
                   type="email"
                   label="outlined"
@@ -113,7 +100,7 @@ const ContactSupport = () => {
               </Grid>
 
               <Grid xs={12} item>
-                <InputBase
+                <InputBase disabled={loading?true:false}
                   className={classes.multilineinput}
                   label="outlined"
                   variant="outlined"
@@ -144,7 +131,18 @@ const ContactSupport = () => {
                     style={{ borderRadius: 50, backgroundColor: "#00CBFF" }}
                   >
                     <Typography fontSize={{ lg: 15, md: 13, sm: 13 }}>
-                      Submit
+                      
+                    {loading ? (
+                                <CircularProgress
+                                  size="1.5rem"
+                                  sx={{
+                                    color: "white",
+                                  }}
+                                />
+                              ) : (
+                                <>Submit</>
+                              )}
+                              
                     </Typography>
                   </Button>
                 </Box>

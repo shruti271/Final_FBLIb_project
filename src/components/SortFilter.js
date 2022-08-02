@@ -154,7 +154,7 @@ function SortFilter(props) {
                 label="Started running date"
               />
               <FormControlLabel
-                value="lastUpdatedDate"
+                value="lastUpdatedTime"
                 control={<Radio style={{ color: "#00CBFF" }} />}
                 label="Recently updated"
               />

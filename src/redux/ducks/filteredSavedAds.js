@@ -83,19 +83,25 @@ const filteredSavedAdsReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: true,
+        // ...state,
+        filteredSavedAds: [],
+       
+        // savedAdsIds:[],
+        // loading: true,
       };
     case LOAD_SAVED_FILTERED_ADS_SUCCESS:
       return {
         ...state,
         loading: false,
         filteredSavedAds: action.payload?.data,
+        hasMoreData:action.payload?.data?.length < 8 ? false : true,
       };
     case LOAD_MORE_SAVED_FILTERED_ADS_SUCCESS:
       return {
         ...state,
         loading: false,
-        filteredSavedAds: [...state.filteredSavedAds].concat(action.payload),
-        // hasMoreData:filteredSavedAds.length < 8
+        filteredSavedAds: [...state.filteredSavedAds].concat(action.payload),        
+        hasMoreData:action.payload?.length < 8 ? false : true,
       };
     case LOAD_SAVED_FILTERED_ADS_ERROR:
     case LOAD_MORE_SAVED_FILTERED_ADS_ERROR:

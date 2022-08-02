@@ -143,13 +143,15 @@ export const CustomSidebar = ({ isOpen }) => {
     );
   };
 
-  useEffect(() => {
+  useEffect(() => {    
     if (window.location.pathname === `/ContactSupport`) {
       setSelectedMenuItem(sideBarMenuItems.SUPPORT);
     } else if (window.location.pathname === `/`) {
       setSelectedMenuItem(sideBarMenuItems.ADLIBSDATABASE);
     } else if (window.location.pathname === `/savedAds`) {
       setSelectedMenuItem(sideBarMenuItems.SAVEDADS);
+    }else if(window.location.pathname.split('/').includes("adDeatails")){
+      setSelectedMenuItem(sideBarMenuItems.ADLIBSDATABASE);
     } else {
       setSelectedMenuItem("");
     }
