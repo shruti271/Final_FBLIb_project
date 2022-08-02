@@ -8,6 +8,9 @@ import ForgetPassword from "./pages/auth/ForgetPassword";
 import Signup from "./pages/auth/Signup";
 import PublicRoute from "./PublicRoute";
 import "./App.scss";
+import Activateemail from "./pages/auth/Activateemail";
+import VerifyEmail from "./pages/auth/VerifyEmail";
+import Updatepassword from "./pages/auth/Updatepassword";
 // import { loadIsAliveStart } from "./redux/ducks/session";
 // import {
 //   Box,
@@ -54,7 +57,33 @@ const App = () => {
             </PublicRoute>
           }
         />
-
+        <Route
+          path="/auth/activate"
+          exact
+          element={
+            <PublicRoute>
+              <Activateemail />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/auth/verify_email/"
+          exact
+          element={
+            <PublicRoute>
+              <VerifyEmail />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/auth/update_password/"
+          exact
+          element={
+            <PublicRoute>
+              <Updatepassword />
+            </PublicRoute>
+          }
+        />
         {/* Private Routes */}
         <Route
           exact

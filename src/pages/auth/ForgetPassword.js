@@ -1,7 +1,8 @@
-import fbaddlogo from "../../assets/fbaddlogo.png"
+import fbaddlogo from "../../assets/fbaddlogo.png";
 import React, { useState, useEffect } from "react";
 import { makeStyles, MuiThemeProvider } from "@material-ui/core/styles";
 import {
+  Alert,
   Box,
   Button,
   Card,
@@ -31,6 +32,7 @@ const ForgetPassword = () => {
   const classes = useStyles();
   const global = globalStyles();
   const [loading, setLoading] = useState(false);
+  const [errormessage, setErrormessage] = useState("");
   const navigate = useNavigate();
   const {
     register,
@@ -46,7 +48,13 @@ const ForgetPassword = () => {
     formData.append("email", data.email);
     const response = await forgotPassword(formData);
     if (response.success) {
+      setErrormessage("Password Reset link send your gmail");
       setLoading(false);
+    }else if(response.error=== "true"){
+       setErrormessage("Sorry, This email Id does not exist with us")
+       setLoading(false)
+    }else{
+      setLoading(false)
     }
   };
 
@@ -90,7 +98,14 @@ const ForgetPassword = () => {
               <CardContent>
                 <img alt="logo" src={fbaddlogo} className={global.logo} />
                 <Box style={{ padding: "30px 32px" }}>
-                  <Grid container spacing={2}>
+                  <Grid container spacing={2} >
+                    {errormessage && (
+                      <>
+                      <Grid item xs={12}>
+                      <Alert severity="success">{errormessage}</Alert>
+                      </Grid>
+                      </>
+                    )}
                     <Grid xs={12} item>
                       <Typography variant="h5" sx={{ fontWeight: "bold" }}>
                         Forget Password?
