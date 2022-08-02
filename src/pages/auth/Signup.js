@@ -24,15 +24,15 @@ import { signUp } from "../../services/index";
 import { themeLight, globalStyles } from "../../css/globalcss";
 import { CssBaseline } from "@material-ui/core";
 import { registerValidationSchema } from "./../../utils/validationSchemas";
-import fbaddlogo from "../../assets/fbaddlogo.png"
-import IconButton from '@mui/material/IconButton';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import fbaddlogo from "../../assets/fbaddlogo.png";
+import IconButton from "@mui/material/IconButton";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 const Signup = () => {
   const global = globalStyles();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const [errormessage, setErrormessage] = useState("")
+  const [errormessage, setErrormessage] = useState("");
   const [values, setValues] = React.useState({
     showPassword: false,
   });
@@ -64,14 +64,14 @@ const Signup = () => {
     try {
       const response = await signUp(data);
       if (response.data.message === "Password is too short") {
-        setLoading(false)
-        setErrormessage("Password is too short")
-      }
-      else if (response.data.message === "User already exist") {
-        setLoading(false)
-        setErrormessage("The email address is already in used")
+        setLoading(false);
+        setErrormessage("Password is too short");
+      } else if (response.data.message === "User already exist") {
+        setLoading(false);
+        setErrormessage("The email address is already in used");
       } else if (response.success) {
-        navigate("/auth/login");
+        localStorage.setItem("email", data.email);
+        navigate("/auth/activate");
       }
     } catch {
       setLoading(false);
@@ -102,9 +102,7 @@ const Signup = () => {
           >
             <CardContent>
               <img alt="logo" src={fbaddlogo} className={global.logo} />
-              <form
-                onSubmit={handleSubmit(submitsigninform)}
-              >
+              <form onSubmit={handleSubmit(submitsigninform)}>
                 <Box style={{ padding: "18px 61px" }}>
                   <Typography variant="h5" sx={{ fontWeight: "bold" }}>
                     Create a free account
@@ -113,23 +111,33 @@ const Signup = () => {
                   <Typography className={global.alreadyaccount} pt={1}>
                     Already have an account?{" "}
                     <span
-                      style={{ color: "#00CBFF", cursor: "pointer", marginLeft: "5px" }}
+                      style={{
+                        color: "#00CBFF",
+                        cursor: "pointer",
+                        marginLeft: "5px",
+                      }}
                       onClick={() => navigate("/auth/login")}
                     >
                       Sign in
                     </span>
                     <Box mt={2}>
-                      {errormessage === "The email address is already in used" ?
-                        (< Box mt={2}>
-                          {errormessage && <Alert severity="error" >{errormessage}</Alert>}
-                        </Box>) :
-                        (<Box mt={2}>
-                          {errormessage && <Alert severity="error" >{errormessage}</Alert>}
-                        </Box>)
-                      }
+                      {errormessage ===
+                      "The email address is already in used" ? (
+                        <Box mt={2}>
+                          {errormessage && (
+                            <Alert severity="error">{errormessage}</Alert>
+                          )}
+                        </Box>
+                      ) : (
+                        <Box mt={2}>
+                          {errormessage && (
+                            <Alert severity="error">{errormessage}</Alert>
+                          )}
+                        </Box>
+                      )}
                     </Box>
                   </Typography>
-                  <Grid container spacing={2} pt={4} >
+                  <Grid container spacing={2} pt={4}>
                     <Grid xs={12} item>
                       <TextField
                         placeholder="Enter first name"
@@ -137,7 +145,6 @@ const Signup = () => {
                         variant="outlined"
                         fullWidth
                         {...register("first_name")}
-
                         name="first_name"
                       />
                     </Grid>
@@ -170,8 +177,16 @@ const Signup = () => {
                       </Typography>
                     </Grid>
                     <Grid item xs={12}>
-                    <FormControl sx={{ mr: 1, width: '100%' }} variant="outlined">
-                      <InputLabel htmlFor="outlined-adornment-password"  error={errors.password ? true : false}>Password</InputLabel>
+                      <FormControl
+                        sx={{ mr: 1, width: "100%" }}
+                        variant="outlined"
+                      >
+                        <InputLabel
+                          htmlFor="outlined-adornment-password"
+                          error={errors.password ? true : false}
+                        >
+                          Password
+                        </InputLabel>
                         <OutlinedInput
                           placeholder="Password"
                           variant="outlined"
@@ -179,9 +194,9 @@ const Signup = () => {
                           required
                           {...register("password")}
                           error={errors.password ? true : false}
-                          type={values.showPassword ? 'text' : 'password'}
+                          type={values.showPassword ? "text" : "password"}
                           value={values.password}
-                          onChange={handleChange('password')}
+                          onChange={handleChange("password")}
                           endAdornment={
                             <InputAdornment position="end">
                               <IconButton
@@ -190,20 +205,24 @@ const Signup = () => {
                                 onMouseDown={handleMouseDownPassword}
                                 edge="end"
                               >
-                                {values.showPassword ? <VisibilityOff /> : <Visibility />}
+                                {values.showPassword ? (
+                                  <VisibilityOff />
+                                ) : (
+                                  <Visibility />
+                                )}
                               </IconButton>
                             </InputAdornment>
                           }
                           label="Password"
                         />
-                        </FormControl>
-                        <Typography
-                          variant="inherit"
-                          color="textSecondary"
-                          p={0.8}
-                        >
-                          {errors.password?.message}
-                        </Typography>
+                      </FormControl>
+                      <Typography
+                        variant="inherit"
+                        color="textSecondary"
+                        p={0.8}
+                      >
+                        {errors.password?.message}
+                      </Typography>
                     </Grid>
                     <Grid item xs={12}>
                       <FormControlLabel
@@ -227,9 +246,18 @@ const Signup = () => {
                             className={global.termsandcondition}
                           >
                             I agree to the
-                            <Typography component={'span'} style={{ color: "#00CBFF" }}>   Terms of service </Typography>
+                            <Typography
+                              component={"span"}
+                              style={{ color: "#00CBFF" }}
+                            >
+                              {" "}
+                              Terms of service{" "}
+                            </Typography>
                             {""}and {""}
-                            <Typography component={'span'} style={{ color: "#00CBFF" }}>
+                            <Typography
+                              component={"span"}
+                              style={{ color: "#00CBFF" }}
+                            >
                               Privacy Policy
                             </Typography>
                           </Typography>
@@ -252,7 +280,10 @@ const Signup = () => {
                     onClick={handleSubmit(submitsigninform)}
                   >
                     {loading ? (
-                      <CircularProgress size={36} style={{ color: "#F6F6FB" }} />
+                      <CircularProgress
+                        size={36}
+                        style={{ color: "#F6F6FB" }}
+                      />
                     ) : (
                       "Create Account"
                     )}

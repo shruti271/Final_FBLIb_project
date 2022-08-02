@@ -122,7 +122,7 @@ const AdsList = () => {
       >
         <Grid
           container
-          // spacing={2}
+          spacing={2}
           sx={{
             marginTop: "5px",
             width: "100%",

@@ -214,9 +214,6 @@ const ThumbNailBox = ({ adInfo, index }) => {
     <Grid item lg={3} md={4} xs={5} key={index}>
       <Card
       sx={{
-        transition: "transform 0.45s ease-in-out",
-        "&:hover": { transform: "scale3d(1.05, 1.05, 1)" },
-        
         borderRadius:"20px"
       }}
       >
