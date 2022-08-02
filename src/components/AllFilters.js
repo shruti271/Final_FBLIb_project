@@ -25,11 +25,6 @@ import * as allAdsPeramsDuck from "../redux/ducks/allAdsPerams";
 import * as savedAdsPeramsDuck from "../redux/ducks/savedAdsPerams";
 import { PageNameEnum } from "../utils/enums";
 import { useLocation } from "react-router-dom";
-import { loadFilteredAdsStart } from "../redux/ducks/filteredAds";
-import {
-  useSkipInitialEffect,
-  useInitialOnlyEffect,
-} from "../utils/customHooks";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -131,6 +126,7 @@ const useStyles = makeStyles((theme) => ({
 
 function AllFilters() {
   const [pageName, setPageName] = useState("");
+  const [searchBarValue, setSearchBarValue] = useState("");
 
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -203,8 +199,12 @@ function AllFilters() {
     });
 
   useEffect(() => {
-    console.log("allAdsPerams :", allAdsPerams);
-  }, [allAdsPerams]);
+    setSearchBarValue(
+      pageName === PageNameEnum.AdlibraryDatabase
+        ? allAdsPerams?.searchBarData
+        : savedAdsPerams?.searchBarData
+    );
+  }, [pageName, allAdsPerams?.searchBarData, savedAdsPerams?.searchBarData]);
 
   const [range, setRange] = useState([
     {
@@ -464,13 +464,10 @@ function AllFilters() {
   ]);
   return (
     <>
-      {pageName === PageNameEnum.AdlibraryDatabase
-        ? allAdsPerams?.searchBarData
-        : savedAdsPerams?.searchBarData}
       <Stack
         direction={"row"}
         // container
-        sx={{ border: "2px solid #EBEBEB" ,borderRadius:2}}
+        sx={{ border: "1px solid #EBEBEB", borderRadius: 2 }}
       >
         <Grid item sx={{ display: "flex" }}>
           {/* Select Search Type Start  */}
@@ -485,7 +482,7 @@ function AllFilters() {
             sx={{
               color: "#2B2F42",
               whiteSpace: "nowrap",
-              border: "1px solid #EBEBEB",
+              border: "none",
             }}
             endIcon={
               <img
@@ -577,16 +574,11 @@ function AllFilters() {
           <Divider orientation="vertical" sx={{ marginLeft: "auto" }} />
         </Grid>
 
-        
         {/* Searchbar Start  */}
         {/* <Box sx={{ marginLeft: "21px",justifyContent:"bottom", alignItems:"end" ,width:"100%"}}> */}
         <InputBase
-          defaultValue={
-            pageName === PageNameEnum.AdlibraryDatabase
-              ? allAdsPerams?.searchBarData
-              : savedAdsPerams?.searchBarData
-          }
-          fullWidth          
+          value={searchBarValue}
+          fullWidth
           onKeyUp={(e) => {
             if (e.key === "Enter") {
               handleChangeSearchBar(e.currentTarget.value);
@@ -595,11 +587,12 @@ function AllFilters() {
               handleChangeSearchBar("");
             }
           }}
+          onChange={(e)=>setSearchBarValue(e.currentTarget.value)}
           size="large"
+          sx={{ paddingLeft: "15px" }}
         />
         {/* </Box> */}
         {/* Searchbar End  */}
-        
       </Stack>
       <Grid container>
         <Grid item lg={11} md={11}>

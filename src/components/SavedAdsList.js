@@ -11,13 +11,19 @@ import {
 import { useSkipInitialEffect } from "../utils/customHooks";
 import emptyImg from "../assets/empty.svg";
 import { FadeLoader } from "react-spinners";
+import { useEffect, useState } from "react";
 
 const SavedAdsList = () => {
   const dispatch = useDispatch();
   const filteredSavedAds = useSelector((state) => state.filteredSavedAds);
   const savedAdsPerams = useSelector((state) => state.savedAdsPerams);
+  const [queryObject, setQueryObject] = useState({});
 
-  useSkipInitialEffect(() => {
+  useEffect(() => {
+    console.log("savedAdsPerams :", savedAdsPerams);
+  }, [savedAdsPerams]);
+
+  useSkipInitialEffect(()=>{
     const queryObject = {
       startdate: savedAdsPerams?.appliedFilters?.StartRunningDate?.startdate,
       enddate: savedAdsPerams?.appliedFilters?.StartRunningDate?.enddate,
@@ -72,17 +78,15 @@ const SavedAdsList = () => {
         savedAdsPerams?.sortFilter?.type?.selectedValue === "false"
           ? ""
           : savedAdsPerams?.sortFilter?.order?.selectedValue,
-
-      keywords:
-      savedAdsPerams?.searchBarData !==""? savedAdsPerams?.searchType === "All these words"
-          ? savedAdsPerams?.searchBarData.split(" ")
-          : []:[],
-
-      phrase:
-        savedAdsPerams?.searchType === "Exact Phrase"
-          ? savedAdsPerams?.searchBarData.split(",")
-          : [],
     };
+    setQueryObject(queryObject);
+  },[
+    savedAdsPerams.appliedFilters,
+    savedAdsPerams.sortFilter,
+    savedAdsPerams.pageIndex,
+  ])
+
+  useSkipInitialEffect(() => {
     if (filteredSavedAds.filteredSavedAds.length === 0) {
       dispatch(loadsavedFilteredAdsStart({ ...queryObject, page_index: 0 }));
     } else {
@@ -97,12 +101,43 @@ const SavedAdsList = () => {
         dispatch(loadsavedFilteredAdsStart({ ...queryObject, page_index: 0 }));
       }
     }
-  }, [dispatch, savedAdsPerams]);
+  }, [dispatch, queryObject]);
+
+  useSkipInitialEffect(() => {
+    if (savedAdsPerams.searchBarData.length > 0) {
+      setQueryObject({
+        ...queryObject,
+        keywords:
+        savedAdsPerams?.searchType === "All these words"
+            ? savedAdsPerams?.searchBarData.split(" ")
+            : [],
+
+        phrase:
+        savedAdsPerams?.searchType === "Exact Phrase"
+            ? savedAdsPerams?.searchBarData.split(",")
+            : [],
+      });
+    }
+  }, [dispatch, savedAdsPerams.searchType, savedAdsPerams.searchBarData]);
 
   return (
-   
     <Box>
-      <InfiniteScroll        
+      { filteredSavedAds?.loading && filteredSavedAds?.filteredSavedAds.length === 0 ?   <Box
+            className="loader"
+            style={{
+              // opacity:0.5,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              textAlign: "center",
+            }}
+          >
+            <FadeLoader
+              color="#00BFFF"
+              cssOverride={{ top: "0px", marginTop: "35px" }}
+            />
+          </Box> : 
+        <InfiniteScroll        
         dataLength={filteredSavedAds?.filteredSavedAds.length} //This is important field to render the next data
         next={() =>
           dispatch(
@@ -164,7 +199,7 @@ const SavedAdsList = () => {
                   }}
                 >
                   <Stack>
-                    <img src={emptyImg} alt="No Records Found" />
+                    <img src={emptyImg} alt="" />
                     <Typography sx={{ color: "#808080" }}>
                       No Records Found
                     </Typography>
@@ -174,6 +209,8 @@ const SavedAdsList = () => {
           </Grid>
         </Grid>
       </InfiniteScroll>
+      }
+      
     </Box>
   );
 };

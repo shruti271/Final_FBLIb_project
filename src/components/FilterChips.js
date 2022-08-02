@@ -32,14 +32,6 @@ const FilterChips = () => {
     }
   }, [allAdsPerams, location.pathname, savedAdsPerams]);
 
-  useEffect(()=>{
-    console.log("In FilterChips allAdsPerams :", allAdsPerams)
-  },[allAdsPerams]);
-
-  useEffect(()=>{
-    console.log("In FilterChips savedAdsPerams :", savedAdsPerams)
-  },[savedAdsPerams]);
-
   return (
     <Grid container sx={{ marginTop: 1 }}>
       { dataSource?.appliedFilters && Object.keys(dataSource?.appliedFilters).map((filter, index) => {

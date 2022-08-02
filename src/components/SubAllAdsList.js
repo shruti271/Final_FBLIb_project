@@ -8,79 +8,103 @@ import { useEffect } from "react";
 import { FadeLoader } from "react-spinners";
 
 const SubAllAdsList = () => {
+  const dispatch = useDispatch();
+  const subAllAds = useSelector((state) => state.subAllAds);
 
-  const dispatch     = useDispatch();
-  const subAllAds  = useSelector((state) => state.subAllAds);
-
-  useEffect(()=>{
+  useEffect(() => {
     console.log("subAllAds ::", subAllAds);
-  },[subAllAds])
+  }, [subAllAds]);
 
-return (
-  <InfiniteScroll
-    // style={{ opacity: loading ? 0.5 : 1 }}
-    dataLength={subAllAds?.subAllAds?.length} //This is important field to render the next data
-    next={() =>
-        dispatch(subAllAdsDuck.loadMoreSubAllAdsStart({ page_name: subAllAds?.pageName, page_index:subAllAds?.pageIndex + 1 }))
-    }
-    hasMore={true}
-    loader={
-      subAllAds?.loading ?
-      <Box
-        className="loader"
-        style={{
-          // opacity:0.5,
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          textAlign: "center",
-        }}
-      >
-        <FadeLoader color="#00BFFF" cssOverride={{top:"0px", marginTop:"35px"}}/>
-      </Box> : null
-    }
-  >
-    <Grid
-      item
-      sx={{
-        width: "100%",
-      }}
-    >
-      <Grid
-        container
-        // spacing={2}
-        sx={{
-          marginTop: "5px",
-          width: "100%",
-          // opacity: save_loading ? 0.5 : 1,
-          // disabled: save_loading ? true : false,
-        }}
-      >
-        {subAllAds?.subAllAds?.length !== 0 &&
-          subAllAds?.subAllAds?.map((ads, index) => (
-            <ThumbNailBox
-              adInfo={ads}
-              index={index}
-              key={index}
-            />
-          ))}
-        {subAllAds?.subAllAds?.length === 0 &&
-          subAllAds?.loading === false && (
-            <Box
+  return (
+    <>
+      {subAllAds?.loading && subAllAds?.subAllAds?.length === 0 ? (
+        <Box
+          className="loader"
+          style={{
+            // opacity:0.5,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            textAlign: "center",
+          }}
+        >
+          <FadeLoader
+            color="#00BFFF"
+            cssOverride={{ top: "0px", marginTop: "35px" }}
+          />
+        </Box>
+      ) : (
+        <InfiniteScroll
+          // style={{ opacity: loading ? 0.5 : 1 }}
+          dataLength={subAllAds?.subAllAds?.length} //This is important field to render the next data
+          next={() =>
+            dispatch(
+              subAllAdsDuck.loadMoreSubAllAdsStart({
+                page_name: subAllAds?.pageName,
+                page_index: subAllAds?.pageIndex + 1,
+              })
+            )
+          }
+          hasMore={true}
+          loader={
+            subAllAds?.loading ? (
+              <Box
+                className="loader"
+                style={{
+                  // opacity:0.5,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  textAlign: "center",
+                }}
+              >
+                <FadeLoader
+                  color="#00BFFF"
+                  cssOverride={{ top: "0px", marginTop: "35px" }}
+                />
+              </Box>
+            ) : null
+          }
+        >
+          <Grid
+            item
+            sx={{
+              width: "100%",
+            }}
+          >
+            <Grid
+              container
+              // spacing={2}
               sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
+                marginTop: "5px",
                 width: "100%",
+                // opacity: save_loading ? 0.5 : 1,
+                // disabled: save_loading ? true : false,
               }}
             >
-              <Typography>No Result</Typography>
-            </Box>
-          )}
-      </Grid>
-    </Grid>
-  </InfiniteScroll>
-);
+              {subAllAds?.subAllAds?.length !== 0 &&
+                subAllAds?.subAllAds?.map((ads, index) => (
+                  <ThumbNailBox adInfo={ads} index={index} key={index} />
+                ))}
+              {subAllAds?.subAllAds?.length === 0 &&
+                subAllAds?.loading === false && (
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      width: "100%",
+                    }}
+                  >
+                    <Typography>No Result</Typography>
+                  </Box>
+                )}
+            </Grid>
+          </Grid>
+        </InfiniteScroll>
+      )}
+    </>
+  );
 };
 
 export default SubAllAdsList;

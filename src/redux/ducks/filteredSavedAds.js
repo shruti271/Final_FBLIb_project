@@ -78,31 +78,36 @@ const initialState = {
 
 const filteredSavedAdsReducer = (state = initialState, action) => {
   switch (action.type) {
+
     case LOAD_SAVED_FILTERED_ADS_START:
+      return {
+        ...state,
+        filteredAds: [],
+        savedAdsIds:[],
+        loading: true,
+      };
     case LOAD_MORE_SAVED_FILTERED_ADS_START:
       return {
         ...state,
         loading: true,
-        // ...state,
-        filteredSavedAds: [],
-       
-        // savedAdsIds:[],
-        // loading: true,
       };
+
     case LOAD_SAVED_FILTERED_ADS_SUCCESS:
       return {
         ...state,
         loading: false,
-        filteredSavedAds: action.payload?.data,
+        filteredSavedAds:action.payload?.error === true ? [] : action.payload?.data,
         hasMoreData:action.payload?.data?.length < 8 ? false : true,
       };
+
     case LOAD_MORE_SAVED_FILTERED_ADS_SUCCESS:
       return {
         ...state,
-        loading: false,
-        filteredSavedAds: [...state.filteredSavedAds].concat(action.payload),        
+        loading: false, 
+        filteredSavedAds: action.payload?.error === true ? state.filteredSavedAds : [...state.filteredSavedAds].concat(action.payload),      
         hasMoreData:action.payload?.length < 8 ? false : true,
       };
+
     case LOAD_SAVED_FILTERED_ADS_ERROR:
     case LOAD_MORE_SAVED_FILTERED_ADS_ERROR:
       return {
@@ -110,6 +115,7 @@ const filteredSavedAdsReducer = (state = initialState, action) => {
         loading: false,
         error: action.payload?.data?.error,
       };
+
     case REMOVE_SAVED_FILTERED_AD:
       return {
         ...state,
@@ -117,6 +123,7 @@ const filteredSavedAdsReducer = (state = initialState, action) => {
           return ad.id !== action.payload?.id;
         }),
       };
+
     case ADD_TO_SAVED_FILTERED_AD_LOCAL_SUCCESS:
       const filterdListToBeUpdated = [...state.filteredSavedAds]
       filterdListToBeUpdated.unshift(action.payload?.AdDetails)
@@ -126,6 +133,7 @@ const filteredSavedAdsReducer = (state = initialState, action) => {
           ? filterdListToBeUpdated
           : state.filteredSavedAds,
       };
+      
     default:
       return state;
   }
