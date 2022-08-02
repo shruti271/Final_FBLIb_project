@@ -586,7 +586,7 @@ function AllFilters() {
               ? allAdsPerams?.searchBarData
               : savedAdsPerams?.searchBarData
           }
-          fullWidth
+          fullWidth          
           onKeyUp={(e) => {
             if (e.key === "Enter") {
               handleChangeSearchBar(e.currentTarget.value);

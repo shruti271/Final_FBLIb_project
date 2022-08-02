@@ -1,8 +1,11 @@
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
+import { useEffect } from "react";
 
 const MyChart = (props) => {
     // console.log(props.chartData?.map((a)=>a.date))
+    const dateobj = Array(30).fill(null);
+
     const option = {
       chart: {
         height: props.graphHeight,
@@ -30,9 +33,46 @@ const MyChart = (props) => {
         // type: "datetime",
         labels: {
             format: "{value:%b - %e}",
-          },
-        categories:props.chartData?.map((a)=>a.date)
-        // categories:['2-3-2022','5-3-2022']
+          },        
+        // categories:[...props.chartData?.map((a)=>a.date)].slice(-3)
+        // categories:dateobj,
+        categories: [
+        "1-3",
+        "2-3",
+        "3-3",
+        "4-3",
+        "5-3",
+        "6-3",
+        "7-3",
+        "8-3",
+        "9-3",
+        "10-3",
+        "11-3",
+        "12-3",
+        "13-3",
+        "14-3",
+        "15-3",
+        "16-3",
+        "17-3",
+        "18-3",
+        "19-3",
+        "20-3",
+        "21-3",
+        "22-3",
+        "23-3",
+        "24-3",
+        "25-3",
+        "26-3",
+        "27-3",
+        "28-3",
+        "29-3",
+        "30-3",
+        "1-4",
+        "2-4",
+        "3-4",
+        "4-4",
+        "5-4",
+      ].slice(-30),
       },
       yAxis: {    
         visible:props.axisVisiblity,    
@@ -80,12 +120,18 @@ const MyChart = (props) => {
       series: [
         {          
           type:"areaspline",// props.fillType,
-          name: "No of ads",
-          data: props.chartData?.map((a)=>a.noOfCopyAds),
+          name: "No of ads",          
+          //  data:[...props.chartData?.map((a)=>a.noOfCopyAds)].slice(-30),
           lineWidth: 7,
+                  data: [
+                    6, 2, 3,null, null, null, null, null,null, null, null, null, null,null, null, null, null, null,null, null, null, null, null,
+           null, null, null, null, null,
+           null, null,// 4, 5, 6, 7, 8, 9, 10,
+            //  21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 0, 34, 35, 36, 37, 38, 39, 40,41,42,43,44,45
+           ].slice(-30),
         // data:[45,56,80,34,45,56,80,95,10,89,78,89,56],
        
-        datalable:{},
+        // datalable:{},
         lineTension: 1,
         marker: {
           enabled: false,
@@ -122,6 +168,47 @@ const MyChart = (props) => {
         },
       ],
     };
+    useEffect(()=>{
+     let abc= [
+        "1-3",
+        "2-3",
+        "3-3",
+        "4-3",
+        "5-3",
+        "6-3",
+        "7-3",
+        "8-3",
+        "9-3",
+        "10-3",
+        "11-3",
+        "12-3",
+        "13-3",
+        "14-3",
+        "15-3",
+        "16-3",
+        "17-3",
+        "18-3",
+        "19-3",
+        "20-3",
+        "21-3",
+        "22-3",
+        "23-3",
+        "24-3",
+        "25-3",
+        "26-3",
+        "27-3",
+        "28-3",
+        "29-3",
+        "30-3",
+        "1-4",
+        "2-4",
+        "3-4",
+        "4-4",
+        "5-4",
+      ].slice(-3);
+      dateobj.splice(0,abc.length-1,...abc);
+      console.log("@@@",dateobj)
+    },[])
     return (
       <>
         <HighchartsReact highcharts={Highcharts} options={option}/>

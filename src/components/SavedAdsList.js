@@ -74,9 +74,9 @@ const SavedAdsList = () => {
           : savedAdsPerams?.sortFilter?.order?.selectedValue,
 
       keywords:
-        savedAdsPerams?.searchType === "All these words"
+      savedAdsPerams?.searchBarData !==""? savedAdsPerams?.searchType === "All these words"
           ? savedAdsPerams?.searchBarData.split(" ")
-          : [],
+          : []:[],
 
       phrase:
         savedAdsPerams?.searchType === "Exact Phrase"
