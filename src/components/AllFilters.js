@@ -122,6 +122,16 @@ const useStyles = makeStyles((theme) => ({
     marginRight: "14px",
     marginTop: "22px",
   },
+  searchBtn:{
+    "&:hover":{
+      border: "none !important",
+    }
+  },
+  filterBtn:{
+    "&:hover":{
+      border: "1px solid #EBEBEB !important",
+    }
+  }
 }));
 
 function AllFilters() {
@@ -484,6 +494,7 @@ function AllFilters() {
               whiteSpace: "nowrap",
               border: "none",
             }}
+            className={classes.searchBtn}
             endIcon={
               <img
                 alt="arrowdown"
@@ -558,6 +569,7 @@ function AllFilters() {
                       width: "80px",
                       borderWidth: 2,
                     }}
+                    className={classes.filterBtn}
                     onClick={(e) => {
                       handleChangeSearchType("All these words");
                       setSeachTypeAnchorEl(null);
@@ -614,6 +626,7 @@ function AllFilters() {
               marginRight: "14px",
               marginTop: "22px",
             }}
+            className={classes.filterBtn}
             // className={classes.FilterBox}
             endIcon={
               <img
@@ -677,6 +690,7 @@ function AllFilters() {
               marginTop: "22px",
               cursor: "pointer",
             }}
+            className={classes.filterBtn}
             endIcon={
               <img
                 alt="arrowdown"
@@ -901,6 +915,7 @@ function AllFilters() {
                     color: "#00CBFF",
                     borderWidth: 2,
                   }}
+                  className={classes.filterBtn}
                   onClick={() => {
                     pageName === PageNameEnum.AdlibraryDatabase
                       ? setRangeAdcountValue({
@@ -938,6 +953,7 @@ function AllFilters() {
               marginRight: "14px",
               marginTop: "22px",
             }}
+            className={classes.filterBtn}
             endIcon={
               <img
                 alt="arrowdown"
@@ -1012,6 +1028,7 @@ function AllFilters() {
                       width: "80px",
                       borderWidth: 2,
                     }}
+                    className={classes.filterBtn}
                     onClick={(e) => {
                       handleChangeStatus("", true);
                       setAdStatusAnchorel(null);
@@ -1038,6 +1055,7 @@ function AllFilters() {
               marginRight: "14px",
               marginTop: "22px",
             }}
+            className={classes.filterBtn}
             endIcon={
               <img
                 alt="arrowdown"
@@ -1258,6 +1276,7 @@ function AllFilters() {
                     color: "#00CBFF",
                     borderWidth: 2,
                   }}
+                  className={classes.filterBtn}
                   onClick={() => {
                     pageName === PageNameEnum.AdlibraryDatabase
                       ? setRangeFacebookValue({
@@ -1293,6 +1312,7 @@ function AllFilters() {
               marginRight: "14px",
               marginTop: "22px",
             }}
+            className={classes.filterBtn}
             endIcon={
               <img
                 alt="arrowdown"
@@ -1526,6 +1546,7 @@ function AllFilters() {
                     color: "#00CBFF",
                     borderWidth: 2,
                   }}
+                  className={classes.filterBtn}
                   onClick={() => {
                     pageName === PageNameEnum.AdlibraryDatabase
                       ? setRangeInstragramValue({
@@ -1562,6 +1583,7 @@ function AllFilters() {
               marginRight: "14px",
               marginTop: "22px",
             }}
+            className={classes.filterBtn}
             endIcon={
               <img
                 alt="arrowdown"
@@ -1639,6 +1661,7 @@ function AllFilters() {
                       width: "80px",
                       borderWidth: 2,
                     }}
+                    className={classes.filterBtn}
                     onClick={() => {
                       handleMediaTypechange("", true);
                       setMediaTypeAnchorel(null);
@@ -1664,6 +1687,7 @@ function AllFilters() {
               marginRight: "14px",
               marginTop: "22px",
             }}
+            className={classes.filterBtn}
             endIcon={
               <img
                 alt="arrowdown"
@@ -1737,6 +1761,7 @@ function AllFilters() {
                       width: "80px",
                       borderWidth: 2,
                     }}
+                    className={classes.filterBtn}
                     onClick={() => {
                       handleButtonType("", true);
                       setButtonTypeAnchorEl(null);
@@ -1774,6 +1799,7 @@ function AllFilters() {
                     borderWidth: 2,
                     textTransform: "none",
                   }}
+                  className={classes.filterBtn}
                   onClick={() => {
                     if (pageName === PageNameEnum.AdlibraryDatabase) {
                       dispatch(allAdsPeramsDuck.clearFilterData());
