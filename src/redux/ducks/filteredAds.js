@@ -7,6 +7,7 @@ export const LOAD_MORE_FILTERED_ADS_SUCCESS = "LOAD_MORE_FILTERED_ADS_SUCCESS";
 export const LOAD_MORE_FILTERED_ADS_ERROR = "LOAD_MORE_FILTERED_ADS_ERROR";
 
 export const REMOVE_FILTERED_AD = "REMOVE_FILTERED_AD";
+export const GET_PAGE_POSITION = "GET_PAGE_POSITION";
 
 export const removeFilteredAd = (adToBeRemoved) => ({
   type: REMOVE_FILTERED_AD,
@@ -43,10 +44,17 @@ export const loadMoreFilteredAdsError = (error) => ({
   payload: error,
 });
 
+export const setPostionForScrollValueStart = (error) => ({
+  type: GET_PAGE_POSITION,
+  payload: error,
+});
+
+
 const initialState = {
   filteredAds: [],
   savedAdsIds:[],
   hasMoreData:true,
+  postionOfPage:0,
   loading: false,
   error: "",
 };
@@ -104,6 +112,11 @@ const filteredAdsReducer = (state = initialState, action) => {
           return ad.id !== action.payload?.id;
       })
       }
+      case GET_PAGE_POSITION:
+        return {
+          ...state,
+          postionOfPage:action.payload
+        }
     default:
       return state;
   }
