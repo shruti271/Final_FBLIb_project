@@ -21,6 +21,7 @@ import MyChart from "./linemy";
 // import { srtPostionForScrollValueStart } from "../redux/ducks/mediaAds";
 import { addToSavedAdsFilterLocalStart, removesavedFilteredAdLocal } from "../redux/ducks/filteredSavedAds";
 import { addSavedAdsIdsLocal, addToSavedAdsStart, removeFromSavedAdsStart, removeSavedAdsIdsLocal } from "../redux/ducks/savedAdsManager";
+import { setPostionForScrollValueStart } from "../redux/ducks/filteredAds";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -401,9 +402,9 @@ const ThumbNailBox = ({ adInfo, index }) => {
             textTransform: "none",
           }}
           onClick={() => {
-            // dispatch(srtPostionForScrollValueStart(window.pageYOffset));
+            dispatch(setPostionForScrollValueStart(window.pageYOffset));
             // navigate(`/adDeatails/${adInfo.id}`);
-            navigate(`/adDeatails/${adInfo.id}`,{ state: { SingleAds: adInfo} });
+            navigate(`/adDeatails/${adInfo.id}`);
           }}
         >
           <b>See Details</b>

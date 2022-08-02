@@ -7,13 +7,16 @@ import * as allAdsPeramsDuck from "../redux/ducks/allAdsPerams";
 import { loadFilteredAdsStart, loadMoreFilteredAdsStart } from "../redux/ducks/filteredAds";
 import { useSkipInitialEffect } from "../utils/customHooks";
 import { FadeLoader } from "react-spinners";
+import { useEffect } from "react";
 
 const AdsList = () => {
 
-    const dispatch     = useDispatch();
+    const dispatch    = useDispatch();
     const filteredAds  = useSelector((state) => state.filteredAds);
     const allAdsPerams = useSelector((state) => state.allAdsPerams);
-
+useEffect(()=>{
+  window.scrollTo(0,filteredAds.postionOfPage);
+},[])
     useSkipInitialEffect(() => {
         const queryObject = {
           startdate: allAdsPerams?.appliedFilters?.StartRunningDate?.startdate,
