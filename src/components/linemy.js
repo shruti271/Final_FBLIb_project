@@ -1,10 +1,8 @@
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
-import { useEffect } from "react";
 
 const MyChart = (props) => {    
     // const dateobj = Array(30).fill(0);
-
     const option = {
       chart: {
         height: props.graphHeight,

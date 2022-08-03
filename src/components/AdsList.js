@@ -21,6 +21,7 @@ const AdsList = () => {
 
   useEffect(() => {
     window.scrollTo(0, filteredAds.postionOfPage);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useSkipInitialEffect(() => {

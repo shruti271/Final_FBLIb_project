@@ -41,6 +41,7 @@ function AdDeatailsTabs() {
   useEffect(() => {
     if(state)
     setRedirectToPage(state.fromPage);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -49,6 +50,7 @@ function AdDeatailsTabs() {
     } else {
       setIsActiveTab(adDetailsTabs.ALLADS);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [window.location.pathname]);
 
   useEffect(() => {
@@ -76,6 +78,7 @@ function AdDeatailsTabs() {
       }
       setAdDetail(adTobeDisplay);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, filteredAds, adId]);
 
   useEffect(() => {
@@ -83,14 +86,18 @@ function AdDeatailsTabs() {
       setAdDetail(singleAdData);
       dispatch(loadSingleAdDataClear());
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [singleAdData]);
 
-  useEffect(() => {
+  useEffect(() => {console.log("888",adDetail?.pageInfo?.name)
     if (adDetail?.pageInfo?.name) {
+      console.log("888",adDetail?.pageInfo?.name)
       if (subAllAds.subAllAds.length > 0) {
         if (
           subAllAds.subAllAds[0]?.pageInfo?.name !== adDetail?.pageInfo?.name
         ) {
+          console.log("888",adDetail?.pageInfo?.name)
+          console.log("888",adDetail?.pageInfo?.name)
           dispatch(
             loadSubAllAdsStart({
               page_name: adDetail?.pageInfo?.name,
@@ -107,6 +114,7 @@ function AdDeatailsTabs() {
         );
       }
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, adDetail]);
 
   return (

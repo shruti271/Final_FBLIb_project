@@ -39,7 +39,7 @@ function AccountSettings() {
     isShowNewPassword: false,
   });
 
-  const { accountSettings, loading } = useSelector(
+  const { accountSettings, loading, error } = useSelector(
     (state) => state.accountSettings
   );
 
@@ -50,9 +50,9 @@ function AccountSettings() {
   const [loadingFor, setLoadingFor] = useState("");
 
   const {
-    register: personalFormRegister,
+    register:personalFormRegister,
     handleSubmit: personalFormHandleSubmit,
-    formState: { personalFormErrors },
+    formState: { errors },
     setValue: personalFormSetValue,
   } = useForm({
     defaultValues: {
@@ -64,7 +64,7 @@ function AccountSettings() {
   const {
     register: securityFormRegister,
     handleSubmit: securityFormHandleSubmit,
-    formState: { securityFormErrors },
+    formState: {securityFormErrors },
   } = useForm({
     defaultValues: {
       c_password: "",
@@ -78,6 +78,7 @@ function AccountSettings() {
   }, [accountSettings, personalFormSetValue]);
 
   const onPersonalFormSubmit = (data) => {
+    console.log("data", data);
     setLoadingFor(LoadingFor.PersonalInfo);
     dispatch(updateAccountSettingsStart({ data, id: accountSettings?.id }));
   };
@@ -116,6 +117,8 @@ function AccountSettings() {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
+  const onError = (errors) => console.log('Errors Occurred !! :', errors);
+
   return (
     <>
       <Grid container>
@@ -144,7 +147,7 @@ function AccountSettings() {
                     marginBottom={3}
                   >
                     <form
-                      onSubmit={personalFormHandleSubmit(onPersonalFormSubmit)}
+                      onSubmit={personalFormHandleSubmit(onPersonalFormSubmit,onError)}
                     >
                       <Stack
                         direction={"row"}
@@ -172,15 +175,16 @@ function AccountSettings() {
                             label="outlined"
                             variant="outlined"
                             placeholder="firstname"
+                            name="first_name"
+                            // required
                             {...personalFormRegister("first_name", {
                               required: "firstname is required",
                             })}
-                            name="first_name"
                             fullWidth
                           />
-                          {personalFormErrors?.first_name?.message && (
+                          {errors?.first_name && (
                             <p style={{ color: "red" }}>
-                              {personalFormErrors?.first_name?.message}
+                              {errors?.first_name?.message}
                             </p>
                           )}
                         </Stack>
@@ -197,15 +201,16 @@ function AccountSettings() {
                             label="outlined"
                             variant="outlined"
                             placeholder="lastname"
+                            // required
                             {...personalFormRegister("last_name", {
                               required: "lastname is required",
                             })}
                             name="last_name"
                             fullWidth
                           />
-                          {personalFormErrors?.last_name?.message && (
+                          {errors?.last_name && (
                             <p style={{ color: "red" }}>
-                              {personalFormErrors?.last_name?.message}
+                              {errors?.last_name?.message}
                             </p>
                           )}
                         </Stack>
@@ -385,34 +390,55 @@ function AccountSettings() {
                         </Stack>
                       </Stack>
                       <Stack direction={"row"} marginTop={2}>
-                        <Grid
-                          container
-                          style={{ display: "flex", justifyContent: "right" }}
-                          item
-                        >
-                          <Box justifyContent={"right "}>
-                            <Button
-                              type="Submit"
-                              variant="contained"
-                              color="primary"
-                              style={{
-                                borderRadius: 50,
-                                backgroundColor: "#00CBFF",
-                                whiteSpace: "nowrap",
-                              }}
-                            >
-                              {loading && LoadingFor.Password === loadingFor ? (
-                                <CircularProgress
-                                  size="1.5rem"
-                                  sx={{
-                                    color: "white",
-                                  }}
-                                />
-                              ) : (
-                                <>Change Password</>
-                              )}
-                            </Button>
-                          </Box>
+                        <Grid container>
+                          <Grid
+                            item
+                            lg={3}
+                            sm={3}
+                            sx={{
+                              color: "red",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                            }}
+                          >
+                            {error}
+                          </Grid>
+                          <Grid
+                            lg={9}
+                            sm={9}
+                            style={{
+                              display: "flex",
+                              justifyContent: "right",
+                              alignItems: "right",
+                            }}
+                            item
+                          >
+                            <Box justifyContent={"right "}>
+                              <Button
+                                type="Submit"
+                                variant="contained"
+                                color="primary"
+                                style={{
+                                  borderRadius: 50,
+                                  backgroundColor: "#00CBFF",
+                                  whiteSpace: "nowrap",
+                                }}
+                              >
+                                {loading &&
+                                LoadingFor.Password === loadingFor ? (
+                                  <CircularProgress
+                                    size="1.5rem"
+                                    sx={{
+                                      color: "white",
+                                    }}
+                                  />
+                                ) : (
+                                  <>Change Password</>
+                                )}
+                              </Button>
+                            </Box>
+                          </Grid>
                         </Grid>
                       </Stack>
                     </form>
@@ -573,3 +599,4 @@ function AccountSettings() {
   );
 }
 export default AccountSettings;
+

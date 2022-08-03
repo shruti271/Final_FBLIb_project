@@ -51,11 +51,20 @@ const accountSettingsReducer = (state = initialState, action) => {
         loading: true,
       };
     case LOAD_ACCOUNT_SETTINGS_SUCCESS:
-    case UPDATE_ACCOUNT_SETTINGS_SUCCESS:
       return {
         ...state,
         loading: false,
-        accountSettings: action.payload,
+        accountSettings: action?.payload,
+      };
+    case UPDATE_ACCOUNT_SETTINGS_SUCCESS:
+      console.log("HandleUpdateAccountSettings Response: --- ",action?.payload?.data?.error)      
+      return {
+        ...state,
+        loading: false,
+        accountSettings: action?.payload?.data?.error ? state.accountSettings : action?.payload?.data?.data,
+        error: action?.payload?.data?.error ? action?.payload?.data?.message : ""
+        // accountSettings: action.payload.error? state.accountSettings : action.payload.data,
+        // error: action.payload.error? action.payload.message :""
       };
     case LOAD_ACCOUNT_SETTINGS_ERROR:
     case UPDATE_ACCOUNT_SETTINGS_ERROR:

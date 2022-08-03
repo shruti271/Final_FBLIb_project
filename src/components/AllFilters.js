@@ -234,7 +234,7 @@ function AllFilters() {
               // componentName: pageName,
               min: newValue[0],
               max: newValue[1],
-              chipText: `Adcount : ${newValue[0]}-${newValue[1]}`,
+              chipText: `Ad Count : ${newValue[0]}-${newValue[1]}`,
               isApplied: isReset ? false : true,
             },
           })
@@ -244,7 +244,7 @@ function AllFilters() {
               // componentName: pageName,
               min: newValue[0],
               max: newValue[1],
-              chipText: `Adcount : ${newValue[0]}-${newValue[1]}`,
+              chipText: `Ad Count : ${newValue[0]}-${newValue[1]}`,
               isApplied: isReset ? false : true,
             },
           })
@@ -258,7 +258,7 @@ function AllFilters() {
             key: "AdStatus",
             value: {
               selectedValue: newValue,
-              chipText: `Adstatus : ${newValue}`,
+              chipText: `Ad status : ${newValue}`,
               isApplied: isReset ? false : true,
             },
           })
@@ -267,7 +267,7 @@ function AllFilters() {
             value: {
               // componentName: pageName,
               selectedValue: newValue,
-              chipText: `Adstatus : ${newValue}`,
+              chipText: `Ad status : ${newValue}`,
               isApplied: isReset ? false : true,
             },
           })
@@ -283,7 +283,7 @@ function AllFilters() {
               // componentName: pageName,
               min: newValue[0],
               max: newValue[1],
-              chipText: `FacebookLikes : ${newValue[0]}-${newValue[1]}`,
+              chipText: `FacebookLike Page Likes: ${newValue[0]}-${newValue[1]}`,
               isApplied: isReset ? false : true,
             },
           })
@@ -293,7 +293,7 @@ function AllFilters() {
               // componentName: pageName,
               min: newValue[0],
               max: newValue[1],
-              chipText: `FacebookLikes : ${newValue[0]}-${newValue[1]}`,
+              chipText: `FacebookLike Page Followers: ${newValue[0]}-${newValue[1]}`,
               isApplied: isReset ? false : true,
             },
           })
@@ -309,7 +309,7 @@ function AllFilters() {
               // componentName: pageName,
               min: newValue[0],
               max: newValue[1],
-              chipText: `InstagramFollowers : ${newValue[0]}-${newValue[1]}`,
+              chipText: `Instagram Page Followers : ${newValue[0]}-${newValue[1]}`,
               isApplied: isReset ? false : true,
             },
           })
@@ -319,7 +319,7 @@ function AllFilters() {
               // componentName: pageName,
               min: newValue[0],
               max: newValue[1],
-              chipText: `InstagramFollowers : ${newValue[0]}-${newValue[1]}`,
+              chipText: `Instagram Page Followers : ${newValue[0]}-${newValue[1]}`,
               isApplied: isReset ? false : true,
             },
           })
@@ -333,7 +333,7 @@ function AllFilters() {
             key: "MediaType",
             value: {
               selectedValue: newValue,
-              chipText: `MediaType : ${newValue}`,
+              chipText: `Media Type : ${newValue}`,
               isApplied: isReset ? false : true,
             },
           })
@@ -341,7 +341,7 @@ function AllFilters() {
             key: "MediaType",
             value: {
               selectedValue: newValue,
-              chipText: `MediaType : ${newValue}`,
+              chipText: `Media Type : ${newValue}`,
               isApplied: isReset ? false : true,
             },
           })
@@ -355,7 +355,7 @@ function AllFilters() {
             key: "ButtonStatus",
             value: {
               selectedValue: newValue,
-              chipText: `ButtonText : ${newValue}`,
+              chipText: `Button Text : ${newValue}`,
               isApplied: isReset ? false : true,
             },
           })
@@ -363,7 +363,7 @@ function AllFilters() {
             key: "ButtonStatus",
             value: {
               selectedValue: newValue,
-              chipText: `ButtonText : ${newValue}`,
+              chipText: `Button Text : ${newValue}`,
               isApplied: isReset ? false : true,
             },
           })
@@ -407,7 +407,7 @@ function AllFilters() {
             value: {
               startdate: format(newValue.selection.startDate, "yyyy-MM-dd"),
               enddate: format(newValue.selection.endDate, "yyyy-MM-dd"),
-              chipText: `running date ${format(
+              chipText: `Running Date ${format(
                 newValue.selection.startDate,
                 "yyyy-MM-dd"
               )} to ${format(newValue.selection.endDate, "yyyy-MM-dd")}`,
@@ -419,7 +419,7 @@ function AllFilters() {
             value: {
               startdate: format(newValue.selection.startDate, "yyyy-MM-dd"),
               enddate: format(newValue.selection.endDate, "yyyy-MM-dd"),
-              chipText: `running date ${format(
+              chipText: `Running Date ${format(
                 newValue.selection.startDate,
                 "yyyy-MM-dd"
               )} to ${format(newValue.selection.endDate, "yyyy-MM-dd")}`,
@@ -747,9 +747,6 @@ function AllFilters() {
                         pageName === PageNameEnum.AdlibraryDatabase
                           ? rangeAdcountValue.min.toString()
                           : savedPageRangeAdcountValue.min.toString()
-                        // pageName === PageNameEnum.AdlibraryDatabase
-                        //   ? allAdsPerams?.appliedFilters?.AdCount?.min.toString()
-                        //   : savedAdsPerams?.appliedFilters?.AdCount?.min.toString()
                       }
                       onSave={(e) => {
                         if (Number(e.value) !== e.previousValue) {
@@ -784,9 +781,6 @@ function AllFilters() {
                         pageName === PageNameEnum.AdlibraryDatabase
                           ? rangeAdcountValue.max.toString()
                           : savedPageRangeAdcountValue.max.toString()
-                        // pageName === PageNameEnum.AdlibraryDatabase
-                        //   ? allAdsPerams?.appliedFilters?.AdCount?.max.toString()
-                        //   : savedAdsPerams?.appliedFilters?.AdCount?.max.toString()
                       }
                       onSave={(e) => {
                         if (Number(e.value) !== e.previousValue) {
