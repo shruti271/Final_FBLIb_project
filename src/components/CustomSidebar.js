@@ -3,7 +3,7 @@ import { styled } from "@mui/material/styles";
 import MuiDrawer from "@mui/material/Drawer";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { Stack } from "@mui/material";
 import logout from "../assets/Logout.svg";
@@ -46,9 +46,9 @@ const useStyles = makeStyles(() => ({
     texFillColor: "transparent",
   },
   selectedMenu: {
-    background:"rgba(0, 203, 255, 0.05)",
+    background: "rgba(0, 203, 255, 0.05)",
     borderRight: "4px solid #00C9FD",
-    borderRadius:"32px 0px 0px 32px"
+    borderRadius: "32px 0px 0px 32px",
   },
   openDrawerItemWrapper: {
     paddingRight: "6px",
@@ -123,6 +123,7 @@ export const CustomSidebar = ({ isOpen }) => {
     sideBarMenuItems.ADLIBSDATABASE
   );
   const [open, setOpen] = React.useState(false);
+  const [currentPage, setCurrentPage] = useState();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -142,20 +143,34 @@ export const CustomSidebar = ({ isOpen }) => {
       }
     );
   };
+  const { state } = useLocation();
 
-  useEffect(() => {    
+  useEffect(() => {
     if (window.location.pathname === `/ContactSupport`) {
       setSelectedMenuItem(sideBarMenuItems.SUPPORT);
     } else if (window.location.pathname === `/`) {
       setSelectedMenuItem(sideBarMenuItems.ADLIBSDATABASE);
     } else if (window.location.pathname === `/savedAds`) {
       setSelectedMenuItem(sideBarMenuItems.SAVEDADS);
-    }else if(window.location.pathname.split('/').includes("adDeatails")){
+    }
+    else if(window.location.pathname.split('/').includes("adDeatails")){
+      console.log("666 data ",currentPage)
+      if(currentPage==="/savedAds")
+      setSelectedMenuItem(sideBarMenuItems.SAVEDADS);
+      else
       setSelectedMenuItem(sideBarMenuItems.ADLIBSDATABASE);
-    } else {
+    }
+    else {
       setSelectedMenuItem("");
     }
-  }, []);
+  });
+  
+useEffect(()=>{
+  if(state)
+  setCurrentPage(state.fromPage)
+},[])
+
+ 
   return (
     <>
       <Drawer variant="permanent" open={isOpen}>
@@ -193,6 +208,7 @@ export const CustomSidebar = ({ isOpen }) => {
               }
               onClick={() => {
                 setSelectedMenuItem(sideBarMenuItems.ADLIBSDATABASE);
+                setCurrentPage("/");
                 navigate("/");
               }}
             >
@@ -235,6 +251,7 @@ export const CustomSidebar = ({ isOpen }) => {
               }
               onClick={() => {
                 setSelectedMenuItem(sideBarMenuItems.SAVEDADS);
+                setCurrentPage("/savedAds");
                 navigate("/savedAds");
               }}
             >

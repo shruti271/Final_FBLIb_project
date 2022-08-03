@@ -18,6 +18,8 @@ export const ADD_TO_SAVED_FILTERED_AD_LOCAL_SUCCESS =
 export const ADD_TO_SAVED_FILTERED_AD_LOCAL_ERROR =
   "ADD_TO_SAVED_FILTERED_AD_LOCAL_ERROR";
 
+  export const SAVED_GET_PAGE_POSITION = "SAVED_GET_PAGE_POSITION";
+
 export const addToSavedAdsFilterLocalStart = (adToBeAdded) => ({
   type: ADD_TO_SAVED_FILTERED_AD_LOCAL_START,
   payload: adToBeAdded,
@@ -67,11 +69,15 @@ export const loadMoresavedFilteredAdsError = (error) => ({
   type: LOAD_MORE_SAVED_FILTERED_ADS_ERROR,
   payload: error,
 });
-
+export const setPostionForSavedPageToScrollValueStart = (error) => ({
+  type: SAVED_GET_PAGE_POSITION,
+  payload: error,
+});
 const initialState = {
   filteredSavedAds: [],
   savedAdsIds: [],
   hasMoreData:true,
+  postionOfPage:0,
   loading: false,
   error: "",
 };
@@ -82,14 +88,15 @@ const filteredSavedAdsReducer = (state = initialState, action) => {
     case LOAD_SAVED_FILTERED_ADS_START:
       return {
         ...state,
-        filteredAds: [],
-        savedAdsIds:[],
-        loading: true,
+        filteredSavedAds: [],
+        savedAdsIds:[],        
+        loading: true,   
+        hasMoreData:true,   
       };
     case LOAD_MORE_SAVED_FILTERED_ADS_START:
       return {
         ...state,
-        loading: true,
+        loading: true,        
       };
 
     case LOAD_SAVED_FILTERED_ADS_SUCCESS:
@@ -133,7 +140,12 @@ const filteredSavedAdsReducer = (state = initialState, action) => {
           ? filterdListToBeUpdated
           : state.filteredSavedAds,
       };
-      
+      case SAVED_GET_PAGE_POSITION:
+        return {
+          ...state,
+          // [`${action.payload.key}`]:action.payload.data,
+          postionOfPage:action.payload
+        }
     default:
       return state;
   }

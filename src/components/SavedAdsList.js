@@ -120,6 +120,10 @@ const SavedAdsList = () => {
     }
   }, [dispatch, savedAdsPerams.searchType, savedAdsPerams.searchBarData]);
 
+  useEffect(()=>{
+    window.scrollTo(0,filteredSavedAds.postionOfPage);
+  },[])
+
   return (
     <Box>
       { filteredSavedAds?.loading && filteredSavedAds?.filteredSavedAds.length === 0 ?   <Box
@@ -174,13 +178,10 @@ const SavedAdsList = () => {
           }}
         >
           <Grid
-            container
-            // spacing={2}
+            container            
             sx={{
               marginTop: "5px",
               width: "100%",
-              // opacity: save_loading ? 0.5 : 1,
-              // disabled: save_loading ? true : false,
             }}
           >
             {filteredSavedAds?.filteredSavedAds?.length !== 0 &&

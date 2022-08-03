@@ -13,11 +13,15 @@ import AdDeatails from "./adDeatails";
 import { useDispatch, useSelector } from "react-redux";
 import { loadSubAllAdsStart } from "../../redux/ducks/subAllAds";
 import LeftArrow from "../../assets/LeftArrow.svg";
-import { loadSingleAdDataClear, loadSingleAdDataStart } from "../../redux/ducks/singleAdsData";
+import {
+  loadSingleAdDataClear,
+  loadSingleAdDataStart,
+} from "../../redux/ducks/singleAdsData";
 function AdDeatailsTabs() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { adId } = useParams();
+  const { state } = useLocation();
 
   // const subAllAds = useSelector((state) => state.subAllAds);
 
@@ -28,10 +32,16 @@ function AdDeatailsTabs() {
   const filteredAds = useSelector((state) => state.filteredAds);
   const [isActiveTab, setIsActiveTab] = useState(adDetailsTabs.ADOVERVIEW);
   const [adDetail, setAdDetail] = useState();
-  
+  const [redirectToPage, setRedirectToPage] = useState("/");
+
   const subAllAds = useSelector((state) => state.subAllAds);
-  const {filteredSavedAds} = useSelector((state) => state.filteredSavedAds);
+  const { filteredSavedAds } = useSelector((state) => state.filteredSavedAds);
   const { singleAdData, loading } = useSelector((state) => state.singleAdData);
+
+  useEffect(() => {
+    if(state)
+    setRedirectToPage(state.fromPage);
+  }, []);
 
   useEffect(() => {
     if (window.location.pathname === `/adDeatails/${adId}`) {
@@ -61,18 +71,17 @@ function AdDeatailsTabs() {
           }
         });
 
-        if(!adTobeDisplay){          
-          dispatch(loadSingleAdDataStart({ id: adId }));                  
-        }
+      if (!adTobeDisplay) {
+        dispatch(loadSingleAdDataStart({ id: adId }));
+      }
       setAdDetail(adTobeDisplay);
     }
   }, [dispatch, filteredAds, adId]);
 
-  
-  useEffect(() => {    
-    if (!adDetail && Object.keys(singleAdData).length) {      
+  useEffect(() => {
+    if (!adDetail && Object.keys(singleAdData).length) {
       setAdDetail(singleAdData);
-      dispatch(loadSingleAdDataClear());  
+      dispatch(loadSingleAdDataClear());
     }
   }, [singleAdData]);
 
@@ -112,8 +121,8 @@ function AdDeatailsTabs() {
         }}
       >
         <Box
-          onClick={() => {
-            navigate("/");
+          onClick={() => {            
+            navigate(redirectToPage);            
           }}
           sx={{ cursor: "pointer" }}
         >

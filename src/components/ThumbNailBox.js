@@ -18,10 +18,19 @@ import Saveicon from "../assets/Saveicon.svg";
 import StarFill from "../assets/StarFill.svg";
 import MyChart from "./linemy";
 
-// import { srtPostionForScrollValueStart } from "../redux/ducks/mediaAds";
-import { addToSavedAdsFilterLocalStart, removesavedFilteredAdLocal } from "../redux/ducks/filteredSavedAds";
-import { addSavedAdsIdsLocal, addToSavedAdsStart, removeFromSavedAdsStart, removeSavedAdsIdsLocal } from "../redux/ducks/savedAdsManager";
+import {
+  addToSavedAdsFilterLocalStart,
+  removesavedFilteredAdLocal,
+  setPostionForSavedPageToScrollValueStart,
+} from "../redux/ducks/filteredSavedAds";
+import {
+  addSavedAdsIdsLocal,
+  addToSavedAdsStart,
+  removeFromSavedAdsStart,
+  removeSavedAdsIdsLocal,
+} from "../redux/ducks/savedAdsManager";
 import { setPostionForScrollValueStart } from "../redux/ducks/filteredAds";
+import { setPostionForSubAllAdsToScrollValueStart } from "../redux/ducks/subAllAds";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -144,7 +153,7 @@ const ThumbNailBox = ({ adInfo, index }) => {
   const savedAdsManager = useSelector((state) => state.savedAdsManager);
   const savedAdsPerams = useSelector((state) => state.savedAdsPerams);
 
-  useEffect(()=>{
+  useEffect(() => {
     const queryObject = {
       startdate: savedAdsPerams?.appliedFilters?.StartRunningDate?.startdate,
       enddate: savedAdsPerams?.appliedFilters?.StartRunningDate?.enddate,
@@ -210,206 +219,233 @@ const ThumbNailBox = ({ adInfo, index }) => {
           ? savedAdsPerams?.searchBarData.split(",")
           : [],
     };
-    setQueryObject(queryObject)
-  },[savedAdsPerams])
-  
+    setQueryObject(queryObject);
+  }, [savedAdsPerams]);
+
   return (
-    <Grid item lg={3} md={4} xs={5} key={index} sx={{padding:"10px"}}>
+    <Grid item lg={3} md={4} xs={5} key={index} sx={{ padding: "10px" }}>
       <Card
-      sx={{
+        sx={{
           // transition: "transform 0.45s ease-in-out",
           // "&:hover": { transform: "scale3d(1.05, 1.05, 1)" },
-        
-        borderRadius:"16px",
-        boxShadow:"none",
-        border:"1px solid #EBEBEB"
-      }}
-      >
-      <Stack
-        sx={{
-          padding: "10px",
-          justifyContent: "space-between"
+
+          borderRadius: "16px",
+          boxShadow: "none",
+          border: "1px solid #EBEBEB",
         }}
       >
-        <Box className={classes.Addheader}>
-          <Box
-            sx={{
-              border: 1,
-              borderRadius: "50%",
-              borderColor: "#EBEBEB",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Avatar
-              src={adInfo?.pageInfo?.logo}
-              aria-label="FirstCard"
-              sx={{ width: 27, height: 27 }}
-            ></Avatar>
+        <Stack
+          sx={{
+            padding: "10px",
+            justifyContent: "space-between",
+          }}
+        >
+          <Box className={classes.Addheader}>
+            <Box
+              sx={{
+                border: 1,
+                borderRadius: "50%",
+                borderColor: "#EBEBEB",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Avatar
+                src={adInfo?.pageInfo?.logo}
+                aria-label="FirstCard"
+                sx={{ width: 27, height: 27 }}
+              ></Avatar>
+            </Box>
+            <Typography
+              sx={{
+                fontWeight: "500",
+                fontSize: "16px",
+                lineHeight: "24px",
+                color: "#2B2F42",
+                marginRight: "12px",
+                paddingLeft: "10px",
+              }}
+              noWrap
+            >
+              {adInfo?.pageInfo?.name}
+            </Typography>
+            <Typography
+              noWrap
+              sx={{
+                fontWeight: 500,
+                fontSize: "15px",
+                lineHeight: "24px",
+                color: "#2B2F42",
+                opacity: 0.6,
+                marginRight: "12px",
+              }}
+            >
+              {`(${Intl.NumberFormat().format(
+                adInfo?.pageInfo?.platforms[0]?.likes
+              )} likes)`}
+            </Typography>
           </Box>
-          <Typography
-            sx={{
-              fontWeight: "500",
-              fontSize: "16px",
-              lineHeight: "24px",
-              color: "#2B2F42",
-              marginRight: "12px",
-              paddingLeft: "10px",
-            }}
-            noWrap
-          >
-            {adInfo?.pageInfo?.name}
-          </Typography>
-          <Typography
-            noWrap
-            sx={{
-              fontWeight: 500,
-              fontSize: "15px",
-              lineHeight: "24px",
-              color: "#2B2F42",
-              opacity: 0.6,
-              marginRight: "12px",
-            }}
-          >
-            {`(${Intl.NumberFormat().format(
-              adInfo?.pageInfo?.platforms[0]?.likes
-            )} likes)`}
-          </Typography>
-        </Box>
-        <div style={{ height: "300px" }}>
-          {adInfo.adMediaType === "video" ? (
-            <video
-              src={adInfo.bucketMediaURL}
-              poster={adInfo?.thumbBucketUrl}
-              style={{ height: "300px" }}
-              autoPlay={false}
-              className={classes.AdsVideo}
-              controls
-            />
-          ) : adInfo?.adMediaType === "image" ? (
-            <img
-              src={adInfo?.bucketMediaURL}
-              alt="thumbnail"
-              style={{ height: "300px" }}
-              className={classes.AdsImage}
-            />
-          ) : (
-            <img
-              src={Firstcardimg}
-              alt="thumbnail"
-              className={classes.AdsImage}
-            />
-          )}
-        </div>
+          <div style={{ height: "300px" }}>
+            {adInfo.adMediaType === "video" ? (
+              <video
+                src={adInfo.bucketMediaURL}
+                poster={adInfo?.thumbBucketUrl}
+                style={{ height: "300px" }}
+                autoPlay={false}
+                className={classes.AdsVideo}
+                controls
+              />
+            ) : adInfo?.adMediaType === "image" ? (
+              <img
+                src={adInfo?.bucketMediaURL}
+                alt="thumbnail"
+                style={{ height: "300px" }}
+                className={classes.AdsImage}
+              />
+            ) : (
+              <img
+                src={Firstcardimg}
+                alt="thumbnail"
+                className={classes.AdsImage}
+              />
+            )}
+          </div>
 
-        <Grid container sx={{ padding: "4px" }}>
-          <Grid item sm={9} md={9} lg={9} >
-            <Stack direction={"column"}>
-              <Stack direction={"row"}>
-                {adInfo.status === "Active" ? (
-                  <Typography>{adInfo.status}</Typography>
-                ) : (
-                  <Typography sx={{ color: "red" }}>
-                    {adInfo.status}
-                  </Typography>
-                )}
-                <Tooltip title="Redirect to shop link">
+          <Grid container sx={{ padding: "4px" }}>
+            <Grid item sm={9} md={9} lg={9}>
+              <Stack direction={"column"}>
+                <Stack direction={"row"}>
+                  {adInfo.status === "Active" ? (
+                    <Typography>{adInfo.status}</Typography>
+                  ) : (
+                    <Typography sx={{ color: "red" }}>
+                      {adInfo.status}
+                    </Typography>
+                  )}
+                  <Tooltip title="Redirect to shop link">
+                    <img
+                      src={Shareicon}
+                      alt="Shareicon"
+                      className={classes.shareicon}
+                      onClick={(e) => {
+                        console.log(adInfo?.purchaseURL);
+                        window.open(adInfo?.purchaseURL, "_blank", "");
+                      }}
+                    />
+                  </Tooltip>
                   <img
-                    src={Shareicon}
-                    alt="Shareicon"
-                    className={classes.shareicon}
-                    onClick={(e) => {
-                      console.log(adInfo?.purchaseURL);
-                      window.open(adInfo?.purchaseURL, "_blank", "");
-                    }}
-                  />
-                </Tooltip>
-                <img
-                    src={savedAdsManager.savedAdsIds.includes(adInfo?.id) ? StarFill : Saveicon}
+                    src={
+                      savedAdsManager.savedAdsIds.includes(adInfo?.id)
+                        ? StarFill
+                        : Saveicon
+                    }
                     alt="saved-icon"
                     className={classes.saveicon}
                     onClick={() => {
-                      if(savedAdsManager.savedAdsIds.includes(adInfo?.id)){
+                      if (savedAdsManager.savedAdsIds.includes(adInfo?.id)) {
                         dispatch(removesavedFilteredAdLocal(adInfo));
                         dispatch(removeSavedAdsIdsLocal(adInfo.id));
                         dispatch(removeFromSavedAdsStart({ ad: adInfo?.id }));
-                      } else{
+                      } else {
                         dispatch(addSavedAdsIdsLocal(adInfo.id));
                         dispatch(addToSavedAdsStart({ ad: adInfo.id }));
-                        dispatch(addToSavedAdsFilterLocalStart({ ...queryObject, adId: adInfo.id }));
+                        dispatch(
+                          addToSavedAdsFilterLocalStart({
+                            ...queryObject,
+                            adId: adInfo.id,
+                          })
+                        );
                       }
                     }}
                   />
-              </Stack>
+                </Stack>
 
-              <Typography color="#c0c0c0" className={classes.AdsText} noWrap>
-                Started Running : {adInfo.startDate}
-              </Typography>
-              <Typography color="#2B2F42" className={classes.AdsText} noWrap>
-                {adInfo.headline}
-              </Typography>
-            </Stack>
-          </Grid>
-          <Grid
-            item
-            sm={3}
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Avatar
+                <Typography color="#c0c0c0" className={classes.AdsText} noWrap>
+                  Started Running : {adInfo.startDate}
+                </Typography>
+                <Typography color="#2B2F42" className={classes.AdsText} noWrap>
+                  {adInfo.headline}
+                </Typography>
+              </Stack>
+            </Grid>
+            <Grid
+              item
+              sm={3}
               sx={{
-                background: "linear-gradient(45deg, #00CBFF 0%, #72E2FF 100%)",
-                display: "grid",
-                width: "52px",
-                height: "51px",
-                padding: "5px 10px 10px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
               }}
             >
-              <span
-                style={{
-                  fontSize: "25px",
-                  lineHeight: "24px",
-                  padding: "2px",
-                  fontWeight: "700",
+              <Avatar
+                sx={{
+                  background:
+                    "linear-gradient(45deg, #00CBFF 0%, #72E2FF 100%)",
+                  display: "grid",
+                  width: "52px",
+                  height: "51px",
+                  padding: "5px 10px 10px",
                 }}
               >
-                {adInfo.noOfCopyAds}
-              </span>
-              <span style={{ fontSize: "10px", margin: "auto" }}>Ads</span>
-            </Avatar>
+                <span
+                  style={{
+                    fontSize: "25px",
+                    lineHeight: "24px",
+                    padding: "2px",
+                    fontWeight: "700",
+                  }}
+                >
+                  {adInfo.noOfCopyAds}
+                </span>
+                <span style={{ fontSize: "10px", margin: "auto" }}>Ads</span>
+              </Avatar>
+            </Grid>
           </Grid>
-        </Grid>
 
-        <Box sx={{ height: "100px" }}>
-          <MyChart
-            chartData={adInfo?.history}
-            dataBoxVisiblity={false}
-            axisVisiblity={false}
-            graphHeight={"100px"}
-          />
-        </Box>
-        <Button
-          variant="contained"
-          size="small"
-          sx={{
-            borderRadius: "17px",
-            background:
-              "linear-gradient(270deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)",
-            textTransform: "none",
-          }}
-          onClick={() => {
-            dispatch(setPostionForScrollValueStart(window.pageYOffset));
-            // navigate(`/adDeatails/${adInfo.id}`);
-            navigate(`/adDeatails/${adInfo.id}`);
-          }}
-        >
-          <b>See Details</b>
-        </Button>
-      </Stack>
+          <Box sx={{ height: "100px" }}>
+            <MyChart
+              chartData={adInfo?.history}
+              dataBoxVisiblity={false}
+              axisVisiblity={false}
+              graphHeight={"100px"}
+            />
+          </Box>
+          <Button
+            variant="contained"
+            size="small"
+            sx={{
+              borderRadius: "17px",
+              background:
+                "linear-gradient(270deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)",
+              textTransform: "none",
+            }}
+            onClick={() => {              
+              window.location.pathname === "/" &&
+                dispatch(setPostionForScrollValueStart(window.pageYOffset));
+
+              window.location.pathname.split("/").includes("allAds") &&
+                dispatch(
+                  setPostionForSubAllAdsToScrollValueStart(window.pageYOffset)
+                );
+
+              window.location.pathname.split("/").includes("savedAds") &&
+                dispatch(
+                  setPostionForSavedPageToScrollValueStart(window.pageYOffset)
+                );
+
+              navigate(`/adDeatails/${adInfo.id}`, {
+                state: {
+                  fromPage:
+                    window.location.pathname.split("/").includes("savedAds") ?
+                    "/savedAds":"/",
+                },
+              });
+            }}
+          >
+            <b>See Details</b>
+          </Button>
+        </Stack>
       </Card>
     </Grid>
   );

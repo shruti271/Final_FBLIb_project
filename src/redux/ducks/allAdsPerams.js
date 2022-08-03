@@ -202,6 +202,11 @@ const allAdsPeramsReducer = (state = initialState, action) => {
           FacebookLikes: { min: 1, max: 100000 },
           InstagramFollowers: { min: 1, max: 10000 },
         },
+        sortFilter: {
+          ...state.sortFilter,
+          type: { selectedValue: "lastUpdatedTime" },
+          order: { selectedValue: "asc" },
+        },
       };
 
     case CHANGE_SORTFILTERS:
@@ -222,7 +227,7 @@ const allAdsPeramsReducer = (state = initialState, action) => {
         [`${action.payload.key}`]: `${action.payload.value}`,
       };
 
-    case SET_ADLIBRARY_DATABASE_PAGE_INDEX:console.log("index inc ",action.payload)
+    case SET_ADLIBRARY_DATABASE_PAGE_INDEX:
       return {
         ...state,
         pageIndex: action.payload,

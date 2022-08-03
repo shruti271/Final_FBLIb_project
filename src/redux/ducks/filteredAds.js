@@ -76,7 +76,7 @@ const filteredAdsReducer = (state = initialState, action) => {
         loading: true,
       };
                                                                   
-    case LOAD_FILTERED_ADS_SUCCESS:
+    case LOAD_FILTERED_ADS_SUCCESS:            
       return {
         ...state,
         loading: false,
@@ -90,6 +90,7 @@ const filteredAdsReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         filteredAds: action.payload?.error === true ? state.filteredAds : [...state.filteredAds].concat(action.payload?.data?.all_ads),
+        savedAdsIds:action.payload?.error === true ? state.savedAdsIds : [...state.savedAdsIds].concat(action.payload?.data?.saved_ads),
         hasMoreData: action.payload?.data?.all_ads?.length < 8 ? false : true
       };
 

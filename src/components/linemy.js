@@ -33,7 +33,7 @@ const MyChart = (props) => {
         labels: {
             format: "{value:%b - %e}",
           },        
-        categories:[...props.chartData?.map((a)=>a.date)].slice(-3)       
+        categories:[...props.chartData?.map((a)=>a.date)].slice(-30)       
       },
       yAxis: {    
         visible:props.axisVisiblity,    
