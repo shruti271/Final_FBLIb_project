@@ -52,12 +52,13 @@ function AdDeatails() {
     },
     []
   );
-  // const abc= async ()=>{
-  //   dispatch(loadSingleAdDataStart({ id: adId }));
-  // }
+  
   useEffect(() => {
     if (filteredAds.filteredAds.length > 0) {
-      // eslint-disable-next-line array-callback-return
+      // filteredAds.filteredAds.find((ad) => ad.id === adId && ad) ||
+      //   subAllAds.subAllAds.find((ad) => ad.id === adId && ad) ||
+      //   filteredSavedAds?.find((ad) => ad.id === adId && ad);
+      // eslint-disable-next-line array-callback-return      
       let adTobeDisplay =
         filteredAds.filteredAds.find((ad) => {
           if (ad.id === adId) {
@@ -103,8 +104,7 @@ function AdDeatails() {
           justifyContent: "center",
           alignItems: "center",
           textAlign: "center",
-          zIndex: 1,
-          // width:"100%"
+          zIndex: 1,          
         }}
       >
         <FadeLoader

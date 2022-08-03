@@ -122,6 +122,7 @@ const SavedAdsList = () => {
 
   useEffect(()=>{
     window.scrollTo(0,filteredSavedAds.postionOfPage);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
 
   return (

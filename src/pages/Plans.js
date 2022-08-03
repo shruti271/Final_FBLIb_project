@@ -95,8 +95,8 @@ const Payment = () => {
                 <Typography variant="h5" gutterBottom align='center' p={1.5}>Try it free for 24 hours!</Typography>
             </Box>
 
-            <Grid container spacing={2} p={2} className={classes.fontSizeCustomize}>
-                <Grid item xs={6} lg={6} className={classes.monthplanborder} sx={{ borderRadius: "44px 18px 1px 1px" }} >
+            <Grid container spacing={5} p={2} className={classes.fontSizeCustomize} sx={{display:"flex",justifyContent:"center",alignItems:"center",marginTop:2}}>
+                <Grid item xs={5} lg={5} className={classes.monthplanborder} sx={{ borderRadius: "60px 18px 18px 18px", marginRight:2}} >
                     <Stack
                         p={2}
                     >
@@ -107,7 +107,7 @@ const Payment = () => {
                                 <Typography variant="h6" m={2.7} className={classes.month}>/MONTH</Typography>
                             </Box>
                             <Typography>Cancel Anytime, No Commitments</Typography>
-                            <Divider variant='fullWidth' />
+                            <Divider variant='fullWidth' sx={{marginTop:1}}/>
                             <Stack direction={"row"} >
                                 <img src={paymentCheckboxicon} alt="paymentchekbox" />
                                 <Typography m={2}>
@@ -155,7 +155,7 @@ const Payment = () => {
                         </Box>
                     </Stack>
                 </Grid>
-                <Grid item xs={6} lg={6} sx={{ background: "linear-gradient(321.16deg, #231259 87.91%, #5D88C3 100%)", borderRadius: "10px 40px 10px 10px" }}>
+                <Grid item xs={5} lg={5} sx={{ background: "linear-gradient(321.16deg, #231259 87.91%, #5D88C3 100%)", borderRadius: "18px 60px 18px 18px" }}>
                     <Stack
                         p={2}
                     >
@@ -182,7 +182,7 @@ const Payment = () => {
                                 <Typography variant="h6" m={2.7} className={classes.month}>/MONTH</Typography>
                             </Box>
                             <Typography className={classes.fontcolor}>Get 5 Months Free By Paying Annually</Typography>
-                            <Divider variant='fullWidth' className={classes.dividerColor} />
+                            <Divider variant='fullWidth' className={classes.dividerColor} sx={{marginTop:1}}/>
                             <Stack direction={"row"}>
                                 <img src={annualplancheckboxicon} alt="paymentchekbox" />
                                 <Typography m={2} sx={{ borderStyle: "linear-gradient(270deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)" }} className={classes.fontcolor}>

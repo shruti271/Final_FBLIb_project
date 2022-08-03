@@ -58,6 +58,8 @@ const subAllAdsReducer = (state = initialState, action) => {
         ...state,
         pageIndex: action.payload.page_index,
         pageName: action.payload.page_name,
+        subAllAds:[],
+        hasMoreData:true,
         loading: true,
       };
     case LOAD_MORE_SUBALLADS_START:

@@ -28,7 +28,7 @@ export function* handleUpdateAccountSettings({ payload }) {
     const response = yield call(requestUpdateAccountSettings, payload);
     console.log("HandleUpdateAccountSettings Response:", response);
     if (response.status === 200) {
-      yield put(updateAccountSettingsSuccess(response.data.data));
+      yield put(updateAccountSettingsSuccess(response));
     }
   } catch (error) {
     yield put(updateAccountSettingsError(error));
