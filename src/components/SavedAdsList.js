@@ -11,6 +11,7 @@ import {
 import { useSkipInitialEffect } from "../utils/customHooks";
 import emptyImg from "../assets/empty.svg";
 import { FadeLoader } from "react-spinners";
+import { useEffect } from "react";
 
 const SavedAdsList = () => {
   const dispatch = useDispatch();
@@ -99,6 +100,10 @@ const SavedAdsList = () => {
     }
   }, [dispatch, savedAdsPerams]);
 
+  useEffect(()=>{
+    window.scrollTo(0,filteredSavedAds.postionOfPage);
+  },[])
+
   return (
    
     <Box>
@@ -139,13 +144,10 @@ const SavedAdsList = () => {
           }}
         >
           <Grid
-            container
-            // spacing={2}
+            container            
             sx={{
               marginTop: "5px",
               width: "100%",
-              // opacity: save_loading ? 0.5 : 1,
-              // disabled: save_loading ? true : false,
             }}
           >
             {filteredSavedAds?.filteredSavedAds?.length !== 0 &&

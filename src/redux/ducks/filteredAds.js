@@ -76,9 +76,7 @@ const filteredAdsReducer = (state = initialState, action) => {
         loading: true,
       };
                                                                   
-    case LOAD_FILTERED_ADS_SUCCESS:
-      console.log("11111",action.payload , state.filteredAds)
-      // console.log(action.payload?.data[0]?.saved_ads)
+    case LOAD_FILTERED_ADS_SUCCESS:            
       return {
         ...state,
         loading: false,
@@ -87,13 +85,12 @@ const filteredAdsReducer = (state = initialState, action) => {
         hasMoreData: action.payload?.data?.all_ads?.length < 8 ? false : true
       };
 
-    case LOAD_MORE_FILTERED_ADS_SUCCESS:console.log("..... ",action.payload?.data?.all_ads)
+    case LOAD_MORE_FILTERED_ADS_SUCCESS:
       return {
         ...state,
         loading: false,
         filteredAds: action.payload?.error === true ? state.filteredAds : [...state.filteredAds].concat(action.payload?.data?.all_ads),
         savedAdsIds:action.payload?.error === true ? state.savedAdsIds : [...state.savedAdsIds].concat(action.payload?.data?.saved_ads),
-
         hasMoreData: action.payload?.data?.all_ads?.length < 8 ? false : true
       };
 

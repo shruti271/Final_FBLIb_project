@@ -73,9 +73,7 @@ function AdDeatails() {
           if (ad.id === adId) {
             return ad;
           }
-        });
-
-      // console.log("adTobeDisplay",adTobeDisplay)
+        });      
       setAdDetail(adTobeDisplay);
 
       if (!adTobeDisplay) {        

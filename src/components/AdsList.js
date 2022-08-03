@@ -17,6 +17,8 @@ const AdsList = () => {
 useEffect(()=>{
   window.scrollTo(0,filteredAds.postionOfPage);
 },[])
+
+
     useSkipInitialEffect(() => {
         const queryObject = {
           startdate: allAdsPerams?.appliedFilters?.StartRunningDate?.startdate,
@@ -78,7 +80,7 @@ useEffect(()=>{
             dispatch(loadFilteredAdsStart({ ...queryObject, page_index : 0}));
         }        
     }, [dispatch, allAdsPerams.appliedFilters, allAdsPerams.sortFilter, allAdsPerams.searchBarData, allAdsPerams.pageIndex]);
-// console.log("1123", filteredAds?.filteredAds)
+
   return (
     <InfiniteScroll      
       dataLength={filteredAds?.filteredAds.length} //This is important field to render the next data

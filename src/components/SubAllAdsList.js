@@ -12,9 +12,14 @@ const SubAllAdsList = () => {
   const dispatch     = useDispatch();
   const subAllAds  = useSelector((state) => state.subAllAds);
 
+  // useEffect(()=>{
+  //   console.log("subAllAds ::", subAllAds);
+  // },[subAllAds])
+
   useEffect(()=>{
-    console.log("subAllAds ::", subAllAds);
-  },[subAllAds])
+    console.log("666 suba ll ads in main page",subAllAds.postionOfPage)
+    window.scrollTo(0,subAllAds.postionOfPage);
+  },[])
 
 return (
   <InfiniteScroll
@@ -23,7 +28,7 @@ return (
     next={() =>
         dispatch(subAllAdsDuck.loadMoreSubAllAdsStart({ page_name: subAllAds?.pageName, page_index:subAllAds?.pageIndex + 1 }))
     }
-    hasMore={true}
+    hasMore={subAllAds.hasMoreData}
     loader={
       subAllAds?.loading ?
       <Box

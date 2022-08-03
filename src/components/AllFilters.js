@@ -202,10 +202,6 @@ function AllFilters() {
       max: savedAdsPerams?.appliedFilters?.InstagramFollowers?.max,
     });
 
-  useEffect(() => {
-    console.log("allAdsPerams :", allAdsPerams);
-  }, [allAdsPerams]);
-
   const [range, setRange] = useState([
     {
       startDate: new Date(),
@@ -215,7 +211,7 @@ function AllFilters() {
   ]);
 
   const handleAdsCountChange = (newValue, isReset) => {
-    console.log("newValue :::", newValue);
+    
     dispatch(
       pageName === PageNameEnum.AdlibraryDatabase
         ? allAdsPeramsDuck.changeAppliedFilters({
@@ -361,7 +357,7 @@ function AllFilters() {
   };
 
   const handleChangeSearchType = (newValue) => {
-    console.log("handleChangeSearchType :", newValue);
+    
     dispatch(
       pageName === PageNameEnum.AdlibraryDatabase
         ? allAdsPeramsDuck.changeSearchType({
@@ -654,7 +650,7 @@ function AllFilters() {
             <DateRange
               id="datepicker"
               onChange={(item) => {
-                console.log("StartDate Change:", item);
+                
                 handleStartDateChange(item);
                 setRange([item.selection]);
               }}
@@ -747,7 +743,6 @@ function AllFilters() {
                       }
                       onSave={(e) => {
                         if (Number(e.value) !== e.previousValue) {
-                          console.log("222", e.value);
                           if (pageName === PageNameEnum.AdlibraryDatabase) {
                             setRangeAdcountValue({
                               min: Number(e.value),
@@ -784,9 +779,7 @@ function AllFilters() {
                         //   : savedAdsPerams?.appliedFilters?.AdCount?.max.toString()
                       }
                       onSave={(e) => {
-                        console.log("222 prv data ", e.previousValue);
                         if (Number(e.value) !== e.previousValue) {
-                          console.log("222", e.value);
                           if (pageName === PageNameEnum.AdlibraryDatabase) {
                             setRangeAdcountValue({
                               min: rangeAdcountValue.min,
@@ -865,7 +858,6 @@ function AllFilters() {
                   }
                   sx={{ color: "#00CBFF" }}
                   onChangeCommitted={(e) => {
-                    console.log("55 data", e);
                     pageName === PageNameEnum.AdlibraryDatabase
                       ? handleAdsCountChange([
                           rangeAdcountValue.min,
@@ -888,12 +880,7 @@ function AllFilters() {
                         max: e.target.value[1],
                       });
                     }
-                    console.log(
-                      "55 data ---",
-                      e.target.value,
-                      rangeAdcountValue,
-                      savedPageRangeAdcountValue
-                    );
+                    
                   }}
                   // onChange={(e) => handleAdsCountChange(e.target.value)}
                 />
@@ -1227,7 +1214,6 @@ function AllFilters() {
                   }
                   sx={{ color: "#00CBFF" }}
                   onChangeCommitted={(e) => {
-                    console.log("55 data", e);
                     pageName === PageNameEnum.AdlibraryDatabase
                       ? handleFacebookLikesChange([
                           rangeFacebookValue.min,
@@ -1364,8 +1350,6 @@ function AllFilters() {
                         //   : savedAdsPerams?.appliedFilters?.InstagramFollowers?.min.toString()
                       }
                       onSave={(e) => {
-                        console.log(e);
-                        console.log("==============================");
                         if (Number(e.value) !== e.previousValue) {
                           if (pageName === PageNameEnum.AdlibraryDatabase) {
                             setRangeInstragramValue({
@@ -1407,7 +1391,6 @@ function AllFilters() {
                         //   : savedAdsPerams?.appliedFilters?.InstagramFollowers?.max.toString()
                       }
                       onSave={(e) => {
-                        console.log(e);
 
                         if (Number(e.value) !== e.previousValue) {
                           if (pageName === PageNameEnum.AdlibraryDatabase) {
@@ -1429,7 +1412,6 @@ function AllFilters() {
                               : savedAdsPerams?.maxRanger?.InstagramFollowers
                                   ?.max)
                           ) {
-                            console.log("444", PageNameEnum.AdlibraryDatabase);
                             dispatch(
                               pageName === PageNameEnum.AdlibraryDatabase
                                 ? allAdsPeramsDuck.refixMinMaxRange({
@@ -1446,7 +1428,6 @@ function AllFilters() {
                                   })
                             );
                           }
-                          console.log("4445", PageNameEnum.AdlibraryDatabase);
                           handleInstagramFollowersChange([
                             pageName === PageNameEnum.AdlibraryDatabase
                               ? allAdsPerams?.appliedFilters?.InstagramFollowers
@@ -1496,7 +1477,6 @@ function AllFilters() {
                   }
                   sx={{ color: "#00CBFF" }}
                   onChangeCommitted={(e) => {
-                    console.log("55 data", e);
                     pageName === PageNameEnum.AdlibraryDatabase
                       ? handleInstagramFollowersChange([
                           rangeInstragramValue.min,
