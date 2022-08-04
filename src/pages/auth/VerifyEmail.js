@@ -1,7 +1,8 @@
 import fbaddlogo from "../../assets/fbaddlogo.png";
 import React, { useEffect, useState } from "react";
-import { makeStyles, MuiThemeProvider } from "@material-ui/core/styles";
+import { MuiThemeProvider } from "@material-ui/core/styles";
 import {
+  Alert,
   Box,
   Button,
   Card,
@@ -31,7 +32,7 @@ const VerifyEmail = () => {
       if (getTkn !== undefined) {
         verifymail();
       }
-    }, 3000);
+    }, 1000);
   }, []);
   return (
     <MuiThemeProvider theme={themeLight}>
@@ -59,15 +60,19 @@ const VerifyEmail = () => {
             >
               <CardContent>
                 <img alt="logo" src={fbaddlogo} className={global.logo} />
-                <Box style={{ padding: "30px 32px" }}>
+                <Box style={{ padding: "30px 22px" }}>
                   <Grid container spacing={2}>
                     <Grid xs={12} item>
-                      <Typography
+                      {/* <Typography
                         variant="h5"
                         align="center"
+                        mb={3}
                         sx={{ fontWeight: "bold" }}
                       >
-                        I Acctivating Your Account
+                        {verifiactionres ===
+                        "User account has already been activated."
+                          ? "Your Account has already been activated !"
+                          : "  Verifying Your Email"}
                       </Typography>
                       {verifiactionres === "User Verified" ? (
                         <Typography align="center">
@@ -75,16 +80,55 @@ const VerifyEmail = () => {
                         </Typography>
                       ) : (
                         <Typography align="center">
+                          {verifiactionres ===
+                          "User account has already been activated."
+                            ? ""
+                            : "Please wait while your activate Your account"}
+                        </Typography>
+                      )} */}
+                      {!verifiactionres ? (
+                        <Typography
+                          variant="h5"
+                          align="center"
+                          mb={3}
+                          sx={{ fontWeight: "bold" }}
+                        >
                           Please wait while your activate Your account
+                        </Typography>
+                      ) : verifiactionres === "User Verified" ? (
+                        <Typography
+                          variant="h5"
+                          align="center"
+                          mb={3}
+                          sx={{ fontWeight: "bold" }}
+                        >
+                          Your Email Has Been Verified.
+                        </Typography>
+                      ) : verifiactionres ===
+                        "Token has already been expired" ? (
+                        <Alert severity="warning">
+                          You Token has already been expired
+                        </Alert>
+                      ) : (
+                        <Typography
+                          variant="h5"
+                          align="center"
+                          mb={3}
+                          sx={{ fontWeight: "bold" }}
+                        >
+                          Your Account has already been activated !{" "}
                         </Typography>
                       )}
                     </Grid>
                   </Grid>
                   <Box
-                    mt={2}
+                    mt={4}
                     style={{ display: "flex", justifyContent: "center" }}
                   >
-                    {verifiactionres === "User Verified" ? (
+                    {verifiactionres === "User Verified" ||
+                    verifiactionres ===
+                      "User account has already been activated." ||
+                    verifiactionres === "Token has already been expired" ? (
                       <Button
                         variant="contained"
                         size="large"
@@ -93,6 +137,7 @@ const VerifyEmail = () => {
                           borderRadius: "14px",
                           textTransform: "none",
                           fontSize: "20px",
+                          cursor: "pointer",
                         }}
                         onClick={() => navigate("/auth/login")}
                       >

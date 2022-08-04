@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Typography from "@mui/material/Typography";
-import { Button, CircularProgress, Grid, InputBase } from "@mui/material";
+import { Alert, Button, CircularProgress, Grid, InputBase } from "@mui/material";
 import { Box } from "@mui/system";
 import { useForm } from "react-hook-form";
 import { contactSupport } from "../services";
@@ -11,6 +11,7 @@ const ContactSupport = () => {
   const classes = useStyles();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [resendmessage, setResendmessage] = useState("");
   const {
     register,
     handleSubmit,
@@ -21,11 +22,14 @@ const ContactSupport = () => {
     setLoading(true);
     console.table("Contact Support Form Data :", data);
     const response = await contactSupport(data);
+    console.log(response.data.message)
+    setResendmessage(response.data.message)
     if (!response.success) {
+      setResendmessage("Email send Successfully")
       setLoading(false);
     } else {
       setLoading(false);
-      navigate("/");
+      // navigate("/");
     }
   };
 
@@ -117,7 +121,11 @@ const ContactSupport = () => {
                   </span>
                 )}
               </Grid>
-
+              {resendmessage === "Email sent" && (
+                          <Grid item xs={12}>
+                            <Alert severity="success">Email send successfully</Alert>
+                           </Grid>
+              )}
               <Grid
                 container
                 style={{ display: "flex", justifyContent: "right" }}
