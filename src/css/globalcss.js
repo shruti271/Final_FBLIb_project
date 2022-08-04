@@ -6,7 +6,7 @@ export const themeLight = createTheme({
       "@global": {
         body: {
           background:
-            "linear-gradient(270deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)",
+            "linear-gradient(243.18deg, #B5EDFF 0%, #00CBFF 28.65%, #6721FF 85.94%)",
           backgroundRepeat: "no-repeat",
           backgroundAttachment: "fixed",
         },

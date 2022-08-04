@@ -1,4 +1,4 @@
-import fbaddlogo from "../../assets/fbaddlogo.png"
+import fbaddlogo from "../../assets/fbaddlogo.png";
 import React, { useState } from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { MuiThemeProvider } from "@material-ui/core/styles";
@@ -18,19 +18,21 @@ import {
 import { Grid } from "@mui/material";
 import { CircularProgress } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { login } from "../../services/index";
+import { login, resendactivateemail } from "../../services/index";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { themeLight, globalStyles } from "../../css/globalcss";
 import { loginvalidationSchema } from "./../../utils/validationSchemas";
-import IconButton from '@mui/material/IconButton';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import IconButton from "@mui/material/IconButton";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 const Login = () => {
   const global = globalStyles();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const [errormessage, setErrormessage] = useState("")
+  const [errormessage, setErrormessage] = useState("");
+  const [verificationmesssage, setVerificationmesssage] = useState("");
+  const [resendmessage, setResendmessage] = useState("");
   const [values, setValues] = React.useState({
     showPassword: false,
   });
@@ -58,23 +60,43 @@ const Login = () => {
   };
   const submitLoginform = (data) => {
     setLoading(true);
-    login(data).then((res) => {
-      localStorage.setItem("is_alive", true);
-      navigate("/");
-    }, (error) => {
-      localStorage.setItem("is_alive", false);
-      setLoading(false);
-      const res = login(data)
-      if (res.error === "User does not exist with us") {
-        console.log("bdshfskfusdjfkjk")
-        setErrormessage("User does not exist with us")
-      }
-      if (res.error === "true")
-        console.log("bdshfskfusdjfkjk")
-      setErrormessage("Invalid email or password")
-    })
-  };
+    localStorage.setItem("email", data.email);
+    try {
+      login(data).then(
+        (res) => {
+          localStorage.setItem("is_alive", true);
+          navigate("/");
+        },
+        (error) => {
+          localStorage.setItem("is_alive", false);
+          setLoading(false);
+          if (error.response.status === 401) {
+            console.log("bdshfskfusdjfkjk");
 
+            setVerificationmesssage("Please verify your email address");
+          } else if (error.response.status === 404) {
+            setErrormessage("User does not exist with us.");
+          } else if (error.response.status === 400) {
+            setErrormessage("Invalid email address or password");
+          }
+        }
+      );
+    } catch {
+      setLoading(false);
+    }
+  };
+  const email = localStorage.getItem("email");
+  const reSendlink = async () => {
+    const formData = new FormData();
+    formData.append("email", email);
+    const res = await resendactivateemail(formData);
+    console.log("YY", res.data.message);
+    console.log("zzz", resendmessage);
+    setResendmessage(res.data.message);
+    if (res.data.message === "Email Sent") {
+      setResendmessage("Verifivation Email link send Your gmail");
+    }
+  };
   return (
     <MuiThemeProvider theme={themeLight}>
       <CssBaseline />
@@ -116,7 +138,36 @@ const Login = () => {
                     </span>
                   </Typography>
                   <Box mt={2}>
-                    {errormessage && <Alert severity="error" >{errormessage}</Alert>}
+                    {errormessage && (
+                      <Alert severity="error">{errormessage}</Alert>
+                    )}
+                    {verificationmesssage && (
+                      <>
+                        <Grid container display="flex" justifyContent="left" spacing={4}>
+                          <Grid item xs={9}>
+                            {!resendmessage ? (
+                              <Alert severity="warning">
+                                {verificationmesssage}
+                              </Alert>
+                            ) : (
+                              <Alert severity="success">
+                                Email verification link send Your gmail
+                              </Alert>
+                            )}
+                          </Grid>
+                          <Grid item mt={1}>
+                            <Typography
+                              // variant="h6"
+                              color="#00CBFF"
+                              sx={{ fontWeight: "bold" }}
+                              onClick={reSendlink}
+                            >
+                              Resend
+                            </Typography>
+                          </Grid>
+                        </Grid>
+                      </>
+                    )}
                   </Box>
                   <form style={{ paddingTop: "36px" }}>
                     <Grid container spacing={1}>
@@ -156,8 +207,16 @@ const Login = () => {
                       </Grid>
 
                       <Grid item xs={12}>
-                        <FormControl sx={{ mr: 1, width: '100%' }} variant="outlined">
-                          <InputLabel htmlFor="outlined-adornment-password" error={errors.password ? true : false}>Password</InputLabel>
+                        <FormControl
+                          sx={{ mr: 1, width: "100%" }}
+                          variant="outlined"
+                        >
+                          <InputLabel
+                            htmlFor="outlined-adornment-password"
+                            error={errors.password ? true : false}
+                          >
+                            Password
+                          </InputLabel>
                           <OutlinedInput
                             placeholder="Password"
                             variant="outlined"
@@ -165,9 +224,9 @@ const Login = () => {
                             required
                             {...register("password")}
                             error={errors.password ? true : false}
-                            type={values.showPassword ? 'text' : 'password'}
+                            type={values.showPassword ? "text" : "password"}
                             value={values.password}
-                            onChange={handleChange('password')}
+                            onChange={handleChange("password")}
                             endAdornment={
                               <InputAdornment position="end">
                                 <IconButton
@@ -176,7 +235,11 @@ const Login = () => {
                                   onMouseDown={handleMouseDownPassword}
                                   edge="end"
                                 >
-                                  {values.showPassword  ? <VisibilityOff /> : <Visibility />}
+                                  {values.showPassword ? (
+                                    <VisibilityOff />
+                                  ) : (
+                                    <Visibility />
+                                  )}
                                 </IconButton>
                               </InputAdornment>
                             }
@@ -207,7 +270,10 @@ const Login = () => {
                     onClick={handleSubmit(submitLoginform)}
                   >
                     {loading ? (
-                      <CircularProgress size={36} style={{ color: "#F6F6FB" }} />
+                      <CircularProgress
+                        size={36}
+                        style={{ color: "#F6F6FB" }}
+                      />
                     ) : (
                       "Log in"
                     )}

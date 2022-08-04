@@ -44,17 +44,18 @@ const ForgetPassword = () => {
 
   const forgetPassword = async (data) => {
     setLoading(true);
-    const formData = new FormData();
-    formData.append("email", data.email);
-    const response = await forgotPassword(formData);
-    if (response.success) {
-      setErrormessage("Password Reset link send your gmail");
+    try {
+      const formData = new FormData();
+      formData.append("email", data.email);
+      const response = await forgotPassword(formData);
+      console.log("::", response.data.message);
+      if (response.data.message === "Success") {
+        setErrormessage("Password Reset link send your gmail");
+        setLoading(false);
+      }
+    } catch {
+      setErrormessage("Sorry, This email Id does not exist with us");
       setLoading(false);
-    }else if(response.error=== "true"){
-       setErrormessage("Sorry, This email Id does not exist with us")
-       setLoading(false)
-    }else{
-      setLoading(false)
     }
   };
 
@@ -98,12 +99,23 @@ const ForgetPassword = () => {
               <CardContent>
                 <img alt="logo" src={fbaddlogo} className={global.logo} />
                 <Box style={{ padding: "30px 32px" }}>
-                  <Grid container spacing={2} >
-                    {errormessage && (
+                  <Grid container spacing={2}>
+                    {errormessage ===
+                    "Sorry, This email Id does not exist with us" ? (
                       <>
-                      <Grid item xs={12}>
-                      <Alert severity="success">{errormessage}</Alert>
-                      </Grid>
+                        {errormessage && (
+                          <Grid item xs={12}>
+                            <Alert severity="error">{errormessage}</Alert>
+                          </Grid>
+                        )}
+                      </>
+                    ) : (
+                      <>
+                        {errormessage && (
+                          <Grid item xs={12}>
+                            <Alert severity="success">{errormessage}</Alert>
+                          </Grid>
+                        )}
                       </>
                     )}
                     <Grid xs={12} item>
