@@ -1,5 +1,5 @@
 import fbaddlogo from "../../assets/fbaddlogo.png";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import {
@@ -11,18 +11,15 @@ import {
   Box,
   Alert,
   InputAdornment,
-  OutlinedInput,
-  FormControl,
-  InputLabel,
 } from "@mui/material";
 import { Grid } from "@mui/material";
 import { CircularProgress } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { login, resendactivateemail } from "../../services/index";
 import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
+// import { yupResolver } from "@hookform/resolvers/yup";
 import { themeLight, globalStyles } from "../../css/globalcss";
-import { loginvalidationSchema } from "./../../utils/validationSchemas";
+// import { loginvalidationSchema } from "./../../utils/validationSchemas";
 import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
@@ -34,32 +31,23 @@ const Login = () => {
   const [verificationmesssage, setVerificationmesssage] = useState("");
   const [resendmessage, setResendmessage] = useState("");
   const [values, setValues] = React.useState({
-    showPassword: false,
+    isShowNewPassword: false,
   });
 
   const {
     register,
     handleSubmit,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(loginvalidationSchema),
+    formState: { errors },    
+  } = useForm({    
   });
-  const handleChange = (prop) => (event) => {
-    setValues({ ...values, [prop]: event.target.value });
-  };
-
-  const handleClickShowPassword = () => {
-    setValues({
-      ...values,
-      showPassword: !values.showPassword,
-    });
-  };
+ 
 
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
   const submitLoginform = (data) => {
     setLoading(true);
+    console.log("888", data);
     localStorage.setItem("email", data.email);
     try {
       login(data).then(
@@ -143,7 +131,12 @@ const Login = () => {
                     )}
                     {verificationmesssage && (
                       <>
-                        <Grid container display="flex" justifyContent="left" spacing={4}>
+                        <Grid
+                          container
+                          display="flex"
+                          justifyContent="left"
+                          spacing={4}
+                        >
                           <Grid item xs={9}>
                             {!resendmessage ? (
                               <Alert severity="warning">
@@ -179,7 +172,13 @@ const Login = () => {
                           variant="outlined"
                           fullWidth
                           required
-                          {...register("email")}
+                          {...register("email", {
+                            required: (
+                              <span style={{ color: "red" }}>
+                                {"E-mail is required"}
+                              </span>
+                            ),
+                          })}
                           error={errors.email ? true : false}
                         />
                         <Grid item xs={12}>
@@ -207,45 +206,58 @@ const Login = () => {
                       </Grid>
 
                       <Grid item xs={12}>
-                        <FormControl
-                          sx={{ mr: 1, width: "100%" }}
-                          variant="outlined"
-                        >
-                          <InputLabel
-                            htmlFor="outlined-adornment-password"
-                            error={errors.password ? true : false}
-                          >
-                            Password
-                          </InputLabel>
-                          <OutlinedInput
-                            placeholder="Password"
-                            variant="outlined"
-                            fullWidth
-                            required
-                            {...register("password")}
-                            error={errors.password ? true : false}
-                            type={values.showPassword ? "text" : "password"}
-                            value={values.password}
-                            onChange={handleChange("password")}
-                            endAdornment={
-                              <InputAdornment position="end">
+                        <TextField
+                          autoComplete="off"
+                          type={values.isShowNewPassword ? "text" : "password"}
+                          fullWidth
+                          label="Password"
+                          error={errors.password ? true : false}
+                          required
+                          InputProps={{
+                            endAdornment: (
+                              <InputAdornment
+                                position="end"
+                                sx={{ marginRight: 1 }}
+                              >
                                 <IconButton
                                   aria-label="toggle password visibility"
-                                  onClick={handleClickShowPassword}
+                                  onClick={() =>
+                                    setValues({
+                                      isShowNewPassword:
+                                        !values.isShowNewPassword,
+                                    })
+                                  }
                                   onMouseDown={handleMouseDownPassword}
                                   edge="end"
                                 >
-                                  {values.showPassword ? (
+                                  {!values.isShowNewPassword ? (
                                     <VisibilityOff />
                                   ) : (
                                     <Visibility />
                                   )}
                                 </IconButton>
                               </InputAdornment>
-                            }
-                            label="Password"
-                          />
-                        </FormControl>
+                            ),
+                          }}
+                          placeholder="password"
+                          {...register("password", {
+                            required: (
+                              <span style={{ color: "red" }}>
+                                {"Password is required"}
+                              </span>
+                            ),
+                            minLength: {
+                              value: 6,
+                              message: (
+                                <span style={{ color: "red" }}>
+                                  {"Password must be more than 6 characters"}
+                                </span>
+                              ),
+                              // color:"red"
+                            },
+                          })}
+                        />
+
                         <Typography
                           variant="inherit"
                           color="textSecondary"

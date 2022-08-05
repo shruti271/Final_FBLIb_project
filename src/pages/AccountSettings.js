@@ -393,8 +393,8 @@ function AccountSettings() {
                         <Grid container>
                           <Grid
                             item
-                            lg={3}
-                            sm={3}
+                            lg={4}
+                            sm={4}
                             sx={{
                               color: "red",
                               display: "flex",
@@ -405,8 +405,8 @@ function AccountSettings() {
                             {error}
                           </Grid>
                           <Grid
-                            lg={9}
-                            sm={9}
+                            lg={8}
+                            sm={8}
                             style={{
                               display: "flex",
                               justifyContent: "right",
