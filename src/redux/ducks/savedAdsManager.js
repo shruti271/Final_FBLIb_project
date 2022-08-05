@@ -31,17 +31,17 @@ export const loadSavedAdsIdsLocal = (savedAdsIds) => ({
 export const addSavedAdsIdsLocal = (adIdToBeAdded) => ({
   type: ADD_SAVED_ADS_IDS_LOCAL,
   payload: adIdToBeAdded,
-});
+});//done
 
 export const removeSavedAdsIdsLocal = (adIdToBeRemoved) => ({
   type: REMOVE_SAVED_ADS_IDS_LOCAL,
   payload: adIdToBeRemoved,
-});
+});//done
 
 export const addToSavedAdsStart = (request) => ({
   type: ADD_TO_SAVED_ADS_START,
   payload: request,
-});
+});//done
 
 export const addToSavedAdsSuccess = (filteredSavedAds) => ({
   type: ADD_TO_SAVED_ADS_SUCCESS,
@@ -61,12 +61,12 @@ export const removeFromSavedAdsStart = (request) => ({
 export const removeFromSavedAdsSuccess = (filteredSavedAds) => ({
   type: REMOVED_FROM_SAVED_ADS_SUCCESS,
   payload: filteredSavedAds,
-});
+});//done
 
 export const removeFromSavedAdsError = (error) => ({
   type: REMOVED_FROM_SAVED_ADS_ERROR,
   payload: error,
-});
+});//done
 
 const initialState = {
   toBeSkipedSavedAdsId: [],
@@ -107,7 +107,8 @@ const savedAdsManagerReducer = (state = initialState, action) => {
         },
       };
     case ADD_TO_SAVED_ADS_SUCCESS:
-    case REMOVED_FROM_SAVED_ADS_SUCCESS:
+    case REMOVED_FROM_SAVED_ADS_SUCCESS://que?
+      console.log("777", action.payload?.data)
       return {
         ...state,
         savedAds: {

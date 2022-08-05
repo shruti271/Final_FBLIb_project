@@ -76,6 +76,7 @@ const AdsList = () => {
     allAdsPerams.appliedFilters,
     allAdsPerams.sortFilter,
     allAdsPerams.pageIndex,
+    allAdsPerams.searchBarData
   ]);
 
   useSkipInitialEffect(() => {
@@ -164,8 +165,6 @@ const AdsList = () => {
               sx={{
                 marginTop: "5px",
                 width: "100%",
-                // opacity: save_loading ? 0.5 : 1,
-                // disabled: save_loading ? true : false,
               }}
             >
               {filteredAds?.filteredAds?.length !== 0 &&

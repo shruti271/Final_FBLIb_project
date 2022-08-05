@@ -78,10 +78,10 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 3,
   },
   AdsImageSize: {
-    ["@media (min-width:780px)"]: { height: "290px" },
-    ["@media (min-width:920px)"]: { height: "250px" },
-    ["@media (min-width:1440px)"]: { height: "290px" },
-    ["@media (min-width:1700px)"]: { height: "410px" },
+    // ["@media (min-width:780px)"]: { height: "290px" },
+    // ["@media (min-width:920px)"]: { height: "250px" },
+    // ["@media (min-width:1440px)"]: { height: "290px" },
+    // ["@media (min-width:1700px)"]: { height: "410px" },
     width: "100%",
     padding: "0",
     margin: "0",
@@ -226,9 +226,6 @@ const ThumbNailBox = ({ adInfo, index }) => {
     <Grid item lg={3} md={4} xs={5} key={index} sx={{ padding: "10px" }}>
       <Card
         sx={{
-          // transition: "transform 0.45s ease-in-out",
-          // "&:hover": { transform: "scale3d(1.05, 1.05, 1)" },
-
           borderRadius: "16px",
           boxShadow: "none",
           border: "1px solid #EBEBEB",

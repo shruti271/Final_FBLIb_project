@@ -156,8 +156,7 @@ const SavedAdsList = () => {
           filteredSavedAds?.loading ? (
             <Box
               className="loader"
-              style={{
-                // opacity:0.5,
+              style={{                
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",

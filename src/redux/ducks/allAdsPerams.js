@@ -221,6 +221,7 @@ const allAdsPeramsReducer = (state = initialState, action) => {
 
     case CHANGE_SEARCHTYPE:
     case CHANGE_SEARCHBARDATA:
+      console.log("6666",action.payload)
       return {
         ...state,
         pageIndex: 0,

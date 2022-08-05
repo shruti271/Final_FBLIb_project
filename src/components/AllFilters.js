@@ -386,6 +386,7 @@ function AllFilters() {
   };
 
   const handleChangeSearchBar = (newValue) => {
+    console.log("6666",newValue)
     dispatch(
       pageName === PageNameEnum.AdlibraryDatabase
         ? allAdsPeramsDuck.changeSearchBarData({
@@ -596,10 +597,13 @@ function AllFilters() {
               handleChangeSearchBar(e.currentTarget.value);
             }
             if (e.target.value.length === 0) {
+              // console.log("6666",e.target.value.length)
               handleChangeSearchBar("");
             }
           }}
-          onChange={(e)=>setSearchBarValue(e.currentTarget.value)}
+          onChange={(e)=>{
+            console.log("6666 searcgh ", searchBarValue);
+            setSearchBarValue(e.currentTarget.value)}}
           size="large"
           sx={{ paddingLeft: "15px" }}
         />

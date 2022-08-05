@@ -23,12 +23,12 @@ export const ADD_TO_SAVED_FILTERED_AD_LOCAL_ERROR =
 export const addToSavedAdsFilterLocalStart = (adToBeAdded) => ({
   type: ADD_TO_SAVED_FILTERED_AD_LOCAL_START,
   payload: adToBeAdded,
-});
+});//done
 
 export const addToSavedAdsFilterLocalSuccess = (adToBeAdded) => ({
   type: ADD_TO_SAVED_FILTERED_AD_LOCAL_SUCCESS,
   payload: adToBeAdded,
-});
+});//done
 
 export const addToSavedAdsFilterLocalError = (error) => ({
   type: ADD_TO_SAVED_FILTERED_AD_LOCAL_ERROR,
@@ -38,32 +38,32 @@ export const addToSavedAdsFilterLocalError = (error) => ({
 export const removesavedFilteredAdLocal = (adToBeRemoved) => ({
   type: REMOVE_SAVED_FILTERED_AD,
   payload: adToBeRemoved,
-});
+});//done
 
 export const loadsavedFilteredAdsStart = (request) => ({
   type: LOAD_SAVED_FILTERED_ADS_START,
   payload: request,
-});
+});//done
 
 export const loadsavedFilteredAdsSuccess = (filteredSavedAds) => ({
   type: LOAD_SAVED_FILTERED_ADS_SUCCESS,
   payload: filteredSavedAds,
-});
+});//done
 
 export const loadsavedFilteredAdsError = (error) => ({
   type: LOAD_SAVED_FILTERED_ADS_ERROR,
   payload: error,
-});
+});//done
 
 export const loadMoresavedFilteredAdsStart = (request) => ({
   type: LOAD_MORE_SAVED_FILTERED_ADS_START,
   payload: request,
-});
+});//done
 
 export const loadMoresavedFilteredAdsSuccess = (filteredSavedAds) => ({
   type: LOAD_MORE_SAVED_FILTERED_ADS_SUCCESS,
   payload: filteredSavedAds,
-});
+});//done
 
 export const loadMoresavedFilteredAdsError = (error) => ({
   type: LOAD_MORE_SAVED_FILTERED_ADS_ERROR,

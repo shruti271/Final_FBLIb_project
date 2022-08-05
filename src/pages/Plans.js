@@ -63,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
         color: "#D3D5E1"
     }
 }));
-const Payment = () => {
+const   Payment = () => {
     const classes = useStyles()
     const [loading, setLoading] = useState(false)
     const [loadingyear, setLoadingyear] = useState(false)

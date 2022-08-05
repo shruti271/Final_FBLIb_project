@@ -55,7 +55,7 @@ const MyChart = (props) => {
         },
       },
       plotOptions: {
-        areaspline: {
+        areaspline: {          
           lineColor: {
             linearGradient: {
               color:
