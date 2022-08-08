@@ -28,6 +28,7 @@ const VerifyEmail = () => {
   console.log("555---", verifiactionres);
   console.log("getTkn", getTkn);
   useEffect(() => {
+    document.title = "VerifyEmail - Eye of Ecom "
     setTimeout(() => {
       if (getTkn !== undefined) {
         verifymail();
@@ -40,7 +41,7 @@ const VerifyEmail = () => {
       <Grid container>
         <Box
           style={{
-            width: "50%",
+            width: "85%",
             justify: "center",
             position: "absolute",
             left: "50%",
@@ -59,8 +60,8 @@ const VerifyEmail = () => {
               }}
             >
               <CardContent>
-                <img alt="logo" src={fbaddlogo} className={global.logo} />
-                <Box style={{ padding: "30px 22px" }}>
+                <img alt="logo" src={fbaddlogo} className={global.logo}  onClick={()=> navigate("/auth/login")}/>
+                <Box style={{  padding: "2vmax 2.5vmax"}}>
                   <Grid container spacing={2}>
                     <Grid xs={12} item>
                       {/* <Typography

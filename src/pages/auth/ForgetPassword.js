@@ -70,6 +70,7 @@ const ForgetPassword = () => {
 
   useEffect(() => {
     getAlive();
+    document.title = "Forgot Password - Eye of Ecom "
   }, []);
 
   return (
@@ -78,7 +79,7 @@ const ForgetPassword = () => {
       <Grid container>
         <Box
           style={{
-            width: "50%",
+            width: "85%",
             justify: "center",
             position: "absolute",
             left: "50%",
@@ -97,8 +98,8 @@ const ForgetPassword = () => {
               }}
             >
               <CardContent>
-                <img alt="logo" src={fbaddlogo} className={global.logo} />
-                <Box style={{ padding: "30px 32px" }}>
+                <img alt="logo" src={fbaddlogo} className={global.logo}  onClick={()=> navigate("/auth/login")}/>
+                <Box style={{ padding: "2vmax 2.5vmax" }}>
                   <Grid container spacing={2}>
                     {errormessage ===
                     "Sorry, This email Id does not exist with us" ? (
@@ -119,7 +120,7 @@ const ForgetPassword = () => {
                       </>
                     )}
                     <Grid xs={12} item>
-                      <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+                    <Typography variant="h5" sx={{ fontWeight: "bold" ,fontSize:{xs:21,lg:25},marginLeft:{xs:"12%",sm:0,md:0,lg:0,xl:0} }}  >
                         Forget Password?
                       </Typography>
                     </Grid>
@@ -139,8 +140,7 @@ const ForgetPassword = () => {
                       </Typography>
                     </Grid>
                   </Grid>
-                </Box>
-                <Box style={{ display: "flex", justifyContent: "center" }}>
+                  <Box pt={1} style={{ display: "flex", justifyContent: "center" }}>
                   <Button
                     variant="contained"
                     size="large"
@@ -155,7 +155,7 @@ const ForgetPassword = () => {
                     {loading ? (
                       <CircularProgress style={{ color: "#F6F6FB" }} />
                     ) : (
-                      "Forget Password"
+                      "Reset Password"
                     )}
                   </Button>
                 </Box>
@@ -173,6 +173,7 @@ const ForgetPassword = () => {
                   >
                     Back to log in
                   </Typography>
+                </Box>
                 </Box>
               </CardContent>
             </Card>

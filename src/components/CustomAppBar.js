@@ -22,6 +22,7 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { useSelector } from "react-redux";
 import useStyles from "../css/mediapage";
 import { logoutUser } from "../services";
+import { getFaviconEl } from "../utils/getFaviconEl";
 
 const drawerWidth = 276;
 
@@ -73,6 +74,9 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
   };
   useEffect(() => {
     setIsMenuOptionActive(window.location.pathname);
+    const favicon = getFaviconEl();
+    console.log("login",favicon)
+    favicon.href = "Rectangleeye.png"
   }, []);
   return (
     <>

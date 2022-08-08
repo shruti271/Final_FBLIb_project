@@ -29,7 +29,7 @@ const Activate = () => {
       <Grid container>
         <Box
           style={{
-            width: "50%",
+            width: "85%",
             justify: "center",
             position: "absolute",
             left: "50%",
@@ -48,8 +48,8 @@ const Activate = () => {
               }}
             >
               <CardContent>
-                <img alt="logo" src={fbaddlogo} className={global.logo} />
-                <Box style={{ padding: "30px 32px" }}>
+                <img alt="logo" src={fbaddlogo} className={global.logo} onClick={()=> navigate("/auth/login")}/>
+                <Box style={{  padding: "1vmax 2.5vmax" }}>
                   <Grid container spacing={2}>
                     <Grid item xs={12}>
                       {console.log("===", resendmessage)}
@@ -62,32 +62,30 @@ const Activate = () => {
                       )}
                     </Grid>
                     <Grid xs={12} item>
-                      <Typography variant="h6" align="center">
+                      <Typography variant="h6" align="center" sx={{fontSize:{xs:16,sm:19,lg:19,xl:19}}} >
                         We've just sent a verification email to <b>{email}</b>
                       </Typography>
-                      <Typography variant="h6" align="center" p={1}>
-                        Click the link in your email to verify your account. If
-                        you can't find the email check your spam folder or click
-                        here to resend.
+                      <Typography variant="h6" align="center" p={1} sx={{fontSize:{xs:16,sm:19,lg:19}}}>
+                      Click the link in your email to verify your account. If you can't find the email check your spam folder or click here to resend.{""}
                         {""}
                         <Typography
                           variant="h6"
                           component="span"
                           color="#00CBFF"
                           onClick={reSendlink}
-                          sx={{cursor:"pointer"}}
+                          sx={{cursor:"pointer",fontSize:{xs:16,sm:19,lg:19}}}
                         >
                           Let's resend it
                         </Typography>
                       </Typography>
-                      <Typography variant="h6" align="center" p={1}>
+                      <Typography variant="h6" align="center" p={1} sx={{fontSize:{xs:16,sm:19,lg:19}}}>
                         Wrong email? {""}
                         Click here to {""}
                         <Typography
                           variant="h6"
                           component="span"
                           color="#00CBFF"
-                          sx={{cursor:"pointer"}}
+                          sx={{cursor:"pointer",fontSize:{xs:16,sm:19,lg:19}}}
                           onClick={()=>navigate("/auth/register")}
                         >
                           Log Out

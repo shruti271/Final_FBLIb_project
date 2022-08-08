@@ -1,5 +1,5 @@
 import fbaddlogo from "../../assets/fbaddlogo.png";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import {
@@ -26,6 +26,8 @@ import { loginvalidationSchema } from "./../../utils/validationSchemas";
 import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { getFaviconEl } from "../../utils/getFaviconEl";
+
 const Login = () => {
   const global = globalStyles();
   const navigate = useNavigate();
@@ -37,6 +39,12 @@ const Login = () => {
     showPassword: false,
   });
 
+  useEffect(()=>{
+    document.title = "Log in - Eye of Ecom "
+    const favicon = getFaviconEl();
+    console.log("login",favicon)
+    favicon.href = "test.jpg"
+  },[])
   const {
     register,
     handleSubmit,
@@ -71,8 +79,6 @@ const Login = () => {
           localStorage.setItem("is_alive", false);
           setLoading(false);
           if (error.response.status === 401) {
-            console.log("bdshfskfusdjfkjk");
-
             setVerificationmesssage("Please verify your email address");
           } else if (error.response.status === 404) {
             setErrormessage("User does not exist with us.");
@@ -90,6 +96,7 @@ const Login = () => {
     const formData = new FormData();
     formData.append("email", email);
     const res = await resendactivateemail(formData);
+    navigate("/auth/activate")
     console.log("YY", res.data.message);
     console.log("zzz", resendmessage);
     setResendmessage(res.data.message);
@@ -103,7 +110,7 @@ const Login = () => {
       <Grid container>
         <Box
           style={{
-            width: "50%",
+            width: "85%",
             justify: "center",
             position: "absolute",
             left: "50%",
@@ -123,12 +130,12 @@ const Login = () => {
             >
               <CardContent>
                 <img alt="logo" src={fbaddlogo} className={global.logo} />
-                <Box style={{ padding: "30px 45px" }}>
-                  <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+                <Box sx={{ padding: "2vmax 2.5vmax" }}>
+                  <Typography variant="h5" sx={{ fontWeight: "bold" ,fontSize:{xs:21,lg:25},marginLeft:{xs:"34%",sm:0,md:0,lg:0,xl:0} }}  >
                     Log in
                   </Typography>
 
-                  <Typography pt={1}>
+                  <Typography sx={{ fontSize:{xs:13,sm:16,lg:16},marginLeft:{xs:"9%",sm:0,md:0,lg:0},paddingTop:{xs:0,sm:1,md:1,lg:1}}}>
                     Don't have an account ?{" "}
                     <span
                       onClick={() => navigate("/auth/register")}
@@ -198,10 +205,11 @@ const Login = () => {
                           sx={{ marginLeft: "auto" }}
                         >
                           <Typography
-                            style={{ color: "#00CBFF", cursor: "pointer" }}
+                            sx={{ color: "#00CBFF", cursor: "pointer",fontSize:{xs:13,sm:16,lg:16} }}
+                            
                           >
                             {" "}
-                            Forgot Password?{" "}
+                            Forgot Your Password?{" "}
                           </Typography>
                         </Box>
                       </Grid>
@@ -256,8 +264,7 @@ const Login = () => {
                       </Grid>
                     </Grid>
                   </form>
-                </Box>
-                <Box style={{ display: "flex", justifyContent: "center" }}>
+                  <Box pt={2} style={{ display: "flex", justifyContent: "center" }}>
                   <Button
                     variant="contained"
                     size="large"
@@ -278,6 +285,7 @@ const Login = () => {
                       "Log in"
                     )}
                   </Button>
+                </Box>
                 </Box>
               </CardContent>
             </Card>

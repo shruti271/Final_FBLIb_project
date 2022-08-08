@@ -3,6 +3,7 @@ import React from "react";
 import SubAllAdsList from "../../components/SubAllAdsList";
 
 const AllAds = () => {
+  document.title = "Allads"
   return (
     <>
       <Grid container>
