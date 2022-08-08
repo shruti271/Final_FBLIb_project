@@ -4,11 +4,17 @@ import { Grid, Box, Typography, Button, Stack, Avatar } from "@mui/material";
 import Firsrcardimg from "../../assets/FirstCardImg.svg";
 import facebook from "../../assets/facebook.svg";
 import instragram from "../../assets/instragram.svg";
-import MyChart from "../../components/linemy";
+// import MyChart from "../../components/linemy";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { loadSingleAdDataClear, loadSingleAdDataStart } from "../../redux/ducks/singleAdsData";
+import {
+  loadSingleAdDataClear,
+  loadSingleAdDataStart,
+} from "../../redux/ducks/singleAdsData";
 import { FadeLoader } from "react-spinners";
+import AreaLineGraph from "../../components/AreaLineGraph";
+import CustomizedView from "../../components/SampleData";
+import MyChart from "../../components/linemy";
 
 const ReadMore = ({ children }) => {
   const text = children;
@@ -40,7 +46,7 @@ function AdDeatails() {
   const { adId } = useParams();
   const filteredAds = useSelector((state) => state.filteredAds);
   const subAllAds = useSelector((state) => state.subAllAds);
-  const {filteredSavedAds} = useSelector((state) => state.filteredSavedAds);
+  const { filteredSavedAds } = useSelector((state) => state.filteredSavedAds);
   const { singleAdData, loading } = useSelector((state) => state.singleAdData);
 
   const [adDetail, setAdDetail] = useState();
@@ -52,13 +58,13 @@ function AdDeatails() {
     },
     []
   );
-  
+
   useEffect(() => {
     if (filteredAds.filteredAds.length > 0) {
       // filteredAds.filteredAds.find((ad) => ad.id === adId && ad) ||
       //   subAllAds.subAllAds.find((ad) => ad.id === adId && ad) ||
       //   filteredSavedAds?.find((ad) => ad.id === adId && ad);
-      // eslint-disable-next-line array-callback-return      
+      // eslint-disable-next-line array-callback-return
       let adTobeDisplay =
         filteredAds.filteredAds.find((ad) => {
           if (ad.id === adId) {
@@ -74,22 +80,21 @@ function AdDeatails() {
           if (ad.id === adId) {
             return ad;
           }
-        });      
+        });
       setAdDetail(adTobeDisplay);
 
-      if (!adTobeDisplay) {        
+      if (!adTobeDisplay) {
         dispatch(loadSingleAdDataStart({ id: adId }));
       }
     }
   }, [dispatch, filteredAds, adId]);
 
-  useEffect(() => {    
-    if (!adDetail && Object.keys(singleAdData).length) {      
+  useEffect(() => {
+    if (!adDetail && Object.keys(singleAdData).length) {
       setAdDetail(singleAdData);
-      dispatch(loadSingleAdDataClear());      
+      dispatch(loadSingleAdDataClear());
     }
   }, [singleAdData]);
-
 
   return (
     <>
@@ -104,7 +109,7 @@ function AdDeatails() {
           justifyContent: "center",
           alignItems: "center",
           textAlign: "center",
-          zIndex: 1,          
+          zIndex: 1,
         }}
       >
         <FadeLoader
@@ -115,10 +120,7 @@ function AdDeatails() {
       {adDetail && (
         <Grid container sx={{ marginTop: "36px" }}>
           <Grid item xs={12} lg={4} md={4} sm={12}>
-            <Box
-              sx={{ border: "1px solid #EBEBEB",
-                borderRadius: "10px" }}
-            >
+            <Box sx={{ border: "1px solid #EBEBEB", borderRadius: "10px" }}>
               <Stack>
                 <Box
                   sx={{
@@ -506,6 +508,8 @@ function AdDeatails() {
 
                   <Grid container>
                     <Grid item xs={12} lg={12} sm={12}>
+                      {/* <AreaLineGraph /> */}
+{/* <CustomizedView /> */}
                       <MyChart
                         chartData={adDetail?.history}
                         dataBoxVisiblity={false}

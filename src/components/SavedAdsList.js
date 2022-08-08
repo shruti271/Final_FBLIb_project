@@ -78,6 +78,16 @@ const SavedAdsList = () => {
         savedAdsPerams?.sortFilter?.type?.selectedValue === "false"
           ? ""
           : savedAdsPerams?.sortFilter?.order?.selectedValue,
+
+          keywords:
+          savedAdsPerams?.searchType === "All these words"
+            ? savedAdsPerams?.searchBarData.split(" ")
+            : null,
+
+        phrase:
+        savedAdsPerams?.searchType === "Exact Phrase"
+            ? savedAdsPerams?.searchBarData.split(",")
+            : null,
     };
     setQueryObject(queryObject);
   },[

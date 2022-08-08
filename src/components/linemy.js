@@ -55,22 +55,22 @@ const MyChart = (props) => {
         },
       },
       plotOptions: {
-        areaspline: {          
-          lineColor: {
-            linearGradient: {
-              color:
-              "linear-gradient(270deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)",
-              x1: 1,
-              y1: 1,
-              x2: 0,
-              y2: 1,
-            },
-          stops: [
-              [0.1, "#B5EDFF"],
-              [0.5, "#00CBFF"],
-              [0.8, "#6721FF"],                
-          ]
-          },
+        areaspline: {                    lineColor:"#6721FF"
+          // lineColor: {
+          //   linearGradient: {
+          //     // color:
+          //     // "linear-gradient(270deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)",
+          //     x1: 1,
+          //     y1: 1,
+          //     x2: 0,
+          //     y2: 1,
+          //   },
+          // stops: [
+          //     [0.1, "#B5EDFF"],
+          //     [0.5, "#00CBFF"],
+          //     [0.8, "#6721FF"],                
+          // ]
+          // },
           
         },
        
@@ -81,12 +81,11 @@ const MyChart = (props) => {
           type:"areaspline",// props.fillType,
           name: "No of ads",            
            data:[...props.chartData?.map((a)=>a.noOfCopyAds)].slice(-30),
-          lineWidth: 7,
-                         
-        lineTension: 1,
+          lineWidth: 4,          
+        // lineTension: 1,
         marker: {
           enabled: false,
-            fillColor: '#FFFFFF',
+            fillColor: '  #FFFFFF',
             lineWidth: 3,             
             lineColor: "black", // inherit from series            
             radius: 5,    
@@ -113,53 +112,11 @@ const MyChart = (props) => {
         
         tooltip: {                   
           hideDelay:"0.5",
-      }
-    
-        //   pointInterval: 0.5,        
+      }                  
         },
       ],
     };
-    // useEffect(()=>{
-    //  let abc= [
-    //     "1-3",
-    //     "2-3",
-    //     "3-3",
-    //     "4-3",
-    //     "5-3",
-    //     "6-3",
-    //     "7-3",
-    //     "8-3",
-    //     "9-3",
-    //     "10-3",
-    //     "11-3",
-    //     "12-3",
-    //     "13-3",
-    //     "14-3",
-    //     "15-3",
-    //     "16-3",
-    //     "17-3",
-    //     "18-3",
-    //     "19-3",
-    //     "20-3",
-    //     "21-3",
-    //     "22-3",
-    //     "23-3",
-    //     "24-3",
-    //     "25-3",
-    //     "26-3",
-    //     "27-3",
-    //     "28-3",
-    //     "29-3",
-    //     "30-3",
-    //     "1-4",
-    //     "2-4",
-    //     "3-4",
-    //     "4-4",
-    //     "5-4",
-    //   ].slice(-3);
-    //   dateobj.splice(0,abc.length-1,...abc);
-    //   console.log("@@@",dateobj)
-    // },[])
+  
     return (
       <>
         <HighchartsReact highcharts={Highcharts} options={option}/>

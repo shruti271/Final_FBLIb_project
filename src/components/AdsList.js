@@ -70,6 +70,16 @@ const AdsList = () => {
         allAdsPerams?.sortFilter?.type?.selectedValue === "false"
           ? ""
           : allAdsPerams?.sortFilter?.order?.selectedValue,
+
+          keywords:
+          allAdsPerams?.searchType === "All these words"
+            ? allAdsPerams?.searchBarData.split(" ")
+            : null,
+
+        phrase:
+          allAdsPerams?.searchType === "Exact Phrase"
+            ? allAdsPerams?.searchBarData.split(",")
+            : null,
     };
     setQueryObject(queryObject);
   }, [
@@ -99,12 +109,12 @@ const AdsList = () => {
         keywords:
           allAdsPerams?.searchType === "All these words"
             ? allAdsPerams?.searchBarData.split(" ")
-            : [],
+            : null,
 
         phrase:
           allAdsPerams?.searchType === "Exact Phrase"
             ? allAdsPerams?.searchBarData.split(",")
-            : [],
+            : null,
       });
     }
   }, [dispatch, allAdsPerams.searchType, allAdsPerams.searchBarData]);
