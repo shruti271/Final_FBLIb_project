@@ -80,14 +80,14 @@ const SavedAdsList = () => {
           : savedAdsPerams?.sortFilter?.order?.selectedValue,
 
           keywords:
-          savedAdsPerams?.searchType === "All these words"
+          savedAdsPerams?.searchBarData.length  ? savedAdsPerams?.searchType === "All these words"
             ? savedAdsPerams?.searchBarData.split(" ")
-            : null,
+            : null:null,
 
         phrase:
-        savedAdsPerams?.searchType === "Exact Phrase"
+        savedAdsPerams?.searchBarData.length  ? savedAdsPerams?.searchType === "Exact Phrase"
             ? savedAdsPerams?.searchBarData.split(",")
-            : null,
+            : null:null,
     };
     setQueryObject(queryObject);
   },[
@@ -118,14 +118,14 @@ const SavedAdsList = () => {
       setQueryObject({
         ...queryObject,
         keywords:
-        savedAdsPerams?.searchType === "All these words"
+        savedAdsPerams?.searchBarData.length  ? savedAdsPerams?.searchType === "All these words"
             ? savedAdsPerams?.searchBarData.split(" ")
-            : [],
+            : null:null,
 
         phrase:
-        savedAdsPerams?.searchType === "Exact Phrase"
+        savedAdsPerams?.searchBarData.length  ? savedAdsPerams?.searchType === "Exact Phrase"
             ? savedAdsPerams?.searchBarData.split(",")
-            : [],
+            : null:null,
       });
     }
   }, [dispatch, savedAdsPerams.searchType, savedAdsPerams.searchBarData]);
