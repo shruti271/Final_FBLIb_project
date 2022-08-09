@@ -72,14 +72,14 @@ const AdsList = () => {
           : allAdsPerams?.sortFilter?.order?.selectedValue,
 
           keywords:
-          allAdsPerams?.searchType === "All these words"
+          allAdsPerams?.searchBarData.length ? allAdsPerams?.searchType === "All these words"
             ? allAdsPerams?.searchBarData.split(" ")
-            : null,
+            : null:null,
 
         phrase:
-          allAdsPerams?.searchType === "Exact Phrase"
+        allAdsPerams?.searchBarData.length ? allAdsPerams?.searchType === "Exact Phrase"
             ? allAdsPerams?.searchBarData.split(",")
-            : null,
+            : null:null,
     };
     setQueryObject(queryObject);
   }, [
@@ -107,14 +107,14 @@ const AdsList = () => {
       setQueryObject({
         ...queryObject,
         keywords:
-          allAdsPerams?.searchType === "All these words"
+        allAdsPerams?.searchBarData.length ? allAdsPerams?.searchType === "All these words"
             ? allAdsPerams?.searchBarData.split(" ")
-            : null,
+            : null : null,
 
         phrase:
-          allAdsPerams?.searchType === "Exact Phrase"
+        allAdsPerams?.searchBarData.length ? allAdsPerams?.searchType === "Exact Phrase"
             ? allAdsPerams?.searchBarData.split(",")
-            : null,
+            : null:null,
       });
     }
   }, [dispatch, allAdsPerams.searchType, allAdsPerams.searchBarData]);
