@@ -248,7 +248,7 @@ const ThumbNailBox = ({ adInfo, index }) => {
   }, [savedAdsPerams]);
 
   return (
-    <Grid item lg={4} md={4} xs={6} key={index} sx={{ padding: "10px" }}>
+    <Grid item lg={4} md={6} xs={12} key={index} sx={{ padding: "10px" }}>
       <Card
         sx={{
           borderRadius: "16px",
@@ -349,238 +349,96 @@ const ThumbNailBox = ({ adInfo, index }) => {
               />
             )}
           </div>
-
-          <Grid container sx={{ padding: "4px" }}>
-            <Grid item sm={9} md={9} lg={9}>
-              <Grid container>
-                <Grid item marginRight={"15px"}>
-                  {adInfo.status === "Active" ? (
-                    <Typography sx={{ textDecoration: "underline" }}>
-                      {adInfo.status}
-                    </Typography>
-                  ) : (
-                    <Typography sx={{ color: "red" }}>
-                      {adInfo.status}
-                    </Typography>
-                  )}
-                </Grid>
-                <Grid item marginRight={"10px"}>
-                  {/* <Tooltip title="Redirect to shop link"> */}
-                  <img
-                    src={Shareicon}
-                    alt="Shareicon"
-                    className={classes.shareicon}
-                    onClick={(e) => {
-                      console.log(adInfo?.purchaseURL);
-                      window.open(adInfo?.purchaseURL, "_blank", "");
-                    }}
-                  />
-                  {/* </Tooltip> */}
-                  <img
-                    src={
-                      savedAdsManager.savedAdsIds.includes(adInfo?.id)
-                        ? StarFill
-                        : Saveicon
-                    }
-                    alt="saved-icon"
-                    className={classes.saveicon}
-                    onClick={() => {
-                      if (savedAdsManager.savedAdsIds.includes(adInfo?.id)) {
-                        dispatch(removesavedFilteredAdLocal(adInfo));
-                        dispatch(removeSavedAdsIdsLocal(adInfo.id));
-                        dispatch(removeFromSavedAdsStart({ ad: adInfo?.id }));
-                      } else {
-                        dispatch(addSavedAdsIdsLocal(adInfo.id));
-                        dispatch(addToSavedAdsStart({ ad: adInfo.id }));
-                        dispatch(
-                          addToSavedAdsFilterLocalStart({
-                            ...queryObject,
-                            adId: adInfo.id,
-                          })
-                        );
-                      }
-                    }}
-                  />
-                </Grid>
-                <Grid item>
-                  <Stack direction={"row"}>
-                    <AccessTime style={{ color: "grey", width: "20px" }} />
-                    <Typography color={"#C4C4C4"} marginLeft="4px">
-                      {Math.floor(
-                        Math.abs(
-                          (new Date(adInfo?.startDate).getTime() -
-                            new Date().getTime()) /
-                            (1000 * 3600 * 24)
-                        )
-                      )}{" "}
-                      Days
-                    </Typography>
-                  </Stack>
-                </Grid>
-              </Grid>
-            
-              <Typography color="#c0c0c0" className={classes.AdsText} noWrap>
-                Started Running : {adInfo.startDate}
-              </Typography>
-              <Typography color="#2B2F42" className={classes.AdsText} noWrap>
-                {adInfo.headline}
-              </Typography>
-            </Grid>
-            <Grid
-              item
-              sm={3}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Avatar
-                sx={{
-                  background:
-                    "linear-gradient(45deg, #00CBFF 0%, #72E2FF 100%)",
-                  display: "grid",
-                  width: "52px",
-                  height: "51px",
-                  padding: "5px 10px 10px",
-                }}
-              >
-                <span
-                  style={{
-                    fontSize: "25px",
-                    lineHeight: "24px",
-                    padding: "2px",
-                    fontWeight: "700",
-                  }}
-                >
-                  {adInfo.noOfCopyAds}
-                </span>
-                <span style={{ fontSize: "10px", margin: "auto" }}>Ads</span>
-              </Avatar>
-            </Grid>
-          </Grid>
-
-          {/* <Grid container sx={{ padding: "4px" }}>
-            <Grid item sm={9} md={9} lg={9}>
-              <Stack direction={"column"}>
-                <Stack direction={"row"}>
-                  {adInfo.status === "Active" ? (
-                    <Typography sx={{ textDecoration: "underline" }}>
-                      {adInfo.status}
-                    </Typography>
-                  ) : (
-                    <Typography sx={{ color: "red" }}>
-                      {adInfo.status}
-                    </Typography>
-                  )}
-                  <Tooltip title="Redirect to shop link">
-                    <img
-                      src={Shareicon}
-                      alt="Shareicon"
-                      className={classes.shareicon}
-                      onClick={(e) => {
-                        console.log(adInfo?.purchaseURL);
-                        window.open(adInfo?.purchaseURL, "_blank", "");
-                      }}
-                    />
-                  </Tooltip>
-                  <img
-                    src={
-                      savedAdsManager.savedAdsIds.includes(adInfo?.id)
-                        ? StarFill
-                        : Saveicon
-                    }
-                    alt="saved-icon"
-                    className={classes.saveicon}
-                    onClick={() => {
-                      if (savedAdsManager.savedAdsIds.includes(adInfo?.id)) {
-                        dispatch(removesavedFilteredAdLocal(adInfo));
-                        dispatch(removeSavedAdsIdsLocal(adInfo.id));
-                        dispatch(removeFromSavedAdsStart({ ad: adInfo?.id }));
-                      } else {
-                        dispatch(addSavedAdsIdsLocal(adInfo.id));
-                        dispatch(addToSavedAdsStart({ ad: adInfo.id }));
-                        dispatch(
-                          addToSavedAdsFilterLocalStart({
-                            ...queryObject,
-                            adId: adInfo.id,
-                          })
-                        );
-                      }
-                    }}
-                  />
-                  <Stack direction={"row"} marginLeft="10px">
-                    <AccessTime style={{ color: "grey", width: "20px" }} />
-                    <Typography color={"#C4C4C4"} marginLeft="4px">
-                      {Math.floor(
-                        Math.abs(
-                          (new Date(adInfo?.startDate).getTime() -
-                            new Date().getTime()) /
-                            (1000 * 3600 * 24)
-                        )
-                      )}{" "}
-                      Days
-                    </Typography>
-                  </Stack>
-                </Stack>
-
-                <Typography color="#c0c0c0" className={classes.AdsText} noWrap>
-                  Started Running : {adInfo.startDate}
+          <Grid container>
+            <Grid item marginRight={"15px"}>
+              {adInfo.status === "Active" ? (
+                <Typography sx={{ textDecoration: "underline" }}>
+                  {adInfo.status}
                 </Typography>
-                <Typography color="#2B2F42" className={classes.AdsText} noWrap>
-                  {adInfo.headline}
+              ) : (
+                <Typography sx={{ color: "red" }}>{adInfo.status}</Typography>
+              )}
+            </Grid>
+            <Grid item marginRight={"10px"}>
+              {/* <Tooltip title="Redirect to shop link"> */}
+              <img
+                src={Shareicon}
+                alt="Shareicon"
+                className={classes.shareicon}
+                onClick={(e) => {
+                  console.log(adInfo?.purchaseURL);
+                  window.open(adInfo?.purchaseURL, "_blank", "");
+                }}
+              />
+              {/* </Tooltip> */}
+              <img
+                src={
+                  savedAdsManager.savedAdsIds.includes(adInfo?.id)
+                    ? StarFill
+                    : Saveicon
+                }
+                alt="saved-icon"
+                className={classes.saveicon}
+                onClick={() => {
+                  if (savedAdsManager.savedAdsIds.includes(adInfo?.id)) {
+                    dispatch(removesavedFilteredAdLocal(adInfo));
+                    dispatch(removeSavedAdsIdsLocal(adInfo.id));
+                    dispatch(removeFromSavedAdsStart({ ad: adInfo?.id }));
+                  } else {
+                    dispatch(addSavedAdsIdsLocal(adInfo.id));
+                    dispatch(addToSavedAdsStart({ ad: adInfo.id }));
+                    dispatch(
+                      addToSavedAdsFilterLocalStart({
+                        ...queryObject,
+                        adId: adInfo.id,
+                      })
+                    );
+                  }
+                }}
+              />
+            </Grid>
+            <Grid item>
+              <Stack direction={"row"}>
+                <AccessTime style={{ color: "grey", width: "20px" }} />
+                <Typography color={"#C4C4C4"} marginLeft="4px">
+                  {Math.floor(
+                    Math.abs(
+                      (new Date(adInfo?.startDate).getTime() -
+                        new Date().getTime()) /
+                        (1000 * 3600 * 24)
+                    )
+                  )}{" "}
+                  Days
                 </Typography>
               </Stack>
             </Grid>
+          </Grid>
+
+          
+
+          <Grid container>
             <Grid
               item
-              sm={3}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
+              lg={12}
+              sm={12}
+              md={12}
+              sx={{ height: "100px", width: "100%" }}
             >
-              <Avatar
-                sx={{
-                  background:
-                    "linear-gradient(45deg, #00CBFF 0%, #72E2FF 100%)",
-                  display: "grid",
-                  width: "52px",
-                  height: "51px",
-                  padding: "5px 10px 10px",
-                }}
-              >
-                <span
-                  style={{
-                    fontSize: "25px",
-                    lineHeight: "24px",
-                    padding: "2px",
-                    fontWeight: "700",
-                  }}
-                >
-                  {adInfo.noOfCopyAds}
-                </span>
-                <span style={{ fontSize: "10px", margin: "auto" }}>Ads</span>
-              </Avatar>
+              <MyChart
+                chartData={adInfo?.history}
+                dataBoxVisiblity={false}
+                axisVisiblity={false}
+                graphHeight={"100px"}
+              />
             </Grid>
-          </Grid> */}
-
-          <Box sx={{ height: "100px" }}>
-            <MyChart
-              chartData={adInfo?.history}
-              dataBoxVisiblity={false}
-              axisVisiblity={false}
-              graphHeight={"100px"}
-            />
-          </Box>
+          </Grid>
           <Button
             variant="contained"
             size="small"
             sx={{
               borderRadius: "17px",
               background:
-                "linear-gradient(243.18deg, #B5EDFF 0%, #00CBFF 28.65%, #6721FF 85.94%)",
+                "linear-gradient(270deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)",
               textTransform: "none",
             }}
             onClick={() => {

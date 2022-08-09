@@ -80,7 +80,7 @@ const SavedAds = () => {
           >
             <Box
               style={{
-                backgroundColor: "#00CBFF",
+                background: "linear-gradient(243.18deg, #B5EDFF 0%, #00CBFF 28.65%, #6721FF 85.94%)",
                 borderRadius: "50%",
                 width: "30px",
                 height: "30px",

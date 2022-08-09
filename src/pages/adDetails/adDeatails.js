@@ -28,7 +28,7 @@ const ReadMore = ({ children }) => {
         {isReadMore ? text.slice(0, 150) : text}
         <Typography
           variant="h7"
-          style={{ color: "#B5EDFF", cursor: "pointer" }}
+          style={{ color: "blue", cursor: "pointer" }}
           onClick={toggleReadMore}
           className="read-or-hide"
         >
@@ -292,7 +292,7 @@ function AdDeatails() {
                   <Button
                     style={{
                       background:
-                        "linear-gradient(270deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)",
+                        "linear-gradient(243.18deg, #B5EDFF 0%, #00CBFF 28.65%, #6721FF 85.94%)",
                       borderRadius: 18,
                       textTransform: "none",
                       width: "156px",
@@ -323,7 +323,7 @@ function AdDeatails() {
               <Grid container sx={{ justifyContent: "space-around" }}>
                 <Button
                   style={{
-                    background: "#00CBFF",
+                    background: "linear-gradient(200deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)",
                     borderRadius: 30,
                     fontSize: "18px",
                     textTransform: "none",
@@ -342,7 +342,7 @@ function AdDeatails() {
                 </Button>
                 <Button
                   style={{
-                    background: "#00CBFF",
+                    background: "linear-gradient(200deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)",
                     borderRadius: 30,
                     fontSize: "18px",
                     textTransform: "none",

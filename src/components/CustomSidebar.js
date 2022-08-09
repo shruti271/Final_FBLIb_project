@@ -148,33 +148,32 @@ export const CustomSidebar = ({ isOpen }) => {
 
   useEffect(() => {
     if (window.location.pathname === `/ContactSupport`) {
-      document.title = "Contactsupport"
+      document.title = "Contactsupport";
       setSelectedMenuItem(sideBarMenuItems.SUPPORT);
     } else if (window.location.pathname === `/`) {
       const favicon = getFaviconEl();
       favicon.href = "vector.png";
-      document.title = "Adlibsdatabase"
+      document.title = "Adlibsdatabase";
       setSelectedMenuItem(sideBarMenuItems.ADLIBSDATABASE);
     } else if (window.location.pathname === `/savedAds`) {
-      document.title = "Savedads"
+      document.title = "Savedads";
       setSelectedMenuItem(sideBarMenuItems.SAVEDADS);
-    }
-    else if(window.location.pathname.split('/').includes("adDeatails"),document.title = "Addeatails"){
-      console.log("666 data ",currentPage)
-      if(currentPage==="/savedAds")
-      setSelectedMenuItem(sideBarMenuItems.SAVEDADS);
-      else
-      setSelectedMenuItem(sideBarMenuItems.ADLIBSDATABASE);
-    }
-    else {
+    } else if (
+      (window.location.pathname.split("/").includes("adDeatails"),
+      (document.title = "Addeatails"))
+    ) {
+      console.log("666 data ", currentPage);
+      if (currentPage === "/savedAds")
+        setSelectedMenuItem(sideBarMenuItems.SAVEDADS);
+      else setSelectedMenuItem(sideBarMenuItems.ADLIBSDATABASE);
+    } else {
       setSelectedMenuItem("");
     }
   });
-  
-useEffect(()=>{
-  if(state)
-  setCurrentPage(state.fromPage)
-},[])
+
+  useEffect(() => {
+    if (state) setCurrentPage(state.fromPage);
+  }, []);
 
   return (
     <>
@@ -191,10 +190,21 @@ useEffect(()=>{
             }}
           >
             <Box sx={{ marginRight: "8px" }}>
-              <img alt="small-logo" src={fbEyelogo} onClick={()=> navigate("/auth/login")} style={{cursor:"pointer"}}/>
+              <img
+                alt="small-logo"
+                src={fbEyelogo}
+                onClick={() => navigate("/auth/login")}
+                style={{ cursor: "pointer" }}
+              />
             </Box>
             <Box>
-              <img alt="small-logo" src={fbEyelogoText} height="20" onClick={()=> navigate("/auth/login")} style={{cursor:"pointer"}}/>
+              <img
+                alt="small-logo"
+                src={fbEyelogoText}
+                height="20"
+                onClick={() => navigate("/auth/login")}
+                style={{ cursor: "pointer" }}
+              />
             </Box>
           </Box>
           <Box
@@ -223,12 +233,27 @@ useEffect(()=>{
                   isOpen ? classes.openDrawerItem : classes.closeDrawerItem
                 }
               >
+                <svg width={0} height={0}>
+                  <linearGradient
+                    id="linearColors"
+                    x1={1}
+                    y1={1}
+                    x2={0}
+                    y2={1}
+                    gradientTransform={`rotate(220px)`}
+                  >
+                    <stop offset={0.1} stopColor="#B5EDFF" />
+                    <stop offset={0.3} stopColor="#00CBFF" />
+                    <stop offset={0.9} stopColor="#6721FF" />
+                  </linearGradient>
+                </svg>
                 <AdLibraryDatabaseIcon
-                  fill={
-                    selectedMenuItem === sideBarMenuItems.ADLIBSDATABASE
-                      ? "#00CBFF"
-                      : "grey"
-                  }
+                  sx={{ fill: selectedMenuItem === sideBarMenuItems.ADLIBSDATABASE ?"url(#linearColors)":'grey' }}
+                  // fill={
+                  //   selectedMenuItem === sideBarMenuItems.ADLIBSDATABASE
+                  //     ? "#00CBFF"
+                  //     : "grey"
+                  // }
                 />
                 <Typography sx={{ marginLeft: "26px" }}>
                   Adilbrary Database
@@ -256,7 +281,7 @@ useEffect(()=>{
               }
               onClick={() => {
                 const favicon = getFaviconEl();
-                console.log("9",favicon)
+                console.log("9", favicon);
                 favicon.href = "saveicon.png";
                 setSelectedMenuItem(sideBarMenuItems.SAVEDADS);
                 setCurrentPage("/savedAds");
@@ -270,11 +295,12 @@ useEffect(()=>{
                 }
               >
                 <SaveIcon
-                  fill={
-                    selectedMenuItem === sideBarMenuItems.SAVEDADS
-                      ? "#00CBFF"
-                      : "grey"
-                  }
+                 sx={{ fill: selectedMenuItem === sideBarMenuItems.SAVEDADS ?"url(#linearColors)":'grey' }}
+                  // fill={
+                  //   selectedMenuItem === sideBarMenuItems.SAVEDADS
+                  //     ? "#00CBFF"
+                  //     : "grey"
+                  // }
                 />
 
                 <Typography sx={{ marginLeft: "26px" }}>Saved Ads</Typography>
@@ -312,11 +338,12 @@ useEffect(()=>{
                 }
               >
                 <ContactIcon
-                  fill={
-                    selectedMenuItem === sideBarMenuItems.SUPPORT
-                      ? "#00CBFF"
-                      : "grey"
-                  }
+                sx={{ fill: selectedMenuItem === sideBarMenuItems.SUPPORT ?"url(#linearColors)":'grey' }}
+                  // fill={
+                  //   selectedMenuItem === sideBarMenuItems.SUPPORT
+                  //     ? "#00CBFF"
+                  //     : "grey"
+                  // }
                 />
                 <Typography sx={{ marginLeft: "26px" }}>
                   Contact Support

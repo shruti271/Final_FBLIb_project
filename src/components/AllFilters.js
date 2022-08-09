@@ -25,6 +25,7 @@ import * as allAdsPeramsDuck from "../redux/ducks/allAdsPerams";
 import * as savedAdsPeramsDuck from "../redux/ducks/savedAdsPerams";
 import { PageNameEnum } from "../utils/enums";
 import { useLocation } from "react-router-dom";
+import GradientButton from "react-linear-gradient-button";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -122,16 +123,16 @@ const useStyles = makeStyles((theme) => ({
     marginRight: "14px",
     marginTop: "22px",
   },
-  searchBtn:{
-    "&:hover":{
+  searchBtn: {
+    "&:hover": {
       border: "none !important",
-    }
+    },
   },
-  filterBtn:{
-    "&:hover":{
+  filterBtn: {
+    "&:hover": {
       border: "1px solid #EBEBEB !important",
-    }
-  }
+    },
+  },
 }));
 
 function AllFilters() {
@@ -225,7 +226,6 @@ function AllFilters() {
   ]);
 
   const handleAdsCountChange = (newValue, isReset) => {
-    
     dispatch(
       pageName === PageNameEnum.AdlibraryDatabase
         ? allAdsPeramsDuck.changeAppliedFilters({
@@ -371,7 +371,6 @@ function AllFilters() {
   };
 
   const handleChangeSearchType = (newValue) => {
-    
     dispatch(
       pageName === PageNameEnum.AdlibraryDatabase
         ? allAdsPeramsDuck.changeSearchType({
@@ -386,7 +385,7 @@ function AllFilters() {
   };
 
   const handleChangeSearchBar = (newValue) => {
-    console.log("6666",newValue)
+    console.log("6666", newValue);
     dispatch(
       pageName === PageNameEnum.AdlibraryDatabase
         ? allAdsPeramsDuck.changeSearchBarData({
@@ -482,6 +481,7 @@ function AllFilters() {
       >
         <Grid item sx={{ display: "flex" }}>
           {/* Select Search Type Start  */}
+
           <Button
             onClick={(event) => {
               setSeachTypeAnchorEl(event.currentTarget);
@@ -592,6 +592,7 @@ function AllFilters() {
         <InputBase
           value={searchBarValue}
           fullWidth
+          placeholder="Search"
           onKeyUp={(e) => {
             if (e.key === "Enter") {
               handleChangeSearchBar(e.currentTarget.value);
@@ -601,9 +602,10 @@ function AllFilters() {
               handleChangeSearchBar("");
             }
           }}
-          onChange={(e)=>{
+          onChange={(e) => {
             console.log("6666 searcgh ", searchBarValue);
-            setSearchBarValue(e.currentTarget.value)}}
+            setSearchBarValue(e.currentTarget.value);
+          }}
           size="large"
           sx={{ paddingLeft: "15px" }}
         />
@@ -629,8 +631,11 @@ function AllFilters() {
               borderRadius: "10px",
               marginRight: "14px",
               marginTop: "22px",
+              "@media (max-width: 400px)": {
+                width: window.innerWidth,
+              },
             }}
-            className={classes.filterBtn}            
+            className={classes.filterBtn}
             endIcon={
               <img
                 alt="arrowdown"
@@ -663,7 +668,6 @@ function AllFilters() {
             <DateRange
               id="datepicker"
               onChange={(item) => {
-                
                 handleStartDateChange(item);
                 setRange([item.selection]);
               }}
@@ -692,6 +696,9 @@ function AllFilters() {
               marginRight: "14px",
               marginTop: "22px",
               cursor: "pointer",
+              "@media (max-width: 400px)": {
+                width: window.innerWidth,
+              },
             }}
             className={classes.filterBtn}
             endIcon={
@@ -888,11 +895,49 @@ function AllFilters() {
                         max: e.target.value[1],
                       });
                     }
-                    
                   }}
                   // onChange={(e) => handleAdsCountChange(e.target.value)}
                 />
-                <Button
+                <GradientButton
+                    gradient={[
+                      "rgba(103, 33, 255, 1)",
+                      "rgba(0, 203, 255, 1)",
+                      "rgba(181, 237, 255, 1)",
+                    ]}
+                    onClick={() => {
+                      pageName === PageNameEnum.AdlibraryDatabase
+                        ? setRangeAdcountValue({
+                            min: 1,
+                            max: allAdsPerams?.maxRanger?.AdCount?.max,
+                          })
+                        : setSavedPageRangeAdcountValue({
+                            min: 1,
+                            max: savedAdsPerams?.maxRanger?.AdCount?.max,
+                          });
+                      handleAdsCountChange([1, 1000], true);
+                      setrangeAnchorEl(null);
+                    }}
+                    style={{                    
+                      fontWeight: 600,
+                      color: "#00CBFF",                      
+                      textTransform: "none",
+                    }}
+                    borderWidth={3}
+                  >
+                    <Typography
+                      paddingLeft={1}
+                      paddingRight={1}
+                      style={{
+                        textTransform: "none",
+                        color: "url(#linearColors)",
+                      }}
+                      variant="p"
+                    >
+                      Reset
+                    </Typography>
+                  </GradientButton>
+
+                {/* <Button
                   // disabled={props.loading}
                   variant="outlined"
                   sx={{
@@ -919,7 +964,7 @@ function AllFilters() {
                   }}
                 >
                   Reset
-                </Button>
+                </Button> */}
               </Stack>
             </Box>
           </Popover>
@@ -940,6 +985,9 @@ function AllFilters() {
               borderRadius: "10px",
               marginRight: "14px",
               marginTop: "22px",
+              "@media (max-width: 400px)": {
+                width: window.innerWidth,
+              },
             }}
             className={classes.filterBtn}
             endIcon={
@@ -972,7 +1020,7 @@ function AllFilters() {
               horizontal: "left",
             }}
           >
-            <Box sx={{ width: "190px" }}>
+            <Box sx={{ width: "190px"  }}>
               <FormControl sx={{ padding: "10px" }}>
                 <RadioGroup
                   aria-labelledby="demo-radio-buttons-group-label"
@@ -1003,7 +1051,37 @@ function AllFilters() {
                   alignContent={"center"}
                   justifyContent={"center"}
                 >
-                  <Button
+                  <GradientButton
+                    gradient={[
+                      "rgba(103, 33, 255, 1)",
+                      "rgba(0, 203, 255, 1)",
+                      "rgba(181, 237, 255, 1)",
+                    ]}
+                    onClick={(e) => {
+                      handleChangeStatus("", true);
+                      setAdStatusAnchorel(null);
+                    }}
+                    style={{                    
+                      fontWeight: 600,
+                      color: "#00CBFF",                      
+                      textTransform: "none",
+                    }}
+                    borderWidth={3}
+                  >
+                    <Typography
+                      paddingLeft={1}
+                      paddingRight={1}
+                      style={{
+                        textTransform: "none",
+                        color: "url(#linearColors)",
+                      }}
+                      variant="p"
+                    >
+                      Reset
+                    </Typography>
+                  </GradientButton>
+
+                  {/* <Button
                     // disabled={props.loading}
                     variant="outlined"
                     sx={{
@@ -1023,7 +1101,7 @@ function AllFilters() {
                     }}
                   >
                     Reset
-                  </Button>
+                  </Button> */}
                 </Box>
               </FormControl>
             </Box>
@@ -1042,6 +1120,9 @@ function AllFilters() {
               borderRadius: "10px",
               marginRight: "14px",
               marginTop: "22px",
+              "@media (max-width: 400px)": {
+                width: window.innerWidth,
+              },
             }}
             className={classes.filterBtn}
             endIcon={
@@ -1252,7 +1333,46 @@ function AllFilters() {
                     // handleFacebookLikesChange(e.target.value)
                   }}
                 />
-                <Button
+                <GradientButton
+                    gradient={[
+                      "rgba(103, 33, 255, 1)",
+                      "rgba(0, 203, 255, 1)",
+                      "rgba(181, 237, 255, 1)",
+                    ]}
+                    onClick={() => {
+                      pageName === PageNameEnum.AdlibraryDatabase
+                        ? setRangeFacebookValue({
+                            min: 1,
+                            max: allAdsPerams?.maxRanger?.FacebookLikes?.max,
+                          })
+                        : setSavedPageRangeFacebookValue({
+                            min: 1,
+                            max: savedAdsPerams?.maxRanger?.FacebookLikes?.max,
+                          });
+  
+                      handleFacebookLikesChange([1, 100000], true);
+                      setFacebookLikeAnchorEl(null);
+                    }}
+                    style={{                    
+                      fontWeight: 600,
+                      color: "#00CBFF",                      
+                      textTransform: "none",
+                    }}
+                    borderWidth={3}
+                  >
+                    <Typography
+                      paddingLeft={1}
+                      paddingRight={1}
+                      style={{
+                        textTransform: "none",
+                        color: "url(#linearColors)",
+                      }}
+                      variant="p"
+                    >
+                      Reset
+                    </Typography>
+                  </GradientButton>
+                {/* <Button
                   // disabled={props.loading}
                   variant="outlined"
                   sx={{
@@ -1280,7 +1400,7 @@ function AllFilters() {
                   }}
                 >
                   Reset
-                </Button>
+                </Button> */}
               </Stack>
             </Box>
           </Popover>
@@ -1298,6 +1418,9 @@ function AllFilters() {
               borderRadius: "10px",
               marginRight: "14px",
               marginTop: "22px",
+              "@media (max-width: 400px)": {
+                width: window.innerWidth,
+              },
             }}
             className={classes.filterBtn}
             endIcon={
@@ -1405,7 +1528,6 @@ function AllFilters() {
                         //   : savedAdsPerams?.appliedFilters?.InstagramFollowers?.max.toString()
                       }
                       onSave={(e) => {
-
                         if (Number(e.value) !== e.previousValue) {
                           if (pageName === PageNameEnum.AdlibraryDatabase) {
                             setRangeInstragramValue({
@@ -1516,7 +1638,47 @@ function AllFilters() {
                     // handleInstagramFollowersChange(e.target.value)
                   }}
                 />
-                <Button
+                <GradientButton
+                    gradient={[
+                      "rgba(103, 33, 255, 1)",
+                      "rgba(0, 203, 255, 1)",
+                      "rgba(181, 237, 255, 1)",
+                    ]}
+                    onClick={() => {
+                      pageName === PageNameEnum.AdlibraryDatabase
+                        ? setRangeInstragramValue({
+                            min: 1,
+                            max: allAdsPerams?.maxRanger?.InstagramFollowers?.max,
+                          })
+                        : setSavedPageRangeInstragramValue({
+                            min: 1,
+                            max: savedAdsPerams?.maxRanger?.InstagramFollowers
+                              ?.max,
+                          });
+                      handleInstagramFollowersChange([1, 10000], true);
+                      setInstragramFollowerAnchorEl(null);
+                    }}
+                    style={{                    
+                      fontWeight: 600,
+                      color: "#00CBFF",                      
+                      textTransform: "none",
+                    }}
+                    borderWidth={3}
+                  >
+                    <Typography
+                      paddingLeft={1}
+                      paddingRight={1}
+                      style={{
+                        textTransform: "none",
+                        color: "url(#linearColors)",
+                      }}
+                      variant="p"
+                    >
+                      Reset
+                    </Typography>
+                  </GradientButton>
+
+                {/* <Button
                   // disabled={props.loading}
                   variant="outlined"
                   sx={{
@@ -1544,7 +1706,7 @@ function AllFilters() {
                   }}
                 >
                   Reset
-                </Button>
+                </Button> */}
               </Stack>
             </Box>
           </Popover>
@@ -1563,6 +1725,9 @@ function AllFilters() {
               borderRadius: "10px",
               marginRight: "14px",
               marginTop: "22px",
+              "@media (max-width: 400px)": {
+                width: window.innerWidth,
+              },
             }}
             className={classes.filterBtn}
             endIcon={
@@ -1630,7 +1795,36 @@ function AllFilters() {
                   alignContent={"center"}
                   justifyContent={"center"}
                 >
-                  <Button
+                  <GradientButton
+                    gradient={[
+                      "rgba(103, 33, 255, 1)",
+                      "rgba(0, 203, 255, 1)",
+                      "rgba(181, 237, 255, 1)",
+                    ]}
+                    onClick={() => {
+                      handleMediaTypechange("", true);
+                      setMediaTypeAnchorel(null);
+                    }}
+                    style={{                    
+                      fontWeight: 600,
+                      color: "#00CBFF",                      
+                      textTransform: "none",
+                    }}
+                    borderWidth={3}
+                  >
+                    <Typography
+                      paddingLeft={1}
+                      paddingRight={1}
+                      style={{
+                        textTransform: "none",
+                        color: "url(#linearColors)",
+                      }}
+                      variant="p"
+                    >
+                      Reset
+                    </Typography>
+                  </GradientButton>
+                  {/* <Button
                     variant="outlined"
                     sx={{
                       borderRadius: 50,
@@ -1649,7 +1843,7 @@ function AllFilters() {
                     }}
                   >
                     Reset
-                  </Button>
+                  </Button> */}
                 </Box>
               </FormControl>
             </Box>
@@ -1667,6 +1861,9 @@ function AllFilters() {
               borderRadius: "10px",
               marginRight: "14px",
               marginTop: "22px",
+              "@media (max-width: 400px)": {
+                width: window.innerWidth,
+              },
             }}
             className={classes.filterBtn}
             endIcon={
@@ -1697,7 +1894,7 @@ function AllFilters() {
               horizontal: "left",
             }}
           >
-            <Box sx={{ width: "190px" }}>
+            <Box sx={{ width: "170px"}}>
               <FormControl sx={{ padding: "10px" }}>
                 <RadioGroup
                   aria-labelledby="demo-radio-buttons-group-label"
@@ -1730,7 +1927,38 @@ function AllFilters() {
                   alignContent={"center"}
                   justifyContent={"center"}
                 >
-                  <Button
+                  <GradientButton
+                    gradient={[
+                      "rgba(103, 33, 255, 1)",
+                      "rgba(0, 203, 255, 1)",
+                      "rgba(181, 237, 255, 1)",
+                    ]}
+                    onClick={() => {
+                      handleButtonType("", true);
+                      setButtonTypeAnchorEl(null);
+                    }}
+                    style={{                    
+                      fontWeight: 600,
+                      color: "#00CBFF",                      
+                      textTransform: "none",
+                    }}
+                    borderWidth={3}
+                  >
+                    <Typography
+                      paddingLeft={1}
+                      paddingRight={1}
+                      style={{
+                        textTransform: "none",
+                        color: "url(#linearColors)",
+                      }}
+                      variant="p"
+                    >
+                      Reset
+                    </Typography>
+                  </GradientButton>
+                 
+                 
+                  {/* <Button
                     variant="outlined"
                     sx={{
                       borderRadius: 50,
@@ -1749,7 +1977,7 @@ function AllFilters() {
                     }}
                   >
                     Reset
-                  </Button>
+                  </Button> */}
                 </Box>
               </FormControl>
             </Box>
@@ -1768,12 +1996,61 @@ function AllFilters() {
           >
             <Grid container>
               <Grid item sx={{ marginTop: "23px" }}>
-                <Button
+                <GradientButton
+                  gradient={[
+                    "rgba(103, 33, 255, 1)",
+                    "rgba(0, 203, 255, 1)",
+                    "rgba(181, 237, 255, 1)",
+                  ]}
+                  onClick={() => {
+                    if (pageName === PageNameEnum.AdlibraryDatabase) {
+                      dispatch(allAdsPeramsDuck.clearFilterData());
+                    } else {
+                      dispatch(savedAdsPeramsDuck.clearSavedFilterData());
+                    }
+                  }}
+                  style={{
+                    // color={"linear-gradient(to top, #6d8aa0, #8ba2b4)"}
+
+                    fontWeight: 600,
+
+                    color: "#00CBFF",
+
+                    // borderWidth: 2,
+                    textTransform: "none",
+                  }}
+                  borderWidth={3}
+                >
+                  {/* <svg width={0} height={0}>
+      <linearGradient id="linearColors" x1={1} y1={0} x2={1} y2={1}>
+        <stop offset={0.1} stopColor="#B5EDFF" />
+        <stop offset={0.3} stopColor="#00CBFF" />
+        <stop offset={0.9} stopColor="#6721FF" />
+      </linearGradient>
+      
+    </svg> */}
+                  {/* <GradientText data='today will be a really good day' gradient={[...colors]} animating={false}>
+                        </GradientText> */}
+
+                  <Typography
+                    paddingLeft={1}
+                    paddingRight={1}
+                    style={{
+                      textTransform: "none",
+                      color: "url(#linearColors)",
+                    }}
+                    variant="p"
+                  >
+                    Clear
+                  </Typography>
+                </GradientButton>
+                {/* <Button
                   variant="outlined"
                   style={{
                     borderRadius: 50,
                     fontWeight: 600,
-                    borderColor: "#00CBFF",
+                    borderColor: "linear-gradient(45deg, pink 30%, yellow 90%)",
+                    // background: 'linear-gradient(45deg, pink 30%, yellow 90%)',
                     color: "#00CBFF",
                     height: "35px",
                     width: "80px",
@@ -1790,7 +2067,7 @@ function AllFilters() {
                   }}
                 >
                   Clear
-                </Button>
+                </Button> */}
               </Grid>
             </Grid>
           </Box>

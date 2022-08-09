@@ -136,7 +136,7 @@ const ContactSupport = () => {
                     type="Submit"
                     variant="contained"
                     color="primary"
-                    style={{ borderRadius: 50, backgroundColor: "#00CBFF" }}
+                    style={{ borderRadius: 50, background: "linear-gradient(243.18deg, #B5EDFF 0%, #00CBFF 28.65%, #6721FF 85.94%)" }}
                   >
                     <Typography fontSize={{ lg: 15, md: 13, sm: 13 }}>
                       
@@ -148,7 +148,7 @@ const ContactSupport = () => {
                                   }}
                                 />
                               ) : (
-                                <>Submit</>
+                                <>Send</>
                               )}
                               
                     </Typography>

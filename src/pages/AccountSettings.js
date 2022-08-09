@@ -232,7 +232,7 @@ function AccountSettings() {
                               color="primary"
                               style={{
                                 borderRadius: 50,
-                                backgroundColor: "#00CBFF",
+                                background: "linear-gradient(243.18deg, #B5EDFF 0%, #00CBFF 28.65%, #6721FF 85.94%)",
                                 whiteSpace: "nowrap",
                               }}
                             >
@@ -425,7 +425,7 @@ function AccountSettings() {
                                 color="primary"
                                 style={{
                                   borderRadius: 50,
-                                  backgroundColor: "#00CBFF",
+                                  background: "linear-gradient(243.18deg, #B5EDFF 0%, #00CBFF 28.65%, #6721FF 85.94%)",
                                   whiteSpace: "nowrap",
                                 }}
                               >
@@ -561,7 +561,7 @@ function AccountSettings() {
                               color="primary"
                               style={{
                                 borderRadius: 50,
-                                backgroundColor: "#00CBFF",
+                                background: "linear-gradient(243.18deg, #B5EDFF 0%, #00CBFF 28.65%, #6721FF 85.94%)",
                                 whiteSpace: "nowrap",
                               }}
                               onClick={

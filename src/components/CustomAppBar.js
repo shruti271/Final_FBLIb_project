@@ -52,7 +52,7 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
   const MenuListOptios = [
     { name: "Account Setings", icon: settings, url: "/accountSettings" },
     { name: "Contact Support", icon: contactUs, url: "/contactSupport" },
-    { name: "Logout", icon: logout, url: "/auth/login" }
+    { name: "Logout", icon: logout, url: "/auth/login" },
   ];
   const [isMenuOptionActive, setIsMenuOptionActive] = React.useState("");
   const navigate = useNavigate();
@@ -61,13 +61,16 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
     setAnchoerEL(e.currentTarget);
   };
   const userLogout = async () => {
-    logoutUser().then((data)=>{
-      localStorage.setItem("is_alive", false);
-      handleCloseMenu();
-      navigate("/auth/login");
-    }, (error)=>{
-      handleCloseMenu();
-    });
+    logoutUser().then(
+      (data) => {
+        localStorage.setItem("is_alive", false);
+        handleCloseMenu();
+        navigate("/auth/login");
+      },
+      (error) => {
+        handleCloseMenu();
+      }
+    );
   };
   const handleCloseMenu = () => {
     setAnchoerEL(null);
@@ -75,8 +78,8 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
   useEffect(() => {
     setIsMenuOptionActive(window.location.pathname);
     const favicon = getFaviconEl();
-    console.log("login",favicon)
-    favicon.href = "Rectangleeye.png"
+    console.log("login", favicon);
+    favicon.href = "Rectangleeye.png";
   }, []);
   return (
     <>
@@ -99,11 +102,16 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
                   !isOpen ? setIsOpen(true) : setIsOpen(false);
                 }}
                 edge="start"
-                sx={{
-                  color: "#00CBFF",
-                }}
+              
               >
-                <MenuIcon />
+                <svg width={0} height={0}>
+                  <linearGradient id="linearColors" x1={0} y1={1} x2={1} y2={0}>
+                    <stop offset={0.1} stopColor="#B5EDFF" />
+                    <stop offset={0.3} stopColor="#00CBFF" />
+                    <stop offset={0.9} stopColor="#6721FF" />
+                  </linearGradient>
+                </svg>
+                <MenuIcon sx={{ fill: "url(#linearColors)" }} />
               </IconButton>
             </Stack>
             <Stack>
@@ -192,7 +200,7 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
                           onClick={() => {
                             if (item.name === "Logout") {
                               userLogout();
-                            }else{
+                            } else {
                               handleCloseMenu();
                               navigate(item.url);
                             }
@@ -220,7 +228,7 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
             </Stack>
           </Stack>
         </Toolbar>
-        <Divider/>
+        <Divider />
       </AppBar>
     </>
   );

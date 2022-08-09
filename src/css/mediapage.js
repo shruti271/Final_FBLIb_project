@@ -8,7 +8,7 @@ const useStyles = makeStyles(() => ({
     height: "43px",
   },
   avtar: {
-    backgroundColor: "#00CBFF",
+    background: 'linear-gradient(220deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)',
     width: "34px",
     height: "34px",
     padding: "10px",
