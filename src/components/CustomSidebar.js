@@ -18,6 +18,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import Button from "@mui/material/Button";
+import { getFaviconEl } from "../utils/getFaviconEl";
 const useStyles = makeStyles(() => ({
   title: {
     fontFamily: "Neue Haas Grotesk Display Pro",
@@ -147,13 +148,18 @@ export const CustomSidebar = ({ isOpen }) => {
 
   useEffect(() => {
     if (window.location.pathname === `/ContactSupport`) {
+      document.title = "Contactsupport"
       setSelectedMenuItem(sideBarMenuItems.SUPPORT);
     } else if (window.location.pathname === `/`) {
+      const favicon = getFaviconEl();
+      favicon.href = "vector.png";
+      document.title = "Adlibsdatabase"
       setSelectedMenuItem(sideBarMenuItems.ADLIBSDATABASE);
     } else if (window.location.pathname === `/savedAds`) {
+      document.title = "Savedads"
       setSelectedMenuItem(sideBarMenuItems.SAVEDADS);
     }
-    else if(window.location.pathname.split('/').includes("adDeatails")){
+    else if(window.location.pathname.split('/').includes("adDeatails"),document.title = "Addeatails"){
       console.log("666 data ",currentPage)
       if(currentPage==="/savedAds")
       setSelectedMenuItem(sideBarMenuItems.SAVEDADS);
@@ -170,7 +176,6 @@ useEffect(()=>{
   setCurrentPage(state.fromPage)
 },[])
 
- 
   return (
     <>
       <Drawer variant="permanent" open={isOpen}>
@@ -186,10 +191,10 @@ useEffect(()=>{
             }}
           >
             <Box sx={{ marginRight: "8px" }}>
-              <img alt="small-logo" src={fbEyelogo} />
+              <img alt="small-logo" src={fbEyelogo} onClick={()=> navigate("/auth/login")} style={{cursor:"pointer"}}/>
             </Box>
             <Box>
-              <img alt="small-logo" src={fbEyelogoText} height="20" />
+              <img alt="small-logo" src={fbEyelogoText} height="20" onClick={()=> navigate("/auth/login")} style={{cursor:"pointer"}}/>
             </Box>
           </Box>
           <Box
@@ -250,6 +255,9 @@ useEffect(()=>{
                   : ""
               }
               onClick={() => {
+                const favicon = getFaviconEl();
+                console.log("9",favicon)
+                favicon.href = "saveicon.png";
                 setSelectedMenuItem(sideBarMenuItems.SAVEDADS);
                 setCurrentPage("/savedAds");
                 navigate("/savedAds");
@@ -291,6 +299,8 @@ useEffect(()=>{
                   : ""
               }
               onClick={() => {
+                const favicon = getFaviconEl();
+                favicon.href = "contact.png";
                 setSelectedMenuItem(sideBarMenuItems.SUPPORT);
                 navigate("/ContactSupport");
               }}

@@ -1,5 +1,8 @@
 import { createTheme, } from "@material-ui/core/styles";
 import { makeStyles } from '@material-ui/core/styles';
+import { InputBase } from "@mui/material";
+import { styled, } from '@mui/material/styles';
+import { alpha} from "@mui/system";
 export const themeLight = createTheme({
   overrides: {
     MuiCssBaseline: {
@@ -18,11 +21,16 @@ export const themeLight = createTheme({
 const globalStyles = makeStyles((theme) => ({
   logo: {
     height: 50,
-    width: '40%',
+    width: 280,
+    // [theme.breakpoints.down('xs')]: {
+    //   width:250
+    // },
     display: 'block',
     marginLeft: 'auto',
     marginRight: 'auto',
-    objectFit: 'cover'
+    objectFit: 'cover',
+    cursor:"pointer",
+    display:"flex"
   },
   title: {
     fontFamily: "Neue Haas Grotesk Display Pro",
@@ -39,14 +47,56 @@ const globalStyles = makeStyles((theme) => ({
   },
   termsandcondition: {
     letterSpacing: "00.01px",
+    [theme.breakpoints.down('sm')]: {
+      alignSelf: "flex-start",
+      padding:"0px 4px 0px 10px !important",
+    },
   },
   Crateaccountbutton: {
     background:
-      "linear-gradient(270deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)",
+      // "linear-gradient(270deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)",
+      "linear-gradient(243.18deg, #B5EDFF 0%, #00CBFF 28.65%, #6721FF 85.94%)",
     fontFamily: "Neue Haas Grotesk Display Pro",
-    width: "60%",
+    width: 400,
     textTransform: "none",
   },
 }));
 
 export { globalStyles };
+const BootstrapInput = styled(InputBase)(({ theme }) => ({
+  'label + &': {
+    marginTop: theme.spacing(3),
+  },
+  '& .MuiInputBase-input': {
+    borderRadius: 8,
+    position: 'relative',
+    backgroundColor: theme.palette.mode === 'light' ? '' : '#2b2b2b',
+    border: '1px solid #ced4da',
+    fontSize: 16,
+    width: '100%',
+    padding: '12px 10px',
+    transition: theme.transitions.create([
+      'border-color',
+      'background-color',
+      'box-shadow',
+    ]),
+    // Use the system font instead of the default Roboto font.
+    fontFamily: [
+      '-apple-system',
+      'BlinkMacSystemFont',
+      '"Segoe UI"',
+      'Roboto',
+      '"Helvetica Neue"',
+      'Arial',
+      'sans-serif',
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(','),
+    '&:focus': {
+      boxShadow: `${alpha(theme.palette.primary.main, 0.25)} 0 0 0 0.2rem`,
+      borderColor: theme.palette.primary.main,
+    },
+  },
+}));
+export { BootstrapInput };

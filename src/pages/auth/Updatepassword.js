@@ -1,5 +1,5 @@
 import fbaddlogo from "../../assets/fbaddlogo.png";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import {
   Alert,
@@ -43,7 +43,9 @@ const Updatepassword = () => {
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
   };
-
+  useEffect(() => {
+    document.title = "Reset Password - Eye of Ecom "
+  }, []);
   const handleClickShowPassword = () => {
     setValues({
       ...values,
@@ -86,7 +88,7 @@ const Updatepassword = () => {
       <Grid container>
         <Box
           style={{
-            width: "50%",
+            width: "85%",
             justify: "center",
             position: "absolute",
             left: "50%",
@@ -105,7 +107,7 @@ const Updatepassword = () => {
               }}
             >
               <CardContent>
-                <img alt="logo" src={fbaddlogo} className={global.logo} />
+                <img alt="logo" src={fbaddlogo} className={global.logo}  onClick={()=> navigate("/auth/login")}/>
                 <Box mt={2} width="85%" ml={4}>
                   {errormessage && (
                     <Alert severity="success">
@@ -119,8 +121,8 @@ const Updatepassword = () => {
                     </Alert>
                   )}
                 </Box>
-                <Box style={{ padding: "30px 45px" }}>
-                  <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+                <Box style={{  padding: "2vmax 2.5vmax"}}>
+                <Typography variant="h5" sx={{ fontWeight: "bold" ,fontSize:{xs:21,lg:25},marginLeft:{xs:"12%",sm:0,md:0,lg:0,xl:0} }}  >
                     Update password
                   </Typography>
                   <form style={{ paddingTop: "36px" }}>
@@ -191,8 +193,7 @@ const Updatepassword = () => {
                       </Grid>
                     </Grid>
                   </form>
-                </Box>
-                <Box style={{ display: "flex", justifyContent: "center" }}>
+                  <Box pt={1} style={{ display: "flex", justifyContent: "center" }}>
                   <Button
                     variant="contained"
                     size="large"
@@ -213,6 +214,7 @@ const Updatepassword = () => {
                       "Update password"
                     )}
                   </Button>
+                </Box>
                 </Box>
               </CardContent>
             </Card>

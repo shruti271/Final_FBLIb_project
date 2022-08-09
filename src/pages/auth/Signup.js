@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import {
   Box,
@@ -16,18 +16,20 @@ import {
   InputLabel,
   OutlinedInput,
   InputAdornment,
+  InputBase,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { signUp } from "../../services/index";
-import { themeLight, globalStyles } from "../../css/globalcss";
+import { themeLight, globalStyles, BootstrapInput } from "../../css/globalcss";
 import { CssBaseline } from "@material-ui/core";
 import { registerValidationSchema } from "./../../utils/validationSchemas";
 import fbaddlogo from "../../assets/fbaddlogo.png";
 import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+
 const Signup = () => {
   const global = globalStyles();
   const navigate = useNavigate();
@@ -59,6 +61,9 @@ const Signup = () => {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
+  useEffect(()=>{
+    document.title = "Register - Eye of Ecom "
+  },[])
   const submitsigninform = async (data) => {
     setLoading(true);
     try {
@@ -83,7 +88,7 @@ const Signup = () => {
       <Grid container>
         <Box
           style={{
-            width: "50%",
+            width: "85%",
             justify: "center",
             position: "absolute",
             left: "50%",
@@ -101,14 +106,15 @@ const Signup = () => {
             }}
           >
             <CardContent>
-              <img alt="logo" src={fbaddlogo} className={global.logo} />
+              <img alt="logo" src={fbaddlogo} className={global.logo}  onClick={()=> navigate("/auth/login")}/>
               <form onSubmit={handleSubmit(submitsigninform)}>
-                <Box style={{ padding: "18px 61px" }}>
-                  <Typography variant="h5" sx={{ fontWeight: "bold" }}>
-                    Create a free account
+              <Box sx={{ padding: "2vmax 2.5vmax" }}>
+                {/* <Box style={{  padding:{xs:0,lg:"18px 61px" ,xl:"18px 61px"}, }}mt={1} > */}
+                  <Typography  sx={{ fontWeight: "bold" ,fontSize:{xs:21,lg:25},marginLeft:{xs:"4%",sm:0,md:0,lg:0} }}>
+                    Create a Free account
                   </Typography>
 
-                  <Typography className={global.alreadyaccount} pt={1}>
+                  <Typography sx={{ fontSize:{xs:13,sm:16,lg:16},marginLeft:{xs:"9%",sm:0,md:0,lg:0},paddingTop:{xs:0,sm:1,md:1,lg:1}}}>
                     Already have an account?{" "}
                     <span
                       style={{
@@ -137,10 +143,10 @@ const Signup = () => {
                       )}
                     </Box>
                   </Typography>
-                  <Grid container spacing={2} pt={4}>
+                  <Grid container spacing={2} pt={4} sx={{paddingTop:{xs:0,md:2,lg:2}}}>
                     <Grid xs={12} item>
-                      <TextField
-                        placeholder="Enter first name"
+                      <BootstrapInput
+                        placeholder=" first name"
                         label="First Name"
                         variant="outlined"
                         fullWidth
@@ -149,8 +155,8 @@ const Signup = () => {
                       />
                     </Grid>
                     <Grid xs={12} item>
-                      <TextField
-                        placeholder="Enter last name"
+                      <BootstrapInput
+                        placeholder=" last name"
                         label="Last Name"
                         variant="outlined"
                         {...register("last_name")}
@@ -158,7 +164,7 @@ const Signup = () => {
                       />
                     </Grid>
                     <Grid item xs={12}>
-                      <TextField
+                      <BootstrapInput
                         type="email"
                         placeholder="Email address"
                         label="Email"
@@ -234,21 +240,23 @@ const Signup = () => {
                             inputRef={register()}
                             render={({ field: { onChange } }) => (
                               <Checkbox
-                                style={{ color: "#00CBFF" }}
+                              sx={{ color: "#00CBFF" }}
+                                className={global.termsandcondition}
                                 onChange={(e) => onChange(e.target.checked)}
                               />
                             )}
                           />
                         }
                         label={
-                          <Typography
+                          <Typography 
                             color={errors.acceptTerms ? "error" : "inherit"}
                             className={global.termsandcondition}
+                            sx={{fontSize:{xs:14,sm:16,lg:16}}}
                           >
                             I agree to the
                             <Typography
                               component={"span"}
-                              style={{ color: "#00CBFF" }}
+                              sx={{fontSize:{xs:14,sm:16,lg:16},color: "#00CBFF"}}
                             >
                               {" "}
                               Terms of service{" "}
@@ -256,7 +264,7 @@ const Signup = () => {
                             {""}and {""}
                             <Typography
                               component={"span"}
-                              style={{ color: "#00CBFF" }}
+                              sx={{fontSize:{xs:14,sm:16,lg:16},color: "#00CBFF"}}
                             >
                               Privacy Policy
                             </Typography>
@@ -266,8 +274,7 @@ const Signup = () => {
                       <br />
                     </Grid>
                   </Grid>
-                </Box>
-                <Box style={{ display: "flex", justifyContent: "center" }}>
+                  <Box pt={2} style={{ display: "flex", justifyContent: "center" }}>
                   <Button
                     variant="contained"
                     size="large"
@@ -288,6 +295,7 @@ const Signup = () => {
                       "Create Account"
                     )}
                   </Button>
+                </Box>
                 </Box>
               </form>
             </CardContent>

@@ -21,6 +21,7 @@ import { cancelusersubcription, fetch_payment_method } from "../services";
 import { setSubscription } from "../redux/ducks/subscription";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Visibility from "@mui/icons-material/Visibility";
+import { getFaviconEl } from "../utils/getFaviconEl";
 
 const LoadingFor = {
   PersonalInfo: "personalInfo",
@@ -73,6 +74,9 @@ function AccountSettings() {
   });
 
   useEffect(() => {
+    document.title = "Account Setting"
+    const favicon = getFaviconEl();
+    favicon.href = "accountSetting.png";
     personalFormSetValue("first_name", accountSettings?.first_name);
     personalFormSetValue("last_name", accountSettings?.last_name);
   }, [accountSettings, personalFormSetValue]);
