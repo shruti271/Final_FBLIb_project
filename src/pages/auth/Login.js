@@ -11,6 +11,7 @@ import {
   Box,
   Alert,
   InputAdornment,
+  InputBase,
 } from "@mui/material";
 import { Grid } from "@mui/material";
 import { CircularProgress } from "@mui/material";
@@ -18,7 +19,7 @@ import { useNavigate } from "react-router-dom";
 import { login, resendactivateemail } from "../../services/index";
 import { useForm } from "react-hook-form";
 // import { yupResolver } from "@hookform/resolvers/yup";
-import { themeLight, globalStyles } from "../../css/globalcss";
+import { themeLight, globalStyles, BootstrapInput } from "../../css/globalcss";
 // import { loginvalidationSchema } from "./../../utils/validationSchemas";
 import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
@@ -36,19 +37,17 @@ const Login = () => {
     isShowNewPassword: false,
   });
 
-  useEffect(()=>{
-    document.title = "Log in - Eye of Ecom "
+  useEffect(() => {
+    document.title = "Log in - Eye of Ecom ";
     const favicon = getFaviconEl();
-    console.log("login",favicon)
-    favicon.href = "test.jpg"
-  },[])
+    console.log("login", favicon);
+    favicon.href = "test.jpg";
+  }, []);
   const {
     register,
     handleSubmit,
-    formState: { errors },    
-  } = useForm({    
-  });
- 
+    formState: { errors },
+  } = useForm({});
 
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
@@ -84,7 +83,7 @@ const Login = () => {
     const formData = new FormData();
     formData.append("email", email);
     const res = await resendactivateemail(formData);
-    navigate("/auth/activate")
+    navigate("/auth/activate");
     console.log("YY", res.data.message);
     console.log("zzz", resendmessage);
     setResendmessage(res.data.message);
@@ -110,7 +109,7 @@ const Login = () => {
             <Card
               style={{
                 maxWidth: 632,
-                padding: "20px 5px",
+                padding: "10px 5px",
                 margin: "0 auto",
                 backgroundColor: "#F6F6FB",
                 borderRadius: "16px",
@@ -118,12 +117,25 @@ const Login = () => {
             >
               <CardContent>
                 <img alt="logo" src={fbaddlogo} className={global.logo} />
-                <Box sx={{ padding: "2vmax 2.5vmax" }}>
-                  <Typography variant="h5" sx={{ fontWeight: "bold" ,fontSize:{xs:21,lg:25},marginLeft:{xs:"34%",sm:0,md:0,lg:0,xl:0} }}  >
+                <Box sx={{ padding: "1vmax 2.5vmax" }}>
+                  <Typography
+                    variant="h5"
+                    sx={{
+                      fontWeight: "bold",
+                      fontSize: { xs: 21, lg: 25 },
+                      marginLeft: { xs: "34%", sm: 0, md: 0, lg: 0, xl: 0 },
+                    }}
+                  >
                     Log in
                   </Typography>
 
-                  <Typography sx={{ fontSize:{xs:13,sm:16,lg:16},marginLeft:{xs:"9%",sm:0,md:0,lg:0},paddingTop:{xs:0,sm:1,md:1,lg:1}}}>
+                  <Typography
+                    sx={{
+                      fontSize: { xs: 13, sm: 16, lg: 16 },
+                      marginLeft: { xs: "9%", sm: 0, md: 0, lg: 0 },
+                      paddingTop: { xs: 0, sm: 1, md: 1, lg: 1 },
+                    }}
+                  >
                     Don't have an account ?{" "}
                     <span
                       onClick={() => navigate("/auth/register")}
@@ -169,43 +181,34 @@ const Login = () => {
                       </>
                     )}
                   </Box>
-                  <form style={{ paddingTop: "36px" }}>
-                    <Grid container spacing={1}>
-                      <Grid item xs={12}>
-                        <TextField
-                          type="email"
-                          placeholder="Email adderss"
-                          label="Email"
-                          variant="outlined"
-                          fullWidth
-                          required
-                          {...register("email", {
-                            required: (
-                              <span style={{ color: "red" }}>
-                                {"E-mail is required"}
-                              </span>
-                            ),
-                          })}
-                          error={errors.email ? true : false}
-                        />
+                  <form >
+                    <Grid container spacing={1} pt={2.5}>
                         <Grid item xs={12}>
-                          <Typography
-                            variant="inherit"
-                            color="textSecondary"
-                            p={0.8}
-                          >
+                          <BootstrapInput
+                            type="email"
+                            placeholder="Email address"
+                            label="Email"
+                            variant="outlined"
+                            fullWidth
+                            required
+                            {...register("email")}
+                            error={errors.email ? true : false}
+                          />
+                          <Typography variant="inherit" color="red" p={0.5}>
                             {errors.email?.message}
                           </Typography>
                         </Grid>
-                      </Grid>
                       <Grid item xs={12} display="flex">
                         <Box
                           onClick={() => navigate("/auth/forgot-password")}
                           sx={{ marginLeft: "auto" }}
                         >
                           <Typography
-                            sx={{ color: "#00CBFF", cursor: "pointer",fontSize:{xs:13,sm:16,lg:16} }}
-                            
+                            sx={{
+                              color: "#00CBFF",
+                              cursor: "pointer",
+                              fontSize: { xs: 13, sm: 16, lg: 16 },
+                            }}
                           >
                             {" "}
                             Forgot Your Password?{" "}
@@ -214,7 +217,7 @@ const Login = () => {
                       </Grid>
 
                       <Grid item xs={12}>
-                        <TextField
+                        {/* <TextField
                           autoComplete="off"
                           type={values.isShowNewPassword ? "text" : "password"}
                           fullWidth
@@ -272,32 +275,89 @@ const Login = () => {
                           p={0.8}
                         >
                           {errors.password?.message}
+                        </Typography> */}
+                        <InputBase
+                          type={values.isShowNewPassword ? "text" : "password"}
+                          //  value={values.password}
+                          className={global.inputField}
+                          label="outlined"
+                          variant="outlined"
+                          name="newPassword"
+                          placeholder="Password (must be at least 6 characters)"
+                          endAdornment={
+                            <InputAdornment
+                              position="end"
+                              sx={{ marginRight: 2 }}
+                            >
+                              <IconButton
+                                aria-label="toggle password visibility"
+                                onClick={() =>
+                                  setValues({
+                                    ...values,
+                                    isShowNewPassword:
+                                      !values.isShowNewPassword,
+                                  })
+                                }
+                                onMouseDown={handleMouseDownPassword}
+                                edge="end"
+                              >
+                                {!values.isShowNewPassword ? (
+                                  <VisibilityOff />
+                                ) : (
+                                  <Visibility />
+                                )}
+                              </IconButton>
+                            </InputAdornment>
+                          }
+                          fullWidth
+                          {...register("password", {
+                            required: (
+                              <span style={{ color: "red" }}>
+                                {"Password is required"}
+                              </span>
+                            ),
+                            minLength: {
+                              value: 6,
+                              message: (
+                                <span style={{ color: "red" }}>
+                                  {"Password must be more than 6 characters"}
+                                </span>
+                              ),
+                              // color:"red"
+                            },
+                          })}
+                        />
+                        <Typography variant="inherit" color="red" p={0.8}>
+                          {errors.password?.message}
                         </Typography>
                       </Grid>
                     </Grid>
                   </form>
-                  <Box pt={2} style={{ display: "flex", justifyContent: "center" }}>
-                  <Button
-                    variant="contained"
-                    size="large"
-                    className={global.Crateaccountbutton}
-                    sx={{
-                      borderRadius: "14px",
-                      textTransform: "none",
-                      fontSize: "20px",
-                    }}
-                    onClick={handleSubmit(submitLoginform)}
+                  <Box
+                    pt={2}
+                    style={{ display: "flex", justifyContent: "center" }}
                   >
-                    {loading ? (
-                      <CircularProgress
-                        size={36}
-                        style={{ color: "#F6F6FB" }}
-                      />
-                    ) : (
-                      "Log in"
-                    )}
-                  </Button>
-                </Box>
+                    <Button
+                      variant="contained"
+                      size="large"
+                      className={global.Crateaccountbutton}
+                      sx={{
+                        borderRadius: "14px",
+                        textTransform: "none",
+                        fontSize: "20px",
+                      }}
+                      onClick={handleSubmit(submitLoginform)}
+                    >
+                      {loading ? (
+                        <CircularProgress
+                          size={36}
+                          style={{ color: "#F6F6FB" }}
+                        />
+                      ) : (
+                        "Log in"
+                      )}
+                    </Button>
+                  </Box>
                 </Box>
               </CardContent>
             </Card>

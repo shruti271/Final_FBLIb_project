@@ -17,7 +17,7 @@ import { useNavigate } from "react-router-dom";
 import { forgotPassword, isAlive } from "../../services/index";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { themeLight, globalStyles } from "../../css/globalcss";
+import { themeLight, globalStyles, BootstrapInput } from "../../css/globalcss";
 import { CssBaseline } from "@material-ui/core";
 import { forgetvalidationSchema } from "./../../utils/validationSchemas";
 const useStyles = makeStyles(() => ({
@@ -70,7 +70,7 @@ const ForgetPassword = () => {
 
   useEffect(() => {
     getAlive();
-    document.title = "Forgot Password - Eye of Ecom "
+    document.title = "Forgot Password - Eye of Ecom ";
   }, []);
 
   return (
@@ -91,21 +91,39 @@ const ForgetPassword = () => {
             <Card
               style={{
                 maxWidth: 632,
-                padding: "20px 5px",
+                padding: "10px 5px",
                 margin: "0 auto",
                 backgroundColor: "#F6F6FB",
                 borderRadius: "16px",
               }}
             >
               <CardContent>
-                <img alt="logo" src={fbaddlogo} className={global.logo}  onClick={()=> navigate("/auth/login")}/>
-                <Box style={{ padding: "2vmax 2.5vmax" }}>
+                <img
+                  alt="logo"
+                  src={fbaddlogo}
+                  className={global.logo}
+                  onClick={() => navigate("/auth/login")}
+                />
+                <Box style={{ padding: "1vmax 2.5vmax" }}>
                   <Grid container spacing={2}>
+                    <Grid xs={12} item>
+                      <Typography
+                        variant="h5"
+                        sx={{
+                          fontWeight: "bold",
+                          fontSize: { xs: 21, lg: 25 },
+                          marginLeft: { xs: "12%", sm: 0, md: 0, lg: 0, xl: 0 },
+                        }}
+                      >
+                        Forget Password?
+                      </Typography>
+                    </Grid>
+                    <Grid xs={12} item>
                     {errormessage ===
                     "Sorry, This email Id does not exist with us" ? (
                       <>
                         {errormessage && (
-                          <Grid item xs={12}>
+                          <Grid item xs={12} p={1}>
                             <Alert severity="error">{errormessage}</Alert>
                           </Grid>
                         )}
@@ -119,15 +137,9 @@ const ForgetPassword = () => {
                         )}
                       </>
                     )}
-                    <Grid xs={12} item>
-                    <Typography variant="h5" sx={{ fontWeight: "bold" ,fontSize:{xs:21,lg:25},marginLeft:{xs:"12%",sm:0,md:0,lg:0,xl:0} }}  >
-                        Forget Password?
-                      </Typography>
-                    </Grid>
-                    <Grid xs={12} item>
-                      <TextField
+                      <BootstrapInput
                         type="email"
-                        placeholder="Enter email"
+                        placeholder="Email address"
                         label="Email"
                         variant="outlined"
                         fullWidth
@@ -135,45 +147,48 @@ const ForgetPassword = () => {
                         {...register("email")}
                         error={errors.email ? true : false}
                       />
-                      <Typography variant="inherit" color="textSecondary" p={1}>
+                      <Typography variant="inherit" color="red" p={0.5}>
                         {errors.email?.message}
                       </Typography>
                     </Grid>
                   </Grid>
-                  <Box pt={1} style={{ display: "flex", justifyContent: "center" }}>
-                  <Button
-                    variant="contained"
-                    size="large"
-                    sx={{
-                      borderRadius: "14px",
-                      textTransform: "none",
-                      fontSize: "20px",
-                    }}
-                    className={global.Crateaccountbutton}
-                    onClick={handleSubmit(forgetPassword)}
+                  <Box
+                    pt={2}
+                    style={{ display: "flex", justifyContent: "center" }}
                   >
-                    {loading ? (
-                      <CircularProgress style={{ color: "#F6F6FB" }} />
-                    ) : (
-                      "Reset Password"
-                    )}
-                  </Button>
-                </Box>
-                <Box className={classes.Backtologinbutton}>
-                  <img
-                    src={Backtologin}
-                    className={classes.BackToLogInArrow}
-                    style={{ marginRight: "10px" }}
-                    alt="bactologin"
-                  />
-                  <Typography
-                    variant="h6"
-                    sx={{ cursor: "pointer" }}
-                    onClick={() => navigate("/auth/login")}
-                  >
-                    Back to log in
-                  </Typography>
-                </Box>
+                    <Button
+                      variant="contained"
+                      size="large"
+                      sx={{
+                        borderRadius: "14px",
+                        textTransform: "none",
+                        fontSize: "20px",
+                      }}
+                      className={global.Crateaccountbutton}
+                      onClick={handleSubmit(forgetPassword)}
+                    >
+                      {loading ? (
+                        <CircularProgress style={{ color: "#F6F6FB" }} />
+                      ) : (
+                        "Reset Password"
+                      )}
+                    </Button>
+                  </Box>
+                  <Box className={classes.Backtologinbutton}>
+                    <img
+                      src={Backtologin}
+                      className={classes.BackToLogInArrow}
+                      style={{ marginRight: "10px" }}
+                      alt="bactologin"
+                    />
+                    <Typography
+                      variant="h6"
+                      sx={{ cursor: "pointer" }}
+                      onClick={() => navigate("/auth/login")}
+                    >
+                      Back to log in
+                    </Typography>
+                  </Box>
                 </Box>
               </CardContent>
             </Card>

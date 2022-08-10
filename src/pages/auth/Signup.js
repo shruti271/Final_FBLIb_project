@@ -61,9 +61,9 @@ const Signup = () => {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
-  useEffect(()=>{
-    document.title = "Register - Eye of Ecom "
-  },[])
+  useEffect(() => {
+    document.title = "Register - Eye of Ecom ";
+  }, []);
   const submitsigninform = async (data) => {
     setLoading(true);
     try {
@@ -99,22 +99,39 @@ const Signup = () => {
           <Card
             style={{
               maxWidth: 722,
-              padding: "20px 5px",
+              padding: "10px 5px",
               margin: "0 auto",
               backgroundColor: "#F6F6FB",
               borderRadius: "16px",
             }}
           >
             <CardContent>
-              <img alt="logo" src={fbaddlogo} className={global.logo}  onClick={()=> navigate("/auth/login")}/>
+              <img
+                alt="logo"
+                src={fbaddlogo}
+                className={global.logo}
+                onClick={() => navigate("/auth/login")}
+              />
               <form onSubmit={handleSubmit(submitsigninform)}>
-              <Box sx={{ padding: "2vmax 2.5vmax" }}>
-                {/* <Box style={{  padding:{xs:0,lg:"18px 61px" ,xl:"18px 61px"}, }}mt={1} > */}
-                  <Typography  sx={{ fontWeight: "bold" ,fontSize:{xs:21,lg:25},marginLeft:{xs:"4%",sm:0,md:0,lg:0} }}>
+                <Box sx={{ padding: "1vmax 2.5vmax" }}>
+                  {/* <Box style={{  padding:{xs:0,lg:"18px 61px" ,xl:"18px 61px"}, }}mt={1} > */}
+                  <Typography
+                    sx={{
+                      fontWeight: "bold",
+                      fontSize: { xs: 21, lg: 25 },
+                      marginLeft: { xs: "4%", sm: 0, md: 0, lg: 0 },
+                    }}
+                  >
                     Create a Free account
                   </Typography>
 
-                  <Typography sx={{ fontSize:{xs:13,sm:16,lg:16},marginLeft:{xs:"9%",sm:0,md:0,lg:0},paddingTop:{xs:0,sm:1,md:1,lg:1}}}>
+                  <Typography
+                    sx={{
+                      fontSize: { xs: 13, sm: 16, lg: 16 },
+                      marginLeft: { xs: "9%", sm: 0, md: 0, lg: 0 },
+                      paddingTop: { xs: 0, sm: 1, md: 1, lg: 1 },
+                    }}
+                  >
                     Already have an account?{" "}
                     <span
                       style={{
@@ -143,7 +160,12 @@ const Signup = () => {
                       )}
                     </Box>
                   </Typography>
-                  <Grid container spacing={2} pt={4} sx={{paddingTop:{xs:0,md:2,lg:2}}}>
+                  <Grid
+                    container
+                    spacing={2}
+                    pt={4}
+                    sx={{ paddingTop: { xs: 0, md: 2, lg: 2 } }}
+                  >
                     <Grid xs={12} item>
                       <BootstrapInput
                         placeholder=" first name"
@@ -176,14 +198,14 @@ const Signup = () => {
                       />
                       <Typography
                         variant="inherit"
-                        color="textSecondary"
+                        color="red"
                         p={0.5}
                       >
                         {errors.email?.message}
                       </Typography>
                     </Grid>
                     <Grid item xs={12}>
-                      <FormControl
+                      {/* <FormControl
                         sx={{ mr: 1, width: "100%" }}
                         variant="outlined"
                       >
@@ -221,12 +243,42 @@ const Signup = () => {
                           }
                           label="Password"
                         />
-                      </FormControl>
-                      <Typography
-                        variant="inherit"
-                        color="textSecondary"
-                        p={0.8}
-                      >
+                      </FormControl> */}
+                      <InputBase
+                        type={values.isShowNewPassword ? "text" : "password"}
+                        //  value={values.password}
+                        className={global.inputField}
+                        label="outlined"
+                        variant="outlined"
+                        name="newPassword"
+                        placeholder="Password (must be at least 6 characters)"
+                        endAdornment={
+                          <InputAdornment
+                            position="end"
+                            sx={{ marginRight: 2 }}
+                          >
+                            <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={() =>
+                                setValues({
+                                  ...values,
+                                  isShowNewPassword: !values.isShowNewPassword,
+                                })
+                              }
+                              onMouseDown={handleMouseDownPassword}
+                              edge="end"
+                            >
+                              {!values.isShowNewPassword ? (
+                                <VisibilityOff />
+                              ) : (
+                                <Visibility />
+                              )}
+                            </IconButton>
+                          </InputAdornment>
+                        }
+                        fullWidth
+                      />
+                      <Typography variant="inherit" color="red" p={0.8}>
                         {errors.password?.message}
                       </Typography>
                     </Grid>
@@ -240,7 +292,7 @@ const Signup = () => {
                             inputRef={register()}
                             render={({ field: { onChange } }) => (
                               <Checkbox
-                              sx={{ color: "#00CBFF" }}
+                                sx={{ color: "#00CBFF" }}
                                 className={global.termsandcondition}
                                 onChange={(e) => onChange(e.target.checked)}
                               />
@@ -248,15 +300,18 @@ const Signup = () => {
                           />
                         }
                         label={
-                          <Typography 
+                          <Typography
                             color={errors.acceptTerms ? "error" : "inherit"}
                             className={global.termsandcondition}
-                            sx={{fontSize:{xs:14,sm:16,lg:16}}}
+                            sx={{ fontSize: { xs: 14, sm: 16, lg: 16 } }}
                           >
                             I agree to the
                             <Typography
                               component={"span"}
-                              sx={{fontSize:{xs:14,sm:16,lg:16},color: "#00CBFF"}}
+                              sx={{
+                                fontSize: { xs: 14, sm: 16, lg: 16 },
+                                color: "#00CBFF",
+                              }}
                             >
                               {" "}
                               Terms of service{" "}
@@ -264,7 +319,10 @@ const Signup = () => {
                             {""}and {""}
                             <Typography
                               component={"span"}
-                              sx={{fontSize:{xs:14,sm:16,lg:16},color: "#00CBFF"}}
+                              sx={{
+                                fontSize: { xs: 14, sm: 16, lg: 16 },
+                                color: "#00CBFF",
+                              }}
                             >
                               Privacy Policy
                             </Typography>
@@ -274,28 +332,31 @@ const Signup = () => {
                       <br />
                     </Grid>
                   </Grid>
-                  <Box pt={2} style={{ display: "flex", justifyContent: "center" }}>
-                  <Button
-                    variant="contained"
-                    size="large"
-                    sx={{
-                      borderRadius: "14px",
-                      textTransform: "none",
-                      fontSize: "20px",
-                    }}
-                    className={global.Crateaccountbutton}
-                    onClick={handleSubmit(submitsigninform)}
+                  <Box
+                    pt={1}
+                    style={{ display: "flex", justifyContent: "center" }}
                   >
-                    {loading ? (
-                      <CircularProgress
-                        size={36}
-                        style={{ color: "#F6F6FB" }}
-                      />
-                    ) : (
-                      "Create Account"
-                    )}
-                  </Button>
-                </Box>
+                    <Button
+                      variant="contained"
+                      size="large"
+                      sx={{
+                        borderRadius: "14px",
+                        textTransform: "none",
+                        fontSize: "20px",
+                      }}
+                      className={global.Crateaccountbutton}
+                      onClick={handleSubmit(submitsigninform)}
+                    >
+                      {loading ? (
+                        <CircularProgress
+                          size={36}
+                          style={{ color: "#F6F6FB" }}
+                        />
+                      ) : (
+                        "Create Account"
+                      )}
+                    </Button>
+                  </Box>
                 </Box>
               </form>
             </CardContent>

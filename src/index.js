@@ -4,7 +4,7 @@ import App from "./App";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./redux/store";
-
+import  Drawer  from "./components/Mobiledrawer";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 console.log("1+++++++++++++++++++++++++++++++++++++++++++++++++")
 root.render(
@@ -13,6 +13,7 @@ root.render(
       <Provider store={store}>
         <App />
       </Provider>
+      {/* <Drawer/> */}
     {/* </React.StrictMode> */}
   </Router>
 );
