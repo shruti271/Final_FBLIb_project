@@ -60,6 +60,13 @@ const globalStyles = makeStyles((theme) => ({
     width: 400,
     textTransform: "none",
   },
+  inputField: {
+    border: "1px solid #ced4da",
+    borderRadius: "10px",
+    paddingLeft: "10px",
+    height: "48px",
+    // marginBottom:"10px"
+  },
 }));
 
 export { globalStyles };

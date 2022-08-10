@@ -19,6 +19,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import Button from "@mui/material/Button";
 import { getFaviconEl } from "../utils/getFaviconEl";
+import Mobiledrawer from "./Mobiledrawer";
 const useStyles = makeStyles(() => ({
   title: {
     fontFamily: "Neue Haas Grotesk Display Pro",
