@@ -258,7 +258,11 @@ const ThumbNailBox = ({ adInfo, index }) => {
       >
         <Stack
           sx={{
-            padding: "10px",
+            // padding: "10px",
+            paddingLeft:"20px",
+            paddingTop:"10px",
+            paddingRight:"20px",
+            paddingBottom:"14px",
             justifyContent: "space-between",
           }}
         >
