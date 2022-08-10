@@ -69,7 +69,7 @@ const MainLayout = () => {
         <CssBaseline />
         <CustomSidebar isOpen={isOpen} />
         <CustomAppBar isOpen={isOpen} setIsOpen={setIsOpen} />
-        <Box component="main" sx={{ flexGrow: 1, paddingLeft: 4 }}>
+        <Box component="main" sx={{ flexGrow: 1, paddingLeft: 2 }}>
           <DrawerHeader />
           {loading ? (
             <Box

@@ -84,14 +84,15 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
   return (
     <>
       <AppBar open={isOpen}>
-        <Toolbar>
+        <Toolbar sx={{ ml: -1 }}>
           <Stack
             direction={"row"}
-            style={{
+            style={{              
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
               width: "100%",
+              
             }}
           >
             <Stack>
@@ -175,7 +176,7 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
                       style: {
                         marginTop: 13,
                         maxHeight: 40 * 6,
-                        width: "35ch",
+                        width: "auto",//"35ch",
                         background: "white",
                       },
                     }}

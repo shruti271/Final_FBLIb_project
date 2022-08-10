@@ -18,7 +18,8 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import Button from "@mui/material/Button";
-import { getFaviconEl } from "../utils/getFaviconEl";
+// import { getFaviconEl } from "../utils/getFaviconEl";
+
 const useStyles = makeStyles(() => ({
   title: {
     fontFamily: "Neue Haas Grotesk Display Pro",
@@ -47,9 +48,9 @@ const useStyles = makeStyles(() => ({
     texFillColor: "transparent",
   },
   selectedMenu: {
-    background: "rgba(0, 203, 255, 0.05)",
-    borderRight: "4px solid #00C9FD",
-    borderRadius: "32px 0px 0px 32px",
+    background: "linear-gradient(270deg, rgba(0, 203, 255, 0.5) 0%, rgba(0, 203, 255, 0.03) 100%)",
+    // borderRight: "4px solid #00C9FD",
+    borderRadius: "32px",    
   },
   openDrawerItemWrapper: {
     paddingRight: "6px",
@@ -178,14 +179,17 @@ export const CustomSidebar = ({ isOpen }) => {
   return (
     <>
       <Drawer variant="permanent" open={isOpen}>
-        <Stack sx={{ height: "100%" }}>
+        <Stack sx={{ height: "100%"}}>
           <Box
             onClick={() => navigate("/")}
             sx={{
               display: "flex",
-              marginLeft: "7.5px",
-              alignItems: "center",
-              marginTop: "28px",
+              marginLeft:  isOpen ? "7.5px" : "17px",
+              marginRight:2,
+              // display:"flex",
+              justifyContent: isOpen ? "center" : "",
+              alignItems: isOpen ? "center" : "",
+              marginTop: "48px",
               marginBottom: "48px",
             }}
           >
@@ -194,7 +198,7 @@ export const CustomSidebar = ({ isOpen }) => {
                 alt="small-logo"
                 src={fbEyelogo}
                 onClick={() => navigate("/auth/login")}
-                style={{ cursor: "pointer" }}
+                style={{ cursor: "pointer" ,width:"50px"}}
               />
             </Box>
             <Box>
@@ -203,7 +207,7 @@ export const CustomSidebar = ({ isOpen }) => {
                 src={fbEyelogoText}
                 height="20"
                 onClick={() => navigate("/auth/login")}
-                style={{ cursor: "pointer" }}
+                style={{ cursor: "pointer",width:"160px" }}
               />
             </Box>
           </Box>
@@ -213,6 +217,7 @@ export const CustomSidebar = ({ isOpen }) => {
                 ? classes.openDrawerItemWrapper
                 : classes.closeDrawerItemWrapper
             }
+            sx={{ paddingRight:1}}
           >
             <Box
               sx={{ cursor: "pointer" }}
@@ -255,7 +260,7 @@ export const CustomSidebar = ({ isOpen }) => {
                   //     : "grey"
                   // }
                 />
-                <Typography sx={{ marginLeft: "26px" }}>
+                <Typography sx={{ marginLeft: "26px" , fontWeight:500}}>
                   Adilbrary Database
                 </Typography>
               </Stack>
@@ -268,11 +273,13 @@ export const CustomSidebar = ({ isOpen }) => {
                 ? classes.openDrawerItemWrapper
                 : classes.closeDrawerItemWrapper
             }
+            sx={{ paddingRight:1}}
           >
             <Box
               sx={{
                 marginTop: "6px",
                 cursor: "pointer",
+                // marginRight:1
               }}
               className={
                 selectedMenuItem === sideBarMenuItems.SAVEDADS
@@ -303,7 +310,7 @@ export const CustomSidebar = ({ isOpen }) => {
                   // }
                 />
 
-                <Typography sx={{ marginLeft: "26px" }}>Saved Ads</Typography>
+                <Typography sx={{ marginLeft: "26px" , fontWeight:500}}>Saved Ads</Typography>
               </Stack>
             </Box>
           </Box>
@@ -313,11 +320,12 @@ export const CustomSidebar = ({ isOpen }) => {
                 ? classes.openDrawerItemWrapper
                 : classes.closeDrawerItemWrapper
             }
-            sx={{ marginTop: "auto" }}
+            sx={{ marginTop: "auto" , paddingRight:1}}
           >
             <Box
               sx={{
                 cursor: "pointer",
+                // marginRight:"10px"
               }}
               className={
                 selectedMenuItem === sideBarMenuItems.SUPPORT
@@ -345,7 +353,7 @@ export const CustomSidebar = ({ isOpen }) => {
                   //     : "grey"
                   // }
                 />
-                <Typography sx={{ marginLeft: "26px" }}>
+                <Typography sx={{ marginLeft: "26px" , fontWeight:500}} >
                   Contact Support
                 </Typography>
               </Stack>
@@ -382,7 +390,7 @@ export const CustomSidebar = ({ isOpen }) => {
                 onClick={handleClickOpen}
               >
                 <img alt="Logout" src={logout} width="17px" />
-                <Typography sx={{ marginLeft: "33px" }}>Log Out</Typography>
+                <Typography sx={{ marginLeft: "33px" , fontWeight:500, textTransform:"none"}}> Log Out</Typography>
               </Stack>
               <Box p={2}>
                 <Dialog
