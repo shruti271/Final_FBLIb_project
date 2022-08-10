@@ -157,7 +157,7 @@ const ReadMore = ({ children }) => {
         {isReadMore ? text.slice(0, 150) : text}
         {text.length >=150 && <Typography
           variant="h7"
-          style={{ color: "blue", cursor: "pointer" }}
+          style={{ color: "#72E2FF", cursor: "pointer" }}
           onClick={toggleReadMore}
           className="read-or-hide"
         >
@@ -364,7 +364,11 @@ const ThumbNailBox = ({ adInfo, index }) => {
               <Grid container>
                 <Grid item marginRight={"15px"}>
                   {adInfo.status === "Active" ? (
-                    <Typography sx={{ textDecoration: "underline" }}>
+                    <Typography sx={{ textDecoration: "underline",
+                    paddingBottom: "4px",
+                    borderBottomWidth:"3px",
+                    // borderBottomColor:"red"
+                    }} variant="p">
                       {adInfo.status}
                     </Typography>
                   ) : (
@@ -413,8 +417,8 @@ const ThumbNailBox = ({ adInfo, index }) => {
                 </Grid>
                 <Grid item>
                   <Stack direction={"row"}>
-                    <AccessTime style={{ color: "grey", width: "20px" }} />
-                    <Typography color={"#C4C4C4"} marginLeft="4px">
+                    <AccessTime style={{ color: "#80828E", width: "20px" }} />
+                    <Typography color={"#80828E"} marginLeft="4px">
                       {Math.floor(
                         Math.abs(
                           (new Date(adInfo?.startDate).getTime() -
@@ -428,7 +432,7 @@ const ThumbNailBox = ({ adInfo, index }) => {
                 </Grid>
               </Grid>
             
-              <Typography color="#c0c0c0" className={classes.AdsText} noWrap>
+              <Typography color="#80828E" className={classes.AdsText} noWrap>
                 Started Running : {adInfo.startDate}
               </Typography>
               <Typography color="#2B2F42" className={classes.AdsText} noWrap>

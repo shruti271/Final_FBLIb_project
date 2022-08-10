@@ -148,19 +148,19 @@ export const CustomSidebar = ({ isOpen }) => {
 
   useEffect(() => {
     if (window.location.pathname === `/ContactSupport`) {
-      document.title = "Contactsupport";
+      // document.title = "Contactsupport";
       setSelectedMenuItem(sideBarMenuItems.SUPPORT);
     } else if (window.location.pathname === `/`) {
-      const favicon = getFaviconEl();
-      favicon.href = "vector.png";
-      document.title = "Adlibsdatabase";
+      // const favicon = getFaviconEl();
+      // favicon.href = "vector.png";
+      // document.title = "Adlibsdatabase";
       setSelectedMenuItem(sideBarMenuItems.ADLIBSDATABASE);
     } else if (window.location.pathname === `/savedAds`) {
-      document.title = "Savedads";
+      // document.title = "Savedads";
       setSelectedMenuItem(sideBarMenuItems.SAVEDADS);
     } else if (
-      (window.location.pathname.split("/").includes("adDeatails"),
-      (document.title = "Addeatails"))
+      window.location.pathname.split("/").includes("adDeatails")
+      
     ) {
       console.log("666 data ", currentPage);
       if (currentPage === "/savedAds")
@@ -280,9 +280,9 @@ export const CustomSidebar = ({ isOpen }) => {
                   : ""
               }
               onClick={() => {
-                const favicon = getFaviconEl();
-                console.log("9", favicon);
-                favicon.href = "saveicon.png";
+                // const favicon = getFaviconEl();
+                // console.log("9", favicon);
+                // favicon.href = "saveicon.png";
                 setSelectedMenuItem(sideBarMenuItems.SAVEDADS);
                 setCurrentPage("/savedAds");
                 navigate("/savedAds");
@@ -325,8 +325,8 @@ export const CustomSidebar = ({ isOpen }) => {
                   : ""
               }
               onClick={() => {
-                const favicon = getFaviconEl();
-                favicon.href = "contact.png";
+                // const favicon = getFaviconEl();
+                // favicon.href = "contact.png";
                 setSelectedMenuItem(sideBarMenuItems.SUPPORT);
                 navigate("/ContactSupport");
               }}

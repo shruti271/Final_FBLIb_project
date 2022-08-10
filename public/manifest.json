@@ -1,0 +1,25 @@
+{
+	"short_name": "Fblib",
+	"name": "Fb Lib theam",
+	"icons": [
+		{
+			"src": "favicon.ico",
+			"sizes": "16x16",
+			"type": "image/png"
+		},
+		{
+			"src": "logo192.png",
+			"type": "image/png",
+			"sizes": "192x192"
+		},
+		{
+			"src": "logo512.png",
+			"type": "image/png",
+			"sizes": "512x512"
+		}
+	],
+	"start_url": ".",
+	"display": "standalone",
+	"theme_color": "#1f2128",
+	"background_color": "#ffffff"
+}

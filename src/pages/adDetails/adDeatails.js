@@ -28,7 +28,7 @@ const ReadMore = ({ children }) => {
         {isReadMore ? text.slice(0, 150) : text}
         <Typography
           variant="h7"
-          style={{ color: "blue", cursor: "pointer" }}
+          style={{ color: "#72E2FF", cursor: "pointer" }}
           onClick={toggleReadMore}
           className="read-or-hide"
         >
