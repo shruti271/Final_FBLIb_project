@@ -56,7 +56,7 @@ const MyChart = (props) => {
     },
     plotOptions: {
       areaspline: {
-        lineColor: "#6721FF",
+        lineColor: "#164AFF",
         // lineColor: {
         //   linearGradient: {
         //     // color:
@@ -80,7 +80,8 @@ const MyChart = (props) => {
         type: "areaspline", // props.fillType,
         name: "No of ads",
         data: [...props.chartData?.map((a) => a.noOfCopyAds)].slice(-30),
-        lineWidth: 4,
+        // data:[23,46,3,45,34,12,67,24,56,45,6],
+        lineWidth: 6,
         // lineTension: 1,
         marker: {
           enabled: false,
@@ -88,20 +89,20 @@ const MyChart = (props) => {
           lineWidth: 3,
           lineColor: "black", // inherit from series
           radius: 5,
-        },
+        },        
         color: {
           linearGradient: {
             color:
-              "linear-gradient(270deg, rgba(181, 237, 255, 0) 0%, rgba(0, 203, 255, 0) 27.78%, rgba(103, 33, 255, 0) 104.56%)",
+              "linear-gradient(150deg, rgba(181, 237, 255, 0.9) 7.32%, rgba(0, 203, 255, 0.2) 32.15%, rgba(103, 33, 255, 0.9) 100.8%)",
             x1: 1,
-            y1: 1,
-            x2: 0,
+            y1: 0,
+            x2: 1,
             y2: 1,
           },
           stops: [
-            [0.1, "rgba(181, 237, 255, 0.45)"],
-            [0.5, "rgba(0, 203, 255, 0.45)"],
-            [0.8, "rgba(103, 33, 255, 0.45)"],
+            [0.07, "rgba(181, 237, 255, 0.4)"],
+            [0.4, "rgba(0, 203, 255, 0.5)"],
+            [0.97, "rgba(103, 33, 255, 0.4)"],
             // [0.1, "#B5EDFF"],
             // [0.5, "#00CBFF"],
             // [0.8, "#6721FF"],

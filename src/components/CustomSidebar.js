@@ -240,7 +240,7 @@ export const CustomSidebar = ({ isOpen }) => {
                     y1={1}
                     x2={0}
                     y2={1}
-                    gradientTransform={`rotate(220px)`}
+                    // gradientTransform={`rotate(220px)`}
                   >
                     <stop offset={0.1} stopColor="#B5EDFF" />
                     <stop offset={0.3} stopColor="#00CBFF" />

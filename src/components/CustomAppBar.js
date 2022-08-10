@@ -111,7 +111,7 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
                     <stop offset={0.9} stopColor="#6721FF" />
                   </linearGradient>
                 </svg>
-                <MenuIcon sx={{ fill: "url(#linearColors)" }} />
+                <MenuIcon sx={{ fill: "url(#linearColors)",fontSize: '35px'}} />
               </IconButton>
             </Stack>
             <Stack>

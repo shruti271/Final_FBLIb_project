@@ -17,8 +17,8 @@ import Shareicon from "../assets/Shareicon.svg";
 import Saveicon from "../assets/Saveicon.svg";
 import StarFill from "../assets/StarFill.svg";
 import MyChart from "./linemy";
-import AccessTimeIcon from "@mui/icons-material/AccessTime";
-
+// import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import ShowMoreText from "react-show-more-text";
 import {
   addToSavedAdsFilterLocalStart,
   removesavedFilteredAdLocal,
@@ -153,16 +153,16 @@ const ReadMore = ({ children }) => {
   };
   return (
     <>
-      <Typography variant="p" className="text">
-        {isReadMore ? text.slice(0, 100) : text}
-        <Typography
+      <Typography variant="p" className="text" style={{fontSize:"15px"}}>
+        {isReadMore ? text.slice(0, 150) : text}
+        {text.length >=150 && <Typography
           variant="h7"
           style={{ color: "blue", cursor: "pointer" }}
           onClick={toggleReadMore}
           className="read-or-hide"
         >
           {isReadMore ? "...Read more" : " Show less"}
-        </Typography>
+        </Typography>}
       </Typography>
     </>
   );
@@ -248,7 +248,7 @@ const ThumbNailBox = ({ adInfo, index }) => {
   }, [savedAdsPerams]);
 
   return (
-    <Grid item lg={4} md={4} xs={6} key={index} sx={{ padding: "10px" }}>
+    <Grid item lg={3} md={4} xs={6} key={index} sx={{ padding: "10px" }}>
       <Card
         sx={{
           borderRadius: "16px",
@@ -308,8 +308,15 @@ const ThumbNailBox = ({ adInfo, index }) => {
               )} likes)`}
             </Typography>
           </Box>
-          <Box sx={{ marginLeft: 1, marginRight: "2px" }}>
-            <Typography
+          <Box height={(adInfo?.adDescription.length <=150) ? "110px":"auto"}>
+            <ShowMoreText lines={3} expanded={false} expandByClick={true} keepNewLines="true">
+            
+            {adInfo?.adDescription ? adInfo.adDescription : " "}
+            </ShowMoreText>
+          </Box>
+          {/* <Box sx={{ marginLeft: 1, marginRight: "2px" ,
+        }}> */}
+            {/* <Typography
               sx={{
                 fontWeight: 500,
 
@@ -319,11 +326,13 @@ const ThumbNailBox = ({ adInfo, index }) => {
                 // margin: "10px 12px 10px 15px",
               }}
             >
+              
+
               <ReadMore>
                 {adInfo?.adDescription ? adInfo.adDescription : " "}
               </ReadMore>
-            </Typography>
-          </Box>
+            </Typography> */}
+          {/* </Box> */}
           <div style={{ height: "300px" }}>
             {adInfo.adMediaType === "video" ? (
               <video
