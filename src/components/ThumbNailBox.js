@@ -17,8 +17,8 @@ import Shareicon from "../assets/Shareicon.svg";
 import Saveicon from "../assets/Saveicon.svg";
 import StarFill from "../assets/StarFill.svg";
 import MyChart from "./linemy";
-import AccessTimeIcon from "@mui/icons-material/AccessTime";
-
+// import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import ShowMoreText from "react-show-more-text";
 import {
   addToSavedAdsFilterLocalStart,
   removesavedFilteredAdLocal,
@@ -153,16 +153,16 @@ const ReadMore = ({ children }) => {
   };
   return (
     <>
-      <Typography variant="p" className="text">
-        {isReadMore ? text.slice(0, 100) : text}
-        <Typography
+      <Typography variant="p" className="text" style={{fontSize:"15px"}}>
+        {isReadMore ? text.slice(0, 150) : text}
+        {text.length >=150 && <Typography
           variant="h7"
-          style={{ color: "blue", cursor: "pointer" }}
+          style={{ color: "#72E2FF", cursor: "pointer" }}
           onClick={toggleReadMore}
           className="read-or-hide"
         >
           {isReadMore ? "...Read more" : " Show less"}
-        </Typography>
+        </Typography>}
       </Typography>
     </>
   );
@@ -248,7 +248,7 @@ const ThumbNailBox = ({ adInfo, index }) => {
   }, [savedAdsPerams]);
 
   return (
-    <Grid item lg={4} md={4} xs={6} key={index} sx={{ padding: "10px" }}>
+    <Grid item xl={3} lg={4} md={6} xs={12} key={index} sx={{ padding: "10px" }}>
       <Card
         sx={{
           borderRadius: "16px",
@@ -308,23 +308,29 @@ const ThumbNailBox = ({ adInfo, index }) => {
               )} likes)`}
             </Typography>
           </Box>
-          <Box sx={{ marginLeft: 1, marginRight: "2px" }}>
+          {/* <Box height={(adInfo?.adDescription.length <=150) ? "80px":"auto"} sx={{lineHeight:"20px"}}>
+            <ShowMoreText lines={3} expanded={false} expandByClick={true} keepNewLines="true">
+            
+            {adInfo?.adDescription ? adInfo.adDescription : " "}
+            </ShowMoreText>
+          </Box> */}
+          <Box  height={(adInfo?.adDescription.length <=150) ? "80px":"auto"}>
             <Typography
               sx={{
                 fontWeight: 500,
-
-                lineHeight: "27px",
+                lineHeight: "20px",
                 letterSpacing: "0.03em",
                 color: "#2B2F42",
+                // lineHeight:1
                 // margin: "10px 12px 10px 15px",
               }}
-            >
+            >              
               <ReadMore>
                 {adInfo?.adDescription ? adInfo.adDescription : " "}
               </ReadMore>
             </Typography>
           </Box>
-          <div style={{ height: "300px" }}>
+          <div style={{ height: "300px" , marginTop:"4px"}}>
             {adInfo.adMediaType === "video" ? (
               <video
                 src={adInfo.bucketMediaURL}
@@ -351,11 +357,15 @@ const ThumbNailBox = ({ adInfo, index }) => {
           </div>
 
           <Grid container sx={{ padding: "4px" }}>
-            <Grid item sm={9} md={9} lg={9}>
+            <Grid item sm={10} md={10} lg={10}>
               <Grid container>
                 <Grid item marginRight={"15px"}>
                   {adInfo.status === "Active" ? (
-                    <Typography sx={{ textDecoration: "underline" }}>
+                    <Typography sx={{ textDecoration: "underline",
+                    paddingBottom: "4px",
+                    borderBottomWidth:"3px",
+                    // borderBottomColor:"red"
+                    }} variant="p">
                       {adInfo.status}
                     </Typography>
                   ) : (
@@ -404,8 +414,8 @@ const ThumbNailBox = ({ adInfo, index }) => {
                 </Grid>
                 <Grid item>
                   <Stack direction={"row"}>
-                    <AccessTime style={{ color: "grey", width: "20px" }} />
-                    <Typography color={"#C4C4C4"} marginLeft="4px">
+                    <AccessTime style={{ color: "#80828E", width: "20px" }} />
+                    <Typography color={"#80828E"} marginLeft="4px">
                       {Math.floor(
                         Math.abs(
                           (new Date(adInfo?.startDate).getTime() -
@@ -419,7 +429,7 @@ const ThumbNailBox = ({ adInfo, index }) => {
                 </Grid>
               </Grid>
             
-              <Typography color="#c0c0c0" className={classes.AdsText} noWrap>
+              <Typography color="#80828E" className={classes.AdsText} noWrap>
                 Started Running : {adInfo.startDate}
               </Typography>
               <Typography color="#2B2F42" className={classes.AdsText} noWrap>
@@ -428,11 +438,11 @@ const ThumbNailBox = ({ adInfo, index }) => {
             </Grid>
             <Grid
               item
-              sm={3}
+              sm={2}
               sx={{
                 display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
+                alignItems: "end",
+                justifyContent: "end",
               }}
             >
               <Avatar
@@ -565,15 +575,32 @@ const ThumbNailBox = ({ adInfo, index }) => {
               </Avatar>
             </Grid>
           </Grid> */}
+<Grid container>
+                    <Grid item xs={12} lg={12} sm={12}>
+                      {/* <AreaLineGraph /> */}
+{/* <CustomizedView /> */}
+{/* <AreaLineGraph /> */}
+                      <MyChart
+                        chartData={adInfo?.history}
+                        dataBoxVisiblity={false}
+                        axisVisiblity={false}
+                        fillType={"area"}
+                        graphHeight={100}
+                      />
+                    </Grid>
+                    </Grid>
 
-          <Box sx={{ height: "100px" }}>
-            <MyChart
+{/* <MyChart
               chartData={adInfo?.history}
               dataBoxVisiblity={false}
               axisVisiblity={false}
               graphHeight={"100px"}
-            />
-          </Box>
+            /> */}
+
+
+          {/* <Box sx={{ height: "100px" }}>
+          
+          </Box> */}
           <Button
             variant="contained"
             size="small"

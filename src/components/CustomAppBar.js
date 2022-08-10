@@ -77,21 +77,22 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
   };
   useEffect(() => {
     setIsMenuOptionActive(window.location.pathname);
-    const favicon = getFaviconEl();
-    console.log("login", favicon);
-    favicon.href = "Rectangleeye.png";
+    // const favicon = getFaviconEl();
+    // console.log("login", favicon);
+    // favicon.href = "Rectangleeye.png";
   }, []);
   return (
     <>
       <AppBar open={isOpen}>
-        <Toolbar>
+        <Toolbar sx={{ ml: -1 }}>
           <Stack
             direction={"row"}
-            style={{
+            style={{              
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
               width: "100%",
+              
             }}
           >
             <Stack>
@@ -111,7 +112,7 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
                     <stop offset={0.9} stopColor="#6721FF" />
                   </linearGradient>
                 </svg>
-                <MenuIcon sx={{ fill: "url(#linearColors)" }} />
+                <MenuIcon sx={{ fill: "url(#linearColors)",fontSize: '35px'}} />
               </IconButton>
             </Stack>
             <Stack>
@@ -175,7 +176,7 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
                       style: {
                         marginTop: 13,
                         maxHeight: 40 * 6,
-                        width: "35ch",
+                        width: "auto",//"35ch",
                         background: "white",
                       },
                     }}

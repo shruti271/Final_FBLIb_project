@@ -28,7 +28,7 @@ const ReadMore = ({ children }) => {
         {isReadMore ? text.slice(0, 150) : text}
         <Typography
           variant="h7"
-          style={{ color: "blue", cursor: "pointer" }}
+          style={{ color: "#72E2FF", cursor: "pointer" }}
           onClick={toggleReadMore}
           className="read-or-hide"
         >
@@ -120,13 +120,13 @@ function AdDeatails() {
       {adDetail && (
         <Grid container sx={{ marginTop: "36px" }}>
           <Grid item xs={12} lg={4} md={4} sm={12}>
-            <Box sx={{ border: "1px solid #EBEBEB", borderRadius: "10px" }}>
+            <Box sx={{ border: "1px solid #EBEBEB", borderRadius: "10px" , paddingLeft:2,paddingRight:1}}>
               <Stack>
                 <Box
                   sx={{
                     display: "flex",
                     marginTop: "13px",
-                    marginLeft: "20px",
+                    // marginLeft: "20px",
                   }}
                 >
                   <Box
@@ -160,7 +160,9 @@ function AdDeatails() {
                   </Typography>
                 </Box>
 
-                <Box sx={{ marginLeft: 2, marginRight: 2 }}>
+                <Box sx={{ 
+                  //marginLeft: 2,
+                   marginRight: 2 }}>
                   <Typography
                     sx={{
                       fontWeight: 500,
@@ -168,7 +170,8 @@ function AdDeatails() {
                       lineHeight: "27px",
                       letterSpacing: "0.03em",
                       color: "#2B2F42",
-                      margin: "10px 12px 10px 15px",
+                      paddingTop:1,
+                      // margin: "10px 12px 10px 15px",
                     }}
                   >
                     <ReadMore>
@@ -179,7 +182,7 @@ function AdDeatails() {
 
                 <Box
                   sx={{
-                    marginLeft: "5px",
+                    marginRight: "10px",
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
@@ -209,7 +212,9 @@ function AdDeatails() {
                 <Box sx={{ marginRight: 2, marginTop: 1 }}>
                   <Grid container spacing={1}>
                     <Grid item xs={10}>
-                      <Box sx={{ paddingLeft: "20px" }}>
+                      <Box sx={{
+                        //  paddingLeft: "20px"
+                          }}>
                         <Typography
                           sx={{
                             lineHeight: "23px",
@@ -510,6 +515,7 @@ function AdDeatails() {
                     <Grid item xs={12} lg={12} sm={12}>
                       {/* <AreaLineGraph /> */}
 {/* <CustomizedView /> */}
+{/* <AreaLineGraph /> */}
                       <MyChart
                         chartData={adDetail?.history}
                         dataBoxVisiblity={false}
@@ -538,7 +544,7 @@ const useStyles = makeStyles(() => ({
     width: "95%",
   },
   AdsImage: {
-    width: "95%",
+    width: "100%",
     height: "400px",
     objectFit: "fill",
     padding: "0",
