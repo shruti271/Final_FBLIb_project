@@ -43,9 +43,9 @@ const Updatepassword = () => {
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
   };
-  useEffect(() => {
-    document.title = "Reset Password - Eye of Ecom "
-  }, []);
+  // useEffect(() => {
+  //   document.title = "Reset Password - Eye of Ecom "
+  // }, []);
   const handleClickShowPassword = () => {
     setValues({
       ...values,

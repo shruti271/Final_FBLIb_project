@@ -28,7 +28,7 @@ const VerifyEmail = () => {
   console.log("555---", verifiactionres);
   console.log("getTkn", getTkn);
   useEffect(() => {
-    document.title = "VerifyEmail - Eye of Ecom "
+    // document.title = "VerifyEmail - Eye of Ecom "
     setTimeout(() => {
       if (getTkn !== undefined) {
         verifymail();

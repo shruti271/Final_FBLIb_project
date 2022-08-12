@@ -70,7 +70,7 @@ const ForgetPassword = () => {
 
   useEffect(() => {
     getAlive();
-    document.title = "Forgot Password - Eye of Ecom ";
+    // document.title = "Forgot Password - Eye of Ecom ";
   }, []);
 
   return (

@@ -37,12 +37,12 @@ const Login = () => {
     isShowNewPassword: false,
   });
 
-  useEffect(() => {
-    document.title = "Log in - Eye of Ecom ";
-    const favicon = getFaviconEl();
-    console.log("login", favicon);
-    favicon.href = "test.jpg";
-  }, []);
+  // useEffect(() => {
+  //   document.title = "Log in - Eye of Ecom ";
+  //   const favicon = getFaviconEl();
+  //   console.log("login", favicon);
+  //   favicon.href = "test.jpg";
+  // }, []);
   const {
     register,
     handleSubmit,

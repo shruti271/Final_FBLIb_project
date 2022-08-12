@@ -61,9 +61,9 @@ const Signup = () => {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
-  useEffect(() => {
-    document.title = "Register - Eye of Ecom ";
-  }, []);
+  // useEffect(() => {
+  //   document.title = "Register - Eye of Ecom ";
+  // }, []);
   const submitsigninform = async (data) => {
     setLoading(true);
     try {
