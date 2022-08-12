@@ -121,18 +121,22 @@ function AdDeatailsTabs() {
     <>
       <Box
         sx={{
-          width: "100%",
+          width: "95%",
           marginTop: 2,
+          margin:"auto",
           typography: "body1",
           justifyContent: "center",
           alignItems: "center",
+          marginBottom:3
+          
         }}
       >
         <Box
           onClick={() => {            
             navigate(redirectToPage);            
           }}
-          sx={{ cursor: "pointer" }}
+          sx={{ cursor: "pointer",
+          marginTop:"20px"   }}
         >
           <Stack direction={"row"}>
             <Box sx={{ marginRight: "12px" }}>
@@ -148,7 +152,9 @@ function AdDeatailsTabs() {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
+            marginTop:"35px"
           }}
+          
         >
           <Stack direction={"row"} spacing={2}>
             <Button
@@ -159,29 +165,40 @@ function AdDeatailsTabs() {
                 borderRadius: 0,
                 borderColor: "#2B2F42",
                 color: "#2B2F42",
+                textTransform: "none",
+              //   "@media (max-width: 450px)": {
+              // marginRight:15,
+              // fontSize:"18px"
+              //   },
               }}
               onClick={() => {
                 setIsActiveTab(adDetailsTabs.ADOVERVIEW);
                 navigate("");
               }}
             >
-              Ad Overview
+              <b>Ad Overview</b>
             </Button>
             <Button
-              disableRipple
-              sx={{
+              disableRipple  
+              sx={{ 
+                // display:{ md:'none', lg:'block'},
                 borderBottom: isActiveTab === "All Ads" ? 2 : 0,
                 height: "20px",
                 borderRadius: 0,
                 borderColor: "#2B2F42",
                 color: "#2B2F42",
+                textTransform: "none",
+                // "@media (max-width: 450px)": {
+                //   // marginRight:15,
+                //   fontSize:"18px"
+                //     },
               }}
               onClick={() => {
                 setIsActiveTab(adDetailsTabs.ALLADS);
                 navigate("allAds");
               }}
             >
-              All Ads
+              <b>All Ads</b>
             </Button>
           </Stack>
         </Box>

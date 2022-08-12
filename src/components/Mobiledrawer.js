@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import { makeStyles } from "@material-ui/core/styles";
 import {
@@ -8,15 +8,23 @@ import {
   Stack,
   Typography,
   Box,
+  DialogActions,
+  Button,
+  Dialog,
+  DialogContent,
+  DialogContentText,
 } from "@mui/material";
 import AdLibraryDatabaseIcon from "../SvgIcons/AdLibraryDatabaseIcon";
 import SaveIcon from "../SvgIcons/SaveIcon";
 import ContactIcon from "../SvgIcons/ContactIcon";
 import settings from "../assets/settings.svg";
 import logout from "../assets/Logout.svg";
+import { useNavigate } from "react-router-dom";
+import { logoutUser } from "../services";
 const useStyles = makeStyles((theme) => ({
   handbergurMenu: {
     margin: theme.spacing(1, 3),
+    cursor:"pointer"
   },
   iconsize: {
     marginTop: theme.spacing(1),
@@ -35,11 +43,56 @@ const sideBarMenuItems = {
   SUPPORT: "Contact Support",
   LOGOUT: "Log Out",
 };
-const Drawer = () => {
+const MobileDrawer = ({ isOpen, setIsOpen }) => {
   const classes = useStyles();
+  const navigate = useNavigate();
   const [selectedMenuItem, setSelectedMenuItem] = useState(
     sideBarMenuItems.ADLIBSDATABASE
   );
+  const [currentPage, setCurrentPage] = useState();
+  const [openLogOut, setOpenLogOut] = React.useState(false);
+  useEffect(() => {
+    if (window.location.pathname === `/ContactSupport`) {      
+      setSelectedMenuItem(sideBarMenuItems.SUPPORT);
+    } else if (window.location.pathname === `/`) {
+      setSelectedMenuItem(sideBarMenuItems.ADLIBSDATABASE);
+    } else if (window.location.pathname === `/savedAds`) {
+      // document.title = "Savedads";
+      setSelectedMenuItem(sideBarMenuItems.SAVEDADS);
+    }else if (window.location.pathname === `/accountSettings`) {
+      // document.title = "Savedads";
+      setSelectedMenuItem(sideBarMenuItems.ACCOUNTSETTINGS);
+    } else if (
+      window.location.pathname.split("/").includes("adDeatails")
+      
+    ) {
+      console.log("666 data ", currentPage);
+      if (currentPage === "/savedAds")
+        setSelectedMenuItem(sideBarMenuItems.SAVEDADS);
+      else setSelectedMenuItem(sideBarMenuItems.ADLIBSDATABASE);
+    } else {
+      setSelectedMenuItem("");
+    }
+  });
+  
+  const handleClickOpen = () => {
+    setOpenLogOut(true);
+  };
+
+  const handleClose = () => {
+    setOpenLogOut(false);
+  };
+  const userLogout = async () => {
+    logoutUser().then(
+      (data) => {
+        localStorage.setItem("is_alive", false);
+        navigate("/auth/login");
+      },
+      (error) => {
+        console.log("Error While LogOut", error);
+      }
+    );
+  };
 
   return (
     <>
@@ -52,7 +105,10 @@ const Drawer = () => {
       </svg>
       <MenuIcon
         className={classes.handbergurMenu}
-        sx={{ fill: "url(#linearColors)" }}
+        sx={{ fill: "url(#linearColors)",fontSize: '35px' }}
+        onClick={()=>{
+          setIsOpen(()=>false)
+          console.log("first")}}
       />
       <Grid container sx={{ display: "flex", justifyContent: "center" }}>
         <Box
@@ -97,6 +153,8 @@ const Drawer = () => {
                   }
                 onClick={() => {
                   setSelectedMenuItem(sideBarMenuItems.ADLIBSDATABASE);
+                  setIsOpen(()=>false)
+                  navigate("/");
                 }}
               >
                 Adlibrary Database
@@ -131,6 +189,8 @@ const Drawer = () => {
                   }
                 onClick={() => {
                   setSelectedMenuItem(sideBarMenuItems.SAVEDADS);
+                  setIsOpen(()=>false)
+                  navigate("/savedAds");
                 }}
                 >
                   Saved Ads
@@ -164,6 +224,8 @@ const Drawer = () => {
                   }
                 onClick={() => {
                   setSelectedMenuItem(sideBarMenuItems.ACCOUNTSETTINGS);
+                  setIsOpen(()=>false)
+                  navigate("/accountSettings");
                 }}
                 >
                   Account Settings
@@ -199,6 +261,8 @@ const Drawer = () => {
                   }
                 onClick={() => {
                   setSelectedMenuItem(sideBarMenuItems.SUPPORT);
+                  setIsOpen(()=>false)
+                  navigate("/ContactSupport");
                 }}
                 >
                   Contact Support
@@ -227,11 +291,60 @@ const Drawer = () => {
                       : ""
                   }
                 onClick={() => {
+                  handleClickOpen()
                   setSelectedMenuItem(sideBarMenuItems.LOGOUT);
                 }}
                 >
                   Log out
                 </Typography>
+                <Box p={2}>
+                <Dialog
+                  open={openLogOut}
+                  onClose={handleClose}
+                  aria-labelledby="alert-dialog-title"
+                  aria-describedby="alert-dialog-description"
+                >
+                  <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                      <Typography
+                        variant="h5"
+                        p={2}
+                        sx={{ fontWeight: "bold", color: "#2B2F42" }}
+                      >
+                        Are You Sure For Logout ?
+                      </Typography>
+                    </DialogContentText>
+                  </DialogContent>
+                  <DialogActions
+                    sx={{ marginRight: "inherit", paddingBottom: "16px" }}
+                  >
+                    <Button
+                      onClick={handleClose}
+                      variant="contained"
+                      color="primary"
+                      style={{
+                        borderRadius: 50,
+                        backgroundColor: "#00CBFF",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      onClick={userLogout}
+                      variant="contained"
+                      color="primary"
+                      style={{
+                        borderRadius: 50,
+                        backgroundColor: "#00CBFF",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      Yes
+                    </Button>
+                  </DialogActions>
+                </Dialog>
+              </Box>
               </Stack>
             </Grid>
             <Divider textAlign="center"></Divider>
@@ -241,6 +354,6 @@ const Drawer = () => {
     </>
   );
 };
-export default Drawer;
+export default MobileDrawer;
 
 

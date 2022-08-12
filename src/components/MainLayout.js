@@ -22,6 +22,8 @@ import { loadFilteredAdsStart } from "../redux/ducks/filteredAds";
 import { loadsavedFilteredAdsStart } from "../redux/ducks/filteredSavedAds";
 import { getButtonTypes } from "../redux/ducks/buttonType";
 import { loadSavedAdsIdsLocal } from "../redux/ducks/savedAdsManager";
+import MobileAppBar from "./MobileAppBar";
+import Drawer from "./Mobiledrawer";
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
@@ -35,41 +37,57 @@ const MainLayout = () => {
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.subscriptionData);
   const [isOpen, setIsOpen] = React.useState(true);
+  const [windowWidth, setWindowWidth] = React.useState(0);
 
-  const filteredAds  = useSelector((state) => state.filteredAds);
 
-  useEffect(()=>{
+  const filteredAds = useSelector((state) => state.filteredAds);
+
+  useEffect(() => {
     dispatch(loadSubscriptionStart());
     dispatch(
       loadFilteredAdsStart({
         page_index: 0,
-        sort_by:"lastUpdatedTime",
-        order_by:"asc",
+        sort_by: "lastUpdatedTime",
+        order_by: "asc",
       })
     );
     dispatch(
       loadsavedFilteredAdsStart({
         page_index: 0,
-        sort_by:"lastUpdatedTime",
-        order_by:"asc",
+        sort_by: "lastUpdatedTime",
+        order_by: "asc",
       })
     );
     dispatch(loadAccountSettingsStart());
     dispatch(getButtonTypes());
-  },[dispatch])
+  }, [dispatch]);
 
-
-  useEffect(()=>{
-    dispatch(loadSavedAdsIdsLocal(filteredAds.savedAdsIds))
-  },[filteredAds.savedAdsIds])
+// useEffect(()=>{
+//   setWindowWidth(()=>window.innerWidth);
+// },[window.onresize])
+  // useEffect(() => {
+  //   dispatch(loadSavedAdsIdsLocal(filteredAds.savedAdsIds));
+  // }, [filteredAds.savedAdsIds]);
 
   return (
     <>
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
-        <CustomSidebar isOpen={isOpen} />
-        <CustomAppBar isOpen={isOpen} setIsOpen={setIsOpen} />
-        <Box component="main" sx={{ flexGrow: 1, paddingLeft: 2 }}>
+        {window.innerWidth >= 1440 && (
+          <>
+            <CustomSidebar isOpen={isOpen} />
+            <CustomAppBar isOpen={isOpen} setIsOpen={setIsOpen} />
+          </>
+        )}
+        {window.innerWidth < 1440 && <MobileAppBar />}
+
+        <Box
+          component="main"
+          sx={{
+            flexGrow: 1,
+            //  paddingLeft: 2
+          }}
+        >
           <DrawerHeader />
           {loading ? (
             <Box

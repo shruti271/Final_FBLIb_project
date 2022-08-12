@@ -79,6 +79,10 @@ const openedMixin = (theme) => ({
     duration: theme.transitions.duration.enteringScreen,
   }),
   overflowX: "hidden",
+  //  [theme.breakpoints.down('sm')]: {
+  //   width: 0,
+  //   display:'none',
+  // },
 });
 
 const closedMixin = (theme) => ({
@@ -91,12 +95,20 @@ const closedMixin = (theme) => ({
   [theme.breakpoints.up("sm")]: {
     width: `calc(${theme.spacing(9)} + 5px)`,
   },
+  // [theme.breakpoints.down('sm')]: {
+  //   width: 0,
+  //   display:'none',
+  // },
 });
 
 const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
   width: drawerWidth,
+  [theme.breakpoints.down('sm')]: {
+    width: 0,
+    display:'none',
+  },
   flexShrink: 0,
   whiteSpace: "nowrap",
   boxSizing: "border-box",
@@ -174,7 +186,7 @@ export const CustomSidebar = ({ isOpen }) => {
   useEffect(() => {
     if (state) setCurrentPage(state.fromPage);
   }, []);
-
+console.log("999 9",window.innerWidth)
   return (
     <>
       <Drawer variant="permanent" open={isOpen}>

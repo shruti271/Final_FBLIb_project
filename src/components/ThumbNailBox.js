@@ -248,7 +248,7 @@ const ThumbNailBox = ({ adInfo, index }) => {
   }, [savedAdsPerams]);
 
   return (
-    <Grid item xl={3} lg={4} md={6} xs={12} key={index} sx={{ padding: "10px" }}>
+    <Grid item xl={3} lg={4} md={6} sm={6} xs={12} key={index} sx={{ padding: "10px" }}>
       <Card
         sx={{
           borderRadius: "16px",
@@ -361,7 +361,7 @@ const ThumbNailBox = ({ adInfo, index }) => {
           </div>
 
           <Grid container sx={{ padding: "4px" }}>
-            <Grid item sm={10} md={10} lg={10}>
+            <Grid item xs={9} sm={10} md={10} lg={10}>
               <Grid container>
                 <Grid item marginRight={"15px"}>
                   {adInfo.status === "Active" ? (
@@ -442,6 +442,7 @@ const ThumbNailBox = ({ adInfo, index }) => {
             </Grid>
             <Grid
               item
+              xs={3}
               sm={2}
               sx={{
                 display: "flex",
