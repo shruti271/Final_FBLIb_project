@@ -1,7 +1,15 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Typography from "@mui/material/Typography";
-import { Alert, Button, CircularProgress, Grid, InputBase } from "@mui/material";
+import {
+  Alert,
+  Button,
+  CircularProgress,
+  Grid,
+  InputBase,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import { Box } from "@mui/system";
 import { useForm } from "react-hook-form";
 import { contactSupport } from "../services";
@@ -9,8 +17,9 @@ import useStyles from "../css/mediapage";
 
 const ContactSupport = () => {
   const classes = useStyles();
-  const navigate = useNavigate();
+  const theme = useTheme();
   const [loading, setLoading] = useState(false);
+  const savebutton = useMediaQuery(theme.breakpoints.up("sm"));
   const [resendmessage, setResendmessage] = useState("");
   const {
     register,
@@ -22,10 +31,10 @@ const ContactSupport = () => {
     setLoading(true);
     console.table("Contact Support Form Data :", data);
     const response = await contactSupport(data);
-    console.log(response.data.message)
-    setResendmessage(response.data.message)
+    console.log(response.data.message);
+    setResendmessage(response.data.message);
     if (!response.success) {
-      setResendmessage("Email send Successfully")
+      setResendmessage("Email send Successfully");
       setLoading(false);
     } else {
       setLoading(false);
@@ -35,25 +44,28 @@ const ContactSupport = () => {
 
   return (
     <>
-
       <Box
         clone
-        style={{
+        sx={{
           alignItems: "center",
-          justifyContent: "center",         
+          justifyContent: "center",
           disabled: loading ? true : false,
-        }}        
-      >        
+          // marginLeft:"35px",
+          marginLeft: { xs: "0px", sm: "35px", md: 0, lg: 0 },
+          marginRight: { xs: "35px", sm: 0, md: 0, lg: 0 },
+        }}
+      >
         <Typography
-              className={classes.titleHome}
-              variant="h5"
-              ml={1}
-              sx={{ fontWeight: "bold",color:"#3A3D4B" }}
-            >
+          className={classes.titleHome}
+          variant="h5"
+          ml={1}
+          sx={{ fontWeight: "bold", color: "#3A3D4B" }}
+        >
           <b>Contact Support</b>
         </Typography>
-        
-        <Box sx={{ opacity: loading ? 0.5 : 1,}}
+
+        <Box
+          sx={{ opacity: loading ? 0.5 : 1 }}
           width={{ lg: "60%", md: "90%", sm: "90%" }}
           border={0.5}
           borderRadius={5}
@@ -61,9 +73,16 @@ const ContactSupport = () => {
           borderColor="#ebebeb"
         >
           <form onSubmit={handleSubmit(onFormSubmit)}>
-            <Grid item xs={10} container spacing={2} margin={2}>
-              <Grid xs={6} sm={6} lg={6} item>
-                <InputBase disabled={loading?true:false}
+            <Grid
+              item
+              xs={11}
+              container
+              spacing={2}
+              sx={{ margin: { xs: "-5px", sm: "10px", md: "8px", lg: "8px" } }}
+            >
+              <Grid xs={12} sm={6} lg={6} item>
+                <InputBase
+                  disabled={loading ? true : false}
                   className={classes.inputField}
                   label="outlined"
                   variant="outlined"
@@ -80,8 +99,9 @@ const ContactSupport = () => {
                 )}
               </Grid>
 
-              <Grid xs={6} sm={6} lg={6} item>
-                <InputBase disabled={loading?true:false}
+              <Grid xs={12} sm={6} lg={6} item>
+                <InputBase
+                  disabled={loading ? true : false}
                   className={classes.inputField}
                   type="email"
                   label="outlined"
@@ -104,7 +124,8 @@ const ContactSupport = () => {
               </Grid>
 
               <Grid xs={12} item>
-                <InputBase disabled={loading?true:false}
+                <InputBase
+                  disabled={loading ? true : false}
                   className={classes.multilineinput}
                   label="outlined"
                   variant="outlined"
@@ -122,35 +143,47 @@ const ContactSupport = () => {
                 )}
               </Grid>
               {resendmessage === "Email sent" && (
-                          <Grid item xs={12}>
-                            <Alert severity="success">Email send successfully</Alert>
-                           </Grid>
+                <Grid item xs={12}>
+                  <Alert severity="success">Email send successfully</Alert>
+                </Grid>
               )}
               <Grid
                 container
-                style={{ display: "flex", justifyContent: "right" }}
+                style={{
+                  display: "flex",
+                  justifyContent: savebutton ? "right" : "center",
+                }}
                 item
               >
-                <Box justifyContent={"right "}>
+                <Box p={2.5}>
                   <Button
                     type="Submit"
                     variant="contained"
                     color="primary"
-                    style={{ borderRadius: 50, background: "linear-gradient(243.18deg, #B5EDFF 0%, #00CBFF 28.65%, #6721FF 85.94%)" }}
+                    className={classes.sendbutton}
+                    sx={{
+                      borderRadius: "20px",
+                      background:
+                        "linear-gradient(243.18deg, #B5EDFF 0%, #00CBFF 28.65%, #6721FF 85.94%)",
+                      width: {
+                        xs: "232px",
+                        sm: "120px",
+                        md: "120px",
+                        lg: "120px",
+                      },
+                    }}
                   >
                     <Typography fontSize={{ lg: 15, md: 13, sm: 13 }}>
-                      
-                    {loading ? (
-                                <CircularProgress
-                                  size="1.5rem"
-                                  sx={{
-                                    color: "white",
-                                  }}
-                                />
-                              ) : (
-                                <>Send</>
-                              )}
-                              
+                      {loading ? (
+                        <CircularProgress
+                          size="1.5rem"
+                          sx={{
+                            color: "white",
+                          }}
+                        />
+                      ) : (
+                        <>Submit</>
+                      )}
                     </Typography>
                   </Button>
                 </Box>
