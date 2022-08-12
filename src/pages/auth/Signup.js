@@ -7,14 +7,10 @@ import {
   Checkbox,
   CircularProgress,
   FormControlLabel,
-  TextField,
   Typography,
   CardContent,
   Grid,
   Alert,
-  FormControl,
-  InputLabel,
-  OutlinedInput,
   InputAdornment,
   InputBase,
 } from "@mui/material";
@@ -168,7 +164,7 @@ const Signup = () => {
                   >
                     <Grid xs={12} item>
                       <BootstrapInput
-                        placeholder=" first name"
+                        placeholder=" First name"
                         label="First Name"
                         variant="outlined"
                         fullWidth
@@ -178,7 +174,7 @@ const Signup = () => {
                     </Grid>
                     <Grid xs={12} item>
                       <BootstrapInput
-                        placeholder=" last name"
+                        placeholder=" Last name"
                         label="Last Name"
                         variant="outlined"
                         {...register("last_name")}
@@ -196,11 +192,7 @@ const Signup = () => {
                         {...register("email")}
                         error={errors.email ? true : false}
                       />
-                      <Typography
-                        variant="inherit"
-                        color="red"
-                        p={0.5}
-                      >
+                      <Typography variant="inherit" color="red" p={0.5}>
                         {errors.email?.message}
                       </Typography>
                     </Grid>
@@ -252,6 +244,7 @@ const Signup = () => {
                         variant="outlined"
                         name="newPassword"
                         placeholder="Password (must be at least 6 characters)"
+                        {...register("password")}
                         endAdornment={
                           <InputAdornment
                             position="end"

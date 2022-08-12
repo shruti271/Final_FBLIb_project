@@ -1,12 +1,15 @@
 import {
   Button,
   CircularProgress,
+  FormControlLabel,
   Grid,
   IconButton,
   InputAdornment,
   InputBase,
   Stack,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useEffect, useState } from "react";
@@ -33,6 +36,7 @@ function AccountSettings() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const theme = useTheme();
   const [subLoading, setSubLoading] = useState(false);
   const [values, setValues] = React.useState({
     showPassword: false,
@@ -40,6 +44,9 @@ function AccountSettings() {
     isShowNewPassword: false,
   });
 
+  const showgrid = useMediaQuery(theme.breakpoints.up("sm"));
+  const changepassword = useMediaQuery(theme.breakpoints.up("sm"));
+  const savebutton = useMediaQuery(theme.breakpoints.up("sm"));
   const { accountSettings, loading, error } = useSelector(
     (state) => state.accountSettings
   );
@@ -51,7 +58,7 @@ function AccountSettings() {
   const [loadingFor, setLoadingFor] = useState("");
 
   const {
-    register:personalFormRegister,
+    register: personalFormRegister,
     handleSubmit: personalFormHandleSubmit,
     formState: { errors },
     setValue: personalFormSetValue,
@@ -65,7 +72,7 @@ function AccountSettings() {
   const {
     register: securityFormRegister,
     handleSubmit: securityFormHandleSubmit,
-    formState: {securityFormErrors },
+    formState: { securityFormErrors },
   } = useForm({
     defaultValues: {
       c_password: "",
@@ -74,7 +81,7 @@ function AccountSettings() {
   });
 
   useEffect(() => {
-    document.title = "Account Setting"
+    document.title = "Account Setting";
     const favicon = getFaviconEl();
     favicon.href = "accountSetting.png";
     personalFormSetValue("first_name", accountSettings?.first_name);
@@ -121,20 +128,22 @@ function AccountSettings() {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
-  const onError = (errors) => console.log('Errors Occurred !! :', errors);
+  const onError = (errors) => console.log("Errors Occurred !! :", errors);
 
   return (
     <>
       <Grid container>
         <Grid item xs={12} pr={5}>
           <Stack>
-            <Typography variant="h5">
+            <Typography variant="h5" className={classes.headindtextcenter}>
               <b>Account Settings</b>
             </Typography>
 
-            <Stack direction={"column"} marginTop={5}>
+            <Stack direction={"column"} marginTop={4}>
               <Box>
-                <Typography variant="h6">Personal Information</Typography>
+                <Typography variant="h6" className={classes.headindtextcenter}>
+                  Personal Information
+                </Typography>
                 <Box
                   border={0.5}
                   marginTop={1}
@@ -151,10 +160,13 @@ function AccountSettings() {
                     marginBottom={3}
                   >
                     <form
-                      onSubmit={personalFormHandleSubmit(onPersonalFormSubmit,onError)}
+                      onSubmit={personalFormHandleSubmit(
+                        onPersonalFormSubmit,
+                        onError
+                      )}
                     >
                       <Stack
-                        direction={"row"}
+                        direction={showgrid ? "row" : "column"}
                         spacing={2}
                         sx={{
                           opacity:
@@ -167,7 +179,17 @@ function AccountSettings() {
                               : false,
                         }}
                       >
-                        <Stack direction={"column"} width="50%">
+                        <Stack
+                          direction={"column"}
+                          sx={{
+                            width: {
+                              xs: "100%",
+                              sm: "50%",
+                              md: "50%",
+                              lg: "50%",
+                            },
+                          }}
+                        >
                           <Typography>First Name</Typography>
                           <InputBase
                             className={classes.inputField}
@@ -192,7 +214,17 @@ function AccountSettings() {
                             </p>
                           )}
                         </Stack>
-                        <Stack direction={"column"} width="50%">
+                        <Stack
+                          direction={"column"}
+                          sx={{
+                            width: {
+                              xs: "100%",
+                              sm: "50%",
+                              md: "50%",
+                              lg: "50%",
+                            },
+                          }}
+                        >
                           <Typography>Last Name</Typography>
 
                           <InputBase
@@ -222,33 +254,37 @@ function AccountSettings() {
                       <Stack direction={"row"} marginTop={2}>
                         <Grid
                           container
-                          style={{ display: "flex", justifyContent: "right" }}
+                          style={{
+                            display: "flex",
+                            justifyContent: savebutton ? "right" : "center",
+                          }}
                           item
+                          xs={12}
                         >
-                          <Box justifyContent={"right "}>
-                            <Button
-                              type="Submit"
-                              variant="contained"
-                              color="primary"
-                              style={{
-                                borderRadius: 50,
-                                background: "linear-gradient(243.18deg, #B5EDFF 0%, #00CBFF 28.65%, #6721FF 85.94%)",
-                                whiteSpace: "nowrap",
-                              }}
-                            >
-                              {loading &&
-                              LoadingFor.PersonalInfo === loadingFor ? (
-                                <CircularProgress
-                                  size="1.5rem"
-                                  sx={{
-                                    color: "white",
-                                  }}
-                                />
-                              ) : (
-                                <>Save</>
-                              )}
-                            </Button>
-                          </Box>
+                          <Button
+                            type="Submit"
+                            variant="contained"
+                            color="primary"
+                            style={{
+                              borderRadius: 50,
+                              background:
+                                "linear-gradient(243.18deg, #B5EDFF 0%, #00CBFF 28.65%, #6721FF 85.94%)",
+                              whiteSpace: "nowrap",
+                              width: changepassword ? "190px" : "226px",
+                            }}
+                          >
+                            {loading &&
+                            LoadingFor.PersonalInfo === loadingFor ? (
+                              <CircularProgress
+                                size="1.5rem"
+                                sx={{
+                                  color: "white",
+                                }}
+                              />
+                            ) : (
+                              <>Save</>
+                            )}
+                          </Button>
                         </Grid>
                       </Stack>
                     </form>
@@ -257,7 +293,9 @@ function AccountSettings() {
               </Box>
 
               <Box marginTop={3}>
-                <Typography variant="h6">Security</Typography>
+                <Typography variant="h6" className={classes.headindtextcenter}>
+                  Security
+                </Typography>
                 <Box
                   marginTop={1}
                   border={0.5}
@@ -277,7 +315,7 @@ function AccountSettings() {
                       onSubmit={securityFormHandleSubmit(onSecurityFormSubmit)}
                     >
                       <Stack
-                        direction={"row"}
+                        direction={showgrid ? "row" : "column"}
                         spacing={2}
                         sx={{
                           opacity:
@@ -286,7 +324,17 @@ function AccountSettings() {
                               : 1,
                         }}
                       >
-                        <Stack direction={"column"} width="50%">
+                        <Stack
+                          direction={"column"}
+                          sx={{
+                            width: {
+                              xs: "100%",
+                              sm: "50%",
+                              md: "50%",
+                              lg: "50%",
+                            },
+                          }}
+                        >
                           <Typography>Current Password</Typography>
                           <InputBase
                             type={
@@ -339,7 +387,17 @@ function AccountSettings() {
                             </p>
                           )}
                         </Stack>
-                        <Stack direction={"column"} width="50%">
+                        <Stack
+                          direction={"column"}
+                          sx={{
+                            width: {
+                              xs: "100%",
+                              sm: "50%",
+                              md: "50%",
+                              lg: "50%",
+                            },
+                          }}
+                        >
                           <Typography>New Password</Typography>
                           <InputBase
                             type={
@@ -394,7 +452,7 @@ function AccountSettings() {
                         </Stack>
                       </Stack>
                       <Stack direction={"row"} marginTop={2}>
-                        <Grid container>
+                        <Grid container justifyContent="center">
                           <Grid
                             item
                             lg={4}
@@ -413,35 +471,34 @@ function AccountSettings() {
                             sm={8}
                             style={{
                               display: "flex",
-                              justifyContent: "right",
-                              alignItems: "right",
+                              justifyContent: savebutton ? "right" : "center",
+                              // justifyContent:"right"
                             }}
                             item
                           >
-                            <Box justifyContent={"right "}>
-                              <Button
-                                type="Submit"
-                                variant="contained"
-                                color="primary"
-                                style={{
-                                  borderRadius: 50,
-                                  background: "linear-gradient(243.18deg, #B5EDFF 0%, #00CBFF 28.65%, #6721FF 85.94%)",
-                                  whiteSpace: "nowrap",
-                                }}
-                              >
-                                {loading &&
-                                LoadingFor.Password === loadingFor ? (
-                                  <CircularProgress
-                                    size="1.5rem"
-                                    sx={{
-                                      color: "white",
-                                    }}
-                                  />
-                                ) : (
-                                  <>Change Password</>
-                                )}
-                              </Button>
-                            </Box>
+                            <Button
+                              type="Submit"
+                              variant="contained"
+                              color="primary"
+                              style={{
+                                borderRadius: 50,
+                                background:
+                                  "linear-gradient(243.18deg, #B5EDFF 0%, #00CBFF 28.65%, #6721FF 85.94%)",
+                                whiteSpace: "nowrap",
+                                width: changepassword ? "190px" : "226px",
+                              }}
+                            >
+                              {loading && LoadingFor.Password === loadingFor ? (
+                                <CircularProgress
+                                  size="1.5rem"
+                                  sx={{
+                                    color: "white",
+                                  }}
+                                />
+                              ) : (
+                                <>Change Password</>
+                              )}
+                            </Button>
                           </Grid>
                         </Grid>
                       </Stack>
@@ -449,7 +506,7 @@ function AccountSettings() {
                   </Stack>
                 </Box>
               </Box>
-              <Box marginTop={3}>
+              {/* <Box marginTop={3}>
                 <Typography variant="h6">Billing</Typography>
                 <Box
                   marginTop={1}
@@ -467,7 +524,7 @@ function AccountSettings() {
                     marginBottom={3}
                   >
                     <Stack
-                      direction={"row"}
+                      direction={"column"}
                       style={{
                         display: "flex",
                         justifyContent: "space-between",
@@ -478,7 +535,7 @@ function AccountSettings() {
                           <Typography>Payment method</Typography>
                         </Stack>
                         <Stack direction={"column"}>
-                          <Stack direction={"row"} ml={13}>
+                          <Stack direction={"row"} ml={4}>
                             <Typography>
                               {subscriptionData?.data?.card_brand ===
                               "mastercard" ? (
@@ -495,7 +552,7 @@ function AccountSettings() {
                                 />
                               )}
                             </Typography>
-                            <Typography style={{ marginLeft: 3 }}>
+                            <Typography sx={{ marginLeft: 1 }}>
                               <b>
                                 Visa ending in {subscriptionData?.data?.last4}
                               </b>
@@ -506,10 +563,93 @@ function AccountSettings() {
                     </Stack>
                   </Stack>
                 </Box>
-              </Box>
+              </Box> */}
+              <Typography
+                variant="h6"
+                className={classes.headindtextcenter}
+                p={1}
+              >
+                Billing
+              </Typography>
+              <Grid
+                container
+                padding={4}
+                border={0.5}
+                borderRadius={5}
+                borderColor="#EBEBEB"
+              >
+                <Grid item xs={12} sm={6} md={6} lg={6}>
+                  <Typography
+                    sx={{
+                      marginLeft: {
+                        xs: "0px",
+                        sm: "32px",
+                        md: "32px",
+                        lg: "32px",
+                      },
+                    }}
+                  >
+                    Payment method
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} sm={6} md={6} lg={6}>
+                  <Typography
+                    ml={2}
+                    sx={{
+                      marginTop: {
+                        xs: "20px",
+                        sm: "0px",
+                        md: "0px",
+                        lg: "0px",
+                      },
+                    }}
+                  >
+                    {subscriptionData?.data?.card_brand === "mastercard" ? (
+                      <>
+                        <FormControlLabel
+                          control={
+                            <img
+                              src={mastercard}
+                              alt="viss"
+                              style={{ width: "30px" }}
+                            />
+                          }
+                          label={
+                            <Typography ml={0.5} sx={{ fontWeight: "bold" }}>
+                              {" "}
+                              Visa ending in {subscriptionData?.data?.last4}
+                            </Typography>
+                          }
+                        />
+                      </>
+                    ) : (
+                      <>
+                        <FormControlLabel
+                          control={
+                            <img
+                              src={viss}
+                              alt="viss"
+                              style={{ width: "30px" }}
+                            />
+                          }
+                          label={
+                            <Typography ml={0.5} sx={{ fontWeight: "bold" }}>
+                              {" "}
+                              Visa ending in {subscriptionData?.data?.last4}
+                            </Typography>
+                          }
+                        />
+                      </>
+                    )}
+                  </Typography>
+                </Grid>
+              </Grid>
+
               <Box marginTop={3}>
-                <Typography variant="h6">Subscription</Typography>
-                <Box
+                <Typography variant="h6" className={classes.headindtextcenter}>
+                  Subscription
+                </Typography>
+                {/* <Box
                   marginTop={1}
                   border={0.5}
                   borderRadius={5}
@@ -554,14 +694,15 @@ function AccountSettings() {
                           style={{ display: "flex", justifyContent: "right" }}
                           item
                         >
-                          <Box justifyContent={"right"}>
+                          <Box>
                             <Button
                               type="Submit"
                               variant="contained"
                               color="primary"
                               style={{
                                 borderRadius: 50,
-                                background: "linear-gradient(243.18deg, #B5EDFF 0%, #00CBFF 28.65%, #6721FF 85.94%)",
+                                background:
+                                  "linear-gradient(243.18deg, #B5EDFF 0%, #00CBFF 28.65%, #6721FF 85.94%)",
                                 whiteSpace: "nowrap",
                               }}
                               onClick={
@@ -593,8 +734,117 @@ function AccountSettings() {
                       </Stack>
                     </Stack>
                   </Stack>
-                </Box>
+                </Box> */}
               </Box>
+
+              <Grid
+                container
+                // marginTop={1}
+                p={3}
+                pt={3}
+                // pl={10}
+                sx={{ paddingLeft: { xs: "", sm: "", md: "", lg: "60px" } }}
+                border={0.5}
+                borderRadius={5}
+                borderColor="#EBEBEB"
+              >
+                <Grid item xs={12} sm={4} md={4} lg={3}>
+                  <Typography
+                    sx={{
+                      marginLeft: {
+                        xs: "0px",
+                        sm: "0px",
+                        md: "19px",
+                        lg: "0px",
+                      },
+                    }}
+                  >
+                    Subscription Status:
+                    <b>{subscriptionData?.data?.status}</b>
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} sm={4} md={4} lg={3}>
+                  <Typography
+                    sx={{
+                      marginTop: {
+                        xs: "10px",
+                        sm: "0px",
+                        md: "0px",
+                        lg: "0px",
+                      },
+                    }}
+                  >
+                    Plan:
+                    <b>{subscriptionData?.data?.plan_type}</b>
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} sm={4} lg={3}>
+                  <Typography
+                    sx={{
+                      marginTop: {
+                        xs: "10px",
+                        sm: "0px",
+                        md: "0px",
+                        lg: "0px",
+                      },
+                    }}
+                  >
+                    Next Renew: <b>{subscriptionData?.data?.end_date}</b>
+                  </Typography>
+                </Grid>
+                <Grid
+                  item
+                  xs={12}
+                  lg={2}
+                  sx={{
+                    padding: { xs: "12px", sm: "12px", md: "10px", lg: "0px" },
+                    marginLeft: {
+                      // xs: "auto",
+                      sm: "40px",
+                      md: "64%",
+                      lg: "20px",
+                    },
+                    display: "flex",
+                    justifyContent: savebutton ? "right" : "center",
+                  }}
+                >
+                  <Button
+                    type="Submit"
+                    variant="contained"
+                    color="primary"
+                    style={{
+                      borderRadius: 50,
+                      background:
+                        "linear-gradient(243.18deg, #B5EDFF 0%, #00CBFF 28.65%, #6721FF 85.94%)",
+                      whiteSpace: "nowrap",
+                      justifyContent: "flex-end",
+                      // width: changepassword ? "190px" : "200px",
+                    }}
+                    onClick={
+                      subscriptionData?.data?.status === "Canceled" ||
+                      subscriptionData?.data?.status === "Inactive"
+                        ? () => navigate("/plans")
+                        : cancelSubscription
+                    }
+                  >
+                    {subLoading && LoadingFor.Subscription ? (
+                      <CircularProgress
+                        size="1.5rem"
+                        sx={{
+                          color: "white",
+                        }}
+                      />
+                    ) : (
+                      <>
+                        {subscriptionData?.data?.status === "Canceled" ||
+                        subscriptionData?.data?.status === "Inactive"
+                          ? "Active Your plan"
+                          : "Cancel Subscription"}
+                      </>
+                    )}
+                  </Button>
+                </Grid>
+              </Grid>
             </Stack>
           </Stack>
         </Grid>
@@ -603,4 +853,3 @@ function AccountSettings() {
   );
 }
 export default AccountSettings;
-
