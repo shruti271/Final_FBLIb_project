@@ -1,6 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Grid, Box, Typography, Button, Stack, Avatar } from "@mui/material";
+import {
+  Grid,
+  Box,
+  Typography,
+  Button,
+  Stack,
+  Avatar,
+  useMediaQuery,
+  useTheme,
+  FormControl,
+  FormControlLabel,
+} from "@mui/material";
 import Firsrcardimg from "../../assets/FirstCardImg.svg";
 import facebook from "../../assets/facebook.svg";
 import instragram from "../../assets/instragram.svg";
@@ -15,6 +26,8 @@ import { FadeLoader } from "react-spinners";
 import AreaLineGraph from "../../components/AreaLineGraph";
 import CustomizedView from "../../components/SampleData";
 import MyChart from "../../components/linemy";
+import DownloadIcon from "@mui/icons-material/Download";
+import Download from "@mui/icons-material/Download";
 
 const ReadMore = ({ children }) => {
   const text = children;
@@ -48,6 +61,8 @@ function AdDeatails() {
   const subAllAds = useSelector((state) => state.subAllAds);
   const { filteredSavedAds } = useSelector((state) => state.filteredSavedAds);
   const { singleAdData, loading } = useSelector((state) => state.singleAdData);
+  // const theme = useTheme();
+  // const matchesMD = useMediaQuery(theme.breakpoints.only('md'));
 
   const [adDetail, setAdDetail] = useState();
 
@@ -118,9 +133,24 @@ function AdDeatails() {
         />
       </Box>
       {adDetail && (
-        <Grid container sx={{ marginTop: "36px" }}>
-          <Grid item xs={12} lg={4} md={4} sm={12}>
-            <Box sx={{ border: "1px solid #EBEBEB", borderRadius: "10px" , paddingLeft:2,paddingRight:1}}>
+        <Grid
+          container
+          sx={{
+            marginTop: "36px",
+            width: "95% !important",
+            margin: "auto",
+            paddingTop: 1,
+          }}
+        >
+          <Grid item xs={12} lg={4} md={5} sm={6}>
+            <Box
+              sx={{
+                border: "1px solid #EBEBEB",
+                borderRadius: "10px",
+                paddingLeft: 2,
+                paddingRight: 1,
+              }}
+            >
               <Stack>
                 <Box
                   sx={{
@@ -160,9 +190,12 @@ function AdDeatails() {
                   </Typography>
                 </Box>
 
-                <Box sx={{ 
-                  //marginLeft: 2,
-                   marginRight: 2 }}>
+                <Box
+                  sx={{
+                    //marginLeft: 2,
+                    marginRight: 2,
+                  }}
+                >
                   <Typography
                     sx={{
                       fontWeight: 500,
@@ -170,7 +203,7 @@ function AdDeatails() {
                       lineHeight: "27px",
                       letterSpacing: "0.03em",
                       color: "#2B2F42",
-                      paddingTop:1,
+                      paddingTop: 1,
                       // margin: "10px 12px 10px 15px",
                     }}
                   >
@@ -212,9 +245,13 @@ function AdDeatails() {
                 <Box sx={{ marginRight: 2, marginTop: 1 }}>
                   <Grid container spacing={1}>
                     <Grid item xs={10}>
-                      <Box sx={{
-                        //  paddingLeft: "20px"
-                          }}>
+                      <Box
+                        sx={
+                          {
+                            //  paddingLeft: "20px"
+                          }
+                        }
+                      >
                         <Typography
                           sx={{
                             lineHeight: "23px",
@@ -323,9 +360,116 @@ function AdDeatails() {
               </Stack>
             </Box>
           </Grid>
-          <Grid item xs={12} lg={8} md={8} sm={12} p={2}>
-            <Box>
-              <Grid container sx={{ justifyContent: "space-around" }}>
+          <Grid item xs={12} lg={8} md={7} sm={6} p={2}>
+            {/* <Box> */}
+            <Grid container>
+              <Grid
+                items
+                xs={12}
+                sm={12}
+                md={6}
+                lg={6}
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Button
+                  style={{
+                    background:
+                      "linear-gradient(200deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)",
+                    borderRadius: 30,
+                    fontSize: "18px",
+                    textTransform: "none",
+                    paddingLeft: "25px",
+                    paddingRight: "16px",
+                    display: "flex",
+                    justifyContent: "end",
+                    alignItems: "end",
+                  }}
+                >
+                  <a
+                    href={adDetail?.thumbBucketUrl}
+                    style={{ textDecoration: "none", color: "white" }}
+                    download
+                  >
+                    {" "}
+                    <FormControlLabel
+                          control={
+                            <Download />
+                          }
+                          label={
+                            <Typography ml={0.5} sx={{ fontWeight: "bold" }}>
+                              {" "}
+                              Download Thumbnai
+                            </Typography>
+                          }
+                        />
+
+                    <FormControl>
+                    {/* <Download />
+                    <span>Download Thumbnail</span> */}
+                    </FormControl>
+                  </a>
+                </Button>
+              </Grid>
+              <Grid
+                items
+                md={6}
+                xs={12}
+                sm={12}
+                lg={6}
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  "@media (max-width: 800px)": {
+                    marginTop: 2,
+                  },
+                }}
+              >
+                <Button
+                  style={{
+                    background:
+                      "linear-gradient(200deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)",
+                    borderRadius: 30,
+                    fontSize: "18px",
+                    textTransform: "none",
+                    paddingLeft: "25px",
+                    paddingRight: "16px",
+                  }}
+                  disabled={adDetail?.adMediaType === "video" ? false : true}
+                >
+                  <a
+                    href={adDetail?.bucketMediaURL}
+                    style={{ textDecoration: "none", color: "white" }}
+                    download
+                  >
+                    
+                    <FormControlLabel
+                          control={
+                            <Download />
+                          }
+                          label={
+                            <Typography ml={0.5} sx={{ fontWeight: "bold" }}>
+                              {" "}
+                              Download Video
+                            </Typography>
+                          }
+                        />
+
+                    <FormControl>
+                      
+                    </FormControl>
+                    
+                   
+                  </a>
+                </Button>
+              </Grid>
+            </Grid>
+
+            {/* <Grid container sx={{ justifyContent: "space-around" }} >
                 <Button
                   style={{
                     background: "linear-gradient(200deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)",
@@ -342,6 +486,7 @@ function AdDeatails() {
                     download
                   >
                     {" "}
+                    <Download />
                     Download Thumbnail
                   </a>
                 </Button>
@@ -353,6 +498,10 @@ function AdDeatails() {
                     textTransform: "none",
                     paddingLeft: "16px",
                     paddingRight: "16px",
+                    
+                    "@media (max-width: 768px)": {
+                    margin:5,
+                    },
                   }}
                   disabled={adDetail?.adMediaType === "video" ? false : true}
                 >
@@ -362,142 +511,230 @@ function AdDeatails() {
                     download
                   >
                     {" "}
+                    <Download />
                     Download Video
                   </a>
                 </Button>
-              </Grid>
+              </Grid> */}
+            <Grid
+              container
+              sx={{
+                justifyContent: "space-around",
+                marginTop: "40px",
+                paddingTop: "0px",
+              }}
+            >
               <Grid
-                container
-                sx={{ justifyContent: "space-around", marginTop: "40px" }}
-              >
-                <Stack sx={{ alignItems: "center" }}>
-                  <Typography className={classes.textdeco}>
-                    Ad Status:
-                  </Typography>
-                  <Typography className={classes.textdeco}>
-                    <b> {adDetail?.status ? adDetail.status : " "}</b>
-                  </Typography>
-                </Stack>
-                <Stack sx={{ alignItems: "center" }}>
-                  <Typography className={classes.textdeco}>
-                    Started Running On:
-                  </Typography>
-                  <Typography className={classes.textdeco}>
-                    <b> {adDetail?.startDate ? adDetail.startDate : " "}</b>
-                  </Typography>
-                  <Typography className={classes.textdeco}>
-                    <b>
-                      {" "}
-                      {Math.floor(
-                        Math.abs(
-                          (new Date(adDetail?.startDate).getTime() -
-                            new Date().getTime()) /
-                            (1000 * 3600 * 24)
-                        )
-                      )}
-                      {" Days"}
-                    </b>
-                  </Typography>
-                </Stack>
-                <Stack sx={{ alignItems: "center" }}>
-                  <Typography className={classes.textdeco}>
-                    Placements:
-                  </Typography>
-                  {adDetail?.platforms?.map((ads, index) => (
-                    <Typography className={classes.textdeco} key={index}>
-                      {" "}
-                      <b>{ads}</b>
-                    </Typography>
-                  ))}
-                </Stack>
-              </Grid>
-              <Grid
-                container
+                item
+                md={12}
+                xs={4}
+                sm={12}
+                lg={4}
                 sx={{
                   display: "flex",
+                  justifyContent: "start",
+                  alignItems: "center",
+                  "@media (max-width: 800px": {
+                    // marginTop: 2,
+                  },
+                  "@media (max-width: 450px)": {
+                    // alignItems: "start",
+                  },
+                }}
+                direction="column"
+              >
+                <Typography className={classes.textdeco}>Ad Status:</Typography>
+                <Typography className={classes.textdeco}>
+                  <b> {adDetail?.status ? adDetail.status : " "}</b>
+                </Typography>
+              </Grid>
+              <Grid
+                item
+                md={12}
+                xs={4}
+                sm={12}
+                lg={4}
+                sx={{
+                  display: "flex",
+                  justifyContent: "start",
+                  alignItems: "center",
+                  "@media (max-width: 800px)": {
+                    marginTop: 2,
+                  },
+                  "@media (max-width: 450px)": {
+                    alignItems: "start",
+                  },
+                }}
+                direction="column"
+              >
+                <Typography className={classes.textdeco}>
+                  Started Running On:
+                </Typography>
+                <Typography className={classes.textdeco}>
+                  <b> {adDetail?.startDate ? adDetail.startDate : " "}</b>
+                </Typography>
+                <Typography className={classes.textdeco}>
+                  <b>
+                    {" "}
+                    {Math.floor(
+                      Math.abs(
+                        (new Date(adDetail?.startDate).getTime() -
+                          new Date().getTime()) /
+                          (1000 * 3600 * 24)
+                      )
+                    )}
+                    {" Days"}
+                  </b>
+                </Typography>
+              </Grid>
+              <Grid
+                item
+                md={12}
+                xs={4}
+                sm={12}
+                lg={4}
+                sx={{
+                  display: "flex",
+                  justifyContent: "start",
+                  alignItems: "center",
+                  "@media (max-width: 800px": {
+                    marginTop: 2,
+                  },
+                  "@media (max-width: 450px)": {
+                    // marginTop: 2,
+                    alignItems: "start",
+                  },
+                }}
+                direction="column"
+              >
+                <Typography className={classes.textdeco}>
+                  Placements:
+                </Typography>
+                {adDetail?.platforms?.map((ads, index) => (
+                  <Typography className={classes.textdeco} key={index}>
+                    {" "}
+                    <b>{ads}</b>
+                  </Typography>
+                ))}
+              </Grid>
+            </Grid>
+            <Grid
+              container
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                marginTop: "10px",
+                // flexWrap: "nowrap",
+                "@media (max-width: 800px)": {
+                  marginTop: 4,
+                },
+              }}
+            >
+              <Grid
+                item
+                xs={6}
+                sm={3}
+                md={12}
+                lg={3}
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
                   justifyContent: "center",
-                  marginTop: "10px",
-                  flexWrap: "nowrap",
+                  // marginRight: "60px",
+                  // flexWrap: "nowrap",
+                }}
+                direction={"column"}
+                spacing={2}
+              >
+                <Typography
+                  style={{ fontWeight: 600, fontSize: "20px" }}
+                  noWrap
+                >
+                  {adDetail?.pageInfo?.name}
+                </Typography>
+                <Box
+                  sx={{
+                    width: "112px",
+                    height: "112px",
+                    border: 2,
+                    borderRadius: "50%",
+                    borderColor: "#EBEBEB",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <Avatar
+                    src={adDetail?.pageInfo?.logo}
+                    aria-label="FirstCard"
+                    style={{ width: "100%", height: "100%" }}
+                  ></Avatar>
+                </Box>
+              </Grid>
+              <Grid
+                item
+                xs={6}
+                sm={12}
+                md={12}
+                lg={5}
+                direction="column"
+                style={{
+                  marginTop: "36px",
+                  "@media screen and (min-width: 700px) and (max-width: 780px) ":
+                    {
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    },
                 }}
               >
-                <Stack
-                  sx={{
-                    alignItems: "center",
-                    justifyContent: "center",
-                    marginRight: "60px",
-                  }}
-                  spacing={2}
-                >
-                  <Typography style={{ fontWeight: 600 }} noWrap>
-                    {adDetail?.pageInfo?.name}
-                  </Typography>
-                  <Box
-                    sx={{
-                      width: "112px",
-                      height: "112px",
-                      border: 2,
-                      borderRadius: "50%",
-                      borderColor: "#EBEBEB",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    <Avatar
-                      src={adDetail?.pageInfo?.logo}
-                      aria-label="FirstCard"
-                      style={{ width: "100%", height: "100%" }}
-                    ></Avatar>
-                  </Box>
-                </Stack>
-                <Stack style={{ justifyContent: "center", marginTop: "36px" }}>
-                  {adDetail?.pageInfo?.platforms.map((socialMedia, index) => {
-                    return (
-                      <Stack
-                        key={index}
-                        direction={"row"}
-                        sx={{
-                          marginBottom: "16px",
-                        }}
-                      >
-                        <Box sx={{ marginRight: "10px" }}>
-                          <img
-                            src={
-                              socialMedia.name === "Facebook"
-                                ? facebook
-                                : instragram
-                            }
-                            aria-label="Add"
-                          />
-                        </Box>
-                        <Stack>
-                          <Typography
-                            style={{
-                              fontFamily: "Neue Haas Grotesk Display Pro",
-                            }}
-                          >
-                            {socialMedia?.other}
-                          </Typography>
-                          <Typography
-                            style={{
-                              fontFamily: "Neue Haas Grotesk Display Pro",
-                            }}
-                          >
-                            {socialMedia.name === "Facebook"
-                              ? socialMedia.likes +
-                                " likes • " +
-                                socialMedia.type
-                              : socialMedia.followers +
-                                " followers • " +
-                                socialMedia.type}
-                          </Typography>
-                        </Stack>
+                {adDetail?.pageInfo?.platforms.map((socialMedia, index) => {
+                  return (
+                    <Stack
+                      key={index}
+                      direction={"row"}
+                      sx={{
+                        marginBottom: "16px",
+                      }}
+                    >
+                      <Box sx={{ marginRight: "10px" }}>
+                        <img
+                          src={
+                            socialMedia.name === "Facebook"
+                              ? facebook
+                              : instragram
+                          }
+                          aria-label="Add"
+                        />
+                      </Box>
+                      <Stack>
+                        <Typography
+                          style={{
+                            fontFamily: "Neue Haas Grotesk Display Pro",
+                          }}
+                        >
+                          {socialMedia?.other}
+                        </Typography>
+                        <Typography
+                          style={{
+                            fontFamily: "Neue Haas Grotesk Display Pro",
+                          }}
+                        >
+                          {socialMedia.name === "Facebook"
+                            ? socialMedia.likes + " likes • " + socialMedia.type
+                            : socialMedia.followers +
+                              " followers • " +
+                              socialMedia.type}
+                        </Typography>
                       </Stack>
-                    );
-                  })}
-                </Stack>
+                    </Stack>
+                  );
+                })}
               </Grid>
-              <Grid>
+            </Grid>
+            {(window.innerWidth > 1024 || window.innerWidth < 450) && (
+              <Grid item xs={12} sm={12}>
                 <Stack
                   sx={{
                     marginTop: 1,
@@ -512,10 +749,10 @@ function AdDeatails() {
                   </Typography>
 
                   <Grid container>
-                    <Grid item xs={12} lg={12} sm={12}>
+                    <Grid item xs={12} lg={12} sm={12} sx={12}>
                       {/* <AreaLineGraph /> */}
-{/* <CustomizedView /> */}
-{/* <AreaLineGraph /> */}
+                      {/* <CustomizedView /> */}
+                      {/* <AreaLineGraph /> */}
                       <MyChart
                         chartData={adDetail?.history}
                         dataBoxVisiblity={false}
@@ -527,8 +764,39 @@ function AdDeatails() {
                   </Grid>
                 </Stack>
               </Grid>
-            </Box>
+            )}
+
+            {/* </Box> */}
           </Grid>
+          {window.innerWidth <= 1024 && window.innerWidth > 450 && (
+            <Grid item md={12} sm={12} xs={12} lg={0} sx={{ marginTop: 2 }}>
+              <Stack
+                sx={{
+                  marginTop: 1,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                direction="column"
+              >
+                <Typography variant="h6">
+                  <b>Ad Count Over 30 Days</b>
+                </Typography>
+
+                <Grid container>
+                  <Grid item xs={12} lg={12} sm={12}>
+                    <MyChart
+                      chartData={adDetail?.history}
+                      dataBoxVisiblity={false}
+                      axisVisiblity={true}
+                      fillType={"area"}
+                      graphHeight={350}
+                    />
+                  </Grid>
+                </Grid>
+              </Stack>
+            </Grid>
+          )}
         </Grid>
       )}
     </>

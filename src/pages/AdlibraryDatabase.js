@@ -109,7 +109,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Addlibrarydatabase = () => {
   const classes = useStyles();
- 
+
   return (
     <>
       <BackTotopbutton />
@@ -117,7 +117,9 @@ const Addlibrarydatabase = () => {
       <Grid
         container
         sx={{
-          paddingRight: "36px",
+          // paddingRight: "36px",
+          width: "97% !important",
+          marginX: "auto",
         }}
       >
         <Grid item xs={12}>
@@ -126,7 +128,16 @@ const Addlibrarydatabase = () => {
               className={classes.titleHome}
               variant="h5"
               ml={1}
-              sx={{ fontWeight: "bold",color:"#3A3D4B" }}
+              sx={{
+                fontWeight: "bold",
+                color: "#3A3D4B",
+                "@media (max-width: 450px)": {
+                  display:"flex",
+                  justifyContent:"center",
+                  alignItems:"center",
+                  marginTop:"15px"
+                },
+              }}
             >
               Adlibrary Database
             </Typography>
@@ -140,6 +151,9 @@ const Addlibrarydatabase = () => {
             borderRadius: "15px",
             padding: "16px 36px",
             marginTop: 2,
+            "@media (max-width: 450px)": {
+              marginTop: 1,
+            },
           }}
         >
           <Box>
@@ -149,10 +163,14 @@ const Addlibrarydatabase = () => {
             <FilterChips />
           </Box>
         </Grid>
-        <Grid container justifyContent="flex-end" sx={{ marginTop: "10px", marginBottom:"15px" }}>
+        <Grid
+          container
+          justifyContent="flex-end"
+          sx={{ marginTop: "10px", marginBottom: "15px" }}
+        >
           <SortFilter />
         </Grid>
-        <Grid item sx={{ width: "100%" }} >
+        <Grid item sx={{ width: "100%" }}>
           <AdsList />
         </Grid>
       </Grid>
