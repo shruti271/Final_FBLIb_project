@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Stack, Typography } from "@mui/material";
+import { Button, Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { Box } from "@mui/system";
 import {
   Route,
@@ -37,7 +37,8 @@ function AdDeatailsTabs() {
   const subAllAds = useSelector((state) => state.subAllAds);
   const { filteredSavedAds } = useSelector((state) => state.filteredSavedAds);
   const { singleAdData, loading } = useSelector((state) => state.singleAdData);
-
+  const theme = useTheme();
+  const showgrid = useMediaQuery(theme.breakpoints.only("xs"));
   useEffect(() => {
     if(state)
     setRedirectToPage(state.fromPage);
@@ -204,10 +205,15 @@ function AdDeatailsTabs() {
           </Stack>
         </Box>
       </Box>
+      <Box  sx={{width: showgrid?"90% !important":"98% !important", margin:"auto",
+          display:"flex",
+          justifyContent:"center",
+          alignItems:"center"}}>
       <Routes>
         <Route exact path="" element={<AdDeatails />} />
         <Route exact path="allAds" element={<AllAds />} />
       </Routes>
+      </Box>
     </>
   );
 }

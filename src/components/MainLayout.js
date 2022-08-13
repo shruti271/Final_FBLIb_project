@@ -72,8 +72,8 @@ const MainLayout = () => {
 
   return (
     <>
-      <Box sx={{ display: "flex" }}>
-        <CssBaseline />
+      <Box display={showhidedrawer?"":"flex"}>
+      <CssBaseline />
         {
           showhidedrawer ? <MobileAppBar /> :
           (
@@ -83,13 +83,7 @@ const MainLayout = () => {
             </>
           )
          } 
-        {/* {windowWidth>= 1440 && (
-          <>
-            <CustomSidebar isOpen={isOpen} />
-            <CustomAppBar isOpen={isOpen} setIsOpen={setIsOpen} />
-          </>
-        )}
-        {windowWidth < 1440 && <MobileAppBar />} */}
+        
 
         <Box
           component="main"

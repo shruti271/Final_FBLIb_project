@@ -56,6 +56,12 @@ function MobileAppBar() {
   const classes = useStyles();
   const { accountSettings } = useSelector((state) => state.accountSettings);
   const [isOpen, setIsOpen] = React.useState(false);
+  useEffect(()=>{
+    localStorage.setItem('IsDrawerOpen', JSON.stringify(isOpen));
+    console.log("999 ---",isOpen)
+  })
+  
+  console.log("999 ---",isOpen)
 //   const [setIsOpen, setIsMenuOptionActive] = React.useState("");
 
   const MenuListOptios = [
@@ -93,7 +99,7 @@ function MobileAppBar() {
   return (
     <>
       <AppBar open={isOpen}>
-        <Toolbar sx={{ ml: -1 }}>
+        <Toolbar>
           <Stack
             direction={"row"}
             style={{
@@ -140,7 +146,7 @@ function MobileAppBar() {
                 alt="small-logo"
                 src={fbEyelogo}
                 onClick={() => navigate("/auth/login")}
-                style={{ cursor: "pointer" ,width:"50px", verticalAlign:"bottom"}}
+                style={{ cursor: "pointer" ,width:"50px"}}
               />
             </Box>
             </Stack>
@@ -149,7 +155,7 @@ function MobileAppBar() {
                 <Box
                   className={classes.avtar}
                   onClick={handleOpenMenu}
-                  sx={{ cursor: "pointer" }}
+                  sx={{ cursor: "pointer", }}
                 >
                   <PersonIcon />
                 </Box>
@@ -168,21 +174,21 @@ function MobileAppBar() {
                     onClose={handleCloseMenu}
                     PaperProps={{
                       style: {
-                        marginTop: 13,
-                        maxHeight: 40 * 6,
+                        // marginTop: 13,
+                        // maxHeight: 40 * 6,
                         width: "auto", //"35ch",
-                        background: "white",
+                        background: "white",                        
                       },
                     }}
                   >
-                    <Box marginLeft={3} marginTop={1} marginBottom={1}>
+                    <Box marginLeft={3} marginTop={1} marginBottom={1} paddingRight={1}>
                       <Typography>
                         <b>
                           {accountSettings &&
                             `${accountSettings?.first_name} ${accountSettings?.last_name}`}
                         </b>
                       </Typography>
-                      <Typography>
+                      <Typography noWrap>
                         {accountSettings && accountSettings?.email}
                       </Typography>
                     </Box>

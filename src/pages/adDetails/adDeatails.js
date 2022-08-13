@@ -60,10 +60,11 @@ function AdDeatails() {
   const theme = useTheme();
 
   const showGraph = useMediaQuery(theme.breakpoints.down("md"));
-  const DownloadBUtton = useMediaQuery(theme.breakpoints.down("md"));
+  let DownloadBUtton = useMediaQuery(theme.breakpoints.down("md"));
   
 
   const [adDetail, setAdDetail] = useState();
+  const [IsDrawerOpen, setIsDrawerOpen] = useState(true);
 
   window.scrollTo(
     {
@@ -72,7 +73,14 @@ function AdDeatails() {
     },
     []
   );
-
+  useEffect(()=>{
+    console.log("999  ---546 ",localStorage.getItem("IsDrawerOpen"))
+   setIsDrawerOpen(()=>localStorage.getItem("IsDrawerOpen"))
+   if(!IsDrawerOpen){
+    
+   }
+  })
+  
   useEffect(() => {
     if (filteredAds.filteredAds.length > 0) {
       // filteredAds.filteredAds.find((ad) => ad.id === adId && ad) ||
@@ -369,7 +377,7 @@ function AdDeatails() {
                 items
                 xs={12}
                 sm={12}
-                md={6}
+                md={IsDrawerOpen?12:6}
                 lg={6}
                 sx={{
                   display: "flex",
@@ -402,7 +410,7 @@ function AdDeatails() {
                             <Download />
                           }
                           label={
-                            <Typography ml={0.5} sx={{ fontWeight: "bold" }} noWrap>
+                            <Typography ml={0.5} sx={{ fontWeight: "bold" }}>
                               {" "}
                               Download Thumbnai
                             </Typography>
@@ -418,7 +426,7 @@ function AdDeatails() {
               </Grid>
               <Grid
                 items
-                md={6}
+                md={IsDrawerOpen?12:6}
                 xs={12}
                 sm={12}
                 lg={6}
@@ -427,7 +435,7 @@ function AdDeatails() {
                   justifyContent: "center",
                   alignItems: "center",
                   // "@media (max-width: 800px)": {
-                    marginTop: DownloadBUtton ?2:"",
+                    marginTop: DownloadBUtton || IsDrawerOpen ?2:"",
                   // },
                 }}
               >

@@ -43,11 +43,11 @@ return (
     }
   >
     <Grid
-      item
-      sx={{
-        width: "100%",
-      }}
-    >
+          item
+          sx={{
+            width: "90%",
+          }}
+        >
       <Grid
         container
         // spacing={2}

@@ -174,8 +174,8 @@ const ThumbNailBox = ({ adInfo, index }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const theme = useTheme();
-  // const smallScreenPointOnly = useMediaQuery(theme.breakpoints.only("xs"));
+  const theme = useTheme();
+  const smallScreenPointOnly = useMediaQuery(theme.breakpoints.only("xs"));
 
   const [queryObject, setQueryObject] = useState({});
 
@@ -252,12 +252,13 @@ const ThumbNailBox = ({ adInfo, index }) => {
   }, [savedAdsPerams]);
 
   return (
-    <Grid item xl={3} lg={4} md={6} sm={6} xs={12} key={index} sx={{ p:{lg:1,md:1,sm:1,}, pb:{xs:3}}}>
+    <Grid item xl={3} lg={4} md={6} sm={6} xs={12} key={index} sx={{ p:{lg:1,md:1,sm:1,xs:"0px"}, pb:{xs:3}}}>
       <Card
         sx={{
           borderRadius: "16px",
           boxShadow: "none",
           border: "1px solid #EBEBEB",
+          
         }}
       >
         <Stack
@@ -268,6 +269,7 @@ const ThumbNailBox = ({ adInfo, index }) => {
             paddingRight:"20px",
             paddingBottom:"14px",
             justifyContent: "space-between",
+           
           }}
         >
           <Box className={classes.Addheader}>

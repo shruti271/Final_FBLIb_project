@@ -57,6 +57,12 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
   const [isMenuOptionActive, setIsMenuOptionActive] = React.useState("");
   const navigate = useNavigate();
   const [anchoerEL, setAnchoerEL] = React.useState();
+
+  useEffect(()=>{
+    localStorage.setItem('IsDrawerOpen', JSON.stringify(isOpen));
+    console.log("999 ---",isOpen)
+  })
+  
   const handleOpenMenu = (e) => {
     setAnchoerEL(e.currentTarget);
   };
@@ -181,7 +187,7 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
                       },
                     }}
                   >
-                    <Box marginLeft={3} marginTop={1} marginBottom={1}>
+                    <Box marginLeft={3} marginTop={1} marginBottom={1} paddingRight={1}>
                       <Typography>
                         <b>
                           {accountSettings &&
