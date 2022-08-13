@@ -133,7 +133,7 @@ function AccountSettings() {
   return (
     <>
       <Grid container>
-        <Grid item xs={12} pr={5}>
+        <Grid item xs={12} sx={{ pl:{lg:5,md:5,sm:5}}}>
           <Stack>
             <Typography variant="h5" className={classes.headindtextcenter} sx={{"@media (max-width: 450px)": {
                   display: "flex",
@@ -145,12 +145,13 @@ function AccountSettings() {
             </Typography>
 
             <Stack direction={"column"} marginTop={4} sx={{"@media (max-width: 450px)": {
+             
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
                   marginTop: "15px",
                 },}}>
-              <Box>
+              <Box sx={{width:{lg:"80%",sm:"90%",xs:"90%",md:"90%"}}}>
                 <Typography variant="h6" className={classes.headindtextcenter} sx={{"@media (max-width: 450px)": {
                   display: "flex",
                   justifyContent: "center",
@@ -285,7 +286,9 @@ function AccountSettings() {
                               background:
                                 "linear-gradient(243.18deg, #B5EDFF 0%, #00CBFF 28.65%, #6721FF 85.94%)",
                               whiteSpace: "nowrap",
-                              width: changepassword ? "190px" : "226px",
+                              width: savebutton ? "auto" : "99%",
+                              textTransform:"none",
+                              fontWeight:"bold"
                             }}
                           >
                             {loading &&
@@ -307,8 +310,13 @@ function AccountSettings() {
                 </Box>
               </Box>
 
-              <Box marginTop={3} >
-                <Typography variant="h6" className={classes.headindtextcenter}>
+              <Box marginTop={3} sx={{width:{lg:"80%",sm:"90%",xs:"90%",md:"90%"}}} >
+                <Typography variant="h6" className={classes.headindtextcenter} sx={{"@media (max-width: 450px)": {
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginTop: "15px",
+                },}}>
                   Security
                 </Typography>
                 <Box
@@ -484,6 +492,7 @@ function AccountSettings() {
                           <Grid
                             lg={8}
                             sm={8}
+                            xs={12}
                             style={{
                               display: "flex",
                               justifyContent: savebutton ? "right" : "center",
@@ -500,7 +509,9 @@ function AccountSettings() {
                                 background:
                                   "linear-gradient(243.18deg, #B5EDFF 0%, #00CBFF 28.65%, #6721FF 85.94%)",
                                 whiteSpace: "nowrap",
-                                width: changepassword ? "190px" : "226px",
+                                width: savebutton ? "auto" : "99%",
+                                textTransform:"none",
+                                fontWeight:"bold"
                               }}
                             >
                               {loading && LoadingFor.Password === loadingFor ? (
@@ -521,73 +532,21 @@ function AccountSettings() {
                   </Stack>
                 </Box>
               </Box>
-              {/* <Box marginTop={3}>
-                <Typography variant="h6">Billing</Typography>
-                <Box
-                  marginTop={1}
-                  border={0.5}
-                  borderRadius={5}
-                  borderColor="#EBEBEB"
-                  display="flex"
-                  justifyContent="center"
-                  alignItems="center"
-                >
-                  <Stack
-                    direction={"column"}
-                    width="90%"
-                    marginTop={3}
-                    marginBottom={3}
-                  >
-                    <Stack
-                      direction={"column"}
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                      }}
-                    >
-                      <Stack direction={"row"} spacing={10}>
-                        <Stack direction={"column"}>
-                          <Typography>Payment method</Typography>
-                        </Stack>
-                        <Stack direction={"column"}>
-                          <Stack direction={"row"} ml={4}>
-                            <Typography>
-                              {subscriptionData?.data?.card_brand ===
-                              "mastercard" ? (
-                                <img
-                                  src={mastercard}
-                                  alt="mastercard"
-                                  style={{ height: "25px" }}
-                                ></img>
-                              ) : (
-                                <img
-                                  src={viss}
-                                  alt="viss"
-                                  style={{ height: "20px", width: "30px" }}
-                                />
-                              )}
-                            </Typography>
-                            <Typography sx={{ marginLeft: 1 }}>
-                              <b>
-                                Visa ending in {subscriptionData?.data?.last4}
-                              </b>
-                            </Typography>
-                          </Stack>
-                        </Stack>
-                      </Stack>
-                    </Stack>
-                  </Stack>
-                </Box>
-              </Box> */}
+              
               <Typography
                 variant="h6"
-                className={classes.headindtextcenter}
-                p={1}
+                className={classes.headindtextcenter} sx={{"@media (max-width: 450px)": {
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginTop: "15px",
+                },}}
+                // p={1}
               >
                 Billing
               </Typography>
               <Grid
-                container
+                container sx={{width:{lg:"80%",sm:"90%",xs:"90%",md:"90%"}}}
                 padding={4}
                 border={0.5}
                 borderRadius={5}
@@ -660,8 +619,13 @@ function AccountSettings() {
                 </Grid>
               </Grid>
 
-              <Box marginTop={3}>
-                <Typography variant="h6" className={classes.headindtextcenter}>
+              <Box marginTop={3} >
+                <Typography variant="h6" className={classes.headindtextcenter} sx={{"@media (max-width: 450px)": {
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginTop: "15px",
+                },}}>
                   Subscription
                 </Typography>
                 {/* <Box
@@ -752,18 +716,18 @@ function AccountSettings() {
                 </Box> */}
               </Box>
 
-              <Grid
+              <Grid 
                 container
                 // marginTop={1}
                 p={3}
                 pt={3}
                 // pl={10}
-                sx={{ paddingLeft: { xs: "", sm: "", md: "", lg: "60px" } }}
+                sx={{ paddingLeft: { xs: "", sm: "", md: "", lg: "60px" } ,width:{lg:"80%",sm:"90%",xs:"90%",md:"90%"}}}
                 border={0.5}
                 borderRadius={5}
                 borderColor="#EBEBEB"
               >
-                <Grid item xs={12} sm={4} md={4} lg={3}>
+                <Grid item xs={12} sm={5} md={5} lg={3}>
                   <Typography
                     sx={{
                       marginLeft: {
@@ -778,7 +742,7 @@ function AccountSettings() {
                     <b>{subscriptionData?.data?.status}</b>
                   </Typography>
                 </Grid>
-                <Grid item xs={12} sm={4} md={4} lg={3}>
+                <Grid item xs={12} sm={3} md={3} lg={2}>
                   <Typography
                     sx={{
                       marginTop: {
@@ -810,9 +774,11 @@ function AccountSettings() {
                 <Grid
                   item
                   xs={12}
-                  lg={2}
+                  lg={3}
+                  
                   sx={{
-                    padding: { xs: "12px", sm: "12px", md: "10px", lg: "0px" },
+                    paddingTop:{xs:1},
+                    padding: {  sm: "12px", md: "10px", lg: "0px" },
                     marginLeft: {
                       // xs: "auto",
                       sm: "40px",
@@ -832,8 +798,10 @@ function AccountSettings() {
                       background:
                         "linear-gradient(243.18deg, #B5EDFF 0%, #00CBFF 28.65%, #6721FF 85.94%)",
                       whiteSpace: "nowrap",
-                      justifyContent: "flex-end",
-                      // width: changepassword ? "190px" : "200px",
+                      // justifyContent: "flex-end",
+                      textTransform:"none",
+                      fontWeight:"bold",
+                      width: savebutton ? "auto" : "100%",
                     }}
                     onClick={
                       subscriptionData?.data?.status === "Canceled" ||
@@ -851,10 +819,10 @@ function AccountSettings() {
                       />
                     ) : (
                       <>
-                        {subscriptionData?.data?.status === "Canceled" ||
-                        subscriptionData?.data?.status === "Inactive"
-                          ? "Active Your plan"
-                          : "Cancel Subscription"}
+                          {subscriptionData?.data?.status === "Canceled" ||
+                          subscriptionData?.data?.status === "Inactive"
+                            ? "Active Your plan"
+                            : "Cancel Subscription"}
                       </>
                     )}
                   </Button>

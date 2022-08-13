@@ -140,7 +140,7 @@ function MobileAppBar() {
                 alt="small-logo"
                 src={fbEyelogo}
                 onClick={() => navigate("/auth/login")}
-                style={{ cursor: "pointer" ,width:"50px"}}
+                style={{ cursor: "pointer" ,width:"50px", verticalAlign:"bottom"}}
               />
             </Box>
             </Stack>

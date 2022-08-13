@@ -61,8 +61,11 @@ function AdDeatails() {
   const subAllAds = useSelector((state) => state.subAllAds);
   const { filteredSavedAds } = useSelector((state) => state.filteredSavedAds);
   const { singleAdData, loading } = useSelector((state) => state.singleAdData);
-  // const theme = useTheme();
-  // const matchesMD = useMediaQuery(theme.breakpoints.only('md'));
+  const theme = useTheme();
+
+  const showGraph = useMediaQuery(theme.breakpoints.down("md"));
+  const DownloadBUtton = useMediaQuery(theme.breakpoints.down("md"));
+  
 
   const [adDetail, setAdDetail] = useState();
 
@@ -137,6 +140,7 @@ function AdDeatails() {
           container
           sx={{
             marginTop: "36px",
+            marginBottom:2,
             width: "95% !important",
             margin: "auto",
             paddingTop: 1,
@@ -402,7 +406,7 @@ function AdDeatails() {
                             <Download />
                           }
                           label={
-                            <Typography ml={0.5} sx={{ fontWeight: "bold" }}>
+                            <Typography ml={0.5} sx={{ fontWeight: "bold" }} noWrap>
                               {" "}
                               Download Thumbnai
                             </Typography>
@@ -426,9 +430,9 @@ function AdDeatails() {
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
-                  "@media (max-width: 800px)": {
-                    marginTop: 2,
-                  },
+                  // "@media (max-width: 800px)": {
+                    marginTop: DownloadBUtton ?2:"",
+                  // },
                 }}
               >
                 <Button
@@ -471,53 +475,7 @@ function AdDeatails() {
               </Grid>
             </Grid>
 
-            {/* <Grid container sx={{ justifyContent: "space-around" }} >
-                <Button
-                  style={{
-                    background: "linear-gradient(200deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)",
-                    borderRadius: 30,
-                    fontSize: "18px",
-                    textTransform: "none",
-                    paddingLeft: "16px",
-                    paddingRight: "16px",
-                  }}
-                >
-                  <a
-                    href={adDetail?.thumbBucketUrl}
-                    style={{ textDecoration: "none", color: "white" }}
-                    download
-                  >
-                    {" "}
-                    <Download />
-                    Download Thumbnail
-                  </a>
-                </Button>
-                <Button
-                  style={{
-                    background: "linear-gradient(200deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)",
-                    borderRadius: 30,
-                    fontSize: "18px",
-                    textTransform: "none",
-                    paddingLeft: "16px",
-                    paddingRight: "16px",
-                    
-                    "@media (max-width: 768px)": {
-                    margin:5,
-                    },
-                  }}
-                  disabled={adDetail?.adMediaType === "video" ? false : true}
-                >
-                  <a
-                    href={adDetail?.bucketMediaURL}
-                    style={{ textDecoration: "none", color: "white" }}
-                    download
-                  >
-                    {" "}
-                    <Download />
-                    Download Video
-                  </a>
-                </Button>
-              </Grid> */}
+           
             <Grid
               container
               sx={{
@@ -528,7 +486,7 @@ function AdDeatails() {
             >
               <Grid
                 item
-                md={12}
+                md={4}
                 xs={4}
                 sm={12}
                 lg={4}
@@ -536,12 +494,10 @@ function AdDeatails() {
                   display: "flex",
                   justifyContent: "start",
                   alignItems: "center",
-                  "@media (max-width: 800px)": {
-                    marginTop: 2,
-                  },
-                  "@media (max-width: 450px)": {
-                    // alignItems: "start",
-                  },
+                  // "@media (max-width: 800px)": {
+                    marginTop: showGraph ? 2:"",
+                  // },
+                  
                 }}
                 direction="column"
               >
@@ -552,7 +508,7 @@ function AdDeatails() {
               </Grid>
               <Grid
                 item
-                md={12}
+                md={4}
                 xs={4}
                 sm={12}
                 lg={4}
@@ -560,16 +516,17 @@ function AdDeatails() {
                   display: "flex",
                   justifyContent: "start",
                   alignItems: "center",
-                  "@media (max-width: 800px)": {
-                    marginTop: 2,
-                  },
+                  marginTop: showGraph ? 2:"",
+                  // "@media (max-width: 800px)": {
+                  //   marginTop: 2,
+                  // },
                   // "@media (max-width: 450px)": {
                   //   alignItems: "start",
                   // },
                 }}
                 direction="column"
               >
-                <Typography className={classes.textdeco}>
+                <Typography className={classes.textdeco} noWrap>
                   Started Running:
                 </Typography>
                 <Typography className={classes.textdeco}>
@@ -591,7 +548,7 @@ function AdDeatails() {
               </Grid>
               <Grid
                 item
-                md={12}
+                md={4}
                 xs={4}
                 sm={12}
                 lg={4}
@@ -599,9 +556,10 @@ function AdDeatails() {
                   display: "flex",
                   justifyContent: "start",
                   alignItems: "center",
-                  "@media (max-width: 800px)": {
-                    marginTop: 2,
-                  },
+                  marginTop: showGraph ? 2:"",
+                  // "@media (max-width: 800px)": {
+                  //   marginTop: 2,
+                  // },
                   "@media (max-width: 450px)": {
                     // marginTop: 2,
                     // alignItems: "start",
@@ -626,18 +584,15 @@ function AdDeatails() {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                marginTop: "10px",
-                // flexWrap: "nowrap",
-                "@media (max-width: 800px)": {
-                  marginTop: 4,
-                },
+                marginTop: showGraph ? "50px" : "10px",
+                
               }}
             >
               <Grid
                 item
                 xs={6}
                 sm={3}
-                md={12}
+                md={5}
                 lg={3}
                 sx={{
                   display: "flex",
@@ -678,7 +633,7 @@ function AdDeatails() {
                 item
                 xs={6}
                 sm={12}
-                md={12}
+                md={6}
                 lg={5}
                 flexDirection="column"
                 style={{
@@ -738,14 +693,15 @@ function AdDeatails() {
                 })}
               </Grid>
             </Grid>
-            {(window.innerWidth > 1024 || window.innerWidth < 450) && (
+            {!showGraph && (
               <Grid item xs={12} sm={12}>
                 <Stack
                   sx={{
-                    marginTop: 1,
+                    marginTop: 2,
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
+                    
                   }}
                   direction="column"
                 >
@@ -773,7 +729,7 @@ function AdDeatails() {
 
             {/* </Box> */}
           </Grid>
-          {window.innerWidth <= 1024 && window.innerWidth > 450 && (
+          {showGraph && (
             <Grid item md={12} sm={12} xs={12} lg={0} sx={{ marginTop: 2 }}>
               <Stack
                 sx={{

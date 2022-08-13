@@ -53,7 +53,7 @@ const ContactSupport = () => {
           marginTop:2,
           // marginLeft:"35px",
           // width:{lg:"80%",md:"90%",sm:"90%",xs:"99%"},
-          marginLeft: { xs: "15px", sm: "35px", md: 0, lg: "40px" },
+          marginLeft: { xs: "15px", sm: "35px", md: "30px", lg: "40px" },
           marginRight: { xs:"15px", sm: 0, md: 0, lg: "40px" },
         }}
       >
@@ -73,7 +73,7 @@ const ContactSupport = () => {
             alignItems: "center",
             justifyContent: "center",
           }}
-          width={{ lg: "60%", md: "90%", sm: "90%" }}
+          width={{ lg: "70%", md: "90%", sm: "90%" }}
           border={0.5}
           borderRadius={5}
           marginTop={3}

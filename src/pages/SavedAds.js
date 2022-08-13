@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Grid, Stack, Typography } from "@mui/material";
+import { Button, Grid, Stack, Typography, useMediaQuery ,useTheme} from "@mui/material";
 import filter from "../assets/filter.svg";
 import { Box } from "@material-ui/core";
 import BackTotopbutton from "../pages/Backtotopbutton";
@@ -23,9 +23,12 @@ const useStyles = makeStyles((theme) => ({
 
 const SavedAds = () => {
   const classes = useStyles();
+  const theme = useTheme();
 
+  const ShowFilterButton = useMediaQuery(theme.breakpoints.up("sm"));
+  const ShowFilterWithClearButton = useMediaQuery(theme.breakpoints.only("xs"));
   const [filterActivate, setFilterActivate] = React.useState(true);
-
+console.log("888  ooo",ShowFilterButton)
   return (
     <>
       <ScrollToTop />
@@ -34,10 +37,16 @@ const SavedAds = () => {
         container
         sx={{
           // paddingRight: "36px",
-          width: "97%",
+          width: "95%",
+          margin:"auto",
+          display:"flex",
+          justifyContent:"center",
+          alignItems:"center"
         }}
       >
-        <Grid item xs={12}>
+        <Grid item xs={12} sx={{display:"flex",
+          justifyContent:"center",
+          alignItems:"center"}}>
           <Box component="main">
             <Typography
               className={classes.titleHome}
@@ -63,11 +72,11 @@ const SavedAds = () => {
           xs={12}
           sx={{
             paddingTop:1,
-            "@media (max-width: 450px)": {
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            },
+            // "@media (max-width: 450px)": {
+              display: ShowFilterWithClearButton?"flex":"",
+              justifyContent: ShowFilterWithClearButton?"center":"",
+              alignItems: ShowFilterWithClearButton?"center":"",
+            // },
           }}
         >
           {filterActivate && (
@@ -85,13 +94,17 @@ const SavedAds = () => {
               <FilterChips />
             </Stack>
           )}
-          {!filterActivate && window.location.pathname === `/savedAds` && (
+          {!filterActivate && (
+            <Box width="100%" sx={{display:"flex", justifyContent:"center", alignItems:"center"}}>
             <Button
               sx={{
                 background:
                   "linear-gradient(243.18deg, #B5EDFF 0%, #00CBFF 28.65%, #6721FF 85.94%)",
-                width: "85%",visibility:{xs:"visible",lg:"hidden",md:"hidden",sm:"hidden"},
+                width: "100%",visibility:{xs:"visible",lg:"hidden",md:"hidden",sm:"hidden"},
                 borderRadius: 3,
+                display:"flex",
+                justifyContent:"center",
+                alignItems:"center",
                 height:"40px", color:"white",
               }}
               onClick={()=>setFilterActivate(true)}
@@ -111,6 +124,7 @@ const SavedAds = () => {
                 }}
               /><Typography sx={{textTransform:"none",paddingLeft:1 , fontWeight:"bold"}}> Filters </Typography>
             </Button>
+            </Box>
           )}
         </Grid>
         <Grid
@@ -128,7 +142,7 @@ const SavedAds = () => {
             }}
             spacing={1}
           >
-            <Box sx={{ visibility: { xs: "hidden" ,sm:"visible",lg:"visible",md:"visible",},}}
+            {ShowFilterButton && <Box //sx={{ visibility:ShowFilterButton?"hidden":"visible" }}//{ xs: "hidden" ,sm:"visible",lg:"visible",md:"visible",},}}
               style={{
                 background:
                   "linear-gradient(243.18deg, #B5EDFF 0%, #00CBFF 28.65%, #6721FF 85.94%)",
@@ -170,7 +184,7 @@ const SavedAds = () => {
                   }}
                 />
               )}
-            </Box>
+            </Box>}
             <Box>
               <SortFilter />
             </Box>

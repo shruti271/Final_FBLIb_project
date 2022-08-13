@@ -13,6 +13,8 @@ import {
   Slider,
   Stack,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import Arrowdown from "../assets/Arrowdown.svg";
@@ -139,7 +141,10 @@ const useStyles = makeStyles((theme) => ({
 function AllFilters(props) {
   const [pageName, setPageName] = useState("");
   const [searchBarValue, setSearchBarValue] = useState("");
+  const theme = useTheme();
 
+  // const ShowFilterButton = useMediaQuery(theme.breakpoints.up("sm"));
+  const ShowFilterWithClearButton = useMediaQuery(theme.breakpoints.only("xs"));
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -1997,13 +2002,13 @@ function AllFilters(props) {
           <Box
             sx={{
               display: "flex",
-              justifyContent: "end",
-              alignItems: "end",
-              "@media (max-width: 450px)": {
-                marginTop: 2,
-                justifyContent: "center",
-                alignItems: "center",
-              },
+              // justifyContent: "end",
+              // alignItems: "end",
+              // "@media (max-width: 450px)": {
+                marginTop: ShowFilterWithClearButton ?2:"",
+                justifyContent: ShowFilterWithClearButton ?"center":"end",
+                alignItems: ShowFilterWithClearButton ?"center":"end",
+              // },
             }}
           >
             {/* <Grid container> */}
@@ -2022,10 +2027,10 @@ function AllFilters(props) {
                 }
               }}
               style={{
-                //  width:"40%",//{xs:"40%",sm:"40%",lg:"auto",md:"auto"},
-                width:"100px",
+                 width:ShowFilterWithClearButton?"40%":"",//{xs:"40%",sm:"40%",lg:"auto",md:"auto"},
+                
                 fontWeight: 600, 
-                height: "40px",               
+                // height: "40px",                 
                 color: "#00CBFF",
                 textTransform: "none",                
               }}
@@ -2043,7 +2048,7 @@ function AllFilters(props) {
                 Clear
               </Typography>
             </GradientButton>
-            {(window.location.pathname === `/savedAds`&& window.innerWidth<=450) && <Button
+            {(window.location.pathname === `/savedAds`&& ShowFilterWithClearButton) && <Button
               sx={{
                 background:
                   " linear-gradient(243.18deg, #B5EDFF 0%, #00CBFF 28.65%, #6721FF 85.94%)",

@@ -10,6 +10,8 @@ import {
   Stack,
   Tooltip,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import { makeStyles } from "@material-ui/core/styles";
 import Firstcardimg from "../assets/FirstCardImg.svg";
@@ -172,6 +174,8 @@ const ThumbNailBox = ({ adInfo, index }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const theme = useTheme();
+  const smallScreenPointOnly = useMediaQuery(theme.breakpoints.only("xs"));
 
   const [queryObject, setQueryObject] = useState({});
 
@@ -248,7 +252,7 @@ const ThumbNailBox = ({ adInfo, index }) => {
   }, [savedAdsPerams]);
 
   return (
-    <Grid item xl={3} lg={4} md={6} sm={6} xs={12} key={index} sx={{ padding: "10px" }}>
+    <Grid item xl={3} lg={4} md={6} sm={6} xs={12} key={index} sx={{ p:{lg:1,md:1,sm:1,}, pb:{xs:3}}}>
       <Card
         sx={{
           borderRadius: "16px",

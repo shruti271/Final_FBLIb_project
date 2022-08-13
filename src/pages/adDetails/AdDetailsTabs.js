@@ -122,12 +122,12 @@ function AdDeatailsTabs() {
       <Box
         sx={{
           width: "95%",
-          marginTop: 2,
+          // marginTop: 2,
           margin:"auto",
           typography: "body1",
           justifyContent: "center",
           alignItems: "center",
-          marginBottom:3
+          // marginBottom:3
           
         }}
       >
@@ -136,7 +136,7 @@ function AdDeatailsTabs() {
             navigate(redirectToPage);            
           }}
           sx={{ cursor: "pointer",
-          marginTop:"20px"   }}
+          marginTop:"10px"   }}
         >
           <Stack direction={"row"}>
             <Box sx={{ marginRight: "12px" }}>
@@ -152,7 +152,8 @@ function AdDeatailsTabs() {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            marginTop:"35px"
+            marginTop:"15px",
+            marginBottom:"10px"
           }}
           
         >
