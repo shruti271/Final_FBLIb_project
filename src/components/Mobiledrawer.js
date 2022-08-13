@@ -140,7 +140,7 @@ const MobileDrawer = ({  setIsOpen }) => {
       <Grid container sx={{ display: "flex", justifyContent: "center" }}>
         <Box
           style={{
-            width: divdercenter ? "41%":"77%",
+            width: divdercenter ? "77%":"77%",
             justify: "center",
             position: "absolute",
             left: "50%",
