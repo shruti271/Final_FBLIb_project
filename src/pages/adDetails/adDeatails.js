@@ -60,8 +60,11 @@ function AdDeatails() {
   const theme = useTheme();
 
   const showGraph = useMediaQuery(theme.breakpoints.down("md"));
-  let DownloadBUtton = useMediaQuery(theme.breakpoints.down("md"));
+  const DownloadBUtton = useMediaQuery(theme.breakpoints.down("md"));
+  const OnlyMdSizeScreen = useMediaQuery(theme.breakpoints.only("md"));
   
+  // const theme = useTheme();
+  const showgrid = useMediaQuery(theme.breakpoints.only("xs"));
 
   const [adDetail, setAdDetail] = useState();
   const [IsDrawerOpen, setIsDrawerOpen] = useState(true);
@@ -74,11 +77,10 @@ function AdDeatails() {
     []
   );
   useEffect(()=>{
-    console.log("999  ---546 ",localStorage.getItem("IsDrawerOpen"))
-   setIsDrawerOpen(()=>localStorage.getItem("IsDrawerOpen"))
-   if(!IsDrawerOpen){
-    
-   }
+    setIsDrawerOpen(()=>localStorage.getItem("IsDrawerOpen"))
+    console.log("999  ---546 ",localStorage.getItem("IsDrawerOpen"),IsDrawerOpen,OnlyMdSizeScreen)
+   
+  
   })
   
   useEffect(() => {
@@ -145,12 +147,16 @@ function AdDeatails() {
           sx={{
             marginTop: "36px",
             marginBottom:2,
-            width: "95% !important",
+            // width: "95% !important",
             margin: "auto",
             paddingTop: 1,
           }}
         >
-          <Grid item xs={12} lg={4} md={5} sm={6}>
+            <Box  sx={{width: showgrid?"90% !important":"98% !important", margin:"auto",
+          display:"flex",
+          justifyContent:"center",
+          alignItems:"center"}}>
+          <Grid item xs={12} lg={4} md={5} sm={6} sx={{ width: "95% !important",}}>
             <Box
               sx={{
                 border: "1px solid #EBEBEB",
@@ -370,14 +376,15 @@ function AdDeatails() {
               </Stack>
             </Box>
           </Grid>
-          <Grid item xs={12} lg={8} md={7} sm={6} p={2}>
+          </Box>
+          <Grid item xs={12} lg={8} md={7} sm={6} p={2} sx={{ width: "95% !important",}}>
             {/* <Box> */}
             <Grid container>
               <Grid
                 items
                 xs={12}
                 sm={12}
-                md={IsDrawerOpen?12:6}
+                md={(IsDrawerOpen && OnlyMdSizeScreen) ?12:6}
                 lg={6}
                 sx={{
                   display: "flex",
@@ -426,7 +433,7 @@ function AdDeatails() {
               </Grid>
               <Grid
                 items
-                md={IsDrawerOpen?12:6}
+                md={(IsDrawerOpen && OnlyMdSizeScreen)?12:6}
                 xs={12}
                 sm={12}
                 lg={6}
@@ -435,7 +442,7 @@ function AdDeatails() {
                   justifyContent: "center",
                   alignItems: "center",
                   // "@media (max-width: 800px)": {
-                    marginTop: DownloadBUtton || IsDrawerOpen ?2:"",
+                    marginTop: (DownloadBUtton )||(IsDrawerOpen && OnlyMdSizeScreen) ?2:"",
                   // },
                 }}
               >
@@ -498,6 +505,7 @@ function AdDeatails() {
                   display: "flex",
                   justifyContent: "start",
                   alignItems: "center",
+                  width: "99% !important",
                   // "@media (max-width: 800px)": {
                     marginTop: showGraph ? 2:"",
                   // },

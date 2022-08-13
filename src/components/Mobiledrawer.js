@@ -24,7 +24,7 @@ import { logoutUser } from "../services";
 const useStyles = makeStyles((theme) => ({
   handbergurMenu: {
     margin: theme.spacing(1, 3),
-    cursor:"pointer"
+    cursor: "pointer",
   },
   iconsize: {
     marginTop: theme.spacing(1),
@@ -52,20 +52,17 @@ const MobileDrawer = ({ isOpen, setIsOpen }) => {
   const [currentPage, setCurrentPage] = useState();
   const [openLogOut, setOpenLogOut] = React.useState(false);
   useEffect(() => {
-    if (window.location.pathname === `/ContactSupport`) {      
+    if (window.location.pathname === `/ContactSupport`) {
       setSelectedMenuItem(sideBarMenuItems.SUPPORT);
     } else if (window.location.pathname === `/`) {
       setSelectedMenuItem(sideBarMenuItems.ADLIBSDATABASE);
     } else if (window.location.pathname === `/savedAds`) {
       // document.title = "Savedads";
       setSelectedMenuItem(sideBarMenuItems.SAVEDADS);
-    }else if (window.location.pathname === `/accountSettings`) {
+    } else if (window.location.pathname === `/accountSettings`) {
       // document.title = "Savedads";
       setSelectedMenuItem(sideBarMenuItems.ACCOUNTSETTINGS);
-    } else if (
-      window.location.pathname.split("/").includes("adDeatails")
-      
-    ) {
+    } else if (window.location.pathname.split("/").includes("adDeatails")) {
       console.log("666 data ", currentPage);
       if (currentPage === "/savedAds")
         setSelectedMenuItem(sideBarMenuItems.SAVEDADS);
@@ -74,7 +71,7 @@ const MobileDrawer = ({ isOpen, setIsOpen }) => {
       setSelectedMenuItem("");
     }
   });
-  
+
   const handleClickOpen = () => {
     setOpenLogOut(true);
   };
@@ -105,10 +102,11 @@ const MobileDrawer = ({ isOpen, setIsOpen }) => {
       </svg>
       <MenuIcon
         className={classes.handbergurMenu}
-        sx={{ fill: "url(#linearColors)",fontSize: '35px' }}
-        onClick={()=>{
-          setIsOpen(()=>false)
-          console.log("first")}}
+        sx={{ fill: "url(#linearColors)", fontSize: "35px" }}
+        onClick={() => {
+          setIsOpen(() => false);
+          console.log("first");
+        }}
       />
       <Grid container sx={{ display: "flex", justifyContent: "center" }}>
         <Box
@@ -126,17 +124,21 @@ const MobileDrawer = ({ isOpen, setIsOpen }) => {
             <Stack
               direction={"row"}
               p={2.5}
-              sx={{ display: "flex", justifyContent: "center",cursor:"pointer" }}
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                cursor: "pointer",
+              }}
             >
               <FormControlLabel
                 control={
                   <AdLibraryDatabaseIcon
                     fontSize="large"
                     fill={
-                        selectedMenuItem === sideBarMenuItems.ADLIBSDATABASE
-                          ? "url(#linearColors)"
-                          : "grey"
-                      }
+                      selectedMenuItem === sideBarMenuItems.ADLIBSDATABASE
+                        ? "url(#linearColors)"
+                        : "grey"
+                    }
                   />
                 }
               />
@@ -147,13 +149,13 @@ const MobileDrawer = ({ isOpen, setIsOpen }) => {
                   fontWeight: "bold",
                 }}
                 className={
-                    selectedMenuItem === sideBarMenuItems.ADLIBSDATABASE
-                      ? classes.sideBarButton
-                      : ""
-                  }
+                  selectedMenuItem === sideBarMenuItems.ADLIBSDATABASE
+                    ? classes.sideBarButton
+                    : ""
+                }
                 onClick={() => {
                   setSelectedMenuItem(sideBarMenuItems.ADLIBSDATABASE);
-                  setIsOpen(()=>false)
+                  setIsOpen(() => false);
                   navigate("/");
                 }}
               >
@@ -165,15 +167,24 @@ const MobileDrawer = ({ isOpen, setIsOpen }) => {
               <Stack
                 direction={"row"}
                 p={2.5}
-                sx={{ display: "flex", justifyContent: "center",cursor:"pointer" }}
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  cursor: "pointer",
+                }}
               >
-                <FormControlLabel control={<SaveIcon fontSize="large" 
-                 fill={
-                    selectedMenuItem === sideBarMenuItems.SAVEDADS
-                      ? "url(#linearColors)"
-                      : "grey"
+                <FormControlLabel
+                  control={
+                    <SaveIcon
+                      fontSize="large"
+                      fill={
+                        selectedMenuItem === sideBarMenuItems.SAVEDADS
+                          ? "url(#linearColors)"
+                          : "grey"
+                      }
+                    />
                   }
-                />} />
+                />
                 <Typography
                   variant="h6"
                   // sx={{ fontWeight: "bold", color: "#3A3D4B" }}
@@ -187,11 +198,11 @@ const MobileDrawer = ({ isOpen, setIsOpen }) => {
                       ? classes.sideBarButton
                       : ""
                   }
-                onClick={() => {
-                  setSelectedMenuItem(sideBarMenuItems.SAVEDADS);
-                  setIsOpen(()=>false)
-                  navigate("/savedAds");
-                }}
+                  onClick={() => {
+                    setSelectedMenuItem(sideBarMenuItems.SAVEDADS);
+                    setIsOpen(() => false);
+                    navigate("/savedAds");
+                  }}
                 >
                   Saved Ads
                 </Typography>
@@ -203,11 +214,14 @@ const MobileDrawer = ({ isOpen, setIsOpen }) => {
               <Stack
                 direction={"row"}
                 p={2.5}
-                sx={{ display: "flex", justifyContent: "center",cursor:"pointer" }}
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  cursor: "pointer",
+                }}
               >
                 <FormControlLabel
-                  control={<img src={settings} width="30px" alt="icon"
-                  />}
+                  control={<img src={settings} width="30px" alt="icon" />}
                 />
                 <Typography
                   variant="h6"
@@ -222,11 +236,11 @@ const MobileDrawer = ({ isOpen, setIsOpen }) => {
                       ? classes.sideBarButton
                       : ""
                   }
-                onClick={() => {
-                  setSelectedMenuItem(sideBarMenuItems.ACCOUNTSETTINGS);
-                  setIsOpen(()=>false)
-                  navigate("/accountSettings");
-                }}
+                  onClick={() => {
+                    setSelectedMenuItem(sideBarMenuItems.ACCOUNTSETTINGS);
+                    setIsOpen(() => false);
+                    navigate("/accountSettings");
+                  }}
                 >
                   Account Settings
                 </Typography>
@@ -237,15 +251,24 @@ const MobileDrawer = ({ isOpen, setIsOpen }) => {
               <Stack
                 direction={"row"}
                 p={2.5}
-                sx={{ display: "flex", justifyContent: "center",cursor:"pointer" }}
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  cursor: "pointer",
+                }}
               >
-                <FormControlLabel control={<ContactIcon fontSize="large" 
-                fill={
-                    selectedMenuItem === sideBarMenuItems.SUPPORT
-                      ? "url(#linearColors)"
-                      : "grey"
+                <FormControlLabel
+                  control={
+                    <ContactIcon
+                      fontSize="large"
+                      fill={
+                        selectedMenuItem === sideBarMenuItems.SUPPORT
+                          ? "url(#linearColors)"
+                          : "grey"
+                      }
+                    />
                   }
-                />} />
+                />
                 <Typography
                   variant="h6"
                   // sx={{ fontWeight: "bold", color: "#3A3D4B" }}
@@ -259,11 +282,11 @@ const MobileDrawer = ({ isOpen, setIsOpen }) => {
                       ? classes.sideBarButton
                       : ""
                   }
-                onClick={() => {
-                  setSelectedMenuItem(sideBarMenuItems.SUPPORT);
-                  setIsOpen(()=>false)
-                  navigate("/ContactSupport");
-                }}
+                  onClick={() => {
+                    setSelectedMenuItem(sideBarMenuItems.SUPPORT);
+                    setIsOpen(() => false);
+                    navigate("/ContactSupport");
+                  }}
                 >
                   Contact Support
                 </Typography>
@@ -274,9 +297,15 @@ const MobileDrawer = ({ isOpen, setIsOpen }) => {
               <Stack
                 direction={"row"}
                 p={2.5}
-                sx={{ display: "flex", justifyContent: "center",cursor:"pointer" }}
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  cursor: "pointer",
+                }}
               >
-                <FormControlLabel control={<img src={logout} width="30px" alt="icon" />} />
+                <FormControlLabel
+                  control={<img src={logout} width="30px" alt="icon" />}
+                />
                 <Typography
                   variant="h6"
                   // sx={{ fontWeight: "bold", color: "#3A3D4B" }}
@@ -290,61 +319,61 @@ const MobileDrawer = ({ isOpen, setIsOpen }) => {
                       ? classes.sideBarButton
                       : ""
                   }
-                onClick={() => {
-                  handleClickOpen()
-                  setSelectedMenuItem(sideBarMenuItems.LOGOUT);
-                }}
+                  onClick={() => {
+                    handleClickOpen();
+                    setSelectedMenuItem(sideBarMenuItems.LOGOUT);
+                  }}
                 >
                   Log out
                 </Typography>
                 <Box p={2}>
-                <Dialog
-                  open={openLogOut}
-                  onClose={handleClose}
-                  aria-labelledby="alert-dialog-title"
-                  aria-describedby="alert-dialog-description"
-                >
-                  <DialogContent>
-                    <DialogContentText id="alert-dialog-description">
-                      <Typography
-                        variant="h5"
-                        p={2}
-                        sx={{ fontWeight: "bold", color: "#2B2F42" }}
-                      >
-                        Are You Sure For Logout ?
-                      </Typography>
-                    </DialogContentText>
-                  </DialogContent>
-                  <DialogActions
-                    sx={{ marginRight: "inherit", paddingBottom: "16px" }}
+                  <Dialog
+                    open={openLogOut}
+                    onClose={handleClose}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
                   >
-                    <Button
-                      onClick={handleClose}
-                      variant="contained"
-                      color="primary"
-                      style={{
-                        borderRadius: 50,
-                        backgroundColor: "#00CBFF",
-                        whiteSpace: "nowrap",
-                      }}
+                    <DialogContent>
+                      <DialogContentText id="alert-dialog-description">
+                        <Typography
+                          variant="h5"
+                          p={2}
+                          sx={{ fontWeight: "bold", color: "#2B2F42" }}
+                        >
+                          Are You Sure For Logout ?
+                        </Typography>
+                      </DialogContentText>
+                    </DialogContent>
+                    <DialogActions
+                      sx={{ marginRight: "inherit", paddingBottom: "16px" }}
                     >
-                      Cancel
-                    </Button>
-                    <Button
-                      onClick={userLogout}
-                      variant="contained"
-                      color="primary"
-                      style={{
-                        borderRadius: 50,
-                        backgroundColor: "#00CBFF",
-                        whiteSpace: "nowrap",
-                      }}
-                    >
-                      Yes
-                    </Button>
-                  </DialogActions>
-                </Dialog>
-              </Box>
+                      <Button
+                        onClick={handleClose}
+                        variant="contained"
+                        color="primary"
+                        style={{
+                          borderRadius: 50,
+                          backgroundColor: "#00CBFF",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        Cancel
+                      </Button>
+                      <Button
+                        onClick={userLogout}
+                        variant="contained"
+                        color="primary"
+                        style={{
+                          borderRadius: 50,
+                          backgroundColor: "#00CBFF",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        Yes
+                      </Button>
+                    </DialogActions>
+                  </Dialog>
+                </Box>
               </Stack>
             </Grid>
             <Divider textAlign="center"></Divider>
@@ -355,5 +384,3 @@ const MobileDrawer = ({ isOpen, setIsOpen }) => {
   );
 };
 export default MobileDrawer;
-
-
