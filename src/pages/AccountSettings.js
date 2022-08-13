@@ -81,9 +81,9 @@ function AccountSettings() {
   });
 
   useEffect(() => {
-    document.title = "Account Setting"
-    const favicon = getFaviconEl();
-    favicon.href = "accountSetting.png";
+    // document.title = "Account Setting"
+    // const favicon = getFaviconEl();
+    // favicon.href = "accountSetting.png";
     personalFormSetValue("first_name", accountSettings?.first_name);
     personalFormSetValue("last_name", accountSettings?.last_name);
   }, [accountSettings, personalFormSetValue]);
@@ -135,13 +135,28 @@ function AccountSettings() {
       <Grid container>
         <Grid item xs={12} pr={5}>
           <Stack>
-            <Typography variant="h5" className={classes.headindtextcenter}>
+            <Typography variant="h5" className={classes.headindtextcenter} sx={{"@media (max-width: 450px)": {
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginTop: "15px",
+                },}}>
               <b>Account Settings</b>
             </Typography>
 
-            <Stack direction={"column"} marginTop={4}>
+            <Stack direction={"column"} marginTop={4} sx={{"@media (max-width: 450px)": {
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginTop: "15px",
+                },}}>
               <Box>
-                <Typography variant="h6" className={classes.headindtextcenter}>
+                <Typography variant="h6" className={classes.headindtextcenter} sx={{"@media (max-width: 450px)": {
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginTop: "15px",
+                },}}  >
                   Personal Information
                 </Typography>
                 <Box
@@ -292,7 +307,7 @@ function AccountSettings() {
                 </Box>
               </Box>
 
-              <Box marginTop={3}>
+              <Box marginTop={3} >
                 <Typography variant="h6" className={classes.headindtextcenter}>
                   Security
                 </Typography>

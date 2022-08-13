@@ -1993,7 +1993,7 @@ function AllFilters(props) {
         </Grid>
 
         {/* Reset Filter Start */}
-        <Grid item lg={2} md={12} sm={12} xs={12}>
+        <Grid item lg={2} md={12} sm={12} xs={12} justifyContent="flex-end">
           <Box
             sx={{
               display: "flex",
@@ -2022,8 +2022,10 @@ function AllFilters(props) {
                 }
               }}
               style={{
-                width:{xs:"45%",lg:"auto",md:"auto"},
-                fontWeight: 600,                
+                //  width:"40%",//{xs:"40%",sm:"40%",lg:"auto",md:"auto"},
+                width:"100px",
+                fontWeight: 600, 
+                height: "40px",               
                 color: "#00CBFF",
                 textTransform: "none",                
               }}

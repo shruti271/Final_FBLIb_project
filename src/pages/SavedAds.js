@@ -77,7 +77,7 @@ const SavedAds = () => {
                 borderRadius: "15px",
                 padding: "16px 36px",
                 marginTop: 2,
-                width: "98%",
+                width: "95%",
                 margin:"auto"
               }}
             >
@@ -92,7 +92,7 @@ const SavedAds = () => {
                   "linear-gradient(243.18deg, #B5EDFF 0%, #00CBFF 28.65%, #6721FF 85.94%)",
                 width: "85%",visibility:{xs:"visible",lg:"hidden",md:"hidden",sm:"hidden"},
                 borderRadius: 3,
-                height:"40px"
+                height:"40px", color:"white",
               }}
               onClick={()=>setFilterActivate(true)}
             >
@@ -104,11 +104,12 @@ const SavedAds = () => {
                   height: "20px",
                   float: "right",
                   cursor: "pointer",
+                
                 }}
                 onClick={() => {
                   setFilterActivate(true);
                 }}
-              />
+              /><Typography sx={{textTransform:"none",paddingLeft:1 , fontWeight:"bold"}}> Filters </Typography>
             </Button>
           )}
         </Grid>

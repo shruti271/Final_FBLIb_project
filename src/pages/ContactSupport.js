@@ -50,9 +50,11 @@ const ContactSupport = () => {
           alignItems: "center",
           justifyContent: "center",
           disabled: loading ? true : false,
+          marginTop:2,
           // marginLeft:"35px",
-          marginLeft: { xs: "0px", sm: "35px", md: 0, lg: 0 },
-          marginRight: { xs: "35px", sm: 0, md: 0, lg: 0 },
+          // width:{lg:"80%",md:"90%",sm:"90%",xs:"99%"},
+          marginLeft: { xs: "15px", sm: "35px", md: 0, lg: "40px" },
+          marginRight: { xs:"15px", sm: 0, md: 0, lg: "40px" },
         }}
       >
         <Typography
@@ -65,7 +67,12 @@ const ContactSupport = () => {
         </Typography>
 
         <Box
-          sx={{ opacity: loading ? 0.5 : 1 }}
+          sx={{
+            opacity: loading ? 0.5 : 1,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
           width={{ lg: "60%", md: "90%", sm: "90%" }}
           border={0.5}
           borderRadius={5}
@@ -73,14 +80,13 @@ const ContactSupport = () => {
           borderColor="#ebebeb"
         >
           <form onSubmit={handleSubmit(onFormSubmit)}>
-            <Grid
-              item
+            <Grid              
               xs={11}
               container
               spacing={2}
-              sx={{ margin: { xs: "-5px", sm: "10px", md: "8px", lg: "8px" } }}
+              sx={{ margin: { xs: "-5px", sm: "10px", md: "8px", lg: "8px" }, }}
             >
-              <Grid xs={12} sm={6} lg={6} item>
+              <Grid xs={12} sm={6} lg={6} item >
                 <InputBase
                   disabled={loading ? true : false}
                   className={classes.inputField}
@@ -162,7 +168,7 @@ const ContactSupport = () => {
                     color="primary"
                     className={classes.sendbutton}
                     sx={{
-                      borderRadius: "20px",
+                      borderRadius: "15px",
                       background:
                         "linear-gradient(243.18deg, #B5EDFF 0%, #00CBFF 28.65%, #6721FF 85.94%)",
                       width: {
@@ -173,7 +179,10 @@ const ContactSupport = () => {
                       },
                     }}
                   >
-                    <Typography fontSize={{ lg: 15, md: 13, sm: 13 }}>
+                    <Typography
+                      fontSize={{ lg: 15, md: 13, sm: 13 }}
+                      sx={{ textTransform: "none", fontWeight: "bold" }}
+                    >
                       {loading ? (
                         <CircularProgress
                           size="1.5rem"
@@ -182,7 +191,7 @@ const ContactSupport = () => {
                           }}
                         />
                       ) : (
-                        <>Submit</>
+                        <>Send</>
                       )}
                     </Typography>
                   </Button>
