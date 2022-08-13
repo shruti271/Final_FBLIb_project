@@ -21,9 +21,7 @@ import InActiveSubScription from "../InActiveSubScription";
 import { loadFilteredAdsStart } from "../redux/ducks/filteredAds";
 import { loadsavedFilteredAdsStart } from "../redux/ducks/filteredSavedAds";
 import { getButtonTypes } from "../redux/ducks/buttonType";
-import { loadSavedAdsIdsLocal } from "../redux/ducks/savedAdsManager";
 import MobileAppBar from "./MobileAppBar";
-import Drawer from "./Mobiledrawer";
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
@@ -37,10 +35,6 @@ const MainLayout = () => {
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.subscriptionData);
   const [isOpen, setIsOpen] = React.useState(true);
-  const [windowWidth, setWindowWidth] = React.useState(0);
-
-
-  const filteredAds = useSelector((state) => state.filteredAds);
 
   useEffect(() => {
     dispatch(loadSubscriptionStart());
@@ -61,14 +55,6 @@ const MainLayout = () => {
     dispatch(loadAccountSettingsStart());
     dispatch(getButtonTypes());
   }, [dispatch]);
-
-// useEffect(()=>{
-//   setWindowWidth(()=>window.innerWidth);
-// },[window.onresize])
-  // useEffect(() => {
-  //   dispatch(loadSavedAdsIdsLocal(filteredAds.savedAdsIds));
-  // }, [filteredAds.savedAdsIds]);
-
   return (
     <>
       <Box sx={{ display: "flex" }}>
