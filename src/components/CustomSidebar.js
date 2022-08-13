@@ -18,7 +18,6 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import Button from "@mui/material/Button";
-import { getFaviconEl } from "../utils/getFaviconEl";
 const useStyles = makeStyles(() => ({
   title: {
     fontFamily: "Neue Haas Grotesk Display Pro",
@@ -79,10 +78,6 @@ const openedMixin = (theme) => ({
     duration: theme.transitions.duration.enteringScreen,
   }),
   overflowX: "hidden",
-  //  [theme.breakpoints.down('sm')]: {
-  //   width: 0,
-  //   display:'none',
-  // },
 });
 
 const closedMixin = (theme) => ({
@@ -95,10 +90,6 @@ const closedMixin = (theme) => ({
   [theme.breakpoints.up("sm")]: {
     width: `calc(${theme.spacing(9)} + 5px)`,
   },
-  // [theme.breakpoints.down('sm')]: {
-  //   width: 0,
-  //   display:'none',
-  // },
 });
 
 const Drawer = styled(MuiDrawer, {
@@ -160,21 +151,15 @@ export const CustomSidebar = ({ isOpen }) => {
 
   useEffect(() => {
     if (window.location.pathname === `/ContactSupport`) {
-      // document.title = "Contactsupport";
       setSelectedMenuItem(sideBarMenuItems.SUPPORT);
     } else if (window.location.pathname === `/`) {
-      // const favicon = getFaviconEl();
-      // favicon.href = "vector.png";
-      // document.title = "Adlibsdatabase";
       setSelectedMenuItem(sideBarMenuItems.ADLIBSDATABASE);
     } else if (window.location.pathname === `/savedAds`) {
-      // document.title = "Savedads";
       setSelectedMenuItem(sideBarMenuItems.SAVEDADS);
     } else if (
       window.location.pathname.split("/").includes("adDeatails")
       
     ) {
-      console.log("666 data ", currentPage);
       if (currentPage === "/savedAds")
         setSelectedMenuItem(sideBarMenuItems.SAVEDADS);
       else setSelectedMenuItem(sideBarMenuItems.ADLIBSDATABASE);
@@ -186,7 +171,6 @@ export const CustomSidebar = ({ isOpen }) => {
   useEffect(() => {
     if (state) setCurrentPage(state.fromPage);
   }, []);
-console.log("999 9",window.innerWidth)
   return (
     <>
       <Drawer variant="permanent" open={isOpen}>
@@ -298,9 +282,6 @@ console.log("999 9",window.innerWidth)
                   : ""
               }
               onClick={() => {
-                // const favicon = getFaviconEl();
-                // console.log("9", favicon);
-                // favicon.href = "saveicon.png";
                 setSelectedMenuItem(sideBarMenuItems.SAVEDADS);
                 setCurrentPage("/savedAds");
                 navigate("/savedAds");
@@ -314,11 +295,6 @@ console.log("999 9",window.innerWidth)
               >
                 <SaveIcon
                  sx={{ fill: selectedMenuItem === sideBarMenuItems.SAVEDADS ?"url(#linearColors)":'grey' }}
-                  // fill={
-                  //   selectedMenuItem === sideBarMenuItems.SAVEDADS
-                  //     ? "#00CBFF"
-                  //     : "grey"
-                  // }
                 />
 
                 <Typography sx={{ marginLeft: "26px" , fontWeight:500}}>Saved Ads</Typography>
@@ -336,7 +312,6 @@ console.log("999 9",window.innerWidth)
             <Box
               sx={{
                 cursor: "pointer",
-                // marginRight:"10px"
               }}
               className={
                 selectedMenuItem === sideBarMenuItems.SUPPORT
@@ -344,8 +319,6 @@ console.log("999 9",window.innerWidth)
                   : ""
               }
               onClick={() => {
-                // const favicon = getFaviconEl();
-                // favicon.href = "contact.png";
                 setSelectedMenuItem(sideBarMenuItems.SUPPORT);
                 navigate("/ContactSupport");
               }}
@@ -358,11 +331,6 @@ console.log("999 9",window.innerWidth)
               >
                 <ContactIcon
                 sx={{ fill: selectedMenuItem === sideBarMenuItems.SUPPORT ?"url(#linearColors)":'grey' }}
-                  // fill={
-                  //   selectedMenuItem === sideBarMenuItems.SUPPORT
-                  //     ? "#00CBFF"
-                  //     : "grey"
-                  // }
                 />
                 <Typography sx={{ marginLeft: "26px" , fontWeight:500}} >
                   Contact Support

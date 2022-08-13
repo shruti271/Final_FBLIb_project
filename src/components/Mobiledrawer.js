@@ -13,6 +13,8 @@ import {
   Dialog,
   DialogContent,
   DialogContentText,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import AdLibraryDatabaseIcon from "../SvgIcons/AdLibraryDatabaseIcon";
 import SaveIcon from "../SvgIcons/SaveIcon";
@@ -35,6 +37,30 @@ const useStyles = makeStyles((theme) => ({
     WebkitBackgroundClip: "text",
     WebkitTextFillColor: "transparent",
   },
+  mobiledrawerfontalign: {
+    [theme.breakpoints.down('xs')]: {
+      marginRight:"70px"
+    },
+    marginRight:"100px"
+  },
+  accontsettingalign: {
+    [theme.breakpoints.down('xs')]: {
+      marginRight:"12px"
+    },
+    marginRight:"20px"
+  },
+  contactsupportalign: {
+    [theme.breakpoints.down('xs')]: {
+      marginRight:"12px"
+    },
+    marginRight:"28px"
+  },
+  logoutalign: {
+    [theme.breakpoints.down('xs')]: {
+      marginRight:"50px"
+    },
+    marginRight:"92px"
+  },
 }));
 const sideBarMenuItems = {
   ADLIBSDATABASE: "Adlibrary Database",
@@ -43,9 +69,11 @@ const sideBarMenuItems = {
   SUPPORT: "Contact Support",
   LOGOUT: "Log Out",
 };
-const MobileDrawer = ({ isOpen, setIsOpen }) => {
+const MobileDrawer = ({  setIsOpen }) => {
   const classes = useStyles();
   const navigate = useNavigate();
+  const theme = useTheme();
+  const divdercenter = useMediaQuery(theme.breakpoints.up("sm"));
   const [selectedMenuItem, setSelectedMenuItem] = useState(
     sideBarMenuItems.ADLIBSDATABASE
   );
@@ -57,16 +85,13 @@ const MobileDrawer = ({ isOpen, setIsOpen }) => {
     } else if (window.location.pathname === `/`) {
       setSelectedMenuItem(sideBarMenuItems.ADLIBSDATABASE);
     } else if (window.location.pathname === `/savedAds`) {
-      // document.title = "Savedads";
       setSelectedMenuItem(sideBarMenuItems.SAVEDADS);
     }else if (window.location.pathname === `/accountSettings`) {
-      // document.title = "Savedads";
       setSelectedMenuItem(sideBarMenuItems.ACCOUNTSETTINGS);
     } else if (
       window.location.pathname.split("/").includes("adDeatails")
       
     ) {
-      console.log("666 data ", currentPage);
       if (currentPage === "/savedAds")
         setSelectedMenuItem(sideBarMenuItems.SAVEDADS);
       else setSelectedMenuItem(sideBarMenuItems.ADLIBSDATABASE);
@@ -113,20 +138,25 @@ const MobileDrawer = ({ isOpen, setIsOpen }) => {
       <Grid container sx={{ display: "flex", justifyContent: "center" }}>
         <Box
           style={{
-            width: "85%",
+            width: divdercenter ? "41%":"62%",
             justify: "center",
             position: "absolute",
             left: "50%",
-            top: "40%",
+            top: "50%",
             transform: "translate(-50%, -50%)",
           }}
         >
           <Grid item xs={12}>
-            <Divider textAlign="center"></Divider>
+            <Divider textAlign="center"  sx={{ borderBottomWidth: 3}}></Divider>
             <Stack
               direction={"row"}
               p={2.5}
               sx={{ display: "flex", justifyContent: "center",cursor:"pointer" }}
+              onClick={() => {
+                setSelectedMenuItem(sideBarMenuItems.ADLIBSDATABASE);
+                setIsOpen(()=>false)
+                navigate("/");
+              }}
             >
               <FormControlLabel
                 control={
@@ -135,7 +165,7 @@ const MobileDrawer = ({ isOpen, setIsOpen }) => {
                     fill={
                         selectedMenuItem === sideBarMenuItems.ADLIBSDATABASE
                           ? "url(#linearColors)"
-                          : "grey"
+                          : "#2B2F42"
                       }
                   />
                 }
@@ -151,32 +181,32 @@ const MobileDrawer = ({ isOpen, setIsOpen }) => {
                       ? classes.sideBarButton
                       : ""
                   }
-                onClick={() => {
-                  setSelectedMenuItem(sideBarMenuItems.ADLIBSDATABASE);
-                  setIsOpen(()=>false)
-                  navigate("/");
-                }}
               >
                 Adlibrary Database
               </Typography>
             </Stack>
             <Grid item xs={12}>
-              <Divider textAlign="center"></Divider>
+              <Divider textAlign="center" sx={{ borderBottomWidth: 3}}></Divider>
               <Stack
                 direction={"row"}
                 p={2.5}
                 sx={{ display: "flex", justifyContent: "center",cursor:"pointer" }}
+                className={classes.mobiledrawerfontalign}
+                onClick={() => {
+                  setSelectedMenuItem(sideBarMenuItems.SAVEDADS);
+                  setIsOpen(()=>false)
+                  navigate("/savedAds");
+                }}
               >
                 <FormControlLabel control={<SaveIcon fontSize="large" 
                  fill={
                     selectedMenuItem === sideBarMenuItems.SAVEDADS
                       ? "url(#linearColors)"
-                      : "grey"
+                      : "#2B2F42"
                   }
                 />} />
                 <Typography
                   variant="h6"
-                  // sx={{ fontWeight: "bold", color: "#3A3D4B" }}
                   sx={{
                     fontSize: { xs: 18, sm: 25 },
                     fontWeight: "bold",
@@ -187,11 +217,6 @@ const MobileDrawer = ({ isOpen, setIsOpen }) => {
                       ? classes.sideBarButton
                       : ""
                   }
-                onClick={() => {
-                  setSelectedMenuItem(sideBarMenuItems.SAVEDADS);
-                  setIsOpen(()=>false)
-                  navigate("/savedAds");
-                }}
                 >
                   Saved Ads
                 </Typography>
@@ -199,11 +224,17 @@ const MobileDrawer = ({ isOpen, setIsOpen }) => {
             </Grid>
 
             <Grid item xs={12}>
-              <Divider textAlign="center"></Divider>
+              <Divider textAlign="center" sx={{ borderBottomWidth: 3}}></Divider>
               <Stack
                 direction={"row"}
                 p={2.5}
                 sx={{ display: "flex", justifyContent: "center",cursor:"pointer" }}
+                className={classes.accontsettingalign}
+                onClick={() => {
+                  setSelectedMenuItem(sideBarMenuItems.ACCOUNTSETTINGS);
+                  setIsOpen(()=>false)
+                  navigate("/accountSettings");
+                }}
               >
                 <FormControlLabel
                   control={<img src={settings} width="30px" alt="icon"
@@ -222,28 +253,29 @@ const MobileDrawer = ({ isOpen, setIsOpen }) => {
                       ? classes.sideBarButton
                       : ""
                   }
-                onClick={() => {
-                  setSelectedMenuItem(sideBarMenuItems.ACCOUNTSETTINGS);
-                  setIsOpen(()=>false)
-                  navigate("/accountSettings");
-                }}
                 >
                   Account Settings
                 </Typography>
               </Stack>
             </Grid>
             <Grid item xs={12}>
-              <Divider textAlign="center"></Divider>
+              <Divider textAlign="center" sx={{ borderBottomWidth: 3}}></Divider>
               <Stack
                 direction={"row"}
                 p={2.5}
                 sx={{ display: "flex", justifyContent: "center",cursor:"pointer" }}
+                className={classes.contactsupportalign}
+                onClick={() => {
+                  setSelectedMenuItem(sideBarMenuItems.SUPPORT);
+                  setIsOpen(()=>false)
+                  navigate("/ContactSupport");
+                }}
               >
                 <FormControlLabel control={<ContactIcon fontSize="large" 
                 fill={
                     selectedMenuItem === sideBarMenuItems.SUPPORT
                       ? "url(#linearColors)"
-                      : "grey"
+                      : "#2B2F42"
                   }
                 />} />
                 <Typography
@@ -259,22 +291,18 @@ const MobileDrawer = ({ isOpen, setIsOpen }) => {
                       ? classes.sideBarButton
                       : ""
                   }
-                onClick={() => {
-                  setSelectedMenuItem(sideBarMenuItems.SUPPORT);
-                  setIsOpen(()=>false)
-                  navigate("/ContactSupport");
-                }}
                 >
                   Contact Support
                 </Typography>
               </Stack>
             </Grid>
             <Grid item xs={12}>
-              <Divider textAlign="center"></Divider>
+              <Divider textAlign="center" sx={{ borderBottomWidth: 3,color:"#2B2F42"}}></Divider>
               <Stack
                 direction={"row"}
                 p={2.5}
                 sx={{ display: "flex", justifyContent: "center",cursor:"pointer" }}
+                className={classes.logoutalign}
               >
                 <FormControlLabel control={<img src={logout} width="30px" alt="icon" />} />
                 <Typography
@@ -347,7 +375,7 @@ const MobileDrawer = ({ isOpen, setIsOpen }) => {
               </Box>
               </Stack>
             </Grid>
-            <Divider textAlign="center"></Divider>
+            <Divider textAlign="center"  sx={{ borderBottomWidth: 3,color:"#2B2F42"}}></Divider>
           </Grid>
         </Box>
       </Grid>

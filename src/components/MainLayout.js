@@ -21,7 +21,6 @@ import InActiveSubScription from "../InActiveSubScription";
 import { loadFilteredAdsStart } from "../redux/ducks/filteredAds";
 import { loadsavedFilteredAdsStart } from "../redux/ducks/filteredSavedAds";
 import { getButtonTypes } from "../redux/ducks/buttonType";
-import { loadSavedAdsIdsLocal } from "../redux/ducks/savedAdsManager";
 import MobileAppBar from "./MobileAppBar";
 import Drawer from "./Mobiledrawer";
 import { useMediaQuery , useTheme} from "@mui/material";
@@ -38,11 +37,9 @@ const MainLayout = () => {
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.subscriptionData);
   const [isOpen, setIsOpen] = React.useState(true);
-  // const [windowWidth, setWindowWidth] = React.useState(0);
-  // const [windowWidth, setWindowWidth] = React.useState(0);
-  const theme = useTheme();
+  const [windowWidth, setWindowWidth] = React.useState(0);
 
-  const showhidedrawer = useMediaQuery(theme.breakpoints.down("md"));
+
   const filteredAds = useSelector((state) => state.filteredAds);
 
   useEffect(() => {
@@ -66,9 +63,11 @@ const MainLayout = () => {
   }, [dispatch]);
 
 // useEffect(()=>{
-//   setWindowWidth(window.innerWidth)
-//   console.log("000", windowWidth)
-// },[window.innerWidth])
+//   setWindowWidth(()=>window.innerWidth);
+// },[window.onresize])
+  // useEffect(() => {
+  //   dispatch(loadSavedAdsIdsLocal(filteredAds.savedAdsIds));
+  // }, [filteredAds.savedAdsIds]);
 
   return (
     <>
