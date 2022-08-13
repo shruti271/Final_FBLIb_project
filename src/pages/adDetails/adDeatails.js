@@ -381,7 +381,7 @@ function AdDeatails() {
                 items
                 xs={12}
                 sm={12}
-                md={(IsDrawerOpen && OnlyMdSizeScreen) ?12:6}
+                md={6}
                 lg={6}
                 sx={{
                   display: "flex",
@@ -430,7 +430,7 @@ function AdDeatails() {
               </Grid>
               <Grid
                 items
-                md={(IsDrawerOpen && OnlyMdSizeScreen)?12:6}
+                md={6}
                 xs={12}
                 sm={12}
                 lg={6}
@@ -439,7 +439,7 @@ function AdDeatails() {
                   justifyContent: "center",
                   alignItems: "center",
                   // "@media (max-width: 800px)": {
-                    marginTop: (DownloadBUtton )||(IsDrawerOpen && OnlyMdSizeScreen) ?2:"",
+                    marginTop: (DownloadBUtton ) ?2:"",
                   // },
                 }}
               >
