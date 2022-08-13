@@ -37,29 +37,28 @@ console.log("888  ooo",ShowFilterButton)
         container
         sx={{
           // paddingRight: "36px",
-          width: "90%",
+          width: ShowFilterButton?"97%":"90%",
           margin:"auto",
           display:"flex",
           justifyContent:"center",
           alignItems:"center"
         }}
       >
-        <Grid item xs={12} sx={{display:"flex",
-          justifyContent:"center",
-          alignItems:"center"}}>
+        <Grid item xs={12} 
+          >
           <Box component="main">
-            <Typography
+          <Typography
               className={classes.titleHome}
               variant="h5"
-              ml={2}
+              ml={1}
               sx={{
                 fontWeight: "bold",
                 color: "#3A3D4B",
                 "@media (max-width: 450px)": {
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  marginTop: "15px",
+                  display:"flex",
+                  justifyContent:"center",
+                  alignItems:"center",
+                  marginTop:"15px"
                 },
               }}
             >
@@ -73,6 +72,7 @@ console.log("888  ooo",ShowFilterButton)
           
           sx={{
             paddingTop:1,
+            width: "100%",
             // "@media (max-width: 450px)": {
               display: ShowFilterWithClearButton?"flex":"",
               justifyContent: ShowFilterWithClearButton?"center":"",
@@ -80,6 +80,7 @@ console.log("888  ooo",ShowFilterButton)
             // },
           }}
         >
+        
           {filterActivate && (
             <Stack
               sx={{
@@ -87,7 +88,7 @@ console.log("888  ooo",ShowFilterButton)
                 borderRadius: "15px",
                 padding: "16px 36px",
                 marginTop: 2,
-                width: "95%",
+                width: "99%",
                 margin:"auto"
               }}
             >

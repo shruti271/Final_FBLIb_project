@@ -152,10 +152,7 @@ function AdDeatails() {
             paddingTop: 1,
           }}
         >
-            <Box  sx={{width: showgrid?"90% !important":"98% !important", margin:"auto",
-          display:"flex",
-          justifyContent:"center",
-          alignItems:"center"}}>
+            
           <Grid item xs={12} lg={4} md={5} sm={6} sx={{ width: "95% !important",}}>
             <Box
               sx={{
@@ -376,7 +373,7 @@ function AdDeatails() {
               </Stack>
             </Box>
           </Grid>
-          </Box>
+       
           <Grid item xs={12} lg={8} md={7} sm={6} p={2} sx={{ width: "95% !important",}}>
             {/* <Box> */}
             <Grid container>

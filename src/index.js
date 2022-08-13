@@ -1,19 +1,26 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
+import "./App.scss";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./redux/store";
-import  Drawer  from "./components/Mobiledrawer";
+import { ThemeProvider, createTheme } from '@mui/material/styles'
 const root = ReactDOM.createRoot(document.getElementById("root"));
-console.log("1+++++++++++++++++++++++++++++++++++++++++++++++++")
+const theme = createTheme({
+  typography: {
+    // fontFamily: "Neue Haas Grotesk Display Pro",
+    fontStyle: 'normal'
+  },
+});
 root.render(
   <Router>
     {/* <React.StrictMode> */}
       <Provider store={store}>
+      <ThemeProvider theme={theme}>
         <App />
+        </ThemeProvider>
       </Provider>
-      {/* <Drawer/> */}
     {/* </React.StrictMode> */}
   </Router>
 );

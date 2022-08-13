@@ -205,15 +205,15 @@ function AdDeatailsTabs() {
           </Stack>
         </Box>
       </Box>
-      {/* <Box  sx={{width: showgrid?"98% !important":"98% !important", margin:"auto",
+      <Box  sx={{width: showgrid?"98% !important":"98% !important", margin:"auto",
           display:"flex",
           justifyContent:"center",
-          alignItems:"center"}}> */}
+          alignItems:"center"}}>
       <Routes>
         <Route exact path="" element={<AdDeatails />} />
         <Route exact path="allAds" element={<AllAds />} />
       </Routes>
-      {/* </Box> */}
+      </Box>
     </>
   );
 }
