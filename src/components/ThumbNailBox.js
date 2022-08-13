@@ -174,8 +174,8 @@ const ThumbNailBox = ({ adInfo, index }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const theme = useTheme();
-  const smallScreenPointOnly = useMediaQuery(theme.breakpoints.only("xs"));
+  // const theme = useTheme();
+  // const smallScreenPointOnly = useMediaQuery(theme.breakpoints.only("xs"));
 
   const [queryObject, setQueryObject] = useState({});
 

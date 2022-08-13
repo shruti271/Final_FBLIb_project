@@ -15,7 +15,6 @@ import {
 import Firsrcardimg from "../../assets/FirstCardImg.svg";
 import facebook from "../../assets/facebook.svg";
 import instragram from "../../assets/instragram.svg";
-// import MyChart from "../../components/linemy";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import {
@@ -23,10 +22,7 @@ import {
   loadSingleAdDataStart,
 } from "../../redux/ducks/singleAdsData";
 import { FadeLoader } from "react-spinners";
-import AreaLineGraph from "../../components/AreaLineGraph";
-import CustomizedView from "../../components/SampleData";
 import MyChart from "../../components/linemy";
-import DownloadIcon from "@mui/icons-material/Download";
 import Download from "@mui/icons-material/Download";
 
 const ReadMore = ({ children }) => {

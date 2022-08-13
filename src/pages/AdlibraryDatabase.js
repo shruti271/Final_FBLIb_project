@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Grid, Typography } from "@mui/material";
+import { Grid, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { makeStyles } from "@material-ui/core/styles";
 import { Box } from "@mui/system";
 import "react-datepicker/dist/react-datepicker.css";
@@ -109,7 +109,8 @@ const useStyles = makeStyles((theme) => ({
 
 const Addlibrarydatabase = () => {
   const classes = useStyles();
-
+  const theme = useTheme();
+  const showgrid = useMediaQuery(theme.breakpoints.only("sm"));
   return (
     <>
       <BackTotopbutton />
@@ -118,7 +119,7 @@ const Addlibrarydatabase = () => {
         container
         sx={{
           // paddingRight: "36px",
-          width: "97% !important",
+          width: showgrid?"90% !important":"97% !important",
           marginX: "auto",
         }}
       >

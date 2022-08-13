@@ -142,8 +142,7 @@ function AllFilters(props) {
   const [pageName, setPageName] = useState("");
   const [searchBarValue, setSearchBarValue] = useState("");
   const theme = useTheme();
-
-  // const ShowFilterButton = useMediaQuery(theme.breakpoints.up("sm"));
+  
   const ShowFilterWithClearButton = useMediaQuery(theme.breakpoints.only("xs"));
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -626,7 +625,7 @@ function AllFilters(props) {
           alignItems: "center",
         }}
       >
-        <Grid item lg={10} md={12} sm={12} xs={12}>
+        <Grid item lg={11} md={12} sm={12} xs={12}>
           {/* Date Filter Start */}
           <Button
             // disabled={props.loading}
@@ -684,6 +683,9 @@ function AllFilters(props) {
                 handleStartDateChange(item);
                 setRange([item.selection]);
               }}
+              // style={{ color:"black"}}
+              // backgroundColor="pink"
+              rangeColors={["#00CBFF"]}
               editableDateInputs={false}
               ranges={range}
               months={1}
@@ -1998,7 +2000,7 @@ function AllFilters(props) {
         </Grid>
 
         {/* Reset Filter Start */}
-        <Grid item lg={2} md={12} sm={12} xs={12} justifyContent="flex-end">
+        <Grid item lg={1} md={12} sm={12} xs={12} justifyContent="flex-end">
           <Box
             sx={{
               display: "flex",
