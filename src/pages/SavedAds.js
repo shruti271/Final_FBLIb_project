@@ -42,7 +42,7 @@ const SavedAds = () => {
             <Typography
               className={classes.titleHome}
               variant="h5"
-              ml={1}
+              ml={2}
               sx={{
                 fontWeight: "bold",
                 color: "#3A3D4B",
@@ -62,6 +62,7 @@ const SavedAds = () => {
           item
           xs={12}
           sx={{
+            paddingTop:1,
             "@media (max-width: 450px)": {
               display: "flex",
               justifyContent: "center",
@@ -76,7 +77,8 @@ const SavedAds = () => {
                 borderRadius: "15px",
                 padding: "16px 36px",
                 marginTop: 2,
-                width: "95%",
+                width: "98%",
+                margin:"auto"
               }}
             >
               <AllFilters setFilterActivate={setFilterActivate} />

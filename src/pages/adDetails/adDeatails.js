@@ -330,15 +330,16 @@ function AdDeatails() {
                     </Grid>
                   </Grid>
                 </Box>
-                <Grid container justifyContent="flex-end">
+                <Grid container justifyContent="flex-end" >
+                  <Grid item xs={12} sm={12} md={12} lg={6}>
                   <Button
                     style={{
                       background:
                         "linear-gradient(243.18deg, #B5EDFF 0%, #00CBFF 28.65%, #6721FF 85.94%)",
                       borderRadius: 18,
                       textTransform: "none",
-                      width: "156px",
-                      height: "31px",
+                      width: "100%",//"156px",
+                      height: "35px",
                       color: "white",
                       marginBottom: "15px",
                       marginRight: "15px",
@@ -356,6 +357,7 @@ function AdDeatails() {
                       <b>{adDetail?.ctaStatus}</b>
                     </Typography>
                   </Button>
+                  </Grid>
                 </Grid>
               </Stack>
             </Box>
@@ -534,8 +536,8 @@ function AdDeatails() {
                   display: "flex",
                   justifyContent: "start",
                   alignItems: "center",
-                  "@media (max-width: 800px": {
-                    // marginTop: 2,
+                  "@media (max-width: 800px)": {
+                    marginTop: 2,
                   },
                   "@media (max-width: 450px)": {
                     // alignItems: "start",
@@ -561,14 +563,14 @@ function AdDeatails() {
                   "@media (max-width: 800px)": {
                     marginTop: 2,
                   },
-                  "@media (max-width: 450px)": {
-                    alignItems: "start",
-                  },
+                  // "@media (max-width: 450px)": {
+                  //   alignItems: "start",
+                  // },
                 }}
                 direction="column"
               >
                 <Typography className={classes.textdeco}>
-                  Started Running On:
+                  Started Running:
                 </Typography>
                 <Typography className={classes.textdeco}>
                   <b> {adDetail?.startDate ? adDetail.startDate : " "}</b>
@@ -597,21 +599,21 @@ function AdDeatails() {
                   display: "flex",
                   justifyContent: "start",
                   alignItems: "center",
-                  "@media (max-width: 800px": {
+                  "@media (max-width: 800px)": {
                     marginTop: 2,
                   },
                   "@media (max-width: 450px)": {
                     // marginTop: 2,
-                    alignItems: "start",
+                    // alignItems: "start",
                   },
                 }}
-                direction="column"
+                flexDirection="column"
               >
                 <Typography className={classes.textdeco}>
                   Placements:
                 </Typography>
                 {adDetail?.platforms?.map((ads, index) => (
-                  <Typography className={classes.textdeco} key={index}>
+                  <Typography className={classes.textdeco} key={index} noWrap>
                     {" "}
                     <b>{ads}</b>
                   </Typography>
@@ -678,15 +680,18 @@ function AdDeatails() {
                 sm={12}
                 md={12}
                 lg={5}
-                direction="column"
+                flexDirection="column"
                 style={{
                   marginTop: "36px",
-                  "@media screen and (min-width: 700px) and (max-width: 780px) ":
-                    {
-                      display: "flex",
+                  display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
-                    },
+                  // "@media screen and (min-width: 800px)":
+                  //   {
+                  //     display: "flex",
+                  //     alignItems: "center",
+                  //     justifyContent: "center",
+                  //   },
                 }}
               >
                 {adDetail?.pageInfo?.platforms.map((socialMedia, index) => {
