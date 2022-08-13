@@ -110,7 +110,7 @@ const useStyles = makeStyles((theme) => ({
 const Addlibrarydatabase = () => {
   const classes = useStyles();
   const theme = useTheme();
-  const showgrid = useMediaQuery(theme.breakpoints.only("sm"));
+  const showgrid = useMediaQuery(theme.breakpoints.only("xs"));
   return (
     <>
       <BackTotopbutton />
@@ -151,6 +151,7 @@ const Addlibrarydatabase = () => {
             border: "1px solid #EBEBEB",
             borderRadius: "15px",
             padding: "16px 36px",
+            width: "95%",
             marginTop: 2,
             "@media (max-width: 450px)": {
               marginTop: 1,

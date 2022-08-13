@@ -738,11 +738,11 @@ function AllFilters(props) {
             }}
             add={open ? "simple-popover" : undefined}
             transformOrigin={{
-              horizontal: "left",
+              horizontal: ShowFilterWithClearButton?"center":"left",
               vertical: "top",
             }}
             anchorOrigin={{
-              horizontal: "left",
+              horizontal: ShowFilterWithClearButton?"center":"left",
               vertical: "bottom",
             }}
           >
@@ -1028,11 +1028,11 @@ function AllFilters(props) {
             open={openAdStatusAnchorel}
             transformOrigin={{
               vertical: "top",
-              horizontal: "left",
+              horizontal: ShowFilterWithClearButton?"center":"left",
             }}
             anchorOrigin={{
               vertical: "bottom",
-              horizontal: "left",
+              horizontal: ShowFilterWithClearButton?"center":"left",
             }}
           >
             <Box sx={{ width: "190px" }}>
@@ -1162,11 +1162,11 @@ function AllFilters(props) {
               setFacebookLikeAnchorEl(null);
             }}
             transformOrigin={{
-              horizontal: "left",
+              horizontal: ShowFilterWithClearButton?"center":"left",
               vertical: "top",
             }}
             anchorOrigin={{
-              horizontal: "left",
+              horizontal: ShowFilterWithClearButton?"center":"left",
               vertical: "bottom",
             }}
           >
@@ -1460,11 +1460,11 @@ function AllFilters(props) {
               setInstragramFollowerAnchorEl(null);
             }}
             transformOrigin={{
-              horizontal: "left",
+              horizontal: ShowFilterWithClearButton?"center":"left",
               vertical: "top",
             }}
             anchorOrigin={{
-              horizontal: "left",
+              horizontal: ShowFilterWithClearButton?"center":"left",
               vertical: "bottom",
             }}
           >
@@ -1767,11 +1767,11 @@ function AllFilters(props) {
             open={openMediaTypeAnchorel}
             transformOrigin={{
               vertical: "top",
-              horizontal: "left",
+              horizontal: ShowFilterWithClearButton?"center":"left",
             }}
             anchorOrigin={{
               vertical: "bottom",
-              horizontal: "left",
+              horizontal: ShowFilterWithClearButton?"center":"left",
             }}
           >
             <Box sx={{ width: "190px" }}>
@@ -1902,11 +1902,11 @@ function AllFilters(props) {
             open={openButtonType}
             transformOrigin={{
               vertical: "top",
-              horizontal: "left",
+              horizontal: ShowFilterWithClearButton?"center":"left",
             }}
             anchorOrigin={{
               vertical: "bottom",
-              horizontal: "left",
+              horizontal: ShowFilterWithClearButton?"center":"left",
             }}
           >
             <Box sx={{ width: "170px" }}>
