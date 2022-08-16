@@ -68,6 +68,7 @@ const initialState = {
   filteredAds: [],
   filterData:{},
   savedAdsIds:[],
+  totalPages:0,
   paginationIndex:0,
   hasMoreData:true,
   postionOfPage:0,
@@ -99,6 +100,7 @@ const filteredAdsReducer = (state = initialState, action) => {
       };
                                                                   
     case LOAD_FILTERED_ADS_SUCCESS:            
+    console.log("0-0 total pages",action.payload?.data?.total_pages)
       return {
         ...state,
         loading: false,
@@ -108,7 +110,8 @@ const filteredAdsReducer = (state = initialState, action) => {
         filterData: {
           ...state.filterData,
           [`${state.paginationIndex}`] : action.payload?.data?.all_ads
-        }
+        },
+        totalPages: Math.ceil(action.payload?.data?.total_pages/12),
       };
 
     case LOAD_MORE_FILTERED_ADS_SUCCESS:
@@ -121,7 +124,8 @@ const filteredAdsReducer = (state = initialState, action) => {
         filterData: {
           ...state.filterData,
           [`${state.paginationIndex}`] : action.payload?.data?.all_ads
-        }
+        },
+        totalPages: Math.ceil(action.payload?.data?.total_pages/12),
         // filteredAds: action.payload?.error === true ? state.filteredAds : [...state.filteredAds].concat(action.payload?.data?.all_ads),
         // savedAdsIds:action.payload?.error === true ? state.savedAdsIds : [...state.savedAdsIds].concat(action.payload?.data?.saved_ads),
         // hasMoreData: action.payload?.data?.all_ads?.length < 8 ? false : true

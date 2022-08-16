@@ -20,7 +20,7 @@ import { useLocation } from "react-router-dom";
 const PagePagination = () => {
   const dispatch = useDispatch();
   const location = useLocation();
-  
+
   const filteredAds = useSelector((state) => state.filteredAds);
   const allAdsPerams = useSelector((state) => state.allAdsPerams);
   const [queryObject, setQueryObject] = useState({});
@@ -90,6 +90,7 @@ const PagePagination = () => {
           ? allAdsPerams?.searchBarData.split(",")
           : null
         : null,
+        number_of_pagead:2
     };
     setQueryObject(queryObject);
   }, [
@@ -210,7 +211,7 @@ const PagePagination = () => {
         }}
       >{console.log("8989",filteredAds?.paginationIndex)}
         <Pagination
-          count={10}
+          count={filteredAds?.totalPages}
           size={"large"}           
           page={filteredAds?.paginationIndex+1}
           onChange={(e, p) => {
