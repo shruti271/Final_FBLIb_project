@@ -90,7 +90,7 @@ const PagePagination = () => {
           ? allAdsPerams?.searchBarData.split(",")
           : null
         : null,
-        number_of_pagead:2
+        number_of_pagead:12
     };
     setQueryObject(queryObject);
   }, [

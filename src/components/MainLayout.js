@@ -52,7 +52,7 @@ const MainLayout = () => {
         page_index: 0,
         sort_by: "lastUpdatedTime",
         order_by: "asc",
-        number_of_pagead:2
+        number_of_pagead:12
       })
     );
     dispatch(
