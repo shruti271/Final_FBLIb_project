@@ -2036,6 +2036,7 @@ function AllFilters(props) {
                 "rgba(181, 237, 255, 1)",
               ]}
               onClick={() => {
+                pageName === PageNameEnum.AdlibraryDatabase && dispatch(clearCashedPageData());
                 if (pageName === PageNameEnum.AdlibraryDatabase) {
                   dispatch(allAdsPeramsDuck.clearFilterData());
                 } else {
