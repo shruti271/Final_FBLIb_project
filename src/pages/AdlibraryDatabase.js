@@ -11,6 +11,7 @@ import SortFilter from "../components/SortFilter";
 import AdsList from "../components/AdsList";
 import FilterChips from "../components/FilterChips";
 import { useSkipInitialEffect } from "../utils/customHooks";
+import PagePagination from "../components/Page_Pagination";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -173,7 +174,8 @@ const Addlibrarydatabase = () => {
           <SortFilter />
         </Grid>
         <Grid item sx={{ width: "100%" }}>
-          <AdsList />
+          {/* <AdsList /> */}
+          <PagePagination/>
         </Grid>
       </Grid>
     </>

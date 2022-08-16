@@ -29,6 +29,7 @@ import { PageNameEnum } from "../utils/enums";
 import { useLocation } from "react-router-dom";
 import GradientButton from "react-linear-gradient-button";
 import filter from "../assets/filter.svg";
+import { clearCashedPageData } from "../redux/ducks/filteredAds";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -231,6 +232,7 @@ function AllFilters(props) {
   ]);
 
   const handleAdsCountChange = (newValue, isReset) => {
+    pageName === PageNameEnum.AdlibraryDatabase && dispatch(clearCashedPageData());
     dispatch(
       pageName === PageNameEnum.AdlibraryDatabase
         ? allAdsPeramsDuck.changeAppliedFilters({
@@ -257,6 +259,7 @@ function AllFilters(props) {
   };
 
   const handleChangeStatus = (newValue, isReset) => {
+    pageName === PageNameEnum.AdlibraryDatabase && dispatch(clearCashedPageData());
     dispatch(
       pageName === PageNameEnum.AdlibraryDatabase
         ? allAdsPeramsDuck.changeAppliedFilters({
@@ -280,6 +283,7 @@ function AllFilters(props) {
   };
 
   const handleFacebookLikesChange = (newValue, isReset) => {
+    pageName === PageNameEnum.AdlibraryDatabase && dispatch(clearCashedPageData());
     dispatch(
       pageName === PageNameEnum.AdlibraryDatabase
         ? allAdsPeramsDuck.changeAppliedFilters({
@@ -306,6 +310,7 @@ function AllFilters(props) {
   };
 
   const handleInstagramFollowersChange = (newValue, isReset) => {
+    pageName === PageNameEnum.AdlibraryDatabase && dispatch(clearCashedPageData());
     dispatch(
       pageName === PageNameEnum.AdlibraryDatabase
         ? allAdsPeramsDuck.changeAppliedFilters({
@@ -332,6 +337,7 @@ function AllFilters(props) {
   };
 
   const handleMediaTypechange = (newValue, isReset) => {
+    pageName === PageNameEnum.AdlibraryDatabase && dispatch(clearCashedPageData());
     dispatch(
       pageName === PageNameEnum.AdlibraryDatabase
         ? allAdsPeramsDuck.changeAppliedFilters({
@@ -354,6 +360,7 @@ function AllFilters(props) {
   };
 
   const handleButtonType = (newValue, isReset) => {
+    pageName === PageNameEnum.AdlibraryDatabase && dispatch(clearCashedPageData());
     dispatch(
       pageName === PageNameEnum.AdlibraryDatabase
         ? allAdsPeramsDuck.changeAppliedFilters({
@@ -405,6 +412,7 @@ function AllFilters(props) {
   };
 
   const handleStartDateChange = (newValue) => {
+    pageName === PageNameEnum.AdlibraryDatabase && dispatch(clearCashedPageData());
     dispatch(
       pageName === PageNameEnum.AdlibraryDatabase
         ? allAdsPeramsDuck.changeAppliedFilters({
@@ -600,9 +608,11 @@ function AllFilters(props) {
           placeholder="Search"
           onKeyUp={(e) => {
             if (e.key === "Enter") {
+              pageName === PageNameEnum.AdlibraryDatabase && dispatch(clearCashedPageData());
               handleChangeSearchBar(e.currentTarget.value);
             }
             if (e.target.value.length === 0) {
+              pageName === PageNameEnum.AdlibraryDatabase && dispatch(clearCashedPageData());
               // console.log("6666",e.target.value.length)
               handleChangeSearchBar("");
             }
@@ -777,6 +787,7 @@ function AllFilters(props) {
                       onSave={(e) => {
                         if (Number(e.value) !== e.previousValue) {
                           if (pageName === PageNameEnum.AdlibraryDatabase) {
+                            dispatch(clearCashedPageData());
                             setRangeAdcountValue({
                               min: Number(e.value),
                               max: rangeAdcountValue.max,
@@ -811,6 +822,7 @@ function AllFilters(props) {
                       onSave={(e) => {
                         if (Number(e.value) !== e.previousValue) {
                           if (pageName === PageNameEnum.AdlibraryDatabase) {
+                            dispatch(clearCashedPageData());
                             setRangeAdcountValue({
                               min: rangeAdcountValue.min,
                               max: Number(e.value),
@@ -1205,6 +1217,7 @@ function AllFilters(props) {
                       onSave={(e) => {
                         if (Number(e.value) !== e.previousValue) {
                           if (pageName === PageNameEnum.AdlibraryDatabase) {
+                            dispatch(clearCashedPageData());
                             setRangeFacebookValue({
                               min: Number(e.value),
                               max: rangeFacebookValue.max,
@@ -1243,6 +1256,7 @@ function AllFilters(props) {
                       onSave={(e) => {
                         if (Number(e.value) !== e.previousValue) {
                           if (pageName === PageNameEnum.AdlibraryDatabase) {
+                            // dispatch(clearCashedPageData());
                             setRangeFacebookValue({
                               min: rangeFacebookValue.min,
                               max: Number(e.value),
@@ -1354,7 +1368,7 @@ function AllFilters(props) {
                     "rgba(0, 203, 255, 1)",
                     "rgba(181, 237, 255, 1)",
                   ]}
-                  onClick={() => {
+                  onClick={() => {                    
                     pageName === PageNameEnum.AdlibraryDatabase
                       ? setRangeFacebookValue({
                           min: 1,

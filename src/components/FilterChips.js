@@ -6,6 +6,7 @@ import * as allAdsPeramsDuck from "../redux/ducks/allAdsPerams";
 import * as savedAdsPeramsDuck from "../redux/ducks/savedAdsPerams";
 import { useLocation } from "react-router-dom";
 import { PageNameEnum } from "../utils/enums";
+import { clearCashedPageData } from "../redux/ducks/filteredAds";
 
 const FilterChips = () => {
   const dispatch = useDispatch();
@@ -52,6 +53,7 @@ const FilterChips = () => {
                 />
               }
               onDelete={() => {
+                pageName === PageNameEnum.AdlibraryDatabase && dispatch(clearCashedPageData());
                 dispatch(
                   pageName === PageNameEnum.AdlibraryDatabase ?
                   allAdsPeramsDuck.clearSingleFilter({

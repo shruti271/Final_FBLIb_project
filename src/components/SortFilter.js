@@ -17,6 +17,7 @@ import { useLocation } from "react-router-dom";
 import { PageNameEnum } from "../utils/enums";
 import * as allAdsPeramsDuck from "../redux/ducks/allAdsPerams";
 import * as savedAdsPeramsDuck from "../redux/ducks/savedAdsPerams";
+import { clearCashedPageData } from "../redux/ducks/filteredAds";
 
 const useStyles = makeStyles((theme) => ({
   DropDownArrow: {
@@ -49,6 +50,7 @@ function SortFilter(props) {
   const openSortByAnchorel = Boolean(sortByAnchorel);
 
   const handleChangeSortType = (event, newValue) => {
+    pageName === PageNameEnum.AdlibraryDatabase && dispatch(clearCashedPageData());
     dispatch(
       pageName === PageNameEnum.AdlibraryDatabase
         ? allAdsPeramsDuck.changeSortFilters({
@@ -67,6 +69,7 @@ function SortFilter(props) {
   };
 
   const handleChangeAceOrDes = (event, newValue) => {
+    pageName === PageNameEnum.AdlibraryDatabase && dispatch(clearCashedPageData());
     dispatch(
       pageName === PageNameEnum.AdlibraryDatabase
         ? allAdsPeramsDuck.changeSortFilters({
