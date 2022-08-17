@@ -20,6 +20,8 @@ export const ADD_TO_SAVED_FILTERED_AD_LOCAL_ERROR =
 
   export const SAVED_GET_PAGE_POSITION = "SAVED_GET_PAGE_POSITION";
 
+  export const SET_CURRENT_PAGINATION_INDEX = "SET_CURRENT_PAGINATION_INDEX";
+
 export const addToSavedAdsFilterLocalStart = (adToBeAdded) => ({
   type: ADD_TO_SAVED_FILTERED_AD_LOCAL_START,
   payload: adToBeAdded,
@@ -73,9 +75,17 @@ export const setPostionForSavedPageToScrollValueStart = (error) => ({
   type: SAVED_GET_PAGE_POSITION,
   payload: error,
 });
+
+export const setSavedCurrentPaginationIndex = (page) => ({
+  type: SET_CURRENT_PAGINATION_INDEX,  
+  payload:page,
+});
+
 const initialState = {
   filteredSavedAds: [],
-  savedAdsIds: [],
+  savedAdsIds: [],  
+  totalPages:0,
+  paginationIndex:0,
   hasMoreData:true,
   postionOfPage:0,
   loading: false,
@@ -122,7 +132,11 @@ const filteredSavedAdsReducer = (state = initialState, action) => {
         loading: false,
         error: action.payload?.data?.error,
       };
-
+      case SET_CURRENT_PAGINATION_INDEX:
+        return {
+          ...state,
+          paginationIndex:action.payload
+        };
     case REMOVE_SAVED_FILTERED_AD:
       return {
         ...state,

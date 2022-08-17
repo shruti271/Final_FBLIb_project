@@ -17,6 +17,8 @@ import {
   loadSingleAdDataClear,
   loadSingleAdDataStart,
 } from "../../redux/ducks/singleAdsData";
+import * as subAllAdsDuck from "../../redux/ducks/subAllAds";
+
 function AdDeatailsTabs() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -93,24 +95,32 @@ function AdDeatailsTabs() {
   useEffect(() => {console.log("888",adDetail?.pageInfo?.name)
     if (adDetail?.pageInfo?.name) {
       console.log("888",adDetail?.pageInfo?.name)
-      if (subAllAds.subAllAds.length > 0) {
+      console.log("909",Object.keys(subAllAds.filterSubAllData).includes('0'))
+      if (Object.keys(subAllAds?.filterSubAllData).includes('0')) {
+        
         if (
-          subAllAds.subAllAds[0]?.pageInfo?.name !== adDetail?.pageInfo?.name
+          Object(subAllAds?.filterSubAllData)[0][0]?.pageInfo?.name !== adDetail?.pageInfo?.name
         ) {
+          console.log(Object(subAllAds?.filterSubAllData)[0][0].pageInfo.name)
           console.log("888",adDetail?.pageInfo?.name)
           console.log("888",adDetail?.pageInfo?.name)
+          
           dispatch(
             loadSubAllAdsStart({
               page_name: adDetail?.pageInfo?.name,
               page_index: 0,
+              number_of_pagead: 12,
             })
           );
+        }else{
+          dispatch(subAllAdsDuck.laodSubAllCashedPageData(0));
         }
       } else {
         dispatch(
           loadSubAllAdsStart({
             page_name: adDetail?.pageInfo?.name,
             page_index: 0,
+            number_of_pagead: 12,
           })
         );
       }

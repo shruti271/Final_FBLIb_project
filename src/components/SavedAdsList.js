@@ -1,12 +1,13 @@
 import { Grid } from "@material-ui/core";
 import InfiniteScroll from "react-infinite-scroll-component";
 import ThumbNailBox from "./ThumbNailBox";
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, Pagination, Stack, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import * as savedAdsPeramsDuck from "../redux/ducks/savedAdsPerams";
 import {
   loadMoresavedFilteredAdsStart,
   loadsavedFilteredAdsStart,
+  setSavedCurrentPaginationIndex,
 } from "../redux/ducks/filteredSavedAds";
 import { useSkipInitialEffect } from "../utils/customHooks";
 import emptyImg from "../assets/empty.svg";
@@ -152,76 +153,58 @@ const SavedAdsList = () => {
               cssOverride={{ top: "0px", marginTop: "35px" }}
             />
           </Box> : 
-        <InfiniteScroll        
-        dataLength={filteredSavedAds?.filteredSavedAds.length} //This is important field to render the next data
-        next={() =>
-          dispatch(
-            savedAdsPeramsDuck.setSavedAdsPageIndex(
-              savedAdsPerams?.pageIndex + 1
-            )
-          )
-        }
-        hasMore={filteredSavedAds?.hasMoreData}
-        loader={
-          filteredSavedAds?.loading ? (
-            <Box
-              className="loader"
-              style={{                
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                textAlign: "center",
-              }}
-            >
-              <FadeLoader
-                color="#00BFFF"
-                cssOverride={{ top: "0px", marginTop: "35px" }}
-              />
-            </Box>
-          ) : null
-        }
+        <Grid
+        item
+        sx={{
+          width: "100%",
+        }}
       >
         <Grid
-          item
+          container            
           sx={{
+            marginTop: "5px",
             width: "100%",
           }}
         >
-          <Grid
-            container            
-            sx={{
-              marginTop: "5px",
-              width: "100%",
-            }}
-          >
-            {filteredSavedAds?.filteredSavedAds?.length !== 0 &&
-              filteredSavedAds?.filteredSavedAds?.map((ads, index) => (
-                <ThumbNailBox adInfo={ads} index={index} key={index} />
-              ))}
-            {filteredSavedAds?.filteredSavedAds?.length === 0 &&
-              filteredSavedAds?.loading === false && (
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    width: "100%",
-                    marginTop: "100px",
-                  }}
-                >
-                  <Stack>
-                    <img src={emptyImg} alt="" />
-                    <Typography sx={{ color: "#808080" }}>
-                      No Records Found
-                    </Typography>
-                  </Stack>
-                </Box>
-              )}
-          </Grid>
+          {filteredSavedAds?.filteredSavedAds?.length !== 0 &&
+            filteredSavedAds?.filteredSavedAds?.map((ads, index) => (
+              <ThumbNailBox adInfo={ads} index={index} key={index} />
+            ))}
+          {filteredSavedAds?.filteredSavedAds?.length === 0 &&
+            filteredSavedAds?.loading === false && (
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  width: "100%",
+                  marginTop: "100px",
+                }}
+              >
+                <Stack>
+                  <img src={emptyImg} alt="" />
+                  <Typography sx={{ color: "#808080" }}>
+                    No Records Found
+                  </Typography>
+                </Stack>
+              </Box>
+            )}
         </Grid>
-      </InfiniteScroll>
+      </Grid>
       }
-      
+       <Pagination
+          count={filteredSavedAds?.totalPages}
+          size={"large"}           
+          page={filteredSavedAds?.paginationIndex+1}
+          onChange={(e, p) => {
+            //console.log("9909",e)
+            dispatch(setSavedCurrentPaginationIndex(p-1))
+            dispatch(
+              savedAdsPeramsDuck.setSavedAdsPageIndex(
+                savedAdsPerams?.pageIndex + 1
+              )
+            )
+          }}/>
     </Box>
   );
 };

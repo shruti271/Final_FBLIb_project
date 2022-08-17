@@ -45,7 +45,7 @@ const PagePagination = () => {
           : [],
       adstatus: allAdsPerams?.appliedFilters?.AdStatus?.selectedValue,
       fb_likes:
-        allAdsPerams?.appliedFilters?.FacebookLikes?.chipText !== ""
+        allAdsPerams?.appliedFilters?.FacebookLikes?.chipText?.length !== 0
           ? [
               allAdsPerams?.appliedFilters?.FacebookLikes?.min,
               allAdsPerams?.appliedFilters?.FacebookLikes?.max,
@@ -209,8 +209,8 @@ const PagePagination = () => {
           justifyContent: "center",
           alignItems: "center",
         }}
-      >{console.log("8989",filteredAds?.paginationIndex)}
-        <Pagination
+      >
+       { (allAdsPerams.pageIndex !== 0 || !filteredAds?.loading) && <Pagination
           count={filteredAds?.totalPages}
           size={"large"}           
           page={filteredAds?.paginationIndex+1}
@@ -219,7 +219,7 @@ const PagePagination = () => {
             dispatch(setCurrentPaginationIndex(p-1))
             dispatch(allAdsPeramsDuck.setDatabasePageIndex(p - 1));
           }}
-        />
+        />}
       </Box>
     </>
   );

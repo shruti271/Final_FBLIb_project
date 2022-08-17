@@ -7,6 +7,9 @@ export const LOAD_MORE_SUBALLADS_SUCCESS = "LOAD_MORE_SUBALLADS_SUCCESS";
 export const LOAD_MORE_SUBALLADS_ERROR = "LOAD_MORE_SUBALLADS_ERROR";
 
 export const SUBALLADS_GET_PAGE_POSITION = "SUBALLADS_GET_PAGE_POSITION";
+export const SET_SUBALL_CURRENT_PAGINATION_INDEX="SET_SUBALL_CURRENT_PAGINATION_INDEX";
+
+export const GET_SUBALL_CASHED_PAGE_DATA = "GET_SUBALL_CASHED_PAGE_DATA";
 
 export const loadSubAllAdsStart = (subAdsInfo) => ({
   type: LOAD_SUBALLADS_START,
@@ -41,10 +44,23 @@ export const setPostionForSubAllAdsToScrollValueStart = (data) => ({
   type: SUBALLADS_GET_PAGE_POSITION,
   payload: data,
 });
+export const setSubAllCurrentPaginationIndex = (page) => ({
+  type: SET_SUBALL_CURRENT_PAGINATION_INDEX,  
+  payload:page,
+});
+
+export const laodSubAllCashedPageData = (page) => ({
+  type: GET_SUBALL_CASHED_PAGE_DATA,
+  payload: page,
+});
+
 const initialState = {
   pageIndex:0,
   pageName:"",
   subAllAds: [],
+  filterSubAllData:{},
+  totalPages:0,
+  // paginationIndex:0,
   hasMoreData:true,
   postionOfPage:0,
   loading: false,
@@ -59,29 +75,56 @@ const subAllAdsReducer = (state = initialState, action) => {
         pageIndex: action.payload.page_index,
         pageName: action.payload.page_name,
         subAllAds:[],
+        filterSubAllData:{},        
         hasMoreData:true,
         loading: true,
       };
     case LOAD_MORE_SUBALLADS_START:
       return {
         ...state,
-        pageIndex: action.payload.page_index,
+        pageIndex: action.payload.page_index,    
+        subAllAds:[],    
         loading: true,
       };
     case LOAD_SUBALLADS_SUCCESS:
+      console.log("909 more",action.payload ,"-----",action?.payload.data)
+
       return {
         ...state,
         loading: false,
-        subAllAds: action.payload,
+        subAllAds: action.payload.data,
         hasMoreData:action.payload?.length < 8 ? false : true,
+        filterSubAllData: {
+          ...state.filterSubAllData,
+          [`${state.pageIndex}`] : action.payload.data
+        },
+        totalPages: action.payload?.total_pages,
       };
     case LOAD_MORE_SUBALLADS_SUCCESS:
+      console.log("909 more",action.payload ,"-----",action?.payload.data)
       return {
         ...state,
         loading: false,
-        subAllAds: [...state.subAllAds].concat(action.payload),
+        subAllAds: action?.payload.data,
         hasMoreData:action.payload?.length < 8 ? false : true,
+        filterSubAllData: {
+          ...state.filterSubAllData,
+          [`${state.pageIndex}`] : action.payload.data
+        },
+        totalPages: action.payload?.total_pages,
       }
+      case GET_SUBALL_CASHED_PAGE_DATA:
+  console.log("909 0-0  cash data",state.filterSubAllData[action.payload] , state.filterSubAllData)
+  return {
+    ...state,
+    subAllAds:state.filterSubAllData[action.payload],
+    pageIndex:action.payload
+  };
+      case SET_SUBALL_CURRENT_PAGINATION_INDEX:
+        return {
+          ...state,
+          paginationIndex:action.payload
+        };
     case LOAD_SUBALLADS_ERROR:
     case LOAD_MORE_SUBALLADS_ERROR:
       return {

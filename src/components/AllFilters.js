@@ -941,8 +941,21 @@ function AllFilters(props) {
                           min: 1,
                           max: savedAdsPerams?.maxRanger?.AdCount?.max,
                         });
-                    handleAdsCountChange([1, 1000], true);
-                    setrangeAnchorEl(null);
+                    
+                    
+                        
+                    pageName === PageNameEnum.AdlibraryDatabase && dispatch(clearCashedPageData());
+                        dispatch(
+                          pageName === PageNameEnum.AdlibraryDatabase ?
+                          allAdsPeramsDuck.clearSingleFilter({
+                            key: "AdCount",
+                          }) :
+                          savedAdsPeramsDuck.clearSavedSingleFilter({
+                            key: "AdCount",
+                          })
+                        );
+                    // handleAdsCountChange([1, 1000], true); 
+                    setrangeAnchorEl(null);                    
                   }}
                   style={{
                     fontWeight: 600,
@@ -1379,7 +1392,22 @@ function AllFilters(props) {
                           max: savedAdsPerams?.maxRanger?.FacebookLikes?.max,
                         });
 
-                    handleFacebookLikesChange([1, 100000], true);
+
+
+                        pageName === PageNameEnum.AdlibraryDatabase && dispatch(clearCashedPageData());
+                        dispatch(
+                          pageName === PageNameEnum.AdlibraryDatabase ?
+                          allAdsPeramsDuck.clearSingleFilter({
+                            key: "FacebookLikes",
+                          }) :
+                          savedAdsPeramsDuck.clearSavedSingleFilter({
+                            key: "FacebookLikes",
+                          })
+                        );
+
+
+
+                    // handleFacebookLikesChange([1, 100000], true);
                     setFacebookLikeAnchorEl(null);
                   }}
                   style={{
@@ -1684,7 +1712,21 @@ function AllFilters(props) {
                           max: savedAdsPerams?.maxRanger?.InstagramFollowers
                             ?.max,
                         });
-                    handleInstagramFollowersChange([1, 10000], true);
+
+
+                        pageName === PageNameEnum.AdlibraryDatabase && dispatch(clearCashedPageData());
+                        dispatch(
+                          pageName === PageNameEnum.AdlibraryDatabase ?
+                          allAdsPeramsDuck.clearSingleFilter({
+                            key: "InstagramFollowers",
+                          }) :
+                          savedAdsPeramsDuck.clearSavedSingleFilter({
+                            key: "InstagramFollowers",
+                          })
+                        );
+
+
+                    // handleInstagramFollowersChange([1, 10000], true);
                     setInstragramFollowerAnchorEl(null);
                   }}
                   style={{
