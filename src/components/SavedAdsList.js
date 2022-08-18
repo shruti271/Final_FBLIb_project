@@ -40,7 +40,7 @@ const SavedAdsList = () => {
       setSavedCurrentPaginationAds({
         start: SavedCurrentPageStartPoint,
         end: SavedCurrentPageEndPoint,
-        currentPage: paginationIndex,
+        currentPage: paginationIndex,        
       })
     );
   }, []);
@@ -123,6 +123,7 @@ const SavedAdsList = () => {
     savedAdsPerams.appliedFilters,
     savedAdsPerams.sortFilter,
     savedAdsPerams.pageIndex,
+    savedAdsPerams.searchBarData,
   ]);
 
   useSkipInitialEffect(() => {
