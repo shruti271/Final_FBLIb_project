@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import * as allAdsPeramsDuck from "../redux/ducks/allAdsPerams";
 import {
   loadFilteredAdsStart,
-  loadMoreFilteredAdsStart,
+  // loadMoreFilteredAdsStart,
 } from "../redux/ducks/filteredAds";
 import { useSkipInitialEffect } from "../utils/customHooks";
 import { FadeLoader } from "react-spinners";
@@ -91,12 +91,12 @@ const AdsList = () => {
 
   useSkipInitialEffect(() => {
     if (allAdsPerams?.pageIndex > 0) {
-      dispatch(
-        loadMoreFilteredAdsStart({
-          ...queryObject,
-          page_index: allAdsPerams?.pageIndex,
-        })
-      );
+      // dispatch(
+      //   loadMoreFilteredAdsStart({
+      //     ...queryObject,
+      //     page_index: allAdsPerams?.pageIndex,
+      //   })
+      // );
     } else {
       dispatch(loadFilteredAdsStart({ ...queryObject, page_index: 0 }));
     }

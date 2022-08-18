@@ -16,6 +16,7 @@ import singleAdDataReducer from "./ducks/singleAdsData";
 
 const reducer = combineReducers({
   filteredAds: filteredAdsReducer,
+  savedAdsPerams:savedAdsPeramsReducer,
   filteredSavedAds: filteredSavedAdsReducer,
   buttonTypes: buttonTypesReducer,
   accountSettings: accountSettingsReducer,
@@ -23,7 +24,6 @@ const reducer = combineReducers({
   isAliveData: isAliveReducer,
   subscriptionData: subscriptionReducer,
   allAdsPerams: allAdsPeramsReducer,
-  savedAdsPerams:savedAdsPeramsReducer,
   savedAdsManager: savedAdsManagerReducer,
   singleAdData : singleAdDataReducer,
 });

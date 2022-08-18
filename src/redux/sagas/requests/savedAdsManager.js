@@ -6,8 +6,9 @@ export function requestAddToSavedAds(SavedAds) {
   });
 }
 
-export function requestRemoveFromSavedAds(id) {
-  return axiosInstance.delete(`api/saveadmanager/${id.ad}/`, {
+export function requestRemoveFromSavedAds(ad) {
+  console.log("404 ===999",ad)
+  return axiosInstance.delete(`api/saveadmanager/${ad.id}/`, {
     withCredentials: true,
   });
 }

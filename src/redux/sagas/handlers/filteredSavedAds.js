@@ -13,13 +13,14 @@ import {
   addToSavedAdsFilterLocalSuccess,
   addToSavedAdsFilterLocalError
 } from "../../ducks/filteredSavedAds";
-import { addToSkipedSavedFilteredAds } from "../../ducks/savedAdsManager";
+// import { addToSkipedSavedFilteredAds } from "../../ducks/savedAdsManager";
 
 export function* handleGetFilteredSavedAds({ payload }) {
   try {
     const response = yield call(requestGetSavedAds, payload);
 
     if (response.status === 200) {
+      console.log("009 come in handler",response?.data)
       yield put(loadsavedFilteredAdsSuccess(response?.data));
     }
   } catch (error) {
@@ -43,18 +44,20 @@ export function* handleGetMoreFilteredSavedAds({ payload }) {
   } catch (error) {
     yield put(loadMoresavedFilteredAdsError(error));
   }
-}
+}//remove
 
 export function* handleCheckAdByFilter({ payload }) {
   try {
     const response = yield call(requestCheckAdByFilter, payload);
 
     if (response.status === 200) {
+      console.log("10001",response?.data)
       yield put(addToSavedAdsFilterLocalSuccess(response?.data?.data));
-      console.log("handleCheckAdByFilter: ", response?.data?.data?.AdDetails?.id);
-      if(response?.data?.data?.valid){
-        yield put(addToSkipedSavedFilteredAds(response?.data?.data?.AdDetails?.id));
-      }
+      console.log("009 handleCheckAdByFilter: ", response?.data?.data?.AdDetails?.id);
+      console.log("009",response)
+      // if(response?.data?.data?.valid){
+      //   yield put((addToSkipedSavedFilteredAdsresponse?.data?.data?.AdDetails?.id));
+      // }
     }
   } catch (error) {
     yield put(addToSavedAdsFilterLocalError(error));

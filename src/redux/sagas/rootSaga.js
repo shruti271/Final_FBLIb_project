@@ -1,7 +1,7 @@
 import { all, fork, takeLatest } from "redux-saga/effects";
 import {
   LOAD_FILTERED_ADS_START,
-  LOAD_MORE_FILTERED_ADS_START,
+  // LOAD_MORE_FILTERED_ADS_START,
 } from "../ducks/filteredAds";
 import {
   handleGetFilteredAds,
@@ -33,13 +33,15 @@ import {
   handleGetMoreFilteredSavedAds,
 } from "./handlers/filteredSavedAds";
 import {
+  ADD_TO_SAVED_ADS_START,
   ADD_TO_SAVED_FILTERED_AD_LOCAL_START,
   LOAD_MORE_SAVED_FILTERED_ADS_START,
   LOAD_SAVED_FILTERED_ADS_START,
+  REMOVED_FROM_SAVED_ADS_START,
 } from "../ducks/filteredSavedAds";
 import { GET_BUTTON_TYPES_START } from "../ducks/buttonType";
 import { handleGetButtonType } from "../sagas/handlers/buttonType";
-import { ADD_TO_SAVED_ADS_START, REMOVED_FROM_SAVED_ADS_START } from "../ducks/savedAdsManager";
+// import {  REMOVED_FROM_SAVED_ADS_START } from "../ducks/savedAdsManager";
 import { handleAddToSavedAds, handleRemoveFromSavedAds } from "../sagas/handlers/savedAdsManager";
 import { LOAD_SINGLEAD_START } from "../ducks/singleAdsData";
 import { handleGetSingleAdData } from "./handlers/singleAdsData";
@@ -52,9 +54,9 @@ function* onLoadFilteredAds() {
   yield takeLatest(LOAD_FILTERED_ADS_START, handleGetFilteredAds);
 }
 
-function* onLoadMoreFilteredAds() {
-  yield takeLatest(LOAD_MORE_FILTERED_ADS_START, handleGetMoreFilteredAds);
-}
+// function* onLoadMoreFilteredAds() {
+//   yield takeLatest(LOAD_MORE_FILTERED_ADS_START, handleGetMoreFilteredAds);
+// }
 
 function* onLoadFilteredSavedAds() {
   yield takeLatest(LOAD_SAVED_FILTERED_ADS_START, handleGetFilteredSavedAds);
@@ -106,7 +108,9 @@ function* onGetSingleAdData() {
   yield takeLatest(LOAD_SINGLEAD_START, handleGetSingleAdData);
 }
 
-const filteredAdsSagas = [fork(onLoadFilteredAds), fork(onLoadMoreFilteredAds)];
+const filteredAdsSagas = [fork(onLoadFilteredAds), 
+  //fork(onLoadMoreFilteredAds)
+];
 const filteredSavedAdsSagas = [
   fork(onLoadFilteredSavedAds),
   fork(onLoadMoreFilteredSavedAds),

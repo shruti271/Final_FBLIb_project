@@ -85,6 +85,7 @@ const initialState = {
 const savedAdsPeramsReducer = (state = initialState, action) => {
   switch (action.type) {
     case SAVED_CHANGE_APPLIEDFILTERS:
+      console.log("0-0----",action.payload.value.selectedValue)
       return {
         ...state,
         pageIndex: 0,

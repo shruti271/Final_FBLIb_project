@@ -90,7 +90,7 @@ const PagePagination = () => {
           ? allAdsPerams?.searchBarData.split(",")
           : null
         : null,
-        number_of_pagead:12
+        // number_of_pagead:12
     };
     setQueryObject(queryObject);
   }, [
@@ -107,17 +107,17 @@ const PagePagination = () => {
     ) {
       dispatch(laodCashedPageData(allAdsPerams?.pageIndex));
     } else {
-      if (allAdsPerams?.pageIndex > 0) {
-        dispatch(
-          loadMoreFilteredAdsStart({
-            ...queryObject,
-            page_index: allAdsPerams?.pageIndex,
-          })
-        );
-      } else {
+      // if (allAdsPerams?.pageIndex > 0) {
+      //   dispatch(
+      //     loadMoreFilteredAdsStart({
+      //       ...queryObject,
+      //       page_index: allAdsPerams?.pageIndex,
+      //     })
+      //   );
+      // } else {
         console.log("0-0 come in")
-        dispatch(loadFilteredAdsStart({ ...queryObject, page_index: 0 }));
-      }
+        dispatch(loadFilteredAdsStart({ ...queryObject, page_index: 0 , number_of_pagead:process.env.REACT_APP_NO_OF_ADS_PER_PAGE}));
+      // }
     }
   }, [dispatch, queryObject]);
 

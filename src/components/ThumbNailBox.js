@@ -23,14 +23,17 @@ import MyChart from "./linemy";
 import ShowMoreText from "react-show-more-text";
 import {
   addToSavedAdsFilterLocalStart,
+  addToSavedAdsStart,
+  checkAplliedFiltersAds,
+  removeFromSavedAdsStart,
   removesavedFilteredAdLocal,
   setPostionForSavedPageToScrollValueStart,
 } from "../redux/ducks/filteredSavedAds";
 import {
   addSavedAdsIdsLocal,
-  addToSavedAdsStart,
-  removeFromSavedAdsStart,
-  removeSavedAdsIdsLocal,
+  // addToSavedAdsStart,
+  // removeFromSavedAdsStart,
+  // removeSavedAdsIdsLocal,
 } from "../redux/ducks/savedAdsManager";
 import { setPostionForScrollValueStart } from "../redux/ducks/filteredAds";
 import { setPostionForSubAllAdsToScrollValueStart } from "../redux/ducks/subAllAds";
@@ -179,24 +182,26 @@ const ThumbNailBox = ({ adInfo, index }) => {
 
   const [queryObject, setQueryObject] = useState({});
 
-  const savedAdsManager = useSelector((state) => state.savedAdsManager);
+  const filteredSavedAds = useSelector((state) => state.filteredSavedAds);
   const savedAdsPerams = useSelector((state) => state.savedAdsPerams);
 
   useEffect(() => {
+    
     const queryObject = {
       startdate: savedAdsPerams?.appliedFilters?.StartRunningDate?.startdate,
       enddate: savedAdsPerams?.appliedFilters?.StartRunningDate?.enddate,
       adcount:
-        savedAdsPerams?.appliedFilters?.AdCount?.min >
-          savedAdsPerams?.maxRanger.AdCount?.min ||
-        savedAdsPerams?.appliedFilters?.AdCount?.max <
-          savedAdsPerams?.maxRanger.AdCount?.max
+        // savedAdsPerams?.appliedFilters?.AdCount?.min >
+        //   savedAdsPerams?.maxRanger.AdCount?.min ||
+        // savedAdsPerams?.appliedFilters?.AdCount?.max <
+        //   savedAdsPerams?.maxRanger.AdCount?.max
+        savedAdsPerams?.appliedFilters?.AdCount?.chipText !==""
           ? [
               savedAdsPerams?.appliedFilters?.AdCount?.min,
               savedAdsPerams?.appliedFilters?.AdCount?.max,
             ]
           : [],
-      adstatus: savedAdsPerams?.appliedFilters?.AdStatus?.status?.selectedValue,
+      adstatus: savedAdsPerams?.appliedFilters?.AdStatus?.selectedValue,
       fb_likes:
         savedAdsPerams?.appliedFilters?.FacebookLikes?.min >
           savedAdsPerams?.maxRanger.FacebookLikes?.min ||
@@ -208,13 +213,14 @@ const ThumbNailBox = ({ adInfo, index }) => {
             ]
           : [],
       insta_followers:
-        savedAdsPerams?.appliedFilters?.InstragramLike?.min >
-          savedAdsPerams?.maxRanger.InstragramLike?.min ||
-        savedAdsPerams?.appliedFilters?.InstragramLike?.max <
-          savedAdsPerams?.maxRanger.InstragramLike?.max
+        // savedAdsPerams?.appliedFilters?.InstragramLike?.min >
+        //   savedAdsPerams?.maxRanger.InstragramLike?.min ||
+        // savedAdsPerams?.appliedFilters?.InstragramLike?.max <
+        //   savedAdsPerams?.maxRanger.InstragramLike?.max
+        savedAdsPerams?.appliedFilters?.InstagramFollowers?.chipText !==""
           ? [
-              savedAdsPerams?.appliedFilters?.InstragramLike?.min,
-              savedAdsPerams?.appliedFilters?.InstragramLike?.max,
+              savedAdsPerams?.appliedFilters?.InstagramFollowers?.min,
+              savedAdsPerams?.appliedFilters?.InstagramFollowers?.max,
             ]
           : [],
       media_type: savedAdsPerams?.appliedFilters?.MediaType?.selectedValue,
@@ -398,24 +404,28 @@ const ThumbNailBox = ({ adInfo, index }) => {
                   {/* </Tooltip> */}
                   <img
                     src={
-                      savedAdsManager.savedAdsIds.includes(adInfo?.id)
+                      filteredSavedAds.savedAdsIds.includes(adInfo?.id)
                         ? StarFill
                         : Saveicon
                     }
                     alt="saved-icon"
                     className={classes.saveicon}
                     onClick={() => {
-                      if (savedAdsManager.savedAdsIds.includes(adInfo?.id)) {
-                        dispatch(removesavedFilteredAdLocal(adInfo));
-                        dispatch(removeSavedAdsIdsLocal(adInfo.id));
-                        dispatch(removeFromSavedAdsStart({ ad: adInfo?.id }));
+                      if (filteredSavedAds.savedAdsIds.includes(adInfo?.id)) {
+                        // dispatch(removesavedFilteredAdLocal(adInfo));
+                        // dispatch(removeSavedAdsIdsLocal(adInfo.id));
+                        dispatch(removeFromSavedAdsStart(adInfo));
                       } else {
-                        dispatch(addSavedAdsIdsLocal(adInfo.id));
+                        // dispatch(addSavedAdsIdsLocal(adInfo.id));//local saved id
                         dispatch(addToSavedAdsStart({ ad: adInfo.id }));
+                        console.log("000000 ---- q",queryObject)
+                        // dispatch(checkAplliedFiltersAds({
+                        //   filters:queryObject,adsData:adInfo
+                        // }));
                         dispatch(
                           addToSavedAdsFilterLocalStart({
-                            ...queryObject,
-                            adId: adInfo.id,
+                         ...queryObject,
+                            adId: adInfo.id
                           })
                         );
                       }

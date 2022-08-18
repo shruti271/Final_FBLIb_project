@@ -5,5 +5,6 @@ export function requestGetSavedAds(payload) {
 }
 
 export function requestCheckAdByFilter(payload) {
+  console.log("009 ======",payload)
   return axiosInstance.post("api/checkAdByFilter/",payload, { withCredentials: true });
 }

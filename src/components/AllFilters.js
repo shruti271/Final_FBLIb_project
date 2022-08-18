@@ -186,7 +186,7 @@ function AllFilters(props) {
   const openButtonType = Boolean(ButtonTypeanchorel);
   const [seachTypeanchorel, setSeachTypeAnchorEl] = React.useState(null);
   const openSearchType = Boolean(seachTypeanchorel);
-
+// all ads
   const [rangeAdcountValue, setRangeAdcountValue] = useState({
     min: allAdsPerams?.appliedFilters?.AdCount?.min,
     max: allAdsPerams?.appliedFilters?.AdCount?.max,
@@ -199,7 +199,7 @@ function AllFilters(props) {
     min: allAdsPerams?.appliedFilters?.InstagramFollowers?.min,
     max: allAdsPerams?.appliedFilters?.InstagramFollowers?.max,
   });
-
+// saved ads
   const [savedPageRangeAdcountValue, setSavedPageRangeAdcountValue] = useState({
     min: savedAdsPerams?.appliedFilters?.AdCount?.min,
     max: savedAdsPerams?.appliedFilters?.AdCount?.max,
@@ -260,6 +260,7 @@ function AllFilters(props) {
   };
 
   const handleChangeStatus = (newValue, isReset) => {
+    console.log("0-0- 00",newValue)
     pageName === PageNameEnum.AdlibraryDatabase && dispatch(clearCashedPageData());
     dispatch(
       pageName === PageNameEnum.AdlibraryDatabase
@@ -398,7 +399,7 @@ function AllFilters(props) {
   };
 
   const handleChangeSearchBar = (newValue) => {
-    console.log("6666", newValue);
+    console.log("8888 value", newValue);
     dispatch(
       pageName === PageNameEnum.AdlibraryDatabase
         ? allAdsPeramsDuck.changeSearchBarData({
@@ -611,15 +612,16 @@ function AllFilters(props) {
             if (e.key === "Enter") {
               pageName === PageNameEnum.AdlibraryDatabase && dispatch(clearCashedPageData());
               handleChangeSearchBar(e.currentTarget.value);
-            }
-            if (e.target.value.length === 0) {
-              pageName === PageNameEnum.AdlibraryDatabase && dispatch(clearCashedPageData());
-              // console.log("6666",e.target.value.length)
-              handleChangeSearchBar("");
+            }console.log("8888",e.target.value)
+            if (e.target.value.length === 0) {console.log("8888 aaaaaaaaaaa",e.target.value)
+            
+            handleChangeSearchBar("");
+            pageName === PageNameEnum.AdlibraryDatabase && dispatch(clearCashedPageData());
+            console.log("8888 bbbbbbb",e.target.value)
             }
           }}
           onChange={(e) => {
-            console.log("6666 searcgh ", searchBarValue);
+            console.log("88888 searcgh ", searchBarValue);
             setSearchBarValue(e.currentTarget.value);
           }}
           size="large"
