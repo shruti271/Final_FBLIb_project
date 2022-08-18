@@ -1,7 +1,8 @@
-import fbaddlogo from "../../assets/fbaddlogo.png";
+import fbaddlogo from "../../assets/Eye of Ecom Logo Blue 08-11 2 1.svg";
+import fbaddlogowhitecolor from "../../assets/new.svg"
 import React, { useState } from "react";
 import { MuiThemeProvider } from "@material-ui/core/styles";
-import { Alert, Box, Card, CardContent, Grid, Typography } from "@mui/material";
+import { Alert, Box, Card, CardContent, Grid, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { themeLight, globalStyles } from "../../css/globalcss";
 import { CssBaseline } from "@material-ui/core";
 import { resendactivateemail } from "../../services";
@@ -9,6 +10,9 @@ import {  useNavigate } from "react-router-dom";
 
 const Activate = () => {
   const global = globalStyles();
+  const theme = useTheme()
+  const showhidelogolargedevice = useMediaQuery(theme.breakpoints.up("sm"));
+  const showhidelogosmalldevice = useMediaQuery(theme.breakpoints.down("sm"));
   const [resendmessage, setResendmessage] = useState("");
   const email = localStorage.getItem("email");
   const navigate = useNavigate()
@@ -37,18 +41,31 @@ const Activate = () => {
             transform: "translate(-50%, -50%)",
           }}
         >
+               {showhidelogosmalldevice ?
+           <img
+                alt="logo"
+                src={fbaddlogowhitecolor}
+                className={global.logo}
+                onClick={() => navigate("/auth/login")}
+              /> :""}
           <Grid>
             <Card
               style={{
                 maxWidth: 632,
                 padding: "20px 5px",
-                margin: "0 auto",
+                margin: "15px auto",
                 backgroundColor: "#F6F6FB",
                 borderRadius: "16px",
               }}
             >
               <CardContent>
-                <img alt="logo" src={fbaddlogo} className={global.logo} onClick={()=> navigate("/auth/login")}/>
+              {showhidelogolargedevice ?
+              <img
+                alt="logo"
+                src={fbaddlogo}
+                className={global.logo}
+                onClick={() => navigate("/auth/login")}
+              /> :""}
                 <Box style={{  padding: "1vmax 2.5vmax" }}>
                   <Grid container spacing={2}>
                     <Grid item xs={12}>

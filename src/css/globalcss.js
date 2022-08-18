@@ -7,12 +7,8 @@ export const themeLight = createTheme({
   overrides: {
     MuiCssBaseline: {
       "@global": {
-        body: {
-          background:
-            "linear-gradient(243.18deg, #B5EDFF 0%, #00CBFF 28.65%, #6721FF 85.94%)",
-          backgroundRepeat: "no-repeat",
-          backgroundAttachment: "fixed",
-        },
+            body: { backgroundColor: "#002838 !important" },
+            // body: {  background:"#002838"}
       },
     },
   },
@@ -21,16 +17,13 @@ export const themeLight = createTheme({
 const globalStyles = makeStyles((theme) => ({
   logo: {
     height: 50,
-    width: 280,
-    // [theme.breakpoints.down('xs')]: {
-    //   width:250
-    // },
+    width: 285,
     display: 'block',
     marginLeft: 'auto',
     marginRight: 'auto',
     objectFit: 'cover',
     cursor:"pointer",
-    display:"flex"
+    display:"flex",
   },
   title: {
     fontFamily: "Neue Haas Grotesk Display Pro",
@@ -55,7 +48,7 @@ const globalStyles = makeStyles((theme) => ({
   Crateaccountbutton: {
     background:
       // "linear-gradient(270deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)",
-      "linear-gradient(243.18deg, #B5EDFF 0%, #00CBFF 28.65%, #6721FF 85.94%)",
+      " linear-gradient(45deg, #00CBFF 0%, #72E2FF 100%)",
     fontFamily: "Neue Haas Grotesk Display Pro",
     width: 400,
     textTransform: "none",
@@ -66,7 +59,7 @@ const globalStyles = makeStyles((theme) => ({
     paddingLeft: "10px",
     height: "48px",
     // marginBottom:"10px"
-  },
+  },    
 }));
 
 export { globalStyles };

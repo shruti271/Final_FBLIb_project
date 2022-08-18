@@ -16,28 +16,29 @@ import { useNavigate } from "react-router-dom";
 import settings from "../assets/settings.svg";
 import logout from "../assets/Logout.svg";
 import contactUs from "../assets/contactUs.svg";
-import NotificationsIcon from "@mui/icons-material/Notifications";
+// import NotificationsIcon from "@mui/icons-material/Notifications";
 import PersonIcon from "@mui/icons-material/Person";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { useSelector } from "react-redux";
 import useStyles from "../css/mediapage";
 import { logoutUser } from "../services";
 import { getFaviconEl } from "../utils/getFaviconEl";
-
+import Eyeofecomlogo from "../assets/Eye of Ecom Logo Blue 08-11 2 1 (1).svg"
 const drawerWidth = 276;
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
-  width: `calc(100% - calc(${theme.spacing(7)} + 20px))`,
+  // width: `calc(100% - calc(${theme.spacing(7)} + 20px))`,
   transition: theme.transitions.create(["width", "margin"], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
   backgroundColor: "#fff",
+  zIndex:1200,
   ...(open && {
     marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
+    // width: `calc(100% - ${drawerWidth}px)`,
     transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
@@ -52,53 +53,43 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
   const MenuListOptios = [
     { name: "Account Setings", icon: settings, url: "/accountSettings" },
     { name: "Contact Support", icon: contactUs, url: "/contactSupport" },
-    { name: "Logout", icon: logout, url: "/auth/login" },
+    { name: "Logout", icon: logout, url: "/auth/login" }
   ];
   const [isMenuOptionActive, setIsMenuOptionActive] = React.useState("");
   const navigate = useNavigate();
   const [anchoerEL, setAnchoerEL] = React.useState();
-
-  useEffect(()=>{
-    localStorage.setItem('IsDrawerOpen', JSON.stringify(isOpen));
-    console.log("999 ---",isOpen)
-  })
-  
   const handleOpenMenu = (e) => {
     setAnchoerEL(e.currentTarget);
   };
   const userLogout = async () => {
-    logoutUser().then(
-      (data) => {
-        localStorage.setItem("is_alive", false);
-        handleCloseMenu();
-        navigate("/auth/login");
-      },
-      (error) => {
-        handleCloseMenu();
-      }
-    );
+    logoutUser().then((data)=>{
+      localStorage.setItem("is_alive", false);
+      handleCloseMenu();
+      navigate("/auth/login");
+    }, (error)=>{
+      handleCloseMenu();
+    });
   };
   const handleCloseMenu = () => {
     setAnchoerEL(null);
   };
   useEffect(() => {
     setIsMenuOptionActive(window.location.pathname);
-    // const favicon = getFaviconEl();
-    // console.log("login", favicon);
-    // favicon.href = "Rectangleeye.png";
+    const favicon = getFaviconEl();
+    console.log("login",favicon)
+    favicon.href = "Rectangleeye.png"
   }, []);
   return (
     <>
       <AppBar open={isOpen}>
-        <Toolbar sx={{ ml: -1 }}>
+        <Toolbar>
           <Stack
             direction={"row"}
-            style={{              
+            style={{
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
               width: "100%",
-              
             }}
           >
             <Stack>
@@ -109,23 +100,18 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
                   !isOpen ? setIsOpen(true) : setIsOpen(false);
                 }}
                 edge="start"
-              
+                sx={{
+                  color: "#00CBFF",
+                }}
               >
-                <svg width={0} height={0}>
-                  <linearGradient id="linearColors" x1={0} y1={1} x2={1} y2={0}>
-                    <stop offset={0.1} stopColor="#B5EDFF" />
-                    <stop offset={0.3} stopColor="#00CBFF" />
-                    <stop offset={0.9} stopColor="#6721FF" />
-                  </linearGradient>
-                </svg>
-                <MenuIcon sx={{ fill: "url(#linearColors)",fontSize: '35px'}} />
+                <img src={Eyeofecomlogo} alt="444" height={33}/>
               </IconButton>
             </Stack>
             <Stack>
               <Stack direction={"row"} spacing={2}>
-                <Box className={classes.avtar}>
+                {/* <Box className={classes.avtar}>
                   <NotificationsIcon />
-                </Box>
+                </Box> */}
                 <Box
                   className={classes.avtar}
                   onClick={handleOpenMenu}
@@ -182,12 +168,12 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
                       style: {
                         marginTop: 13,
                         maxHeight: 40 * 6,
-                        width: "auto",//"35ch",
+                        width: "35ch",
                         background: "white",
                       },
                     }}
                   >
-                    <Box marginLeft={3} marginTop={1} marginBottom={1} paddingRight={1}>
+                    <Box marginLeft={3} marginTop={1} marginBottom={1}>
                       <Typography>
                         <b>
                           {accountSettings &&
@@ -207,7 +193,7 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
                           onClick={() => {
                             if (item.name === "Logout") {
                               userLogout();
-                            } else {
+                            }else{
                               handleCloseMenu();
                               navigate(item.url);
                             }
@@ -235,7 +221,7 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
             </Stack>
           </Stack>
         </Toolbar>
-        <Divider />
+        <Divider/>
       </AppBar>
     </>
   );

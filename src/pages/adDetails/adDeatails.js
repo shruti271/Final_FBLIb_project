@@ -317,7 +317,7 @@ function AdDeatails() {
                     >
                       <Avatar
                         sx={{
-                          backgroundColor: "#00CBFF",
+                          background: "linear-gradient(45deg, #00CBFF 0%, #72E2FF 100%)",
                           display: "grid",
                           width: "52px",
                           height: "51px",
@@ -346,7 +346,7 @@ function AdDeatails() {
                   <Button
                     style={{
                       background:
-                        "linear-gradient(243.18deg, #B5EDFF 0%, #00CBFF 28.65%, #6721FF 85.94%)",
+                        "linear-gradient(45deg, #00CBFF 0%, #72E2FF 100%)",
                       borderRadius: 18,
                       textTransform: "none",
                       width: "100%",//"156px",
@@ -392,7 +392,7 @@ function AdDeatails() {
                 <Button
                   style={{
                     background:
-                      "linear-gradient(200deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)",
+                      "linear-gradient(45deg, #00CBFF 0%, #72E2FF 100%)",
                     borderRadius: 30,
                     fontSize: "18px",
                     textTransform: "none",
@@ -446,7 +446,7 @@ function AdDeatails() {
                 <Button
                   style={{
                     background:
-                      "linear-gradient(200deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)",
+                      "linear-gradient(45deg, #00CBFF 0%, #72E2FF 100%)",
                     borderRadius: 30,
                     fontSize: "18px",
                     textTransform: "none",

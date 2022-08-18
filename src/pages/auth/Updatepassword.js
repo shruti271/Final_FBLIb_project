@@ -1,4 +1,5 @@
-import fbaddlogo from "../../assets/fbaddlogo.png";
+import fbaddlogo from "../../assets/Eye of Ecom Logo Blue 08-11 2 1.svg";
+import fbaddlogowhitecolor from "../../assets/new.svg"
 import React, { useEffect, useState } from "react";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import {
@@ -15,6 +16,8 @@ import {
   OutlinedInput,
   TextField,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import { themeLight, globalStyles } from "../../css/globalcss";
 import { CssBaseline } from "@material-ui/core";
@@ -28,6 +31,9 @@ import queryString from "query-string";
 
 const Updatepassword = () => {
   const global = globalStyles();
+  const theme = useTheme()
+  const showhidelogolargedevice = useMediaQuery(theme.breakpoints.up("sm"));
+  const showhidelogosmalldevice = useMediaQuery(theme.breakpoints.down("sm"));
   const [values, setValues] = React.useState({
     showPassword: false,
   });
@@ -96,18 +102,31 @@ const Updatepassword = () => {
             transform: "translate(-50%, -50%)",
           }}
         >
+               {showhidelogosmalldevice ?
+           <img
+                alt="logo"
+                src={fbaddlogowhitecolor}
+                className={global.logo}
+                onClick={() => navigate("/auth/login")}
+              /> :""}
           <Grid>
             <Card
               style={{
                 maxWidth: 632,
                 padding: "20px 5px",
-                margin: "0 auto",
+                margin: "15px auto",
                 backgroundColor: "#F6F6FB",
                 borderRadius: "16px",
               }}
             >
               <CardContent>
-                <img alt="logo" src={fbaddlogo} className={global.logo}  onClick={()=> navigate("/auth/login")}/>
+              {showhidelogolargedevice ?
+              <img
+                alt="logo"
+                src={fbaddlogo}
+                className={global.logo}
+                onClick={() => navigate("/auth/login")}
+              /> :""}
                 <Box mt={2} width="85%" ml={4}>
                   {errormessage && (
                     <Alert severity="success">

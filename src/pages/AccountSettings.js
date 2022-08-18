@@ -284,7 +284,7 @@ function AccountSettings() {
                             style={{
                               borderRadius: 50,
                               background:
-                                "linear-gradient(243.18deg, #B5EDFF 0%, #00CBFF 28.65%, #6721FF 85.94%)",
+                                "linear-gradient(45deg, #00CBFF 0%, #72E2FF 100%)",
                               whiteSpace: "nowrap",
                               width: savebutton ? "auto" : "99%",
                               textTransform:"none",
@@ -507,7 +507,7 @@ function AccountSettings() {
                               style={{
                                 borderRadius: 50,
                                 background:
-                                  "linear-gradient(243.18deg, #B5EDFF 0%, #00CBFF 28.65%, #6721FF 85.94%)",
+                                  "linear-gradient(45deg, #00CBFF 0%, #72E2FF 100%)",
                                 whiteSpace: "nowrap",
                                 width: savebutton ? "auto" : "99%",
                                 textTransform:"none",
@@ -796,7 +796,7 @@ function AccountSettings() {
                     style={{
                       borderRadius: 50,
                       background:
-                        "linear-gradient(243.18deg, #B5EDFF 0%, #00CBFF 28.65%, #6721FF 85.94%)",
+                        "linear-gradient(45deg, #00CBFF 0%, #72E2FF 100%)",
                       whiteSpace: "nowrap",
                       // justifyContent: "flex-end",
                       textTransform:"none",

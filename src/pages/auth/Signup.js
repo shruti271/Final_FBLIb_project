@@ -13,6 +13,8 @@ import {
   Alert,
   InputAdornment,
   InputBase,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
@@ -21,7 +23,8 @@ import { signUp } from "../../services/index";
 import { themeLight, globalStyles, BootstrapInput } from "../../css/globalcss";
 import { CssBaseline } from "@material-ui/core";
 import { registerValidationSchema } from "./../../utils/validationSchemas";
-import fbaddlogo from "../../assets/fbaddlogo.png";
+import fbaddlogo from "../../assets/Eye of Ecom Logo Blue 08-11 2 1.svg";
+import fbaddlogowhitecolor from "../../assets/new.svg";
 import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
@@ -31,6 +34,11 @@ const Signup = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [errormessage, setErrormessage] = useState("");
+  const theme = useTheme();
+  const showhidelogolargedevice = useMediaQuery(theme.breakpoints.up("sm"));
+  const showhidelogosmalldevice = useMediaQuery(theme.breakpoints.down("sm"));
+  const paddingcardsmalldevice= useMediaQuery(theme.breakpoints.down("sm"));
+  const aligncenterfont = useMediaQuery(theme.breakpoints.up("sm"));
   const [values, setValues] = React.useState({
     showPassword: false,
   });
@@ -92,31 +100,45 @@ const Signup = () => {
             transform: "translate(-50%, -50%)",
           }}
         >
+          {showhidelogosmalldevice ? (
+            <img
+              alt="logo"
+              src={fbaddlogowhitecolor}
+              className={global.logo}
+              onClick={() => navigate("/auth/login")}
+            />
+          ) : (
+            ""
+          )}
           <Card
             style={{
               maxWidth: 722,
               padding: "10px 5px",
-              margin: "0 auto",
+              margin: "15px auto",
               backgroundColor: "#F6F6FB",
               borderRadius: "16px",
             }}
           >
             <CardContent>
-              <img
-                alt="logo"
-                src={fbaddlogo}
-                className={global.logo}
-                onClick={() => navigate("/auth/login")}
-              />
+              {showhidelogolargedevice ? (
+                <img
+                  alt="logo"
+                  src={fbaddlogo}
+                  className={global.logo}
+                  onClick={() => navigate("/auth/login")}
+                />
+              ) : (
+                ""
+              )}
               <form onSubmit={handleSubmit(submitsigninform)}>
-                <Box sx={{ padding: "1vmax 2.5vmax" }}>
+                <Box sx={{ padding:paddingcardsmalldevice ? "" :"1vmax 2.5vmax" }}>
                   {/* <Box style={{  padding:{xs:0,lg:"18px 61px" ,xl:"18px 61px"}, }}mt={1} > */}
                   <Typography
                     sx={{
                       fontWeight: "bold",
-                      fontSize: { xs: 21, lg: 25 },
-                      marginLeft: { xs: "4%", sm: 0, md: 0, lg: 0 },
+                      fontSize: { xs: 23, lg: 25 },
                     }}
+                    align={aligncenterfont ?"" :"center"}
                   >
                     Create a Free account
                   </Typography>
@@ -126,6 +148,7 @@ const Signup = () => {
                       fontSize: { xs: 13, sm: 16, lg: 16 },
                       marginLeft: { xs: "9%", sm: 0, md: 0, lg: 0 },
                       paddingTop: { xs: 0, sm: 1, md: 1, lg: 1 },
+                      fontWeight:500
                     }}
                   >
                     Already have an account?{" "}

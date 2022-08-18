@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   },
   avtar: {
     background:
-      "linear-gradient(220deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)",
+      " linear-gradient(45deg, #00CBFF 0%, #72E2FF 100%)",
     width: "34px",
     height: "34px",
     padding: "10px",

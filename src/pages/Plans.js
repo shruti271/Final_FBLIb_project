@@ -5,6 +5,8 @@ import {
   Grid,
   Stack,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
@@ -17,12 +19,14 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "900 !important",
     fontSize: "24px !important",
     lineHeight: "31px !important",
-    background:
+    [theme.breakpoints.down('xs')]: {
+         background:
       "linear-gradient(270deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)",
-    WebkitBackgroundClip: "text",
-    WebkitTextFillColor: "transparent",
-    backgroundClip: "text",
-    textFillColor: "transparent",
+      WebkitBackgroundClip: "text",
+      WebkitTextFillColor: "transparent",
+      backgroundClip: "text",
+      textFillColor: "transparent",
+    },
   },
   plansheading: {
     fontWeight: "600 !important",
@@ -71,6 +75,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 const Payment = () => {
   const classes = useStyles();
+  const theme = useTheme();
+  const aligncenterfont = useMediaQuery(theme.breakpoints.up("sm"));
   const [loading, setLoading] = useState(false);
   const [loadingyear, setLoadingyear] = useState(false);
   const buySubscriptionmonthly = async () => {
@@ -93,14 +99,13 @@ const Payment = () => {
   };
   return (
     <>
-      <Box className={classes.fontSizeCustomize}>
+      <Box className={classes.fontSizeCustomize} p={1}>
         <Typography
           variant="h5"
           sx={{
             fontWeight: "bold",
-            marginRight: { xs: "12%", sm: 0, md: 0, lg: 0 },
           }}
-          align="center"
+          align={aligncenterfont ?"center" :"center"}
         >
           Experience The{" "}
           <span className={classes.paymentheading}>All-Seeing Eye</span> For
@@ -109,10 +114,9 @@ const Payment = () => {
         <Typography
           variant="h5"
           gutterBottom
-          align="center"
           color="#2B2F42"
           p={1.5}
-          sx={{ marginRight: { xs: "12%", sm: 0, md: 0, lg: 0 } }}
+          align={aligncenterfont ?"center" :"center"}
         >
           Try it free for 24 hours!
         </Typography>
