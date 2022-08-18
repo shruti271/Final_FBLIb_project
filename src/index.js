@@ -9,18 +9,16 @@ import { ThemeProvider, createTheme } from '@mui/material/styles'
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const theme = createTheme({
   typography: {
-    // fontFamily: "Neue Haas Grotesk Display Pro",
-    fontStyle: 'normal'
-  },
-});
+    fontFamily: [
+      'Neue Haas Grotesk Display Pro', 'sans-serif'
+    ].join(',')
+}});
 root.render(
   <Router>
-    {/* <React.StrictMode> */}
       <Provider store={store}>
       <ThemeProvider theme={theme}>
         <App />
         </ThemeProvider>
       </Provider>
-    {/* </React.StrictMode> */}
   </Router>
 );

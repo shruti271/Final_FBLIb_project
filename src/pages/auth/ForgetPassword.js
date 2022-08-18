@@ -1,4 +1,5 @@
-import fbaddlogo from "../../assets/fbaddlogo.png";
+import fbaddlogo from "../../assets/Eye of Ecom Logo Blue 08-11 2 1.svg";
+import fbaddlogowhitecolor from "../../assets/new.svg"
 import React, { useState, useEffect } from "react";
 import { makeStyles, MuiThemeProvider } from "@material-ui/core/styles";
 import {
@@ -11,6 +12,8 @@ import {
   Grid,
   TextField,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import Backtologin from "../../assets/Backtologinicon.svg";
 import { useNavigate } from "react-router-dom";
@@ -31,6 +34,10 @@ const useStyles = makeStyles(() => ({
 const ForgetPassword = () => {
   const classes = useStyles();
   const global = globalStyles();
+  const theme = useTheme()
+  const showhidelogolargedevice = useMediaQuery(theme.breakpoints.up("sm"));
+  const showhidelogosmalldevice = useMediaQuery(theme.breakpoints.down("sm"));
+  const aligncenterfont = useMediaQuery(theme.breakpoints.up("sm"));
   const [loading, setLoading] = useState(false);
   const [errormessage, setErrormessage] = useState("");
   const navigate = useNavigate();
@@ -87,23 +94,31 @@ const ForgetPassword = () => {
             transform: "translate(-50%, -50%)",
           }}
         >
+               {showhidelogosmalldevice ?
+           <img
+                alt="logo"
+                src={fbaddlogowhitecolor}
+                className={global.logo}
+                onClick={() => navigate("/auth/login")}
+              /> :""}
           <Grid>
             <Card
               style={{
                 maxWidth: 632,
                 padding: "10px 5px",
-                margin: "0 auto",
+                margin: "15px auto",
                 backgroundColor: "#F6F6FB",
                 borderRadius: "16px",
               }}
             >
               <CardContent>
-                <img
-                  alt="logo"
-                  src={fbaddlogo}
-                  className={global.logo}
-                  onClick={() => navigate("/auth/login")}
-                />
+              {showhidelogolargedevice ?
+              <img
+                alt="logo"
+                src={fbaddlogo}
+                className={global.logo}
+                onClick={() => navigate("/auth/login")}
+              /> :""}
                 <Box style={{ padding: "1vmax 2.5vmax" }}>
                   <Grid container spacing={2}>
                     <Grid xs={12} item>
@@ -111,9 +126,9 @@ const ForgetPassword = () => {
                         variant="h5"
                         sx={{
                           fontWeight: "bold",
-                          fontSize: { xs: 21, lg: 25 },
-                          marginLeft: { xs: "12%", sm: 0, md: 0, lg: 0, xl: 0 },
+                          fontSize: { xs: 23, lg: 25 },
                         }}
+                        align={aligncenterfont ? "" :"center"}
                       >
                         Forget Password?
                       </Typography>

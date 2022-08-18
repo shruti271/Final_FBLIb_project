@@ -32,7 +32,7 @@ const BackTotopbutton = () => {
                             width: "50px",
                             zIndex: 1,
                             cursor: "pointer",
-                            background: 'linear-gradient(243.18deg, #B5EDFF 0%, #00CBFF 28.65%, #6721FF 85.94%)',
+                            background: ' linear-gradient(45deg, #00CBFF 0%, #72E2FF 100%)',
                         }}
                         onClick={scrollToTop}
                     >

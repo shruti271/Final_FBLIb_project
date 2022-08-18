@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, MuiThemeProvider } from "@material-ui/core/styles";
 import {
   Divider,
   FormControlLabel,
@@ -23,6 +23,8 @@ import settings from "../assets/settings.svg";
 import logout from "../assets/Logout.svg";
 import { useNavigate } from "react-router-dom";
 import { logoutUser } from "../services";
+import SettingsIcon from '@mui/icons-material/Settings';
+import LogoutIcon from '@mui/icons-material/Logout';
 const useStyles = makeStyles((theme) => ({
   handbergurMenu: {
     margin: theme.spacing(1, 3),
@@ -33,34 +35,39 @@ const useStyles = makeStyles((theme) => ({
   },
   sideBarButton: {
     background:
-      "-webkit-linear-gradient(243.18deg, #B5EDFF 0%, #00CBFF 28.65%, #6721FF 85.94%)",
+      " #FFFFFF",
     WebkitBackgroundClip: "text",
     WebkitTextFillColor: "transparent",
+                   fontWeight: "bold",
   },
   mobiledrawerfontalign: {
-    [theme.breakpoints.down('xs')]: {
-      marginRight:"70px"
+    [theme.breakpoints.down("xs")]: {
+      marginRight: "70px",
     },
-    marginRight:"100px"
+    marginRight: "100px",
   },
   accontsettingalign: {
-    [theme.breakpoints.down('xs')]: {
-      marginRight:"12px"
+    [theme.breakpoints.down("xs")]: {
+      marginRight: "12px",
     },
-    marginRight:"20px"
+    marginRight: "20px",
   },
   contactsupportalign: {
-    [theme.breakpoints.down('xs')]: {
-      marginRight:"12px"
+    [theme.breakpoints.down("xs")]: {
+      marginRight: "12px",
     },
-    marginRight:"28px"
+    marginRight: "28px",
   },
   logoutalign: {
-    [theme.breakpoints.down('xs')]: {
-      marginRight:"50px"
+    [theme.breakpoints.down("xs")]: {
+      marginRight: "50px",
     },
-    marginRight:"92px"
+    marginRight: "92px",
   },
+  selectedMenu:{
+    background: " linear-gradient(270deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 100%)",
+    borderRadius: "80px",    
+  }
 }));
 const sideBarMenuItems = {
   ADLIBSDATABASE: "Adlibrary Database",
@@ -69,7 +76,7 @@ const sideBarMenuItems = {
   SUPPORT: "Contact Support",
   LOGOUT: "Log Out",
 };
-const MobileDrawer = ({  setIsOpen }) => {
+const MobileDrawer = ({ setIsOpen }) => {
   const classes = useStyles();
   const navigate = useNavigate();
   const theme = useTheme();
@@ -77,6 +84,7 @@ const MobileDrawer = ({  setIsOpen }) => {
   const [selectedMenuItem, setSelectedMenuItem] = useState(
     sideBarMenuItems.ADLIBSDATABASE
   );
+  console.log("///",selectedMenuItem)
   const [currentPage, setCurrentPage] = useState();
   const [openLogOut, setOpenLogOut] = React.useState(false);
   useEffect(() => {
@@ -86,13 +94,9 @@ const MobileDrawer = ({  setIsOpen }) => {
       setSelectedMenuItem(sideBarMenuItems.ADLIBSDATABASE);
     } else if (window.location.pathname === `/savedAds`) {
       setSelectedMenuItem(sideBarMenuItems.SAVEDADS);
-
-    }else if (window.location.pathname === `/accountSettings`) {
+    } else if (window.location.pathname === `/accountSettings`) {
       setSelectedMenuItem(sideBarMenuItems.ACCOUNTSETTINGS);
-    } else if (
-      window.location.pathname.split("/").includes("adDeatails")
-      
-    ) {
+    } else if (window.location.pathname.split("/").includes("adDeatails")) {
       if (currentPage === "/savedAds")
         setSelectedMenuItem(sideBarMenuItems.SAVEDADS);
       else setSelectedMenuItem(sideBarMenuItems.ADLIBSDATABASE);
@@ -122,284 +126,323 @@ const MobileDrawer = ({  setIsOpen }) => {
 
   return (
     <>
-      <svg width={0} height={0}>
-        <linearGradient id="linearColors" x1={0} y1={1} x2={1} y2={0}>
-          <stop offset={0.1} stopColor="#B5EDFF" />
-          <stop offset={0.3} stopColor="#00CBFF" />
-          <stop offset={0.9} stopColor="#6721FF" />
-        </linearGradient>
-      </svg>
       <MenuIcon
         className={classes.handbergurMenu}
-        sx={{ fill: "url(#linearColors)", fontSize: "35px" }}
+        sx={{ fill: "#FFFFFF", fontSize: "35px" }}
         onClick={() => {
           setIsOpen(() => false);
           console.log("first");
         }}
       />
-      <Grid container sx={{ display: "flex", justifyContent: "center" }}>
-        <Box
-          style={{
-            width: divdercenter ? "77%":"77%",
-            justify: "center",
-            position: "absolute",
-            left: "50%",
-            top: "50%",
-            transform: "translate(-50%, -50%)",
-          }}
-        >
-          <Grid item xs={12}>
-            <Divider textAlign="center"  sx={{ borderBottomWidth: 3}}></Divider>
-            <Stack
-              direction={"row"}
-              p={2.5}
-
-              sx={{ display: "flex", justifyContent: "center",cursor:"pointer" }}
-              onClick={() => {
-                setSelectedMenuItem(sideBarMenuItems.ADLIBSDATABASE);
-                setIsOpen(()=>false)
-                navigate("/");
-
-              }}
-            >
-              <FormControlLabel
-                control={
-                  <AdLibraryDatabaseIcon
-                    fontSize="large"
-                    fill={
-
-                        selectedMenuItem === sideBarMenuItems.ADLIBSDATABASE
-                          ? "url(#linearColors)"
-                          : "#2B2F42"
-                      }
-
-                  />
-                }
-              />
-              <Typography
-                variant="h6"
+        <Grid container sx={{ display: "flex", justifyContent: "center" }}>
+          <Box
+            style={{
+              width: divdercenter ? "77%" : "100%",
+              justify: "center",
+              position: "absolute",
+              left: "50%",
+              top: "50%",
+              transform: "translate(-50%, -50%)",
+            }}
+          >
+            <Grid item xs={12}>
+              <Stack
+                direction={"row"}
+                p={1.5}
                 sx={{
-                  fontSize: { xs: 18, sm: 25 },
-                  fontWeight: "bold",
+                  display: "flex",
+                  justifyContent: "center",
+                  cursor: "pointer",
                 }}
-                className={
-
+                onClick={() => {
+                  setSelectedMenuItem(sideBarMenuItems.ADLIBSDATABASE);
+                  setIsOpen(() => false);
+                  navigate("/");
+                }}
+                
+              >
+                <Box sx={{display:"flex",padding:"20px 40px"}}
+                  className={
+                    selectedMenuItem === sideBarMenuItems.ADLIBSDATABASE
+                      ? classes.selectedMenu
+                      : ""
+                  }
+                >
+                <FormControlLabel
+                  control={
+                    <AdLibraryDatabaseIcon
+                      fontSize="large"
+                      fill={
+                        selectedMenuItem === sideBarMenuItems.ADLIBSDATABASE
+                          ? "#FFFFFF"
+                          : "#FFFFFF"
+                      }
+                    />
+                  }
+                />
+                <Typography
+                  variant="h6"
+                  color="#FFFFFF"
+                  sx={{
+                    fontSize: { xs: 18, sm: 25},
+                    fontWeight: "bold",
+                  }}
+                  className={
                     selectedMenuItem === sideBarMenuItems.ADLIBSDATABASE
                       ? classes.sideBarButton
                       : ""
                   }
-
-              >
-                Adlibrary Database
-              </Typography>
-            </Stack>
-            <Grid item xs={12}>
-              <Divider textAlign="center" sx={{ borderBottomWidth: 3}}></Divider>
-              <Stack
-                direction={"row"}
-                p={2.5}
-
-                sx={{ display: "flex", justifyContent: "center",cursor:"pointer" }}
-                className={classes.mobiledrawerfontalign}
-                onClick={() => {
-                  setSelectedMenuItem(sideBarMenuItems.SAVEDADS);
-                  setIsOpen(()=>false)
-                  navigate("/savedAds");
-                }}
-              >
-                <FormControlLabel control={<SaveIcon fontSize="large" 
-                 fill={
-                    selectedMenuItem === sideBarMenuItems.SAVEDADS
-                      ? "url(#linearColors)"
-                      : "#2B2F42"
-
-                  }
-                />}
-                />
-                <Typography
-                  variant="h6"
-                  sx={{
-                    fontSize: { xs: 18, sm: 25 },
-                    fontWeight: "bold",
-                    color: "#2B2F42",
-                  }}
-                  className={
-                    selectedMenuItem === sideBarMenuItems.SAVEDADS
-                      ? classes.sideBarButton
-                      : ""
-                  }
-
                 >
-                  Saved Ads
+                  Adlibrary Database
                 </Typography>
-              </Stack>
-            </Grid>
-
-            <Grid item xs={12}>
-              <Divider textAlign="center" sx={{ borderBottomWidth: 3}}></Divider>
-              <Stack
-                direction={"row"}
-                p={2.5}
-
-                sx={{ display: "flex", justifyContent: "center",cursor:"pointer" }}
-                className={classes.accontsettingalign}
-                onClick={() => {
-                  setSelectedMenuItem(sideBarMenuItems.ACCOUNTSETTINGS);
-                  setIsOpen(()=>false)
-                  navigate("/accountSettings");
-
-                }}
-              >
-                <FormControlLabel
-                  control={<img src={settings} width="30px" alt="icon" />}
-                />
-                <Typography
-                  variant="h6"
-                  // sx={{ fontWeight: "bold", color: "#3A3D4B" }}
-                  sx={{
-                    fontSize: { xs: 18, sm: 25 },
-                    fontWeight: "bold",
-                    color: "#2B2F42",
-                  }}
-                  className={
-                    selectedMenuItem === sideBarMenuItems.ACCOUNTSETTINGS
-                      ? classes.sideBarButton
-                      : ""
-                  }
-
-                >
-                  Account Settings
-                </Typography>
-              </Stack>
-            </Grid>
-            <Grid item xs={12}>
-              <Divider textAlign="center" sx={{ borderBottomWidth: 3}}></Divider>
-              <Stack
-                direction={"row"}
-                p={2.5}
-
-                sx={{ display: "flex", justifyContent: "center",cursor:"pointer" }}
-                className={classes.contactsupportalign}
-                onClick={() => {
-                  setSelectedMenuItem(sideBarMenuItems.SUPPORT);
-                  setIsOpen(()=>false)
-                  navigate("/ContactSupport");
-                }}
-              >
-                <FormControlLabel control={<ContactIcon fontSize="large" 
-                fill={
-                    selectedMenuItem === sideBarMenuItems.SUPPORT
-                      ? "url(#linearColors)"
-                      : "#2B2F42"
-
-                  }/>}
-                />
-                <Typography
-                  variant="h6"
-                  // sx={{ fontWeight: "bold", color: "#3A3D4B" }}
-                  sx={{
-                    fontSize: { xs: 18, sm: 25 },
-                    fontWeight: "bold",
-                    color: "#2B2F42",
-                  }}
-                  className={
-                    selectedMenuItem === sideBarMenuItems.SUPPORT
-                      ? classes.sideBarButton
-                      : ""
-                  }
-
-                >
-                  Contact Support
-                </Typography>
-              </Stack>
-            </Grid>
-            <Grid item xs={12}>
-              <Divider textAlign="center" sx={{ borderBottomWidth: 3,color:"#2B2F42"}}></Divider>
-              <Stack
-                direction={"row"}
-                p={2.5}
-
-                sx={{ display: "flex", justifyContent: "center",cursor:"pointer" }}
-                className={classes.logoutalign}
-
-              >
-                <FormControlLabel
-                  control={<img src={logout} width="30px" alt="icon" />}
-                />
-                <Typography
-                  variant="h6"
-                  // sx={{ fontWeight: "bold", color: "#3A3D4B" }}
-                  sx={{
-                    fontSize: { xs: 18, sm: 25 },
-                    fontWeight: "bold",
-                    color: "#2B2F42",
-                  }}
-                  className={
-                    selectedMenuItem === sideBarMenuItems.LOGOUT
-                      ? classes.sideBarButton
-                      : ""
-                  }
-                  onClick={() => {
-                    handleClickOpen();
-                    setSelectedMenuItem(sideBarMenuItems.LOGOUT);
-                  }}
-                >
-                  Log out
-                </Typography>
-                <Box p={2}>
-                  <Dialog
-                    open={openLogOut}
-                    onClose={handleClose}
-                    aria-labelledby="alert-dialog-title"
-                    aria-describedby="alert-dialog-description"
-                  >
-                    <DialogContent>
-                      <DialogContentText id="alert-dialog-description">
-                        <Typography
-                          variant="h5"
-                          p={2}
-                          sx={{ fontWeight: "bold", color: "#2B2F42" }}
-                        >
-                          Are You Sure For Logout ?
-                        </Typography>
-                      </DialogContentText>
-                    </DialogContent>
-                    <DialogActions
-                      sx={{ marginRight: "inherit", paddingBottom: "16px" }}
-                    >
-                      <Button
-                        onClick={handleClose}
-                        variant="contained"
-                        color="primary"
-                        style={{
-                          borderRadius: 50,
-                          backgroundColor: "#00CBFF",
-                          whiteSpace: "nowrap",
-                        }}
-                      >
-                        Cancel
-                      </Button>
-                      <Button
-                        onClick={userLogout}
-                        variant="contained"
-                        color="primary"
-                        style={{
-                          borderRadius: 50,
-                          backgroundColor: "#00CBFF",
-                          whiteSpace: "nowrap",
-                        }}
-                      >
-                        Yes
-                      </Button>
-                    </DialogActions>
-                  </Dialog>
                 </Box>
               </Stack>
+              <Grid item xs={12}>
+                <Stack
+                  direction={"row"}
+                  p={1}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    cursor: "pointer",
+                  }}
+                  className={classes.mobiledrawerfontalign}
+                  onClick={() => {
+                    setSelectedMenuItem(sideBarMenuItems.SAVEDADS);
+                    setIsOpen(() => false);
+                    navigate("/savedAds");
+                  }}
+                >
+                   <Box sx={{display:"flex",padding:"20px 40px"}}
+                  className={
+                    selectedMenuItem === sideBarMenuItems.SAVEDADS
+                      ? classes.selectedMenu
+                      : ""
+                  }
+                >
+                  <FormControlLabel
+                    control={
+                      <SaveIcon
+                        fontSize="large"
+                        fill={
+                          selectedMenuItem === sideBarMenuItems.SAVEDADS
+                            ? "#FFFFFF"
+                            : "#FFFFFF"
+                        }
+                      />
+                    }
+                  />
+                  <Typography
+                    variant="h6"
+                    color="#FFFFFF"
+                    sx={{
+                      fontSize: { xs: 18, sm: 25 },
+                      fontWeight: "bold",
+                    }}
+                    className={
+                      selectedMenuItem === sideBarMenuItems.SAVEDADS
+                        ? classes.sideBarButton
+                        : ""
+                    }
+                  >
+                    Saved Ads
+                  </Typography>
+                  </Box>
+                </Stack>
+              </Grid>
+
+              <Grid item xs={12}>
+                <Stack
+                  direction={"row"}
+                  p={2.5}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    cursor: "pointer",
+                  }}
+                  className={classes.accontsettingalign}
+                  onClick={() => {
+                    setSelectedMenuItem(sideBarMenuItems.ACCOUNTSETTINGS);
+                    setIsOpen(() => false);
+                    navigate("/accountSettings");
+                  }}
+                >
+                    <Box sx={{display:"flex",padding:"20px 40px"}}
+                  className={
+                    selectedMenuItem === sideBarMenuItems.ACCOUNTSETTINGS
+                      ? classes.selectedMenu
+                      : ""
+                  }
+                >
+                  <FormControlLabel
+                    control={<SettingsIcon
+                      fontSize="large"
+                      style={{ fill: "#FFFFFF" }}
+                    />}
+                  />
+                  <Typography
+                    variant="h6"
+                    // sx={{ fontWeight: "bold", color: "#3A3D4B" }}
+                    sx={{
+                      fontSize: { xs: 18, sm: 25 },
+                      fontWeight: "bold",
+                      color: "#FFFFFF",
+                    }}
+                    className={
+                      selectedMenuItem === sideBarMenuItems.ACCOUNTSETTINGS
+                        ? classes.sideBarButton
+                        : ""
+                    }
+                  >
+                    Account Settings
+                  </Typography>
+                  </Box>
+                </Stack>
+              </Grid>
+              <Grid item xs={12}>
+                <Stack
+                  direction={"row"}
+                  p={1.5}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    cursor: "pointer",
+                  }}
+                  className={classes.contactsupportalign}
+                  onClick={() => {
+                    setSelectedMenuItem(sideBarMenuItems.SUPPORT);
+                    setIsOpen(() => false);
+                    navigate("/ContactSupport");
+                  }}
+                >
+                  <Box sx={{display:"flex",padding:"20px 40px"}}
+                  className={
+                    selectedMenuItem === sideBarMenuItems.SUPPORT
+                      ? classes.selectedMenu
+                      : ""
+                  }
+                >
+                  <FormControlLabel
+                    control={
+                      <ContactIcon
+                        fontSize="large"
+                        fill={
+                          selectedMenuItem === sideBarMenuItems.SUPPORT
+                            ?  "#FFFFFF"
+                            : "#FFFFFF"
+                        }
+                      />
+                    }
+                  />
+                  <Typography
+                    variant="h6"
+                    // sx={{ fontWeight: "bold", color: "#3A3D4B" }}
+                    sx={{
+                      fontSize: { xs: 18, sm: 25 },
+                      fontWeight: "bold",
+                      color: "#FFFFFF",
+                    }}
+                    className={
+                      selectedMenuItem === sideBarMenuItems.SUPPORT
+                        ? classes.sideBarButton
+                        : ""
+                    }
+                  >
+                    Contact Support
+                  </Typography>
+                  </Box>
+                </Stack>
+              </Grid>
+              <Grid item xs={12}>
+                <Stack
+                  direction={"row"}
+                  p={2.5}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    cursor: "pointer",
+                  }}
+                  className={classes.logoutalign}
+                >
+                  <FormControlLabel
+                    control={<LogoutIcon
+                      fontSize="large"
+                      style={{ fill: "#FFFFFF" }}
+                    />}
+                  />
+                  <Typography
+                    variant="h6"
+                    // sx={{ fontWeight: "bold", color: "#3A3D4B" }}
+                    sx={{
+                      fontSize: { xs: 18, sm: 25 },
+                      fontWeight: "bold",
+                      color: "#FFFFFF",
+                    }}
+                    className={
+                      selectedMenuItem === sideBarMenuItems.LOGOUT
+                        ? classes.sideBarButton
+                        : ""
+                    }
+                    onClick={() => {
+                      handleClickOpen();
+                      setSelectedMenuItem(sideBarMenuItems.LOGOUT);
+                    }}
+                  >
+                    Log out
+                  </Typography>
+                  <Box p={2}>
+                    <Dialog
+                      open={openLogOut}
+                      onClose={handleClose}
+                      aria-labelledby="alert-dialog-title"
+                      aria-describedby="alert-dialog-description"
+                    >
+                      <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                          <Typography
+                            variant="h5"
+                            p={2}
+                            sx={{ fontWeight: "bold", color: "#2B2F42" }}
+                          >
+                            Are You Sure For Logout ?
+                          </Typography>
+                        </DialogContentText>
+                      </DialogContent>
+                      <DialogActions
+                        sx={{ marginRight: "inherit", paddingBottom: "16px" }}
+                      >
+                        <Button
+                          onClick={handleClose}
+                          variant="contained"
+                          color="primary"
+                          style={{
+                            borderRadius: 50,
+                            backgroundColor: "#00CBFF",
+                            whiteSpace: "nowrap",
+                          }}
+                        >
+                          Cancel
+                        </Button>
+                        <Button
+                          onClick={userLogout}
+                          variant="contained"
+                          color="primary"
+                          style={{
+                            borderRadius: 50,
+                            backgroundColor: "#00CBFF",
+                            whiteSpace: "nowrap",
+                          }}
+                        >
+                          Yes
+                        </Button>
+                      </DialogActions>
+                    </Dialog>
+                  </Box>
+                </Stack>
+              </Grid>
             </Grid>
-            <Divider textAlign="center"  sx={{ borderBottomWidth: 3,color:"#2B2F42"}}></Divider>
-          </Grid>
-        </Box>
-      </Grid>
+          </Box>
+        </Grid>
     </>
   );
 };

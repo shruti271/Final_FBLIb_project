@@ -25,7 +25,7 @@ import useStyles from "../css/mediapage";
 import { logoutUser } from "../services";
 import { Drawer } from "@material-ui/core";
 import MobileDrawer from "./Mobiledrawer";
-import fbEyelogo from "../assets/eye_logo.svg";
+import fbEyelogo from "../assets/fbEyelogo.svg";
 
 const drawerWidth = 276;
 
@@ -120,18 +120,11 @@ function MobileAppBar() {
                 }}
                 // edge="start"
               >
-                <svg width={0} height={0}>
-                  <linearGradient id="linearColors" x1={0} y1={1} x2={1} y2={0}>
-                    <stop offset={0.1} stopColor="#B5EDFF" />
-                    <stop offset={0.3} stopColor="#00CBFF" />
-                    <stop offset={0.9} stopColor="#6721FF" />
-                  </linearGradient>
-                </svg>
                 <MenuIcon
-                  sx={{ fill: "url(#linearColors)", fontSize: "35px" }}
+                  sx={{ fill: "#72E2FF", fontSize: "35px" }}
                 />
               </IconButton>
-              <Drawer PaperProps={{ style: { width: "100%" } }}
+              <Drawer PaperProps={{ style: { width: "100%" ,background:"#002838" } }}
                 
                 //   anchor={anchor}
                 open={isOpen}
@@ -141,13 +134,16 @@ function MobileAppBar() {
               </Drawer>
             </Stack>
             <Stack>
-            <Box sx={{ marginRight: "8px" }}>
+            <Box sx={{ marginRight: "8px",display:"flex" }}>
               <img
                 alt="small-logo"
                 src={fbEyelogo}
                 onClick={() => navigate("/auth/login")}
                 style={{ cursor: "pointer" ,width:"50px"}}
               />
+                 <Typography color="#4A4C57" variant="span" pl={1}>
+              BETA
+              </Typography>
             </Box>
             </Stack>
             <Stack>

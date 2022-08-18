@@ -29,6 +29,7 @@ import { PageNameEnum } from "../utils/enums";
 import { useLocation } from "react-router-dom";
 import GradientButton from "react-linear-gradient-button";
 import filter from "../assets/filter.svg";
+import ResetButton from "../css/ResetButton";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -913,13 +914,8 @@ function AllFilters(props) {
                   }}
                   // onChange={(e) => handleAdsCountChange(e.target.value)}
                 />
-                <GradientButton
-                  gradient={[
-                    "rgba(103, 33, 255, 1)",
-                    "rgba(0, 203, 255, 1)",
-                    "rgba(181, 237, 255, 1)",
-                  ]}
-                  onClick={() => {
+                <ResetButton
+                  onResetFunction={() => {
                     pageName === PageNameEnum.AdlibraryDatabase
                       ? setRangeAdcountValue({
                           min: 1,
@@ -945,12 +941,12 @@ function AllFilters(props) {
                     style={{
                       textTransform: "none",
                       color: "url(#linearColors)",
-                    }}
+                 }}
                     variant="p"
                   >
                     Reset
                   </Typography>
-                </GradientButton>
+                </ResetButton>
 
                 {/* <Button
                   // disabled={props.loading}
@@ -1066,13 +1062,8 @@ function AllFilters(props) {
                   alignContent={"center"}
                   justifyContent={"center"}
                 >
-                  <GradientButton
-                    gradient={[
-                      "rgba(103, 33, 255, 1)",
-                      "rgba(0, 203, 255, 1)",
-                      "rgba(181, 237, 255, 1)",
-                    ]}
-                    onClick={(e) => {
+                  <ResetButton
+                    onResetFunction={(e) => {
                       handleChangeStatus("", true);
                       setAdStatusAnchorel(null);
                     }}
@@ -1089,12 +1080,12 @@ function AllFilters(props) {
                       style={{
                         textTransform: "none",
                         color: "url(#linearColors)",
-                      }}
+                   }}
                       variant="p"
                     >
                       Reset
                     </Typography>
-                  </GradientButton>
+                  </ResetButton>
 
                   {/* <Button
                     // disabled={props.loading}
@@ -1348,13 +1339,8 @@ function AllFilters(props) {
                     // handleFacebookLikesChange(e.target.value)
                   }}
                 />
-                <GradientButton
-                  gradient={[
-                    "rgba(103, 33, 255, 1)",
-                    "rgba(0, 203, 255, 1)",
-                    "rgba(181, 237, 255, 1)",
-                  ]}
-                  onClick={() => {
+                <ResetButton
+                  onResetFunction={() => {
                     pageName === PageNameEnum.AdlibraryDatabase
                       ? setRangeFacebookValue({
                           min: 1,
@@ -1381,12 +1367,12 @@ function AllFilters(props) {
                     style={{
                       textTransform: "none",
                       color: "url(#linearColors)",
-                    }}
+                 }}
                     variant="p"
                   >
                     Reset
                   </Typography>
-                </GradientButton>
+                </ResetButton>
                 {/* <Button
                   // disabled={props.loading}
                   variant="outlined"
@@ -1653,13 +1639,8 @@ function AllFilters(props) {
                     // handleInstagramFollowersChange(e.target.value)
                   }}
                 />
-                <GradientButton
-                  gradient={[
-                    "rgba(103, 33, 255, 1)",
-                    "rgba(0, 203, 255, 1)",
-                    "rgba(181, 237, 255, 1)",
-                  ]}
-                  onClick={() => {
+                <ResetButton
+                  onResetFunction={() => {
                     pageName === PageNameEnum.AdlibraryDatabase
                       ? setRangeInstragramValue({
                           min: 1,
@@ -1691,7 +1672,7 @@ function AllFilters(props) {
                   >
                     Reset
                   </Typography>
-                </GradientButton>
+                </ResetButton>
 
                 {/* <Button
                   // disabled={props.loading}
@@ -1810,13 +1791,8 @@ function AllFilters(props) {
                   alignContent={"center"}
                   justifyContent={"center"}
                 >
-                  <GradientButton
-                    gradient={[
-                      "rgba(103, 33, 255, 1)",
-                      "rgba(0, 203, 255, 1)",
-                      "rgba(181, 237, 255, 1)",
-                    ]}
-                    onClick={() => {
+                  <ResetButton
+                    onResetFunction={() => {
                       handleMediaTypechange("", true);
                       setMediaTypeAnchorel(null);
                     }}
@@ -1838,7 +1814,7 @@ function AllFilters(props) {
                     >
                       Reset
                     </Typography>
-                  </GradientButton>
+                  </ResetButton>
                   {/* <Button
                     variant="outlined"
                     sx={{
@@ -1942,13 +1918,8 @@ function AllFilters(props) {
                   alignContent={"center"}
                   justifyContent={"center"}
                 >
-                  <GradientButton
-                    gradient={[
-                      "rgba(103, 33, 255, 1)",
-                      "rgba(0, 203, 255, 1)",
-                      "rgba(181, 237, 255, 1)",
-                    ]}
-                    onClick={() => {
+                  <ResetButton
+                    onResetFunction={() => {
                       handleButtonType("", true);
                       setButtonTypeAnchorEl(null);
                     }}
@@ -1970,7 +1941,7 @@ function AllFilters(props) {
                     >
                       Reset
                     </Typography>
-                  </GradientButton>
+                  </ResetButton>
 
                   {/* <Button
                     variant="outlined"
@@ -2015,13 +1986,8 @@ function AllFilters(props) {
           >
             {/* <Grid container> */}
             {/* <Grid item sx={{ marginTop: "23px" }}> */}
-            <GradientButton 
-              gradient={[
-                "rgba(103, 33, 255, 1)",
-                "rgba(0, 203, 255, 1)",
-                "rgba(181, 237, 255, 1)",
-              ]}
-              onClick={() => {
+            <ResetButton
+              onResetFunction={() => {
                 if (pageName === PageNameEnum.AdlibraryDatabase) {
                   dispatch(allAdsPeramsDuck.clearFilterData());
                 } else {
@@ -2043,13 +2009,13 @@ function AllFilters(props) {
                 paddingRight={1}
                 style={{
                   textTransform: "none",
-                  color: "url(#linearColors)",
+                  color: "linear-gradient(45deg, #00CBFF 0%, #72E2FF 100%)",
                 }}
                 variant="p"
               >
                 Clear
               </Typography>
-            </GradientButton>
+            </ResetButton>
             {(window.location.pathname === `/savedAds`&& ShowFilterWithClearButton) && <Button
               sx={{
                 background:

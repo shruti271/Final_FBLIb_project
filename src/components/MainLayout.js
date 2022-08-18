@@ -38,8 +38,6 @@ const MainLayout = () => {
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.subscriptionData);
   const [isOpen, setIsOpen] = React.useState(true);
-  // const [windowWidth, setWindowWidth] = React.useState(0);
-  // const [windowWidth, setWindowWidth] = React.useState(0);
   const theme = useTheme();
 
   const showhidedrawer = useMediaQuery(theme.breakpoints.down("md"));
@@ -65,10 +63,6 @@ const MainLayout = () => {
     dispatch(getButtonTypes());
   }, [dispatch]);
 
-// useEffect(()=>{
-//   setWindowWidth(window.innerWidth)
-//   console.log("000", windowWidth)
-// },[window.innerWidth])
 
   return (
     <>
@@ -78,8 +72,8 @@ const MainLayout = () => {
           showhidedrawer ? <MobileAppBar /> :
           (
             <>
-              <CustomSidebar isOpen={isOpen} />
-              <CustomAppBar isOpen={isOpen} setIsOpen={setIsOpen} />
+              <CustomSidebar isOpen={isOpen} setIsOpen={setIsOpen} />
+              <CustomAppBar  />
             </>
           )
          } 

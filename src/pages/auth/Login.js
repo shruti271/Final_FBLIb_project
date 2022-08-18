@@ -1,4 +1,5 @@
-import fbaddlogo from "../../assets/fbaddlogo.png";
+import fbaddlogo from "../../assets/Eye of Ecom Logo Blue 08-11 2 1.svg";
+import fbaddlogowhitecolor from "../../assets/new.svg";
 import React, { useEffect, useState } from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { MuiThemeProvider } from "@material-ui/core/styles";
@@ -12,6 +13,8 @@ import {
   Alert,
   InputAdornment,
   InputBase,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import { Grid } from "@mui/material";
 import { CircularProgress } from "@mui/material";
@@ -24,11 +27,14 @@ import { themeLight, globalStyles, BootstrapInput } from "../../css/globalcss";
 import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { getFaviconEl } from "../../utils/getFaviconEl";
 
 const Login = () => {
   const global = globalStyles();
   const navigate = useNavigate();
+  const theme = useTheme();
+  const showhidelogolargedevice = useMediaQuery(theme.breakpoints.up("sm"));
+  const showhidelogosmalldevice = useMediaQuery(theme.breakpoints.down("sm"));
+  const aligncenterfont = useMediaQuery(theme.breakpoints.up("sm"));
   const [loading, setLoading] = useState(false);
   const [errormessage, setErrormessage] = useState("");
   const [verificationmesssage, setVerificationmesssage] = useState("");
@@ -105,26 +111,45 @@ const Login = () => {
             transform: "translate(-50%, -50%)",
           }}
         >
+          {showhidelogosmalldevice ? (
+            <img
+              alt="logo"
+              src={fbaddlogowhitecolor}
+              className={global.logo}
+              onClick={() => navigate("/auth/login")}
+            />
+          ) : (
+            ""
+          )}
           <Grid>
             <Card
               style={{
                 maxWidth: 632,
                 padding: "10px 5px",
-                margin: "0 auto",
+                margin: "15px auto",
                 backgroundColor: "#F6F6FB",
                 borderRadius: "16px",
               }}
             >
               <CardContent>
-                <img alt="logo" src={fbaddlogo} className={global.logo} />
+                {showhidelogolargedevice ? (
+                  <img
+                    alt="logo"
+                    src={fbaddlogo}
+                    className={global.logo}
+                    onClick={() => navigate("/auth/login")}
+                  />
+                ) : (
+                  ""
+                )}
                 <Box sx={{ padding: "1vmax 2.5vmax" }}>
                   <Typography
                     variant="h5"
                     sx={{
                       fontWeight: "bold",
-                      fontSize: { xs: 21, lg: 25 },
-                      marginLeft: { xs: "34%", sm: 0, md: 0, lg: 0, xl: 0 },
+                      fontSize: { xs: 25, lg: 25 },
                     }}
+                    align={aligncenterfont ?"" :"center"}
                   >
                     Log in
                   </Typography>
@@ -181,23 +206,23 @@ const Login = () => {
                       </>
                     )}
                   </Box>
-                  <form >
+                  <form>
                     <Grid container spacing={1} pt={2.5}>
-                        <Grid item xs={12}>
-                          <BootstrapInput
-                            type="email"
-                            placeholder="Email address"
-                            label="Email"
-                            variant="outlined"
-                            fullWidth
-                            required
-                            {...register("email")}
-                            error={errors.email ? true : false}
-                          />
-                          <Typography variant="inherit" color="red" p={0.5}>
-                            {errors.email?.message}
-                          </Typography>
-                        </Grid>
+                      <Grid item xs={12}>
+                        <BootstrapInput
+                          type="email"
+                          placeholder="Email address"
+                          label="Email"
+                          variant="outlined"
+                          fullWidth
+                          required
+                          {...register("email")}
+                          error={errors.email ? true : false}
+                        />
+                        <Typography variant="inherit" color="red" p={0.5}>
+                          {errors.email?.message}
+                        </Typography>
+                      </Grid>
                       <Grid item xs={12} display="flex">
                         <Box
                           onClick={() => navigate("/auth/forgot-password")}
