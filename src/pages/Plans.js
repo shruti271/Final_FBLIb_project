@@ -83,6 +83,7 @@ const Payment = () => {
   const theme = useTheme();
   const aligncenterfont = useMediaQuery(theme.breakpoints.up("sm"));
   const aligncentercard = useMediaQuery(theme.breakpoints.up("sm"));
+  const paddingcard = useMediaQuery(theme.breakpoints.down("sm"));
   const [loading, setLoading] = useState(false);
   const [loadingyear, setLoadingyear] = useState(false);
   const buySubscriptionmonthly = async () => {
@@ -136,8 +137,9 @@ const Payment = () => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          marginTop: 2,
-          marginRight:11
+          // marginTop: 2,
+          marginRight:11,
+          marginBottom: paddingcard?5:""
         }}
       >
         <Grid
@@ -252,7 +254,7 @@ const Payment = () => {
           sm={5}
           sx={{
             background:
-              "linear-gradient(321.16deg, #231259 87.91%, #5D88C3 100%)",
+              "linear-gradient(321.16deg, #002838 87.91%, #5F5DC3 100%)",
             borderRadius: {
               xs: "25px",
               sm: "18px 60px 18px 18px",
