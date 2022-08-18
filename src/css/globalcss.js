@@ -16,8 +16,8 @@ export const themeLight = createTheme({
 
 const globalStyles = makeStyles((theme) => ({
   logo: {
-    height: 50,
-    width: 285,
+    height: 39,
+    width: 280,
     display: 'block',
     marginLeft: 'auto',
     marginRight: 'auto',

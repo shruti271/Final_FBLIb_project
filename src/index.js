@@ -10,9 +10,10 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 const theme = createTheme({
   typography: {
     fontFamily: [
-      'Neue Haas Grotesk Display Pro', 'sans-serif'
-    ].join(',')
-}});
+      'Neue Haas Grotesk Display Pro', 'sans-serif',
+    ].join(','),
+}
+});
 root.render(
   <Router>
       <Provider store={store}>

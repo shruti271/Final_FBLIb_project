@@ -20,23 +20,6 @@ const useStyles = makeStyles((theme) => ({
     WebkitBackgroundClip: "text",
     WebkitTextFillColor: "transparent",
   },
-  titleHome: {
-    // height: "37px !important",
-    // width: "41px !important",
-    // marginRight: "10px",
-    fontWeight: 600,
-    fontSize: "24px",
-    lineHeight: "24px",
-    color: "#2B2F42",
-  },
-  subTitleHome: {
-    // fontWeight: 500,
-    // fontSize: "18px",
-    // lineHeight: "24px",
-    // color: "#2B2F42",
-    // marginTop: "8px",
-    // marginBottom: "18px",
-  },
   addTextfilter: {
     padding: theme.spacing(1, 3),
     border: "1px solid #EBEBEB",
@@ -122,16 +105,17 @@ const Addlibrarydatabase = () => {
           // paddingRight: "36px",
           width: showgrid?"90% !important":"97% !important",
           marginX: "auto",
+          paddingInline:"10px"
         }}
       >
         <Grid item xs={12}>
           <Box component="main">
             <Typography
-              className={classes.titleHome}
               variant="h5"
-              ml={1}
+              ml={2}
               sx={{
-                fontWeight: "bold",
+                fontWeight:600,
+                fontSize:"24px",
                 color: "#3A3D4B",
                 "@media (max-width: 450px)": {
                   display:"flex",

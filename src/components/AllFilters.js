@@ -519,7 +519,7 @@ function AllFilters(props) {
               />
             }
           >
-            <Typography noWrap textTransform="capitalize">
+            <Typography noWrap textTransform="capitalize"sx={{fontWeight:500}}>
               {pageName === PageNameEnum.AdlibraryDatabase
                 ? allAdsPerams?.searchType
                 : savedAdsPerams?.searchType}
@@ -559,12 +559,12 @@ function AllFilters(props) {
                   <FormControlLabel
                     value="All these words"
                     control={<Radio style={{ color: "#00CBFF" }} />}
-                    label="All these words"
+                    label={<Typography sx={{fontWeight:500}}>All these words</Typography>}
                   />
                   <FormControlLabel
                     value="Exact Phrase"
                     control={<Radio style={{ color: "#00CBFF" }} />}
-                    label="Exact Phrase"
+                    label={<Typography sx={{fontWeight:500}}>Exact Phrase</Typography>}
                   />
                 </RadioGroup>
                 <Box
@@ -669,7 +669,7 @@ function AllFilters(props) {
               />
             }
           >
-            <Typography noWrap textTransform="capitalize">
+            <Typography noWrap textTransform="capitalize" sx={{fontWeight:500}}>
               Started Running Date{" "}
             </Typography>
           </Button>
@@ -737,7 +737,7 @@ function AllFilters(props) {
               />
             }
           >
-            <Typography noWrap textTransform="capitalize">
+            <Typography noWrap textTransform="capitalize"sx={{fontWeight:500}}>
               {" "}
               Ad count{" "}
             </Typography>
@@ -777,7 +777,7 @@ function AllFilters(props) {
               >
                 <Box>
                   <Stack direction={"row"} spacing={1}>
-                    <Typography>From</Typography>
+                    <Typography sx={{fontWeight:500}}>From</Typography>
                     <EditText
                       id="minRange"
                       type="number"
@@ -812,7 +812,7 @@ function AllFilters(props) {
                       }}
                     />
 
-                    <Typography>to</Typography>
+                    <Typography sx={{fontWeight:500}}>to</Typography>
                     <EditText
                       id="minRange"
                       type="number"
@@ -1036,7 +1036,7 @@ function AllFilters(props) {
               />
             }
           >
-            <Typography noWrap textTransform="capitalize">
+            <Typography noWrap textTransform="capitalize" sx={{fontWeight:500}}>
               {" "}
               Ad status{" "}
             </Typography>
@@ -1076,12 +1076,12 @@ function AllFilters(props) {
                   <FormControlLabel
                     value="Active"
                     control={<Radio style={{ color: "#00CBFF" }} />}
-                    label="Active"
+                    label={<Typography sx={{fontWeight:500}}>Active</Typography>}
                   />
                   <FormControlLabel
                     value="Inactive"
                     control={<Radio style={{ color: "#00CBFF" }} />}
-                    label="Inactive"
+                    label={<Typography sx={{fontWeight:500}}>Inactive</Typography>}
                   />
                 </RadioGroup>
                 <Box
@@ -1166,7 +1166,7 @@ function AllFilters(props) {
               />
             }
           >
-            <Typography noWrap textTransform="capitalize">
+            <Typography noWrap textTransform="capitalize" sx={{fontWeight:500}}>
               {" "}
               Facebook Page Likes
             </Typography>
@@ -1206,7 +1206,7 @@ function AllFilters(props) {
               >
                 <Box>
                   <Stack direction={"row"} spacing={1}>
-                    <Typography>From</Typography>
+                    <Typography sx={{fontWeight:500}}>From</Typography>
                     <EditText
                       id="minRange"
                       type="number"
@@ -1246,7 +1246,7 @@ function AllFilters(props) {
                       }}
                     />
 
-                    <Typography>to</Typography>
+                    <Typography sx={{fontWeight:500}}>to</Typography>
                     <EditText
                       id="minRange"
                       type="number"
@@ -1476,7 +1476,7 @@ function AllFilters(props) {
               />
             }
           >
-            <Typography noWrap textTransform="capitalize">
+            <Typography noWrap textTransform="capitalize" sx={{fontWeight:500}}>
               {" "}
               Instagram Page Followers{" "}
             </Typography>
@@ -1516,7 +1516,7 @@ function AllFilters(props) {
               >
                 <Box>
                   <Stack direction={"row"} spacing={1}>
-                    <Typography>From</Typography>
+                    <Typography sx={{fontWeight:500}}>From</Typography>
                     <EditText
                       id="minRange"
                       type="number"
@@ -1557,7 +1557,7 @@ function AllFilters(props) {
                       }}
                     />
 
-                    <Typography>to</Typography>
+                    <Typography sx={{fontWeight:500}}>to</Typography>
                     <EditText
                       id="minRange"
                       type="number"
@@ -1793,7 +1793,7 @@ function AllFilters(props) {
             }
             size="large"
           >
-            <Typography noWrap textTransform="capitalize">
+            <Typography noWrap textTransform="capitalize" sx={{fontWeight:500}}>
               Media Type
             </Typography>
           </Button>
@@ -1831,17 +1831,17 @@ function AllFilters(props) {
                   <FormControlLabel
                     value=""
                     control={<Radio style={{ color: "#00CBFF" }} />}
-                    label="Video or Photo"
+                    label={<Typography sx={{fontWeight:500}}>Video or Photo</Typography>}
                   />
                   <FormControlLabel
                     value="video"
                     control={<Radio style={{ color: "#00CBFF" }} />}
-                    label="Video"
+                    label={<Typography sx={{fontWeight:500}}>Video</Typography>}
                   />
                   <FormControlLabel
                     value="image"
                     control={<Radio style={{ color: "#00CBFF" }} />}
-                    label="Photo"
+                    label={<Typography sx={{fontWeight:500}}> Photo</Typography>}
                   />
                 </RadioGroup>
                 <Box
@@ -1923,7 +1923,7 @@ function AllFilters(props) {
               />
             }
           >
-            <Typography noWrap textTransform="capitalize">
+            <Typography noWrap textTransform="capitalize" sx={{fontWeight:500}}>
               Button
             </Typography>
           </Button>

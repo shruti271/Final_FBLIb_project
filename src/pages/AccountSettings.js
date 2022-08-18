@@ -24,7 +24,6 @@ import { cancelusersubcription, fetch_payment_method } from "../services";
 import { setSubscription } from "../redux/ducks/subscription";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Visibility from "@mui/icons-material/Visibility";
-import { getFaviconEl } from "../utils/getFaviconEl";
 
 const LoadingFor = {
   PersonalInfo: "personalInfo",
@@ -135,7 +134,7 @@ function AccountSettings() {
       <Grid container>
         <Grid item xs={12} sx={{ pl:{lg:5,md:5,sm:5}}}>
           <Stack>
-            <Typography variant="h5" className={classes.headindtextcenter} sx={{"@media (max-width: 450px)": {
+            <Typography variant="h5" sx={{"@media (max-width: 450px)": {
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
@@ -144,7 +143,7 @@ function AccountSettings() {
               <b>Account Settings</b>
             </Typography>
 
-            <Stack direction={"column"} marginTop={4} sx={{"@media (max-width: 450px)": {
+            <Stack direction={"column"} marginTop={2} sx={{"@media (max-width: 450px)": {
              
                   display: "flex",
                   justifyContent: "center",
@@ -206,7 +205,7 @@ function AccountSettings() {
                             },
                           }}
                         >
-                          <Typography>First Name</Typography>
+                          <Typography sx={{fontWeight:500,fontSize:"16px"}}>First Name</Typography>
                           <InputBase
                             className={classes.inputField}
                             disabled={
@@ -241,7 +240,7 @@ function AccountSettings() {
                             },
                           }}
                         >
-                          <Typography>Last Name</Typography>
+                          <Typography sx={{fontWeight:500,fontSize:"16px"}}>Last Name</Typography>
 
                           <InputBase
                             className={classes.inputField}
@@ -288,7 +287,8 @@ function AccountSettings() {
                               whiteSpace: "nowrap",
                               width: savebutton ? "auto" : "99%",
                               textTransform:"none",
-                              fontWeight:"bold"
+                              fontWeight:600,
+                              fontSize:"16px",
                             }}
                           >
                             {loading &&
@@ -358,7 +358,7 @@ function AccountSettings() {
                             },
                           }}
                         >
-                          <Typography>Current Password</Typography>
+                          <Typography sx={{fontWeight:500,fontSize:"16px"}}>Current Password</Typography>
                           <InputBase
                             type={
                               values.isShowCurrentPassword ? "text" : "password"
@@ -421,7 +421,7 @@ function AccountSettings() {
                             },
                           }}
                         >
-                          <Typography>New Password</Typography>
+                          <Typography sx={{fontWeight:500,fontSize:"16px"}}>New Password</Typography>
                           <InputBase
                             type={
                               values.isShowNewPassword ? "text" : "password"
@@ -511,7 +511,8 @@ function AccountSettings() {
                                 whiteSpace: "nowrap",
                                 width: savebutton ? "auto" : "99%",
                                 textTransform:"none",
-                                fontWeight:"bold"
+                                fontWeight:600,
+                                fontSize:"16px",
                               }}
                             >
                               {loading && LoadingFor.Password === loadingFor ? (
@@ -534,6 +535,8 @@ function AccountSettings() {
               </Box>
               
               <Typography
+               mb={2}
+               mt={2}
                 variant="h6"
                 className={classes.headindtextcenter} sx={{"@media (max-width: 450px)": {
                   display: "flex",
@@ -561,6 +564,8 @@ function AccountSettings() {
                         md: "32px",
                         lg: "32px",
                       },
+                      fontWeight:500,
+                      fontSize:"16px"
                     }}
                   >
                     Payment method
@@ -619,8 +624,8 @@ function AccountSettings() {
                 </Grid>
               </Grid>
 
-              <Box marginTop={3} >
-                <Typography variant="h6" className={classes.headindtextcenter} sx={{"@media (max-width: 450px)": {
+              <Box marginTop={2} >
+                <Typography variant="h6"mb={2} className={classes.headindtextcenter} sx={{"@media (max-width: 450px)": {
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
@@ -736,6 +741,8 @@ function AccountSettings() {
                         md: "19px",
                         lg: "0px",
                       },
+                      fontWeight:500,
+                      fontSize:"16px"
                     }}
                   >
                     Subscription Status:
@@ -751,6 +758,8 @@ function AccountSettings() {
                         md: "0px",
                         lg: "0px",
                       },
+                      fontWeight:500,
+                      fontSize:"16px"
                     }}
                   >
                     Plan:
@@ -766,6 +775,8 @@ function AccountSettings() {
                         md: "0px",
                         lg: "0px",
                       },
+                      fontWeight:500,
+                      fontSize:"16px"
                     }}
                   >
                     Next Renew: <b>{subscriptionData?.data?.end_date}</b>
@@ -800,7 +811,8 @@ function AccountSettings() {
                       whiteSpace: "nowrap",
                       // justifyContent: "flex-end",
                       textTransform:"none",
-                      fontWeight:"bold",
+                      fontWeight:600,
+                      fontSize:"16px",
                       width: savebutton ? "auto" : "100%",
                     }}
                     onClick={

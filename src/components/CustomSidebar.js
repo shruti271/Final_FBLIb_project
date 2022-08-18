@@ -6,43 +6,11 @@ import Typography from "@mui/material/Typography";
 import { useLocation, useNavigate } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { Stack } from "@mui/material";
-import logout from "../assets/Logout.svg";
-import { logoutUser } from "../services";
 import AdLibraryDatabaseIcon from "../SvgIcons/AdLibraryDatabaseIcon";
 import ContactIcon from "../SvgIcons/ContactIcon";
-// import fbEyelogo from "../assets/eye_logo.svg";
-// import fbEyelogoText from "../assets/logo_text.svg";
 import SaveIcon from "../SvgIcons/SaveIcon";
 import Menuicon from "../assets/bxs_left-arrow-circle.svg";
-import Menuiconrightside from "../assets/bxs_Right-arrow-circle (1).svg";
-import { IconButton } from "@mui/material";
 const useStyles = makeStyles(() => ({
-  title: {
-    fontFamily: "Neue Haas Grotesk Display Pro",
-    fontStyle: "normal !important",
-    fontWeight: "900 !important",
-    fontSize: "24px !important",
-    lineHeight: "31px !important",
-    background:
-      "linear-gradient(270deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)",
-    WebkitBackgroundClip: "text",
-    WebkitTextFillColor: "transparent",
-    backgroundClip: "text",
-    textFillColor: "transparent",
-  },
-  logoText: {
-    fontFamily: "Neue Haas Grotesk Display Pro",
-    fontStyle: "normal",
-    fontWeight: 900,
-    fontSize: "32.5271px",
-    lineHeight: "43px",
-    background:
-      "linear-gradient(270deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)",
-    WebkitBackgroundClip: "text",
-    WebkitTextFillColor: "transparent",
-    backgroundClip: "text",
-    texFillColor: "transparent",
-  },
   selectedMenu: {
     background:
       " linear-gradient(270deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 100%)",
@@ -153,30 +121,23 @@ export const CustomSidebar = ({ isOpen, setIsOpen }) => {
     <>
       <Drawer variant="permanent" open={isOpen}>
         <Stack sx={{ height: "100%", background: "#002838" }}>
-              <Stack pt={9} ml={isOpen === true ? 35 :10}>
-                <IconButton
-                  color="inherit"
-                  aria-label="open drawer"
-                  onClick={() => {
-                    !isOpen ? setIsOpen(true) : setIsOpen(false);
-                  }}
-                  edge="start"
-                >
+              <Box pt={9} sx={{display:"flex",justifyContent:"end"}}>
                   <img
                     alt="small-logo"
                     src={Menuicon}
                     height="40"
                     style={{
                       cursor: "pointer",
-                      // width: "290px",
                       position: "fixed",
-                      // backgroundColor:"#FFFFFF"
+                      marginLeft:"20px",
+                      marginTop:"-12px",
                       transform:isOpen === true ?"rotate(180deg)":"rotate(0deg)" 
                     }}
+                    onClick={() => {
+                      !isOpen ? setIsOpen(true) : setIsOpen(false);
+                    }}
                   />
-                </IconButton>
-              </Stack>
-          {/* </Box> */}
+              </Box>
           <Box
             className={
               !isOpen
@@ -186,7 +147,7 @@ export const CustomSidebar = ({ isOpen, setIsOpen }) => {
             sx={{ paddingRight: 1 }}
           >
             <Box
-              sx={{ cursor: "pointer", marginTop: 4 }}
+              sx={{ cursor: "pointer", marginTop: 5 }}
               className={
                 selectedMenuItem === sideBarMenuItems.ADLIBSDATABASE
                   ? classes.selectedMenu
@@ -206,15 +167,10 @@ export const CustomSidebar = ({ isOpen, setIsOpen }) => {
               >
                 <AdLibraryDatabaseIcon
                   sx={{ color: "#FFFFFF" }}
-                  // fill={
-                  //   selectedMenuItem === sideBarMenuItems.ADLIBSDATABASE
-                  //     ? "#00CBFF"
-                  //     : "grey"
-                  // }
                 />
                 <Typography
                   color="#FFFFFF"
-                  sx={{ marginLeft: "26px", fontWeight: 500 }}
+                  sx={{ marginLeft: "26px", fontWeight: 500}}
                 >
                   Adilbrary Database
                 </Typography>
@@ -257,7 +213,7 @@ export const CustomSidebar = ({ isOpen, setIsOpen }) => {
 
                 <Typography
                   color="#FFFFFF"
-                  sx={{ marginLeft: "26px", fontWeight: 500 }}
+                  sx={{ marginLeft: "26px", fontWeight: 500, }}
                 >
                   Saved Ads
                 </Typography>
@@ -295,7 +251,7 @@ export const CustomSidebar = ({ isOpen, setIsOpen }) => {
                 <ContactIcon sx={{ color: "#FFFFFF" }} />
                 <Typography
                   color="#FFFFFF"
-                  sx={{ marginLeft: "26px", fontWeight: 500 }}
+                  sx={{ marginLeft: "26px", fontWeight: 500, }}
                 >
                   Contact Support
                 </Typography>

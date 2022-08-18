@@ -1,5 +1,5 @@
-import fbaddlogo from "../../assets/Eye of Ecom Logo Blue 08-11 2 1.svg";
-import fbaddlogowhitecolor from "../../assets/new.svg"
+import fbaddlogo from "../../assets/Eye of Ecom  Blue.png";
+import fbaddlogowhitecolor from "../../assets/Eye of Ecom White.png"
 import React, { useEffect, useState } from "react";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import {

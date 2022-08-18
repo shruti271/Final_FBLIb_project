@@ -1,13 +1,12 @@
-import fbaddlogo from "../../assets/Eye of Ecom Logo Blue 08-11 2 1.svg";
-import fbaddlogowhitecolor from "../../assets/new.svg";
-import React, { useEffect, useState } from "react";
+import fbaddlogo from "../../assets/Eye of Ecom  Blue.png";
+import fbaddlogowhitecolor from "../../assets/Eye of Ecom White.png";
+import React, {  useState } from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import {
   Card,
   CardContent,
   Typography,
-  TextField,
   Button,
   Box,
   Alert,
@@ -34,6 +33,7 @@ const Login = () => {
   const theme = useTheme();
   const showhidelogolargedevice = useMediaQuery(theme.breakpoints.up("sm"));
   const showhidelogosmalldevice = useMediaQuery(theme.breakpoints.down("sm"));
+  const paddingcardsmalldevice= useMediaQuery(theme.breakpoints.down("sm"));
   const aligncenterfont = useMediaQuery(theme.breakpoints.up("sm"));
   const [loading, setLoading] = useState(false);
   const [errormessage, setErrormessage] = useState("");
@@ -43,12 +43,6 @@ const Login = () => {
     isShowNewPassword: false,
   });
 
-  // useEffect(() => {
-  //   document.title = "Log in - Eye of Ecom ";
-  //   const favicon = getFaviconEl();
-  //   console.log("login", favicon);
-  //   favicon.href = "test.jpg";
-  // }, []);
   const {
     register,
     handleSubmit,
@@ -142,11 +136,11 @@ const Login = () => {
                 ) : (
                   ""
                 )}
-                <Box sx={{ padding: "1vmax 2.5vmax" }}>
+                <Box sx={{ padding:paddingcardsmalldevice ? "" :"1vmax 2.5vmax" }}>
                   <Typography
                     variant="h5"
                     sx={{
-                      fontWeight: "bold",
+                      fontWeight: 600,
                       fontSize: { xs: 25, lg: 25 },
                     }}
                     align={aligncenterfont ?"" :"center"}
@@ -156,10 +150,11 @@ const Login = () => {
 
                   <Typography
                     sx={{
-                      fontSize: { xs: 13, sm: 16, lg: 16 },
-                      marginLeft: { xs: "9%", sm: 0, md: 0, lg: 0 },
+                      fontSize: { xs: 16, sm: 16, lg: 16 },
                       paddingTop: { xs: 0, sm: 1, md: 1, lg: 1 },
+                      fontWeight: 500,
                     }}
+                    align={aligncenterfont ?"" :"center"}
                   >
                     Don't have an account ?{" "}
                     <span
@@ -171,7 +166,7 @@ const Login = () => {
                   </Typography>
                   <Box mt={2}>
                     {errormessage && (
-                      <Alert severity="error">{errormessage}</Alert>
+                      <Alert severity="error" sx={{marginBottom:paddingcardsmalldevice ? "10px":""}}>{errormessage}</Alert>
                     )}
                     {verificationmesssage && (
                       <>
@@ -183,11 +178,11 @@ const Login = () => {
                         >
                           <Grid item xs={9}>
                             {!resendmessage ? (
-                              <Alert severity="warning">
+                              <Alert severity="warning" sx={{marginBottom:paddingcardsmalldevice ? "10px":""}}>
                                 {verificationmesssage}
                               </Alert>
                             ) : (
-                              <Alert severity="success">
+                              <Alert severity="success" >
                                 Email verification link send Your gmail
                               </Alert>
                             )}
@@ -207,7 +202,7 @@ const Login = () => {
                     )}
                   </Box>
                   <form>
-                    <Grid container spacing={1} pt={2.5}>
+                    <Grid container spacing={1} pt={paddingcardsmalldevice ?"":2.5}>
                       <Grid item xs={12}>
                         <BootstrapInput
                           type="email"
@@ -233,6 +228,7 @@ const Login = () => {
                               color: "#00CBFF",
                               cursor: "pointer",
                               fontSize: { xs: 13, sm: 16, lg: 16 },
+                              fontWeight:500
                             }}
                           >
                             {" "}
@@ -242,65 +238,6 @@ const Login = () => {
                       </Grid>
 
                       <Grid item xs={12}>
-                        {/* <TextField
-                          autoComplete="off"
-                          type={values.isShowNewPassword ? "text" : "password"}
-                          fullWidth
-                          label="Password"
-                          error={errors.password ? true : false}
-                          required
-                          InputProps={{
-                            endAdornment: (
-                              <InputAdornment
-                                position="end"
-                                sx={{ marginRight: 1 }}
-                              >
-                                <IconButton
-                                  aria-label="toggle password visibility"
-                                  onClick={() =>
-                                    setValues({
-                                      isShowNewPassword:
-                                        !values.isShowNewPassword,
-                                    })
-                                  }
-                                  onMouseDown={handleMouseDownPassword}
-                                  edge="end"
-                                >
-                                  {!values.isShowNewPassword ? (
-                                    <VisibilityOff />
-                                  ) : (
-                                    <Visibility />
-                                  )}
-                                </IconButton>
-                              </InputAdornment>
-                            ),
-                          }}
-                          placeholder="password"
-                          {...register("password", {
-                            required: (
-                              <span style={{ color: "red" }}>
-                                {"Password is required"}
-                              </span>
-                            ),
-                            minLength: {
-                              value: 6,
-                              message: (
-                                <span style={{ color: "red" }}>
-                                  {"Password must be more than 6 characters"}
-                                </span>
-                              ),
-                              // color:"red"
-                            },
-                          })}
-                        />
-
-                        <Typography
-                          variant="inherit"
-                          color="textSecondary"
-                          p={0.8}
-                        >
-                          {errors.password?.message}
-                        </Typography> */}
                         <InputBase
                           type={values.isShowNewPassword ? "text" : "password"}
                           //  value={values.password}
@@ -379,7 +316,7 @@ const Login = () => {
                           style={{ color: "#F6F6FB" }}
                         />
                       ) : (
-                        "Log in"
+                        <Typography sx={{fontWeight:600,fontSize: "20px"}}> Log in</Typography>
                       )}
                     </Button>
                   </Box>

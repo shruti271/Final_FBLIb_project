@@ -181,7 +181,8 @@ const ContactSupport = () => {
                   >
                     <Typography
                       fontSize={{ lg: 15, md: 13, sm: 13 }}
-                      sx={{ textTransform: "none", fontWeight: "bold" }}
+                      sx={{ textTransform: "none", fontWeight:600,
+                      fontSize:"16px", }}
                     >
                       {loading ? (
                         <CircularProgress

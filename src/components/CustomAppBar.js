@@ -23,7 +23,7 @@ import { useSelector } from "react-redux";
 import useStyles from "../css/mediapage";
 import { logoutUser } from "../services";
 import { getFaviconEl } from "../utils/getFaviconEl";
-import Eyeofecomlogo from "../assets/Eye of Ecom Logo Blue 08-11 2 1 (1).svg"
+import Eyeofecomlogo from "../assets/Eye of Ecom  Blue.png"
 const drawerWidth = 276;
 
 const AppBar = styled(MuiAppBar, {
@@ -105,6 +105,7 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
                 }}
               >
                 <img src={Eyeofecomlogo} alt="444" height={33}/>
+                <Typography color="black" mb={2}sx={{fontWeight:500,border:"1px solid black",paddingInline:"1px",fontSize:"10px"}}>BETA</Typography>
               </IconButton>
             </Stack>
             <Stack>
@@ -137,7 +138,7 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
                     <Typography
                       sx={{
                         fontStyle: "normal",
-                        fontWeight: "600",
+                        fontWeight: 600,
                         fontSize: "18px",
                         lineHeight: "24px",
                         color: "#2B2F42",
@@ -180,7 +181,7 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
                             `${accountSettings?.first_name} ${accountSettings?.last_name}`}
                         </b>
                       </Typography>
-                      <Typography>
+                      <Typography sx={{fontWeight:500,fontSize:"16px"}}>
                         {accountSettings && accountSettings?.email}
                       </Typography>
                     </Box>
@@ -211,7 +212,7 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
                             alt="img1"
                             style={{ height: "15px", width: "15px" }}
                           />
-                          <Typography marginLeft={1}>{item.name}</Typography>
+                          <Typography marginLeft={1}sx={{ fontWeight:500, fontSize:"16px"}}>{item.name}</Typography>
                         </MenuItem>
                       );
                     })}

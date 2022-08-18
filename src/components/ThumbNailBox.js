@@ -374,8 +374,8 @@ const ThumbNailBox = ({ adInfo, index }) => {
 
           <Grid container sx={{ padding: "4px" }}>
             <Grid item xs={9} sm={10} md={10} lg={10}>
-              <Grid container>
-                <Grid item marginRight={"15px"}>
+              <Grid container pt={1.3}>
+                <Grid item marginRight={"15px"} sx={{fontWeight:500}}>
                   {adInfo.status === "Active" ? (
                     <Typography sx={{ textDecoration: "underline",
                     paddingBottom: "4px",
@@ -385,7 +385,7 @@ const ThumbNailBox = ({ adInfo, index }) => {
                       {adInfo.status}
                     </Typography>
                   ) : (
-                    <Typography sx={{ color: "red" }}>
+                    <Typography sx={{ color: "red",textDecoration: "underline", }}>
                       {adInfo.status}
                     </Typography>
                   )}
@@ -656,7 +656,7 @@ const ThumbNailBox = ({ adInfo, index }) => {
               });
             }}
           >
-            <b>See Details</b>
+            <Typography sx={{fontWeight:700,fontSize:"14px"}}>See Details</Typography>
           </Button>
         </Stack>
       </Card>

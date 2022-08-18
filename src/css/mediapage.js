@@ -50,6 +50,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   headingtextcenter: {
+    fontWeight:500,
     [theme.breakpoints.down("xs")]: {
       display: "flex",
       justifyContent: "center",
