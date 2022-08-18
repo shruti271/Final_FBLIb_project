@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
     textTransform: "none",
   },
   yearplanbutton: {
-    fontWeight: "600 !important",
+    fontWeight: "700 !important",
     height: "35px",
     background:
       "linear-gradient(270deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)",
@@ -60,8 +60,12 @@ const useStyles = makeStyles((theme) => ({
     textTransform: "none",
   },
   fontcolor: {
-    fontSize: "1px",
     color: "#F6F6FB",
+    fontWeight:"600 !important"
+  },
+  fontcolorheading:{
+    color: "#F6F6FB",
+    fontWeight:"600 !important"
   },
   monthplanborder: {
     border: "1px solid #EBEBEB",
@@ -71,12 +75,14 @@ const useStyles = makeStyles((theme) => ({
   },
   month: {
     color: "#D3D5E1",
+    fontWeight:"600 !important"
   },
 }));
 const Payment = () => {
   const classes = useStyles();
   const theme = useTheme();
   const aligncenterfont = useMediaQuery(theme.breakpoints.up("sm"));
+  const aligncentercard = useMediaQuery(theme.breakpoints.up("sm"));
   const [loading, setLoading] = useState(false);
   const [loadingyear, setLoadingyear] = useState(false);
   const buySubscriptionmonthly = async () => {
@@ -116,6 +122,7 @@ const Payment = () => {
           gutterBottom
           color="#2B2F42"
           p={1.5}
+          sx={{fontWeight:600}}
           align={aligncenterfont ?"center" :"center"}
         >
           Try it free for 24 hours!
@@ -145,12 +152,12 @@ const Payment = () => {
               sm: "60px 18px 18px 18px",
               lg: "60px 18px 18px 18px",
             },
-            marginRight: 2,
+            marginRight: aligncentercard ?2 :""
           }}
         >
           <Stack p={2} pt={4}>
             <Typography className={classes.plansheading} pl={3}
-                sx={{marginLeft: { xs: "26px", sm: "16px" },border:"1px solid #EBEBEB",width:"200px",borderRadius:"41px"}}
+                sx={{marginLeft: { xs: "26px", sm: "16px" },border:"1px solid #EBEBEB",width:"200px",borderRadius:"41px",fontWeight:600}}
             >
               {" "}
               Monthly Plan{" "}
@@ -158,7 +165,7 @@ const Payment = () => {
             <Stack p={2}>
               <Box sx={{ display: "flex", justifyContent: "flex-start" }}>
                 <Typography variant="h3" gutterBottom component="div"
-                sx={{marginLeft:{xs:3,sm:0,lg:0}}}
+                sx={{marginLeft:{xs:3,sm:0,lg:0},fontWeight:600}}
                 >
                   {" "}
                   $49
@@ -167,7 +174,7 @@ const Payment = () => {
                   /MONTH
                 </Typography>
               </Box>
-              <Typography sx={{ fontSize: { xs: "14px", sm: "14px", lg: 16 } }}>
+              <Typography sx={{ fontSize: { xs: "18px", sm: "16px", lg: "16px" },fontWeight:500 }} align={aligncenterfont ? "" :"center"}>
                 Cancel Anytime, No Commitments
               </Typography>
               <Divider variant="fullWidth" sx={{ marginTop: 1 }} />
@@ -175,7 +182,7 @@ const Payment = () => {
                 <img src={paymentCheckboxicon} alt="paymentchekbox" />
                 <Typography
                   m={2}
-                  sx={{ fontSize: { xs: "14px", sm: "14px", lg: 16 } }}
+                  sx={{ fontSize: { xs: "18px", sm: "14px", lg: 16 },fontWeight:500  }}
                 >
                   Adlibrary Database With Over 30,000 Active Dropshipping Sites
                 </Typography>
@@ -184,7 +191,7 @@ const Payment = () => {
                 <img src={paymentCheckboxicon} alt="paymentchekbox" />
                 <Typography
                   m={2}
-                  sx={{ fontSize: { xs: "14px", sm: "14px", lg: 16 } }}
+                  sx={{ fontSize: { xs: "18px", sm: "14px", lg: 16 },fontWeight:500  }}
                 >
                   Early Access to the Most Powerfull Ecom Spy Tool
                 </Typography>
@@ -193,7 +200,7 @@ const Payment = () => {
                 <img src={paymentCheckboxicon} alt="paymentchekbox" />
                 <Typography
                   m={2}
-                  sx={{ fontSize: { xs: "14px", sm: "14px", lg: 16 } }}
+                  sx={{ fontSize: { xs: "18px", sm: "14px", lg: 16 },fontWeight:500  }}
                 >
                   Thousands of New Sites Added Daily
                 </Typography>
@@ -202,7 +209,7 @@ const Payment = () => {
                 <img src={paymentCheckboxicon} alt="paymentchekbox" />
                 <Typography
                   m={2}
-                  sx={{ fontSize: { xs: "14px", sm: "14px", lg: 16 } }}
+                  sx={{ fontSize: { xs: "18px", sm: "14px", lg: 16 },fontWeight:500  }}
                 >
                   Customer Support
                 </Typography>
@@ -211,7 +218,7 @@ const Payment = () => {
                 <img src={paymentCheckboxicon} alt="paymentchekbox" />
                 <Typography
                   m={2}
-                  sx={{ fontSize: { xs: "14px", sm: "14px", lg: 16 } }}
+                  sx={{ fontSize: { xs: "18px", sm: "14px", lg: 16 },fontWeight:500  }}
                 >
                   New Tools and Features Coming Soon
                 </Typography>
@@ -224,7 +231,7 @@ const Payment = () => {
                 onClick={buySubscriptionmonthly}
                 style={{
                   borderRadius: 30,
-                  fontSize: 22,
+                  fontSize: "20px",
                   borderColor: "#EBEBEB",
                   textTransform: "none",
                 }}
@@ -257,6 +264,7 @@ const Payment = () => {
           <Stack p={2} pt={4}>
             <Button
               className={classes.annualheadinglabel}
+              align={aligncenterfont ? "" :"center"}
               sx={{
                 marginLeft: { xs: "26px", sm: "16px" },
                 padding: "0px",
@@ -280,7 +288,7 @@ const Payment = () => {
                   variant="h3"
                   gutterBottom
                   component="div"
-                  className={classes.fontcolor}
+                  className={classes.fontcolorheading}
                   sx={{marginLeft:{xs:3,sm:0,lg:0}}}
                 >
                   {" "}
@@ -291,8 +299,9 @@ const Payment = () => {
                 </Typography>
               </Box>
               <Typography
-                className={classes.fontcolor}
-                sx={{ fontSize: { xs: "14px", sm: "14px", lg: 16 } }}
+                className={classes.fontcolorheading}
+                sx={{ fontSize: { xs: "18px", sm: "14px", lg: "15px" } }}
+                align={aligncenterfont ? "" :"center"}
               >
                 Get 5 Months Free By Paying Annually
               </Typography>
@@ -305,7 +314,7 @@ const Payment = () => {
                 <img src={annualplancheckboxicon} alt="paymentchekbox" />
                 <Typography
                   m={2}
-                  sx={{ fontSize: { xs: "14px", sm: "14px", lg: 16 } }}
+                  sx={{ fontSize: { xs: "18px", sm: "16px", lg: "15px" } }}
                   className={classes.fontcolor}
                 >
                   Adlibrary Database With Over 30,000 Active Dropshipping Sites
@@ -316,7 +325,7 @@ const Payment = () => {
                 <Typography
                   m={2}
                   className={classes.fontcolor}
-                  sx={{ fontSize: { xs: "14px", sm: "14px", lg: 16 } }}
+                  sx={{ fontSize: { xs: "18px", sm: "14px", lg: "15px" } }}
                 >
                   Early Access to the Most Powerful Ecom Spy Tool
                 </Typography>
@@ -326,7 +335,7 @@ const Payment = () => {
                 <Typography
                   m={2}
                   className={classes.fontcolor}
-                  sx={{ fontSize: { xs: "14px", sm: "14px", lg: 16 } }}
+                  sx={{ fontSize: { xs: "18px", sm: "14px", lg: "15px" } }}
                 >
                   Thousands of New Sites Added Daily
                 </Typography>
@@ -336,7 +345,7 @@ const Payment = () => {
                 <Typography
                   m={2}
                   className={classes.fontcolor}
-                  sx={{ fontSize: { xs: "14px", sm: "14px", lg: 16 } }}
+                  sx={{ fontSize: { xs: "18px", sm: "14px", lg: "15px" } }}
                 >
                   Customer Support
                 </Typography>
@@ -347,7 +356,7 @@ const Payment = () => {
                 <Typography
                   m={2}
                   className={classes.fontcolor}
-                  sx={{ fontSize: { xs: "14px", sm: "14px", lg: 16 } }}
+                  sx={{ fontSize: { xs: "18px", sm: "14px", lg:"15px" } }}
                 >
                   New Tools and Features Coming Soon
                 </Typography>
@@ -359,7 +368,7 @@ const Payment = () => {
                 size="large"
                 className={classes.yearplanbutton}
                 onClick={buySubscriptionAnnually}
-                sx={{ borderRadius: 30, fontSize: 22, textTransform: "none" }}
+                sx={{ borderRadius: 30, fontSize: "20px", textTransform: "none" }}
               >
                 {loadingyear ? (
                   <CircularProgress size={25} style={{ color: "#F6F6FB" }} />

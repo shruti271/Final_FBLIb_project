@@ -117,7 +117,7 @@ function SortFilter(props) {
           />
         }
       >
-        <Typography noWrap textTransform="capitalize">
+        <Typography noWrap textTransform="capitalize" sx={{fontWeight:500,fontSize:"16px"}}>
           {/* {sortedDetail || "sort by"} */}
           Sort by
         </Typography>
@@ -154,32 +154,32 @@ function SortFilter(props) {
               <FormControlLabel
                 value="startDate"
                 control={<Radio style={{ color: "#00CBFF" }} />}
-                label="Started running date"
+                label={<Typography sx={{fontWeight:500,fontSize:"16px"}}>Started running date</Typography>}
               />
               <FormControlLabel
                 value="lastUpdatedTime"
                 control={<Radio style={{ color: "#00CBFF" }} />}
-                label="Recently updated"
+                label={<Typography sx={{fontWeight:500,fontSize:"16px"}}>Recently updated</Typography>}
               />
               <FormControlLabel
                 value="pageInfo.platforms.likes"
                 control={<Radio style={{ color: "#00CBFF" }} />}
-                label="Page likes"
+                label={<Typography sx={{fontWeight:500,fontSize:"16px"}}>Page likes</Typography>}
               />
               <FormControlLabel
                 value="noOfCopyAds"
                 control={<Radio style={{ color: "#00CBFF" }} />}
-                label="Ad count total"
+                label={<Typography sx={{fontWeight:500,fontSize:"16px"}}>Ad count total</Typography>}
               />
               <FormControlLabel
                 value="true"
                 control={<Radio style={{ color: "#00CBFF" }} />}
-                label="Ad count increase"
+                label={<Typography sx={{fontWeight:500,fontSize:"16px"}}>Ad count increase</Typography>}
               />
               <FormControlLabel
                 value="false"
                 control={<Radio style={{ color: "#00CBFF" }} />}
-                label="Ad count decrease"
+                label={<Typography sx={{fontWeight:500,fontSize:"16px"}}>Ad count decrease</Typography>}
               />
             </RadioGroup>
           </FormControl>
@@ -208,7 +208,7 @@ function SortFilter(props) {
                 }
                 value="asc"
                 control={<Radio style={{ color: "#00CBFF" }} />}
-                label="Ascending"
+                label={<Typography sx={{fontWeight:500,fontSize:"16px"}}>Ascending</Typography>}
               />
               <FormControlLabel
                 disabled={
@@ -223,7 +223,7 @@ function SortFilter(props) {
                 }
                 value="desc"
                 control={<Radio style={{ color: "#00CBFF" }} />}
-                label="Descending"
+                label={<Typography sx={{fontWeight:500,fontSize:"16px"}}>Descending</Typography>}
               />
             </RadioGroup>
           </FormControl>

@@ -64,7 +64,7 @@ function AdDeatails() {
   const OnlyMdSizeScreen = useMediaQuery(theme.breakpoints.only("md"));
   
   // const theme = useTheme();
-  const showgrid = useMediaQuery(theme.breakpoints.only("xs"));
+  const showgrid = useMediaQuery(theme.breakpoints.up("xs"));
 
   const [adDetail, setAdDetail] = useState();
   const [IsDrawerOpen, setIsDrawerOpen] = useState(true);
@@ -195,9 +195,9 @@ function AdDeatails() {
                       fontWeight: "bold",
                     }}
                   >
-                    <b>
+                    
                       {adDetail?.pageInfo?.name ? adDetail.pageInfo?.name : " "}
-                    </b>
+                    
                   </Typography>
                 </Box>
 
@@ -614,8 +614,11 @@ function AdDeatails() {
                 spacing={2}
               >
                 <Typography
-                  style={{ fontWeight: 600, fontSize: "20px" }}
+                  // style={{ fontWeight: 600, fontSize: "20px" }}
+                  style={{ fontWeight: 600, fontSize:{ xs:"15px",sm:"20px",md:"20px",lg:"22px"} }}
                   noWrap
+                  mb={2.5}
+                  ml={4}
                 >
                   {adDetail?.pageInfo?.name}
                 </Typography>
@@ -630,6 +633,7 @@ function AdDeatails() {
                     justifyContent: "center",
                     alignItems: "center",
                   }}
+                  mb={2.9}
                 >
                   <Avatar
                     src={adDetail?.pageInfo?.logo}
@@ -648,7 +652,7 @@ function AdDeatails() {
                 style={{
                   marginTop: "36px",
                   display: "flex",
-                      alignItems: "center",
+                      alignItems: showgrid?"":"center",
                       justifyContent: "center",
                   // "@media screen and (min-width: 800px)":
                   //   {
@@ -677,7 +681,7 @@ function AdDeatails() {
                           aria-label="Add"
                         />
                       </Box>
-                      <Stack>
+                      <Stack sx={{display:"flex",justifyContent:"center",alignItems:"flexStart"}}>
                         <Typography
                           style={{
                             fontFamily: "Neue Haas Grotesk Display Pro",

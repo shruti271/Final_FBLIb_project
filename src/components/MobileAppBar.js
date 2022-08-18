@@ -141,9 +141,7 @@ function MobileAppBar() {
                 onClick={() => navigate("/auth/login")}
                 style={{ cursor: "pointer" ,width:"50px"}}
               />
-                 <Typography color="#4A4C57" variant="span" pl={1}>
-              BETA
-              </Typography>
+               <Typography color="black" mb={2}sx={{fontWeight:500,border:"1px solid black",paddingInline:"1px",fontSize:"10px",marginLeft:"5px"}}>BETA</Typography>
             </Box>
             </Stack>
             <Stack>

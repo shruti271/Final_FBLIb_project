@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import {
   Box,
@@ -23,8 +23,8 @@ import { signUp } from "../../services/index";
 import { themeLight, globalStyles, BootstrapInput } from "../../css/globalcss";
 import { CssBaseline } from "@material-ui/core";
 import { registerValidationSchema } from "./../../utils/validationSchemas";
-import fbaddlogo from "../../assets/Eye of Ecom Logo Blue 08-11 2 1.svg";
-import fbaddlogowhitecolor from "../../assets/new.svg";
+import fbaddlogo from "../../assets/Eye of Ecom  Blue.png";
+import fbaddlogowhitecolor from "../../assets/Eye of Ecom White.png";
 import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
@@ -51,23 +51,9 @@ const Signup = () => {
     resolver: yupResolver(registerValidationSchema),
   });
 
-  const handleChange = (prop) => (event) => {
-    setValues({ ...values, [prop]: event.target.value });
-  };
-
-  const handleClickShowPassword = () => {
-    setValues({
-      ...values,
-      showPassword: !values.showPassword,
-    });
-  };
-
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
-  // useEffect(() => {
-  //   document.title = "Register - Eye of Ecom ";
-  // }, []);
   const submitsigninform = async (data) => {
     setLoading(true);
     try {
@@ -132,10 +118,9 @@ const Signup = () => {
               )}
               <form onSubmit={handleSubmit(submitsigninform)}>
                 <Box sx={{ padding:paddingcardsmalldevice ? "" :"1vmax 2.5vmax" }}>
-                  {/* <Box style={{  padding:{xs:0,lg:"18px 61px" ,xl:"18px 61px"}, }}mt={1} > */}
                   <Typography
                     sx={{
-                      fontWeight: "bold",
+                      fontWeight: 600,
                       fontSize: { xs: 23, lg: 25 },
                     }}
                     align={aligncenterfont ?"" :"center"}
@@ -146,10 +131,10 @@ const Signup = () => {
                   <Typography
                     sx={{
                       fontSize: { xs: 13, sm: 16, lg: 16 },
-                      marginLeft: { xs: "9%", sm: 0, md: 0, lg: 0 },
                       paddingTop: { xs: 0, sm: 1, md: 1, lg: 1 },
                       fontWeight:500
                     }}
+                    align={aligncenterfont ?"" :"center"}
                   >
                     Already have an account?{" "}
                     <span
@@ -167,13 +152,13 @@ const Signup = () => {
                       "The email address is already in used" ? (
                         <Box mt={2}>
                           {errormessage && (
-                            <Alert severity="error">{errormessage}</Alert>
+                            <Alert severity="error" sx={{marginBottom:{xs:"10px" ,sm:"10px",md:"0px",lg:"0px"}}}>{errormessage}</Alert>
                           )}
                         </Box>
                       ) : (
                         <Box mt={2}>
                           {errormessage && (
-                            <Alert severity="error">{errormessage}</Alert>
+                            <Alert severity="error" sx={{marginBottom:{xs:"10px" ,sm:"10px",md:"0px",lg:"0px"}}}>{errormessage}</Alert>
                           )}
                         </Box>
                       )}
@@ -220,48 +205,8 @@ const Signup = () => {
                       </Typography>
                     </Grid>
                     <Grid item xs={12}>
-                      {/* <FormControl
-                        sx={{ mr: 1, width: "100%" }}
-                        variant="outlined"
-                      >
-                        <InputLabel
-                          htmlFor="outlined-adornment-password"
-                          error={errors.password ? true : false}
-                        >
-                          Password
-                        </InputLabel>
-                        <OutlinedInput
-                          placeholder="Password"
-                          variant="outlined"
-                          fullWidth
-                          required
-                          {...register("password")}
-                          error={errors.password ? true : false}
-                          type={values.showPassword ? "text" : "password"}
-                          value={values.password}
-                          onChange={handleChange("password")}
-                          endAdornment={
-                            <InputAdornment position="end">
-                              <IconButton
-                                aria-label="toggle password visibility"
-                                onClick={handleClickShowPassword}
-                                onMouseDown={handleMouseDownPassword}
-                                edge="end"
-                              >
-                                {values.showPassword ? (
-                                  <VisibilityOff />
-                                ) : (
-                                  <Visibility />
-                                )}
-                              </IconButton>
-                            </InputAdornment>
-                          }
-                          label="Password"
-                        />
-                      </FormControl> */}
                       <InputBase
                         type={values.isShowNewPassword ? "text" : "password"}
-                        //  value={values.password}
                         className={global.inputField}
                         label="outlined"
                         variant="outlined"
@@ -319,7 +264,7 @@ const Signup = () => {
                           <Typography
                             color={errors.acceptTerms ? "error" : "inherit"}
                             className={global.termsandcondition}
-                            sx={{ fontSize: { xs: 14, sm: 16, lg: 16 } }}
+                            sx={{ fontSize: { xs: 14, sm: 16, lg: 16 },fontWeight:500 }}
                           >
                             I agree to the
                             <Typography
@@ -369,7 +314,7 @@ const Signup = () => {
                           style={{ color: "#F6F6FB" }}
                         />
                       ) : (
-                        "Create Account"
+                      <Typography sx={{fontWeight:600,fontSize: "20px"}}> Create Account</Typography>
                       )}
                     </Button>
                   </Box>

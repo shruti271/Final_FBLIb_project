@@ -1,5 +1,5 @@
-import fbaddlogo from "../../assets/Eye of Ecom Logo Blue 08-11 2 1.svg";
-import fbaddlogowhitecolor from "../../assets/new.svg"
+import fbaddlogo from "../../assets/Eye of Ecom  Blue.png";
+import fbaddlogowhitecolor from "../../assets/Eye of Ecom White.png"
 import React, { useState, useEffect } from "react";
 import { makeStyles, MuiThemeProvider } from "@material-ui/core/styles";
 import {
@@ -37,6 +37,7 @@ const ForgetPassword = () => {
   const theme = useTheme()
   const showhidelogolargedevice = useMediaQuery(theme.breakpoints.up("sm"));
   const showhidelogosmalldevice = useMediaQuery(theme.breakpoints.down("sm"));
+  const paddingcardsmalldevice= useMediaQuery(theme.breakpoints.down("sm"));
   const aligncenterfont = useMediaQuery(theme.breakpoints.up("sm"));
   const [loading, setLoading] = useState(false);
   const [errormessage, setErrormessage] = useState("");
@@ -119,7 +120,7 @@ const ForgetPassword = () => {
                 className={global.logo}
                 onClick={() => navigate("/auth/login")}
               /> :""}
-                <Box style={{ padding: "1vmax 2.5vmax" }}>
+                <Box sx={{ padding:paddingcardsmalldevice ? "" :"1vmax 2.5vmax" }}>
                   <Grid container spacing={2}>
                     <Grid xs={12} item>
                       <Typography
@@ -127,6 +128,7 @@ const ForgetPassword = () => {
                         sx={{
                           fontWeight: "bold",
                           fontSize: { xs: 23, lg: 25 },
+                          fontWeight:600
                         }}
                         align={aligncenterfont ? "" :"center"}
                       >
@@ -185,7 +187,7 @@ const ForgetPassword = () => {
                       {loading ? (
                         <CircularProgress style={{ color: "#F6F6FB" }} />
                       ) : (
-                        "Reset Password"
+                        <Typography sx={{fontWeight:600,fontSize: "20px"}}> Reset Password</Typography>
                       )}
                     </Button>
                   </Box>
@@ -198,7 +200,7 @@ const ForgetPassword = () => {
                     />
                     <Typography
                       variant="h6"
-                      sx={{ cursor: "pointer" }}
+                      sx={{ cursor: "pointer" ,fontWeight:500}}
                       onClick={() => navigate("/auth/login")}
                     >
                       Back to log in

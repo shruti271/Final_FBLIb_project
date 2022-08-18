@@ -153,8 +153,8 @@ function AdDeatailsTabs() {
             <Box sx={{ marginRight: "12px" }}>
               <img src={LeftArrow} aria-label="FirstCard" />
             </Box>
-            <Typography>
-              <b>Search Results</b>
+            <Typography sx={{fontWeight:{xs:600,sm:600,md:600,xl:600},fontSize:{xs:"18px",sm:"18px",md:"18px",xl:"18px"}}}>
+              Search Results
             </Typography>
           </Stack>
         </Box>
@@ -188,7 +188,7 @@ function AdDeatailsTabs() {
                 navigate("");
               }}
             >
-              <b>Ad Overview</b>
+           <Typography sx={{fontWeight:500,fontSize:{xs:"18px",sm:"22px",md:"16px",xl:"16px"}}}>   Ad Overview</Typography>
             </Button>
             <Button
               disableRipple  
@@ -210,7 +210,7 @@ function AdDeatailsTabs() {
                 navigate("allAds");
               }}
             >
-              <b>All Ads</b>
+               <Typography sx={{fontWeight:500,fontSize:{xs:"18px",sm:"22px",md:"16px",xl:"16px"}}}> All Ads</Typography>
             </Button>
           </Stack>
         </Box>
@@ -218,7 +218,7 @@ function AdDeatailsTabs() {
       <Box  sx={{width: showgrid?"98% !important":"98% !important", margin:"auto",
           display:"flex",
           justifyContent:"center",
-          alignItems:"center"}}>
+          alignItems:"center",paddingInline:"24px"}}>
       <Routes>
         <Route exact path="" element={<AdDeatails />} />
         <Route exact path="allAds" element={<AllAds />} />
