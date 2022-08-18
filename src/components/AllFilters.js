@@ -29,11 +29,8 @@ import { PageNameEnum } from "../utils/enums";
 import { useLocation } from "react-router-dom";
 import GradientButton from "react-linear-gradient-button";
 import filter from "../assets/filter.svg";
-<<<<<<< HEAD
 import { clearCashedPageData } from "../redux/ducks/filteredAds";
-=======
 import ResetButton from "../css/ResetButton";
->>>>>>> v3_design_changes
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -1369,18 +1366,8 @@ function AllFilters(props) {
                     // handleFacebookLikesChange(e.target.value)
                   }}
                 />
-<<<<<<< HEAD
-                <GradientButton
-                  gradient={[
-                    "rgba(103, 33, 255, 1)",
-                    "rgba(0, 203, 255, 1)",
-                    "rgba(181, 237, 255, 1)",
-                  ]}
-                  onClick={() => {                    
-=======
                 <ResetButton
                   onResetFunction={() => {
->>>>>>> v3_design_changes
                     pageName === PageNameEnum.AdlibraryDatabase
                       ? setRangeFacebookValue({
                           min: 1,
@@ -2055,19 +2042,8 @@ function AllFilters(props) {
           >
             {/* <Grid container> */}
             {/* <Grid item sx={{ marginTop: "23px" }}> */}
-<<<<<<< HEAD
-            <GradientButton 
-              gradient={[
-                "rgba(103, 33, 255, 1)",
-                "rgba(0, 203, 255, 1)",
-                "rgba(181, 237, 255, 1)",
-              ]}
-              onClick={() => {
-                pageName === PageNameEnum.AdlibraryDatabase && dispatch(clearCashedPageData());
-=======
             <ResetButton
               onResetFunction={() => {
->>>>>>> v3_design_changes
                 if (pageName === PageNameEnum.AdlibraryDatabase) {
                   dispatch(allAdsPeramsDuck.clearFilterData());
                 } else {
