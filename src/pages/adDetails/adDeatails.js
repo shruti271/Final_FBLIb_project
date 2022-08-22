@@ -183,7 +183,7 @@ function AdDeatails() {
             <Box
               sx={{
                 borderRadius: "16px",
-                boxShadow: "0px 0px 5px 2px rgba(0, 0, 0, 0.15)",
+                // boxShadow: "0px 0px 5px 2px rgba(0, 0, 0, 0.15)",
                 border: "1px solid #EBEBEB",
                 paddingLeft: 2,
                 paddingRight: 2,
