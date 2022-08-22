@@ -330,7 +330,7 @@ const ThumbNailBox = ({ adInfo, index }) => {
             {adInfo?.adDescription ? adInfo.adDescription : " "}
             </ShowMoreText>
           </Box> */}
-          <Box  height={(adInfo?.adDescription.length <=150) ? "80px":"auto"}>
+          <Box /* height={(adInfo?.adDescription.length <=150) ? "80px":"auto"}*/>
             <Typography
               sx={{
                 fontWeight: 500,
