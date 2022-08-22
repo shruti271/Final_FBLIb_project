@@ -292,7 +292,7 @@ const ThumbNailBox = ({ adInfo, index }) => {
               }}
             >
               <Avatar
-                src={adInfo?.pageInfo?.logo}
+                src={adInfo?.pageInfo?.bucketLogoURL}
                 aria-label="FirstCard"
                 sx={{ width: 27, height: 27 }}
               ></Avatar>
@@ -305,8 +305,12 @@ const ThumbNailBox = ({ adInfo, index }) => {
                 color: "#2B2F42",
                 marginRight: "12px",
                 paddingLeft: "10px",
+                cursor:"pointer"
               }}
               noWrap
+              onClick={()=>{                
+                window.open(adInfo?.pageInfo?.url, "_blank", "");
+              }}
             >
               {adInfo?.pageInfo?.name}
             </Typography>
