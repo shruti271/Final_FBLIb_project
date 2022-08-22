@@ -131,7 +131,7 @@ export const CustomSidebar = ({ isOpen, setIsOpen }) => {
                       position: "fixed",
                       marginLeft:"20px",
                       marginTop:"-12px",
-                      transform:isOpen === true ?"rotate(180deg)":"rotate(0deg)" 
+                      transform:isOpen === false ?"rotate(180deg)":"rotate(0deg)" 
                     }}
                     onClick={() => {
                       !isOpen ? setIsOpen(true) : setIsOpen(false);

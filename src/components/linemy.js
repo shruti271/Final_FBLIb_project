@@ -61,7 +61,7 @@ const MyChart = (props) => {
     },
     plotOptions: {
       areaspline: {
-        lineColor: "#164AFF",
+        lineColor: "#00CBFF",
         // lineColor: {
         //   linearGradient: {
         //     // color:
@@ -86,28 +86,31 @@ const MyChart = (props) => {
         name: "No of ads",
         data: [...props.chartData?.map((a) => a.noOfCopyAds)].slice(-30),
         // data:[23,46,3,45,34,12,67,24,56,45,6],
-        lineWidth: 6,
+        lineWidth: 4,
         // lineTension: 1,
         marker: {
           enabled: false,
-          fillColor: "  #FFFFFF",
-          lineWidth: 3,
-          lineColor: "black", // inherit from series
+          fillColor: "white",
+          lineWidth: 2,
+          lineColor: "#00CBFF", // inherit from series
           radius: 5,
         },        
         color: {
           linearGradient: {
-            color:
-              "linear-gradient(180deg, rgba(181, 237, 255, 0.5) 7.32%, rgba(0, 203, 255, 0.5) 32.15%, rgba(103, 33, 255, 0.5) 100.8%)",
+            color:"linear-gradient(180deg, rgba(0, 203, 255, 0.8) 0%, rgba(0, 203, 255, 0.1) 99.99%, rgba(0, 203, 255, 0) 100%)",
+              // "linear-gradient(180deg, rgba(181, 237, 255, 0.5) 7.32%, rgba(0, 203, 255, 0.5) 32.15%, rgba(103, 33, 255, 0.5) 100.8%)",
             x1: 1,
             y1: 0,
             x2: 1,
             y2: 1,
           },
           stops: [
-            [0.07, "rgba(181, 237, 255, 0.5)"],
-            [0.32, "rgba(0, 203, 255, 0.5)"],
-            [0.97, "rgba(103, 33, 255, 0.5)"],
+            [0, "rgba(0, 203, 255, 0.8)"],
+            [0.9, "rgba(0, 203, 255, 0.1)"],
+            [1,"rgba(0, 203, 255, 0) 100%)"]
+            // [0.07, "rgba(181, 237, 255, 0.5)"],
+            // [0.32, "rgba(0, 203, 255, 0.5)"],
+            // [0.97, "rgba(103, 33, 255, 0.5)"],
           
           ],
         },

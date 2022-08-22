@@ -16,7 +16,7 @@ import Firsrcardimg from "../../assets/FirstCardImg.svg";
 import facebook from "../../assets/facebook.svg";
 import instragram from "../../assets/instragram.svg";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import {
   loadSingleAdDataClear,
   loadSingleAdDataStart,
@@ -24,6 +24,14 @@ import {
 import { FadeLoader } from "react-spinners";
 import MyChart from "../../components/linemy";
 import Download from "@mui/icons-material/Download";
+import {
+  addToSavedAdsFilterLocalStart,
+  addToSavedAdsStart,
+  removeFromSavedAdsStart,
+} from "../../redux/ducks/filteredSavedAds";
+import Shareicon from "../../assets/Shareicon.svg";
+import Saveicon from "../../assets/Saveicon.svg";
+import StarFill from "../../assets/StarFill.svg";
 
 const ReadMore = ({ children }) => {
   const text = children;
@@ -35,14 +43,16 @@ const ReadMore = ({ children }) => {
     <>
       <Typography variant="p" className="text">
         {isReadMore ? text.slice(0, 150) : text}
-        <Typography
-          variant="h7"
-          style={{ color: "#72E2FF", cursor: "pointer" }}
-          onClick={toggleReadMore}
-          className="read-or-hide"
-        >
-          {isReadMore ? "...Read more" : " Show less"}
-        </Typography>
+        {text.length >= 150 && (
+          <Typography
+            variant="h7"
+            style={{ color: "#72E2FF", cursor: "pointer" }}
+            onClick={toggleReadMore}
+            className="read-or-hide"
+          >
+            {isReadMore ? "...Read more" : " Show less"}
+          </Typography>
+        )}
       </Typography>
     </>
   );
@@ -50,19 +60,26 @@ const ReadMore = ({ children }) => {
 
 function AdDeatails() {
   const classes = useStyles();
+  const theme = useTheme();
 
   const dispatch = useDispatch();
   const { adId } = useParams();
+  const { state } = useLocation();
+
   const filteredAds = useSelector((state) => state.filteredAds);
   const subAllAds = useSelector((state) => state.subAllAds);
-  const { filteredSavedAds } = useSelector((state) => state.filteredSavedAds);
+  // const filteredSavedAds = useSelector((state) => state.filteredSavedAds);
+  // const savedAdsPerams = useSelector((state) => state.savedAdsPerams);
+  const { filteredSavedAds, savedAdsIds } = useSelector(
+    (state) => state.filteredSavedAds
+  );
   const { singleAdData, loading } = useSelector((state) => state.singleAdData);
-  const theme = useTheme();
+  // const theme = useTheme();
 
   const showGraph = useMediaQuery(theme.breakpoints.down("md"));
   const DownloadBUtton = useMediaQuery(theme.breakpoints.down("md"));
   const OnlyMdSizeScreen = useMediaQuery(theme.breakpoints.only("md"));
-  
+
   // const theme = useTheme();
   const showgrid = useMediaQuery(theme.breakpoints.up("xs"));
 
@@ -76,13 +93,16 @@ function AdDeatails() {
     },
     []
   );
-  useEffect(()=>{
-    setIsDrawerOpen(()=>localStorage.getItem("IsDrawerOpen"))
-    console.log("999  ---546 ",localStorage.getItem("IsDrawerOpen"),IsDrawerOpen,OnlyMdSizeScreen)
-   
-  
-  })
-  
+  useEffect(() => {
+    setIsDrawerOpen(() => localStorage.getItem("IsDrawerOpen"));
+    console.log(
+      "999  ---546 ",
+      localStorage.getItem("IsDrawerOpen"),
+      IsDrawerOpen,
+      OnlyMdSizeScreen
+    );
+  });
+
   useEffect(() => {
     if (filteredAds.filteredAds.length > 0) {
       // filteredAds.filteredAds.find((ad) => ad.id === adId && ad) ||
@@ -146,65 +166,129 @@ function AdDeatails() {
           container
           sx={{
             marginTop: "36px",
-            marginBottom:2,
+            marginBottom: 2,
             // width: "95% !important",
             margin: "auto",
             paddingTop: 1,
           }}
         >
-            
-          <Grid item xs={12} lg={4} md={5} sm={6} sx={{ width: "95% !important",}}>
+          <Grid
+            item
+            xs={12}
+            lg={4}
+            md={5}
+            sm={6}
+            sx={{ width: "95% !important" }}
+          >
             <Box
               sx={{
+                borderRadius: "16px",
+                boxShadow: "0px 0px 5px 2px rgba(0, 0, 0, 0.15)",
                 border: "1px solid #EBEBEB",
-                borderRadius: "10px",
                 paddingLeft: 2,
-                paddingRight: 1,
+                paddingRight: 2,
               }}
             >
               <Stack>
-                <Box
+                <Stack
+                  direction={"row"}
                   sx={{
-                    display: "flex",
-                    marginTop: "13px",
-                    // marginLeft: "20px",
+                    justifyContent: "space-between",
+                    alignItems: "center",
                   }}
                 >
                   <Box
                     sx={{
-                      border: 2,
-                      borderRadius: "50%",
-                      borderColor: "#EBEBEB",
                       display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
+                      marginTop: "13px",
+                      // marginLeft: "20px",
                     }}
                   >
-                    <Avatar
-                      src={adDetail?.pageInfo?.logo}
-                      aria-label="FirstCard"
-                      style={{ width: "30px", height: "30px" }}
-                    ></Avatar>
-                  </Box>
-                  <Typography
-                    variant="h6"
-                    style={{
-                      marginLeft: "8px",
-                      lineHeight: "30px",
-                      color: "#2B2F42",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    
+                    <Box
+                      sx={{
+                        border: 2,
+                        borderRadius: "50%",
+                        borderColor: "#EBEBEB",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Avatar
+                        src={adDetail?.pageInfo?.logo}
+                        aria-label="FirstCard"
+                        style={{ width: "30px", height: "30px" }}
+                      ></Avatar>
+                    </Box>
+                    <Typography
+                      variant="h6"
+                      style={{
+                        marginLeft: "8px",
+                        lineHeight: "30px",
+                        color: "#2B2F42",
+                        fontWeight: "bold",
+                      }}
+                    >
                       {adDetail?.pageInfo?.name ? adDetail.pageInfo?.name : " "}
-                    
-                  </Typography>
-                </Box>
+                    </Typography>
+                  </Box>
+
+                  {showGraph && (
+                    <Box sx={{ marginTop: "13px" }}>
+                      <Box>
+                        {/* <Tooltip title="Redirect to shop link"> */}
+                        {adDetail?.ctaStatus !== "" && (
+                          <img
+                            src={Shareicon}
+                            alt="Shareicon"
+                            className={classes.shareicon}
+                            onClick={(e) => {
+                              console.log(adDetail?.purchaseURL);
+                              window.open(adDetail?.purchaseURL, "_blank", "");
+                            }}
+                          />
+                        )}
+                        {/* </Tooltip> */}
+                        <img
+                          src={
+                            savedAdsIds.includes(adDetail?.id)
+                              ? StarFill
+                              : Saveicon
+                          }
+                          alt="saved-icon"
+                          className={classes.saveicon}
+                          onClick={() => {
+                            if (savedAdsIds.includes(adDetail?.id)) {
+                              // dispatch(removesavedFilteredAdLocal(adInfo));
+                              // dispatch(removeSavedAdsIdsLocal(adInfo.id));
+                              console.log("0=0", state.CurrentAppliedFilter);
+                              dispatch(removeFromSavedAdsStart(adDetail));
+                            } else {
+                              // dispatch(addSavedAdsIdsLocal(adInfo.id));//local saved id
+                              dispatch(addToSavedAdsStart({ ad: adDetail.id }));
+                              // console.log("000000 ---- q",queryObject)
+                              // dispatch(checkAplliedFiltersAds({
+                              //   filters:queryObject,adsData:adInfo
+                              // }));
+                              console.log("0=0", state.CurrentAppliedFilter);
+                              dispatch(
+                                addToSavedAdsFilterLocalStart({
+                                  ...state.CurrentAppliedFilter,
+                                  adId: adDetail.id,
+                                })
+                              );
+                            }
+                          }}
+                        />
+                      </Box>
+                    </Box>
+                  )}
+                </Stack>
 
                 <Box
                   sx={{
                     //marginLeft: 2,
-                    marginRight: 2,
+                    // marginRight: 2,
                   }}
                 >
                   <Typography
@@ -226,7 +310,7 @@ function AdDeatails() {
 
                 <Box
                   sx={{
-                    marginRight: "10px",
+                    // marginRight: "10px",
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
@@ -253,7 +337,87 @@ function AdDeatails() {
                     />
                   )}
                 </Box>
-                <Box sx={{ marginRight: 2, marginTop: 1 }}>
+                <Box sx={{  marginTop: 1, marginBottom: 1 }}>
+                  <Stack direction={"row"}>
+                    <Typography
+                      sx={{
+                        lineHeight: "23px",
+                        letterSpacing: "0.035em",
+                        color: "#2B2F42",
+                        opacity: 0.6,
+                      }}
+                      noWrap
+                    >
+                      <b>
+                        {" "}
+                        {adDetail?.displayURL
+                          ? adDetail.displayURL.replace("HTTPS://", "")
+                          : " "}
+                      </b>
+                    </Typography>
+                    {!showGraph && (
+                      <Box>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            // marginLeft: 1,
+                          }}
+                        >
+                          {/* <Tooltip title="Redirect to shop link"> */}
+                          {adDetail?.ctaStatus !== "" && (
+                            <img
+                              src={Shareicon}
+                              alt="Shareicon"
+                              className={classes.shareicon}
+                              onClick={(e) => {
+                                console.log(adDetail?.purchaseURL);
+                                window.open(
+                                  adDetail?.purchaseURL,
+                                  "_blank",
+                                  ""
+                                );
+                              }}
+                            />
+                          )}
+                          {/* </Tooltip> */}
+                          <img
+                            src={
+                              savedAdsIds.includes(adDetail?.id)
+                                ? StarFill
+                                : Saveicon
+                            }
+                            alt="saved-icon"
+                            className={classes.saveicon}
+                            onClick={() => {
+                              if (savedAdsIds.includes(adDetail?.id)) {
+                                // dispatch(removesavedFilteredAdLocal(adInfo));
+                                // dispatch(removeSavedAdsIdsLocal(adInfo.id));
+                                console.log("0=0", state.CurrentAppliedFilter);
+                                dispatch(removeFromSavedAdsStart(adDetail));
+                              } else {
+                                // dispatch(addSavedAdsIdsLocal(adInfo.id));//local saved id
+                                dispatch(
+                                  addToSavedAdsStart({ ad: adDetail.id })
+                                );
+                                // console.log("000000 ---- q",queryObject)
+                                // dispatch(checkAplliedFiltersAds({
+                                //   filters:queryObject,adsData:adInfo
+                                // }));
+                                console.log("0=0", state.CurrentAppliedFilter);
+                                dispatch(
+                                  addToSavedAdsFilterLocalStart({
+                                    ...state.CurrentAppliedFilter,
+                                    adId: adDetail.id,
+                                  })
+                                );
+                              }
+                            }}
+                          />
+                        </Box>
+                      </Box>
+                    )}
+                  </Stack>
                   <Grid container spacing={1}>
                     <Grid item xs={10}>
                       <Box
@@ -263,7 +427,7 @@ function AdDeatails() {
                           }
                         }
                       >
-                        <Typography
+                        {/* <Typography
                           sx={{
                             lineHeight: "23px",
                             letterSpacing: "0.035em",
@@ -278,7 +442,7 @@ function AdDeatails() {
                               ? adDetail.displayURL.replace("HTTPS://", "")
                               : " "}
                           </b>
-                        </Typography>
+                        </Typography> */}
                         <Typography
                           style={{
                             lineHeight: "30px",
@@ -317,7 +481,8 @@ function AdDeatails() {
                     >
                       <Avatar
                         sx={{
-                          background: "linear-gradient(45deg, #00CBFF 0%, #72E2FF 100%)",
+                          background:
+                            "linear-gradient(45deg, #00CBFF 0%, #72E2FF 100%)",
                           display: "grid",
                           width: "52px",
                           height: "51px",
@@ -341,44 +506,54 @@ function AdDeatails() {
                     </Grid>
                   </Grid>
                 </Box>
-                <Grid container justifyContent="flex-end" >
-                  <Grid item xs={12} sm={12} md={12} lg={6}>
-                  <Button
-                    style={{
-                      background:
-                        "linear-gradient(45deg, #00CBFF 0%, #72E2FF 100%)",
-                      borderRadius: 18,
-                      textTransform: "none",
-                      width: "100%",//"156px",
-                      height: "35px",
-                      color: "white",
-                      marginBottom: "15px",
-                      marginRight: "15px",
-                      marginTop: "10px",
-                    }}
-                    onClick={() => {
-                      window.open(adDetail?.purchaseURL, "_blank", "");
-                    }}
-                  >
-                    <Typography
-                      variant="h6"
-                      fontStyle={{ color: "white" }}
-                      noWrap
-                    >
-                      <b>{adDetail?.ctaStatus}</b>
-                    </Typography>
-                  </Button>
+                {adDetail?.ctaStatus !== "" && (
+                  <Grid container justifyContent="flex-end">
+                    <Grid item xs={12} sm={12} md={12} lg={6}>
+                      <Button
+                        style={{
+                          background:
+                            "linear-gradient(45deg, #00CBFF 0%, #72E2FF 100%)",
+                          borderRadius: 18,
+                          textTransform: "none",
+                          width: "100%", //"156px",
+                          height: "35px",
+                          color: "white",
+                          marginBottom: "15px",
+                          marginRight: "15px",
+                          marginTop: "10px",
+                        }}
+                        onClick={() => {
+                          window.open(adDetail?.purchaseURL, "_blank", "");
+                        }}
+                      >
+                        <Typography
+                          variant="h6"
+                          fontStyle={{ color: "white" }}
+                          noWrap
+                        >
+                          <b>{adDetail?.ctaStatus}</b>
+                        </Typography>
+                      </Button>
+                    </Grid>
                   </Grid>
-                </Grid>
+                )}
               </Stack>
             </Box>
           </Grid>
-       
-          <Grid item xs={12} lg={8} md={7} sm={6} p={2} sx={{ width: "95% !important",}}>
+
+          <Grid
+            item
+            xs={12}
+            lg={8}
+            md={7}
+            sm={6}
+            p={2}
+            sx={{ width: "95% !important" }}
+          >
             {/* <Box> */}
             <Grid container>
               <Grid
-                items
+                item
                 xs={12}
                 sm={12}
                 md={6}
@@ -410,26 +585,23 @@ function AdDeatails() {
                   >
                     {" "}
                     <FormControlLabel
-                          control={
-                            <Download />
-                          }
-                          label={
-                            <Typography ml={0.5} sx={{ fontWeight: "bold" }}>
-                              {" "}
-                              Download Thumbnai
-                            </Typography>
-                          }
-                        />
-
+                      control={<Download />}
+                      label={
+                        <Typography ml={0.5} sx={{ fontWeight: "bold" }}>
+                          {" "}
+                          Download Thumbnai
+                        </Typography>
+                      }
+                    />
                     <FormControl>
-                    {/* <Download />
+                      {/* <Download />
                     <span>Download Thumbnail</span> */}
                     </FormControl>
                   </a>
                 </Button>
               </Grid>
               <Grid
-                items
+                item
                 md={6}
                 xs={12}
                 sm={12}
@@ -439,7 +611,7 @@ function AdDeatails() {
                   justifyContent: "center",
                   alignItems: "center",
                   // "@media (max-width: 800px)": {
-                    marginTop: (DownloadBUtton ) ?2:"",
+                  marginTop: DownloadBUtton ? 2 : "",
                   // },
                 }}
               >
@@ -460,30 +632,22 @@ function AdDeatails() {
                     style={{ textDecoration: "none", color: "white" }}
                     download
                   >
-                    
                     <FormControlLabel
-                          control={
-                            <Download />
-                          }
-                          label={
-                            <Typography ml={0.5} sx={{ fontWeight: "bold" }}>
-                              {" "}
-                              Download Video
-                            </Typography>
-                          }
-                        />
+                      control={<Download />}
+                      label={
+                        <Typography ml={0.5} sx={{ fontWeight: "bold" }}>
+                          {" "}
+                          Download Video
+                        </Typography>
+                      }
+                    />
 
-                    <FormControl>
-                      
-                    </FormControl>
-                    
-                   
+                    <FormControl></FormControl>
                   </a>
                 </Button>
               </Grid>
             </Grid>
 
-           
             <Grid
               container
               sx={{
@@ -504,9 +668,8 @@ function AdDeatails() {
                   alignItems: "center",
                   width: "99% !important",
                   // "@media (max-width: 800px)": {
-                    marginTop: showGraph ? 2:"",
+                  marginTop: showGraph ? 2 : "",
                   // },
-                  
                 }}
                 direction="column"
               >
@@ -525,7 +688,7 @@ function AdDeatails() {
                   display: "flex",
                   justifyContent: "start",
                   alignItems: "center",
-                  marginTop: showGraph ? 2:"",
+                  marginTop: showGraph ? 2 : "",
                   // "@media (max-width: 800px)": {
                   //   marginTop: 2,
                   // },
@@ -565,7 +728,7 @@ function AdDeatails() {
                   display: "flex",
                   justifyContent: "start",
                   alignItems: "center",
-                  marginTop: showGraph ? 2:"",
+                  marginTop: showGraph ? 2 : "",
                   // "@media (max-width: 800px)": {
                   //   marginTop: 2,
                   // },
@@ -594,7 +757,7 @@ function AdDeatails() {
                 justifyContent: "center",
                 alignItems: "center",
                 marginTop: showGraph ? "50px" : "10px",
-                
+                width: "100%",
               }}
             >
               <Grid
@@ -615,7 +778,15 @@ function AdDeatails() {
               >
                 <Typography
                   // style={{ fontWeight: 600, fontSize: "20px" }}
-                  style={{ fontWeight: 600, fontSize:{ xs:"15px",sm:"20px",md:"20px",lg:"22px"} }}
+                  style={{
+                    fontWeight: 600,
+                    fontSize: {
+                      xs: "15px",
+                      sm: "20px",
+                      md: "20px",
+                      lg: "22px",
+                    },
+                  }}
                   noWrap
                   mb={2.5}
                   ml={4}
@@ -652,8 +823,8 @@ function AdDeatails() {
                 style={{
                   marginTop: "36px",
                   display: "flex",
-                      alignItems: showgrid?"":"center",
-                      justifyContent: "center",
+                  alignItems: "center",
+                  justifyContent: "center",
                   // "@media screen and (min-width: 800px)":
                   //   {
                   //     display: "flex",
@@ -662,48 +833,58 @@ function AdDeatails() {
                   //   },
                 }}
               >
-                {adDetail?.pageInfo?.platforms.map((socialMedia, index) => {
-                  return (
-                    <Stack
-                      key={index}
-                      direction={"row"}
-                      sx={{
-                        marginBottom: "16px",
-                      }}
-                    >
-                      <Box sx={{ marginRight: "10px" }}>
-                        <img
-                          src={
-                            socialMedia.name === "Facebook"
-                              ? facebook
-                              : instragram
-                          }
-                          aria-label="Add"
-                        />
-                      </Box>
-                      <Stack sx={{display:"flex",justifyContent:"center",alignItems:"flexStart"}}>
-                        <Typography
-                          style={{
-                            fontFamily: "Neue Haas Grotesk Display Pro",
+                <Grid item sm={10}>
+                  {adDetail?.pageInfo?.platforms.map((socialMedia, index) => {
+                    return (
+                      <Stack
+                        key={index}
+                        direction={"row"}
+                        sx={{
+                          marginBottom: "16px",
+                        }}
+                      >
+                        <Box sx={{ marginRight: "10px" }}>
+                          <img
+                            src={
+                              socialMedia.name === "Facebook"
+                                ? facebook
+                                : instragram
+                            }
+                            aria-label="Add"
+                          />
+                        </Box>
+                        <Stack
+                          sx={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "flexStart",
                           }}
                         >
-                          {socialMedia?.other}
-                        </Typography>
-                        <Typography
-                          style={{
-                            fontFamily: "Neue Haas Grotesk Display Pro",
-                          }}
-                        >
-                          {socialMedia.name === "Facebook"
-                            ? socialMedia.likes + " likes • " + socialMedia.type
-                            : socialMedia.followers +
-                              " followers • " +
-                              socialMedia.type}
-                        </Typography>
+                          <Typography
+                            style={{
+                              fontFamily: "Neue Haas Grotesk Display Pro",
+                            }}
+                          >
+                            {socialMedia?.other}
+                          </Typography>
+                          <Typography
+                            style={{
+                              fontFamily: "Neue Haas Grotesk Display Pro",
+                            }}
+                          >
+                            {socialMedia.name === "Facebook"
+                              ? socialMedia.likes +
+                                " likes • " +
+                                socialMedia.type
+                              : socialMedia.followers +
+                                " followers • " +
+                                socialMedia.type}
+                          </Typography>
+                        </Stack>
                       </Stack>
-                    </Stack>
-                  );
-                })}
+                    );
+                  })}
+                </Grid>
               </Grid>
             </Grid>
             {!showGraph && (
@@ -714,7 +895,6 @@ function AdDeatails() {
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
-                    
                   }}
                   direction="column"
                 >
@@ -779,11 +959,11 @@ function AdDeatails() {
 
 export default AdDeatails;
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   AdsImageVideo: {
     objectFit: "fill",
     height: "400px",
-    width: "95%",
+    width: "100%",
   },
   AdsImage: {
     width: "100%",
@@ -791,5 +971,15 @@ const useStyles = makeStyles(() => ({
     objectFit: "fill",
     padding: "0",
     margin: "0",
+  },
+  shareicon: {
+    marginLeft: theme.spacing(1),
+    cursor: "pointer",
+    width: "20px",
+  },
+  saveicon: {
+    marginLeft: theme.spacing(1),
+    cursor: "pointer",
+    width: "20px",
   },
 }));

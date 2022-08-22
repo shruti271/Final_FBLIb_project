@@ -118,10 +118,12 @@ const useStyles = makeStyles((theme) => ({
   shareicon: {
     marginLeft: theme.spacing(1),
     cursor: "pointer",
+    width:"20px"
   },
   saveicon: {
     marginLeft: theme.spacing(1),
     cursor: "pointer",
+    width:"20px"
   },
   AdsText: {
     display: "inlineBlock",
@@ -263,7 +265,7 @@ const ThumbNailBox = ({ adInfo, index }) => {
         sx={{
           borderRadius: "16px",
           boxShadow: "none",
-          border: "1px solid #EBEBEB",
+          border: " 1px solid #EBEBEB",
           
         }}
       >
@@ -330,7 +332,7 @@ const ThumbNailBox = ({ adInfo, index }) => {
             {adInfo?.adDescription ? adInfo.adDescription : " "}
             </ShowMoreText>
           </Box> */}
-          <Box /* height={(adInfo?.adDescription.length <=150) ? "80px":"auto"}*/>
+          <Box  /*height={(adInfo?.adDescription.length <=150) ? "80px":"auto"}*/>
             <Typography
               sx={{
                 fontWeight: 500,
@@ -371,10 +373,7 @@ const ThumbNailBox = ({ adInfo, index }) => {
               />
             )}
           </div>
-
-          <Grid container sx={{ padding: "4px" }}>
-            <Grid item xs={9} sm={10} md={10} lg={10}>
-              <Grid container pt={1.3}>
+          <Grid container pt={1.3}>
                 <Grid item marginRight={"15px"} sx={{fontWeight:500}}>
                   {adInfo.status === "Active" ? (
                     <Typography sx={{ textDecoration: "underline",
@@ -392,7 +391,7 @@ const ThumbNailBox = ({ adInfo, index }) => {
                 </Grid>
                 <Grid item marginRight={"10px"}>
                   {/* <Tooltip title="Redirect to shop link"> */}
-                  <img
+                  {adInfo?.ctaStatus !=="" && <img
                     src={Shareicon}
                     alt="Shareicon"
                     className={classes.shareicon}
@@ -400,7 +399,7 @@ const ThumbNailBox = ({ adInfo, index }) => {
                       console.log(adInfo?.purchaseURL);
                       window.open(adInfo?.purchaseURL, "_blank", "");
                     }}
-                  />
+                  />}
                   {/* </Tooltip> */}
                   <img
                     src={
@@ -448,6 +447,9 @@ const ThumbNailBox = ({ adInfo, index }) => {
                   </Stack>
                 </Grid>
               </Grid>
+          <Grid container sx={{ padding: "4px" }}>
+            <Grid item xs={9} sm={10} md={10} lg={10}>
+              
             
               <Typography color="#80828E" className={classes.AdsText} noWrap>
                 Started Running : {adInfo.startDate}
@@ -652,6 +654,7 @@ const ThumbNailBox = ({ adInfo, index }) => {
                     .includes("savedAds")
                     ? "/savedAds"
                     : "/",
+                    CurrentAppliedFilter:queryObject,
                 },
               });
             }}
