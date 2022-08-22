@@ -18,11 +18,11 @@ import { useEffect, useState } from "react";
 const SavedAdsList = () => {
   const dispatch = useDispatch();
   const filteredSavedAds = useSelector((state) => state.filteredSavedAds);
-  const {
+  const {    
     SavedCurrentPageStartPoint,
     SavedCurrentPageEndPoint,
     paginationIndex,
-    SavedCurrentPage,
+    SavedCurrentPage,    
     totalAds,
   } = useSelector((state) => state.filteredSavedAds);
   const savedAdsPerams = useSelector((state) => state.savedAdsPerams);
@@ -33,17 +33,21 @@ const SavedAdsList = () => {
   useEffect(() => {
     console.log("savedAdsPerams :", savedAdsPerams);
   }, [savedAdsPerams]);
-
+useEffect(()=>{
+  console.log("0000000?",paginationIndex)
+},[])
   useEffect(() => {
-    console.log("707 come in 1st time");
-    dispatch(
+    console.log("707 come in 1st time",paginationIndex,filteredSavedAds.filteredSavedAds);
+    filteredSavedAds.filteredSavedAds.length && dispatch(
       setSavedCurrentPaginationAds({
-        start: SavedCurrentPageStartPoint,
-        end: SavedCurrentPageEndPoint,
+        start: (paginationIndex - 1) * process.env.REACT_APP_NO_OF_ADS_PER_PAGE,
+        end: paginationIndex * process.env.REACT_APP_NO_OF_ADS_PER_PAGE,
         currentPage: paginationIndex,        
       })
     );
-  }, []);
+  }, [dispatch, filteredSavedAds.filteredSavedAds]);
+
+
   useEffect(() => {
     console.log("101 start");
     SavedCurrentPage?.map((ads, index) => console.log("101", ads.id));
@@ -168,27 +172,27 @@ const SavedAdsList = () => {
     }
   }, [dispatch, savedAdsPerams.searchType, savedAdsPerams.searchBarData]);
 
-  useEffect(() => {
-    console.log(
-      "404 ++++++++++++++++++",
-      paginationIndex,
-      SavedCurrentPageStartPoint,
-      SavedCurrentPageEndPoint
-    );
-    dispatch(
-      setSavedCurrentPaginationAds({
-        start: (paginationIndex - 1) * process.env.REACT_APP_NO_OF_ADS_PER_PAGE,
-        end: paginationIndex * process.env.REACT_APP_NO_OF_ADS_PER_PAGE,
-        currentPage: paginationIndex,
-      })
-    );
-  }, [
-    SavedCurrentPageEndPoint,
-    SavedCurrentPageStartPoint,
-    dispatch,
-    filteredSavedAds.filteredSavedAds,
-    paginationIndex,
-  ]);
+  // useEffect(() => {
+  //   console.log(
+  //     "404 ++++++++++++++++++",
+  //     paginationIndex,
+  //     SavedCurrentPageStartPoint,
+  //     SavedCurrentPageEndPoint
+  //   );
+  //   dispatch(
+  //     setSavedCurrentPaginationAds({
+  //       start: (paginationIndex - 1) * process.env.REACT_APP_NO_OF_ADS_PER_PAGE,
+  //       end: paginationIndex * process.env.REACT_APP_NO_OF_ADS_PER_PAGE,
+  //       currentPage: paginationIndex,
+  //     })
+  //   );
+  // }, [
+  //   SavedCurrentPageEndPoint,
+  //   SavedCurrentPageStartPoint,
+  //   dispatch,
+  //   filteredSavedAds.filteredSavedAds,
+  //   paginationIndex,
+  // ]);
 
   useEffect(() => {
     window.scrollTo(0, filteredSavedAds.postionOfPage);
@@ -264,7 +268,8 @@ const SavedAdsList = () => {
           alignItems: "center",
         }}
       >
-        { !filteredSavedAds?.loading && <Pagination
+        {
+         (!filteredSavedAds?.loading && filteredSavedAds?.filteredSavedAds?.length !== 0) && <Pagination
           count={Math.ceil(totalAds / process.env.REACT_APP_NO_OF_ADS_PER_PAGE)}
           size={"large"}
           page={paginationIndex}
@@ -277,15 +282,15 @@ const SavedAdsList = () => {
             //   "p+2",
             //   p + 2
             // );
-            if (p === 1) {
-              dispatch(
-                setSavedCurrentPaginationAds({
-                  start: 0,
-                  end: 4,
-                  currentPage: p,
-                })
-              );
-            } else {
+            // if (p === 1) {
+            //   dispatch(
+            //     setSavedCurrentPaginationAds({
+            //       start: 0,
+            //       end: 4,
+            //       currentPage: p,
+            //     })
+            //   );
+            // } else {
               dispatch(
                 setSavedCurrentPaginationAds({
                   start: (p - 1) * process.env.REACT_APP_NO_OF_ADS_PER_PAGE,
@@ -293,7 +298,7 @@ const SavedAdsList = () => {
                   currentPage: p,
                 })
               );
-            }
+            // }
             // setPageStart(()=>p+1)
             // setPageEnd(()=>p+3)
             //console.log("9909",e)

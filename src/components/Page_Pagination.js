@@ -89,7 +89,7 @@ const PagePagination = () => {
         ? allAdsPerams?.searchType === "Exact Phrase"
           ? allAdsPerams?.searchBarData.split(",")
           : null
-        : null,
+        : null,        
         // number_of_pagead:12
     };
     setQueryObject(queryObject);
@@ -101,11 +101,12 @@ const PagePagination = () => {
   ]);
 
   useSkipInitialEffect(() => {
+    console.log("9909",allAdsPerams?.paginationIndex)
     console.log("0-0 index of stored page",Object.keys(filteredAds?.filterData).includes(allAdsPerams?.pageIndex.toString()))
     if (
       Object.keys(filteredAds?.filterData).includes(allAdsPerams?.pageIndex.toString())
     ) {
-      dispatch(laodCashedPageData(allAdsPerams?.pageIndex));
+      dispatch(laodCashedPageData(filteredAds?.paginationIndex));
     } else {
       // if (allAdsPerams?.pageIndex > 0) {
       //   dispatch(
@@ -116,7 +117,7 @@ const PagePagination = () => {
       //   );
       // } else {
         console.log("0-0 come in")
-        dispatch(loadFilteredAdsStart({ ...queryObject, page_index: 0 , number_of_pagead:process.env.REACT_APP_NO_OF_ADS_PER_PAGE}));
+        dispatch(loadFilteredAdsStart({...queryObject, page_index: filteredAds?.paginationIndex , number_of_pagead:process.env.REACT_APP_NO_OF_ADS_PER_PAGE, }));
       // }
     }
   }, [dispatch, queryObject]);
@@ -215,7 +216,7 @@ const PagePagination = () => {
           size={"large"}           
           page={filteredAds?.paginationIndex+1}
           onChange={(e, p) => {
-            //console.log("9909",e)
+            console.log("9909",p)
             dispatch(setCurrentPaginationIndex(p-1))
             dispatch(allAdsPeramsDuck.setDatabasePageIndex(p - 1));
           }}

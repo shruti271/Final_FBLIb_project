@@ -98,7 +98,7 @@ useEffect(()=>{
          { dispatch(
             subAllAdsDuck.loadMoreSubAllAdsStart({
               page_name: subAllAds?.pageName,
-              number_of_pagead: 12,
+              number_of_pagead: process.env.REACT_APP_NO_OF_ADS_PER_PAGE,
               page_index: p - 1,
             })
           );}

@@ -109,7 +109,7 @@ function AdDeatailsTabs() {
             loadSubAllAdsStart({
               page_name: adDetail?.pageInfo?.name,
               page_index: 0,
-              number_of_pagead: 12,
+              number_of_pagead: process.env.REACT_APP_NO_OF_ADS_PER_PAGE,
             })
           );
         }else{

@@ -250,7 +250,8 @@ const filteredSavedAdsReducer = (state = initialState, action) => {
           state.SavedCurrentPageStartPoint,
           state.SavedCurrentPageEndPoint
         ),
-        totalAds: (state.totalAds + 1),
+        paginationIndex:1,
+        totalAds:state.totalAds+1,
       }; // done
     case ADD_TO_SAVED_FILTERED_AD_LOCAL_ERROR:
       return {

@@ -50,7 +50,7 @@ const MainLayout = () => {
         page_index: 0,
         sort_by: "lastUpdatedTime",
         order_by: "asc",
-        number_of_pagead:12
+        number_of_pagead:process.env.REACT_APP_NO_OF_ADS_PER_PAGE
       })
     );
     dispatch(
@@ -58,7 +58,7 @@ const MainLayout = () => {
         page_index: 0,
         sort_by: "lastUpdatedTime",
         order_by: "asc",
-        number_of_pagead: 12,
+        number_of_pagead: process.env.REACT_APP_NO_OF_ADS_PER_PAGE,
       })
     );
     dispatch(loadAccountSettingsStart());

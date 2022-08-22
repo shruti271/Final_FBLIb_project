@@ -86,7 +86,7 @@ const filteredAdsReducer = (state = initialState, action) => {
         ...state,
         filteredAds: [],
         savedAdsIds: [],
-        filterData: {},
+        // filterData: {},
         paginationIndex: action?.payload?.page_index,
         loading: true,
       };
