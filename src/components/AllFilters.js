@@ -2165,49 +2165,40 @@ function AllFilters(props) {
               >
                 Clear
               </Typography>
-            </ResetButton> */}
-            {window.location.pathname === `/savedAds` &&
-              ShowFilterWithClearButton && (
-                <Button
-                  sx={{
-                    background:
-                      " linear-gradient(243.18deg, #B5EDFF 0%, #00CBFF 28.65%, #6721FF 85.94%)",
-                    color: "white",
-                    borderRadius: 30,
-                    // width: "40%",
-                    width: "100px",
-                    height: "40px",
-                    marginLeft: 1,
-                    visibility: {
-                      xs: "visible",
-                      lg: "hidden",
-                      md: "hidden",
-                      sm: "hidden",
-                    },
-                    // visibility: {
-                    //   xs:
-                    //     window.location.pathname === `/savedAds`
-                    //       ? "visible"
-                    //       : "hidden",
-                    //   lg: "hidden",
-                    // },
-                  }}
-                >
-                  <img
-                    src={filter}
-                    alt="savedAds"
-                    style={{
-                      width: "20px",
-                      height: "20px",
-                      float: "right",
-                      cursor: "pointer",
-                    }}
-                    onClick={() => {
-                      props.setFilterActivate(false);
-                    }}
-                  />
-                </Button>
-              )}
+            </ResetButton>
+            {(window.location.pathname === `/savedAds`&& ShowFilterWithClearButton) && <Button
+              sx={{
+                background:
+                  "linear-gradient(45deg, #00CBFF 0%, #72E2FF 100%)",
+                color: "white",
+                borderRadius: 30,
+                width: "40%",
+                height: "40px",
+                marginLeft:1,
+                visibility:{xs:"visible",lg:"hidden",md:"hidden",sm:"hidden"},
+                // visibility: {
+                //   xs:
+                //     window.location.pathname === `/savedAds`
+                //       ? "visible"
+                //       : "hidden",
+                //   lg: "hidden"
+                // },
+              }}
+            >
+              <img
+                src={filter}
+                alt="savedAds"
+                style={{
+                  width: "20px",
+                  height: "20px",
+                  float: "right",
+                  cursor: "pointer",
+                }}
+                onClick={() => {
+                  props.setFilterActivate(false);
+                }}
+              />
+            </Button>}
             {/* </Grid> */}
             {/* </Grid> */}
           </Box>

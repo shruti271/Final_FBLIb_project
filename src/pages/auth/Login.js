@@ -20,12 +20,13 @@ import { CircularProgress } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { login, resendactivateemail } from "../../services/index";
 import { useForm } from "react-hook-form";
-// import { yupResolver } from "@hookform/resolvers/yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { themeLight, globalStyles, BootstrapInput } from "../../css/globalcss";
 // import { loginvalidationSchema } from "./../../utils/validationSchemas";
 import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { loginvalidationSchema } from "../../utils/validationSchemas";
 
 const Login = () => {
   const global = globalStyles();
@@ -44,10 +45,12 @@ const Login = () => {
   });
 
   const {
-    register,
+    register:validate,
     handleSubmit,
     formState: { errors },
-  } = useForm({});
+  } = useForm({
+    resolver: yupResolver(loginvalidationSchema),
+  });
 
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
@@ -211,7 +214,7 @@ const Login = () => {
                           variant="outlined"
                           fullWidth
                           required
-                          {...register("email")}
+                          {...validate("email")}
                           error={errors.email ? true : false}
                         />
                         <Typography variant="inherit" color="red" p={0.5}>
@@ -272,7 +275,7 @@ const Login = () => {
                             </InputAdornment>
                           }
                           fullWidth
-                          {...register("password", {
+                          {...validate("password", {
                             required: (
                               <span style={{ color: "red" }}>
                                 {"Password is required"}

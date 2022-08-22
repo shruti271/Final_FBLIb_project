@@ -585,17 +585,18 @@ function AdDeatails() {
                   >
                     {" "}
                     <FormControlLabel
-                      control={<Download />}
-                      label={
-                        <Typography ml={0.5} sx={{ fontWeight: "bold" }}>
-                          {" "}
-                          Download Thumbnai
-                        </Typography>
-                      }
-                    />
+                          control={
+                            <Download />
+                          }
+                          label={
+                            <Typography ml={0.5} sx={{ fontWeight: "bold" }}>
+                              {" "}
+                              Download Thumbnail
+                            </Typography>
+                          }
+                        />
+
                     <FormControl>
-                      {/* <Download />
-                    <span>Download Thumbnail</span> */}
                     </FormControl>
                   </a>
                 </Button>

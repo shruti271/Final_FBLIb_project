@@ -43,7 +43,7 @@ const Signup = () => {
     showPassword: false,
   });
   const {
-    register,
+    register:validate,
     control,
     handleSubmit,
     formState: { errors },
@@ -176,7 +176,7 @@ const Signup = () => {
                         label="First Name"
                         variant="outlined"
                         fullWidth
-                        {...register("first_name")}
+                        {...validate("first_name")}
                         name="first_name"
                       />
                     </Grid>
@@ -185,7 +185,7 @@ const Signup = () => {
                         placeholder=" Last name"
                         label="Last Name"
                         variant="outlined"
-                        {...register("last_name")}
+                        {...validate("last_name")}
                         fullWidth
                       />
                     </Grid>
@@ -197,7 +197,7 @@ const Signup = () => {
                         variant="outlined"
                         fullWidth
                         required
-                        {...register("email")}
+                        {...validate("email")}
                         error={errors.email ? true : false}
                       />
                       <Typography variant="inherit" color="red" p={0.5}>
@@ -212,7 +212,7 @@ const Signup = () => {
                         variant="outlined"
                         name="newPassword"
                         placeholder="Password (must be at least 6 characters)"
-                        {...register("password")}
+                        {...validate("password")}
                         endAdornment={
                           <InputAdornment
                             position="end"
@@ -250,7 +250,7 @@ const Signup = () => {
                             control={control}
                             name="acceptTerms"
                             defaultValue="false"
-                            inputRef={register()}
+                            inputRef={validate()}
                             render={({ field: { onChange } }) => (
                               <Checkbox
                                 sx={{ color: "#00CBFF" }}

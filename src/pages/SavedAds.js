@@ -11,7 +11,7 @@ import ScrollToTop from "../utils/scrollToTop";
 import FilterChips from "../components/FilterChips";
 import SavedAdsList from "../components/SavedAdsList";
 import { makeStyles } from "@material-ui/core/styles";
-
+import "../css/Style.css";
 const useStyles = makeStyles((theme) => ({
   titleHome: {
     fontWeight: 600,
@@ -29,6 +29,13 @@ const SavedAds = () => {
   const ShowFilterWithClearButton = useMediaQuery(theme.breakpoints.only("xs"));
   const [filterActivate, setFilterActivate] = React.useState(true);
 console.log("888  ooo",ShowFilterButton)
+const mountedStyle = {
+  animation: "inAnimation 450ms ease-in",
+};
+const unmountedStyle = {
+  animation: "outAnimation 470ms ease-out",
+  animationFillMode: "forwards"
+};
   return (
     <>
       <ScrollToTop />
@@ -89,19 +96,21 @@ console.log("888  ooo",ShowFilterButton)
                 padding: "16px 36px",
                 marginTop: 2,
                 width: "99%",
-                margin:"auto"
+                margin:"auto",
               }}
+              style={filterActivate ? mountedStyle : unmountedStyle}
+              className="transitionDiv"
             >
               <AllFilters setFilterActivate={setFilterActivate} />
               <FilterChips />
             </Stack>
           )}
           {!filterActivate && (
-            <Box width="100%" sx={{display:"flex", justifyContent:"center", alignItems:"center"}}>
+            <Box width="95%" sx={{display:"flex", justifyContent:"center", alignItems:"center"}}>
             <Button
               sx={{
                 background:
-                  "linear-gradient(243.18deg, #B5EDFF 0%, #00CBFF 28.65%, #6721FF 85.94%)",
+                  "linear-gradient(45deg, #00CBFF 0%, #72E2FF 100%)",
                 width: "100%",visibility:{xs:"visible",lg:"hidden",md:"hidden",sm:"hidden"},
                 borderRadius: 3,
                 display:"flex",

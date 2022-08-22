@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { styled } from "@mui/material/styles";
 import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
-import MenuIcon from "@mui/icons-material/Menu";
 import {
   Box,
   Divider,
@@ -105,7 +104,7 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
                 }}
               >
                 <img src={Eyeofecomlogo} alt="444" height={33}/>
-                <Typography color="black" mb={2}sx={{fontWeight:500,border:"1px solid black",paddingInline:"1px",fontSize:"10px"}}>BETA</Typography>
+                <Typography color="black" mb={2}sx={{fontWeight:600,border:"1px solid black",paddingInline:"1px",fontSize:"10px"}}>BETA</Typography>
               </IconButton>
             </Stack>
             <Stack>

@@ -188,7 +188,7 @@ function AdDeatailsTabs() {
                 navigate("");
               }}
             >
-           <Typography sx={{fontWeight:500,fontSize:{xs:"18px",sm:"22px",md:"16px",xl:"16px"}}}>   Ad Overview</Typography>
+           <Typography sx={{fontWeight:500,fontSize:{xs:"18px",sm:"18px",md:"16px",xl:"16px"}}}>Ad Overview</Typography>
             </Button>
             <Button
               disableRipple  
@@ -210,7 +210,7 @@ function AdDeatailsTabs() {
                 navigate("allAds");
               }}
             >
-               <Typography sx={{fontWeight:500,fontSize:{xs:"18px",sm:"22px",md:"16px",xl:"16px"}}}> All Ads</Typography>
+               <Typography sx={{fontWeight:500,fontSize:{xs:"18px",sm:"18px",md:"16px",xl:"16px"}}}> All Ads</Typography>
             </Button>
           </Stack>
         </Box>
