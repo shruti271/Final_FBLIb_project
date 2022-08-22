@@ -152,11 +152,25 @@ const Updatepassword = () => {
                         variant="outlined"
                         fullWidth
                         {...register("password", {
-                          required:
-                            "Please enter a valid min 6 charcter password",
-                          pattern: {
-                            value: /[a-zA-Z]+/,
+                          required: (
+                            <span style={{ color: "red" }}>
+                              {"Password is required"}
+                            </span>
+                          ),
+                          minLength: {
+                            value: 6,
+                            message: (
+                              <span style={{ color: "red" }}>
+                                {"Password must be more than 6 characters"}
+                              </span>
+                            ),
+                            // color:"red"
                           },
+                          pattern: {
+                            value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{6,})/,
+                            message:'Must Contain 1 Character, 1 Number, 1 Special Character'
+                              // JS only: <p>error message</p> TS only support string
+                          }
                         })}
                       />
                       <Typography variant="inherit" color="red" p={0.5}>
@@ -179,13 +193,24 @@ const Updatepassword = () => {
                             value={values.password}
                             onChange={handleChange("password")}
                             {...register("confirm_password", {
-                              validate: (value) => {
-                                const { password } = getValues();
-                                return (
-                                  password === value ||
-                                  "Passwords does not match!"
-                                );
+                              required: (
+                                <span style={{ color: "red" }}>
+                                  {"Password is required"}
+                                </span>
+                              ),
+                              minLength: {
+                                value: 6,
+                                message: (
+                                  <span style={{ color: "red" }}>
+                                    {"Password must be more than 6 characters"}
+                                  </span>
+                                ),
+                                // color:"red"
                               },
+                              pattern: {
+                                value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{6,})/,
+                                message: 'Must Contain 1 Character, 1 Number and 1 Special Character' // JS only: <p>error message</p> TS only support string
+                              }
                             })}
                             endAdornment={
                               <InputAdornment position="end">
