@@ -44,7 +44,7 @@ const Login = () => {
   });
 
   const {
-    register,
+    register:validate,
     handleSubmit,
     formState: { errors },
   } = useForm({});
@@ -211,7 +211,7 @@ const Login = () => {
                           variant="outlined"
                           fullWidth
                           required
-                          {...register("email")}
+                          {...validate("email")}
                           error={errors.email ? true : false}
                         />
                         <Typography variant="inherit" color="red" p={0.5}>
@@ -272,7 +272,7 @@ const Login = () => {
                             </InputAdornment>
                           }
                           fullWidth
-                          {...register("password", {
+                          {...validate("password", {
                             required: (
                               <span style={{ color: "red" }}>
                                 {"Password is required"}

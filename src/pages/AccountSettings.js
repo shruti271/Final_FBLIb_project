@@ -310,7 +310,7 @@ function AccountSettings() {
                 </Box>
               </Box>
 
-              <Box marginTop={3} sx={{width:{lg:"80%",sm:"90%",xs:"90%",md:"90%"}}} >
+              <Box marginTop={showgrid ?3:0} sx={{width:{lg:"80%",sm:"90%",xs:"90%",md:"90%"}}} >
                 <Typography variant="h6" className={classes.headindtextcenter} sx={{"@media (max-width: 450px)": {
                   display: "flex",
                   justifyContent: "center",
@@ -624,7 +624,7 @@ function AccountSettings() {
                 </Grid>
               </Grid>
 
-              <Box marginTop={2} >
+              <Box marginTop={showgrid ? 2 :0 } >
                 <Typography variant="h6"mb={2} className={classes.headindtextcenter} sx={{"@media (max-width: 450px)": {
                   display: "flex",
                   justifyContent: "center",

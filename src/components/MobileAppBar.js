@@ -17,9 +17,8 @@ import { useNavigate } from "react-router-dom";
 import settings from "../assets/settings.svg";
 import logout from "../assets/Logout.svg";
 import contactUs from "../assets/contactUs.svg";
-import NotificationsIcon from "@mui/icons-material/Notifications";
+// import NotificationsIcon from "@mui/icons-material/Notifications";
 import PersonIcon from "@mui/icons-material/Person";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { useSelector } from "react-redux";
 import useStyles from "../css/mediapage";
 import { logoutUser } from "../services";
@@ -141,7 +140,7 @@ function MobileAppBar() {
                 onClick={() => navigate("/auth/login")}
                 style={{ cursor: "pointer" ,width:"50px"}}
               />
-               <Typography color="black" mb={2}sx={{fontWeight:500,border:"1px solid black",paddingInline:"1px",fontSize:"10px",marginLeft:"5px"}}>BETA</Typography>
+               <Typography color="black" mb={2}sx={{fontWeight:600,border:"1px solid black",paddingInline:"1px",fontSize:"10px",marginLeft:"5px"}}>BETA</Typography>
             </Box>
             </Stack>
             <Stack>
