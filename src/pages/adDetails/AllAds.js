@@ -20,7 +20,7 @@ const AllAds = () => {
         }}
       >
         <Grid container>
-          <Grid item xs={12} sx={{ marginTop: "36px" }}>
+          <Grid item xs={12} sx={{ marginTop: "24px" }}>
             <SubAllAdsList />            
           </Grid>
         </Grid>

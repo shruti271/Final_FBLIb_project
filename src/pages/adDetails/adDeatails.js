@@ -135,10 +135,8 @@ function AdDeatails() {
         <Grid
           container
           sx={{
-            marginTop: "36px",
+            marginTop: "24px",
             marginBottom: 2,
-            margin: "auto",
-            paddingTop: 1,
           }}
         >
           <Grid
@@ -193,7 +191,7 @@ function AdDeatails() {
                         marginLeft: "8px",
                         lineHeight: "30px",
                         color: "#2B2F42",
-                        fontWeight: "bold",
+                        fontWeight: "500",
                       }}
                     >
                       {adDetail?.pageInfo?.name ? adDetail.pageInfo?.name : " "}
@@ -245,10 +243,11 @@ function AdDeatails() {
                   <Typography
                     sx={{
                       fontWeight: 500,
-                      lineHeight: "27px",
+                      lineHeight: "24px",
                       letterSpacing: "0.03em",
                       color: "#2B2F42",
                       paddingTop: 1,
+                      fontSize:"14px"
                     }}
                   >
                     <ReadMore>
@@ -289,19 +288,19 @@ function AdDeatails() {
                   <Stack direction={"row"}>
                     <Typography
                       sx={{
+                        fontSize: "14px",
                         lineHeight: "23px",
                         letterSpacing: "0.035em",
                         color: "#2B2F42",
                         opacity: 0.6,
+                        marginRight:"16px"
                       }}
                       noWrap
                     >
-                      <b>
                         {" "}
                         {adDetail?.displayURL
                           ? adDetail.displayURL.replace("HTTPS://", "")
                           : " "}
-                      </b>
                     </Typography>
                     {!showGraph && (
                       <Box>
@@ -358,21 +357,23 @@ function AdDeatails() {
                       <Box>
                         <Typography
                           style={{
-                            lineHeight: "30px",
+                            lineHeight: "25px",
                             letterSpacing: "0.035em",
                             color: "#2B2F42",
-                            fontWeight: "bold",
+                            fontWeight: 500,
+                            fontSize: "14px"
                           }}
                         >
                           {adDetail?.headline ? adDetail.headline : " "}
                         </Typography>
                         <Typography
-                          style={{
+                          sx={{
                             fontWeight: 400,
-                            fontSize: "17px",
-                            lineHeight: "21px",
+                            lineHeight: "17px",
                             letterSpacing: "0.035em",
                             color: "#2B2F42",
+                            paddingTop: 1,
+                            fontSize:"12px"
                           }}
                         >
                           <ReadMore>
@@ -440,11 +441,10 @@ function AdDeatails() {
                         }}
                       >
                         <Typography
-                          variant="h6"
-                          fontStyle={{ color: "white" }}
+                          fontStyle={{ color: "white", fontWeight:600, fontSize:"18px" }}
                           noWrap
                         >
-                          <b>{adDetail?.ctaStatus}</b>
+                          {adDetail?.ctaStatus}
                         </Typography>
                       </Button>
                     </Grid>
@@ -499,7 +499,7 @@ function AdDeatails() {
                     <FormControlLabel
                       control={<Download />}
                       label={
-                        <Typography ml={0.5} sx={{ fontWeight: "bold" }}>
+                        <Typography ml={0.5} sx={{ fontWeight: "600" }}>
                           {" "}
                           Download Thumbnail
                         </Typography>
@@ -543,7 +543,7 @@ function AdDeatails() {
                     <FormControlLabel
                       control={<Download />}
                       label={
-                        <Typography ml={0.5} sx={{ fontWeight: "bold" }}>
+                        <Typography ml={0.5} sx={{ fontWeight: "600" }}>
                           {" "}
                           Download Video
                         </Typography>
@@ -581,8 +581,16 @@ function AdDeatails() {
                 direction="column"
               >
                 <Typography className={classes.textdeco}>Ad Status:</Typography>
-                <Typography className={classes.textdeco}>
-                  <b> {adDetail?.status ? adDetail.status : " "}</b>
+                <Typography className={classes.textdeco} style={{
+                    fontWeight: 600,
+                    fontSize: {
+                      xs: "15px",
+                      sm: "20px",
+                      md: "20px",
+                      lg: "22px",
+                    },
+                  }}>
+                  {adDetail?.status ? adDetail.status : " "}
                 </Typography>
               </Grid>
               <Grid
@@ -602,11 +610,26 @@ function AdDeatails() {
                 <Typography className={classes.textdeco} noWrap>
                   Started Running:
                 </Typography>
-                <Typography className={classes.textdeco}>
-                  <b> {adDetail?.startDate ? adDetail.startDate : " "}</b>
+                <Typography className={classes.textdeco} style={{
+                    fontWeight: 600,
+                    fontSize: {
+                      xs: "15px",
+                      sm: "20px",
+                      md: "20px",
+                      lg: "22px",
+                    },
+                  }}>
+                  {adDetail?.startDate ? adDetail.startDate : " "}
                 </Typography>
-                <Typography className={classes.textdeco}>
-                  <b>
+                <Typography className={classes.textdeco} style={{
+                    fontWeight: 600,
+                    fontSize: {
+                      xs: "15px",
+                      sm: "20px",
+                      md: "20px",
+                      lg: "22px",
+                    },
+                  }}>
                     {" "}
                     {Math.floor(
                       Math.abs(
@@ -616,7 +639,6 @@ function AdDeatails() {
                       )
                     )}
                     {" Days"}
-                  </b>
                 </Typography>
               </Grid>
               <Grid
@@ -637,9 +659,17 @@ function AdDeatails() {
                   Placements:
                 </Typography>
                 {adDetail?.platforms?.map((ads, index) => (
-                  <Typography className={classes.textdeco} key={index} noWrap>
+                  <Typography className={classes.textdeco} key={index} noWrap style={{
+                    fontWeight: 600,
+                    fontSize: {
+                      xs: "15px",
+                      sm: "20px",
+                      md: "20px",
+                      lg: "22px",
+                    },
+                  }}>
                     {" "}
-                    <b>{ads}</b>
+                    {ads}
                   </Typography>
                 ))}
               </Grid>
@@ -650,7 +680,7 @@ function AdDeatails() {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                marginTop: showGraph ? "50px" : "10px",
+                marginTop: showGraph ? "50px" : "16px",
                 width: "100%",
               }}
             >
@@ -754,18 +784,12 @@ function AdDeatails() {
                               }}
                             >
                               <Typography
-                                style={{
-                                  fontFamily: "Neue Haas Grotesk Display Pro",
-                                }}
                               >
                                 {adDetail?.pageInfo?.platforms?.[
                                   `${socialMedia}`
                                 ]?.other || ""}
                               </Typography>
                               <Typography
-                                style={{
-                                  fontFamily: "Neue Haas Grotesk Display Pro",
-                                }}
                               >
                                 {socialMedia === "Facebook"
                                   ? adDetail?.pageInfo?.platforms?.[
@@ -792,7 +816,7 @@ function AdDeatails() {
               </Grid>
             </Grid>
             {!showGraph && (
-              <Grid item xs={12} sm={12}>
+              <Grid item xs={12} sm={12} sx={{marginLeft:"8%"}}>
                 <Stack
                   sx={{
                     marginTop: 2,
@@ -802,8 +826,16 @@ function AdDeatails() {
                   }}
                   direction="column"
                 >
-                  <Typography variant="h6">
-                    <b>Ad Count Over 30 Days</b>
+                  <Typography style={{
+                    fontWeight: 600,
+                    fontSize: {
+                      xs: "15px",
+                      sm: "20px",
+                      md: "20px",
+                      lg: "22px",
+                    },
+                  }}>
+                    Ad Count Over 30 Days
                   </Typography>
 
                   <Grid container>
@@ -872,12 +904,11 @@ const useStyles = makeStyles((theme) => ({
     margin: "0",
   },
   shareicon: {
-    marginLeft: theme.spacing(1),
     cursor: "pointer",
     width: "20px",
   },
   saveicon: {
-    marginLeft: theme.spacing(1),
+    marginLeft: "16px",
     cursor: "pointer",
     width: "20px",
   },

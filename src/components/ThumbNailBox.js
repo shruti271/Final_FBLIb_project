@@ -116,12 +116,11 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(1),
   },
   shareicon: {
-    marginLeft: theme.spacing(1),
     cursor: "pointer",
     width:"20px"
   },
   saveicon: {
-    marginLeft: theme.spacing(1),
+    marginLeft: "16px",
     cursor: "pointer",
     width:"20px"
   },
@@ -134,7 +133,7 @@ const useStyles = makeStyles((theme) => ({
   },
   Addheader: {
     display: "flex",
-    padding: "6px",
+    padding: "6px 0px",
     whiteSpace: "nowrap",
   },
   AddFooter: {
@@ -393,7 +392,7 @@ const ThumbNailBox = ({ adInfo, index }) => {
                     </Typography>
                   )}
                 </Grid>
-                <Grid item marginRight={"10px"}>
+                <Grid item marginRight={"16px"}>
                   {/* <Tooltip title="Redirect to shop link"> */}
                   {adInfo?.ctaStatus !=="" && <img
                     src={Shareicon}
@@ -636,6 +635,7 @@ const ThumbNailBox = ({ adInfo, index }) => {
               background:
                 " linear-gradient(45deg, #00CBFF 0%, #72E2FF 100%)",
               textTransform: "none",
+              height:"30px"
             }}
             onClick={() => {
               window.location.pathname === "/" &&
