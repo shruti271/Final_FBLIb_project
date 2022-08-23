@@ -77,9 +77,9 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
   };
   useEffect(() => {
     setIsMenuOptionActive(window.location.pathname);
-    const favicon = getFaviconEl();
-    console.log("login", favicon);
-    favicon.href = "Rectangleeye.png";
+    // const favicon = getFaviconEl();
+    // console.log("login", favicon);
+    // favicon.href = "fav.ico";
   }, []);
   return (
     <>
