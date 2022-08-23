@@ -1832,6 +1832,9 @@ function AllFilters(props) {
                 marginLeft:1,
                 visibility:{xs:"visible",lg:"hidden",md:"hidden",sm:"hidden"},               
               }}
+              onClick={() => {
+                props.setFilterActivate(false);
+              }}
             >
               <img
                 src={filter}
