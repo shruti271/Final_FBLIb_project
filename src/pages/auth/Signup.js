@@ -1,4 +1,7 @@
 import React, {  useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useForm, Controller } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import {
   Box,
@@ -16,18 +19,15 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-import { useForm, Controller } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { signUp } from "../../services/index";
-import { themeLight, globalStyles, BootstrapInput } from "../../css/globalcss";
-import { CssBaseline } from "@material-ui/core";
-import { registerValidationSchema } from "./../../utils/validationSchemas";
-import fbaddlogo from "../../assets/Eye of Ecom  Blue.png";
-import fbaddlogowhitecolor from "../../assets/Eye of Ecom White.png";
 import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { CssBaseline } from "@material-ui/core";
+import { signUp } from "../../services/index";
+import { themeLight, globalStyles, BootstrapInput } from "../../css/globalcss";
+import { registerValidationSchema } from "./../../utils/validationSchemas";
+import fbaddlogo from "../../assets/Eye of Ecom  Blue.png";
+import fbaddlogowhitecolor from "../../assets/Eye of Ecom White.png";
 
 const Signup = () => {
   const global = globalStyles();
@@ -35,13 +35,16 @@ const Signup = () => {
   const [loading, setLoading] = useState(false);
   const [errormessage, setErrormessage] = useState("");
   const theme = useTheme();
+
   const showhidelogolargedevice = useMediaQuery(theme.breakpoints.up("sm"));
   const showhidelogosmalldevice = useMediaQuery(theme.breakpoints.down("sm"));
   const paddingcardsmalldevice= useMediaQuery(theme.breakpoints.down("sm"));
   const aligncenterfont = useMediaQuery(theme.breakpoints.up("sm"));
+
   const [values, setValues] = React.useState({
     showPassword: false,
   });
+
   const {
     register:validate,
     control,
@@ -54,6 +57,7 @@ const Signup = () => {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
+
   const submitsigninform = async (data) => {
     setLoading(true);
     try {
@@ -73,6 +77,7 @@ const Signup = () => {
       setLoading(false);
     }
   };
+  
   return (
     <MuiThemeProvider theme={themeLight}>
       <CssBaseline />

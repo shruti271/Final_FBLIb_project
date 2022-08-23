@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useParams } from "react-router-dom";
+import { FadeLoader } from "react-spinners";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Grid,
@@ -12,17 +15,12 @@ import {
   FormControl,
   FormControlLabel,
 } from "@mui/material";
-import Firsrcardimg from "../../assets/FirstCardImg.svg";
-import facebook from "../../assets/facebook.svg";
-import instragram from "../../assets/instragram.svg";
-import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useParams } from "react-router-dom";
+import Download from "@mui/icons-material/Download";
+import SplineAreaGraph from "../../components/SplineAreaGraph";
 import {
   loadSingleAdDataClear,
   loadSingleAdDataStart,
 } from "../../redux/ducks/singleAdsData";
-import { FadeLoader } from "react-spinners";
-import Download from "@mui/icons-material/Download";
 import {
   addToSavedAdsFilterLocalStart,
   addToSavedAdsStart,
@@ -31,7 +29,9 @@ import {
 import Shareicon from "../../assets/Shareicon.svg";
 import Saveicon from "../../assets/Saveicon.svg";
 import StarFill from "../../assets/StarFill.svg";
-import SplineAreaGraph from "../../components/SplineAreaGraph";
+import Firsrcardimg from "../../assets/FirstCardImg.svg";
+import facebook from "../../assets/facebook.svg";
+import instragram from "../../assets/instragram.svg";
 
 const ReadMore = ({ children }) => {
   const text = children;
@@ -61,27 +61,20 @@ const ReadMore = ({ children }) => {
 function AdDeatails() {
   const classes = useStyles();
   const theme = useTheme();
-
   const dispatch = useDispatch();
   const { adId } = useParams();
   const { state } = useLocation();
 
   const filteredAds = useSelector((state) => state.filteredAds);
   const subAllAds = useSelector((state) => state.subAllAds);
-  // const filteredSavedAds = useSelector((state) => state.filteredSavedAds);
-  // const savedAdsPerams = useSelector((state) => state.savedAdsPerams);
+  const { singleAdData, loading } = useSelector((state) => state.singleAdData);
   const { filteredSavedAds, savedAdsIds } = useSelector(
     (state) => state.filteredSavedAds
   );
-  const { singleAdData, loading } = useSelector((state) => state.singleAdData);
-  // const theme = useTheme();
 
   const showGraph = useMediaQuery(theme.breakpoints.down("md"));
   const DownloadBUtton = useMediaQuery(theme.breakpoints.down("md"));
   const OnlyMdSizeScreen = useMediaQuery(theme.breakpoints.only("md"));
-
-  // const theme = useTheme();
-  const showgrid = useMediaQuery(theme.breakpoints.up("xs"));
 
   const [adDetail, setAdDetail] = useState();
   const [IsDrawerOpen, setIsDrawerOpen] = useState(true);
@@ -93,60 +86,29 @@ function AdDeatails() {
     },
     []
   );
-  useEffect(() => {
-    setIsDrawerOpen(() => localStorage.getItem("IsDrawerOpen"));
-    console.log(
-      "999  ---546 ",
-      localStorage.getItem("IsDrawerOpen"),
-      IsDrawerOpen,
-      OnlyMdSizeScreen
-    );
-  });
 
   useEffect(() => {
     if (filteredAds.filteredAds.length > 0) {
-      // filteredAds.filteredAds.find((ad) => ad.id === adId && ad) ||
-      //   subAllAds.subAllAds.find((ad) => ad.id === adId && ad) ||
-      //   filteredSavedAds?.find((ad) => ad.id === adId && ad);
-      // eslint-disable-next-line array-callback-return
       let adTobeDisplay =
-        filteredAds.filteredAds.find((ad) => {
-          if (ad.id === adId) {
-            return ad;
-          }
-        }) ||
-        subAllAds.subAllAds.find((ad) => {
-          if (ad.id === adId) {
-            return ad;
-          }
-        }) ||
-        filteredSavedAds?.find((ad) => {
-          if (ad.id === adId) {
-            return ad;
-          }
-        });
+        filteredAds.filteredAds.find((ad) => ad.id === adId && ad) ||
+        subAllAds.subAllAds.find((ad) => ad.id === adId && ad) ||
+        filteredSavedAds?.find((ad) => ad.id === adId && ad);
+
       setAdDetail(adTobeDisplay);
 
       if (!adTobeDisplay) {
         dispatch(loadSingleAdDataStart({ id: adId }));
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, filteredAds, adId]);
-  console.log("99999999", adDetail?.pageInfo?.platforms);
-  adDetail &&
-    Object.keys(adDetail?.pageInfo?.platforms).map((a, i) =>
-      console.log("99999999 --", a, i)
-    );
-  useEffect(() => {
-    // adDetail?.pageInfo?.platforms.map((a)=>{console.log("99999999",a)})
-    // Object.keys(adDetail?.pageInfo?.platforms).map((a,i)=>console.log("99999999",a,i))
-  });
+
   useEffect(() => {
     if (!adDetail && Object.keys(singleAdData).length) {
       setAdDetail(singleAdData);
       dispatch(loadSingleAdDataClear());
     }
-  }, [singleAdData]);
+  }, [adDetail, dispatch, singleAdData]);
 
   return (
     <>
@@ -175,7 +137,6 @@ function AdDeatails() {
           sx={{
             marginTop: "36px",
             marginBottom: 2,
-            // width: "95% !important",
             margin: "auto",
             paddingTop: 1,
           }}
@@ -191,7 +152,6 @@ function AdDeatails() {
             <Box
               sx={{
                 borderRadius: "16px",
-                // boxShadow: "0px 0px 5px 2px rgba(0, 0, 0, 0.15)",
                 border: "1px solid #EBEBEB",
                 paddingLeft: 2,
                 paddingRight: 2,
@@ -209,7 +169,6 @@ function AdDeatails() {
                     sx={{
                       display: "flex",
                       marginTop: "13px",
-                      // marginLeft: "20px",
                     }}
                   >
                     <Box
@@ -229,7 +188,7 @@ function AdDeatails() {
                       ></Avatar>
                     </Box>
                     <Typography
-                      variant="h6"
+                      // variant="h6"
                       style={{
                         marginLeft: "8px",
                         lineHeight: "30px",
@@ -244,7 +203,6 @@ function AdDeatails() {
                   {showGraph && (
                     <Box sx={{ marginTop: "13px" }}>
                       <Box>
-                        {/* <Tooltip title="Redirect to shop link"> */}
                         {adDetail?.purchaseURL !== "" && (
                           <img
                             src={Shareicon}
@@ -256,7 +214,6 @@ function AdDeatails() {
                             }}
                           />
                         )}
-                        {/* </Tooltip> */}
                         <img
                           src={
                             savedAdsIds.includes(adDetail?.id)
@@ -267,18 +224,9 @@ function AdDeatails() {
                           className={classes.saveicon}
                           onClick={() => {
                             if (savedAdsIds.includes(adDetail?.id)) {
-                              // dispatch(removesavedFilteredAdLocal(adInfo));
-                              // dispatch(removeSavedAdsIdsLocal(adInfo.id));
-                              console.log("0=0", state.CurrentAppliedFilter);
                               dispatch(removeFromSavedAdsStart(adDetail));
                             } else {
-                              // dispatch(addSavedAdsIdsLocal(adInfo.id));//local saved id
                               dispatch(addToSavedAdsStart({ ad: adDetail.id }));
-                              // console.log("000000 ---- q",queryObject)
-                              // dispatch(checkAplliedFiltersAds({
-                              //   filters:queryObject,adsData:adInfo
-                              // }));
-                              console.log("0=0", state.CurrentAppliedFilter);
                               dispatch(
                                 addToSavedAdsFilterLocalStart({
                                   ...state.CurrentAppliedFilter,
@@ -293,23 +241,14 @@ function AdDeatails() {
                   )}
                 </Stack>
 
-                <Box
-                  sx={
-                    {
-                      //marginLeft: 2,
-                      // marginRight: 2,
-                    }
-                  }
-                >
+                <Box>
                   <Typography
                     sx={{
                       fontWeight: 500,
-
                       lineHeight: "27px",
                       letterSpacing: "0.03em",
                       color: "#2B2F42",
                       paddingTop: 1,
-                      // margin: "10px 12px 10px 15px",
                     }}
                   >
                     <ReadMore>
@@ -320,7 +259,6 @@ function AdDeatails() {
 
                 <Box
                   sx={{
-                    // marginRight: "10px",
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
@@ -371,17 +309,14 @@ function AdDeatails() {
                           sx={{
                             display: "flex",
                             justifyContent: "space-between",
-                            // marginLeft: 1,
                           }}
                         >
-                          {/* <Tooltip title="Redirect to shop link"> */}
                           {adDetail?.purchaseURL !== "" && (
                             <img
                               src={Shareicon}
                               alt="Shareicon"
                               className={classes.shareicon}
                               onClick={(e) => {
-                                console.log(adDetail?.purchaseURL);
                                 window.open(
                                   adDetail?.purchaseURL,
                                   "_blank",
@@ -390,7 +325,6 @@ function AdDeatails() {
                               }}
                             />
                           )}
-                          {/* </Tooltip> */}
                           <img
                             src={
                               savedAdsIds.includes(adDetail?.id)
@@ -401,20 +335,11 @@ function AdDeatails() {
                             className={classes.saveicon}
                             onClick={() => {
                               if (savedAdsIds.includes(adDetail?.id)) {
-                                // dispatch(removesavedFilteredAdLocal(adInfo));
-                                // dispatch(removeSavedAdsIdsLocal(adInfo.id));
-                                console.log("0=0", state.CurrentAppliedFilter);
                                 dispatch(removeFromSavedAdsStart(adDetail));
                               } else {
-                                // dispatch(addSavedAdsIdsLocal(adInfo.id));//local saved id
                                 dispatch(
                                   addToSavedAdsStart({ ad: adDetail.id })
                                 );
-                                // console.log("000000 ---- q",queryObject)
-                                // dispatch(checkAplliedFiltersAds({
-                                //   filters:queryObject,adsData:adInfo
-                                // }));
-                                console.log("0=0", state.CurrentAppliedFilter);
                                 dispatch(
                                   addToSavedAdsFilterLocalStart({
                                     ...state.CurrentAppliedFilter,
@@ -430,29 +355,7 @@ function AdDeatails() {
                   </Stack>
                   <Grid container spacing={1}>
                     <Grid item xs={10}>
-                      <Box
-                        sx={
-                          {
-                            //  paddingLeft: "20px"
-                          }
-                        }
-                      >
-                        {/* <Typography
-                          sx={{
-                            lineHeight: "23px",
-                            letterSpacing: "0.035em",
-                            color: "#2B2F42",
-                            opacity: 0.6,
-                          }}
-                          noWrap
-                        >
-                          <b>
-                            {" "}
-                            {adDetail?.displayURL
-                              ? adDetail.displayURL.replace("HTTPS://", "")
-                              : " "}
-                          </b>
-                        </Typography> */}
+                      <Box>
                         <Typography
                           style={{
                             lineHeight: "30px",
@@ -525,7 +428,7 @@ function AdDeatails() {
                             "linear-gradient(45deg, #00CBFF 0%, #72E2FF 100%)",
                           borderRadius: 18,
                           textTransform: "none",
-                          width: "100%", //"156px",
+                          width: "100%",
                           height: "35px",
                           color: "white",
                           marginBottom: "15px",
@@ -557,17 +460,16 @@ function AdDeatails() {
             lg={8}
             md={7}
             sm={6}
-            p={2}
-            sx={{ width: "95% !important" }}
+           
+            sx={{ width: "100% !important" }}
           >
-            {/* <Box> */}
             <Grid container>
               <Grid
                 item
                 xs={12}
                 sm={12}
                 md={6}
-                lg={6}
+                lg={6}  p={2}
                 sx={{
                   display: "flex",
                   justifyContent: "center",
@@ -617,9 +519,8 @@ function AdDeatails() {
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
-                  // "@media (max-width: 800px)": {
+
                   marginTop: DownloadBUtton ? 2 : "",
-                  // },
                 }}
               >
                 <Button
@@ -658,7 +559,7 @@ function AdDeatails() {
             <Grid
               container
               sx={{
-                justifyContent: "space-around",
+                justifyContent: "space-between",
                 marginTop: "40px",
                 paddingTop: "0px",
               }}
@@ -666,7 +567,7 @@ function AdDeatails() {
               <Grid
                 item
                 md={4}
-                xs={4}
+                xs={3}
                 sm={12}
                 lg={4}
                 sx={{
@@ -674,9 +575,8 @@ function AdDeatails() {
                   justifyContent: "start",
                   alignItems: "center",
                   width: "99% !important",
-                  // "@media (max-width: 800px)": {
+
                   marginTop: showGraph ? 2 : "",
-                  // },
                 }}
                 direction="column"
               >
@@ -688,7 +588,7 @@ function AdDeatails() {
               <Grid
                 item
                 md={4}
-                xs={4}
+                xs={5}
                 sm={12}
                 lg={4}
                 sx={{
@@ -696,12 +596,6 @@ function AdDeatails() {
                   justifyContent: "start",
                   alignItems: "center",
                   marginTop: showGraph ? 2 : "",
-                  // "@media (max-width: 800px)": {
-                  //   marginTop: 2,
-                  // },
-                  // "@media (max-width: 450px)": {
-                  //   alignItems: "start",
-                  // },
                 }}
                 direction="column"
               >
@@ -736,13 +630,6 @@ function AdDeatails() {
                   justifyContent: "start",
                   alignItems: "center",
                   marginTop: showGraph ? 2 : "",
-                  // "@media (max-width: 800px)": {
-                  //   marginTop: 2,
-                  // },
-                  "@media (max-width: 450px)": {
-                    // marginTop: 2,
-                    // alignItems: "start",
-                  },
                 }}
                 flexDirection="column"
               >
@@ -777,14 +664,11 @@ function AdDeatails() {
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  // marginRight: "60px",
-                  // flexWrap: "nowrap",
                 }}
                 direction={"column"}
                 spacing={2}
               >
                 <Typography
-                  // style={{ fontWeight: 600, fontSize: "20px" }}
                   style={{
                     fontWeight: 600,
                     fontSize: {
@@ -795,8 +679,7 @@ function AdDeatails() {
                     },
                   }}
                   noWrap
-                  mb={2.5}
-                  ml={4}
+                  mb={2.5}                  
                 >
                   {adDetail?.pageInfo?.name}
                 </Typography>
@@ -832,12 +715,6 @@ function AdDeatails() {
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  // "@media screen and (min-width: 800px)":
-                  //   {
-                  //     display: "flex",
-                  //     alignItems: "center",
-                  //     justifyContent: "center",
-                  //   },
                 }}
               >
                 <Grid item sm={12}>
@@ -852,7 +729,14 @@ function AdDeatails() {
                               marginBottom: "16px",
                             }}
                           >
-                            <Box sx={{ marginRight: "10px" , display:"flex", justifyContent:"center",alignItems:"center"}}>
+                            <Box
+                              sx={{
+                                marginRight: "10px",
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                              }}
+                            >
                               <img
                                 src={
                                   socialMedia === "Facebook"
@@ -874,11 +758,9 @@ function AdDeatails() {
                                   fontFamily: "Neue Haas Grotesk Display Pro",
                                 }}
                               >
-                                {
-                                  (adDetail?.pageInfo?.platforms?.[
-                                    `${socialMedia}`
-                                  ]?.other || "")
-                                }
+                                {adDetail?.pageInfo?.platforms?.[
+                                  `${socialMedia}`
+                                ]?.other || ""}
                               </Typography>
                               <Typography
                                 style={{
@@ -926,9 +808,6 @@ function AdDeatails() {
 
                   <Grid container>
                     <Grid item xs={12} lg={12} sm={12} sx={12}>
-                      {/* <AreaLineGraph /> */}
-                      {/* <CustomizedView /> */}
-                      {/* <AreaLineGraph /> */}
                       <SplineAreaGraph
                         chartData={adDetail?.history}
                         dataBoxVisiblity={false}
@@ -941,8 +820,6 @@ function AdDeatails() {
                 </Stack>
               </Grid>
             )}
-
-            {/* </Box> */}
           </Grid>
           {showGraph && (
             <Grid item md={12} sm={12} xs={12} lg={0} sx={{ marginTop: 2 }}>

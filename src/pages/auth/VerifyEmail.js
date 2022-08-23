@@ -1,6 +1,5 @@
-import fbaddlogo from "../../assets/Eye of Ecom  Blue.png";
-import fbaddlogowhitecolor from "../../assets/Eye of Ecom White.png"
 import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import {
   Alert,
@@ -14,33 +13,36 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { themeLight, globalStyles } from "../../css/globalcss";
 import { CssBaseline } from "@material-ui/core";
 import { activatyoureemail } from "../../services";
-import { useLocation, useNavigate } from "react-router-dom";
+import { themeLight, globalStyles } from "../../css/globalcss";
+import fbaddlogo from "../../assets/Eye of Ecom  Blue.png";
+import fbaddlogowhitecolor from "../../assets/Eye of Ecom White.png";
 
 const VerifyEmail = () => {
   const global = globalStyles();
   const navigate = useNavigate();
-  const theme = useTheme()
+  const theme = useTheme();
+  const getTkn = useLocation()?.search;
+
   const showhidelogolargedevice = useMediaQuery(theme.breakpoints.up("sm"));
   const showhidelogosmalldevice = useMediaQuery(theme.breakpoints.down("sm"));
+
   const [verifiactionres, setVerifiactionres] = useState(null);
-  const getTkn = useLocation()?.search;
+
   const verifymail = async () => {
     const res = await activatyoureemail({ getTkn });
     setVerifiactionres(res.data.message);
   };
-  console.log("555---", verifiactionres);
-  console.log("getTkn", getTkn);
+
   useEffect(() => {
-    // document.title = "VerifyEmail - Eye of Ecom "
     setTimeout(() => {
       if (getTkn !== undefined) {
         verifymail();
       }
     }, 1000);
   }, []);
+
   return (
     <MuiThemeProvider theme={themeLight}>
       <CssBaseline />
@@ -55,13 +57,16 @@ const VerifyEmail = () => {
             transform: "translate(-50%, -50%)",
           }}
         >
-               {showhidelogosmalldevice ?
-           <img
-                alt="logo"
-                src={fbaddlogowhitecolor}
-                className={global.logo}
-                onClick={() => navigate("/auth/login")}
-              /> :""}
+          {showhidelogosmalldevice ? (
+            <img
+              alt="logo"
+              src={fbaddlogowhitecolor}
+              className={global.logo}
+              onClick={() => navigate("/auth/login")}
+            />
+          ) : (
+            ""
+          )}
           <Grid>
             <Card
               style={{
@@ -73,57 +78,33 @@ const VerifyEmail = () => {
               }}
             >
               <CardContent>
-              {showhidelogolargedevice ?
-              <img
-                alt="logo"
-                src={fbaddlogo}
-                className={global.logo}
-                onClick={() => navigate("/auth/login")}
-              /> :""}
-                <Box style={{  padding: "2vmax 2.5vmax"}}>
+                {showhidelogolargedevice ? (
+                  <img
+                    alt="logo"
+                    src={fbaddlogo}
+                    className={global.logo}
+                    onClick={() => navigate("/auth/login")}
+                  />
+                ) : (
+                  ""
+                )}
+                <Box style={{ padding: "2vmax 2.5vmax" }}>
                   <Grid container spacing={2}>
                     <Grid xs={12} item>
-                      {/* <Typography
-                        variant="h5"
-                        align="center"
-                        mb={3}
-                        sx={{ fontWeight: "bold" }}
-                      >
-                        {verifiactionres ===
-                        "User account has already been activated."
-                          ? "Your Account has already been activated !"
-                          : "  Verifying Your Email"}
-                      </Typography>
-                      {verifiactionres === "User Verified" ? (
-                        <Typography align="center">
-                          Please Click Login Button
-                        </Typography>
-                      ) : (
-                        <Typography align="center">
-                          {verifiactionres ===
-                          "User account has already been activated."
-                            ? ""
-                            : "Please wait while your activate Your account"}
-                        </Typography>
-                      )} */}
                       {!verifiactionres ? (
                         <>
-                        <Typography
-                          variant="h5"
-                          align="center"
-                          mb={3}
-                          sx={{ fontWeight: "bold" }}
-                        >
-                         Verifying your email...
-                        </Typography>
-                              <Typography
-                              variant="h6"
-                              align="center"
-                              mb={3}
-                            >
-                              Please wait while we verify your email.
-                            </Typography>
-                            </>
+                          <Typography
+                            variant="h5"
+                            align="center"
+                            mb={3}
+                            sx={{ fontWeight: "bold" }}
+                          >
+                            Verifying your email...
+                          </Typography>
+                          <Typography variant="h6" align="center" mb={3}>
+                            Please wait while we verify your email.
+                          </Typography>
+                        </>
                       ) : verifiactionres === "User Verified" ? (
                         <Typography
                           variant="h5"

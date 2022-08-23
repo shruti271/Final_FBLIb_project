@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   Avatar,
   Button,
@@ -8,15 +9,14 @@ import {
   Stack,
   Typography,
   useMediaQuery,
-  useTheme,
-  withStyles,
+  useTheme,  
 } from "@mui/material";
 import { Box } from "@mui/system";
-import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import paymentCheckboxicon from "../../src/assets/paymentcheckboxicon.svg";
 import annualplancheckboxicon from "../../src/assets/annualplancheckboxicon.svg";
 import { monthsubscription, yearsubcription } from "../services";
+import GradientButton from "react-linear-gradient-button/lib/GradientButton";
 const useStyles = makeStyles((theme) => ({
   paymentheading: {
     fontWeight: "900 !important",
@@ -81,14 +81,18 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "600 !important",
   },
 }));
+
 const Payment = () => {
   const classes = useStyles();
   const theme = useTheme();
+
   const aligncenterfont = useMediaQuery(theme.breakpoints.up("sm"));
   const aligncentercard = useMediaQuery(theme.breakpoints.up("sm"));
   const paddingcard = useMediaQuery(theme.breakpoints.down("sm"));
+
   const [loading, setLoading] = useState(false);
   const [loadingyear, setLoadingyear] = useState(false);
+
   const buySubscriptionmonthly = async () => {
     setLoading(true);
     try {
@@ -98,6 +102,7 @@ const Payment = () => {
       setLoading(false);
     }
   };
+
   const buySubscriptionAnnually = async () => {
     setLoadingyear(true);
     try {
@@ -107,6 +112,7 @@ const Payment = () => {
       setLoadingyear(false);
     }
   };
+
   return (
     <>
       <Box className={classes.fontSizeCustomize} p={1}>
@@ -140,7 +146,6 @@ const Payment = () => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          // marginTop: 2,
           marginRight: 11,
           marginBottom: paddingcard ? 5 : "",
         }}
@@ -298,6 +303,36 @@ const Payment = () => {
           }}
         >
           <Stack p={2} pt={4}>
+          {/* <GradientButton
+                  gradient={[
+                    "rgba(103, 33, 255, 1)",
+                    "rgba(0, 203, 255, 1)",
+                    "rgba(181, 237, 255, 1)",
+                  ]}
+                  onClick={() => {
+                  
+                  }}
+
+
+                  style={{                    
+                    fontWeight: 600,
+                    color: "#00CBFF",
+                    textTransform: "none",
+                  }}
+                  borderWidth={3}
+                >
+                  <Typography
+                    paddingLeft={1}
+                    paddingRight={1}
+                    style={{
+                      textTransform: "none",
+                      color: "url(#linearColors)",
+                    }}
+                    variant="p"
+                  >
+                    Reset
+                  </Typography>
+                </GradientButton> */}
             <Button
               className={classes.annualheadinglabel}
               align={aligncenterfont ? "" : "center"}
@@ -325,7 +360,7 @@ const Payment = () => {
                   gutterBottom
                   component="div"
                   className={classes.fontcolorheading}
-                  sx={{marginLeft:{xs:3,sm:0,lg:0}}}
+                  sx={{ marginLeft: { xs: 3, sm: 0, lg: 0 } }}
                 >
                   {" "}
                   $29

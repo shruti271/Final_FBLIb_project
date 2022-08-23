@@ -1,18 +1,18 @@
 import {
-  Backdrop,
+  
   Button,
   CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
   DialogContentText,
-  Fade,
+  
   FormControlLabel,
   Grid,
   IconButton,
   InputAdornment,
   InputBase,
-  Modal,
+  
   Stack,
   Typography,
   useMediaQuery,
@@ -959,8 +959,7 @@ function AccountSettings() {
                               sx={{
                                 color: "white",
                               }}
-                            />,
-                            setOpen(false)
+                            />
                           ) : (
                             <>
                               {subscriptionData?.data?.status === "Canceled" ||

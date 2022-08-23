@@ -1,7 +1,8 @@
-import { Avatar } from '@mui/material';
 import React from 'react'
 import { useEffect, useState } from 'react'
+import { Avatar } from '@mui/material';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+
 const BackTotopbutton = () => {
     const [backtoTop, setbacktoTop] = useState(false)
     useEffect(() => {

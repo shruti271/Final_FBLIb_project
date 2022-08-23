@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
 import Typography from "@mui/material/Typography";
 import {
   Alert,
@@ -11,16 +11,18 @@ import {
   useTheme,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import { useForm } from "react-hook-form";
 import { contactSupport } from "../services";
 import useStyles from "../css/mediapage";
 
 const ContactSupport = () => {
   const classes = useStyles();
   const theme = useTheme();
-  const [loading, setLoading] = useState(false);
+
   const savebutton = useMediaQuery(theme.breakpoints.up("sm"));
+
+  const [loading, setLoading] = useState(false);
   const [resendmessage, setResendmessage] = useState("");
+
   const {
     register,
     handleSubmit,
@@ -29,16 +31,15 @@ const ContactSupport = () => {
 
   const onFormSubmit = async (data) => {
     setLoading(true);
-    console.table("Contact Support Form Data :", data);
+
     const response = await contactSupport(data);
-    console.log(response.data.message);
+
     setResendmessage(response.data.message);
     if (!response.success) {
       setResendmessage("Email sent Successfully");
       setLoading(false);
     } else {
       setLoading(false);
-      // navigate("/");
     }
   };
 
@@ -50,11 +51,9 @@ const ContactSupport = () => {
           alignItems: "center",
           justifyContent: "center",
           disabled: loading ? true : false,
-          marginTop:2,
-          // marginLeft:"35px",
-          // width:{lg:"80%",md:"90%",sm:"90%",xs:"99%"},
+          marginTop: 2,
           marginLeft: { xs: "15px", sm: "35px", md: "30px", lg: "40px" },
-          marginRight: { xs:"15px", sm: 0, md: 0, lg: "40px" },
+          marginRight: { xs: "15px", sm: 0, md: 0, lg: "40px" },
         }}
       >
         <Typography
@@ -79,13 +78,13 @@ const ContactSupport = () => {
           borderColor="#ebebeb"
         >
           <form onSubmit={handleSubmit(onFormSubmit)}>
-            <Grid              
+            <Grid
               xs={11}
               container
               spacing={2}
-              sx={{ margin: { xs: "-5px", sm: "10px", md: "8px", lg: "8px" }, }}
+              sx={{ margin: { xs: "-5px", sm: "10px", md: "8px", lg: "8px" } }}
             >
-              <Grid xs={12} sm={6} lg={6} item >
+              <Grid xs={12} sm={6} lg={6} item>
                 <InputBase
                   disabled={loading ? true : false}
                   className={classes.inputField}
@@ -180,8 +179,11 @@ const ContactSupport = () => {
                   >
                     <Typography
                       fontSize={{ lg: 15, md: 13, sm: 13 }}
-                      sx={{ textTransform: "none", fontWeight:600,
-                      fontSize:"16px", }}
+                      sx={{
+                        textTransform: "none",
+                        fontWeight: 600,
+                        fontSize: "16px",
+                      }}
                     >
                       {loading ? (
                         <CircularProgress

@@ -1,3 +1,8 @@
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
+import { makeStyles } from "@material-ui/core/styles";
+import { Box } from "@mui/system";
 import {
   Button,
   Divider,
@@ -8,27 +13,29 @@ import {
   RadioGroup,
   Typography,
 } from "@mui/material";
-import { Box } from "@mui/system";
-import React, { useEffect, useState } from "react";
-import Arrowdown from "../assets/Arrowdown.svg";
-import { makeStyles } from "@material-ui/core/styles";
-import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
 import { PageNameEnum } from "../utils/enums";
 import * as allAdsPeramsDuck from "../redux/ducks/allAdsPerams";
 import * as savedAdsPeramsDuck from "../redux/ducks/savedAdsPerams";
 import { clearCashedPageData } from "../redux/ducks/filteredAds";
+import Arrowdown from "../assets/Arrowdown.svg";
 
 const useStyles = makeStyles((theme) => ({
   DropDownArrow: {
     marginLeft: theme.spacing(1),
   },
 }));
+
 function SortFilter(props) {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const [pageName, setPageName] = useState("");
   const location = useLocation();
+
+  const allAdsPerams = useSelector((state) => state.allAdsPerams);
+  const savedAdsPerams = useSelector((state) => state.savedAdsPerams);
+
+  const [pageName, setPageName] = useState("");
+  const [sortByAnchorel, setSortByAnchorel] = React.useState(null);
+  const openSortByAnchorel = Boolean(sortByAnchorel);
 
   useEffect(() => {
     switch (location.pathname) {
@@ -42,12 +49,6 @@ function SortFilter(props) {
         setPageName("");
     }
   }, [location.pathname]);
-
-  const allAdsPerams = useSelector((state) => state.allAdsPerams);
-  const savedAdsPerams = useSelector((state) => state.savedAdsPerams);
-
-  const [sortByAnchorel, setSortByAnchorel] = React.useState(null);
-  const openSortByAnchorel = Boolean(sortByAnchorel);
 
   const handleChangeSortType = (event, newValue) => {
     pageName === PageNameEnum.AdlibraryDatabase &&
@@ -91,15 +92,11 @@ function SortFilter(props) {
 
   return (
     <>
-      {/* <Grid container justifyContent="flex-end">
-       <Box> */}
       <Button
-        // disabled={props.loading}
         onClick={(event) => {
           setSortByAnchorel(event.currentTarget);
         }}
         size="large"
-        // variant="outlined"
         disableElevation
         disableRipple
         sx={{
@@ -108,9 +105,7 @@ function SortFilter(props) {
           border: "1px solid white",
           borderRadius: "10px",
           marginRight: "14px",
-          // marginTop: "22px",
         }}
-        // className={classes.FilterBox}
         endIcon={
           <img
             alt="arrowdown"
@@ -124,7 +119,6 @@ function SortFilter(props) {
           textTransform="capitalize"
           sx={{ fontWeight: 500, fontSize: "16px" }}
         >
-          {/* {sortedDetail || "sort by"} */}
           Sort by
         </Typography>
       </Button>
@@ -133,7 +127,6 @@ function SortFilter(props) {
         open={openSortByAnchorel}
         add={openSortByAnchorel ? "simple-popover" : undefined}
         onClose={() => {
-          // callFilters();
           setSortByAnchorel(null);
         }}
         transformOrigin={{

@@ -9,6 +9,7 @@ const SplineAreaGraph = (props) => {
       spacingLeft: 0,
     },
     title: {
+      text: "",
       align: "left",
       style: {
         fontSize: ".875rem",
@@ -71,7 +72,7 @@ const SplineAreaGraph = (props) => {
           enabled: false,
           fillColor: "white",
           lineWidth: 2,
-          lineColor: "#00CBFF",
+          lineColor: "#00CBFF", // inherit from series
           radius: 5,
         },
         color: {

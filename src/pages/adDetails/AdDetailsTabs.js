@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
-import { Box } from "@mui/system";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Route,
   Routes,
@@ -8,39 +7,41 @@ import {
   useNavigate,
   useParams,
 } from "react-router-dom";
+import { Box } from "@mui/system";
+import { Button, Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
 import AllAds from "./AllAds";
 import AdDeatails from "./adDeatails";
-import { useDispatch, useSelector } from "react-redux";
 import { loadSubAllAdsStart } from "../../redux/ducks/subAllAds";
-import LeftArrow from "../../assets/LeftArrow.svg";
 import {
   loadSingleAdDataClear,
   loadSingleAdDataStart,
 } from "../../redux/ducks/singleAdsData";
 import * as subAllAdsDuck from "../../redux/ducks/subAllAds";
+import LeftArrow from "../../assets/LeftArrow.svg";
 
 function AdDeatailsTabs() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const theme = useTheme();
   const { adId } = useParams();
-  const { state } = useLocation();
-
-  // const subAllAds = useSelector((state) => state.subAllAds);
+  const { state } = useLocation();  
 
   const adDetailsTabs = {
     ADOVERVIEW: "Ad Overview",
     ALLADS: "All Ads",
   };
+  
+  const showgrid = useMediaQuery(theme.breakpoints.only("xs"));
+
   const filteredAds = useSelector((state) => state.filteredAds);
+  const subAllAds = useSelector((state) => state.subAllAds);
+  const { filteredSavedAds } = useSelector((state) => state.filteredSavedAds);
+  const { singleAdData } = useSelector((state) => state.singleAdData);
+
   const [isActiveTab, setIsActiveTab] = useState(adDetailsTabs.ADOVERVIEW);
   const [adDetail, setAdDetail] = useState();
   const [redirectToPage, setRedirectToPage] = useState("/");
 
-  const subAllAds = useSelector((state) => state.subAllAds);
-  const { filteredSavedAds } = useSelector((state) => state.filteredSavedAds);
-  const { singleAdData, loading } = useSelector((state) => state.singleAdData);
-  const theme = useTheme();
-  const showgrid = useMediaQuery(theme.breakpoints.only("xs"));
   useEffect(() => {
     if(state)
     setRedirectToPage(state.fromPage);
@@ -57,24 +58,11 @@ function AdDeatailsTabs() {
   }, [window.location.pathname]);
 
   useEffect(() => {
-    if (filteredAds.filteredAds.length > 0) {
-      // eslint-disable-next-line array-callback-return
+    if (filteredAds.filteredAds.length > 0) {      
       const adTobeDisplay =
-        filteredAds.filteredAds.find((ad) => {
-          if (ad.id === adId) {
-            return ad;
-          }
-        }) ||
-        subAllAds.subAllAds.find((ad) => {
-          if (ad.id === adId) {
-            return ad;
-          }
-        }) ||
-        filteredSavedAds?.find((ad) => {
-          if (ad.id === adId) {
-            return ad;
-          }
-        });
+        filteredAds.filteredAds.find((ad) => ad.id === adId && ad) ||
+        subAllAds.subAllAds.find((ad) =>ad.id === adId && ad) ||
+        filteredSavedAds?.find((ad) => ad.id === adId && ad);
 
       if (!adTobeDisplay) {
         dispatch(loadSingleAdDataStart({ id: adId }));
@@ -92,18 +80,14 @@ function AdDeatailsTabs() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [singleAdData]);
 
-  useEffect(() => {console.log("888",adDetail?.pageInfo?.name)
+  useEffect(() => {
     if (adDetail?.pageInfo?.name) {
-      console.log("888",adDetail?.pageInfo?.name)
-      console.log("909",Object.keys(subAllAds.filterSubAllData).includes('0'))
+     
       if (Object.keys(subAllAds?.filterSubAllData).includes('0')) {
         
         if (
           Object(subAllAds?.filterSubAllData)[0][0]?.pageInfo?.name !== adDetail?.pageInfo?.name
         ) {
-          console.log(Object(subAllAds?.filterSubAllData)[0][0].pageInfo.name)
-          console.log("888",adDetail?.pageInfo?.name)
-          console.log("888",adDetail?.pageInfo?.name)
           
           dispatch(
             loadSubAllAdsStart({
@@ -133,12 +117,11 @@ function AdDeatailsTabs() {
       <Box
         sx={{
           width: "95%",
-          // marginTop: 2,
           margin:"auto",
           typography: "body1",
           justifyContent: "center",
           alignItems: "center",
-          // marginBottom:3
+          
           
         }}
       >
@@ -178,10 +161,6 @@ function AdDeatailsTabs() {
                 borderColor: "#2B2F42",
                 color: "#2B2F42",
                 textTransform: "none",
-              //   "@media (max-width: 450px)": {
-              // marginRight:15,
-              // fontSize:"18px"
-              //   },
               }}
               onClick={() => {
                 setIsActiveTab(adDetailsTabs.ADOVERVIEW);
@@ -193,7 +172,7 @@ function AdDeatailsTabs() {
             <Button
               disableRipple  
               sx={{ 
-                // display:{ md:'none', lg:'block'},
+               
                 borderBottom: isActiveTab === "All Ads" ? 2 : 0,
                 height: "20px",
                 borderRadius: 0,
@@ -218,7 +197,9 @@ function AdDeatailsTabs() {
       <Box  sx={{width: showgrid?"98% !important":"98% !important", margin:"auto",
           display:"flex",
           justifyContent:"center",
-          alignItems:"center",paddingInline:"24px"}}>
+          alignItems:"center",
+          paddingInline:"10px"
+          }}>
       <Routes>
         <Route exact path="" element={<AdDeatails />} />
         <Route exact path="allAds" element={<AllAds />} />

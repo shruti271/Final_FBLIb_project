@@ -1,6 +1,8 @@
-import fbaddlogo from "../../assets/Eye of Ecom  Blue.png";
-import fbaddlogowhitecolor from "../../assets/Eye of Ecom White.png"
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { CssBaseline } from "@material-ui/core";
 import { makeStyles, MuiThemeProvider } from "@material-ui/core/styles";
 import {
   Alert,
@@ -10,19 +12,17 @@ import {
   CardContent,
   CircularProgress,
   Grid,
-  TextField,
   Typography,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import Backtologin from "../../assets/Backtologinicon.svg";
-import { useNavigate } from "react-router-dom";
 import { forgotPassword, isAlive } from "../../services/index";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { themeLight, globalStyles, BootstrapInput } from "../../css/globalcss";
-import { CssBaseline } from "@material-ui/core";
 import { forgetvalidationSchema } from "./../../utils/validationSchemas";
+import { themeLight, globalStyles, BootstrapInput } from "../../css/globalcss";
+import fbaddlogo from "../../assets/Eye of Ecom  Blue.png";
+import fbaddlogowhitecolor from "../../assets/Eye of Ecom White.png";
+import Backtologin from "../../assets/Backtologinicon.svg";
+
 const useStyles = makeStyles(() => ({
   Backtologinbutton: {
     display: "flex",
@@ -34,14 +34,17 @@ const useStyles = makeStyles(() => ({
 const ForgetPassword = () => {
   const classes = useStyles();
   const global = globalStyles();
-  const theme = useTheme()
+  const navigate = useNavigate();
+  const theme = useTheme();
+
   const showhidelogolargedevice = useMediaQuery(theme.breakpoints.up("sm"));
   const showhidelogosmalldevice = useMediaQuery(theme.breakpoints.down("sm"));
-  const paddingcardsmalldevice= useMediaQuery(theme.breakpoints.down("sm"));
+  const paddingcardsmalldevice = useMediaQuery(theme.breakpoints.down("sm"));
   const aligncenterfont = useMediaQuery(theme.breakpoints.up("sm"));
+
   const [loading, setLoading] = useState(false);
   const [errormessage, setErrormessage] = useState("");
-  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -56,7 +59,6 @@ const ForgetPassword = () => {
       const formData = new FormData();
       formData.append("email", data.email);
       const response = await forgotPassword(formData);
-      console.log("::", response.data.message);
       if (response.data.message === "Success") {
         setErrormessage("Password Reset link sent your gmail");
         setLoading(false);
@@ -95,13 +97,16 @@ const ForgetPassword = () => {
             transform: "translate(-50%, -50%)",
           }}
         >
-               {showhidelogosmalldevice ?
-           <img
-                alt="logo"
-                src={fbaddlogowhitecolor}
-                className={global.logo}
-                onClick={() => navigate("/auth/login")}
-              /> :""}
+          {showhidelogosmalldevice ? (
+            <img
+              alt="logo"
+              src={fbaddlogowhitecolor}
+              className={global.logo}
+              onClick={() => navigate("/auth/login")}
+            />
+          ) : (
+            ""
+          )}
           <Grid>
             <Card
               style={{
@@ -113,14 +118,21 @@ const ForgetPassword = () => {
               }}
             >
               <CardContent>
-              {showhidelogolargedevice ?
-              <img
-                alt="logo"
-                src={fbaddlogo}
-                className={global.logo}
-                onClick={() => navigate("/auth/login")}
-              /> :""}
-                <Box sx={{ padding:paddingcardsmalldevice ? "" :"1vmax 2.5vmax" }}>
+                {showhidelogolargedevice ? (
+                  <img
+                    alt="logo"
+                    src={fbaddlogo}
+                    className={global.logo}
+                    onClick={() => navigate("/auth/login")}
+                  />
+                ) : (
+                  ""
+                )}
+                <Box
+                  sx={{
+                    padding: paddingcardsmalldevice ? "" : "1vmax 2.5vmax",
+                  }}
+                >
                   <Grid container spacing={2}>
                     <Grid xs={12} item>
                       <Typography
@@ -128,32 +140,31 @@ const ForgetPassword = () => {
                         sx={{
                           fontWeight: "bold",
                           fontSize: { xs: 23, lg: 25 },
-                          fontWeight:600
                         }}
-                        align={aligncenterfont ? "" :"center"}
+                        align={aligncenterfont ? "" : "center"}
                       >
                         Forget Password?
                       </Typography>
                     </Grid>
                     <Grid xs={12} item>
-                    {errormessage ===
-                    "Sorry, This email Id does not exist with us" ? (
-                      <>
-                        {errormessage && (
-                          <Grid item xs={12} p={1}>
-                            <Alert severity="error">{errormessage}</Alert>
-                          </Grid>
-                        )}
-                      </>
-                    ) : (
-                      <>
-                        {errormessage && (
-                          <Grid item xs={12}>
-                            <Alert severity="success">{errormessage}</Alert>
-                          </Grid>
-                        )}
-                      </>
-                    )}
+                      {errormessage ===
+                      "Sorry, This email Id does not exist with us" ? (
+                        <>
+                          {errormessage && (
+                            <Grid item xs={12} p={1}>
+                              <Alert severity="error">{errormessage}</Alert>
+                            </Grid>
+                          )}
+                        </>
+                      ) : (
+                        <>
+                          {errormessage && (
+                            <Grid item xs={12}>
+                              <Alert severity="success">{errormessage}</Alert>
+                            </Grid>
+                          )}
+                        </>
+                      )}
                       <BootstrapInput
                         type="email"
                         placeholder="Email address"
@@ -187,7 +198,10 @@ const ForgetPassword = () => {
                       {loading ? (
                         <CircularProgress style={{ color: "#F6F6FB" }} />
                       ) : (
-                        <Typography sx={{fontWeight:600,fontSize: "20px"}}> Reset Password</Typography>
+                        <Typography sx={{ fontWeight: 600, fontSize: "20px" }}>
+                          {" "}
+                          Reset Password
+                        </Typography>
                       )}
                     </Button>
                   </Box>
@@ -200,7 +214,7 @@ const ForgetPassword = () => {
                     />
                     <Typography
                       variant="h6"
-                      sx={{ cursor: "pointer" ,fontWeight:500}}
+                      sx={{ cursor: "pointer", fontWeight: 500 }}
                       onClick={() => navigate("/auth/login")}
                     >
                       Back to log in

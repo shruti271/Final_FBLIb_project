@@ -11,21 +11,9 @@ import "./App.scss";
 import Activateemail from "./pages/auth/Activateemail";
 import VerifyEmail from "./pages/auth/VerifyEmail";
 import Updatepassword from "./pages/auth/Updatepassword";
-// import { loadIsAliveStart } from "./redux/ducks/session";
-// import {
-//   Box,
-//   CircularProgress,
-// } from "@mui/material";
 
 const App = () => {
-  // const dispatch = useDispatch();
-
-  // const { loading } = useSelector((state) => state.isAliveData);
-
-  // useEffect(() => {
-  //   dispatch(loadIsAliveStart());
-  // }, []);
-
+  
   return (
     <>
       <Routes>

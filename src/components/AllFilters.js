@@ -29,6 +29,7 @@ import * as allAdsPeramsDuck from "../redux/ducks/allAdsPerams";
 import * as savedAdsPeramsDuck from "../redux/ducks/savedAdsPerams";
 import { clearCashedPageData } from "../redux/ducks/filteredAds";
 import Arrowdown from "../assets/Arrowdown.svg";
+import filter from "../assets/filter.svg";
 
 const useStyles = makeStyles((theme) => ({
   divider: {
@@ -1791,7 +1792,6 @@ function AllFilters(props) {
               variant="outlined"
               sx={{
                 borderRadius: 50,
-
                 textTransform: "none",
                 fontWeight: 600,
                 borderColor: "#00CBFF",
@@ -1821,6 +1821,32 @@ function AllFilters(props) {
                 Clear
               </Typography>
             </Button>
+            {(window.location.pathname === `/savedAds`&& ShowFilterWithClearButton) && <Button
+              sx={{
+                background:
+                  "linear-gradient(45deg, #00CBFF 0%, #72E2FF 100%)",
+                color: "white",
+                borderRadius: 30,
+                width: "100px",
+                height: "40px",
+                marginLeft:1,
+                visibility:{xs:"visible",lg:"hidden",md:"hidden",sm:"hidden"},               
+              }}
+            >
+              <img
+                src={filter}
+                alt="savedAds"
+                style={{
+                  width: "20px",
+                  height: "20px",
+                  float: "right",
+                  cursor: "pointer",
+                }}
+                onClick={() => {
+                  props.setFilterActivate(false);
+                }}
+              />
+            </Button>}
           </Box>
         </Grid>
         {/* Reset Filter End */}

@@ -4,7 +4,6 @@ import filter from "../assets/filter.svg";
 import { Box } from "@material-ui/core";
 import BackTotopbutton from "../pages/Backtotopbutton";
 import AllFilters from "../components/AllFilters";
-import CloseIcon from "@mui/icons-material/Close";
 import SortFilter from "../components/SortFilter";
 import FilterAltOffIcon from "@mui/icons-material/FilterAltOff";
 import ScrollToTop from "../utils/scrollToTop";
@@ -120,20 +119,19 @@ const unmountedStyle = {
               }}
               onClick={()=>setFilterActivate(true)}
             >
-              <img
-                src={filter}
-                alt="savedAds"
-                style={{
-                  width: "20px",
-                  height: "20px",
-                  float: "right",
-                  cursor: "pointer",
-                
-                }}
-                onClick={() => {
-                  setFilterActivate(true);
-                }}
-              /><Typography sx={{textTransform:"none",paddingLeft:1 , fontWeight:"bold"}}> Filters </Typography>
+              <FilterAltOffIcon
+                  style={{
+                    width: "20px",
+                    height: "20px",
+                    float: "right",
+                    cursor: "pointer",
+                    color: "white",
+                  }}
+                  onClick={() => {
+                    setFilterActivate(true);
+                  }}
+                />
+              <Typography sx={{textTransform:"none",paddingLeft:1 , fontWeight:"bold"}}> Filters </Typography>
             </Button>
             </Box>
           )}
@@ -153,7 +151,7 @@ const unmountedStyle = {
             }}
             spacing={1}
           >
-            {ShowFilterButton && <Box //sx={{ visibility:ShowFilterButton?"hidden":"visible" }}//{ xs: "hidden" ,sm:"visible",lg:"visible",md:"visible",},}}
+            {ShowFilterButton && <Box 
               style={{
                 background:
                   "linear-gradient(45deg, #00CBFF 0%, #72E2FF 100%)",
