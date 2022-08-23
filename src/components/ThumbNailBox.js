@@ -314,7 +314,7 @@ const ThumbNailBox = ({ adInfo, index }) => {
             >
               {adInfo?.pageInfo?.name}
             </Typography>
-            <Typography
+            {adInfo?.pageInfo?.platforms?.Facebook?.likes && <Typography
               noWrap
               sx={{
                 fontWeight: 500,
@@ -326,9 +326,9 @@ const ThumbNailBox = ({ adInfo, index }) => {
               }}
             >
               {`(${Intl.NumberFormat().format(
-                adInfo?.pageInfo?.platforms[0]?.likes
+                adInfo?.pageInfo?.platforms?.Facebook?.likes
               )} likes)`}
-            </Typography>
+            </Typography>}
           </Box>
           {/* <Box height={(adInfo?.adDescription.length <=150) ? "80px":"auto"} sx={{lineHeight:"20px"}}>
             <ShowMoreText lines={3} expanded={false} expandByClick={true} keepNewLines="true">
