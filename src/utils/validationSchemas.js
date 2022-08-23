@@ -5,8 +5,8 @@ export const registerValidationSchema = Yup.object().shape({
   password: Yup.string()
     .required("Password is required")
     .min(6, "Password must have at least 6 characters")
-    .test("passwordRequirements", "Must Contain 1 Character, 1 Number, 1 Special Character", (value) =>
-      [/[a-z]/, /[0-9]/, /[^a-zA-Z0-9]/,/[!@#$%]/].every((pattern) =>
+    .test("passwordRequirements", "Must Contain Characters ans Numbers", (value) =>
+      [/[a-z]/, /[0-9]/, /* /[^a-zA-Z0-9]/,/[!@#$%]/ */].every((pattern) =>
         pattern.test(value)
       )
     ),
@@ -18,8 +18,8 @@ export const loginvalidationSchema = Yup.object().shape({
   password: Yup.string()
     .required("Password is required")
     .min(6, "Password must have at least 6 characters")
-    .test("passwordRequirements", "Must Contain 1 Character, 1 Number, 1 Special Character", (value) =>
-      [/[a-z]/, /[0-9]/, /[^a-zA-Z0-9]/,/[!@#$%]/].every((pattern) =>
+    .test("passwordRequirements", "Must Contain Characters ans Numbers", (value) =>
+      [/[a-z]/, /[0-9]/,/* /[^a-zA-Z0-9]/,/[!@#$%]/ */].every((pattern) =>
         pattern.test(value)
       )
     ),

@@ -22,7 +22,7 @@ import { useSelector } from "react-redux";
 import useStyles from "../css/mediapage";
 import { logoutUser } from "../services";
 import { getFaviconEl } from "../utils/getFaviconEl";
-import Eyeofecomlogo from "../assets/Eye of Ecom  Blue.png"
+import Eyeofecomlogo from "../assets/Eye of Ecom  Blue.png";
 const drawerWidth = 276;
 
 const AppBar = styled(MuiAppBar, {
@@ -34,7 +34,7 @@ const AppBar = styled(MuiAppBar, {
     duration: theme.transitions.duration.leavingScreen,
   }),
   backgroundColor: "#fff",
-  zIndex:1200,
+  zIndex: 1200,
   ...(open && {
     marginLeft: drawerWidth,
     // width: `calc(100% - ${drawerWidth}px)`,
@@ -52,7 +52,7 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
   const MenuListOptios = [
     { name: "Account Setings", icon: settings, url: "/accountSettings" },
     { name: "Contact Support", icon: contactUs, url: "/contactSupport" },
-    { name: "Logout", icon: logout, url: "/auth/login" }
+    { name: "Logout", icon: logout, url: "/auth/login" },
   ];
   const [isMenuOptionActive, setIsMenuOptionActive] = React.useState("");
   const navigate = useNavigate();
@@ -61,13 +61,16 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
     setAnchoerEL(e.currentTarget);
   };
   const userLogout = async () => {
-    logoutUser().then((data)=>{
-      localStorage.setItem("is_alive", false);
-      handleCloseMenu();
-      navigate("/auth/login");
-    }, (error)=>{
-      handleCloseMenu();
-    });
+    logoutUser().then(
+      (data) => {
+        localStorage.setItem("is_alive", false);
+        handleCloseMenu();
+        navigate("/auth/login");
+      },
+      (error) => {
+        handleCloseMenu();
+      }
+    );
   };
   const handleCloseMenu = () => {
     setAnchoerEL(null);
@@ -75,8 +78,8 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
   useEffect(() => {
     setIsMenuOptionActive(window.location.pathname);
     const favicon = getFaviconEl();
-    console.log("login",favicon)
-    favicon.href = "Rectangleeye.png"
+    console.log("login", favicon);
+    favicon.href = "Rectangleeye.png";
   }, []);
   return (
     <>
@@ -91,21 +94,62 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
               width: "100%",
             }}
           >
-            <Stack>
-              <IconButton
+            <Stack direction={"row"}>
+            <img
+                  src={Eyeofecomlogo}
+                  alt="444"
+                  height={33}
+                  onClick={() => {
+                    navigate("/");
+                  }}
+                  style={{cursor:"pointer"}}
+                />
+                <Typography
+                  color="black"
+                  mb={2}
+                  sx={{
+                    fontWeight: 600,
+                    border: "1px solid black",
+                    paddingInline: "1px",
+                    fontSize: "10px",                    
+                  }}
+                >
+                  BETA
+                </Typography>
+              {/* <IconButton
                 color="inherit"
-                aria-label="open drawer"
-                onClick={() => {
-                  !isOpen ? setIsOpen(true) : setIsOpen(false);
-                }}
-                edge="start"
+                // aria-label="open drawer"
+                // onClick={() => {
+                //   !isOpen ? setIsOpen(true) : setIsOpen(false);
+                // }}
+                // edge="start"
+                disableElevation
+                disableFocusRipple={true}                
                 sx={{
                   color: "#00CBFF",
                 }}
               >
-                <img src={Eyeofecomlogo} alt="444" height={33}/>
-                <Typography color="black" mb={2}sx={{fontWeight:600,border:"1px solid black",paddingInline:"1px",fontSize:"10px"}}>BETA</Typography>
-              </IconButton>
+                <img
+                  src={Eyeofecomlogo}
+                  alt="444"
+                  height={33}
+                  onClick={() => {
+                    navigate("/");
+                  }}
+                />
+                <Typography
+                  color="black"
+                  mb={2}
+                  sx={{
+                    fontWeight: 600,
+                    border: "1px solid black",
+                    paddingInline: "1px",
+                    fontSize: "10px",
+                  }}
+                >
+                  BETA
+                </Typography>
+              </IconButton> */}
             </Stack>
             <Stack>
               <Stack direction={"row"} spacing={2}>
@@ -180,7 +224,7 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
                             `${accountSettings?.first_name} ${accountSettings?.last_name}`}
                         </b>
                       </Typography>
-                      <Typography sx={{fontWeight:500,fontSize:"16px"}}>
+                      <Typography sx={{ fontWeight: 500, fontSize: "16px" }}>
                         {accountSettings && accountSettings?.email}
                       </Typography>
                     </Box>
@@ -193,7 +237,7 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
                           onClick={() => {
                             if (item.name === "Logout") {
                               userLogout();
-                            }else{
+                            } else {
                               handleCloseMenu();
                               navigate(item.url);
                             }
@@ -211,7 +255,12 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
                             alt="img1"
                             style={{ height: "15px", width: "15px" }}
                           />
-                          <Typography marginLeft={1}sx={{ fontWeight:500, fontSize:"16px"}}>{item.name}</Typography>
+                          <Typography
+                            marginLeft={1}
+                            sx={{ fontWeight: 500, fontSize: "16px" }}
+                          >
+                            {item.name}
+                          </Typography>
                         </MenuItem>
                       );
                     })}
@@ -221,7 +270,7 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
             </Stack>
           </Stack>
         </Toolbar>
-        <Divider/>
+        <Divider />
       </AppBar>
     </>
   );
