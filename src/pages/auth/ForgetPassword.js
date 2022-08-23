@@ -60,7 +60,7 @@ const ForgetPassword = () => {
       formData.append("email", data.email);
       const response = await forgotPassword(formData);
       if (response.data.message === "Success") {
-        setErrormessage("Password Reset link sent your gmail");
+        setErrormessage("Password reset link sent to your email");
         setLoading(false);
       }
     } catch {

@@ -148,7 +148,7 @@ const ContactSupport = () => {
               </Grid>
               {resendmessage === "Email sent" && (
                 <Grid item xs={12}>
-                  <Alert severity="success">Email send successfully</Alert>
+                  <Alert severity="success">Email sent successfully</Alert>
                 </Grid>
               )}
               <Grid
