@@ -72,18 +72,18 @@ const Activate = () => {
                       {console.log("===", resendmessage)}
                       {resendmessage === "Email sent" ? (
                         <Alert severity="success">
-                          Please check you email once again
+                          Please check your email again
                         </Alert>
                       ) : (
                         ""
                       )}
                     </Grid>
                     <Grid xs={12} item>
-                      <Typography variant="h6" align="center" sx={{fontSize:{xs:16,sm:19,lg:19,xl:19},fontWeight:600}} >
-                        We've just sent a verification email to: <b>{email}</b>
+                      <Typography variant="h6" align="center" color="#2B2F42" sx={{fontSize:{xs:16,sm:19,lg:19,xl:19},fontWeight:600}} >
+                        We've just sent a verification email to:{email}
                       </Typography>
                       <Typography variant="h6" align="center" p={1} sx={{fontSize:{xs:16,sm:19,lg:19},fontWeight:500}}>
-                      Click the link in your email to verify your account. If you can't find the email check your spam folder or click here to resend.{""}
+                      Click the link in your email to verify your account. If you can't find the email check your spam folder or {""}
                         {""}
                         <Typography
                           variant="h6"
@@ -92,7 +92,7 @@ const Activate = () => {
                           onClick={reSendlink}
                           sx={{cursor:"pointer",fontSize:{xs:16,sm:19,lg:19}}}
                         >
-                          Let's resend it
+                          click here to resend
                         </Typography>
                       </Typography>
                       <Typography variant="h6" align="center" p={1} sx={{fontSize:{xs:16,sm:19,lg:19},fontWeight:500}}>

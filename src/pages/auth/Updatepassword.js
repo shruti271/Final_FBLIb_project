@@ -78,7 +78,7 @@ const Updatepassword = () => {
       console.log("+++",res)
       setLoading(true);
       if (res.data.message === "Password updated") {
-        setErrormessage("Password successfull Updated");
+        setErrormessage("Password successfully Updated");
         setLoading(false);
       }else if(res.data.message==="Token is not valid"){
         setLoading(false)
