@@ -18,7 +18,6 @@ import Firstcardimg from "../assets/FirstCardImg.svg";
 import Shareicon from "../assets/Shareicon.svg";
 import Saveicon from "../assets/Saveicon.svg";
 import StarFill from "../assets/StarFill.svg";
-import MyChart from "./linemy";
 // import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import ShowMoreText from "react-show-more-text";
 import {
@@ -38,6 +37,7 @@ import {
 import { setPostionForScrollValueStart } from "../redux/ducks/filteredAds";
 import { setPostionForSubAllAdsToScrollValueStart } from "../redux/ducks/subAllAds";
 import AccessTime from "@mui/icons-material/AccessTime";
+import SplineAreaGraph from "./SplineAreaGraph";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -607,7 +607,7 @@ const ThumbNailBox = ({ adInfo, index }) => {
                       {/* <AreaLineGraph /> */}
 {/* <CustomizedView /> */}
 {/* <AreaLineGraph /> */}
-                      <MyChart
+                      <SplineAreaGraph
                         chartData={adInfo?.history}
                         dataBoxVisiblity={false}
                         axisVisiblity={false}

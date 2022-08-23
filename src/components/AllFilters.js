@@ -1,4 +1,11 @@
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
+import { DateRange } from "react-date-range";
+import { EditText } from "react-edit-text";
+import { addDays } from "date-fns";
+import { format } from "date-fns";
 import {
   Box,
   Button,
@@ -16,117 +23,21 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import Arrowdown from "../assets/Arrowdown.svg";
-import { useDispatch, useSelector } from "react-redux";
-import { DateRange } from "react-date-range";
-import { format } from "date-fns";
-import { addDays } from "date-fns";
-import { EditText } from "react-edit-text";
+import { PageNameEnum } from "../utils/enums";
+import ResetButton from "../css/ResetButton";
 import * as allAdsPeramsDuck from "../redux/ducks/allAdsPerams";
 import * as savedAdsPeramsDuck from "../redux/ducks/savedAdsPerams";
-import { PageNameEnum } from "../utils/enums";
-import { useLocation } from "react-router-dom";
-import GradientButton from "react-linear-gradient-button";
-import filter from "../assets/filter.svg";
 import { clearCashedPageData } from "../redux/ducks/filteredAds";
-import ResetButton from "../css/ResetButton";
+import Arrowdown from "../assets/Arrowdown.svg";
 
 const useStyles = makeStyles((theme) => ({
-  title: {
-    background:
-      "linear-gradient(270deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)",
-    WebkitBackgroundClip: "text",
-    WebkitTextFillColor: "transparent",
-  },
-  titleHome: {
-    // height: "37px !important",
-    // width: "41px !important",
-    // marginRight: "10px",
-    fontWeight: 600,
-    fontSize: "24px",
-    lineHeight: "24px",
-    color: "#2B2F42",
-  },
-  subTitleHome: {
-    // fontWeight: 500,
-    // fontSize: "18px",
-    // lineHeight: "24px",
-    // color: "#2B2F42",
-    // marginTop: "8px",
-    // marginBottom: "18px",
-  },
-  addTextfilter: {
-    padding: theme.spacing(1, 3),
-    border: "1px solid #EBEBEB",
-    borderRadius: "15px",
-    marginTop: "10px",
-  },
-  addtextfilterButton: {
-    padding: "4px 4px",
-    borderRadius: 10,
-    display: "flex",
-    justifyContent: "space-between",
-    border: "2px solid #EBEBEB",
-  },
   divider: {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
   },
-  calenderfilter: {
-    color: "#2B2F42",
-    whiteSpace: "nowrap",
-    border: "1px solid #EBEBEB",
-    borderRadius: 3,
-  },
-
-  AdsImageVideo: {
-    width: "100%",
-    height: "auto",
-    padding: "0",
-    margin: "0",
-    overflowY: "none",
-    outline: "none",
-  },
   DropDownArrow: {
     marginLeft: theme.spacing(1),
-  },
-  DropDownArrow2: {
-    marginLeft: theme.spacing(8),
-  },
-  shareicon: {
-    marginLeft: theme.spacing(5),
-  },
-  saveicon: {
-    marginLeft: theme.spacing(2),
-    cursor: "pointer",
-  },
-  AdsText: {
-    display: "inlineBlock",
-    fontWeight: "16px",
-    whiteSpace: "nowrap",
-    overflow: "hidden !important",
-    textOverflow: "ellipsis",
-  },
-  Addheader: {
-    display: "flex",
-    justifyContent: "space-evenly",
-    padding: "6px",
-    whiteSpace: "nowrap",
-  },
-  AddFooter: {
-    display: "flex",
-    flexWrap: "wrap",
-    whiteSpace: "nowrap",
-  },
-  FilterBox: {
-    color: "#2B2F42",
-    whiteSpace: "nowrap",
-    border: "1px solid #EBEBEB",
-    borderRadius: "10px",
-    marginRight: "14px",
-    marginTop: "22px",
   },
   searchBtn: {
     "&:hover": {
@@ -138,36 +49,36 @@ const useStyles = makeStyles((theme) => ({
       border: "1px solid #EBEBEB !important",
     },
   },
+  filterButton: {
+    "&:hover": {
+      border: "1px solid #EBEBEB !important",
+    },
+    color: "#2B2F42",
+    whiteSpace: "nowrap",
+    border: "1px solid #EBEBEB",
+    borderRadius: "10px",
+    marginRight: "14px",
+    marginTop: "22px",
+    "@media (max-width: 450px)": {
+      width: "100%",
+    },
+  },
 }));
 
 function AllFilters(props) {
-  const [pageName, setPageName] = useState("");
-  const [searchBarValue, setSearchBarValue] = useState("");
-  const theme = useTheme();
-
-  const ShowFilterWithClearButton = useMediaQuery(theme.breakpoints.only("xs"));
   const classes = useStyles();
   const dispatch = useDispatch();
-
   const location = useLocation();
-
-  useEffect(() => {
-    switch (location.pathname) {
-      case "/":
-        setPageName(PageNameEnum.AdlibraryDatabase);
-        break;
-      case "/savedAds":
-        setPageName(PageNameEnum.SavedAds);
-        break;
-      default:
-        setPageName("");
-    }
-  }, [location.pathname]);
-
-  const { buttonTypes } = useSelector((state) => state.buttonTypes);
+  const theme = useTheme();
 
   const allAdsPerams = useSelector((state) => state.allAdsPerams);
   const savedAdsPerams = useSelector((state) => state.savedAdsPerams);
+  const { buttonTypes } = useSelector((state) => state.buttonTypes);
+
+  const ShowFilterWithClearButton = useMediaQuery(theme.breakpoints.only("xs"));
+
+  const [pageName, setPageName] = useState("");
+  const [searchBarValue, setSearchBarValue] = useState("");
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -217,6 +128,19 @@ function AllFilters(props) {
     });
 
   useEffect(() => {
+    switch (location.pathname) {
+      case "/":
+        setPageName(PageNameEnum.AdlibraryDatabase);
+        break;
+      case "/savedAds":
+        setPageName(PageNameEnum.SavedAds);
+        break;
+      default:
+        setPageName("");
+    }
+  }, [location.pathname]);
+
+  useEffect(() => {
     setSearchBarValue(
       pageName === PageNameEnum.AdlibraryDatabase
         ? allAdsPerams?.searchBarData
@@ -240,20 +164,18 @@ function AllFilters(props) {
         ? allAdsPeramsDuck.changeAppliedFilters({
             key: "AdCount",
             value: {
-              // componentName: pageName,
               min: newValue[0],
               max: newValue[1],
-              chipText: `Ad Count : ${newValue[0]}-${newValue[1]}`,
+              chipText: `Ad Count : ${newValue[0]} - ${newValue[1]}`,
               isApplied: isReset ? false : true,
             },
           })
         : savedAdsPeramsDuck.changeSavedAppliedFilters({
             key: "AdCount",
             value: {
-              // componentName: pageName,
               min: newValue[0],
               max: newValue[1],
-              chipText: `Ad Count : ${newValue[0]}-${newValue[1]}`,
+              chipText: `Ad Count : ${newValue[0]} - ${newValue[1]}`,
               isApplied: isReset ? false : true,
             },
           })
@@ -261,7 +183,6 @@ function AllFilters(props) {
   };
 
   const handleChangeStatus = (newValue, isReset) => {
-    console.log("0-0- 00", newValue);
     pageName === PageNameEnum.AdlibraryDatabase &&
       dispatch(clearCashedPageData());
     dispatch(
@@ -277,7 +198,6 @@ function AllFilters(props) {
         : savedAdsPeramsDuck.changeSavedAppliedFilters({
             key: "AdStatus",
             value: {
-              // componentName: pageName,
               selectedValue: newValue,
               chipText: `Ad status : ${newValue}`,
               isApplied: isReset ? false : true,
@@ -294,20 +214,18 @@ function AllFilters(props) {
         ? allAdsPeramsDuck.changeAppliedFilters({
             key: "FacebookLikes",
             value: {
-              // componentName: pageName,
               min: newValue[0],
               max: newValue[1],
-              chipText: `FacebookLike Page Likes: ${newValue[0]}-${newValue[1]}`,
+              chipText: `FacebookLike Page Likes: ${newValue[0]} - ${newValue[1]}`,
               isApplied: isReset ? false : true,
             },
           })
         : savedAdsPeramsDuck.changeSavedAppliedFilters({
             key: "FacebookLikes",
             value: {
-              // componentName: pageName,
               min: newValue[0],
               max: newValue[1],
-              chipText: `FacebookLike Page Followers: ${newValue[0]}-${newValue[1]}`,
+              chipText: `FacebookLike Page Followers: ${newValue[0]} - ${newValue[1]}`,
               isApplied: isReset ? false : true,
             },
           })
@@ -322,20 +240,18 @@ function AllFilters(props) {
         ? allAdsPeramsDuck.changeAppliedFilters({
             key: "InstagramFollowers",
             value: {
-              // componentName: pageName,
               min: newValue[0],
               max: newValue[1],
-              chipText: `Instagram Page Followers : ${newValue[0]}-${newValue[1]}`,
+              chipText: `Instagram Page Followers : ${newValue[0]} - ${newValue[1]}`,
               isApplied: isReset ? false : true,
             },
           })
         : savedAdsPeramsDuck.changeSavedAppliedFilters({
             key: "InstagramFollowers",
             value: {
-              // componentName: pageName,
               min: newValue[0],
               max: newValue[1],
-              chipText: `Instagram Page Followers : ${newValue[0]}-${newValue[1]}`,
+              chipText: `Instagram Page Followers : ${newValue[0]} - ${newValue[1]}`,
               isApplied: isReset ? false : true,
             },
           })
@@ -405,7 +321,6 @@ function AllFilters(props) {
   };
 
   const handleChangeSearchBar = (newValue) => {
-    console.log("8888 value", newValue);
     dispatch(
       pageName === PageNameEnum.AdlibraryDatabase
         ? allAdsPeramsDuck.changeSearchBarData({
@@ -431,8 +346,8 @@ function AllFilters(props) {
               enddate: format(newValue.selection.endDate, "yyyy-MM-dd"),
               chipText: `Running Date ${format(
                 newValue.selection.startDate,
-                "yyyy-MM-dd"
-              )} to ${format(newValue.selection.endDate, "yyyy-MM-dd")}`,
+                "yyyy/MM/dd"
+              )}   -  ${format(newValue.selection.endDate, "yyyy/MM/dd")}`,
               isApplied: true,
             },
           })
@@ -443,8 +358,8 @@ function AllFilters(props) {
               enddate: format(newValue.selection.endDate, "yyyy-MM-dd"),
               chipText: `Running Date ${format(
                 newValue.selection.startDate,
-                "yyyy-MM-dd"
-              )} to ${format(newValue.selection.endDate, "yyyy-MM-dd")}`,
+                "yyyy/MM/dd"
+              )}   -  ${format(newValue.selection.endDate, "yyyy/MM/dd")}`,
               isApplied: true,
             },
           })
@@ -498,12 +413,10 @@ function AllFilters(props) {
     <>
       <Stack
         direction={"row"}
-        // container
         sx={{ border: "1px solid #EBEBEB", borderRadius: 2 }}
       >
         <Grid item sx={{ display: "flex" }}>
           {/* Select Search Type Start  */}
-
           <Button
             onClick={(event) => {
               setSeachTypeAnchorEl(event.currentTarget);
@@ -592,7 +505,6 @@ function AllFilters(props) {
                   justifyContent={"center"}
                 >
                   <Button
-                    // disabled={props.loading}
                     variant="outlined"
                     sx={{
                       borderRadius: 50,
@@ -622,7 +534,6 @@ function AllFilters(props) {
         </Grid>
 
         {/* Searchbar Start  */}
-        {/* <Box sx={{ marginLeft: "21px",justifyContent:"bottom", alignItems:"end" ,width:"100%"}}> */}
         <InputBase
           value={searchBarValue}
           fullWidth
@@ -633,24 +544,19 @@ function AllFilters(props) {
                 dispatch(clearCashedPageData());
               handleChangeSearchBar(e.currentTarget.value);
             }
-            console.log("8888", e.target.value);
-            if (e.target.value.length === 0) {
-              console.log("8888 aaaaaaaaaaa", e.target.value);
 
+            if (e.target.value.length === 0) {
               handleChangeSearchBar("");
               pageName === PageNameEnum.AdlibraryDatabase &&
                 dispatch(clearCashedPageData());
-              console.log("8888 bbbbbbb", e.target.value);
             }
           }}
           onChange={(e) => {
-            console.log("88888 searcgh ", searchBarValue);
             setSearchBarValue(e.currentTarget.value);
           }}
           size="large"
           sx={{ paddingLeft: "15px" }}
         />
-        {/* </Box> */}
         {/* Searchbar End  */}
       </Stack>
       <Grid
@@ -664,7 +570,6 @@ function AllFilters(props) {
         <Grid item lg={11} md={12} sm={12} xs={12}>
           {/* Date Filter Start */}
           <Button
-            // disabled={props.loading}
             onClick={(event) => {
               setAnchorEl(event.currentTarget);
             }}
@@ -705,7 +610,6 @@ function AllFilters(props) {
             open={open}
             add={open ? "simple-popover" : undefined}
             onClose={() => {
-              // callFilters();
               setAnchorEl(null);
             }}
             transformOrigin={{
@@ -723,8 +627,6 @@ function AllFilters(props) {
                 handleStartDateChange(item);
                 setRange([item.selection]);
               }}
-              // style={{ color:"black"}}
-              // backgroundColor="pink"
               rangeColors={["#00CBFF"]}
               editableDateInputs={false}
               ranges={range}
@@ -737,7 +639,6 @@ function AllFilters(props) {
 
           {/* Ad Count Filter Start */}
           <Button
-            // disabled={props.loading}
             onClick={(e) => setrangeAnchorEl(e.currentTarget)}
             variant="outlined"
             size="large"
@@ -777,7 +678,6 @@ function AllFilters(props) {
             open={addcounteropen}
             anchorEl={rangeanchorel}
             onClose={() => {
-              // callFilters();
               setrangeAnchorEl(null);
             }}
             add={open ? "simple-popover" : undefined}
@@ -911,16 +811,6 @@ function AllFilters(props) {
                           savedPageRangeAdcountValue.min,
                           savedPageRangeAdcountValue.max,
                         ]
-                    // [rangeAdcountValue.min, rangeAdcountValue.max]
-                    // pageName === PageNameEnum.AdlibraryDatabase
-                    //   ? [
-                    //       allAdsPerams?.appliedFilters?.AdCount?.min,
-                    //       allAdsPerams?.appliedFilters?.AdCount?.max,
-                    //     ]
-                    //   : [
-                    //       savedAdsPerams?.appliedFilters?.AdCount?.min,
-                    //       savedAdsPerams?.appliedFilters?.AdCount?.max,
-                    //     ]
                   }
                   min={
                     pageName === PageNameEnum.AdlibraryDatabase
@@ -957,7 +847,6 @@ function AllFilters(props) {
                       });
                     }
                   }}
-                  // onChange={(e) => handleAdsCountChange(e.target.value)}
                 />
                 <ResetButton
                   onResetFunction={() => {
@@ -982,7 +871,6 @@ function AllFilters(props) {
                             key: "AdCount",
                           })
                     );
-                    // handleAdsCountChange([1, 1000], true);
                     setrangeAnchorEl(null);
                   }}
                   style={{
@@ -1004,35 +892,6 @@ function AllFilters(props) {
                     Reset
                   </Typography>
                 </ResetButton>
-
-                {/* <Button
-                  // disabled={props.loading}
-                  variant="outlined"
-                  sx={{
-                    borderRadius: 50,
-                    textTransform: "none",
-                    fontWeight: 600,
-                    borderColor: "#00CBFF",
-                    color: "#00CBFF",
-                    borderWidth: 2,
-                  }}
-                  className={classes.filterBtn}
-                  onClick={() => {
-                    pageName === PageNameEnum.AdlibraryDatabase
-                      ? setRangeAdcountValue({
-                          min: 1,
-                          max: allAdsPerams?.maxRanger?.AdCount?.max,
-                        })
-                      : setSavedPageRangeAdcountValue({
-                          min: 1,
-                          max: savedAdsPerams?.maxRanger?.AdCount?.max,
-                        });
-                    handleAdsCountChange([1, 1000], true);
-                    setrangeAnchorEl(null);
-                  }}
-                >
-                  Reset
-                </Button> */}
               </Stack>
             </Box>
           </Popover>
@@ -1040,7 +899,6 @@ function AllFilters(props) {
 
           {/* Ad Status Filter Start */}
           <Button
-            // disabled={props.loading}
             variant="outlined"
             onClick={(e) => setAdStatusAnchorel(e.currentTarget)}
             size="large"
@@ -1079,7 +937,6 @@ function AllFilters(props) {
             anchorEl={adStatusAnchorel}
             add={openAdStatusAnchorel ? "simple-popover" : undefined}
             onClose={() => {
-              // callFilters();
               setAdStatusAnchorel(null);
             }}
             open={openAdStatusAnchorel}
@@ -1151,28 +1008,6 @@ function AllFilters(props) {
                       Reset
                     </Typography>
                   </ResetButton>
-
-                  {/* <Button
-                    // disabled={props.loading}
-                    variant="outlined"
-                    sx={{
-                      borderRadius: 50,
-                      fontWeight: 600,
-                      borderColor: "#00CBFF",
-                      textTransform: "none",
-                      color: "#00CBFF",
-                      height: "35px",
-                      width: "80px",
-                      borderWidth: 2,
-                    }}
-                    className={classes.filterBtn}
-                    onClick={(e) => {
-                      handleChangeStatus("", true);
-                      setAdStatusAnchorel(null);
-                    }}
-                  >
-                    Reset
-                  </Button> */}
                 </Box>
               </FormControl>
             </Box>
@@ -1181,7 +1016,6 @@ function AllFilters(props) {
 
           {/* Facebook Likes Filter Start */}
           <Button
-            // disabled={props.loading}
             variant="outlined"
             onClick={(e) => setFacebookLikeAnchorEl(e.currentTarget)}
             sx={{
@@ -1218,7 +1052,6 @@ function AllFilters(props) {
             anchorEl={facebookLikeanchorel}
             add={openFaceboolLike ? "simple-popover" : undefined}
             onClose={() => {
-              // callFilters();
               setFacebookLikeAnchorEl(null);
             }}
             transformOrigin={{
@@ -1257,10 +1090,6 @@ function AllFilters(props) {
                         pageName === PageNameEnum.AdlibraryDatabase
                           ? rangeFacebookValue.min.toString()
                           : savedPageRangeFacebookValue.min.toString()
-
-                        // pageName === PageNameEnum.AdlibraryDatabase
-                        //   ? allAdsPerams?.appliedFilters?.FacebookLikes?.min.toString()
-                        //   : savedAdsPerams?.appliedFilters?.FacebookLikes?.min.toString()
                       }
                       onSave={(e) => {
                         if (Number(e.value) !== e.previousValue) {
@@ -1297,14 +1126,10 @@ function AllFilters(props) {
                         pageName === PageNameEnum.AdlibraryDatabase
                           ? rangeFacebookValue.max.toString()
                           : savedPageRangeFacebookValue.max.toString()
-                        // pageName === PageNameEnum.AdlibraryDatabase
-                        //   ? allAdsPerams?.appliedFilters?.FacebookLikes?.max.toString()
-                        //   : savedAdsPerams?.appliedFilters?.FacebookLikes?.max.toString()
                       }
                       onSave={(e) => {
                         if (Number(e.value) !== e.previousValue) {
                           if (pageName === PageNameEnum.AdlibraryDatabase) {
-                            // dispatch(clearCashedPageData());
                             setRangeFacebookValue({
                               min: rangeFacebookValue.min,
                               max: Number(e.value),
@@ -1362,15 +1187,6 @@ function AllFilters(props) {
                           savedPageRangeFacebookValue.min,
                           savedPageRangeFacebookValue.max,
                         ]
-                    // pageName === PageNameEnum.AdlibraryDatabase
-                    //   ? [
-                    //       allAdsPerams?.appliedFilters?.FacebookLikes?.min,
-                    //       allAdsPerams?.appliedFilters?.FacebookLikes?.max,
-                    //     ]
-                    //   : [
-                    //       savedAdsPerams?.appliedFilters?.FacebookLikes?.min,
-                    //       savedAdsPerams?.appliedFilters?.FacebookLikes?.max,
-                    //     ]
                   }
                   min={
                     pageName === PageNameEnum.AdlibraryDatabase
@@ -1406,8 +1222,6 @@ function AllFilters(props) {
                         max: e.target.value[1],
                       });
                     }
-
-                    // handleFacebookLikesChange(e.target.value)
                   }}
                 />
                 <ResetButton
@@ -1433,8 +1247,6 @@ function AllFilters(props) {
                             key: "FacebookLikes",
                           })
                     );
-
-                    // handleFacebookLikesChange([1, 100000], true);
                     setFacebookLikeAnchorEl(null);
                   }}
                   style={{
@@ -1456,35 +1268,6 @@ function AllFilters(props) {
                     Reset
                   </Typography>
                 </ResetButton>
-                {/* <Button
-                  // disabled={props.loading}
-                  variant="outlined"
-                  sx={{
-                    borderRadius: 50,
-                    fontWeight: 600,
-                    textTransform: "none",
-                    borderColor: "#00CBFF",
-                    color: "#00CBFF",
-                    borderWidth: 2,
-                  }}
-                  className={classes.filterBtn}
-                  onClick={() => {
-                    pageName === PageNameEnum.AdlibraryDatabase
-                      ? setRangeFacebookValue({
-                          min: 1,
-                          max: allAdsPerams?.maxRanger?.FacebookLikes?.max,
-                        })
-                      : setSavedPageRangeFacebookValue({
-                          min: 1,
-                          max: savedAdsPerams?.maxRanger?.FacebookLikes?.max,
-                        });
-
-                    handleFacebookLikesChange([1, 100000], true);
-                    setFacebookLikeAnchorEl(null);
-                  }}
-                >
-                  Reset
-                </Button> */}
               </Stack>
             </Box>
           </Popover>
@@ -1492,7 +1275,6 @@ function AllFilters(props) {
 
           {/* Instagram Likes Filter Start */}
           <Button
-            // disabled={props.loading}
             variant="outlined"
             onClick={(e) => setInstragramFollowerAnchorEl(e.currentTarget)}
             sx={{
@@ -1529,7 +1311,6 @@ function AllFilters(props) {
             anchorEl={instragramFolloweranchorel}
             add={openInstragramFollower ? "simple-popover" : undefined}
             onClose={() => {
-              // callFilters();
               setInstragramFollowerAnchorEl(null);
             }}
             transformOrigin={{
@@ -1570,9 +1351,6 @@ function AllFilters(props) {
                         pageName === PageNameEnum.AdlibraryDatabase
                           ? rangeInstragramValue.min.toString()
                           : savedPageRangeInstragramValue.min.toString()
-                        // pageName === PageNameEnum.AdlibraryDatabase
-                        //   ? allAdsPerams?.appliedFilters?.InstagramFollowers?.min.toString()
-                        //   : savedAdsPerams?.appliedFilters?.InstagramFollowers?.min.toString()
                       }
                       onSave={(e) => {
                         if (Number(e.value) !== e.previousValue) {
@@ -1611,9 +1389,6 @@ function AllFilters(props) {
                         pageName === PageNameEnum.AdlibraryDatabase
                           ? rangeInstragramValue.max.toString()
                           : savedPageRangeInstragramValue.max.toString()
-                        // pageName === PageNameEnum.AdlibraryDatabase
-                        //   ? allAdsPerams?.appliedFilters?.InstagramFollowers?.max.toString()
-                        //   : savedAdsPerams?.appliedFilters?.InstagramFollowers?.max.toString()
                       }
                       onSave={(e) => {
                         if (Number(e.value) !== e.previousValue) {
@@ -1676,18 +1451,6 @@ function AllFilters(props) {
                           savedPageRangeInstragramValue.min,
                           savedPageRangeInstragramValue.max,
                         ]
-
-                    // pageName === PageNameEnum.AdlibraryDatabase
-                    //   ? [
-                    //       allAdsPerams?.appliedFilters?.InstagramFollowers?.min,
-                    //       allAdsPerams?.appliedFilters?.InstagramFollowers?.max,
-                    //     ]
-                    //   : [
-                    //       savedAdsPerams?.appliedFilters?.InstagramFollowers
-                    //         ?.min,
-                    //       savedAdsPerams?.appliedFilters?.InstagramFollowers
-                    //         ?.max,
-                    //     ]
                   }
                   min={
                     pageName === PageNameEnum.AdlibraryDatabase
@@ -1723,7 +1486,6 @@ function AllFilters(props) {
                         max: e.target.value[1],
                       });
                     }
-                    // handleInstagramFollowersChange(e.target.value)
                   }}
                 />
                 <ResetButton
@@ -1750,8 +1512,6 @@ function AllFilters(props) {
                             key: "InstagramFollowers",
                           })
                     );
-
-                    // handleInstagramFollowersChange([1, 10000], true);
                     setInstragramFollowerAnchorEl(null);
                   }}
                   style={{
@@ -1773,36 +1533,6 @@ function AllFilters(props) {
                     Reset
                   </Typography>
                 </ResetButton>
-
-                {/* <Button
-                  // disabled={props.loading}
-                  variant="outlined"
-                  sx={{
-                    borderRadius: 50,
-                    textTransform: "none",
-                    fontWeight: 600,
-                    borderColor: "#00CBFF",
-                    color: "#00CBFF",
-                    borderWidth: 2,
-                  }}
-                  className={classes.filterBtn}
-                  onClick={() => {
-                    pageName === PageNameEnum.AdlibraryDatabase
-                      ? setRangeInstragramValue({
-                          min: 1,
-                          max: allAdsPerams?.maxRanger?.InstagramFollowers?.max,
-                        })
-                      : setSavedPageRangeInstragramValue({
-                          min: 1,
-                          max: savedAdsPerams?.maxRanger?.InstagramFollowers
-                            ?.max,
-                        });
-                    handleInstagramFollowersChange([1, 10000], true);
-                    setInstragramFollowerAnchorEl(null);
-                  }}
-                >
-                  Reset
-                </Button> */}
               </Stack>
             </Box>
           </Popover>
@@ -1927,26 +1657,6 @@ function AllFilters(props) {
                       Reset
                     </Typography>
                   </ResetButton>
-                  {/* <Button
-                    variant="outlined"
-                    sx={{
-                      borderRadius: 50,
-                      fontWeight: 600,
-                      textTransform: "none",
-                      borderColor: "#00CBFF",
-                      color: "#00CBFF",
-                      height: "35px",
-                      width: "80px",
-                      borderWidth: 2,
-                    }}
-                    className={classes.filterBtn}
-                    onClick={() => {
-                      handleMediaTypechange("", true);
-                      setMediaTypeAnchorel(null);
-                    }}
-                  >
-                    Reset
-                  </Button> */}
                 </Box>
               </FormControl>
             </Box>
@@ -2058,27 +1768,6 @@ function AllFilters(props) {
                       Reset
                     </Typography>
                   </ResetButton>
-
-                  {/* <Button
-                    variant="outlined"
-                    sx={{
-                      borderRadius: 50,
-                      fontWeight: 600,
-                      textTransform: "none",
-                      borderColor: "#00CBFF",
-                      color: "#00CBFF",
-                      height: "35px",
-                      width: "80px",
-                      borderWidth: 2,
-                    }}
-                    className={classes.filterBtn}
-                    onClick={() => {
-                      handleButtonType("", true);
-                      setButtonTypeAnchorEl(null);
-                    }}
-                  >
-                    Reset
-                  </Button> */}
                 </Box>
               </FormControl>
             </Box>
@@ -2091,22 +1780,18 @@ function AllFilters(props) {
           <Box
             sx={{
               display: "flex",
-              // justifyContent: "end",
-              // alignItems: "end",
-              // "@media (max-width: 450px)": {
+
               marginTop: ShowFilterWithClearButton ? 2 : "",
               justifyContent: ShowFilterWithClearButton ? "center" : "end",
               alignItems: ShowFilterWithClearButton ? "center" : "end",
               // },
             }}
           >
-            {/* <Grid container> */}
-            {/* <Grid item sx={{ marginTop: "23px" }}> */}
             <Button
               variant="outlined"
               sx={{
                 borderRadius: 50,
-                // width: "40%",
+
                 textTransform: "none",
                 fontWeight: 600,
                 borderColor: "#00CBFF",
@@ -2136,71 +1821,6 @@ function AllFilters(props) {
                 Clear
               </Typography>
             </Button>
-            {/* <ResetButton
-              onResetFunction={() => {
-                if (pageName === PageNameEnum.AdlibraryDatabase) {
-                  dispatch(allAdsPeramsDuck.clearFilterData());
-                } else {
-                  dispatch(savedAdsPeramsDuck.clearSavedFilterData());
-                }
-              }}
-              style={{
-                 width:ShowFilterWithClearButton?"40%":"",//{xs:"40%",sm:"40%",lg:"auto",md:"auto"},
-                
-                fontWeight: 600, 
-                // height: "40px",                 
-                color: "#00CBFF",
-                textTransform: "none",                
-              }}
-              borderWidth={3}
-            >
-              <Typography
-                paddingLeft={1}
-                paddingRight={1}
-                style={{
-                  textTransform: "none",
-                  color: "linear-gradient(45deg, #00CBFF 0%, #72E2FF 100%)",
-                }}
-                variant="p"
-              >
-                Clear
-              </Typography>
-            </ResetButton>
-            {(window.location.pathname === `/savedAds`&& ShowFilterWithClearButton) && <Button
-              sx={{
-                background:
-                  "linear-gradient(45deg, #00CBFF 0%, #72E2FF 100%)",
-                color: "white",
-                borderRadius: 30,
-                width: "40%",
-                height: "40px",
-                marginLeft:1,
-                visibility:{xs:"visible",lg:"hidden",md:"hidden",sm:"hidden"},
-                // visibility: {
-                //   xs:
-                //     window.location.pathname === `/savedAds`
-                //       ? "visible"
-                //       : "hidden",
-                //   lg: "hidden"
-                // },
-              }}
-            >
-              <img
-                src={filter}
-                alt="savedAds"
-                style={{
-                  width: "20px",
-                  height: "20px",
-                  float: "right",
-                  cursor: "pointer",
-                }}
-                onClick={() => {
-                  props.setFilterActivate(false);
-                }}
-              />
-            </Button>}
-            {/* </Grid> */}
-            {/* </Grid> */}
           </Box>
         </Grid>
         {/* Reset Filter End */}

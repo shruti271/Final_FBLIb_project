@@ -1,8 +1,7 @@
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
 
-const MyChart = (props) => {
-  // const dateobj = Array(30).fill(0);
+const SplineAreaGraph = (props) => {
   const option = {
     chart: {
       height: props.graphHeight,
@@ -10,7 +9,6 @@ const MyChart = (props) => {
       spacingLeft: 0,
     },
     title: {
-      text: "",
       align: "left",
       style: {
         fontSize: ".875rem",
@@ -19,19 +17,16 @@ const MyChart = (props) => {
       },
     },
 
-    subtitle: {
-      text: "",
-    },
     credits: {
       enabled: false,
     },
 
     xAxis: {
-      maxPadding:0,
+      maxPadding: 0,
       gridLineWidth: 1,
       showEmpty: false,
       visible: props.axisVisiblity,
-      // type: "datetime",
+      type: "datetime",
       labels: {
         format: "{value:%b - %e}",
       },
@@ -62,43 +57,27 @@ const MyChart = (props) => {
     plotOptions: {
       areaspline: {
         lineColor: "#00CBFF",
-        // lineColor: {
-        //   linearGradient: {
-        //     // color:
-        //     // "linear-gradient(270deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)",
-        //     x1: 1,
-        //     y1: 1,
-        //     x2: 0,
-        //     y2: 1,
-        //   },
-        // stops: [
-        //     [0.1, "#B5EDFF"],
-        //     [0.5, "#00CBFF"],
-        //     [0.8, "#6721FF"],
-        // ]
-        // },
       },
     },
 
     series: [
       {
-        type: "areaspline", // props.fillType,
+        type: "areaspline",
         name: "No of ads",
         data: [...props.chartData?.map((a) => a.noOfCopyAds)].slice(-30),
         // data:[23,46,3,45,34,12,67,24,56,45,6],
         lineWidth: 4,
-        // lineTension: 1,
         marker: {
           enabled: false,
           fillColor: "white",
           lineWidth: 2,
-          lineColor: "#00CBFF", // inherit from series
+          lineColor: "#00CBFF",
           radius: 5,
-        },        
+        },
         color: {
           linearGradient: {
-            color:"linear-gradient(180deg, rgba(0, 203, 255, 0.5) 0%, rgba(0, 203, 255, 0) 100%)",
-              // "linear-gradient(180deg, rgba(181, 237, 255, 0.5) 7.32%, rgba(0, 203, 255, 0.5) 32.15%, rgba(103, 33, 255, 0.5) 100.8%)",
+            color:
+              "linear-gradient(180deg, rgba(0, 203, 255, 0.5) 0%, rgba(0, 203, 255, 0) 100%)",
             x1: 1,
             y1: 0,
             x2: 1,
@@ -106,14 +85,7 @@ const MyChart = (props) => {
           },
           stops: [
             [0, "rgba(0, 203, 255, 0.5)"],
-            [1, "rgba(0, 203, 255, 0)"],            
-            // [0, "rgba(0, 203, 255, 0.5)"],
-            // [0.99, "rgba(0, 203, 255, 0.1)"],
-            // [1, "rgba(0, 203, 255, 0) 100%)"]
-            // [0.07, "rgba(181, 237, 255, 0.5)"],
-            // [0.32, "rgba(0, 203, 255, 0.5)"],
-            // [0.97, "rgba(103, 33, 255, 0.5)"],
-          
+            [1, "rgba(0, 203, 255, 0)"],
           ],
         },
 
@@ -131,4 +103,4 @@ const MyChart = (props) => {
   );
 };
 
-export default MyChart;
+export default SplineAreaGraph;

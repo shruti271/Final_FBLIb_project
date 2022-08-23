@@ -22,7 +22,6 @@ import {
   loadSingleAdDataStart,
 } from "../../redux/ducks/singleAdsData";
 import { FadeLoader } from "react-spinners";
-import MyChart from "../../components/linemy";
 import Download from "@mui/icons-material/Download";
 import {
   addToSavedAdsFilterLocalStart,
@@ -32,6 +31,7 @@ import {
 import Shareicon from "../../assets/Shareicon.svg";
 import Saveicon from "../../assets/Saveicon.svg";
 import StarFill from "../../assets/StarFill.svg";
+import SplineAreaGraph from "../../components/SplineAreaGraph";
 
 const ReadMore = ({ children }) => {
   const text = children;
@@ -929,7 +929,7 @@ function AdDeatails() {
                       {/* <AreaLineGraph /> */}
                       {/* <CustomizedView /> */}
                       {/* <AreaLineGraph /> */}
-                      <MyChart
+                      <SplineAreaGraph
                         chartData={adDetail?.history}
                         dataBoxVisiblity={false}
                         axisVisiblity={true}
@@ -961,7 +961,7 @@ function AdDeatails() {
 
                 <Grid container>
                   <Grid item xs={12} lg={12} sm={12}>
-                    <MyChart
+                    <SplineAreaGraph
                       chartData={adDetail?.history}
                       dataBoxVisiblity={false}
                       axisVisiblity={true}

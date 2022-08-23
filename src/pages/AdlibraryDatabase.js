@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Grid, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { makeStyles } from "@material-ui/core/styles";
 import { Box } from "@mui/system";
@@ -11,7 +11,7 @@ import SortFilter from "../components/SortFilter";
 import AdsList from "../components/AdsList";
 import FilterChips from "../components/FilterChips";
 import { useSkipInitialEffect } from "../utils/customHooks";
-import PagePagination from "../components/Page_Pagination";
+// import PagePagination from "../components/Page_Pagination";
 
 const useStyles = makeStyles((theme) => ({
   title: {

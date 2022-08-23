@@ -1,34 +1,24 @@
 import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
-import {
-  Box,
-  Divider,
-  IconButton,
-  Menu,
-  MenuItem,
-  Stack,
-  Typography,
-} from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { Box, Divider, Menu, MenuItem, Stack, Typography } from "@mui/material";
+import PersonIcon from "@mui/icons-material/Person";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import useStyles from "../css/mediapage";
+import { logoutUser } from "../services";
+import EyeofEcomLaptopLogo from "../assets/EyeofEcomLaptopLogo.png";
 import settings from "../assets/settings.svg";
 import logout from "../assets/Logout.svg";
 import contactUs from "../assets/contactUs.svg";
-// import NotificationsIcon from "@mui/icons-material/Notifications";
-import PersonIcon from "@mui/icons-material/Person";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import { useSelector } from "react-redux";
-import useStyles from "../css/mediapage";
-import { logoutUser } from "../services";
-import { getFaviconEl } from "../utils/getFaviconEl";
-import Eyeofecomlogo from "../assets/Eye of Ecom  Blue.png";
+
 const drawerWidth = 276;
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
-})(({ theme, open }) => ({
-  // width: `calc(100% - calc(${theme.spacing(7)} + 20px))`,
+})(({ theme, open }) => ({  
   transition: theme.transitions.create(["width", "margin"], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
@@ -36,8 +26,7 @@ const AppBar = styled(MuiAppBar, {
   backgroundColor: "#fff",
   zIndex: 1200,
   ...(open && {
-    marginLeft: drawerWidth,
-    // width: `calc(100% - ${drawerWidth}px)`,
+    marginLeft: drawerWidth,    
     transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
@@ -47,6 +36,8 @@ const AppBar = styled(MuiAppBar, {
 
 export const CustomAppBar = ({ isOpen, setIsOpen }) => {
   const classes = useStyles();
+  const navigate = useNavigate();
+
   const { accountSettings } = useSelector((state) => state.accountSettings);
 
   const MenuListOptios = [
@@ -54,12 +45,14 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
     { name: "Contact Support", icon: contactUs, url: "/contactSupport" },
     { name: "Logout", icon: logout, url: "/auth/login" },
   ];
+
   const [isMenuOptionActive, setIsMenuOptionActive] = React.useState("");
-  const navigate = useNavigate();
   const [anchoerEL, setAnchoerEL] = React.useState();
+
   const handleOpenMenu = (e) => {
     setAnchoerEL(e.currentTarget);
   };
+
   const userLogout = async () => {
     logoutUser().then(
       (data) => {
@@ -72,15 +65,15 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
       }
     );
   };
+
   const handleCloseMenu = () => {
     setAnchoerEL(null);
   };
+
   useEffect(() => {
     setIsMenuOptionActive(window.location.pathname);
-    // const favicon = getFaviconEl();
-    // console.log("login", favicon);
-    // favicon.href = "fav.ico";
   }, []);
+
   return (
     <>
       <AppBar open={isOpen}>
@@ -95,67 +88,18 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
             }}
           >
             <Stack direction={"row"}>
-            <img
-                  src={Eyeofecomlogo}
-                  alt="444"
-                  height={33}
-                  onClick={() => {
-                    navigate("/");
-                  }}
-                  style={{cursor:"pointer"}}
-                />
-                <Typography
-                  color="black"
-                  mb={2}
-                  sx={{
-                    fontWeight: 600,
-                    border: "1px solid black",
-                    paddingInline: "1px",
-                    fontSize: "10px",                    
-                  }}
-                >
-                  BETA
-                </Typography>
-              {/* <IconButton
-                color="inherit"
-                // aria-label="open drawer"
-                // onClick={() => {
-                //   !isOpen ? setIsOpen(true) : setIsOpen(false);
-                // }}
-                // edge="start"
-                disableElevation
-                disableFocusRipple={true}                
-                sx={{
-                  color: "#00CBFF",
+              <img
+                src={EyeofEcomLaptopLogo}
+                alt="444"
+                height={33}
+                onClick={() => {
+                  navigate("/");
                 }}
-              >
-                <img
-                  src={Eyeofecomlogo}
-                  alt="444"
-                  height={33}
-                  onClick={() => {
-                    navigate("/");
-                  }}
-                />
-                <Typography
-                  color="black"
-                  mb={2}
-                  sx={{
-                    fontWeight: 600,
-                    border: "1px solid black",
-                    paddingInline: "1px",
-                    fontSize: "10px",
-                  }}
-                >
-                  BETA
-                </Typography>
-              </IconButton> */}
+                style={{ cursor: "pointer" }}
+              />
             </Stack>
             <Stack>
               <Stack direction={"row"} spacing={2}>
-                {/* <Box className={classes.avtar}>
-                  <NotificationsIcon />
-                </Box> */}
                 <Box
                   className={classes.avtar}
                   onClick={handleOpenMenu}

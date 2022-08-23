@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { makeStyles } from "@material-ui/core/styles";
 import MenuIcon from "@mui/icons-material/Menu";
-import { makeStyles, MuiThemeProvider } from "@material-ui/core/styles";
-import {
-  Divider,
+import SettingsIcon from '@mui/icons-material/Settings';
+import LogoutIcon from '@mui/icons-material/Logout';
+import {  
   FormControlLabel,
   Grid,
   Stack,
@@ -16,15 +18,11 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
+import { logoutUser } from "../services";
 import AdLibraryDatabaseIcon from "../SvgIcons/AdLibraryDatabaseIcon";
 import SaveIcon from "../SvgIcons/SaveIcon";
 import ContactIcon from "../SvgIcons/ContactIcon";
-import settings from "../assets/settings.svg";
-import logout from "../assets/Logout.svg";
-import { useNavigate } from "react-router-dom";
-import { logoutUser } from "../services";
-import SettingsIcon from '@mui/icons-material/Settings';
-import LogoutIcon from '@mui/icons-material/Logout';
+
 const useStyles = makeStyles((theme) => ({
   handbergurMenu: {
     margin: theme.spacing(1, 3),
@@ -69,6 +67,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "80px",    
   }
 }));
+
 const sideBarMenuItems = {
   ADLIBSDATABASE: "Adlibrary Database",
   SAVEDADS: "Saved Ads",
@@ -76,17 +75,22 @@ const sideBarMenuItems = {
   SUPPORT: "Contact Support",
   LOGOUT: "Log Out",
 };
+
 const MobileDrawer = ({ setIsOpen }) => {
   const classes = useStyles();
   const navigate = useNavigate();
   const theme = useTheme();
+
   const divdercenter = useMediaQuery(theme.breakpoints.up("sm"));
+  
   const [selectedMenuItem, setSelectedMenuItem] = useState(
     sideBarMenuItems.ADLIBSDATABASE
   );
-  console.log("///",selectedMenuItem)
+  
   const [currentPage, setCurrentPage] = useState();
   const [openLogOut, setOpenLogOut] = React.useState(false);
+  
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (window.location.pathname === `/ContactSupport`) {
       setSelectedMenuItem(sideBarMenuItems.SUPPORT);
@@ -112,6 +116,7 @@ const MobileDrawer = ({ setIsOpen }) => {
   const handleClose = () => {
     setOpenLogOut(false);
   };
+  
   const userLogout = async () => {
     logoutUser().then(
       (data) => {
@@ -130,8 +135,7 @@ const MobileDrawer = ({ setIsOpen }) => {
         className={classes.handbergurMenu}
         sx={{ fill: "#FFFFFF", fontSize: "35px" }}
         onClick={() => {
-          setIsOpen(() => false);
-          console.log("first");
+          setIsOpen(() => false);          
         }}
       />
         <Grid container sx={{ display: "flex", justifyContent: "center" }}>
@@ -281,8 +285,7 @@ const MobileDrawer = ({ setIsOpen }) => {
                     />}
                   />
                   <Typography
-                    variant="h6"
-                    // sx={{ fontWeight: "bold", color: "#3A3D4B" }}
+                    variant="h6"                    
                     sx={{
                       fontSize: { xs: 18, sm: 25 },
                       fontWeight: "bold",
@@ -335,8 +338,7 @@ const MobileDrawer = ({ setIsOpen }) => {
                     }
                   />
                   <Typography
-                    variant="h6"
-                    // sx={{ fontWeight: "bold", color: "#3A3D4B" }}
+                    variant="h6"                    
                     sx={{
                       fontSize: { xs: 18, sm: 25 },
                       fontWeight: "bold",
@@ -371,8 +373,7 @@ const MobileDrawer = ({ setIsOpen }) => {
                     />}
                   />
                   <Typography
-                    variant="h6"
-                    // sx={{ fontWeight: "bold", color: "#3A3D4B" }}
+                    variant="h6"                    
                     sx={{
                       fontSize: { xs: 18, sm: 25 },
                       fontWeight: "bold",

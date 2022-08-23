@@ -1,20 +1,29 @@
 import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import MuiDrawer from "@mui/material/Drawer";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { useLocation, useNavigate } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { Stack } from "@mui/material";
-import AdLibraryDatabaseIcon from "../SvgIcons/AdLibraryDatabaseIcon";
 import ContactIcon from "../SvgIcons/ContactIcon";
 import SaveIcon from "../SvgIcons/SaveIcon";
 import Menuicon from "../assets/bxs_left-arrow-circle.svg";
+import AdLibraryDatabaseIcon from "../SvgIcons/AdLibraryDatabaseIcon";
+
+const drawerWidth = 276;
+
+const sideBarMenuItems = {
+  ADLIBSDATABASE: "Adlibrary Database",
+  SAVEDADS: "Saved Ads",
+  SUPPORT: "Contact Support",
+  LOGOUT: "Log Out",
+};
+
 const useStyles = makeStyles(() => ({
   selectedMenu: {
     background:
       " linear-gradient(270deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 100%)",
-    // borderRight: "4px solid #00C9FD",
     borderRadius: "32px",
   },
   openDrawerItemWrapper: {
@@ -35,8 +44,6 @@ const useStyles = makeStyles(() => ({
     paddingBottom: "20px",
   },
 }));
-
-const drawerWidth = 276;
 
 const openedMixin = (theme) => ({
   width: drawerWidth,
@@ -81,22 +88,17 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
-const sideBarMenuItems = {
-  ADLIBSDATABASE: "Adlibrary Database",
-  SAVEDADS: "Saved Ads",
-  SUPPORT: "Contact Support",
-  LOGOUT: "Log Out",
-};
-
 export const CustomSidebar = ({ isOpen, setIsOpen }) => {
   const classes = useStyles();
   const navigate = useNavigate();
+
   const [selectedMenuItem, setSelectedMenuItem] = useState(
     sideBarMenuItems.ADLIBSDATABASE
   );
   const [currentPage, setCurrentPage] = useState();
   const { state } = useLocation();
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (window.location.pathname === `/ContactSupport`) {
       setSelectedMenuItem(sideBarMenuItems.SUPPORT);
@@ -116,28 +118,29 @@ export const CustomSidebar = ({ isOpen, setIsOpen }) => {
   useEffect(() => {
     if (state) setCurrentPage(state.fromPage);
     localStorage.setItem("IsDrawerOpen", JSON.stringify(isOpen));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <>
       <Drawer variant="permanent" open={isOpen}>
         <Stack sx={{ height: "100%", background: "#002838" }}>
-              <Box pt={9} sx={{display:"flex",justifyContent:"end"}}>
-                  <img
-                    alt="small-logo"
-                    src={Menuicon}
-                    height="40"
-                    style={{
-                      cursor: "pointer",
-                      position: "fixed",
-                      marginLeft:"20px",
-                      marginTop:"-12px",
-                      transform:isOpen === false ?"rotate(180deg)":"rotate(0deg)" 
-                    }}
-                    onClick={() => {
-                      !isOpen ? setIsOpen(true) : setIsOpen(false);
-                    }}
-                  />
-              </Box>
+          <Box pt={9} sx={{ display: "flex", justifyContent: "end" }}>
+            <img
+              alt="small-logo"
+              src={Menuicon}
+              height="40"
+              style={{
+                cursor: "pointer",
+                position: "fixed",
+                marginLeft: "20px",
+                marginTop: "-12px",
+                transform: isOpen === false ? "rotate(180deg)" : "rotate(0deg)",
+              }}
+              onClick={() => {
+                !isOpen ? setIsOpen(true) : setIsOpen(false);
+              }}
+            />
+          </Box>
           <Box
             className={
               !isOpen
@@ -165,12 +168,10 @@ export const CustomSidebar = ({ isOpen, setIsOpen }) => {
                   isOpen ? classes.openDrawerItem : classes.closeDrawerItem
                 }
               >
-                <AdLibraryDatabaseIcon
-                  sx={{ color: "#FFFFFF" }}
-                />
+                <AdLibraryDatabaseIcon sx={{ color: "#FFFFFF" }} />
                 <Typography
                   color="#FFFFFF"
-                  sx={{ marginLeft: "26px", fontWeight: 500}}
+                  sx={{ marginLeft: "26px", fontWeight: 500 }}
                 >
                   Adilbrary Database
                 </Typography>
@@ -188,9 +189,7 @@ export const CustomSidebar = ({ isOpen, setIsOpen }) => {
           >
             <Box
               sx={{
-                // marginTop: "6px",
                 cursor: "pointer",
-                // marginRight:1
               }}
               className={
                 selectedMenuItem === sideBarMenuItems.SAVEDADS
@@ -213,7 +212,7 @@ export const CustomSidebar = ({ isOpen, setIsOpen }) => {
 
                 <Typography
                   color="#FFFFFF"
-                  sx={{ marginLeft: "26px", fontWeight: 500, }}
+                  sx={{ marginLeft: "26px", fontWeight: 500 }}
                 >
                   Saved Ads
                 </Typography>
@@ -226,7 +225,7 @@ export const CustomSidebar = ({ isOpen, setIsOpen }) => {
                 ? classes.openDrawerItemWrapper
                 : classes.closeDrawerItemWrapper
             }
-            sx={{ marginTop:"auto", paddingRight: 1,paddingBlockEnd:4 }}
+            sx={{ marginTop: "auto", paddingRight: 1, paddingBlockEnd: 4 }}
           >
             <Box
               sx={{
@@ -251,7 +250,7 @@ export const CustomSidebar = ({ isOpen, setIsOpen }) => {
                 <ContactIcon sx={{ color: "#FFFFFF" }} />
                 <Typography
                   color="#FFFFFF"
-                  sx={{ marginLeft: "26px", fontWeight: 500, }}
+                  sx={{ marginLeft: "26px", fontWeight: 500 }}
                 >
                   Contact Support
                 </Typography>

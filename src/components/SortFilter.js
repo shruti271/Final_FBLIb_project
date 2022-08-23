@@ -50,7 +50,8 @@ function SortFilter(props) {
   const openSortByAnchorel = Boolean(sortByAnchorel);
 
   const handleChangeSortType = (event, newValue) => {
-    pageName === PageNameEnum.AdlibraryDatabase && dispatch(clearCashedPageData());
+    pageName === PageNameEnum.AdlibraryDatabase &&
+      dispatch(clearCashedPageData());
     dispatch(
       pageName === PageNameEnum.AdlibraryDatabase
         ? allAdsPeramsDuck.changeSortFilters({
@@ -69,7 +70,8 @@ function SortFilter(props) {
   };
 
   const handleChangeAceOrDes = (event, newValue) => {
-    pageName === PageNameEnum.AdlibraryDatabase && dispatch(clearCashedPageData());
+    pageName === PageNameEnum.AdlibraryDatabase &&
+      dispatch(clearCashedPageData());
     dispatch(
       pageName === PageNameEnum.AdlibraryDatabase
         ? allAdsPeramsDuck.changeSortFilters({
@@ -117,7 +119,11 @@ function SortFilter(props) {
           />
         }
       >
-        <Typography noWrap textTransform="capitalize" sx={{fontWeight:500,fontSize:"16px"}}>
+        <Typography
+          noWrap
+          textTransform="capitalize"
+          sx={{ fontWeight: 500, fontSize: "16px" }}
+        >
           {/* {sortedDetail || "sort by"} */}
           Sort by
         </Typography>
@@ -154,32 +160,56 @@ function SortFilter(props) {
               <FormControlLabel
                 value="startDate"
                 control={<Radio style={{ color: "#00CBFF" }} />}
-                label={<Typography sx={{fontWeight:500,fontSize:"16px"}}>Started running date</Typography>}
+                label={
+                  <Typography sx={{ fontWeight: 500, fontSize: "16px" }}>
+                    Started running date
+                  </Typography>
+                }
               />
               <FormControlLabel
                 value="lastUpdatedTime"
                 control={<Radio style={{ color: "#00CBFF" }} />}
-                label={<Typography sx={{fontWeight:500,fontSize:"16px"}}>Recently updated</Typography>}
+                label={
+                  <Typography sx={{ fontWeight: 500, fontSize: "16px" }}>
+                    Recently updated
+                  </Typography>
+                }
               />
               <FormControlLabel
                 value="pageInfo.platforms.Facebook.likes"
                 control={<Radio style={{ color: "#00CBFF" }} />}
-                label={<Typography sx={{fontWeight:500,fontSize:"16px"}}>Page likes</Typography>}
+                label={
+                  <Typography sx={{ fontWeight: 500, fontSize: "16px" }}>
+                    Page likes
+                  </Typography>
+                }
               />
               <FormControlLabel
                 value="noOfCopyAds"
                 control={<Radio style={{ color: "#00CBFF" }} />}
-                label={<Typography sx={{fontWeight:500,fontSize:"16px"}}>Ad count total</Typography>}
+                label={
+                  <Typography sx={{ fontWeight: 500, fontSize: "16px" }}>
+                    Ad count total
+                  </Typography>
+                }
               />
               <FormControlLabel
                 value="true"
                 control={<Radio style={{ color: "#00CBFF" }} />}
-                label={<Typography sx={{fontWeight:500,fontSize:"16px"}}>Ad count increase</Typography>}
+                label={
+                  <Typography sx={{ fontWeight: 500, fontSize: "16px" }}>
+                    Ad count increase
+                  </Typography>
+                }
               />
               <FormControlLabel
                 value="false"
                 control={<Radio style={{ color: "#00CBFF" }} />}
-                label={<Typography sx={{fontWeight:500,fontSize:"16px"}}>Ad count decrease</Typography>}
+                label={
+                  <Typography sx={{ fontWeight: 500, fontSize: "16px" }}>
+                    Ad count decrease
+                  </Typography>
+                }
               />
             </RadioGroup>
           </FormControl>
@@ -198,32 +228,78 @@ function SortFilter(props) {
               <FormControlLabel
                 disabled={
                   pageName === PageNameEnum.AdlibraryDatabase
-                  ? 
-                  ((allAdsPerams?.sortFilter?.type?.selectedValue === "false" ||
-                  allAdsPerams?.sortFilter?.type?.selectedValue === "true"
-                  ) ? true : false)
-                  : ((savedAdsPerams?.sortFilter?.type?.selectedValue === "false" ||
-                  savedAdsPerams?.sortFilter?.type?.selectedValue === "true"
-                  ) ? true : false)
+                    ? allAdsPerams?.sortFilter?.type?.selectedValue ===
+                        "false" ||
+                      allAdsPerams?.sortFilter?.type?.selectedValue === "true"
+                      ? true
+                      : false
+                    : savedAdsPerams?.sortFilter?.type?.selectedValue ===
+                        "false" ||
+                      savedAdsPerams?.sortFilter?.type?.selectedValue === "true"
+                    ? true
+                    : false
                 }
                 value="asc"
-                control={<Radio style={{ color: "#00CBFF" }} />}
-                label={<Typography sx={{fontWeight:500,fontSize:"16px"}}>Ascending</Typography>}
+                control={
+                  <Radio
+                    style={{
+                      color:
+                        allAdsPerams?.sortFilter?.type?.selectedValue ===
+                          "true" ||
+                        allAdsPerams?.sortFilter?.type?.selectedValue ===
+                          "false" ||
+                        savedAdsPerams?.sortFilter?.type?.selectedValue ===
+                          "false" ||
+                        savedAdsPerams?.sortFilter?.type?.selectedValue ===
+                          "true"
+                          ? "grey"
+                          : "#00CBFF",
+                    }}
+                  />
+                }
+                label={
+                  <Typography sx={{ fontWeight: 500, fontSize: "16px" }}>
+                    Ascending
+                  </Typography>
+                }
               />
               <FormControlLabel
                 disabled={
                   pageName === PageNameEnum.AdlibraryDatabase
-                  ? 
-                  ((allAdsPerams?.sortFilter?.type?.selectedValue === "false" ||
-                  allAdsPerams?.sortFilter?.type?.selectedValue === "true"
-                  ) ? true : false)
-                  : ((savedAdsPerams?.sortFilter?.type?.selectedValue === "false" ||
-                  savedAdsPerams?.sortFilter?.type?.selectedValue === "true"
-                  ) ? true : false)
+                    ? allAdsPerams?.sortFilter?.type?.selectedValue ===
+                        "false" ||
+                      allAdsPerams?.sortFilter?.type?.selectedValue === "true"
+                      ? true
+                      : false
+                    : savedAdsPerams?.sortFilter?.type?.selectedValue ===
+                        "false" ||
+                      savedAdsPerams?.sortFilter?.type?.selectedValue === "true"
+                    ? true
+                    : false
                 }
                 value="desc"
-                control={<Radio style={{ color: "#00CBFF" }} />}
-                label={<Typography sx={{fontWeight:500,fontSize:"16px"}}>Descending</Typography>}
+                control={
+                  <Radio
+                    style={{
+                      color:
+                        allAdsPerams?.sortFilter?.type?.selectedValue ===
+                          "true" ||
+                        allAdsPerams?.sortFilter?.type?.selectedValue ===
+                          "false" ||
+                        savedAdsPerams?.sortFilter?.type?.selectedValue ===
+                          "false" ||
+                        savedAdsPerams?.sortFilter?.type?.selectedValue ===
+                          "true"
+                          ? "grey"
+                          : "#00CBFF",
+                    }}
+                  />
+                }
+                label={
+                  <Typography sx={{ fontWeight: 500, fontSize: "16px" }}>
+                    Descending
+                  </Typography>
+                }
               />
             </RadioGroup>
           </FormControl>
