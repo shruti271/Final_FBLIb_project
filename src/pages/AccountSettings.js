@@ -1,11 +1,18 @@
 import {
+  Backdrop,
   Button,
   CircularProgress,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  Fade,
   FormControlLabel,
   Grid,
   IconButton,
   InputAdornment,
   InputBase,
+  Modal,
   Stack,
   Typography,
   useMediaQuery,
@@ -37,6 +44,7 @@ function AccountSettings() {
   const navigate = useNavigate();
   const theme = useTheme();
   const [subLoading, setSubLoading] = useState(false);
+  const [open, setOpen] = React.useState(false);
   const [values, setValues] = React.useState({
     showPassword: false,
     isShowCurrentPassword: false,
@@ -128,35 +136,59 @@ function AccountSettings() {
     event.preventDefault();
   };
   const onError = (errors) => console.log("Errors Occurred !! :", errors);
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
 
+  const handleClose = () => {
+    setOpen(false);
+  };
   return (
     <>
       <Grid container>
-        <Grid item xs={12} sx={{ pl:{lg:5,md:5,sm:5}}}>
+        <Grid item xs={12} sx={{ pl: { lg: 5, md: 5, sm: 5 } }}>
           <Stack>
-            <Typography variant="h5" sx={{"@media (max-width: 450px)": {
+            <Typography
+              variant="h5"
+              sx={{
+                "@media (max-width: 450px)": {
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
                   marginTop: "15px",
-                },}}>
+                },
+              }}
+            >
               <b>Account Settings</b>
             </Typography>
 
-            <Stack direction={"column"} marginTop={2} sx={{"@media (max-width: 450px)": {
-             
+            <Stack
+              direction={"column"}
+              marginTop={2}
+              sx={{
+                "@media (max-width: 450px)": {
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
                   marginTop: "15px",
-                },}}>
-              <Box sx={{width:{lg:"80%",sm:"90%",xs:"90%",md:"90%"}}}>
-                <Typography variant="h6" className={classes.headindtextcenter} sx={{"@media (max-width: 450px)": {
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  marginTop: "15px",
-                },}}  >
+                },
+              }}
+            >
+              <Box
+                sx={{ width: { lg: "80%", sm: "90%", xs: "90%", md: "90%" } }}
+              >
+                <Typography
+                  variant="h6"
+                  className={classes.headindtextcenter}
+                  sx={{
+                    "@media (max-width: 450px)": {
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginTop: "15px",
+                    },
+                  }}
+                >
                   Personal Information
                 </Typography>
                 <Box
@@ -205,7 +237,11 @@ function AccountSettings() {
                             },
                           }}
                         >
-                          <Typography sx={{fontWeight:500,fontSize:"16px"}}>First Name</Typography>
+                          <Typography
+                            sx={{ fontWeight: 500, fontSize: "16px" }}
+                          >
+                            First Name
+                          </Typography>
                           <InputBase
                             className={classes.inputField}
                             disabled={
@@ -240,7 +276,11 @@ function AccountSettings() {
                             },
                           }}
                         >
-                          <Typography sx={{fontWeight:500,fontSize:"16px"}}>Last Name</Typography>
+                          <Typography
+                            sx={{ fontWeight: 500, fontSize: "16px" }}
+                          >
+                            Last Name
+                          </Typography>
 
                           <InputBase
                             className={classes.inputField}
@@ -286,9 +326,9 @@ function AccountSettings() {
                                 "linear-gradient(45deg, #00CBFF 0%, #72E2FF 100%)",
                               whiteSpace: "nowrap",
                               width: savebutton ? "auto" : "99%",
-                              textTransform:"none",
-                              fontWeight:600,
-                              fontSize:"16px",
+                              textTransform: "none",
+                              fontWeight: 600,
+                              fontSize: "16px",
                             }}
                           >
                             {loading &&
@@ -310,13 +350,22 @@ function AccountSettings() {
                 </Box>
               </Box>
 
-              <Box marginTop={showgrid ?3:0} sx={{width:{lg:"80%",sm:"90%",xs:"90%",md:"90%"}}} >
-                <Typography variant="h6" className={classes.headindtextcenter} sx={{"@media (max-width: 450px)": {
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  marginTop: "15px",
-                },}}>
+              <Box
+                marginTop={showgrid ? 3 : 0}
+                sx={{ width: { lg: "80%", sm: "90%", xs: "90%", md: "90%" } }}
+              >
+                <Typography
+                  variant="h6"
+                  className={classes.headindtextcenter}
+                  sx={{
+                    "@media (max-width: 450px)": {
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginTop: "15px",
+                    },
+                  }}
+                >
                   Security
                 </Typography>
                 <Box
@@ -358,7 +407,11 @@ function AccountSettings() {
                             },
                           }}
                         >
-                          <Typography sx={{fontWeight:500,fontSize:"16px"}}>Current Password</Typography>
+                          <Typography
+                            sx={{ fontWeight: 500, fontSize: "16px" }}
+                          >
+                            Current Password
+                          </Typography>
                           <InputBase
                             type={
                               values.isShowCurrentPassword ? "text" : "password"
@@ -421,7 +474,11 @@ function AccountSettings() {
                             },
                           }}
                         >
-                          <Typography sx={{fontWeight:500,fontSize:"16px"}}>New Password</Typography>
+                          <Typography
+                            sx={{ fontWeight: 500, fontSize: "16px" }}
+                          >
+                            New Password
+                          </Typography>
                           <InputBase
                             type={
                               values.isShowNewPassword ? "text" : "password"
@@ -510,9 +567,9 @@ function AccountSettings() {
                                   "linear-gradient(45deg, #00CBFF 0%, #72E2FF 100%)",
                                 whiteSpace: "nowrap",
                                 width: savebutton ? "auto" : "99%",
-                                textTransform:"none",
-                                fontWeight:600,
-                                fontSize:"16px",
+                                textTransform: "none",
+                                fontWeight: 600,
+                                fontSize: "16px",
                               }}
                             >
                               {loading && LoadingFor.Password === loadingFor ? (
@@ -533,23 +590,27 @@ function AccountSettings() {
                   </Stack>
                 </Box>
               </Box>
-              
+
               <Typography
-               mb={2}
-               mt={2}
+                mb={2}
+                mt={2}
                 variant="h6"
-                className={classes.headindtextcenter} sx={{"@media (max-width: 450px)": {
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  marginTop: "15px",
-                },}}
+                className={classes.headindtextcenter}
+                sx={{
+                  "@media (max-width: 450px)": {
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginTop: "15px",
+                  },
+                }}
                 // p={1}
               >
                 Billing
               </Typography>
               <Grid
-                container sx={{width:{lg:"80%",sm:"90%",xs:"90%",md:"90%"}}}
+                container
+                sx={{ width: { lg: "80%", sm: "90%", xs: "90%", md: "90%" } }}
                 padding={4}
                 border={0.5}
                 borderRadius={5}
@@ -564,8 +625,8 @@ function AccountSettings() {
                         md: "32px",
                         lg: "32px",
                       },
-                      fontWeight:500,
-                      fontSize:"16px"
+                      fontWeight: 500,
+                      fontSize: "16px",
                     }}
                   >
                     Payment method
@@ -624,13 +685,20 @@ function AccountSettings() {
                 </Grid>
               </Grid>
 
-              <Box marginTop={showgrid ? 2 :0 } >
-                <Typography variant="h6"mb={2} className={classes.headindtextcenter} sx={{"@media (max-width: 450px)": {
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  marginTop: "15px",
-                },}}>
+              <Box marginTop={showgrid ? 2 : 0}>
+                <Typography
+                  variant="h6"
+                  mb={2}
+                  className={classes.headindtextcenter}
+                  sx={{
+                    "@media (max-width: 450px)": {
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginTop: "15px",
+                    },
+                  }}
+                >
                   Subscription
                 </Typography>
                 {/* <Box
@@ -721,13 +789,16 @@ function AccountSettings() {
                 </Box> */}
               </Box>
 
-              <Grid 
+              <Grid
                 container
                 // marginTop={1}
                 p={3}
                 pt={3}
                 // pl={10}
-                sx={{ paddingLeft: { xs: "", sm: "", md: "", lg: "60px" } ,width:{lg:"80%",sm:"90%",xs:"90%",md:"90%"}}}
+                sx={{
+                  paddingLeft: { xs: "", sm: "", md: "", lg: "60px" },
+                  width: { lg: "80%", sm: "90%", xs: "90%", md: "90%" },
+                }}
                 border={0.5}
                 borderRadius={5}
                 borderColor="#EBEBEB"
@@ -741,8 +812,8 @@ function AccountSettings() {
                         md: "19px",
                         lg: "0px",
                       },
-                      fontWeight:500,
-                      fontSize:"16px"
+                      fontWeight: 500,
+                      fontSize: "16px",
                     }}
                   >
                     Subscription Status:
@@ -758,8 +829,8 @@ function AccountSettings() {
                         md: "0px",
                         lg: "0px",
                       },
-                      fontWeight:500,
-                      fontSize:"16px"
+                      fontWeight: 500,
+                      fontSize: "16px",
                     }}
                   >
                     Plan:
@@ -775,8 +846,8 @@ function AccountSettings() {
                         md: "0px",
                         lg: "0px",
                       },
-                      fontWeight:500,
-                      fontSize:"16px"
+                      fontWeight: 500,
+                      fontSize: "16px",
                     }}
                   >
                     Next Renew: <b>{subscriptionData?.data?.end_date}</b>
@@ -786,10 +857,9 @@ function AccountSettings() {
                   item
                   xs={12}
                   lg={3}
-                  
                   sx={{
-                    paddingTop:{xs:1},
-                    padding: {  sm: "12px", md: "10px", lg: "0px" },
+                    paddingTop: { xs: 1 },
+                    padding: { sm: "12px", md: "10px", lg: "0px" },
                     marginLeft: {
                       // xs: "auto",
                       sm: "40px",
@@ -810,34 +880,99 @@ function AccountSettings() {
                         "linear-gradient(45deg, #00CBFF 0%, #72E2FF 100%)",
                       whiteSpace: "nowrap",
                       // justifyContent: "flex-end",
-                      textTransform:"none",
-                      fontWeight:600,
-                      fontSize:"16px",
+                      textTransform: "none",
+                      fontWeight: 600,
+                      fontSize: "16px",
                       width: savebutton ? "auto" : "100%",
                     }}
-                    onClick={
-                      subscriptionData?.data?.status === "Canceled" ||
-                      subscriptionData?.data?.status === "Inactive"
-                        ? () => navigate("/plans")
-                        : cancelSubscription
-                    }
+                    onClick={subscriptionData?.data?.status === "Canceled" ?() => navigate("/plans") :handleClickOpen}
                   >
-                    {subLoading && LoadingFor.Subscription ? (
-                      <CircularProgress
-                        size="1.5rem"
-                        sx={{
-                          color: "white",
-                        }}
-                      />
-                    ) : (
-                      <>
-                          {subscriptionData?.data?.status === "Canceled" ||
-                          subscriptionData?.data?.status === "Inactive"
-                            ? "Active Your plan"
-                            : "Cancel Subscription"}
-                      </>
-                    )}
+                    <>
+                      {subscriptionData?.data?.status === "Canceled" ||
+                      subscriptionData?.data?.status === "Inactive"
+                        ? "Active Your plan"
+                        : "Cancel Subscription"}
+                    </>
                   </Button>
+                  <Box p={2} in={open}>
+                    <Dialog
+                      open={open}
+                      onClose={handleClose}
+                      aria-labelledby="alert-dialog-title"
+                      aria-describedby="alert-dialog-description"
+                    >
+                      <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                          <Typography
+                            variant="h5"
+                            p={1}
+                            sx={{ fontWeight: 600, color: "#2B2F42" }}
+                          >
+                            Are you sure you want to cancel your subscription?
+                            You will lose access to Eye of Ecom immediately and
+                            will not receive a refund for any time remaining in
+                            your subscription.
+                          </Typography>
+                        </DialogContentText>
+                      </DialogContent>
+                      <DialogActions
+                        sx={{ marginRight: "inherit", paddingBottom: "16px",marginLeft:savebutton?"0px":"23px" }}
+                      >
+                        <Button
+                          onClick={handleClose}
+                          variant="contained"
+                          color="primary"
+                          style={{
+                            borderRadius: 50,
+                            background:
+                              "linear-gradient(45deg, #00CBFF 0%, #72E2FF 100%)",
+                            whiteSpace: "nowrap",
+                            // justifyContent: "flex-end",
+                            textTransform: "none",
+                            fontWeight: 600,
+                            fontSize: "16px",
+                            width: savebutton ? "auto" : "100%",
+                          }}
+                        >
+                          Cancel
+                        </Button>
+                        <Button
+                          type="Submit"
+                          variant="contained"
+                          color="primary"
+                          style={{
+                            borderRadius: 50,
+                            background:
+                              "linear-gradient(45deg, #00CBFF 0%, #72E2FF 100%)",
+                            whiteSpace: "nowrap",
+                            // justifyContent: "flex-end",
+                            textTransform: "none",
+                            fontWeight: 600,
+                            fontSize: "16px",
+                            width: savebutton ? "auto" : "100%",
+                          }}
+                          onClick={cancelSubscription}
+                        >
+                          {subLoading && LoadingFor.Subscription ? (
+                            <CircularProgress
+                              size="1.5rem"
+                              sx={{
+                                color: "white",
+                              }}
+                            />,
+                            setOpen(false)
+                          ) : (
+                            <>
+                              {subscriptionData?.data?.status === "Canceled" ||
+                              subscriptionData?.data?.status === "Inactive"
+                                ? "Yes"
+                                : "Yes"}
+                            </>
+                          )}
+                        </Button>
+                      </DialogActions>
+                    </Dialog>
+                  </Box>
                 </Grid>
               </Grid>
             </Stack>

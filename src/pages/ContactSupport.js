@@ -34,7 +34,7 @@ const ContactSupport = () => {
     console.log(response.data.message);
     setResendmessage(response.data.message);
     if (!response.success) {
-      setResendmessage("Email send Successfully");
+      setResendmessage("Email sent Successfully");
       setLoading(false);
     } else {
       setLoading(false);
@@ -68,7 +68,6 @@ const ContactSupport = () => {
 
         <Box
           sx={{
-            opacity: loading ? 0.5 : 1,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
