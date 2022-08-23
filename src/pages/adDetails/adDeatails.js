@@ -237,7 +237,7 @@ function AdDeatails() {
                     <Box sx={{ marginTop: "13px" }}>
                       <Box>
                         {/* <Tooltip title="Redirect to shop link"> */}
-                        {adDetail?.purchaseURL !== "" && (
+                        {adDetail?.purchaseURL  !== "" && (
                           <img
                             src={Shareicon}
                             alt="Shareicon"
@@ -506,7 +506,7 @@ function AdDeatails() {
                     </Grid>
                   </Grid>
                 </Box>
-                {adDetail?.ctaStatus || AdDeatails?.purchaseURL !== "" && (
+                {(adDetail?.ctaStatus) !== "" && (
                   <Grid container justifyContent="flex-end">
                     <Grid item xs={12} sm={12} md={12} lg={6}>
                       <Button
