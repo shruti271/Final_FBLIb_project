@@ -162,7 +162,7 @@ function SortFilter(props) {
                 label={<Typography sx={{fontWeight:500,fontSize:"16px"}}>Recently updated</Typography>}
               />
               <FormControlLabel
-                value="pageInfo.platforms.likes"
+                value="pageInfo.platforms.Facebook.likes"
                 control={<Radio style={{ color: "#00CBFF" }} />}
                 label={<Typography sx={{fontWeight:500,fontSize:"16px"}}>Page likes</Typography>}
               />
