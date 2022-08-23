@@ -1,27 +1,32 @@
-import { Grid } from "@material-ui/core";
-import InfiniteScroll from "react-infinite-scroll-component";
-import ThumbNailBox from "./ThumbNailBox";
-import { Box, Stack, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { FadeLoader } from "react-spinners";
+import { Grid } from "@material-ui/core";
+import { Box, Pagination, Stack, Typography } from "@mui/material";
+import ThumbNailBox from "./ThumbNailBox";
+import { useSkipInitialEffect } from "../utils/customHooks";
 import * as allAdsPeramsDuck from "../redux/ducks/allAdsPerams";
 import {
+  clearCashedPageData,
+  laodCashedPageData,
   loadFilteredAdsStart,
-  // loadMoreFilteredAdsStart,
+  setCurrentPaginationIndex,
 } from "../redux/ducks/filteredAds";
-import { useSkipInitialEffect } from "../utils/customHooks";
-import { FadeLoader } from "react-spinners";
-import { useEffect, useState } from "react";
 import emptyImg from "../assets/empty.svg";
 
 const AdsList = () => {
   const dispatch = useDispatch();
+  const location = useLocation();
+
   const filteredAds = useSelector((state) => state.filteredAds);
   const allAdsPerams = useSelector((state) => state.allAdsPerams);
   const [queryObject, setQueryObject] = useState({});
 
+ 
   useEffect(() => {
     window.scrollTo(0, filteredAds.postionOfPage);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useSkipInitialEffect(() => {
@@ -37,7 +42,7 @@ const AdsList = () => {
           : [],
       adstatus: allAdsPerams?.appliedFilters?.AdStatus?.selectedValue,
       fb_likes:
-        allAdsPerams?.appliedFilters?.FacebookLikes?.chipText !== ""
+        allAdsPerams?.appliedFilters?.FacebookLikes?.chipText?.length !== 0
           ? [
               allAdsPerams?.appliedFilters?.FacebookLikes?.min,
               allAdsPerams?.appliedFilters?.FacebookLikes?.max,
@@ -71,138 +76,143 @@ const AdsList = () => {
           ? ""
           : allAdsPerams?.sortFilter?.order?.selectedValue,
 
-          keywords:
-          allAdsPerams?.searchBarData.length ? allAdsPerams?.searchType === "All these words"
-            ? allAdsPerams?.searchBarData.split(" ")
-            : null:null,
+      keywords: allAdsPerams?.searchBarData.length
+        ? allAdsPerams?.searchType === "All these words"
+          ? allAdsPerams?.searchBarData.split(" ")
+          : null
+        : null,
 
-        phrase:
-        allAdsPerams?.searchBarData.length ? allAdsPerams?.searchType === "Exact Phrase"
-            ? allAdsPerams?.searchBarData.split(",")
-            : null:null,
+      phrase: allAdsPerams?.searchBarData.length
+        ? allAdsPerams?.searchType === "Exact Phrase"
+          ? allAdsPerams?.searchBarData.split(",")
+          : null
+        : null,      
     };
     setQueryObject(queryObject);
   }, [
     allAdsPerams.appliedFilters,
     allAdsPerams.sortFilter,
     allAdsPerams.pageIndex,
-    allAdsPerams.searchBarData
+    allAdsPerams.searchBarData,
   ]);
 
-  useSkipInitialEffect(() => {
-    if (allAdsPerams?.pageIndex > 0) {
-      // dispatch(
-      //   loadMoreFilteredAdsStart({
-      //     ...queryObject,
-      //     page_index: allAdsPerams?.pageIndex,
-      //   })
-      // );
-    } else {
-      dispatch(loadFilteredAdsStart({ ...queryObject, page_index: 0 }));
+  useSkipInitialEffect(() => {       
+    if (
+      Object.keys(filteredAds?.filterData).includes(
+        allAdsPerams?.pageIndex.toString()
+      )
+    ) {
+      dispatch(laodCashedPageData(filteredAds?.paginationIndex));
+    } else {            
+      dispatch(
+        loadFilteredAdsStart({
+          ...queryObject,
+          page_index: filteredAds?.paginationIndex,
+          number_of_pagead: process.env.REACT_APP_NO_OF_ADS_PER_PAGE,
+        })
+      );
+    
     }
   }, [dispatch, queryObject]);
 
   useSkipInitialEffect(() => {
     if (allAdsPerams.searchBarData.length > 0) {
+      location.pathname === "/" && dispatch(clearCashedPageData());
       setQueryObject({
         ...queryObject,
-        keywords:
-        allAdsPerams?.searchBarData.length ? allAdsPerams?.searchType === "All these words"
+        keywords: allAdsPerams?.searchBarData.length
+          ? allAdsPerams?.searchType === "All these words"
             ? allAdsPerams?.searchBarData.split(" ")
-            : null : null,
+            : null
+          : null,
 
-        phrase:
-        allAdsPerams?.searchBarData.length ? allAdsPerams?.searchType === "Exact Phrase"
+        phrase: allAdsPerams?.searchBarData.length
+          ? allAdsPerams?.searchType === "Exact Phrase"
             ? allAdsPerams?.searchBarData.split(",")
-            : null:null,
+            : null
+          : null,
       });
     }
   }, [dispatch, allAdsPerams.searchType, allAdsPerams.searchBarData]);
 
   return (
-    <>
-    { filteredAds?.loading && filteredAds?.filteredAds.length === 0 ?   <Box
-            className="loader"
-            style={{
-              // opacity:0.5,
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              textAlign: "center",
-            }}
-          >
-            <FadeLoader
-              color="#00BFFF"
-              cssOverride={{ top: "0px", marginTop: "35px" }}
-            />
-          </Box> : 
-          <InfiniteScroll
-          dataLength={filteredAds?.filteredAds.length} //This is important field to render the next data
-          next={() =>
-            dispatch(
-              allAdsPeramsDuck.setDatabasePageIndex(allAdsPerams?.pageIndex + 1)
-            )
-          }
-          hasMore={filteredAds.hasMoreData}
-          loader={
-            filteredAds?.loading ? (
-              <Box
-                className="loader"
-                style={{
-                  // opacity:0.5,
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  textAlign: "center",
-                }}
-              >
-                <FadeLoader
-                  color="#00BFFF"
-                  cssOverride={{ top: "0px", marginTop: "35px" }}
-                />
-              </Box>
-            ) : null
-          }
+    <>     
+      {filteredAds?.loading && filteredAds?.filteredAds.length === 0 ? (
+        <Box
+          className="loader"
+          style={{            
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            textAlign: "center",
+          }}
+        >
+          <FadeLoader
+            color="#00BFFF"
+            cssOverride={{ top: "0px", marginTop: "35px" }}
+          />
+        </Box>
+      ) : (
+        <Grid
+          item
+          sx={{
+            width: "90%",
+          }}
         >
           <Grid
-            item
+            container
             sx={{
-              width: "90%",
+              marginTop: "5px",
+              width: "100%",
             }}
           >
-            <Grid
-              container
-              sx={{
-                marginTop: "5px",
-                width: "100%",
-              }}
-            >
-              {filteredAds?.filteredAds?.length !== 0 &&
-                filteredAds?.filteredAds?.map((ads, index) => (
-                  <ThumbNailBox adInfo={ads} index={index} key={index} />
-                ))}
-              {filteredAds?.filteredAds?.length === 0 &&
-                filteredAds?.loading === false && (
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      width: "100%",
-                    }}
-                  >
-                    <Stack>
+            {filteredAds?.filteredAds?.length !== 0 &&
+              filteredAds?.filteredAds?.map((ads, index) => (
+                <ThumbNailBox adInfo={ads} index={index} key={index} />
+              ))}
+            {filteredAds?.filteredAds?.length === 0 &&
+              filteredAds?.loading === false && (
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    width: "100%",
+                  }}
+                >
+                  <Stack>
                     <img src={emptyImg} alt="" />
                     <Typography sx={{ color: "#808080" }}>
                       No Records Found
                     </Typography>
                   </Stack>
-                  </Box>
-                )}
-            </Grid>
+                </Box>
+              )}
           </Grid>
-        </InfiniteScroll>
-          }
+        </Grid>
+      )}
+      <Box
+        sx={{
+          width: "100%",
+          marginBottom: 5,
+          marginTop: 5,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        {(allAdsPerams.pageIndex !== 0 || !filteredAds?.loading) && (
+          <Pagination
+            count={filteredAds?.totalPages}
+            size={"large"}
+            page={filteredAds?.paginationIndex + 1}
+            onChange={(e, p) => {              
+              dispatch(setCurrentPaginationIndex(p - 1));
+              dispatch(allAdsPeramsDuck.setDatabasePageIndex(p - 1));
+            }}
+          />
+        )}
+      </Box>
     </>
   );
 };

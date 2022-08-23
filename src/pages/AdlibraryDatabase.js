@@ -158,8 +158,8 @@ const Addlibrarydatabase = () => {
           <SortFilter />
         </Grid>
         <Grid item sx={{ width: "100%" }}>
-          {/* <AdsList /> */}
-          <PagePagination/>
+          <AdsList />
+          {/* <PagePagination/> */}
         </Grid>
       </Grid>
     </>

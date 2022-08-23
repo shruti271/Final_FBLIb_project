@@ -132,7 +132,15 @@ function AdDeatails() {
       }
     }
   }, [dispatch, filteredAds, adId]);
-
+  console.log("99999999", adDetail?.pageInfo?.platforms);
+  adDetail &&
+    Object.keys(adDetail?.pageInfo?.platforms).map((a, i) =>
+      console.log("99999999 --", a, i)
+    );
+  useEffect(() => {
+    // adDetail?.pageInfo?.platforms.map((a)=>{console.log("99999999",a)})
+    // Object.keys(adDetail?.pageInfo?.platforms).map((a,i)=>console.log("99999999",a,i))
+  });
   useEffect(() => {
     if (!adDetail && Object.keys(singleAdData).length) {
       setAdDetail(singleAdData);
@@ -237,7 +245,7 @@ function AdDeatails() {
                     <Box sx={{ marginTop: "13px" }}>
                       <Box>
                         {/* <Tooltip title="Redirect to shop link"> */}
-                        {adDetail?.purchaseURL  !== "" && (
+                        {adDetail?.purchaseURL !== "" && (
                           <img
                             src={Shareicon}
                             alt="Shareicon"
@@ -286,10 +294,12 @@ function AdDeatails() {
                 </Stack>
 
                 <Box
-                  sx={{
-                    //marginLeft: 2,
-                    // marginRight: 2,
-                  }}
+                  sx={
+                    {
+                      //marginLeft: 2,
+                      // marginRight: 2,
+                    }
+                  }
                 >
                   <Typography
                     sx={{
@@ -337,7 +347,7 @@ function AdDeatails() {
                     />
                   )}
                 </Box>
-                <Box sx={{  marginTop: 1, marginBottom: 1 }}>
+                <Box sx={{ marginTop: 1, marginBottom: 1 }}>
                   <Stack direction={"row"}>
                     <Typography
                       sx={{
@@ -506,7 +516,7 @@ function AdDeatails() {
                     </Grid>
                   </Grid>
                 </Box>
-                {(adDetail?.ctaStatus) !== "" && (
+                {adDetail?.ctaStatus !== "" && (
                   <Grid container justifyContent="flex-end">
                     <Grid item xs={12} sm={12} md={12} lg={6}>
                       <Button
@@ -585,19 +595,15 @@ function AdDeatails() {
                   >
                     {" "}
                     <FormControlLabel
-                          control={
-                            <Download />
-                          }
-                          label={
-                            <Typography ml={0.5} sx={{ fontWeight: "bold" }}>
-                              {" "}
-                              Download Thumbnail
-                            </Typography>
-                          }
-                        />
-
-                    <FormControl>
-                    </FormControl>
+                      control={<Download />}
+                      label={
+                        <Typography ml={0.5} sx={{ fontWeight: "bold" }}>
+                          {" "}
+                          Download Thumbnail
+                        </Typography>
+                      }
+                    />
+                    <FormControl></FormControl>
                   </a>
                 </Button>
               </Grid>
@@ -834,57 +840,72 @@ function AdDeatails() {
                   //   },
                 }}
               >
-                <Grid item sm={10}>
-                  {adDetail?.pageInfo?.platforms.map((socialMedia, index) => {
-                    return (
-                      <Stack
-                        key={index}
-                        direction={"row"}
-                        sx={{
-                          marginBottom: "16px",
-                        }}
-                      >
-                        <Box sx={{ marginRight: "10px" }}>
-                          <img
-                            src={
-                              socialMedia.name === "Facebook"
-                                ? facebook
-                                : instragram
-                            }
-                            aria-label="Add"
-                          />
-                        </Box>
-                        <Stack
-                          sx={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "flexStart",
-                          }}
-                        >
-                          <Typography
-                            style={{
-                              fontFamily: "Neue Haas Grotesk Display Pro",
+                <Grid item sm={12}>
+                  {adDetail &&
+                    Object.keys(adDetail?.pageInfo?.platforms).map(
+                      (socialMedia, index) => {
+                        return (
+                          <Stack
+                            key={index}
+                            direction={"row"}
+                            sx={{
+                              marginBottom: "16px",
                             }}
                           >
-                            {socialMedia?.other}
-                          </Typography>
-                          <Typography
-                            style={{
-                              fontFamily: "Neue Haas Grotesk Display Pro",
-                            }}
-                          >
-                            {socialMedia.name === "Facebook"
-                              ? socialMedia.likes +
-                                " likes • " +
-                                socialMedia.type
-                              : socialMedia.followers +
-                                " followers • " +
-                                socialMedia.type}
-                          </Typography>
-                        </Stack>
-                      </Stack>
-                    );
-                  })}
+                            <Box sx={{ marginRight: "10px" , display:"flex", justifyContent:"center",alignItems:"center"}}>
+                              <img
+                                src={
+                                  socialMedia === "Facebook"
+                                    ? facebook
+                                    : instragram
+                                }
+                                aria-label="Add"
+                              />
+                            </Box>
+                            <Stack
+                              sx={{
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "flexStart",
+                              }}
+                            >
+                              <Typography
+                                style={{
+                                  fontFamily: "Neue Haas Grotesk Display Pro",
+                                }}
+                              >
+                                {
+                                  (adDetail?.pageInfo?.platforms?.[
+                                    `${socialMedia}`
+                                  ]?.other || "")
+                                }
+                              </Typography>
+                              <Typography
+                                style={{
+                                  fontFamily: "Neue Haas Grotesk Display Pro",
+                                }}
+                              >
+                                {socialMedia === "Facebook"
+                                  ? adDetail?.pageInfo?.platforms?.[
+                                      `${socialMedia}`
+                                    ]?.likes +
+                                    " likes • " +
+                                    (adDetail?.pageInfo?.platforms?.[
+                                      `${socialMedia}`
+                                    ]?.type || "")
+                                  : adDetail?.pageInfo?.platforms?.[
+                                      `${socialMedia}`
+                                    ]?.followers +
+                                    " followers • " +
+                                    (adDetail?.pageInfo?.platforms?.[
+                                      `${socialMedia}`
+                                    ]?.type || "")}
+                              </Typography>
+                            </Stack>
+                          </Stack>
+                        );
+                      }
+                    )}
                 </Grid>
               </Grid>
             </Grid>
