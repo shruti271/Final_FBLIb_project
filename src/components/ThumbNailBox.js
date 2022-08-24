@@ -262,12 +262,7 @@ const ThumbNailBox = ({ adInfo, index }) => {
 
   return (
     <Grid
-      item
-      xl={3}
-      lg={2}
-      md={2}
-      sm={6}
-      xs={12}
+      item xl={3} lg={4} md={6} sm={6} xs={12}      
       key={index}
       sx={{ p: { lg: 1, md: 1, sm: 1, xs: "0px" }, pb: { xs: 3 } }}
     >
