@@ -98,7 +98,7 @@ const useStyles = makeStyles((theme) => ({
   AdsImage: {
     width: "100%",
     height: "230px",
-    // objectFit: "fill",
+    objectFit: "fill",
     padding: "0",
     margin: "0",
     overflowY: "none",
@@ -106,7 +106,7 @@ const useStyles = makeStyles((theme) => ({
   },
   AdsVideo: {
     width: "100%",
-    // objectFit: "cover",
+    objectFit: "fill",
     padding: "0",
     margin: "0",
     overflowY: "none",
