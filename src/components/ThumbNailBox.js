@@ -181,6 +181,7 @@ const ThumbNailBox = ({ adInfo, index }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const theme = useTheme();
+
   const smallScreenPointOnly = useMediaQuery(theme.breakpoints.only("xs"));
 
   const [queryObject, setQueryObject] = useState({});
@@ -247,7 +248,7 @@ const ThumbNailBox = ({ adInfo, index }) => {
           : savedAdsPerams?.sortFilter?.order?.selectedValue,
 
       keywords:
-        savedAdsPerams?.searchType === "All these words"
+        savedAdsPerams?.searchType === "Ad Text"
           ? savedAdsPerams?.searchBarData.split(" ")
           : [],
 
@@ -263,8 +264,8 @@ const ThumbNailBox = ({ adInfo, index }) => {
     <Grid
       item
       xl={3}
-      lg={4}
-      md={6}
+      lg={2}
+      md={2}
       sm={6}
       xs={12}
       key={index}
@@ -275,6 +276,8 @@ const ThumbNailBox = ({ adInfo, index }) => {
           borderRadius: "16px",
           boxShadow: "none",
           border: " 1px solid #EBEBEB",
+          margin:1,
+          width:"auto"
         }}
       >
         <Stack
@@ -362,7 +365,7 @@ const ThumbNailBox = ({ adInfo, index }) => {
               </ReadMore>
             </Typography>
           </Box>
-          <div style={{ height: "300px", marginTop: "4px" }}>
+          <div style={{ height: "300px", marginTop: "4px" }}>            
             {adInfo.adMediaType === "video" ? (
               <video
                 src={adInfo.bucketMediaURL}
@@ -645,7 +648,7 @@ const ThumbNailBox = ({ adInfo, index }) => {
             variant="contained"
             size="small"
             sx={{
-              borderRadius: "17px",
+              borderRadius: "17px",              
               background: " linear-gradient(45deg, #00CBFF 0%, #72E2FF 100%)",
               textTransform: "none",
               height: "30px",
@@ -682,7 +685,7 @@ const ThumbNailBox = ({ adInfo, index }) => {
           </Button>
         </Stack>
       </Card>
-    </Grid>
+      </Grid> 
   );
 };
 

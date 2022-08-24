@@ -110,7 +110,7 @@ useEffect(()=>{
           : savedAdsPerams?.sortFilter?.order?.selectedValue,
 
       keywords: savedAdsPerams?.searchBarData.length
-        ? savedAdsPerams?.searchType === "All these words"
+        ? savedAdsPerams?.searchType === "Ad Text"
           ? savedAdsPerams?.searchBarData.split(" ")
           : null
         : null,
@@ -158,7 +158,7 @@ useEffect(()=>{
       setQueryObject({
         ...queryObject,
         keywords: savedAdsPerams?.searchBarData.length
-          ? savedAdsPerams?.searchType === "All these words"
+          ? savedAdsPerams?.searchType === "Ad Text"
             ? savedAdsPerams?.searchBarData.split(" ")
             : null
           : null,

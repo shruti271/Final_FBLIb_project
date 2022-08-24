@@ -78,7 +78,7 @@ const initialState = {
     type: { selectedValue: "lastUpdatedTime"},
     order: { selectedValue: "asc"},
   },
-  searchType: "All these words",
+  searchType: "Ad Text",
   searchBarData: "",
 };
 

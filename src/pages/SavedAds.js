@@ -92,7 +92,7 @@ const unmountedStyle = {
               sx={{
                 border: "1px solid #EBEBEB",
                 borderRadius: "15px",
-                padding: "16px 36px",
+                padding: {lg:"16px 36px",xs:"15px 20px"},
                 marginTop: 2,
                 width: "99%",
                 margin:"auto",

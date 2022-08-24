@@ -77,7 +77,7 @@ const AdsList = () => {
           : allAdsPerams?.sortFilter?.order?.selectedValue,
 
       keywords: allAdsPerams?.searchBarData.length
-        ? allAdsPerams?.searchType === "All these words"
+        ? allAdsPerams?.searchType === "Ad Text"
           ? allAdsPerams?.searchBarData.split(" ")
           : null
         : null,
@@ -121,7 +121,7 @@ const AdsList = () => {
       setQueryObject({
         ...queryObject,
         keywords: allAdsPerams?.searchBarData.length
-          ? allAdsPerams?.searchType === "All these words"
+          ? allAdsPerams?.searchType === "Ad Text"
             ? allAdsPerams?.searchBarData.split(" ")
             : null
           : null,

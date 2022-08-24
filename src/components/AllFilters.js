@@ -77,6 +77,8 @@ function AllFilters(props) {
   const { buttonTypes } = useSelector((state) => state.buttonTypes);
 
   const ShowFilterWithClearButton = useMediaQuery(theme.breakpoints.only("xs"));
+  // const ExtraSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const LargeScreenOnly = useMediaQuery(theme.breakpoints.up("sm"));
 
   const [pageName, setPageName] = useState("");
   const [searchBarValue, setSearchBarValue] = useState("");
@@ -416,9 +418,50 @@ function AllFilters(props) {
         direction={"row"}
         sx={{ border: "1px solid #EBEBEB", borderRadius: 2 }}
       >
-        <Grid item sx={{ display: "flex" }}>
+        <Grid item sx={{ display: "flex" , alignItems:"center"}}>
           {/* Select Search Type Start  */}
           <Button
+            onClick={(event) => {
+              setSeachTypeAnchorEl(event.currentTarget);
+            }}
+            size="large"
+            // variant="outlined"
+            disableElevation
+            disableRipple
+            sx={{
+              color: "#2B2F42",
+              whiteSpace: "nowrap",              
+              borderRadius: "10px",
+              border: "none",
+              "@media (max-width: 450px)": {
+                width: "100%",
+              },
+            }}           
+          >
+            <Box
+              style={{
+                display: "flex",
+                justifyContent: "center",                
+              }}
+            >
+               <Typography
+              noWrap
+              textTransform="capitalize"
+              sx={{ fontWeight: 500 }}
+            >
+              {pageName === PageNameEnum.AdlibraryDatabase
+                ? allAdsPerams?.searchType
+                : savedAdsPerams?.searchType}
+            </Typography>
+            </Box>
+            <img
+              alt="arrowdown"
+              src={Arrowdown}
+              className={classes.DropDownArrow}
+            />
+
+          </Button>
+          {/* <Button
             onClick={(event) => {
               setSeachTypeAnchorEl(event.currentTarget);
             }}
@@ -430,6 +473,7 @@ function AllFilters(props) {
               color: "#2B2F42",
               whiteSpace: "nowrap",
               border: "none",
+              width:"50%"
             }}
             className={classes.searchBtn}
             endIcon={
@@ -443,13 +487,13 @@ function AllFilters(props) {
             <Typography
               noWrap
               textTransform="capitalize"
-              sx={{ fontWeight: 500 }}
+              sx={{ fontWeight: 500 , width:"30px"}}
             >
               {pageName === PageNameEnum.AdlibraryDatabase
                 ? allAdsPerams?.searchType
                 : savedAdsPerams?.searchType}
             </Typography>
-          </Button>
+          </Button> */}
           <Popover
             anchorEl={seachTypeanchorel}
             add={openSearchType ? "simple-popover" : undefined}
@@ -482,11 +526,11 @@ function AllFilters(props) {
                   }}
                 >
                   <FormControlLabel
-                    value="All these words"
+                    value="Ad Text"
                     control={<Radio style={{ color: "#00CBFF" }} />}
                     label={
                       <Typography sx={{ fontWeight: 500 }}>
-                        All these words
+                        Ad Text
                       </Typography>
                     }
                   />
@@ -519,7 +563,7 @@ function AllFilters(props) {
                     }}
                     className={classes.filterBtn}
                     onClick={(e) => {
-                      handleChangeSearchType("All these words");
+                      handleChangeSearchType("Ad Text");
                       setSeachTypeAnchorEl(null);
                     }}
                   >
@@ -531,19 +575,20 @@ function AllFilters(props) {
           </Popover>
           {/* Select Search Type End  */}
 
-          <Divider orientation="vertical" sx={{ marginLeft: "auto" }} />
+          <Divider orientation="vertical" sx={{ marginLeft: "auto" , height:"20px"}} />
         </Grid>
 
         {/* Searchbar Start  */}
         <InputBase
-          value={searchBarValue}
-          fullWidth
+          value={searchBarValue}          
+          // fullWidth
+          widt="50%"
           placeholder="Search"
           onKeyUp={(e) => {
             if (e.key === "Enter") {
               pageName === PageNameEnum.AdlibraryDatabase &&
                 dispatch(clearCashedPageData());
-              handleChangeSearchBar(e.currentTarget.value);
+              handleChangeSearchBar(e.currentTarget.value.trim());
             }
 
             if (e.target.value.length === 0) {
@@ -570,12 +615,13 @@ function AllFilters(props) {
       >
         <Grid item lg={11} md={12} sm={12} xs={12}>
           {/* Date Filter Start */}
+
           <Button
             onClick={(event) => {
               setAnchorEl(event.currentTarget);
             }}
             size="large"
-            variant="outlined"
+            // variant="outlined"
             disableElevation
             disableRipple
             sx={{
@@ -586,25 +632,31 @@ function AllFilters(props) {
               marginRight: "14px",
               marginTop: "22px",
               "@media (max-width: 450px)": {
-                width: "100%",
+                width: "100%"
               },
             }}
             className={classes.filterBtn}
-            endIcon={
-              <img
-                alt="arrowdown"
-                src={Arrowdown}
-                className={classes.DropDownArrow}
-              />
-            }
           >
-            <Typography
-              noWrap
-              textTransform="capitalize"
-              sx={{ fontWeight: 500 }}
+            <Box
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                width: "100%",
+              }}
             >
-              Started Running Date{" "}
-            </Typography>
+              <Typography
+                noWrap
+                textTransform="capitalize"
+                sx={{ fontWeight: 500 }}
+              >                             
+                {"Started Running Date"}
+              </Typography>
+            </Box>
+            <img
+              alt="arrowdown"
+              src={Arrowdown}
+              className={classes.DropDownArrow}
+            />
           </Button>
           <Popover
             anchorEl={anchorEl}
@@ -639,10 +691,11 @@ function AllFilters(props) {
           {/* Date Filter End */}
 
           {/* Ad Count Filter Start */}
+
           <Button
             onClick={(e) => setrangeAnchorEl(e.currentTarget)}
-            variant="outlined"
             size="large"
+            // variant="outlined"
             disableElevation
             disableRipple
             sx={{
@@ -651,30 +704,34 @@ function AllFilters(props) {
               border: "1px solid #EBEBEB",
               borderRadius: "10px",
               marginRight: "14px",
-              marginTop: "22px",
-              cursor: "pointer",
+              marginTop: "18px",
               "@media (max-width: 450px)": {
                 width: "100%",
               },
             }}
             className={classes.filterBtn}
-            endIcon={
-              <img
-                alt="arrowdown"
-                src={Arrowdown}
-                className={classes.DropDownArrow}
-              />
-            }
           >
-            <Typography
-              noWrap
-              textTransform="capitalize"
-              sx={{ fontWeight: 500 }}
+            <Box
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                width: "100%",
+              }}
             >
-              {" "}
-              Ad count{" "}
-            </Typography>
-          </Button>
+              <Typography
+                noWrap
+                textTransform="capitalize"
+                sx={{ fontWeight: 500 }}
+              >
+                {"Ad count"}
+              </Typography>
+            </Box>
+            <img
+              alt="arrowdown"
+              src={Arrowdown}
+              className={classes.DropDownArrow}
+            />
+          </Button>         
           <Popover
             open={addcounteropen}
             anchorEl={rangeanchorel}
@@ -899,10 +956,11 @@ function AllFilters(props) {
           {/* Ad Count Filter End */}
 
           {/* Ad Status Filter Start */}
+
           <Button
-            variant="outlined"
             onClick={(e) => setAdStatusAnchorel(e.currentTarget)}
             size="large"
+            // variant="outlined"
             disableElevation
             disableRipple
             sx={{
@@ -911,29 +969,34 @@ function AllFilters(props) {
               border: "1px solid #EBEBEB",
               borderRadius: "10px",
               marginRight: "14px",
-              marginTop: "22px",
+              marginTop: "18px",
               "@media (max-width: 450px)": {
                 width: "100%",
               },
             }}
             className={classes.filterBtn}
-            endIcon={
-              <img
-                alt="arrowdown"
-                src={Arrowdown}
-                className={classes.DropDownArrow}
-              />
-            }
           >
-            <Typography
-              noWrap
-              textTransform="capitalize"
-              sx={{ fontWeight: 500 }}
+            <Box
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                width: "100%",
+              }}
             >
-              {" "}
-              Ad status{" "}
-            </Typography>
-          </Button>
+              <Typography
+                noWrap
+                textTransform="capitalize"
+                sx={{ fontWeight: 500 }}
+              >
+                {"Ad status"}
+              </Typography>
+            </Box>
+            <img
+              alt="arrowdown"
+              src={Arrowdown}
+              className={classes.DropDownArrow}
+            />
+          </Button>          
           <Popover
             anchorEl={adStatusAnchorel}
             add={openAdStatusAnchorel ? "simple-popover" : undefined}
@@ -1017,37 +1080,45 @@ function AllFilters(props) {
 
           {/* Facebook Likes Filter Start */}
           <Button
-            variant="outlined"
-            onClick={(e) => setFacebookLikeAnchorEl(e.currentTarget)}
+              onClick={(e) => setFacebookLikeAnchorEl(e.currentTarget)}
+            size="large"
+            // variant="outlined"
+            disableElevation
+            disableRipple
             sx={{
               color: "#2B2F42",
               whiteSpace: "nowrap",
               border: "1px solid #EBEBEB",
               borderRadius: "10px",
               marginRight: "14px",
-              marginTop: "22px",
+              marginTop: "18px",
               "@media (max-width: 450px)": {
                 width: "100%",
               },
             }}
             className={classes.filterBtn}
-            endIcon={
-              <img
-                alt="arrowdown"
-                src={Arrowdown}
-                className={classes.DropDownArrow}
-              />
-            }
           >
-            <Typography
-              noWrap
-              textTransform="capitalize"
-              sx={{ fontWeight: 500 }}
+            <Box
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                width: "100%",
+              }}
             >
-              {" "}
-              Facebook Page Likes
-            </Typography>
-          </Button>
+              <Typography
+                noWrap
+                textTransform="capitalize"
+                sx={{ fontWeight: 500 }}
+              >
+                {"Facebook Page Likes"}
+              </Typography>
+            </Box>
+            <img
+              alt="arrowdown"
+              src={Arrowdown}
+              className={classes.DropDownArrow}
+            />
+          </Button>         
           <Popover
             open={openFaceboolLike}
             anchorEl={facebookLikeanchorel}
@@ -1276,37 +1347,45 @@ function AllFilters(props) {
 
           {/* Instagram Likes Filter Start */}
           <Button
-            variant="outlined"
-            onClick={(e) => setInstragramFollowerAnchorEl(e.currentTarget)}
+              onClick={(e) => setInstragramFollowerAnchorEl(e.currentTarget)}
+            size="large"
+            // variant="outlined"
+            disableElevation
+            disableRipple
             sx={{
               color: "#2B2F42",
               whiteSpace: "nowrap",
               border: "1px solid #EBEBEB",
               borderRadius: "10px",
               marginRight: "14px",
-              marginTop: "22px",
+              marginTop: "18px",
               "@media (max-width: 450px)": {
                 width: "100%",
               },
             }}
             className={classes.filterBtn}
-            endIcon={
-              <img
-                alt="arrowdown"
-                src={Arrowdown}
-                className={classes.DropDownArrow}
-              />
-            }
           >
-            <Typography
-              noWrap
-              textTransform="capitalize"
-              sx={{ fontWeight: 500 }}
+            <Box
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                width: "100%",
+              }}
             >
-              {" "}
-              Instagram Page Followers{" "}
-            </Typography>
-          </Button>
+              <Typography
+                noWrap
+                textTransform="capitalize"
+                sx={{ fontWeight: 500 }}
+              >
+                {"Instagram Page Followers"}
+              </Typography>
+            </Box>
+            <img
+              alt="arrowdown"
+              src={Arrowdown}
+              className={classes.DropDownArrow}
+            />
+          </Button>         
           <Popover
             open={openInstragramFollower}
             anchorEl={instragramFolloweranchorel}
@@ -1541,8 +1620,9 @@ function AllFilters(props) {
 
           {/* Media Type Filter Start */}
           <Button
-            variant="outlined"
-            onClick={(e) => setMediaTypeAnchorel(e.currentTarget)}
+              onClick={(e) => setMediaTypeAnchorel(e.currentTarget)}
+            size="large"
+            // variant="outlined"
             disableElevation
             disableRipple
             sx={{
@@ -1551,29 +1631,34 @@ function AllFilters(props) {
               border: "1px solid #EBEBEB",
               borderRadius: "10px",
               marginRight: "14px",
-              marginTop: "22px",
+              marginTop: "18px",
               "@media (max-width: 450px)": {
                 width: "100%",
               },
             }}
             className={classes.filterBtn}
-            endIcon={
-              <img
-                alt="arrowdown"
-                src={Arrowdown}
-                className={classes.DropDownArrow}
-              />
-            }
-            size="large"
           >
-            <Typography
-              noWrap
-              textTransform="capitalize"
-              sx={{ fontWeight: 500 }}
+            <Box
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                width: "100%",
+              }}
             >
-              Media Type
-            </Typography>
-          </Button>
+              <Typography
+                noWrap
+                textTransform="capitalize"
+                sx={{ fontWeight: 500 }}
+              >
+                {"Media Type"}
+              </Typography>
+            </Box>
+            <img
+              alt="arrowdown"
+              src={Arrowdown}
+              className={classes.DropDownArrow}
+            />
+          </Button>         
           <Popover
             anchorEl={mediaTypeAnchorel}
             add={openMediaTypeAnchorel ? "simple-popover" : undefined}
@@ -1674,27 +1759,40 @@ function AllFilters(props) {
               border: "1px solid #EBEBEB",
               borderRadius: "10px",
               marginRight: "14px",
-              marginTop: "22px",
+              marginTop: "18px",
               "@media (max-width: 450px)": {
                 width: "100%",
               },
             }}
             className={classes.filterBtn}
-            endIcon={
-              <img
-                alt="arrowdown"
-                src={Arrowdown}
-                className={classes.DropDownArrow}
-              />
-            }
+            // endIcon={
+            //   <img
+            //     alt="arrowdown"
+            //     src={Arrowdown}
+            //     className={classes.DropDownArrow}
+            //   />
+            // }
           >
-            <Typography
-              noWrap
-              textTransform="capitalize"
-              sx={{ fontWeight: 500 }}
+            <Box
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                width: "100%",
+              }}
             >
-              Button
-            </Typography>
+              <Typography
+                noWrap
+                textTransform="capitalize"
+                sx={{ fontWeight: 500 }}
+              >
+                Button
+              </Typography>
+            </Box>
+            <img
+              alt="arrowdown"
+              src={Arrowdown}
+              className={classes.DropDownArrow}
+            />
           </Button>
           <Popover
             anchorEl={ButtonTypeanchorel}
@@ -1791,7 +1889,7 @@ function AllFilters(props) {
             <Button
               variant="outlined"
               sx={{
-                borderRadius: 50,
+                borderRadius: LargeScreenOnly?"50px":"15px",
                 textTransform: "none",
                 fontWeight: 600,
                 borderColor: "#00CBFF",
@@ -1821,35 +1919,43 @@ function AllFilters(props) {
                 Clear
               </Typography>
             </Button>
-            {(window.location.pathname === `/savedAds`&& ShowFilterWithClearButton) && <Button
-              sx={{
-                background:
-                  "linear-gradient(45deg, #00CBFF 0%, #72E2FF 100%)",
-                color: "white",
-                borderRadius: 30,
-                width: "100px",
-                height: "40px",
-                marginLeft:1,
-                visibility:{xs:"visible",lg:"hidden",md:"hidden",sm:"hidden"},               
-              }}
-              onClick={() => {
-                props.setFilterActivate(false);
-              }}
-            >
-              <img
-                src={filter}
-                alt="savedAds"
-                style={{
-                  width: "20px",
-                  height: "20px",
-                  float: "right",
-                  cursor: "pointer",
-                }}
-                onClick={() => {
-                  props.setFilterActivate(false);
-                }}
-              />
-            </Button>}
+            {window.location.pathname === `/savedAds` &&
+              ShowFilterWithClearButton && (
+                <Button
+                  sx={{
+                    background:
+                      "linear-gradient(45deg, #00CBFF 0%, #72E2FF 100%)",
+                    color: "white",
+                    borderRadius: 30,
+                    width: "100px",
+                    height: "40px",
+                    marginLeft: 1,
+                    visibility: {
+                      xs: "visible",
+                      lg: "hidden",
+                      md: "hidden",
+                      sm: "hidden",
+                    },
+                  }}
+                  onClick={() => {
+                    props.setFilterActivate(false);
+                  }}
+                >
+                  <img
+                    src={filter}
+                    alt="savedAds"
+                    style={{
+                      width: "20px",
+                      height: "20px",
+                      float: "right",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => {
+                      props.setFilterActivate(false);
+                    }}
+                  />
+                </Button>
+              )}
           </Box>
         </Grid>
         {/* Reset Filter End */}

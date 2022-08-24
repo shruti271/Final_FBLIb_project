@@ -11,6 +11,8 @@ import SortFilter from "../components/SortFilter";
 import AdsList from "../components/AdsList";
 import FilterChips from "../components/FilterChips";
 import { useSkipInitialEffect } from "../utils/customHooks";
+import DummList from "../components/dummList";
+
 // import PagePagination from "../components/Page_Pagination";
 
 const useStyles = makeStyles((theme) => ({
@@ -108,7 +110,7 @@ const Addlibrarydatabase = () => {
           paddingInline:"10px"
         }}
       >
-        <Grid item xs={12}>
+        <Grid item xs={12} sx={{marginBottom:{lg:"16px",sm:"16px", md:"16px",xs:"18px"}}}>
           <Box component="main">
             <Typography
               variant="h5"
@@ -135,11 +137,11 @@ const Addlibrarydatabase = () => {
           sx={{
             border: "1px solid #EBEBEB",
             borderRadius: "15px",
-            padding: "16px 36px",
-            width: "95%",
-            marginTop: 2,
+            padding: {lg:"16px 36px",xs:"15px 20px"},
+            width: "98%",
+            // marginTop: 2,
             "@media (max-width: 450px)": {
-              marginTop: 1,
+              // marginTop: 1,
             },
           }}
         >
@@ -159,7 +161,7 @@ const Addlibrarydatabase = () => {
         </Grid>
         <Grid item sx={{ width: "100%" }}>
           <AdsList />
-          {/* <PagePagination/> */}
+          {/* <DummList /> */}
         </Grid>
       </Grid>
     </>
