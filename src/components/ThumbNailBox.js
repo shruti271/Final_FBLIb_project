@@ -264,7 +264,7 @@ const ThumbNailBox = ({ adInfo, index }) => {
     <Grid
       item xl={3} lg={4} md={6} sm={6} xs={12}      
       key={index}
-      sx={{ p: { lg: 1, md: 1, sm: 1, xs: "0px" }, pb: { xs: 3 } }}
+      sx={{ p: { lg: "1px", md: "1px", sm: "1px", xs: "0px" }, pb: { xs: 3 } }}
     >
       <Card
         sx={{
