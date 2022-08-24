@@ -581,8 +581,10 @@ function AllFilters(props) {
         {/* Searchbar Start  */}
         <InputBase
           value={searchBarValue}          
-          // fullWidth
-          widt="50%"
+          fullWidth
+          style={{
+            width:ShowFilterWithClearButton && "50%"
+          }}
           placeholder="Search"
           onKeyUp={(e) => {
             if (e.key === "Enter") {
