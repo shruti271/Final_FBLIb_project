@@ -98,7 +98,7 @@ const useStyles = makeStyles((theme) => ({
   AdsImage: {
     width: "100%",
     height: "230px",
-    objectFit: "fill",
+    // objectFit: "fill",
     padding: "0",
     margin: "0",
     overflowY: "none",
@@ -106,7 +106,7 @@ const useStyles = makeStyles((theme) => ({
   },
   AdsVideo: {
     width: "100%",
-    objectFit: "cover",
+    // objectFit: "cover",
     padding: "0",
     margin: "0",
     overflowY: "none",
@@ -117,12 +117,12 @@ const useStyles = makeStyles((theme) => ({
   },
   shareicon: {
     cursor: "pointer",
-    width:"20px"
+    width: "20px",
   },
   saveicon: {
     marginLeft: "16px",
     cursor: "pointer",
-    width:"20px"
+    width: "20px",
   },
   AdsText: {
     display: "inlineBlock",
@@ -159,16 +159,18 @@ const ReadMore = ({ children }) => {
   };
   return (
     <>
-      <Typography variant="p" className="text" style={{fontSize:"15px"}}>
+      <Typography variant="p" className="text" style={{ fontSize: "15px" }}>
         {isReadMore ? text.slice(0, 150) : text}
-        {text.length >=150 && <Typography
-          variant="h7"
-          style={{ color: "#72E2FF", cursor: "pointer" }}
-          onClick={toggleReadMore}
-          className="read-or-hide"
-        >
-          {isReadMore ? "...Read more" : " Show less"}
-        </Typography>}
+        {text.length >= 150 && (
+          <Typography
+            variant="h7"
+            style={{ color: "#72E2FF", cursor: "pointer" }}
+            onClick={toggleReadMore}
+            className="read-or-hide"
+          >
+            {isReadMore ? "...Read more" : " Show less"}
+          </Typography>
+        )}
       </Typography>
     </>
   );
@@ -187,7 +189,6 @@ const ThumbNailBox = ({ adInfo, index }) => {
   const savedAdsPerams = useSelector((state) => state.savedAdsPerams);
 
   useEffect(() => {
-    
     const queryObject = {
       startdate: savedAdsPerams?.appliedFilters?.StartRunningDate?.startdate,
       enddate: savedAdsPerams?.appliedFilters?.StartRunningDate?.enddate,
@@ -196,7 +197,7 @@ const ThumbNailBox = ({ adInfo, index }) => {
         //   savedAdsPerams?.maxRanger.AdCount?.min ||
         // savedAdsPerams?.appliedFilters?.AdCount?.max <
         //   savedAdsPerams?.maxRanger.AdCount?.max
-        savedAdsPerams?.appliedFilters?.AdCount?.chipText !==""
+        savedAdsPerams?.appliedFilters?.AdCount?.chipText !== ""
           ? [
               savedAdsPerams?.appliedFilters?.AdCount?.min,
               savedAdsPerams?.appliedFilters?.AdCount?.max,
@@ -218,7 +219,7 @@ const ThumbNailBox = ({ adInfo, index }) => {
         //   savedAdsPerams?.maxRanger.InstragramLike?.min ||
         // savedAdsPerams?.appliedFilters?.InstragramLike?.max <
         //   savedAdsPerams?.maxRanger.InstragramLike?.max
-        savedAdsPerams?.appliedFilters?.InstagramFollowers?.chipText !==""
+        savedAdsPerams?.appliedFilters?.InstagramFollowers?.chipText !== ""
           ? [
               savedAdsPerams?.appliedFilters?.InstagramFollowers?.min,
               savedAdsPerams?.appliedFilters?.InstagramFollowers?.max,
@@ -259,24 +260,31 @@ const ThumbNailBox = ({ adInfo, index }) => {
   }, [savedAdsPerams]);
 
   return (
-    <Grid item xl={3} lg={4} md={6} sm={6} xs={12} key={index} sx={{ p:{lg:1,md:1,sm:1,xs:"0px"}, pb:{xs:3}}}>
+    <Grid
+      item
+      xl={3}
+      lg={4}
+      md={6}
+      sm={6}
+      xs={12}
+      key={index}
+      sx={{ p: { lg: 1, md: 1, sm: 1, xs: "0px" }, pb: { xs: 3 } }}
+    >
       <Card
         sx={{
           borderRadius: "16px",
           boxShadow: "none",
           border: " 1px solid #EBEBEB",
-          
         }}
       >
         <Stack
           sx={{
             // padding: "10px",
-            paddingLeft:"20px",
-            paddingTop:"10px",
-            paddingRight:"20px",
-            paddingBottom:"14px",
+            paddingLeft: "20px",
+            paddingTop: "10px",
+            paddingRight: "20px",
+            paddingBottom: "14px",
             justifyContent: "space-between",
-           
           }}
         >
           <Box className={classes.Addheader}>
@@ -304,30 +312,32 @@ const ThumbNailBox = ({ adInfo, index }) => {
                 color: "#2B2F42",
                 marginRight: "12px",
                 paddingLeft: "10px",
-                cursor:"pointer"
+                cursor: "pointer",
               }}
               noWrap
-              onClick={()=>{                
+              onClick={() => {
                 window.open(adInfo?.pageInfo?.url, "_blank", "");
               }}
             >
               {adInfo?.pageInfo?.name}
             </Typography>
-            {adInfo?.pageInfo?.platforms?.Facebook?.likes && <Typography
-              noWrap
-              sx={{
-                fontWeight: 500,
-                fontSize: "15px",
-                lineHeight: "24px",
-                color: "#2B2F42",
-                opacity: 0.6,
-                marginRight: "12px",
-              }}
-            >
-              {`(${Intl.NumberFormat().format(
-                adInfo?.pageInfo?.platforms?.Facebook?.likes
-              )} likes)`}
-            </Typography>}
+            {adInfo?.pageInfo?.platforms?.Facebook?.likes && (
+              <Typography
+                noWrap
+                sx={{
+                  fontWeight: 500,
+                  fontSize: "15px",
+                  lineHeight: "24px",
+                  color: "#2B2F42",
+                  opacity: 0.6,
+                  marginRight: "12px",
+                }}
+              >
+                {`(${Intl.NumberFormat().format(
+                  adInfo?.pageInfo?.platforms?.Facebook?.likes
+                )} likes)`}
+              </Typography>
+            )}
           </Box>
           {/* <Box height={(adInfo?.adDescription.length <=150) ? "80px":"auto"} sx={{lineHeight:"20px"}}>
             <ShowMoreText lines={3} expanded={false} expandByClick={true} keepNewLines="true">
@@ -335,7 +345,8 @@ const ThumbNailBox = ({ adInfo, index }) => {
             {adInfo?.adDescription ? adInfo.adDescription : " "}
             </ShowMoreText>
           </Box> */}
-          <Box  /*height={(adInfo?.adDescription.length <=150) ? "80px":"auto"}*/>
+          <Box /*height={(adInfo?.adDescription.length <=150) ? "80px":"auto"}*/
+          >
             <Typography
               sx={{
                 fontWeight: 500,
@@ -345,13 +356,13 @@ const ThumbNailBox = ({ adInfo, index }) => {
                 // lineHeight:1
                 // margin: "10px 12px 10px 15px",
               }}
-            >              
+            >
               <ReadMore>
                 {adInfo?.adDescription ? adInfo.adDescription : " "}
               </ReadMore>
             </Typography>
           </Box>
-          <div style={{ height: "300px" , marginTop:"4px"}}>
+          <div style={{ height: "300px", marginTop: "4px" }}>
             {adInfo.adMediaType === "video" ? (
               <video
                 src={adInfo.bucketMediaURL}
@@ -377,83 +388,87 @@ const ThumbNailBox = ({ adInfo, index }) => {
             )}
           </div>
           <Grid container pt={1.3}>
-                <Grid item marginRight={"15px"} sx={{fontWeight:500}}>
-                  {adInfo.status === "Active" ? (
-                    <Typography sx={{ textDecoration: "underline",
+            <Grid item marginRight={"15px"} sx={{ fontWeight: 500 }}>
+              {adInfo.status === "Active" ? (
+                <Typography
+                  sx={{
+                    textDecoration: "underline",
                     paddingBottom: "4px",
-                    borderBottomWidth:"3px",
+                    borderBottomWidth: "3px",
                     // borderBottomColor:"red"
-                    }} variant="p">
-                      {adInfo.status}
-                    </Typography>
-                  ) : (
-                    <Typography sx={{ color: "red",textDecoration: "underline", }}>
-                      {adInfo.status}
-                    </Typography>
-                  )}
-                </Grid>
-                <Grid item marginRight={"16px"}>
-                  {/* <Tooltip title="Redirect to shop link"> */}
-                  {adInfo?.ctaStatus !=="" && <img
-                    src={Shareicon}
-                    alt="Shareicon"
-                    className={classes.shareicon}
-                    onClick={(e) => {
-                      console.log(adInfo?.purchaseURL);
-                      window.open(adInfo?.purchaseURL, "_blank", "");
-                    }}
-                  />}
-                  {/* </Tooltip> */}
-                  <img
-                    src={
-                      filteredSavedAds.savedAdsIds.includes(adInfo?.id)
-                        ? StarFill
-                        : Saveicon
-                    }
-                    alt="saved-icon"
-                    className={classes.saveicon}
-                    onClick={() => {
-                      if (filteredSavedAds.savedAdsIds.includes(adInfo?.id)) {
-                        // dispatch(removesavedFilteredAdLocal(adInfo));
-                        // dispatch(removeSavedAdsIdsLocal(adInfo.id));
-                        dispatch(removeFromSavedAdsStart(adInfo));
-                      } else {
-                        // dispatch(addSavedAdsIdsLocal(adInfo.id));//local saved id
-                        dispatch(addToSavedAdsStart({ ad: adInfo.id }));
-                        console.log("000000 ---- q",queryObject)
-                        // dispatch(checkAplliedFiltersAds({
-                        //   filters:queryObject,adsData:adInfo
-                        // }));
-                        dispatch(
-                          addToSavedAdsFilterLocalStart({
-                         ...queryObject,
-                            adId: adInfo.id
-                          })
-                        );
-                      }
-                    }}
-                  />
-                </Grid>
-                <Grid item>
-                  <Stack direction={"row"}>
-                    <AccessTime style={{ color: "#80828E", width: "20px" }} />
-                    <Typography color={"#80828E"} marginLeft="4px">
-                      {Math.floor(
-                        Math.abs(
-                          (new Date(adInfo?.startDate).getTime() -
-                            new Date().getTime()) /
-                            (1000 * 3600 * 24)
-                        )
-                      )}{" "}
-                      Days
-                    </Typography>
-                  </Stack>
-                </Grid>
-              </Grid>
+                  }}
+                  variant="p"
+                >
+                  {adInfo.status}
+                </Typography>
+              ) : (
+                <Typography sx={{ color: "red", textDecoration: "underline" }}>
+                  {adInfo.status}
+                </Typography>
+              )}
+            </Grid>
+            <Grid item marginRight={"16px"}>
+              {/* <Tooltip title="Redirect to shop link"> */}
+              {(adInfo?.ctaStatus !== ""  && adInfo?.purchaseURL !=="")&& (
+                <img
+                  src={Shareicon}
+                  alt="Shareicon"
+                  className={classes.shareicon}
+                  onClick={(e) => {
+                    console.log(adInfo?.purchaseURL);
+                    window.open(adInfo?.purchaseURL, "_blank", "");
+                  }}
+                />
+              )}
+              {/* </Tooltip> */}
+              <img
+                src={
+                  filteredSavedAds.savedAdsIds.includes(adInfo?.id)
+                    ? StarFill
+                    : Saveicon
+                }
+                alt="saved-icon"
+                className={classes.saveicon}
+                onClick={() => {
+                  if (filteredSavedAds.savedAdsIds.includes(adInfo?.id)) {
+                    // dispatch(removesavedFilteredAdLocal(adInfo));
+                    // dispatch(removeSavedAdsIdsLocal(adInfo.id));
+                    dispatch(removeFromSavedAdsStart(adInfo));
+                  } else {
+                    // dispatch(addSavedAdsIdsLocal(adInfo.id));//local saved id
+                    dispatch(addToSavedAdsStart({ ad: adInfo.id }));
+                    console.log("000000 ---- q", queryObject);
+                    // dispatch(checkAplliedFiltersAds({
+                    //   filters:queryObject,adsData:adInfo
+                    // }));
+                    dispatch(
+                      addToSavedAdsFilterLocalStart({
+                        ...queryObject,
+                        adId: adInfo.id,
+                      })
+                    );
+                  }
+                }}
+              />
+            </Grid>
+            <Grid item>
+              <Stack direction={"row"}>
+                <AccessTime style={{ color: "#80828E", width: "20px" }} />
+                <Typography color={"#80828E"} marginLeft="4px">
+                  {Math.floor(
+                    Math.abs(
+                      (new Date(adInfo?.startDate).getTime() -
+                        new Date().getTime()) /
+                        (1000 * 3600 * 24)
+                    )
+                  )}{" "}
+                  Days
+                </Typography>
+              </Stack>
+            </Grid>
+          </Grid>
           <Grid container sx={{ padding: "4px" }}>
             <Grid item xs={9} sm={10} md={10} lg={10}>
-              
-            
               <Typography color="#80828E" className={classes.AdsText} noWrap>
                 Started Running : {adInfo.startDate}
               </Typography>
@@ -601,28 +616,27 @@ const ThumbNailBox = ({ adInfo, index }) => {
               </Avatar>
             </Grid>
           </Grid> */}
-<Grid container>
-                    <Grid item xs={12} lg={12} sm={12}>
-                      {/* <AreaLineGraph /> */}
-{/* <CustomizedView /> */}
-{/* <AreaLineGraph /> */}
-                      <SplineAreaGraph
-                        chartData={adInfo?.history}
-                        dataBoxVisiblity={false}
-                        axisVisiblity={false}
-                        fillType={"area"}
-                        graphHeight={100}
-                      />
-                    </Grid>
-                    </Grid>
+          <Grid container>
+            <Grid item xs={12} lg={12} sm={12}>
+              {/* <AreaLineGraph /> */}
+              {/* <CustomizedView /> */}
+              {/* <AreaLineGraph /> */}
+              <SplineAreaGraph
+                chartData={adInfo?.history}
+                dataBoxVisiblity={false}
+                axisVisiblity={false}
+                fillType={"area"}
+                graphHeight={100}
+              />
+            </Grid>
+          </Grid>
 
-{/* <MyChart
+          {/* <MyChart
               chartData={adInfo?.history}
               dataBoxVisiblity={false}
               axisVisiblity={false}
               graphHeight={"100px"}
             /> */}
-
 
           {/* <Box sx={{ height: "100px" }}>
           
@@ -632,10 +646,9 @@ const ThumbNailBox = ({ adInfo, index }) => {
             size="small"
             sx={{
               borderRadius: "17px",
-              background:
-                " linear-gradient(45deg, #00CBFF 0%, #72E2FF 100%)",
+              background: " linear-gradient(45deg, #00CBFF 0%, #72E2FF 100%)",
               textTransform: "none",
-              height:"30px"
+              height: "30px",
             }}
             onClick={() => {
               window.location.pathname === "/" &&
@@ -658,12 +671,14 @@ const ThumbNailBox = ({ adInfo, index }) => {
                     .includes("savedAds")
                     ? "/savedAds"
                     : "/",
-                    CurrentAppliedFilter:queryObject,
+                  CurrentAppliedFilter: queryObject,
                 },
               });
             }}
           >
-            <Typography sx={{fontWeight:700,fontSize:"14px"}}>See Details</Typography>
+            <Typography sx={{ fontWeight: 700, fontSize: "14px" }}>
+              See Details
+            </Typography>
           </Button>
         </Stack>
       </Card>

@@ -123,7 +123,7 @@ function AdDeatails() {
           justifyContent: "center",
           alignItems: "center",
           textAlign: "center",
-          zIndex: 1,
+          zIndex: 1,  
         }}
       >
         <FadeLoader
@@ -201,7 +201,7 @@ function AdDeatails() {
                   {showGraph && (
                     <Box sx={{ marginTop: "13px" }}>
                       <Box>
-                        {adDetail?.purchaseURL !== "" && (
+                        {(adDetail?.purchaseURL !== ""  && adDetail?.purchaseURL !=="") && (
                           <img
                             src={Shareicon}
                             alt="Shareicon"
@@ -420,7 +420,7 @@ function AdDeatails() {
                     </Grid>
                   </Grid>
                 </Box>
-                {adDetail?.ctaStatus !== "" && (
+                {(adDetail?.ctaStatus !== ""  && adDetail?.purchaseURL !=="") && (
                   <Grid container justifyContent="flex-end">
                     <Grid item xs={12} sm={12} md={12} lg={6}>
                       <Button
@@ -892,14 +892,14 @@ export default AdDeatails;
 
 const useStyles = makeStyles((theme) => ({
   AdsImageVideo: {
-    objectFit: "fill",
-    height: "400px",
+    // objectFit: "fill",
+    // height: "400px",
     width: "100%",
   },
   AdsImage: {
     width: "100%",
-    height: "400px",
-    objectFit: "fill",
+    // height: "400px",
+    // objectFit: "fill",
     padding: "0",
     margin: "0",
   },
