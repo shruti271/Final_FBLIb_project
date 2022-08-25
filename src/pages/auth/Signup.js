@@ -259,7 +259,7 @@ const Signup = () => {
                             inputRef={validate()}
                             render={({ field: { onChange } }) => (
                               <Checkbox
-                                sx={{ color: "#00CBFF" }}
+                                style={{ color: "#00CBFF" }}
                                 className={global.termsandcondition}
                                 onChange={(e) => onChange(e.target.checked)}
                               />

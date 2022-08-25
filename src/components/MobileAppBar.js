@@ -155,18 +155,16 @@ function MobileAppBar() {
                     }}
                   >
                     <Box
-                      marginLeft={3}
+                      marginLeft={2.5}
                       marginTop={1}
                       marginBottom={1}
                       paddingRight={1}
                     >
-                      <Typography>
-                        <b>
+                      <Typography variant="h4"  sx={{fontWeight:600,fontSize:"18px",lineHeight:"24px"}}>
                           {accountSettings &&
                             `${accountSettings?.first_name} ${accountSettings?.last_name}`}
-                        </b>
                       </Typography>
-                      <Typography noWrap>
+                      <Typography noWrap  color="#2B2F42" sx={{fontWeight:400,fontSize:"14px",lineHeight:"24px",letterSpacing:"0.02em"}}>
                         {accountSettings && accountSettings?.email}
                       </Typography>
                     </Box>
@@ -197,7 +195,7 @@ function MobileAppBar() {
                             alt="img1"
                             style={{ height: "15px", width: "15px" }}
                           />
-                          <Typography marginLeft={1}>{item.name}</Typography>
+                          <Typography sx={{fontWeight:500,fontSize:"16px",lineHeight:"24px"}} marginLeft={1}>{item.name}</Typography>
                         </MenuItem>
                       );
                     })}
