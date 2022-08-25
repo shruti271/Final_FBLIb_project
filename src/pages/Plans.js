@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
   plansheading: {
     fontWeight: "600 !important",
-    fontSize: "22px !important",
+    fontSize: "20px !important",
     background:
       "linear-gradient(270deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)",
     WebkitBackgroundClip: "text",
@@ -172,8 +172,9 @@ const Payment = () => {
               sx={{
                 marginLeft: { xs: "26px", sm: "16px" },
                 border: "1px solid #EBEBEB",
-                width: "160px",
-                borderRadius: "41px",
+                width: "148px",
+                borderRadius: "25px",
+                padding:"7px 15px"
               }}
             >
               {" "}
@@ -303,56 +304,24 @@ const Payment = () => {
           }}
         >
           <Stack p={2} pt={4}>
-          {/* <GradientButton
-                  gradient={[
+            <Box  sx={{marginLeft: { xs: "26px", sm: "16px" }}}>
+            <GradientButton
+             gradient={[
                     "rgba(103, 33, 255, 1)",
                     "rgba(0, 203, 255, 1)",
                     "rgba(181, 237, 255, 1)",
                   ]}
-                  onClick={() => {
-                  
-                  }}
-
-
-                  style={{                    
-                    fontWeight: 600,
-                    color: "#00CBFF",
-                    textTransform: "none",
-                  }}
-                  borderWidth={3}
-                >
-                  <Typography
-                    paddingLeft={1}
-                    paddingRight={1}
-                    style={{
-                      textTransform: "none",
-                      color: "url(#linearColors)",
-                    }}
-                    variant="p"
-                  >
-                    Reset
-                  </Typography>
-                </GradientButton> */}
-            <Button
+                  background=" #002838"
+                  color="#F6F6FB"
+                  fontSize="20px"
+                  // width="fitContent"
               className={classes.annualheadinglabel}
               align={aligncenterfont ? "" : "center"}
-              sx={{
-                marginLeft: { xs: "26px", sm: "16px" },
-                padding: "0px",
-                width: { xs: "203px", sm: "163px", lg: "163px" },
-                border: "2px solid  #EBEBEB",
-                borderImageSlice: 1,
-                borderImageSource:
-                  "linear-gradient(270deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)",
-                color: "#F6F6FB",
-                fontWeight: 700,
-                fontSize: "19px",
-                borderRadius: 15,
-                textTransform: "none",
-              }}
+
             >
               Annual Plan
-            </Button>
+            </GradientButton>
+            </Box>
             <Stack p={1.8}>
               <Box sx={{ display: "flex", justifyContent: "flex-start" }}>
                 <Typography

@@ -106,6 +106,7 @@ const VerifyEmail = () => {
                           </Typography>
                         </>
                       ) : verifiactionres === "User Verified" ? (
+                        <>
                         <Typography
                           variant="h5"
                           align="center"
@@ -114,6 +115,15 @@ const VerifyEmail = () => {
                         >
                           Your email has been verified.
                         </Typography>
+                           <Typography
+                           variant="h5"
+                           align="center"
+                           mb={3}
+                           sx={{ fontWeight: 500 }}
+                         >
+                           Welcome to Eye of Ecom Please click below to log in.
+                         </Typography>
+                         </>
                       ) : verifiactionres ===
                         "Token has already been expired" ? (
                         <Alert severity="warning">

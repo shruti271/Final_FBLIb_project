@@ -42,25 +42,26 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("xs")]: {
       marginRight: "70px",
     },
-    marginRight: "100px",
+    marginRight: "98px",
   },
   accontsettingalign: {
     [theme.breakpoints.down("xs")]: {
-      marginRight: "12px",
+      marginLeft: "12px",
     },
-    marginRight: "20px",
+    marginRight: "24px",
   },
   contactsupportalign: {
     [theme.breakpoints.down("xs")]: {
-      marginRight: "12px",
+      // marginRight: "12px",
+      marginLeft: "12px",
     },
-    marginRight: "28px",
+    marginRight: "22px",
   },
   logoutalign: {
     [theme.breakpoints.down("xs")]: {
       marginRight: "50px",
     },
-    marginRight: "92px",
+    marginRight: "88px",
   },
   selectedMenu:{
     background: " linear-gradient(270deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 100%)",
@@ -157,6 +158,7 @@ const MobileDrawer = ({ setIsOpen }) => {
                   display: "flex",
                   justifyContent: "center",
                   cursor: "pointer",
+                  marginRight: selectedMenuItem === sideBarMenuItems.ADLIBSDATABASE ?"0px":"19px"
                 }}
                 onClick={() => {
                   setSelectedMenuItem(sideBarMenuItems.ADLIBSDATABASE);
@@ -189,7 +191,9 @@ const MobileDrawer = ({ setIsOpen }) => {
                   color="#FFFFFF"
                   sx={{
                     fontSize: { xs: 18, sm: 25},
-                    fontWeight: "bold",
+                    fontWeight: selectedMenuItem === sideBarMenuItems.ADLIBSDATABASE
+                    ? 600
+                    : 400,
                   }}
                   className={
                     selectedMenuItem === sideBarMenuItems.ADLIBSDATABASE
@@ -241,7 +245,9 @@ const MobileDrawer = ({ setIsOpen }) => {
                     color="#FFFFFF"
                     sx={{
                       fontSize: { xs: 18, sm: 25 },
-                      fontWeight: "bold",
+                      fontWeight: selectedMenuItem === sideBarMenuItems.SAVEDADS
+                    ? 600
+                    : 400,
                     }}
                     className={
                       selectedMenuItem === sideBarMenuItems.SAVEDADS
@@ -263,6 +269,7 @@ const MobileDrawer = ({ setIsOpen }) => {
                     display: "flex",
                     justifyContent: "center",
                     cursor: "pointer",
+                    marginRight: selectedMenuItem === sideBarMenuItems.ACCOUNTSETTINGS ?"28px":"42px"
                   }}
                   className={classes.accontsettingalign}
                   onClick={() => {
@@ -278,6 +285,7 @@ const MobileDrawer = ({ setIsOpen }) => {
                       : ""
                   }
                 >
+                  
                   <FormControlLabel
                     control={<SettingsIcon
                       fontSize="large"
@@ -288,8 +296,11 @@ const MobileDrawer = ({ setIsOpen }) => {
                     variant="h6"                    
                     sx={{
                       fontSize: { xs: 18, sm: 25 },
-                      fontWeight: "bold",
+                      fontWeight: selectedMenuItem === sideBarMenuItems.ACCOUNTSETTINGS
+                      ? 600
+                      : 400,
                       color: "#FFFFFF",
+                      marginTop:divdercenter?"0px":"5px"
                     }}
                     className={
                       selectedMenuItem === sideBarMenuItems.ACCOUNTSETTINGS
@@ -310,6 +321,7 @@ const MobileDrawer = ({ setIsOpen }) => {
                     display: "flex",
                     justifyContent: "center",
                     cursor: "pointer",
+                    marginRight: selectedMenuItem === sideBarMenuItems.SUPPORT ?"24px":"40px"
                   }}
                   className={classes.contactsupportalign}
                   onClick={() => {
@@ -341,7 +353,9 @@ const MobileDrawer = ({ setIsOpen }) => {
                     variant="h6"                    
                     sx={{
                       fontSize: { xs: 18, sm: 25 },
-                      fontWeight: "bold",
+                      fontWeight: selectedMenuItem === sideBarMenuItems.SUPPORT
+                      ? 600
+                      : 400,
                       color: "#FFFFFF",
                     }}
                     className={
@@ -376,7 +390,7 @@ const MobileDrawer = ({ setIsOpen }) => {
                     variant="h6"                    
                     sx={{
                       fontSize: { xs: 18, sm: 25 },
-                      fontWeight: "bold",
+                      fontWeight: 500,
                       color: "#FFFFFF",
                     }}
                     className={
