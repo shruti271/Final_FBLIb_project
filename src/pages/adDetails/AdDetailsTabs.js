@@ -132,7 +132,7 @@ function AdDeatailsTabs() {
           }}
           sx={{ cursor: "pointer", marginTop: "10px" }}
         >
-          <Stack direction={"row"} sx={{marginLeft:"1px"}}>
+          <Stack direction={"row"} sx={{ marginLeft: "1px" }}>
             <Box sx={{ marginRight: "12px" }}>
               <img src={LeftArrow} aria-label="FirstCard" />
             </Box>
@@ -159,7 +159,6 @@ function AdDeatailsTabs() {
             <Button
               disableRipple
               sx={{
-                // borderBottom: isActiveTab === "Ad Overview" ? 2 : 0,
                 height: "20px",
                 width: "113px",
                 borderRadius: 0,
@@ -187,16 +186,11 @@ function AdDeatailsTabs() {
             <Button
               disableRipple
               sx={{
-                // borderBottom: isActiveTab === "All Ads" ? 2 : 0,
                 height: "20px",
                 borderRadius: 0,
                 borderColor: "#2B2F42",
                 color: "#2B2F42",
                 textTransform: "none",
-                // "@media (max-width: 450px)": {
-                //   // marginRight:15,
-                //   fontSize:"18px"
-                //     },
               }}
               onClick={() => {
                 setIsActiveTab(adDetailsTabs.ALLADS);

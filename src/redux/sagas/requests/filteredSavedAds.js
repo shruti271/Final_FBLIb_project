@@ -1,11 +1,15 @@
 import axiosInstance from "../../../axios/Index";
 
 export function requestGetSavedAds(payload) {
-  return axiosInstance.post("api/allsavedads/",payload, { withCredentials: true });
+  return axiosInstance.post("api/allsavedads/", payload, {
+    withCredentials: true,
+  });
 }
 
-export function requestCheckAdByFilter(payload) {  
-  return axiosInstance.post("api/checkAdByFilter/",payload, { withCredentials: true });
+export function requestCheckAdByFilter(payload) {
+  return axiosInstance.post("api/checkAdByFilter/", payload, {
+    withCredentials: true,
+  });
 }
 
 export function requestAddToSavedAds(SavedAds) {
@@ -14,7 +18,7 @@ export function requestAddToSavedAds(SavedAds) {
   });
 }
 
-export function requestRemoveFromSavedAds(ad) {  
+export function requestRemoveFromSavedAds(ad) {
   return axiosInstance.delete(`api/saveadmanager/${ad.id}/`, {
     withCredentials: true,
   });

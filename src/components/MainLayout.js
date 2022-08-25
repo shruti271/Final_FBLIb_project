@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Routes } from "react-router-dom";
 import { Route } from "react-router-dom";
 import FadeLoader from "react-spinners/FadeLoader";
-import { useMediaQuery , useTheme} from "@mui/material";
+import { useMediaQuery, useTheme } from "@mui/material";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import { styled } from "@mui/material/styles";
@@ -38,8 +38,7 @@ const MainLayout = () => {
   const [isOpen, setIsOpen] = React.useState(true);
   const theme = useTheme();
 
-  const showhidedrawer = useMediaQuery(theme.breakpoints.down("md"));
-  const filteredAds = useSelector((state) => state.filteredAds);
+  const showhidedrawer = useMediaQuery(theme.breakpoints.down("md"));  
 
   useEffect(() => {
     dispatch(loadSubscriptionStart());
@@ -48,7 +47,7 @@ const MainLayout = () => {
         page_index: 0,
         sort_by: "lastUpdatedTime",
         order_by: "asc",
-        number_of_pagead:process.env.REACT_APP_NO_OF_ADS_PER_PAGE
+        number_of_pagead: process.env.REACT_APP_NO_OF_ADS_PER_PAGE,
       })
     );
     dispatch(
@@ -63,21 +62,18 @@ const MainLayout = () => {
     dispatch(getButtonTypes());
   }, [dispatch]);
 
-
   return (
     <>
-      <Box display={showhidedrawer?"":"flex"}>
-      <CssBaseline />
-        {
-          showhidedrawer ? <MobileAppBar /> :
-          (
-            <>
-              <CustomSidebar isOpen={isOpen} setIsOpen={setIsOpen} />
-              <CustomAppBar  />
-            </>
-          )
-         } 
-        
+      <Box display={showhidedrawer ? "" : "flex"}>
+        <CssBaseline />
+        {showhidedrawer ? (
+          <MobileAppBar />
+        ) : (
+          <>
+            <CustomSidebar isOpen={isOpen} setIsOpen={setIsOpen} />
+            <CustomAppBar />
+          </>
+        )}
 
         <Box
           component="main"

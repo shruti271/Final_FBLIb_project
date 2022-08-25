@@ -14,17 +14,17 @@ export const CLEAR_PAGINATION_INDEX = "CLEAR_PAGINATION_INDEX";
 export const loadFilteredAdsStart = (filters) => ({
   type: LOAD_FILTERED_ADS_START,
   payload: filters,
-}); //keep
+});
 
 export const loadFilteredAdsSuccess = (filteredAds) => ({
   type: LOAD_FILTERED_ADS_SUCCESS,
   payload: filteredAds,
-}); //keep
+});
 
 export const loadFilteredAdsError = (error) => ({
   type: LOAD_FILTERED_ADS_ERROR,
   payload: error,
-}); //keep
+});
 
 export const removeFilteredAd = (adToBeRemoved) => ({
   type: REMOVE_FILTERED_AD,
@@ -49,7 +49,7 @@ export const setCurrentPaginationIndex = (page) => ({
 });
 
 export const clearPaginationIndex = () => ({
-  type: CLEAR_PAGINATION_INDEX,  
+  type: CLEAR_PAGINATION_INDEX,
 });
 
 const initialState = {
@@ -57,7 +57,7 @@ const initialState = {
   filterData: {},
   savedAdsIds: [],
   totalPages: 0,
-  paginationIndex: 0,  
+  paginationIndex: 0,
   postionOfPage: 0,
   loading: false,
   error: "",
@@ -65,7 +65,7 @@ const initialState = {
 
 const filteredAdsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case LOAD_FILTERED_ADS_START:      
+    case LOAD_FILTERED_ADS_START:
       return {
         ...state,
         filteredAds: [],
@@ -74,7 +74,7 @@ const filteredAdsReducer = (state = initialState, action) => {
         loading: true,
       };
 
-    case LOAD_FILTERED_ADS_SUCCESS:      
+    case LOAD_FILTERED_ADS_SUCCESS:
       return {
         ...state,
         loading: false,
@@ -90,7 +90,6 @@ const filteredAdsReducer = (state = initialState, action) => {
       };
 
     case GET_CASHED_PAGE_DATA:
-      
       return {
         ...state,
         filteredAds: state.filterData[action.payload],
@@ -107,7 +106,6 @@ const filteredAdsReducer = (state = initialState, action) => {
         paginationIndex: action.payload,
       };
     case LOAD_FILTERED_ADS_ERROR:
-      // case LOAD_MORE_FILTERED_ADS_ERROR:
       return {
         ...state,
         loading: false,
@@ -126,13 +124,13 @@ const filteredAdsReducer = (state = initialState, action) => {
         ...state,
         postionOfPage: action.payload,
       };
-      case CLEAR_PAGINATION_INDEX:
+    case CLEAR_PAGINATION_INDEX:
       return {
         ...state,
         postionOfPage: 0,
-        filteredAds:[],
-        paginationIndex:0,
-        filterData:{}
+        filteredAds: [],
+        paginationIndex: 0,
+        filterData: {},
       };
     default:
       return state;

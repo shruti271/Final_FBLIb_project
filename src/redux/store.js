@@ -15,15 +15,15 @@ import singleAdDataReducer from "./ducks/singleAdsData";
 
 const reducer = combineReducers({
   filteredAds: filteredAdsReducer,
-  savedAdsPerams:savedAdsPeramsReducer,
+  savedAdsPerams: savedAdsPeramsReducer,
   filteredSavedAds: filteredSavedAdsReducer,
   buttonTypes: buttonTypesReducer,
   accountSettings: accountSettingsReducer,
   subAllAds: subAllAdsReducer,
   isAliveData: isAliveReducer,
   subscriptionData: subscriptionReducer,
-  allAdsPerams: allAdsPeramsReducer,  
-  singleAdData : singleAdDataReducer,
+  allAdsPerams: allAdsPeramsReducer,
+  singleAdData: singleAdDataReducer,
 });
 
 const composeEnhancers =
@@ -42,7 +42,7 @@ const store = createStore(
 
 export const getStore = () => {
   return store;
-}
+};
 // const store = createStore(reducer, applyMiddleware(...middleWares));
 
 sagaMiddleWares.run(watcherSaga);

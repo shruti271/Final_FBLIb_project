@@ -74,7 +74,7 @@ const Updatepassword = () => {
       const res = await resetPassword({
         token: token,
         password: data.password,
-      });      
+      });
       setLoading(true);
       if (res.data.message === "Password updated") {
         setErrormessage("Password successfully updated");
@@ -178,11 +178,6 @@ const Updatepassword = () => {
                             ),
                             // color:"red"
                           },
-                          // pattern: {
-                          //   value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{6,})/,
-                          //   message:'Must Contain 1 Character, 1 Number, 1 Special Character'
-                          //     // JS only: <p>error message</p> TS only support string
-                          // }
                         })}
                       />
                       <Typography variant="inherit" color="red" p={0.5}>

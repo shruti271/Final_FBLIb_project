@@ -1,10 +1,6 @@
 import { all, fork, takeLatest } from "redux-saga/effects";
-import {
-  LOAD_FILTERED_ADS_START,  
-} from "../ducks/filteredAds";
-import {
-  handleGetFilteredAds,
-} from "./handlers/filteredAds";
+import { LOAD_FILTERED_ADS_START } from "../ducks/filteredAds";
+import { handleGetFilteredAds } from "./handlers/filteredAds";
 import {
   handleGetAccountSettings,
   handleUpdateAccountSettings,
@@ -29,26 +25,22 @@ import {
   handleAddToSavedAds,
   handleCheckAdByFilter,
   handleGetFilteredSavedAds,
-  handleRemoveFromSavedAds,  
+  handleRemoveFromSavedAds,
 } from "./handlers/filteredSavedAds";
 import {
   ADD_TO_SAVED_ADS_START,
   ADD_TO_SAVED_FILTERED_AD_LOCAL_START,
-  // LOAD_MORE_SAVED_FILTERED_ADS_START,
   LOAD_SAVED_FILTERED_ADS_START,
   REMOVED_FROM_SAVED_ADS_START,
 } from "../ducks/filteredSavedAds";
 import { GET_BUTTON_TYPES_START } from "../ducks/buttonType";
 import { handleGetButtonType } from "../sagas/handlers/buttonType";
-// import {  REMOVED_FROM_SAVED_ADS_START } from "../ducks/savedAdsManager";
-// import { handleAddToSavedAds, handleRemoveFromSavedAds } from "../sagas/handlers/savedAdsManager";
 import { LOAD_SINGLEAD_START } from "../ducks/singleAdsData";
 import { handleGetSingleAdData } from "./handlers/singleAdsData";
-// import { handleAddToSavedAds, handleRemoveFromSavedAds } from "./handlers/savedAdsManager";
 
 function* onAddToSavedFilterLocal() {
   yield takeLatest(ADD_TO_SAVED_FILTERED_AD_LOCAL_START, handleCheckAdByFilter);
-}//keep
+}
 
 function* onLoadFilteredAds() {
   yield takeLatest(LOAD_FILTERED_ADS_START, handleGetFilteredAds);
@@ -58,20 +50,13 @@ function* onLoadFilteredSavedAds() {
   yield takeLatest(LOAD_SAVED_FILTERED_ADS_START, handleGetFilteredSavedAds);
 }
 
-// function* onLoadMoreFilteredSavedAds() {
-//   yield takeLatest(
-//     LOAD_MORE_SAVED_FILTERED_ADS_START,
-//     handleGetMoreFilteredSavedAds
-//   );
-// }
-
 function* onAddToSavedAds() {
   yield takeLatest(ADD_TO_SAVED_ADS_START, handleAddToSavedAds);
-}//keep
+}
 
 function* onRemoveFromSavedAds() {
   yield takeLatest(REMOVED_FROM_SAVED_ADS_START, handleRemoveFromSavedAds);
-}//keep
+}
 
 function* onLoadIsAlive() {
   yield takeLatest(LOAD_ISALIVE_START, handleGetIsAlive);
@@ -104,15 +89,12 @@ function* onGetSingleAdData() {
   yield takeLatest(LOAD_SINGLEAD_START, handleGetSingleAdData);
 }
 
-const filteredAdsSagas = [fork(onLoadFilteredAds), 
-  //fork(onLoadMoreFilteredAds)
-];
+const filteredAdsSagas = [fork(onLoadFilteredAds)];
 const filteredSavedAdsSagas = [
   fork(onLoadFilteredSavedAds),
-  // fork(onLoadMoreFilteredSavedAds),
   fork(onAddToSavedAds),
   fork(onRemoveFromSavedAds),
-  fork(onAddToSavedFilterLocal)
+  fork(onAddToSavedFilterLocal),
 ];
 const isAliveSagas = [fork(onLoadIsAlive)];
 const subscriptionSagas = [fork(onLoadSubscription)];
@@ -133,6 +115,6 @@ export default function* watcherSaga() {
     ...suballadsSagas,
     ...isAliveSagas,
     ...subscriptionSagas,
-    ...singleAdDataSagas
+    ...singleAdDataSagas,
   ]);
 }

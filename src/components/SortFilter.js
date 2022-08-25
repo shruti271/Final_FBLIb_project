@@ -51,6 +51,7 @@ function SortFilter(props) {
   }, [location.pathname]);
 
   const handleChangeSortType = (event, newValue) => {
+    setSortByAnchorel(null);
     pageName === PageNameEnum.AdlibraryDatabase &&
       dispatch(clearCashedPageData());
     dispatch(
@@ -71,6 +72,7 @@ function SortFilter(props) {
   };
 
   const handleChangeAceOrDes = (event, newValue) => {
+    setSortByAnchorel(null);
     pageName === PageNameEnum.AdlibraryDatabase &&
       dispatch(clearCashedPageData());
     dispatch(

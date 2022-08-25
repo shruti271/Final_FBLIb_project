@@ -22,40 +22,39 @@ export const setSubscription = (data) => ({
   payload: data,
 });
 
-
 const initialState = {
-    data: {},
-    loading: true,
-    error: "",
-  };
-  
+  data: {},
+  loading: true,
+  error: "",
+};
+
 const subscriptionReducer = (state = initialState, action) => {
-switch (action.type) {
+  switch (action.type) {
     case LOAD_SUBSCRIPTION_START:
-    return {
+      return {
         ...state,
         loading: true,
-    };
+      };
     case LOAD_SUBSCRIPTION_SUCCESS:
-    return {
+      return {
         ...state,
         loading: false,
         data: action.payload,
-    };
+      };
     case SET_SUBSCRIPTION:
-        return {
+      return {
         ...state,
         data: action.payload,
-        };
+      };
     case LOAD_SUBSCRIPTION_ERROR:
-    return {
+      return {
         ...state,
         loading: false,
         error: action.payload,
-    };
+      };
     default:
-    return state;
-}
+      return state;
+  }
 };
-  
-  export default subscriptionReducer;
+
+export default subscriptionReducer;

@@ -9,8 +9,6 @@ import {
   Grid,
   Stack,
   Typography,
-  useMediaQuery,
-  useTheme,
 } from "@mui/material";
 import { makeStyles } from "@material-ui/core/styles";
 import Firstcardimg from "../assets/FirstCardImg.svg";

@@ -174,7 +174,7 @@ const savedAdsPeramsReducer = (state = initialState, action) => {
           },
         },
       };
-    case SAVED_CLEAR_FILTERDATA:      
+    case SAVED_CLEAR_FILTERDATA:
       return {
         ...state,
         pageIndex: 0,

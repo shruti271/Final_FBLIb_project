@@ -22,40 +22,39 @@ export const setIsAlive = (data) => ({
   payload: data,
 });
 
-
 const initialState = {
-    isAlive: false,
-    loading: true,
-    error: "",
-  };
-  
-  const isAliveReducer = (state = initialState, action) => {
-    switch (action.type) {
-      case LOAD_ISALIVE_START:
-        return {
-          ...state,
-          loading: true,
-        };
-      case LOAD_ISALIVE_SUCCESS:
-        return {
-          ...state,
-          loading: false,
-          isAlive: action.payload,
-        };
-        case SET_ISALIVE:
-          return {
-            ...state,
-            isAlive: action.payload,
-          };
-      case LOAD_ISALIVE_ERROR:
-        return {
-          ...state,
-          loading: false,
-          error: action.payload,
-        };
-      default:
-        return state;
-    }
-  };
-  
-  export default isAliveReducer;
+  isAlive: false,
+  loading: true,
+  error: "",
+};
+
+const isAliveReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case LOAD_ISALIVE_START:
+      return {
+        ...state,
+        loading: true,
+      };
+    case LOAD_ISALIVE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        isAlive: action.payload,
+      };
+    case SET_ISALIVE:
+      return {
+        ...state,
+        isAlive: action.payload,
+      };
+    case LOAD_ISALIVE_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
+export default isAliveReducer;

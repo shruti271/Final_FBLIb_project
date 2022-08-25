@@ -18,7 +18,7 @@ const drawerWidth = 276;
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
-})(({ theme, open }) => ({  
+})(({ theme, open }) => ({
   transition: theme.transitions.create(["width", "margin"], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
@@ -26,7 +26,7 @@ const AppBar = styled(MuiAppBar, {
   backgroundColor: "#fff",
   zIndex: 1200,
   ...(open && {
-    marginLeft: drawerWidth,    
+    marginLeft: drawerWidth,
     transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,

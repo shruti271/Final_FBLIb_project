@@ -23,7 +23,6 @@ const AdsList = () => {
   const allAdsPerams = useSelector((state) => state.allAdsPerams);
   const [queryObject, setQueryObject] = useState({});
 
- 
   useEffect(() => {
     window.scrollTo(0, filteredAds.postionOfPage);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -86,7 +85,7 @@ const AdsList = () => {
         ? allAdsPerams?.searchType === "Exact Phrase"
           ? allAdsPerams?.searchBarData.split(",")
           : null
-        : null,      
+        : null,
     };
     setQueryObject(queryObject);
   }, [
@@ -96,14 +95,14 @@ const AdsList = () => {
     allAdsPerams.searchBarData,
   ]);
 
-  useSkipInitialEffect(() => {       
+  useSkipInitialEffect(() => {
     if (
       Object.keys(filteredAds?.filterData).includes(
         allAdsPerams?.pageIndex.toString()
       )
     ) {
       dispatch(laodCashedPageData(filteredAds?.paginationIndex));
-    } else {            
+    } else {
       dispatch(
         loadFilteredAdsStart({
           ...queryObject,
@@ -111,7 +110,6 @@ const AdsList = () => {
           number_of_pagead: process.env.REACT_APP_NO_OF_ADS_PER_PAGE,
         })
       );
-    
     }
   }, [dispatch, queryObject]);
 
@@ -136,11 +134,11 @@ const AdsList = () => {
   }, [dispatch, allAdsPerams.searchType, allAdsPerams.searchBarData]);
 
   return (
-    <>     
+    <>
       {filteredAds?.loading && filteredAds?.filteredAds.length === 0 ? (
         <Box
           className="loader"
-          style={{            
+          style={{
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
@@ -206,7 +204,7 @@ const AdsList = () => {
             count={filteredAds?.totalPages}
             size={"large"}
             page={filteredAds?.paginationIndex + 1}
-            onChange={(e, p) => {              
+            onChange={(e, p) => {
               dispatch(setCurrentPaginationIndex(p - 1));
               dispatch(allAdsPeramsDuck.setDatabasePageIndex(p - 1));
             }}

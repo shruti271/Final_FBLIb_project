@@ -17,30 +17,30 @@ export const getButtonTypesError = (error) => ({
 });
 
 const initialState = {
-  buttonTypes:[],
+  buttonTypes: [],
   loading: false,
-  error:null
+  error: null,
 };
 
 const buttonTypesReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_BUTTON_TYPES_START:
-      return { 
+      return {
         ...state,
-        loading:true
-       };
+        loading: true,
+      };
     case GET_BUTTON_TYPES_SUCCESS:
       return {
         ...state,
         buttonTypes: action.payload,
-        loading:false
+        loading: false,
       };
     case GET_BUTTON_TYPES_ERROR:
-      return { 
-        ...state, 
+      return {
+        ...state,
         error: action.payload,
-        loading:false
-       };
+        loading: false,
+      };
     default:
       return state;
   }

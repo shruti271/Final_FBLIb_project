@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "@mui/material";
 
-const ResetButton=(props)=> {
+const ResetButton = (props) => {
   return (
     <Button
       // disabled={props.loading}
@@ -21,6 +21,6 @@ const ResetButton=(props)=> {
       Reset
     </Button>
   );
-}
+};
 
 export default ResetButton;

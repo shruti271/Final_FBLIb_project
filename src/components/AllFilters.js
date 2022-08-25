@@ -27,7 +27,10 @@ import { PageNameEnum } from "../utils/enums";
 import ResetButton from "../css/ResetButton";
 import * as allAdsPeramsDuck from "../redux/ducks/allAdsPerams";
 import * as savedAdsPeramsDuck from "../redux/ducks/savedAdsPerams";
-import { clearCashedPageData, clearPaginationIndex } from "../redux/ducks/filteredAds";
+import {
+  clearCashedPageData,
+  clearPaginationIndex,
+} from "../redux/ducks/filteredAds";
 import Arrowdown from "../assets/Arrowdown.svg";
 import filter from "../assets/filter.svg";
 
@@ -418,7 +421,7 @@ function AllFilters(props) {
         direction={"row"}
         sx={{ border: "1px solid #EBEBEB", borderRadius: 2 }}
       >
-        <Grid item sx={{ display: "flex" , alignItems:"center"}}>
+        <Grid item sx={{ display: "flex", alignItems: "center" }}>
           {/* Select Search Type Start  */}
           <Button
             onClick={(event) => {
@@ -430,36 +433,35 @@ function AllFilters(props) {
             disableRipple
             sx={{
               color: "#2B2F42",
-              whiteSpace: "nowrap",              
+              whiteSpace: "nowrap",
               borderRadius: "10px",
               border: "none",
               "@media (max-width: 450px)": {
                 width: "100%",
               },
-            }}           
+            }}
           >
             <Box
               style={{
                 display: "flex",
-                justifyContent: "center",                
+                justifyContent: "center",
               }}
             >
-               <Typography
-              noWrap
-              textTransform="capitalize"
-              sx={{ fontWeight: 500 }}
-            >
-              {pageName === PageNameEnum.AdlibraryDatabase
-                ? allAdsPerams?.searchType
-                : savedAdsPerams?.searchType}
-            </Typography>
+              <Typography
+                noWrap
+                textTransform="capitalize"
+                sx={{ fontWeight: 500 }}
+              >
+                {pageName === PageNameEnum.AdlibraryDatabase
+                  ? allAdsPerams?.searchType
+                  : savedAdsPerams?.searchType}
+              </Typography>
             </Box>
             <img
               alt="arrowdown"
               src={Arrowdown}
               className={classes.DropDownArrow}
             />
-
           </Button>
           {/* <Button
             onClick={(event) => {
@@ -529,9 +531,7 @@ function AllFilters(props) {
                     value="Ad Text"
                     control={<Radio style={{ color: "#00CBFF" }} />}
                     label={
-                      <Typography sx={{ fontWeight: 500 }}>
-                        Ad Text
-                      </Typography>
+                      <Typography sx={{ fontWeight: 500 }}>Ad Text</Typography>
                     }
                   />
                   <FormControlLabel
@@ -575,13 +575,16 @@ function AllFilters(props) {
           </Popover>
           {/* Select Search Type End  */}
 
-          <Divider orientation="vertical" sx={{ marginLeft: "auto" , height:"20px"}} />
+          <Divider
+            orientation="vertical"
+            sx={{ marginLeft: "auto", height: "20px" }}
+          />
         </Grid>
 
         {/* Searchbar Start  */}
         <InputBase
-          value={searchBarValue}          
-          fullWidth          
+          value={searchBarValue}
+          fullWidth
           placeholder="Search"
           onKeyUp={(e) => {
             if (e.key === "Enter") {
@@ -631,7 +634,7 @@ function AllFilters(props) {
               marginRight: "14px",
               marginTop: "22px",
               "@media (max-width: 450px)": {
-                width: "100%"
+                width: "100%",
               },
             }}
             className={classes.filterBtn}
@@ -647,7 +650,7 @@ function AllFilters(props) {
                 noWrap
                 textTransform="capitalize"
                 sx={{ fontWeight: 500 }}
-              >                             
+              >
                 {"Started Running Date"}
               </Typography>
             </Box>
@@ -730,7 +733,7 @@ function AllFilters(props) {
               src={Arrowdown}
               className={classes.DropDownArrow}
             />
-          </Button>         
+          </Button>
           <Popover
             open={addcounteropen}
             anchorEl={rangeanchorel}
@@ -995,7 +998,7 @@ function AllFilters(props) {
               src={Arrowdown}
               className={classes.DropDownArrow}
             />
-          </Button>          
+          </Button>
           <Popover
             anchorEl={adStatusAnchorel}
             add={openAdStatusAnchorel ? "simple-popover" : undefined}
@@ -1079,7 +1082,7 @@ function AllFilters(props) {
 
           {/* Facebook Likes Filter Start */}
           <Button
-              onClick={(e) => setFacebookLikeAnchorEl(e.currentTarget)}
+            onClick={(e) => setFacebookLikeAnchorEl(e.currentTarget)}
             size="large"
             // variant="outlined"
             disableElevation
@@ -1117,7 +1120,7 @@ function AllFilters(props) {
               src={Arrowdown}
               className={classes.DropDownArrow}
             />
-          </Button>         
+          </Button>
           <Popover
             open={openFaceboolLike}
             anchorEl={facebookLikeanchorel}
@@ -1346,7 +1349,7 @@ function AllFilters(props) {
 
           {/* Instagram Likes Filter Start */}
           <Button
-              onClick={(e) => setInstragramFollowerAnchorEl(e.currentTarget)}
+            onClick={(e) => setInstragramFollowerAnchorEl(e.currentTarget)}
             size="large"
             // variant="outlined"
             disableElevation
@@ -1384,7 +1387,7 @@ function AllFilters(props) {
               src={Arrowdown}
               className={classes.DropDownArrow}
             />
-          </Button>         
+          </Button>
           <Popover
             open={openInstragramFollower}
             anchorEl={instragramFolloweranchorel}
@@ -1619,7 +1622,7 @@ function AllFilters(props) {
 
           {/* Media Type Filter Start */}
           <Button
-              onClick={(e) => setMediaTypeAnchorel(e.currentTarget)}
+            onClick={(e) => setMediaTypeAnchorel(e.currentTarget)}
             size="large"
             // variant="outlined"
             disableElevation
@@ -1657,7 +1660,7 @@ function AllFilters(props) {
               src={Arrowdown}
               className={classes.DropDownArrow}
             />
-          </Button>         
+          </Button>
           <Popover
             anchorEl={mediaTypeAnchorel}
             add={openMediaTypeAnchorel ? "simple-popover" : undefined}
@@ -1888,7 +1891,7 @@ function AllFilters(props) {
             <Button
               variant="outlined"
               sx={{
-                borderRadius: LargeScreenOnly?"50px":"15px",
+                borderRadius: LargeScreenOnly ? "50px" : "15px",
                 textTransform: "none",
                 fontWeight: 600,
                 borderColor: "#00CBFF",

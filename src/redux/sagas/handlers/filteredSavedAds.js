@@ -14,7 +14,6 @@ import {
   removeFromSavedAdsError,
 } from "../../ducks/filteredSavedAds";
 
-
 export function* handleGetFilteredSavedAds({ payload }) {
   try {
     const response = yield call(requestGetSavedAds, payload);
@@ -37,31 +36,28 @@ export function* handleCheckAdByFilter({ payload }) {
   } catch (error) {
     yield put(addToSavedAdsFilterLocalError(error));
   }
-} //keep
+}
 
-export function* handleAddToSavedAds({ payload }) {  
+export function* handleAddToSavedAds({ payload }) {
   try {
-    const response = yield call(requestAddToSavedAds , payload);
+    const response = yield call(requestAddToSavedAds, payload);
 
     if (response.status === 200) {
-     //nothing to do for success response
+      //nothing to do for success response
     }
-  } catch (error) {    
-    yield put(addToSavedAdsError({error:error,errorId:payload.ad}));
+  } catch (error) {
+    yield put(addToSavedAdsError({ error: error, errorId: payload.ad }));
   }
-}//keep
-
-
+}
 
 export function* handleRemoveFromSavedAds({ payload }) {
   try {
     const response = yield call(requestRemoveFromSavedAds, payload);
 
-    if (response.status === 200) {      
-      //no need to do anythinbg on remove from database as we altready managed on local redux directly          
+    if (response.status === 200) {
+      //no need to do anythinbg on remove from database as we altready managed on local redux directly
     }
   } catch (error) {
-    yield put(removeFromSavedAdsError({error:error,AdDetail:payload}));
+    yield put(removeFromSavedAdsError({ error: error, AdDetail: payload }));
   }
-}//keep
-
+}

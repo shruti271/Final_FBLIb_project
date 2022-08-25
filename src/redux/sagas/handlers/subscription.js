@@ -1,6 +1,9 @@
 import { requestGetSubscription } from "../requests/subscription";
 import { call, put } from "redux-saga/effects";
-import { loadSubscriptionError, loadSubscriptionSuccess } from "../../ducks/subscription";
+import {
+  loadSubscriptionError,
+  loadSubscriptionSuccess,
+} from "../../ducks/subscription";
 
 export function* handleGetSubscription() {
   try {

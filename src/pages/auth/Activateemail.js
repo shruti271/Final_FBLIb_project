@@ -97,11 +97,28 @@ const Activate = () => {
                       )}
                     </Grid>
                     <Grid xs={12} item>
-                      <Typography variant="h6" align="center" color="#2B2F42" sx={{fontSize:{xs:16,sm:19,lg:19,xl:19},fontWeight:600}} >
+                      <Typography
+                        variant="h6"
+                        align="center"
+                        color="#2B2F42"
+                        sx={{
+                          fontSize: { xs: 16, sm: 19, lg: 19, xl: 19 },
+                          fontWeight: 600,
+                        }}
+                      >
                         We've just sent a verification email to:{email}
                       </Typography>
-                      <Typography variant="h6" align="center" p={1} sx={{fontSize:{xs:16,sm:19,lg:19},fontWeight:500}}>
-                      Click the link in your email to verify your account. If you can't find the email check your spam folder or {""}
+                      <Typography
+                        variant="h6"
+                        align="center"
+                        p={1}
+                        sx={{
+                          fontSize: { xs: 16, sm: 19, lg: 19 },
+                          fontWeight: 500,
+                        }}
+                      >
+                        Click the link in your email to verify your account. If
+                        you can't find the email check your spam folder or {""}
                         {""}
                         <Typography
                           variant="h6"

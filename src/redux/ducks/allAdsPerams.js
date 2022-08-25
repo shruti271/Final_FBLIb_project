@@ -126,9 +126,9 @@ const allAdsPeramsReducer = (state = initialState, action) => {
                   chipText: "",
                   isApplied: false,
                 },
-            }
-          }
-        }
+              },
+            },
+          };
         case "FacebookLikes":
         case "InstagramFollowers":
           return {
@@ -136,7 +136,12 @@ const allAdsPeramsReducer = (state = initialState, action) => {
             pageIndex: 0,
             appliedFilters: {
               ...state.appliedFilters,
-              [`${action.payload.key}`]: { min: 1, max: 100000, chipText: "", isApplied: false },
+              [`${action.payload.key}`]: {
+                min: 1,
+                max: 100000,
+                chipText: "",
+                isApplied: false,
+              },
             },
           };
         case "AdCount":
@@ -145,7 +150,12 @@ const allAdsPeramsReducer = (state = initialState, action) => {
             pageIndex: 0,
             appliedFilters: {
               ...state.appliedFilters,
-              [`${action.payload.key}`]: { min: 1, max: 1000, chipText: "", isApplied: false },
+              [`${action.payload.key}`]: {
+                min: 1,
+                max: 1000,
+                chipText: "",
+                isApplied: false,
+              },
             },
           };
         default:
@@ -158,19 +168,19 @@ const allAdsPeramsReducer = (state = initialState, action) => {
         pageIndex: 0,
         maxRanger: {
           ...state.maxRanger,
-          [`${action.payload.key}`]: {            
-            min:1,
+          [`${action.payload.key}`]: {
+            min: 1,
             max: action.payload.value.max,
           },
         },
       };
 
-    case CLEAR_FILTERDATA:      
+    case CLEAR_FILTERDATA:
       return {
         ...state,
         pageIndex: 0,
         appliedFilters: {
-          // ...state.appliedFilters,
+          ...state.appliedFilters,
           StartRunningDate: {
             startdate: "",
             enddate: "",
@@ -218,7 +228,7 @@ const allAdsPeramsReducer = (state = initialState, action) => {
       };
 
     case CHANGE_SEARCHTYPE:
-    case CHANGE_SEARCHBARDATA:      
+    case CHANGE_SEARCHBARDATA:
       return {
         ...state,
         pageIndex: 0,

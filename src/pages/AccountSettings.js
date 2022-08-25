@@ -1,3 +1,7 @@
+import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import {
   Button,
   CircularProgress,
@@ -15,19 +19,15 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { Box } from "@mui/system";
-import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import viss from "../assets/viss.svg";
-import mastercard from "../assets/master-card.svg";
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { updateAccountSettingsStart } from "../redux/ducks/accountSettings";
-import useStyles from "../css/mediapage";
-import { cancelusersubcription, fetch_payment_method } from "../services";
-import { setSubscription } from "../redux/ducks/subscription";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Visibility from "@mui/icons-material/Visibility";
+import { Box } from "@mui/system";
+import { updateAccountSettingsStart } from "../redux/ducks/accountSettings";
+import { setSubscription } from "../redux/ducks/subscription";
+import { cancelusersubcription, fetch_payment_method } from "../services";
+import useStyles from "../css/mediapage";
+import viss from "../assets/viss.svg";
+import mastercard from "../assets/master-card.svg";
 
 const LoadingFor = {
   PersonalInfo: "personalInfo",
