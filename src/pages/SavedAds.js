@@ -41,6 +41,7 @@ const SavedAds = () => {
     animation: "outAnimation 470ms ease-out",
     animationFillMode: "forwards",
   };
+  
   return (
     <>
       <ScrollToTop />

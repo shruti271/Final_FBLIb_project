@@ -8,7 +8,6 @@ export const themeLight = createTheme({
     MuiCssBaseline: {
       "@global": {
             body: { backgroundColor: "#002838 !important" },
-            // body: {  background:"#002838"}
       },
     },
   },
@@ -23,7 +22,7 @@ const globalStyles = makeStyles((theme) => ({
     marginRight: 'auto',
     objectFit: 'cover',
     cursor:"pointer",
-    display:"flex",
+    // display:"flex",
   },
   title: {
     fontFamily: "Neue Haas Grotesk Display Pro",
@@ -47,7 +46,6 @@ const globalStyles = makeStyles((theme) => ({
   },
   Crateaccountbutton: {
     background:
-      // "linear-gradient(270deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)",
       " linear-gradient(45deg, #00CBFF 0%, #72E2FF 100%)",
     fontFamily: "Neue Haas Grotesk Display Pro",
     width: 400,
@@ -58,7 +56,6 @@ const globalStyles = makeStyles((theme) => ({
     borderRadius: "10px",
     paddingLeft: "10px",
     height: "48px",
-    // marginBottom:"10px"
   },    
 }));
 

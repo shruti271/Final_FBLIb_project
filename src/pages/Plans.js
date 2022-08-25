@@ -16,7 +16,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import paymentCheckboxicon from "../../src/assets/paymentcheckboxicon.svg";
 import annualplancheckboxicon from "../../src/assets/annualplancheckboxicon.svg";
 import { monthsubscription, yearsubcription } from "../services";
-import GradientButton from "react-linear-gradient-button/lib/GradientButton";
 const useStyles = makeStyles((theme) => ({
   paymentheading: {
     fontWeight: "900 !important",

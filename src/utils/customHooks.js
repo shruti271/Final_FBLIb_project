@@ -9,6 +9,7 @@ export const useSkipInitialEffect = (func, deps) => {
       } else {
         didMount.current = true;
       }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, deps);
 };
 
@@ -22,5 +23,6 @@ export const useInitialOnlyEffect = (func, deps) => {
     } else {
       didMount.current = false;
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps);
 };

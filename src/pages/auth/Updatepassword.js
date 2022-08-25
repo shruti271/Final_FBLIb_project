@@ -1,6 +1,6 @@
 import fbaddlogo from "../../assets/Eye of Ecom  Blue.png";
 import fbaddlogowhitecolor from "../../assets/Eye of Ecom White.png";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import {
   Alert,
@@ -40,8 +40,7 @@ const Updatepassword = () => {
   const [loading, setLoading] = useState(false);
   const [errormessage, setErrormessage] = useState("");
   const {
-    register,
-    getValues,
+    register,    
     handleSubmit,
     formState: { errors },
   } = useForm();
@@ -49,9 +48,7 @@ const Updatepassword = () => {
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
   };
-  // useEffect(() => {
-  //   document.title = "Reset Password - Eye of Ecom "
-  // }, []);
+  
   const handleClickShowPassword = () => {
     setValues({
       ...values,

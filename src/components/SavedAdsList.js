@@ -30,6 +30,7 @@ const SavedAdsList = () => {
           currentPage: paginationIndex,
         })
       );
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, filteredSavedAds.filteredSavedAds]);
 
   useSkipInitialEffect(() => {

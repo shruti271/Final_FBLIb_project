@@ -81,6 +81,7 @@ const ForgetPassword = () => {
   useEffect(() => {
     getAlive();
     // document.title = "Forgot Password - Eye of Ecom ";
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

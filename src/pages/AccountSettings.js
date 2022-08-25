@@ -49,7 +49,6 @@ function AccountSettings() {
   });
 
   const showgrid = useMediaQuery(theme.breakpoints.up("sm"));
-  const changepassword = useMediaQuery(theme.breakpoints.up("sm"));
   const savebutton = useMediaQuery(theme.breakpoints.up("sm"));
   const { accountSettings, loading, error } = useSelector(
     (state) => state.accountSettings
@@ -119,12 +118,7 @@ function AccountSettings() {
       }
     );
   };
-  const handleClickShowPassword = () => {
-    setValues({
-      ...values,
-      isShowCurrentPassword: !values.isShowCurrentPassword,
-    });
-  };
+
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };

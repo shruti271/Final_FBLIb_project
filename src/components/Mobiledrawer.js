@@ -87,6 +87,7 @@ const MobileDrawer = ({ setIsOpen }) => {
     sideBarMenuItems.ADLIBSDATABASE
   );
 
+  // eslint-disable-next-line no-unused-vars
   const [currentPage, setCurrentPage] = useState();
   const [openLogOut, setOpenLogOut] = React.useState(false);
 
