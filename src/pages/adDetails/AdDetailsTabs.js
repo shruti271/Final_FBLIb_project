@@ -8,7 +8,13 @@ import {
   useParams,
 } from "react-router-dom";
 import { Box } from "@mui/system";
-import { Button, Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
+import {
+  Button,
+  Stack,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import AllAds from "./AllAds";
 import AdDeatails from "./adDeatails";
 import { loadSubAllAdsStart } from "../../redux/ducks/subAllAds";
@@ -24,13 +30,13 @@ function AdDeatailsTabs() {
   const dispatch = useDispatch();
   const theme = useTheme();
   const { adId } = useParams();
-  const { state } = useLocation();  
+  const { state } = useLocation();
 
   const adDetailsTabs = {
     ADOVERVIEW: "Ad Overview",
     ALLADS: "All Ads",
   };
-  
+
   const showgrid = useMediaQuery(theme.breakpoints.only("xs"));
 
   const filteredAds = useSelector((state) => state.filteredAds);
@@ -43,9 +49,8 @@ function AdDeatailsTabs() {
   const [redirectToPage, setRedirectToPage] = useState("/");
 
   useEffect(() => {
-    if(state)
-    setRedirectToPage(state.fromPage);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    if (state) setRedirectToPage(state.fromPage);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -54,14 +59,14 @@ function AdDeatailsTabs() {
     } else {
       setIsActiveTab(adDetailsTabs.ALLADS);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [window.location.pathname]);
 
   useEffect(() => {
-    if (filteredAds.filteredAds.length > 0) {      
+    if (filteredAds.filteredAds.length > 0) {
       const adTobeDisplay =
         filteredAds.filteredAds.find((ad) => ad.id === adId && ad) ||
-        subAllAds.subAllAds.find((ad) =>ad.id === adId && ad) ||
+        subAllAds.subAllAds.find((ad) => ad.id === adId && ad) ||
         filteredSavedAds?.find((ad) => ad.id === adId && ad);
 
       if (!adTobeDisplay) {
@@ -69,7 +74,7 @@ function AdDeatailsTabs() {
       }
       setAdDetail(adTobeDisplay);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, filteredAds, adId]);
 
   useEffect(() => {
@@ -77,18 +82,16 @@ function AdDeatailsTabs() {
       setAdDetail(singleAdData);
       dispatch(loadSingleAdDataClear());
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [singleAdData]);
 
   useEffect(() => {
     if (adDetail?.pageInfo?.name) {
-     
-      if (Object.keys(subAllAds?.filterSubAllData).includes('0')) {
-        
+      if (Object.keys(subAllAds?.filterSubAllData).includes("0")) {
         if (
-          Object(subAllAds?.filterSubAllData)[0][0]?.pageInfo?.name !== adDetail?.pageInfo?.name
+          Object(subAllAds?.filterSubAllData)[0][0]?.pageInfo?.name !==
+          adDetail?.pageInfo?.name
         ) {
-          
           dispatch(
             loadSubAllAdsStart({
               page_name: adDetail?.pageInfo?.name,
@@ -96,7 +99,7 @@ function AdDeatailsTabs() {
               number_of_pagead: process.env.REACT_APP_NO_OF_ADS_PER_PAGE,
             })
           );
-        }else{
+        } else {
           dispatch(subAllAdsDuck.laodSubAllCashedPageData(0));
         }
       } else {
@@ -109,7 +112,7 @@ function AdDeatailsTabs() {
         );
       }
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, adDetail]);
 
   return (
@@ -117,26 +120,28 @@ function AdDeatailsTabs() {
       <Box
         sx={{
           width: "95%",
-          margin:"auto",
+          margin: "auto",
           typography: "body1",
           justifyContent: "center",
           alignItems: "center",
-          
-          
         }}
       >
         <Box
-          onClick={() => {            
-            navigate(redirectToPage);            
+          onClick={() => {
+            navigate(redirectToPage);
           }}
-          sx={{ cursor: "pointer",
-          marginTop:"10px"   }}
+          sx={{ cursor: "pointer", marginTop: "10px" }}
         >
-          <Stack direction={"row"}>
+          <Stack direction={"row"} sx={{marginLeft:"1px"}}>
             <Box sx={{ marginRight: "12px" }}>
               <img src={LeftArrow} aria-label="FirstCard" />
             </Box>
-            <Typography sx={{fontWeight:{xs:600,sm:600,md:600,xl:600},fontSize:{xs:"18px",sm:"18px",md:"18px",xl:"18px"}}}>
+            <Typography
+              sx={{
+                fontWeight: { xs: 600, sm: 600, md: 600, xl: 600 },
+                fontSize: { xs: "18px", sm: "18px", md: "18px", xl: "18px" },
+              }}
+            >
               Search Results
             </Typography>
           </Stack>
@@ -146,17 +151,17 @@ function AdDeatailsTabs() {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            marginTop:"15px",
-            marginBottom:"10px"
+            marginTop: showgrid ? "25px" : "5px",
+            marginBottom: "5px",
           }}
-          
         >
-          <Stack direction={"row"} spacing={2}>
+          <Stack direction={"row"} spacing={10}>
             <Button
               disableRipple
               sx={{
-                borderBottom: isActiveTab === "Ad Overview" ? 2 : 0,
+                // borderBottom: isActiveTab === "Ad Overview" ? 2 : 0,
                 height: "20px",
+                width: "113px",
                 borderRadius: 0,
                 borderColor: "#2B2F42",
                 color: "#2B2F42",
@@ -167,13 +172,22 @@ function AdDeatailsTabs() {
                 navigate("");
               }}
             >
-           <Typography sx={{fontWeight:500,fontSize:{xs:"18px",sm:"18px",md:"16px",xl:"16px"}}}>Ad Overview</Typography>
+              <Typography
+                sx={{
+                  fontWeight: 500,
+                  fontSize: { xs: "18px", sm: "18px", md: "16px", xl: "16px" },
+                  textDecoration:
+                    isActiveTab === "Ad Overview" ? "underline" : "none",
+                  textUnderlineOffset: "5px",
+                }}
+              >
+                Ad Overview
+              </Typography>
             </Button>
             <Button
-              disableRipple  
-              sx={{ 
-               
-                borderBottom: isActiveTab === "All Ads" ? 2 : 0,
+              disableRipple
+              sx={{
+                // borderBottom: isActiveTab === "All Ads" ? 2 : 0,
                 height: "20px",
                 borderRadius: 0,
                 borderColor: "#2B2F42",
@@ -189,21 +203,36 @@ function AdDeatailsTabs() {
                 navigate("allAds");
               }}
             >
-               <Typography sx={{fontWeight:500,fontSize:{xs:"18px",sm:"18px",md:"16px",xl:"16px"}}}> All Ads</Typography>
+              <Typography
+                sx={{
+                  fontWeight: 500,
+                  fontSize: { xs: "18px", sm: "18px", md: "16px", xl: "16px" },
+                  textDecoration:
+                    isActiveTab === "Ad Overview" ? "none" : "underline",
+                  textUnderlineOffset: "5px",
+                }}
+              >
+                {" "}
+                All Ads
+              </Typography>
             </Button>
           </Stack>
         </Box>
       </Box>
-      <Box  sx={{width: showgrid?"98% !important":"98% !important", margin:"auto",
-          display:"flex",
-          justifyContent:"center",
-          alignItems:"center",
-          paddingInline:"10px"
-          }}>
-      <Routes>
-        <Route exact path="" element={<AdDeatails />} />
-        <Route exact path="allAds" element={<AllAds />} />
-      </Routes>
+      <Box
+        sx={{
+          width: showgrid ? "98% !important" : "98% !important",
+          margin: "auto",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          paddingInline: "10px",
+        }}
+      >
+        <Routes>
+          <Route exact path="" element={<AdDeatails />} />
+          <Route exact path="allAds" element={<AllAds />} />
+        </Routes>
       </Box>
     </>
   );

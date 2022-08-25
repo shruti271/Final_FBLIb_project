@@ -893,12 +893,12 @@ export default AdDeatails;
 const useStyles = makeStyles((theme) => ({
   AdsImageVideo: {
     objectFit: "fill",
-    height: "550px",
+    height: "auto",
     width: "100%",
   },
   AdsImage: {
     width: "100%",
-    height: "500px",
+    height: "auto",
     objectFit: "fill",
     padding: "0",
     margin: "0",

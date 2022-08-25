@@ -12,7 +12,7 @@ const AllAds = () => {
     <>
       <Box
         sx={{
-          width: showgrid ? "90% !important" : "98% !important",
+          width: showgrid ? "98% !important" : "98% !important",
           margin: "auto",
           display: "flex",
           justifyContent: "center",
