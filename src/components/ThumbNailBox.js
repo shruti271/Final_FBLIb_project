@@ -80,7 +80,7 @@ const useStyles = makeStyles((theme) => ({
   },
   AdsImage: {
     width: "100%",
-    height: "230px",
+    height:"auto",
     objectFit: "cover",
     padding: "0",
     margin: "0",
@@ -92,6 +92,7 @@ const useStyles = makeStyles((theme) => ({
     objectFit: "cover",
     overflowY: "none",
     outline: "none",
+    height:"auto"
   },
   DropDownArrow: {
     marginLeft: theme.spacing(1),
@@ -328,12 +329,11 @@ const ThumbNailBox = ({ adInfo, index }) => {
               </ReadMore>
             </Typography>
           </Box>
-          <div style={{ height: "300px", marginTop: "4px" }}>
+          <div style={{ marginTop: "4px" }}>
             {adInfo.adMediaType === "video" ? (
               <video
                 src={adInfo.bucketMediaURL}
                 poster={adInfo?.thumbBucketUrl}
-                style={{ height: "300px" }}
                 autoPlay={false}
                 className={classes.AdsVideo}
                 controls
@@ -342,7 +342,6 @@ const ThumbNailBox = ({ adInfo, index }) => {
               <img
                 src={adInfo?.bucketMediaURL}
                 alt="thumbnail"
-                style={{ height: "300px" }}
                 className={classes.AdsImage}
               />
             ) : (
