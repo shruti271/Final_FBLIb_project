@@ -165,6 +165,7 @@ const MobileDrawer = ({ setIsOpen }) => {
                 setIsOpen(() => false);
                 navigate("/");
               }}
+              mr={1}
             >
               <Box
                 sx={{ display: "flex", padding: "20px 40px" }}
