@@ -104,8 +104,8 @@ const Addlibrarydatabase = () => {
       <Grid
         container
         sx={{
-          // paddingRight: "36px",
-          width: showgrid?"90% !important":"97% !important",
+          // padding: "32px",
+          width: showgrid?"95% !important":"97% !important",
           marginX: "auto",
           paddingInline:"10px"
         }}

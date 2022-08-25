@@ -264,14 +264,13 @@ const ThumbNailBox = ({ adInfo, index }) => {
     <Grid
       item xl={3} lg={4} md={6} sm={6} xs={12}      
       key={index}
-      sx={{ p: { lg: "1px", md: "1px", sm: "1px", xs: "0px" }, pb: { xs: 3 } }}
+      sx={{ p: { lg: "10px", md: "10px", sm: "10px", xs: "0px" }, pb: { xs: 3 } }}
     >
       <Card
         sx={{
           borderRadius: "16px",
           boxShadow: "none",
-          border: " 1px solid #EBEBEB",
-          margin:1,
+          border: " 1px solid #EBEBEB",          
           width:"auto"
         }}
       >
