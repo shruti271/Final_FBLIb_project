@@ -97,15 +97,7 @@ const Activate = () => {
                       )}
                     </Grid>
                     <Grid xs={12} item>
-                      <Typography
-                        variant="h6"
-                        align="center"
-                        color="#2B2F42"
-                        sx={{
-                          fontSize: { xs: 16, sm: 19, lg: 19, xl: 19 },
-                          fontWeight: 600,
-                        }}
-                      >
+                      <Typography variant="h6" align="center" color="#2B2F42" sx={{fontSize:{xs:16,sm:19,lg:24,xl:24},fontWeight:600}} >
                         We've just sent a verification email to:{email}
                       </Typography>
                       <Typography
