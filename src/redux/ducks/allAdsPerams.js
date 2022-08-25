@@ -170,7 +170,7 @@ const allAdsPeramsReducer = (state = initialState, action) => {
         ...state,
         pageIndex: 0,
         appliedFilters: {
-          ...state.appliedFilters,
+          // ...state.appliedFilters,
           StartRunningDate: {
             startdate: "",
             enddate: "",

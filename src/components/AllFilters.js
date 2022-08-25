@@ -27,7 +27,7 @@ import { PageNameEnum } from "../utils/enums";
 import ResetButton from "../css/ResetButton";
 import * as allAdsPeramsDuck from "../redux/ducks/allAdsPerams";
 import * as savedAdsPeramsDuck from "../redux/ducks/savedAdsPerams";
-import { clearCashedPageData } from "../redux/ducks/filteredAds";
+import { clearCashedPageData, clearPaginationIndex } from "../redux/ducks/filteredAds";
 import Arrowdown from "../assets/Arrowdown.svg";
 import filter from "../assets/filter.svg";
 
@@ -1901,6 +1901,7 @@ function AllFilters(props) {
               onClick={() => {
                 if (pageName === PageNameEnum.AdlibraryDatabase) {
                   dispatch(allAdsPeramsDuck.clearFilterData());
+                  dispatch(clearPaginationIndex());
                 } else {
                   dispatch(savedAdsPeramsDuck.clearSavedFilterData());
                 }

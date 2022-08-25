@@ -9,6 +9,8 @@ export const GET_CASHED_PAGE_DATA = "GET_CASHED_PAGE_DATA";
 export const CLEAR_CASHED_PAGE_DATA = "CLEAR_CASHED_PAGE_DATA";
 export const SET_CURRENT_PAGINATION_INDEX = "SET_CURRENT_PAGINATION_INDEX";
 
+export const CLEAR_PAGINATION_INDEX = "CLEAR_PAGINATION_INDEX";
+
 export const loadFilteredAdsStart = (filters) => ({
   type: LOAD_FILTERED_ADS_START,
   payload: filters,
@@ -44,6 +46,10 @@ export const clearCashedPageData = () => ({
 export const setCurrentPaginationIndex = (page) => ({
   type: SET_CURRENT_PAGINATION_INDEX,
   payload: page,
+});
+
+export const clearPaginationIndex = () => ({
+  type: CLEAR_PAGINATION_INDEX,  
 });
 
 const initialState = {
@@ -119,6 +125,14 @@ const filteredAdsReducer = (state = initialState, action) => {
       return {
         ...state,
         postionOfPage: action.payload,
+      };
+      case CLEAR_PAGINATION_INDEX:
+      return {
+        ...state,
+        postionOfPage: 0,
+        filteredAds:[],
+        paginationIndex:0,
+        filterData:{}
       };
     default:
       return state;
