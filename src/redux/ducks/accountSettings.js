@@ -57,7 +57,6 @@ const accountSettingsReducer = (state = initialState, action) => {
         accountSettings: action?.payload,
       };
     case UPDATE_ACCOUNT_SETTINGS_SUCCESS:
-      console.log("HandleUpdateAccountSettings Response: --- ",action?.payload?.data?.error)      
       return {
         ...state,
         loading: false,

@@ -87,8 +87,6 @@ const subAllAdsReducer = (state = initialState, action) => {
         loading: true,
       };
     case LOAD_SUBALLADS_SUCCESS:
-      console.log("909 more",action.payload ,"-----",action?.payload.data)
-
       return {
         ...state,
         loading: false,
@@ -101,7 +99,6 @@ const subAllAdsReducer = (state = initialState, action) => {
         totalPages: action.payload?.total_pages,
       };
     case LOAD_MORE_SUBALLADS_SUCCESS:
-      console.log("909 more",action.payload ,"-----",action?.payload.data)
       return {
         ...state,
         loading: false,
@@ -114,7 +111,6 @@ const subAllAdsReducer = (state = initialState, action) => {
         totalPages: action.payload?.total_pages,
       }
       case GET_SUBALL_CASHED_PAGE_DATA:
-  console.log("909 0-0  cash data",state.filterSubAllData[action.payload] , state.filterSubAllData)
   return {
     ...state,
     subAllAds:state.filterSubAllData[action.payload],

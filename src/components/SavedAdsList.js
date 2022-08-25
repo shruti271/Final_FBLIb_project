@@ -2,10 +2,9 @@ import { Grid } from "@material-ui/core";
 import ThumbNailBox from "./ThumbNailBox";
 import { Box, Pagination, Stack, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import * as savedAdsPeramsDuck from "../redux/ducks/savedAdsPerams";
-import {  
+import {
   loadsavedFilteredAdsStart,
-  setSavedCurrentPaginationAds,  
+  setSavedCurrentPaginationAds,
 } from "../redux/ducks/filteredSavedAds";
 import { useSkipInitialEffect } from "../utils/customHooks";
 import emptyImg from "../assets/empty.svg";
@@ -15,40 +14,25 @@ import { useEffect, useState } from "react";
 const SavedAdsList = () => {
   const dispatch = useDispatch();
   const filteredSavedAds = useSelector((state) => state.filteredSavedAds);
-  const {        
-    paginationIndex,
-    SavedCurrentPage,    
-    totalAds,
-  } = useSelector((state) => state.filteredSavedAds);
+  const { paginationIndex, SavedCurrentPage, totalAds } = useSelector(
+    (state) => state.filteredSavedAds
+  );
   const savedAdsPerams = useSelector((state) => state.savedAdsPerams);
   const [queryObject, setQueryObject] = useState({});
-  // const [pageStart, setPageStart] = useState(0);
-  // const [pageEnd, setPageEnd] = useState(2);
 
   useEffect(() => {
-    console.log("savedAdsPerams :", savedAdsPerams);
-  }, [savedAdsPerams]);
-useEffect(()=>{
-  console.log("0000000?",paginationIndex)
-},[])
-  useEffect(() => {
-    console.log("707 come in 1st time",paginationIndex,filteredSavedAds.filteredSavedAds);
-    filteredSavedAds.filteredSavedAds.length && dispatch(
-      setSavedCurrentPaginationAds({
-        start: (paginationIndex - 1) * process.env.REACT_APP_NO_OF_ADS_PER_PAGE,
-        end: paginationIndex * process.env.REACT_APP_NO_OF_ADS_PER_PAGE,
-        currentPage: paginationIndex,        
-      })
-    );
+    filteredSavedAds.filteredSavedAds.length &&
+      dispatch(
+        setSavedCurrentPaginationAds({
+          start:
+            (paginationIndex - 1) * process.env.REACT_APP_NO_OF_ADS_PER_PAGE,
+          end: paginationIndex * process.env.REACT_APP_NO_OF_ADS_PER_PAGE,
+          currentPage: paginationIndex,
+        })
+      );
   }, [dispatch, filteredSavedAds.filteredSavedAds]);
 
-
-  useEffect(() => {
-    console.log("101 start");
-    SavedCurrentPage?.map((ads, index) => console.log("101", ads.id));
-  });
   useSkipInitialEffect(() => {
-    console.log("0-0- y876787", savedAdsPerams?.appliedFilters?.AdStatus?.selectedValue)
     const queryObject = {
       startdate: savedAdsPerams?.appliedFilters?.StartRunningDate?.startdate,
       enddate: savedAdsPerams?.appliedFilters?.StartRunningDate?.enddate,
@@ -115,7 +99,6 @@ useEffect(()=>{
           ? savedAdsPerams?.searchBarData.split(",")
           : null
         : null,
-        
     };
     setQueryObject(queryObject);
   }, [
@@ -126,26 +109,12 @@ useEffect(()=>{
   ]);
 
   useSkipInitialEffect(() => {
-    dispatch(loadsavedFilteredAdsStart({ ...queryObject ,number_of_pagead:process.env.REACT_APP_NO_OF_ADS_PER_PAGE}));
-
-    // if (filteredSavedAds.filteredSavedAds.length === 0) {
-    //   dispatch(loadsavedFilteredAdsStart({ ...queryObject }));
-    // } else {
-    //   if (savedAdsPerams?.pageIndex > 0) {
-    //     dispatch(
-    //       loadMoresavedFilteredAdsStart({
-    //         ...queryObject,
-    //         // page_index: savedAdsPerams?.pageIndex,
-    //       })
-    //     );
-    //   } else {
-    //     dispatch(
-    //       loadsavedFilteredAdsStart({
-    //         ...queryObject,            
-    //       })
-    //     );
-    //   }
-    // }
+    dispatch(
+      loadsavedFilteredAdsStart({
+        ...queryObject,
+        number_of_pagead: process.env.REACT_APP_NO_OF_ADS_PER_PAGE,
+      })
+    );
   }, [dispatch, queryObject]);
 
   useSkipInitialEffect(() => {
@@ -167,33 +136,6 @@ useEffect(()=>{
     }
   }, [dispatch, savedAdsPerams.searchType, savedAdsPerams.searchBarData]);
 
-  // useEffect(() => {
-  //   console.log(
-  //     "404 ++++++++++++++++++",
-  //     paginationIndex,
-  //     SavedCurrentPageStartPoint,
-  //     SavedCurrentPageEndPoint
-  //   );
-  //   dispatch(
-  //     setSavedCurrentPaginationAds({
-  //       start: (paginationIndex - 1) * process.env.REACT_APP_NO_OF_ADS_PER_PAGE,
-  //       end: paginationIndex * process.env.REACT_APP_NO_OF_ADS_PER_PAGE,
-  //       currentPage: paginationIndex,
-  //     })
-  //   );
-  // }, [
-  //   SavedCurrentPageEndPoint,
-  //   SavedCurrentPageStartPoint,
-  //   dispatch,
-  //   filteredSavedAds.filteredSavedAds,
-  //   paginationIndex,
-  // ]);
-
-  useEffect(() => {
-    // window.scrollTo(0, filteredSavedAds.postionOfPage);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   return (
     <Box>
       {filteredSavedAds?.loading &&
@@ -201,7 +143,6 @@ useEffect(()=>{
         <Box
           className="loader"
           style={{
-            // opacity:0.5,
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
@@ -263,54 +204,25 @@ useEffect(()=>{
           alignItems: "center",
         }}
       >
-        {
-         (!filteredSavedAds?.loading && filteredSavedAds?.filteredSavedAds?.length !== 0) && <Pagination
-          count={Math.ceil(totalAds / process.env.REACT_APP_NO_OF_ADS_PER_PAGE)}
-          size={"large"}
-          page={paginationIndex}
-          onChange={(e, p) => {
-            // console.log(
-            //   "101 ----p",
-            //   p,
-            //   "------------------- p-1",
-            //   p - 1,
-            //   "p+2",
-            //   p + 2
-            // );
-            // if (p === 1) {
-            //   dispatch(
-            //     setSavedCurrentPaginationAds({
-            //       start: 0,
-            //       end: 4,
-            //       currentPage: p,
-            //     })
-            //   );
-            // } else {
-              dispatch(
-                setSavedCurrentPaginationAds({
-                  start: (p - 1) * process.env.REACT_APP_NO_OF_ADS_PER_PAGE,
-                  end: p * process.env.REACT_APP_NO_OF_ADS_PER_PAGE,
-                  currentPage: p,
-                })
-              );
-            // }
-            // setPageStart(()=>p+1)
-            // setPageEnd(()=>p+3)
-            //console.log("9909",e)
-            // dispatch(setSavedCurrentPaginationIndex(p-1))
-            // dispatch(
-            //   loadMoresavedFilteredAdsStart({
-            //     ...queryObject,
-            //     page_index: p-1,
-            //   })
-            // );
-            // dispatch(
-            //   savedAdsPeramsDuck.setSavedAdsPageIndex(
-            //     p - 1
-            //   )
-            // )
-          }}
-        />}
+        {!filteredSavedAds?.loading &&
+          filteredSavedAds?.filteredSavedAds?.length !== 0 && (
+            <Pagination
+              count={Math.ceil(
+                totalAds / process.env.REACT_APP_NO_OF_ADS_PER_PAGE
+              )}
+              size={"large"}
+              page={paginationIndex}
+              onChange={(e, p) => {
+                dispatch(
+                  setSavedCurrentPaginationAds({
+                    start: (p - 1) * process.env.REACT_APP_NO_OF_ADS_PER_PAGE,
+                    end: p * process.env.REACT_APP_NO_OF_ADS_PER_PAGE,
+                    currentPage: p,
+                  })
+                );
+              }}
+            />
+          )}
       </Box>
     </Box>
   );

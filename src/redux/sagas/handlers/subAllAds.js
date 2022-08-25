@@ -3,7 +3,7 @@ import {
   loadSubAllAdsSuccess,
   loadSubAllAdsError,
   loadMoreSubAllAdsSuccess,
-  loadMoreSubAllAdsError
+  loadMoreSubAllAdsError,
 } from "../../ducks/subAllAds";
 import { requestGetSubAllAds } from "../requests/subAllAds";
 
@@ -14,7 +14,6 @@ export function* handleGetSubAllAds({ payload }) {
 
     if (response.status === 200) {
       yield put(loadSubAllAdsSuccess(response?.data?.data));
-      // yield put(loadMediaStart);
     }
   } catch (error) {
     yield put(loadSubAllAdsError(error));
@@ -28,7 +27,6 @@ export function* handleGetMoreSubAllAds({ payload }) {
 
     if (response.status === 200) {
       yield put(loadMoreSubAllAdsSuccess(response?.data?.data));
-      // yield put(loadMediaStart);
     }
   } catch (error) {
     yield put(loadMoreSubAllAdsError(error));

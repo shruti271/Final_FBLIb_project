@@ -206,8 +206,7 @@ function AdDeatails() {
                             src={Shareicon}
                             alt="Shareicon"
                             className={classes.shareicon}
-                            onClick={(e) => {
-                              console.log(adDetail?.purchaseURL);
+                            onClick={(e) => {                              
                               window.open(adDetail?.purchaseURL, "_blank", "");
                             }}
                           />

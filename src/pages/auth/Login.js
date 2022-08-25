@@ -57,7 +57,7 @@ const Login = () => {
   };
   const submitLoginform = (data) => {
     setLoading(true);
-    console.log("888", data);
+    
     localStorage.setItem("email", data.email);
     try {
       login(data).then(
@@ -87,8 +87,6 @@ const Login = () => {
     formData.append("email", email);
     const res = await resendactivateemail(formData);
     navigate("/auth/activate");
-    console.log("YY", res.data.message);
-    console.log("zzz", resendmessage);
     setResendmessage(res.data.message);
     if (res.data.message === "Email Sent") {
       setResendmessage("Verifivation Email link send Your gmail");

@@ -68,8 +68,7 @@ const filteredAdsReducer = (state = initialState, action) => {
         loading: true,
       };
 
-    case LOAD_FILTERED_ADS_SUCCESS:
-      console.log("0-0 total pages", action.payload?.data?.total_pages);
+    case LOAD_FILTERED_ADS_SUCCESS:      
       return {
         ...state,
         loading: false,
@@ -85,7 +84,7 @@ const filteredAdsReducer = (state = initialState, action) => {
       };
 
     case GET_CASHED_PAGE_DATA:
-      console.log("0-0  cash data", state.filterData[action.payload]);
+      
       return {
         ...state,
         filteredAds: state.filterData[action.payload],

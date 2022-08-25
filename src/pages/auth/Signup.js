@@ -61,8 +61,7 @@ const Signup = () => {
   const submitsigninform = async (data) => {
     setLoading(true);
     try {
-      const response = await signUp(data);
-      console.log("+++++++",response)
+      const response = await signUp(data);      
       if (response.data.message === "Password is too short") {
         setLoading(false);
         setErrormessage("Password is too short");

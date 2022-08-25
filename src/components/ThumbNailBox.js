@@ -8,7 +8,6 @@ import {
   Card,
   Grid,
   Stack,
-  Tooltip,
   Typography,
   useMediaQuery,
   useTheme,
@@ -75,10 +74,6 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 3,
   },
   AdsImageSize: {
-    // ["@media (min-width:780px)"]: { height: "290px" },
-    // ["@media (min-width:920px)"]: { height: "250px" },
-    // ["@media (min-width:1440px)"]: { height: "290px" },
-    // ["@media (min-width:1700px)"]: { height: "410px" },
     width: "100%",
     padding: "0",
     margin: "0",
@@ -96,7 +91,7 @@ const useStyles = makeStyles((theme) => ({
   },
   AdsVideo: {
     width: "100%",
-    objectFit: "cover",    
+    objectFit: "cover",
     overflowY: "none",
     outline: "none",
   },
@@ -168,9 +163,6 @@ const ThumbNailBox = ({ adInfo, index }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const theme = useTheme();
-
-  const smallScreenPointOnly = useMediaQuery(theme.breakpoints.only("xs"));
 
   const [queryObject, setQueryObject] = useState({});
 
@@ -182,10 +174,6 @@ const ThumbNailBox = ({ adInfo, index }) => {
       startdate: savedAdsPerams?.appliedFilters?.StartRunningDate?.startdate,
       enddate: savedAdsPerams?.appliedFilters?.StartRunningDate?.enddate,
       adcount:
-        // savedAdsPerams?.appliedFilters?.AdCount?.min >
-        //   savedAdsPerams?.maxRanger.AdCount?.min ||
-        // savedAdsPerams?.appliedFilters?.AdCount?.max <
-        //   savedAdsPerams?.maxRanger.AdCount?.max
         savedAdsPerams?.appliedFilters?.AdCount?.chipText !== ""
           ? [
               savedAdsPerams?.appliedFilters?.AdCount?.min,
@@ -204,10 +192,6 @@ const ThumbNailBox = ({ adInfo, index }) => {
             ]
           : [],
       insta_followers:
-        // savedAdsPerams?.appliedFilters?.InstragramLike?.min >
-        //   savedAdsPerams?.maxRanger.InstragramLike?.min ||
-        // savedAdsPerams?.appliedFilters?.InstragramLike?.max <
-        //   savedAdsPerams?.maxRanger.InstragramLike?.max
         savedAdsPerams?.appliedFilters?.InstagramFollowers?.chipText !== ""
           ? [
               savedAdsPerams?.appliedFilters?.InstagramFollowers?.min,
@@ -250,21 +234,28 @@ const ThumbNailBox = ({ adInfo, index }) => {
 
   return (
     <Grid
-      item xl={3} lg={4} md={6} sm={6} xs={12}      
+      item
+      xl={3}
+      lg={4}
+      md={6}
+      sm={6}
+      xs={12}
       key={index}
-      sx={{ p: { lg: "10px", md: "10px", sm: "10px", xs: "0px" }, pb: { xs: 2 } }}
+      sx={{
+        p: { lg: "10px", md: "10px", sm: "10px", xs: "0px" },
+        pb: { xs: 2 },
+      }}
     >
       <Card
         sx={{
           borderRadius: "16px",
           boxShadow: "none",
-          border: " 1px solid #EBEBEB",          
-          width:"auto"
+          border: " 1px solid #EBEBEB",
+          width: "auto",
         }}
       >
         <Stack
           sx={{
-            // padding: "10px",
             paddingLeft: "20px",
             paddingTop: "10px",
             paddingRight: "20px",
@@ -324,22 +315,14 @@ const ThumbNailBox = ({ adInfo, index }) => {
               </Typography>
             )}
           </Box>
-          {/* <Box height={(adInfo?.adDescription.length <=150) ? "80px":"auto"} sx={{lineHeight:"20px"}}>
-            <ShowMoreText lines={3} expanded={false} expandByClick={true} keepNewLines="true">
-            
-            {adInfo?.adDescription ? adInfo.adDescription : " "}
-            </ShowMoreText>
-          </Box> */}
-          <Box /*height={(adInfo?.adDescription.length <=150) ? "80px":"auto"}*/
-          >
+
+          <Box>
             <Typography
               sx={{
                 fontWeight: 500,
                 lineHeight: "20px",
                 letterSpacing: "0.03em",
                 color: "#2B2F42",
-                // lineHeight:1
-                // margin: "10px 12px 10px 15px",
               }}
             >
               <ReadMore>
@@ -347,7 +330,7 @@ const ThumbNailBox = ({ adInfo, index }) => {
               </ReadMore>
             </Typography>
           </Box>
-          <div style={{ height: "300px", marginTop: "4px" }}>            
+          <div style={{ height: "300px", marginTop: "4px" }}>
             {adInfo.adMediaType === "video" ? (
               <video
                 src={adInfo.bucketMediaURL}
@@ -380,7 +363,6 @@ const ThumbNailBox = ({ adInfo, index }) => {
                     textDecoration: "underline",
                     paddingBottom: "4px",
                     borderBottomWidth: "3px",
-                    // borderBottomColor:"red"
                   }}
                   variant="p"
                 >
@@ -394,13 +376,12 @@ const ThumbNailBox = ({ adInfo, index }) => {
             </Grid>
             <Grid item marginRight={"16px"}>
               {/* <Tooltip title="Redirect to shop link"> */}
-              {(adInfo?.ctaStatus !== ""  && adInfo?.purchaseURL !=="")&& (
+              {adInfo?.ctaStatus !== "" && adInfo?.purchaseURL !== "" && (
                 <img
                   src={Shareicon}
                   alt="Shareicon"
                   className={classes.shareicon}
                   onClick={(e) => {
-                    console.log(adInfo?.purchaseURL);
                     window.open(adInfo?.purchaseURL, "_blank", "");
                   }}
                 />
@@ -416,12 +397,9 @@ const ThumbNailBox = ({ adInfo, index }) => {
                 className={classes.saveicon}
                 onClick={() => {
                   if (filteredSavedAds.savedAdsIds.includes(adInfo?.id)) {
-                    // dispatch(removesavedFilteredAdLocal(adInfo));
-                    // dispatch(removeSavedAdsIdsLocal(adInfo.id));
                     dispatch(removeFromSavedAdsStart(adInfo));
                   } else {
-                    // dispatch(addSavedAdsIdsLocal(adInfo.id));//local saved id
-                    dispatch(addToSavedAdsStart({ ad: adInfo.id }));                                        
+                    dispatch(addToSavedAdsStart({ ad: adInfo.id }));
                     dispatch(
                       addToSavedAdsFilterLocalStart({
                         ...queryObject,
@@ -492,116 +470,8 @@ const ThumbNailBox = ({ adInfo, index }) => {
             </Grid>
           </Grid>
 
-          {/* <Grid container sx={{ padding: "4px" }}>
-            <Grid item sm={9} md={9} lg={9}>
-              <Stack direction={"column"}>
-                <Stack direction={"row"}>
-                  {adInfo.status === "Active" ? (
-                    <Typography sx={{ textDecoration: "underline" }}>
-                      {adInfo.status}
-                    </Typography>
-                  ) : (
-                    <Typography sx={{ color: "red" }}>
-                      {adInfo.status}
-                    </Typography>
-                  )}
-                  <Tooltip title="Redirect to shop link">
-                    <img
-                      src={Shareicon}
-                      alt="Shareicon"
-                      className={classes.shareicon}
-                      onClick={(e) => {
-                        console.log(adInfo?.purchaseURL);
-                        window.open(adInfo?.purchaseURL, "_blank", "");
-                      }}
-                    />
-                  </Tooltip>
-                  <img
-                    src={
-                      savedAdsManager.savedAdsIds.includes(adInfo?.id)
-                        ? StarFill
-                        : Saveicon
-                    }
-                    alt="saved-icon"
-                    className={classes.saveicon}
-                    onClick={() => {
-                      if (savedAdsManager.savedAdsIds.includes(adInfo?.id)) {
-                        dispatch(removesavedFilteredAdLocal(adInfo));
-                        dispatch(removeSavedAdsIdsLocal(adInfo.id));
-                        dispatch(removeFromSavedAdsStart({ ad: adInfo?.id }));
-                      } else {
-                        dispatch(addSavedAdsIdsLocal(adInfo.id));
-                        dispatch(addToSavedAdsStart({ ad: adInfo.id }));
-                        dispatch(
-                          addToSavedAdsFilterLocalStart({
-                            ...queryObject,
-                            adId: adInfo.id,
-                          })
-                        );
-                      }
-                    }}
-                  />
-                  <Stack direction={"row"} marginLeft="10px">
-                    <AccessTime style={{ color: "grey", width: "20px" }} />
-                    <Typography color={"#C4C4C4"} marginLeft="4px">
-                      {Math.floor(
-                        Math.abs(
-                          (new Date(adInfo?.startDate).getTime() -
-                            new Date().getTime()) /
-                            (1000 * 3600 * 24)
-                        )
-                      )}{" "}
-                      Days
-                    </Typography>
-                  </Stack>
-                </Stack>
-
-                <Typography color="#c0c0c0" className={classes.AdsText} noWrap>
-                  Started Running : {adInfo.startDate}
-                </Typography>
-                <Typography color="#2B2F42" className={classes.AdsText} noWrap>
-                  {adInfo.headline}
-                </Typography>
-              </Stack>
-            </Grid>
-            <Grid
-              item
-              sm={3}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Avatar
-                sx={{
-                  background:
-                    "linear-gradient(45deg, #00CBFF 0%, #72E2FF 100%)",
-                  display: "grid",
-                  width: "52px",
-                  height: "51px",
-                  padding: "5px 10px 10px",
-                }}
-              >
-                <span
-                  style={{
-                    fontSize: "25px",
-                    lineHeight: "24px",
-                    padding: "2px",
-                    fontWeight: "700",
-                  }}
-                >
-                  {adInfo.noOfCopyAds}
-                </span>
-                <span style={{ fontSize: "10px", margin: "auto" }}>Ads</span>
-              </Avatar>
-            </Grid>
-          </Grid> */}
           <Grid container>
             <Grid item xs={12} lg={12} sm={12}>
-              {/* <AreaLineGraph /> */}
-              {/* <CustomizedView /> */}
-              {/* <AreaLineGraph /> */}
               <SplineAreaGraph
                 chartData={adInfo?.history}
                 dataBoxVisiblity={false}
@@ -612,21 +482,11 @@ const ThumbNailBox = ({ adInfo, index }) => {
             </Grid>
           </Grid>
 
-          {/* <MyChart
-              chartData={adInfo?.history}
-              dataBoxVisiblity={false}
-              axisVisiblity={false}
-              graphHeight={"100px"}
-            /> */}
-
-          {/* <Box sx={{ height: "100px" }}>
-          
-          </Box> */}
           <Button
             variant="contained"
             size="small"
             sx={{
-              borderRadius: "17px",              
+              borderRadius: "17px",
               background: " linear-gradient(45deg, #00CBFF 0%, #72E2FF 100%)",
               textTransform: "none",
               height: "30px",
@@ -663,7 +523,7 @@ const ThumbNailBox = ({ adInfo, index }) => {
           </Button>
         </Stack>
       </Card>
-      </Grid> 
+    </Grid>
   );
 };
 

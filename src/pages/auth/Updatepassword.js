@@ -74,8 +74,7 @@ const Updatepassword = () => {
       const res = await resetPassword({
         token: token,
         password: data.password,
-      });
-      console.log("+++", res);
+      });      
       setLoading(true);
       if (res.data.message === "Password updated") {
         setErrormessage("Password successfully updated");

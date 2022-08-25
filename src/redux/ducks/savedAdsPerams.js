@@ -4,10 +4,10 @@ export const SAVED_CHANGE_SORTFILTERS = "SAVED_CHANGE_SORTFILTERS";
 export const SAVED_CHANGE_SEARCHTYPE = "SAVED_CHANGE_SEARCHTYPE";
 export const SAVED_CHANGE_SEARCHBARDATA = "SAVED_CHANGE_SEARCHBARDATA";
 export const SAVED_CLEAR_SINGLE_FILTER = "SAVED_CLEAR_SINGLE_FILTER";
-export const SAVED_REFIX_MIN_MAX_RANGE_IN_SLIDER = "SAVED_REFIX_MIN_MAX_RANGE_IN_SLIDER";
+export const SAVED_REFIX_MIN_MAX_RANGE_IN_SLIDER =
+  "SAVED_REFIX_MIN_MAX_RANGE_IN_SLIDER";
 export const SAVED_CLEAR_FILTERDATA = "SAVED_CLEAR_FILTERDATA";
-export const SET_SAVED_ADS_PAGE_INDEX =
-  "SET_SAVED_ADS_PAGE_INDEX";
+export const SET_SAVED_ADS_PAGE_INDEX = "SET_SAVED_ADS_PAGE_INDEX";
 
 export const setSavedAdsPageIndex = (pageIndex) => ({
   type: SET_SAVED_ADS_PAGE_INDEX,
@@ -15,42 +15,42 @@ export const setSavedAdsPageIndex = (pageIndex) => ({
 });
 
 export const changeSavedAppliedFilters = (filter) => ({
-    type: SAVED_CHANGE_APPLIEDFILTERS,
-    payload: filter,
+  type: SAVED_CHANGE_APPLIEDFILTERS,
+  payload: filter,
 });
 
 export const changeSavedMaxRanger = (filter) => ({
-    type: SAVED_CHANGE_MAXRANGER,
-    payload: filter,
+  type: SAVED_CHANGE_MAXRANGER,
+  payload: filter,
 });
 
 export const changeSavedSortFilters = (filter) => ({
-    type: SAVED_CHANGE_SORTFILTERS,
-    payload: filter,
+  type: SAVED_CHANGE_SORTFILTERS,
+  payload: filter,
 });
 
 export const changeSavedSearchType = (filter) => ({
-    type: SAVED_CHANGE_SEARCHTYPE,
-    payload: filter,
+  type: SAVED_CHANGE_SEARCHTYPE,
+  payload: filter,
 });
 
 export const changeSavedSearchBarData = (filter) => ({
-    type: SAVED_CHANGE_SEARCHBARDATA,
-    payload: filter,
+  type: SAVED_CHANGE_SEARCHBARDATA,
+  payload: filter,
 });
 
 export const clearSavedSingleFilter = (filter) => ({
-    type: SAVED_CLEAR_SINGLE_FILTER,
-    payload: filter,
+  type: SAVED_CLEAR_SINGLE_FILTER,
+  payload: filter,
 });
 
 export const refixSavedMinMaxRange = (filter) => ({
-    type: SAVED_REFIX_MIN_MAX_RANGE_IN_SLIDER,
-    payload: filter,
+  type: SAVED_REFIX_MIN_MAX_RANGE_IN_SLIDER,
+  payload: filter,
 });
 
 export const clearSavedFilterData = () => ({
-    type: SAVED_CLEAR_FILTERDATA,
+  type: SAVED_CLEAR_FILTERDATA,
 });
 
 const initialState = {
@@ -75,8 +75,8 @@ const initialState = {
     InstagramFollowers: { min: 1, max: 10000 },
   },
   sortFilter: {
-    type: { selectedValue: "lastUpdatedTime"},
-    order: { selectedValue: "asc"},
+    type: { selectedValue: "lastUpdatedTime" },
+    order: { selectedValue: "asc" },
   },
   searchType: "Ad Text",
   searchBarData: "",
@@ -85,7 +85,6 @@ const initialState = {
 const savedAdsPeramsReducer = (state = initialState, action) => {
   switch (action.type) {
     case SAVED_CHANGE_APPLIEDFILTERS:
-      console.log("0-0----",action.payload.value.selectedValue)
       return {
         ...state,
         pageIndex: 0,
@@ -127,9 +126,9 @@ const savedAdsPeramsReducer = (state = initialState, action) => {
                   chipText: "",
                   isApplied: false,
                 },
-            }
-          }
-        }
+              },
+            },
+          };
         case "FacebookLikes":
         case "InstagramFollowers":
           return {
@@ -137,7 +136,12 @@ const savedAdsPeramsReducer = (state = initialState, action) => {
             pageIndex: 0,
             appliedFilters: {
               ...state.appliedFilters,
-              [`${action.payload.key}`]: { min: 1, max: 100000, chipText: "", isApplied: false },
+              [`${action.payload.key}`]: {
+                min: 1,
+                max: 100000,
+                chipText: "",
+                isApplied: false,
+              },
             },
           };
         case "AdCount":
@@ -146,13 +150,18 @@ const savedAdsPeramsReducer = (state = initialState, action) => {
             pageIndex: 0,
             appliedFilters: {
               ...state.appliedFilters,
-              [`${action.payload.key}`]: { min: 1, max: 1000, chipText: "", isApplied: false },
+              [`${action.payload.key}`]: {
+                min: 1,
+                max: 1000,
+                chipText: "",
+                isApplied: false,
+              },
             },
           };
         default:
           return state;
-      };
-      
+      }
+
     case SAVED_REFIX_MIN_MAX_RANGE_IN_SLIDER:
       return {
         ...state,
@@ -165,8 +174,7 @@ const savedAdsPeramsReducer = (state = initialState, action) => {
           },
         },
       };
-    case SAVED_CLEAR_FILTERDATA:
-      console.log("CLEAR_FILTERDATA");
+    case SAVED_CLEAR_FILTERDATA:      
       return {
         ...state,
         pageIndex: 0,

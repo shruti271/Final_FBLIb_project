@@ -165,8 +165,7 @@ const allAdsPeramsReducer = (state = initialState, action) => {
         },
       };
 
-    case CLEAR_FILTERDATA:
-      console.log("CLEAR_FILTERDATA");
+    case CLEAR_FILTERDATA:      
       return {
         ...state,
         pageIndex: 0,
@@ -219,8 +218,7 @@ const allAdsPeramsReducer = (state = initialState, action) => {
       };
 
     case CHANGE_SEARCHTYPE:
-    case CHANGE_SEARCHBARDATA:
-      console.log("6666",action.payload)
+    case CHANGE_SEARCHBARDATA:      
       return {
         ...state,
         pageIndex: 0,

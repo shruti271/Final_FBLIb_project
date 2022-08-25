@@ -1,18 +1,15 @@
 import {
-  
   Button,
   CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
   DialogContentText,
-  
   FormControlLabel,
   Grid,
   IconButton,
   InputAdornment,
   InputBase,
-  
   Stack,
   Typography,
   useMediaQuery,
@@ -88,15 +85,11 @@ function AccountSettings() {
   });
 
   useEffect(() => {
-    // document.title = "Account Setting"
-    // const favicon = getFaviconEl();
-    // favicon.href = "accountSetting.png";
     personalFormSetValue("first_name", accountSettings?.first_name);
     personalFormSetValue("last_name", accountSettings?.last_name);
   }, [accountSettings, personalFormSetValue]);
 
   const onPersonalFormSubmit = (data) => {
-    console.log("data", data);
     setLoadingFor(LoadingFor.PersonalInfo);
     dispatch(updateAccountSettingsStart({ data, id: accountSettings?.id }));
   };
@@ -253,7 +246,6 @@ function AccountSettings() {
                             variant="outlined"
                             placeholder="firstname"
                             name="first_name"
-                            // required
                             {...personalFormRegister("first_name", {
                               required: "firstname is required",
                             })}
@@ -701,100 +693,12 @@ function AccountSettings() {
                 >
                   Subscription
                 </Typography>
-                {/* <Box
-                  marginTop={1}
-                  border={0.5}
-                  borderRadius={5}
-                  borderColor="#EBEBEB"
-                  display="flex"
-                  justifyContent="center"
-                  alignItems="center"
-                >
-                  <Stack
-                    direction={"column"}
-                    width="90%"
-                    marginTop={3}
-                    marginBottom={3}
-                  >
-                    <Stack
-                      direction={"row"}
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                      }}
-                    >
-                      <Stack direction={"column"}>
-                        <Typography>
-                          Subscription Status:
-                          <b>{subscriptionData?.data?.status}</b>
-                        </Typography>
-                      </Stack>
-                      <Stack direction={"column"}>
-                        <Typography>
-                          Plan:
-                          <b>{subscriptionData?.data?.plan_type}</b>
-                        </Typography>
-                      </Stack>
-                      <Stack direction={"column"}>
-                        <Typography>
-                          Next Renew: <b>{subscriptionData?.data?.end_date}</b>
-                        </Typography>
-                      </Stack>
-                      <Stack direction={"column"}>
-                        <Grid
-                          container
-                          style={{ display: "flex", justifyContent: "right" }}
-                          item
-                        >
-                          <Box>
-                            <Button
-                              type="Submit"
-                              variant="contained"
-                              color="primary"
-                              style={{
-                                borderRadius: 50,
-                                background:
-                                  "linear-gradient(243.18deg, #B5EDFF 0%, #00CBFF 28.65%, #6721FF 85.94%)",
-                                whiteSpace: "nowrap",
-                              }}
-                              onClick={
-                                subscriptionData?.data?.status === "Canceled" ||
-                                subscriptionData?.data?.status === "Inactive"
-                                  ? () => navigate("/plans")
-                                  : cancelSubscription
-                              }
-                            >
-                              {subLoading && LoadingFor.Subscription ? (
-                                <CircularProgress
-                                  size="1.5rem"
-                                  sx={{
-                                    color: "white",
-                                  }}
-                                />
-                              ) : (
-                                <>
-                                  {subscriptionData?.data?.status ===
-                                    "Canceled" ||
-                                  subscriptionData?.data?.status === "Inactive"
-                                    ? "Active Your plan"
-                                    : "Cancel Subscription"}
-                                </>
-                              )}
-                            </Button>
-                          </Box>
-                        </Grid>
-                      </Stack>
-                    </Stack>
-                  </Stack>
-                </Box> */}
               </Box>
 
               <Grid
                 container
-                // marginTop={1}
                 p={3}
                 pt={3}
-                // pl={10}
                 sx={{
                   paddingLeft: { xs: "", sm: "", md: "", lg: "60px" },
                   width: { lg: "80%", sm: "90%", xs: "90%", md: "90%" },
@@ -879,13 +783,16 @@ function AccountSettings() {
                       background:
                         "linear-gradient(45deg, #00CBFF 0%, #72E2FF 100%)",
                       whiteSpace: "nowrap",
-                      // justifyContent: "flex-end",
                       textTransform: "none",
                       fontWeight: 600,
                       fontSize: "16px",
                       width: savebutton ? "auto" : "100%",
                     }}
-                    onClick={subscriptionData?.data?.status === "Canceled" ?() => navigate("/plans") :handleClickOpen}
+                    onClick={
+                      subscriptionData?.data?.status === "Canceled"
+                        ? () => navigate("/plans")
+                        : handleClickOpen
+                    }
                   >
                     <>
                       {subscriptionData?.data?.status === "Canceled" ||
@@ -916,7 +823,11 @@ function AccountSettings() {
                         </DialogContentText>
                       </DialogContent>
                       <DialogActions
-                        sx={{ marginRight: "inherit", paddingBottom: "16px",marginLeft:savebutton?"0px":"23px" }}
+                        sx={{
+                          marginRight: "inherit",
+                          paddingBottom: "16px",
+                          marginLeft: savebutton ? "0px" : "23px",
+                        }}
                       >
                         <Button
                           onClick={handleClose}
@@ -927,7 +838,6 @@ function AccountSettings() {
                             background:
                               "linear-gradient(45deg, #00CBFF 0%, #72E2FF 100%)",
                             whiteSpace: "nowrap",
-                            // justifyContent: "flex-end",
                             textTransform: "none",
                             fontWeight: 600,
                             fontSize: "16px",
@@ -945,7 +855,6 @@ function AccountSettings() {
                             background:
                               "linear-gradient(45deg, #00CBFF 0%, #72E2FF 100%)",
                             whiteSpace: "nowrap",
-                            // justifyContent: "flex-end",
                             textTransform: "none",
                             fontWeight: 600,
                             fontSize: "16px",
