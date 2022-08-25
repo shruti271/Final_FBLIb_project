@@ -8,3 +8,15 @@ export function requestCheckAdByFilter(payload) {
   console.log("009 ======",payload)
   return axiosInstance.post("api/checkAdByFilter/",payload, { withCredentials: true });
 }
+
+export function requestAddToSavedAds(SavedAds) {
+  return axiosInstance.post("api/saveadmanager/", SavedAds, {
+    withCredentials: true,
+  });
+}
+
+export function requestRemoveFromSavedAds(ad) {  
+  return axiosInstance.delete(`api/saveadmanager/${ad.id}/`, {
+    withCredentials: true,
+  });
+}

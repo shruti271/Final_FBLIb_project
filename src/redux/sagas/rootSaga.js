@@ -1,11 +1,9 @@
 import { all, fork, takeLatest } from "redux-saga/effects";
 import {
-  LOAD_FILTERED_ADS_START,
-  // LOAD_MORE_FILTERED_ADS_START,
+  LOAD_FILTERED_ADS_START,  
 } from "../ducks/filteredAds";
 import {
   handleGetFilteredAds,
-  handleGetMoreFilteredAds,
 } from "./handlers/filteredAds";
 import {
   handleGetAccountSettings,
@@ -28,54 +26,52 @@ import {
   handleGetMoreSubAllAds,
 } from "../sagas/handlers/subAllAds";
 import {
+  handleAddToSavedAds,
   handleCheckAdByFilter,
   handleGetFilteredSavedAds,
-  handleGetMoreFilteredSavedAds,
+  handleRemoveFromSavedAds,  
 } from "./handlers/filteredSavedAds";
 import {
   ADD_TO_SAVED_ADS_START,
   ADD_TO_SAVED_FILTERED_AD_LOCAL_START,
-  LOAD_MORE_SAVED_FILTERED_ADS_START,
+  // LOAD_MORE_SAVED_FILTERED_ADS_START,
   LOAD_SAVED_FILTERED_ADS_START,
   REMOVED_FROM_SAVED_ADS_START,
 } from "../ducks/filteredSavedAds";
 import { GET_BUTTON_TYPES_START } from "../ducks/buttonType";
 import { handleGetButtonType } from "../sagas/handlers/buttonType";
 // import {  REMOVED_FROM_SAVED_ADS_START } from "../ducks/savedAdsManager";
-import { handleAddToSavedAds, handleRemoveFromSavedAds } from "../sagas/handlers/savedAdsManager";
+// import { handleAddToSavedAds, handleRemoveFromSavedAds } from "../sagas/handlers/savedAdsManager";
 import { LOAD_SINGLEAD_START } from "../ducks/singleAdsData";
 import { handleGetSingleAdData } from "./handlers/singleAdsData";
+// import { handleAddToSavedAds, handleRemoveFromSavedAds } from "./handlers/savedAdsManager";
 
 function* onAddToSavedFilterLocal() {
   yield takeLatest(ADD_TO_SAVED_FILTERED_AD_LOCAL_START, handleCheckAdByFilter);
-}
+}//keep
 
 function* onLoadFilteredAds() {
   yield takeLatest(LOAD_FILTERED_ADS_START, handleGetFilteredAds);
 }
 
-// function* onLoadMoreFilteredAds() {
-//   yield takeLatest(LOAD_MORE_FILTERED_ADS_START, handleGetMoreFilteredAds);
-// }
-
 function* onLoadFilteredSavedAds() {
   yield takeLatest(LOAD_SAVED_FILTERED_ADS_START, handleGetFilteredSavedAds);
 }
 
-function* onLoadMoreFilteredSavedAds() {
-  yield takeLatest(
-    LOAD_MORE_SAVED_FILTERED_ADS_START,
-    handleGetMoreFilteredSavedAds
-  );
-}
+// function* onLoadMoreFilteredSavedAds() {
+//   yield takeLatest(
+//     LOAD_MORE_SAVED_FILTERED_ADS_START,
+//     handleGetMoreFilteredSavedAds
+//   );
+// }
 
 function* onAddToSavedAds() {
   yield takeLatest(ADD_TO_SAVED_ADS_START, handleAddToSavedAds);
-}
+}//keep
 
 function* onRemoveFromSavedAds() {
   yield takeLatest(REMOVED_FROM_SAVED_ADS_START, handleRemoveFromSavedAds);
-}
+}//keep
 
 function* onLoadIsAlive() {
   yield takeLatest(LOAD_ISALIVE_START, handleGetIsAlive);
@@ -113,7 +109,7 @@ const filteredAdsSagas = [fork(onLoadFilteredAds),
 ];
 const filteredSavedAdsSagas = [
   fork(onLoadFilteredSavedAds),
-  fork(onLoadMoreFilteredSavedAds),
+  // fork(onLoadMoreFilteredSavedAds),
   fork(onAddToSavedAds),
   fork(onRemoveFromSavedAds),
   fork(onAddToSavedFilterLocal)

@@ -1,14 +1,11 @@
 import { Grid } from "@material-ui/core";
-import InfiniteScroll from "react-infinite-scroll-component";
 import ThumbNailBox from "./ThumbNailBox";
 import { Box, Pagination, Stack, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import * as savedAdsPeramsDuck from "../redux/ducks/savedAdsPerams";
-import {
-  loadMoresavedFilteredAdsStart,
+import {  
   loadsavedFilteredAdsStart,
-  setSavedCurrentPaginationAds,
-  setSavedCurrentPaginationIndex,
+  setSavedCurrentPaginationAds,  
 } from "../redux/ducks/filteredSavedAds";
 import { useSkipInitialEffect } from "../utils/customHooks";
 import emptyImg from "../assets/empty.svg";
@@ -18,9 +15,7 @@ import { useEffect, useState } from "react";
 const SavedAdsList = () => {
   const dispatch = useDispatch();
   const filteredSavedAds = useSelector((state) => state.filteredSavedAds);
-  const {    
-    SavedCurrentPageStartPoint,
-    SavedCurrentPageEndPoint,
+  const {        
     paginationIndex,
     SavedCurrentPage,    
     totalAds,

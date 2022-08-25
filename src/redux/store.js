@@ -11,7 +11,6 @@ import savedAdsPeramsReducer from "./ducks/savedAdsPerams";
 import subAllAdsReducer from "./ducks/subAllAds";
 import filteredSavedAdsReducer from "./ducks/filteredSavedAds";
 import buttonTypesReducer from "./ducks/buttonType";
-import savedAdsManagerReducer from "./ducks/savedAdsManager";
 import singleAdDataReducer from "./ducks/singleAdsData";
 
 const reducer = combineReducers({
@@ -23,8 +22,7 @@ const reducer = combineReducers({
   subAllAds: subAllAdsReducer,
   isAliveData: isAliveReducer,
   subscriptionData: subscriptionReducer,
-  allAdsPerams: allAdsPeramsReducer,
-  savedAdsManager: savedAdsManagerReducer,
+  allAdsPerams: allAdsPeramsReducer,  
   singleAdData : singleAdDataReducer,
 });
 

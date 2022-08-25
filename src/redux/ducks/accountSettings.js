@@ -63,8 +63,6 @@ const accountSettingsReducer = (state = initialState, action) => {
         loading: false,
         accountSettings: action?.payload?.data?.error ? state.accountSettings : action?.payload?.data?.data,
         error: action?.payload?.data?.error ? action?.payload?.data?.message : ""
-        // accountSettings: action.payload.error? state.accountSettings : action.payload.data,
-        // error: action.payload.error? action.payload.message :""
       };
     case LOAD_ACCOUNT_SETTINGS_ERROR:
     case UPDATE_ACCOUNT_SETTINGS_ERROR:

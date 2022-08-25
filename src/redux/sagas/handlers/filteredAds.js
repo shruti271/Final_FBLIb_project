@@ -18,14 +18,14 @@ export function* handleGetFilteredAds({payload}) {
 }
 
 
-export function* handleGetMoreFilteredAds({payload}) {
-  try {
-    const response = yield call(requestGetFilteredAds,payload);
+// export function* handleGetMoreFilteredAds({payload}) {
+//   try {
+//     const response = yield call(requestGetFilteredAds,payload);
 
-    if (response.status === 200) {
-      yield put(loadMoreFilteredAdsSuccess(response?.data));
-    }
-  } catch (error) {
-    yield put(loadMoreFilteredAdsError(error));
-  }
-}
+//     if (response.status === 200) {
+//       yield put(loadMoreFilteredAdsSuccess(response?.data));
+//     }
+//   } catch (error) {
+//     yield put(loadMoreFilteredAdsError(error));
+//   }
+// }

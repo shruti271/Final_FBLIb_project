@@ -158,8 +158,7 @@ const allAdsPeramsReducer = (state = initialState, action) => {
         pageIndex: 0,
         maxRanger: {
           ...state.maxRanger,
-          [`${action.payload.key}`]: {
-            // ...state.maxRanger[action.payload.key],
+          [`${action.payload.key}`]: {            
             min:1,
             max: action.payload.value.max,
           },

@@ -18,22 +18,12 @@ import Firstcardimg from "../assets/FirstCardImg.svg";
 import Shareicon from "../assets/Shareicon.svg";
 import Saveicon from "../assets/Saveicon.svg";
 import StarFill from "../assets/StarFill.svg";
-// import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import ShowMoreText from "react-show-more-text";
 import {
   addToSavedAdsFilterLocalStart,
   addToSavedAdsStart,
-  checkAplliedFiltersAds,
   removeFromSavedAdsStart,
-  removesavedFilteredAdLocal,
   setPostionForSavedPageToScrollValueStart,
 } from "../redux/ducks/filteredSavedAds";
-import {
-  addSavedAdsIdsLocal,
-  // addToSavedAdsStart,
-  // removeFromSavedAdsStart,
-  // removeSavedAdsIdsLocal,
-} from "../redux/ducks/savedAdsManager";
 import { setPostionForScrollValueStart } from "../redux/ducks/filteredAds";
 import { setPostionForSubAllAdsToScrollValueStart } from "../redux/ducks/subAllAds";
 import AccessTime from "@mui/icons-material/AccessTime";
@@ -431,11 +421,7 @@ const ThumbNailBox = ({ adInfo, index }) => {
                     dispatch(removeFromSavedAdsStart(adInfo));
                   } else {
                     // dispatch(addSavedAdsIdsLocal(adInfo.id));//local saved id
-                    dispatch(addToSavedAdsStart({ ad: adInfo.id }));
-                    console.log("000000 ---- q", queryObject);
-                    // dispatch(checkAplliedFiltersAds({
-                    //   filters:queryObject,adsData:adInfo
-                    // }));
+                    dispatch(addToSavedAdsStart({ ad: adInfo.id }));                                        
                     dispatch(
                       addToSavedAdsFilterLocalStart({
                         ...queryObject,
