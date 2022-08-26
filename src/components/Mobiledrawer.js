@@ -159,13 +159,13 @@ const MobileDrawer = ({ setIsOpen }) => {
                 display: "flex",
                 justifyContent: "center",
                 cursor: "pointer",
+                marginRight: selectedMenuItem === sideBarMenuItems.ADLIBSDATABASE ?"0px":"20px"
               }}
               onClick={() => {
                 setSelectedMenuItem(sideBarMenuItems.ADLIBSDATABASE);
                 setIsOpen(() => false);
                 navigate("/");
               }}
-              mr={1}
             >
               <Box
                 sx={{ display: "flex", padding: "20px 40px" }}
