@@ -77,6 +77,7 @@ const useStyles = makeStyles((theme) => ({
     margin: "0",
     overflowY: "none",
     outline: "none",
+    
   },
   AdsImage: {
     width: "100%",
@@ -329,12 +330,13 @@ const ThumbNailBox = ({ adInfo, index }) => {
               </ReadMore>
             </Typography>
           </Box>
-          <div style={{ marginTop: "4px" }}>
+          <div style={{ marginTop: "4px" , height: "300px",}}>
             {adInfo.adMediaType === "video" ? (
               <video
                 src={adInfo.bucketMediaURL}
                 poster={adInfo?.thumbBucketUrl}
                 autoPlay={false}
+                style={{ height: "300px" }}
                 className={classes.AdsVideo}
                 controls
               />
@@ -342,6 +344,7 @@ const ThumbNailBox = ({ adInfo, index }) => {
               <img
                 src={adInfo?.bucketMediaURL}
                 alt="thumbnail"
+                style={{ height: "300px" }}
                 className={classes.AdsImage}
               />
             ) : (
