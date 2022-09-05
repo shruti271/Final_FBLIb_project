@@ -72,8 +72,7 @@ function AdDeatails() {
     (state) => state.filteredSavedAds
   );
 
-  const showGraph = useMediaQuery(theme.breakpoints.down("md"));
-  const DownloadBUtton = useMediaQuery(theme.breakpoints.down("md"));
+  const showGraph = useMediaQuery(theme.breakpoints.down("md"));  
 
   const [adDetail, setAdDetail] = useState();
 
@@ -526,7 +525,7 @@ function AdDeatails() {
                   justifyContent: "center",
                   alignItems: "center",
 
-                  marginTop: DownloadBUtton ? 2 : "",
+                  marginTop: showGraph ? 2 : "",
                 }}
               >
                 <Button

@@ -208,7 +208,7 @@ const AdsList = () => {
               dispatch(setCurrentPaginationIndex(p - 1));
               dispatch(allAdsPeramsDuck.setDatabasePageIndex(p - 1));
             }}
-          />
+          />          
         )}
       </Box>
     </>

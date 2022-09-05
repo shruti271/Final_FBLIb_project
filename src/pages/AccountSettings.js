@@ -854,7 +854,10 @@ function AccountSettings() {
                             fontSize: "16px",
                             width: savebutton ? "auto" : "100%",
                           }}
-                          onClick={cancelSubscription}
+                          onClick={()=>{
+                            cancelSubscription();
+                            handleClose(false)}
+                          }
                         >
                           {subLoading && LoadingFor.Subscription ? (
                             <CircularProgress

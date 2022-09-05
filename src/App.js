@@ -16,7 +16,7 @@ const App = () => {
   
   return (
     <>
-      <Routes>
+    <Routes>
         {/* Public Routes */}
         <Route
           path="/auth/login"

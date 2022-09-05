@@ -37,7 +37,7 @@ const MainLayout = () => {
   const { loading } = useSelector((state) => state.subscriptionData);
   const [isOpen, setIsOpen] = React.useState(true);
   const theme = useTheme();
-
+  
   const showhidedrawer = useMediaQuery(theme.breakpoints.down("md"));  
 
   useEffect(() => {
