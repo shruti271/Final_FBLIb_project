@@ -27,7 +27,7 @@ const VerifyEmail = () => {
 
   const showhidelogolargedevice = useMediaQuery(theme.breakpoints.up("sm"));
   const showhidelogosmalldevice = useMediaQuery(theme.breakpoints.down("sm"));
-
+  const paddingcardsmalldevice= useMediaQuery(theme.breakpoints.down("sm")); 
   const [verifiactionres, setVerifiactionres] = useState(null);
 
   const verifymail = async () => {
@@ -89,7 +89,7 @@ const VerifyEmail = () => {
                 ) : (
                   ""
                 )}
-                <Box style={{ padding: "2vmax 2.5vmax" }}>
+                <Box sx={{ padding:paddingcardsmalldevice ? "" :"1vmax 2.5vmax" }}>
                   <Grid container spacing={2}>
                     <Grid xs={12} item>
                       {!verifiactionres ? (
@@ -102,7 +102,7 @@ const VerifyEmail = () => {
                           >
                             Verifying your email...
                           </Typography>
-                          <Typography variant="h6" align="center" mb={3}>
+                          <Typography variant="h6" align="center" mb={3} sx={{letterSpacing:" 0.04em"}}>
                             Please wait while we verify your email.
                           </Typography>
                         </>
@@ -117,12 +117,20 @@ const VerifyEmail = () => {
                           Your email has been verified.
                         </Typography>
                            <Typography
-                           variant="h5"
+                           variant="h6"
                            align="center"
-                           mb={3}
+                           mb={2}
                            sx={{ fontWeight: 500 }}
                          >
-                           Welcome to Eye of Ecom Please click below to log in.
+                           Welcome to Eye of Ecom 
+                         </Typography>
+                           <Typography
+                           variant="h6"
+                           align="center"
+                           mb={2}
+                           sx={{ fontWeight: 500 }}
+                         >
+                          Please click below to log in.
                          </Typography>
                          </>
                       ) : verifiactionres ===
@@ -143,7 +151,7 @@ const VerifyEmail = () => {
                     </Grid>
                   </Grid>
                   <Box
-                    mt={4}
+                    mt={1}
                     style={{ display: "flex", justifyContent: "center" }}
                   >
                     {verifiactionres === "User Verified" ||
@@ -159,6 +167,7 @@ const VerifyEmail = () => {
                           textTransform: "none",
                           fontSize: "20px",
                           cursor: "pointer",
+                          fontWeight:600
                         }}
                         onClick={() => navigate("/auth/login")}
                       >
