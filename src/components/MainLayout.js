@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Routes } from "react-router-dom";
+import { Routes, useParams } from "react-router-dom";
 import { Route } from "react-router-dom";
 import FadeLoader from "react-spinners/FadeLoader";
 import { useMediaQuery, useTheme } from "@mui/material";
@@ -37,14 +37,15 @@ const MainLayout = () => {
   const { loading } = useSelector((state) => state.subscriptionData);
   const [isOpen, setIsOpen] = React.useState(true);
   const theme = useTheme();
-  
+  let { id } = useParams()
   const showhidedrawer = useMediaQuery(theme.breakpoints.down("md"));  
 
   useEffect(() => {
+    console.log("909- id in route in main layout",id,window.location.pathname.split("=")[1])
     dispatch(loadSubscriptionStart());
     dispatch(
       loadFilteredAdsStart({
-        page_index: 0,
+        page_index: window.location.pathname.split("=")[1]-1 || 0,
         sort_by: "lastUpdatedTime",
         order_by: "asc",
         number_of_pagead: process.env.REACT_APP_NO_OF_ADS_PER_PAGE,
@@ -52,7 +53,7 @@ const MainLayout = () => {
     );
     dispatch(
       loadsavedFilteredAdsStart({
-        page_index: 0,
+        // page_index:window.location.pathname.split("=")[1]-1 || 0,
         sort_by: "lastUpdatedTime",
         order_by: "asc",
         number_of_pagead: process.env.REACT_APP_NO_OF_ADS_PER_PAGE,
@@ -107,7 +108,7 @@ const MainLayout = () => {
             <Routes>
               <Route
                 exact
-                path="/"
+                path="/page=:id"
                 element={
                   <ActiveSubScription>
                     <Addlibrarydatabase />
@@ -116,7 +117,7 @@ const MainLayout = () => {
               />
               <Route
                 exact
-                path="/savedAds"
+                path="/savedAds/page=:page"
                 element={
                   <ActiveSubScription>
                     <SavedAds />

@@ -43,10 +43,14 @@ function AdDeatailsTabs() {
   const subAllAds = useSelector((state) => state.subAllAds);
   const { filteredSavedAds } = useSelector((state) => state.filteredSavedAds);
   const { singleAdData } = useSelector((state) => state.singleAdData);
+  
+
+  
+
 
   const [isActiveTab, setIsActiveTab] = useState(adDetailsTabs.ADOVERVIEW);
   const [adDetail, setAdDetail] = useState();
-  const [redirectToPage, setRedirectToPage] = useState("/");
+  const [redirectToPage, setRedirectToPage] = useState(`/page=${filteredAds.paginationIndex + 1}`);
 
   useEffect(() => {
     if (state) setRedirectToPage(state.fromPage);
@@ -128,7 +132,11 @@ function AdDeatailsTabs() {
       >
         <Box
           onClick={() => {
-            navigate(redirectToPage);
+            // console.log("990099",state.)
+            // navigate(redirectToPage);
+            navigate(`/page=${filteredAds.paginationIndex + 1}`)
+            // window.history.back()
+
           }}
           sx={{ cursor: "pointer", marginTop: "10px" }}
         >
@@ -169,6 +177,8 @@ function AdDeatailsTabs() {
               onClick={() => {
                 setIsActiveTab(adDetailsTabs.ADOVERVIEW);
                 navigate("");
+                // window.history.replace("")
+
               }}
             >
               <Typography
@@ -194,7 +204,10 @@ function AdDeatailsTabs() {
               }}
               onClick={() => {
                 setIsActiveTab(adDetailsTabs.ALLADS);
-                navigate("allAds");
+                //adDeatails/PSHN6oIB5wG9Mmewh9Dl/allAds/page
+                // navigate(`adDeatails/${adId}/allAds/page=${subAllAds?.pageIndex + 1}`);
+                navigate(`allAds/page=${subAllAds?.pageIndex + 1}`);
+                // window.history.replace("/allAds")
               }}
             >
               <Typography
@@ -225,7 +238,7 @@ function AdDeatailsTabs() {
       >
         <Routes>
           <Route exact path="" element={<AdDeatails />} />
-          <Route exact path="allAds" element={<AllAds />} />
+          <Route exact path="allAds/page=:subId" element={<AllAds />} />
         </Routes>
       </Box>
     </>

@@ -22,6 +22,7 @@ import { themeLight, globalStyles, BootstrapInput } from "../../css/globalcss";
 import fbaddlogo from "../../assets/Eye of Ecom  Blue.png";
 import fbaddlogowhitecolor from "../../assets/Eye of Ecom White.png";
 import Backtologin from "../../assets/Backtologinicon.svg";
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles(() => ({
   Backtologinbutton: {
@@ -36,6 +37,8 @@ const ForgetPassword = () => {
   const global = globalStyles();
   const navigate = useNavigate();
   const theme = useTheme();
+
+  const filteredAds = useSelector((state) => state.filteredAds);
 
   const showhidelogolargedevice = useMediaQuery(theme.breakpoints.up("sm"));
   const showhidelogosmalldevice = useMediaQuery(theme.breakpoints.down("sm"));
@@ -73,14 +76,13 @@ const ForgetPassword = () => {
     const res = await isAlive();
     if (res.success && res?.data?.data) {
       if (res?.data?.data?.is_alive === true) {
-        navigate("/");
+        navigate(`/page=${filteredAds.paginationIndex + 1}`);
       }
     }
   };
 
   useEffect(() => {
-    getAlive();
-    // document.title = "Forgot Password - Eye of Ecom ";
+    getAlive();    
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

@@ -39,6 +39,7 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
   const navigate = useNavigate();
 
   const { accountSettings } = useSelector((state) => state.accountSettings);
+  const filteredAds = useSelector((state) => state.filteredAds);
 
   const MenuListOptios = [
     { name: "Account Setings", icon: settings, url: "/accountSettings" },
@@ -93,7 +94,7 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
                 alt="444"
                 height={33}
                 onClick={() => {
-                  navigate("/");
+                  navigate(`/currentPage=${filteredAds.paginationIndex + 1}`);
                 }}
                 style={{ cursor: "pointer" }}
               />

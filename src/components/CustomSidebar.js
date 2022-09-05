@@ -10,6 +10,7 @@ import ContactIcon from "../SvgIcons/ContactIcon";
 import SaveIcon from "../SvgIcons/SaveIcon";
 import Menuicon from "../assets/bxs_left-arrow-circle.svg";
 import AdLibraryDatabaseIcon from "../SvgIcons/AdLibraryDatabaseIcon";
+import { useSelector } from "react-redux";
 
 const drawerWidth = 276;
 
@@ -95,6 +96,11 @@ export const CustomSidebar = ({ isOpen, setIsOpen }) => {
   const [selectedMenuItem, setSelectedMenuItem] = useState(
     sideBarMenuItems.ADLIBSDATABASE
   );
+  const filteredAds = useSelector((state) => state.filteredAds);
+  const { paginationIndex } = useSelector(
+    (state) => state.filteredSavedAds
+  );
+
   const [currentPage, setCurrentPage] = useState();
   const { state } = useLocation();
 
@@ -102,9 +108,9 @@ export const CustomSidebar = ({ isOpen, setIsOpen }) => {
   useEffect(() => {
     if (window.location.pathname === `/ContactSupport`) {
       setSelectedMenuItem(sideBarMenuItems.SUPPORT);
-    } else if (window.location.pathname === `/`) {
+    } else if (window.location.pathname === `/page=${filteredAds.paginationIndex + 1}`) {
       setSelectedMenuItem(sideBarMenuItems.ADLIBSDATABASE);
-    } else if (window.location.pathname === `/savedAds`) {
+    } else if (window.location.pathname === `/savedAds/page=${paginationIndex}`) {
       setSelectedMenuItem(sideBarMenuItems.SAVEDADS);
     } else if (window.location.pathname.split("/").includes("adDeatails")) {
       if (currentPage === "/savedAds")
@@ -159,7 +165,7 @@ export const CustomSidebar = ({ isOpen, setIsOpen }) => {
               onClick={() => {
                 setSelectedMenuItem(sideBarMenuItems.ADLIBSDATABASE);
                 setCurrentPage("/");
-                navigate("/");
+                navigate(`/page=${filteredAds.paginationIndex + 1}`);
               }}
             >
               <Stack
@@ -199,7 +205,7 @@ export const CustomSidebar = ({ isOpen, setIsOpen }) => {
               onClick={() => {
                 setSelectedMenuItem(sideBarMenuItems.SAVEDADS);
                 setCurrentPage("/savedAds");
-                navigate("/savedAds");
+                navigate(`/savedAds/page=${paginationIndex}`);
               }}
             >
               <Stack

@@ -63,7 +63,7 @@ const Login = () => {
       login(data).then(
         (res) => {
           localStorage.setItem("is_alive", true);
-          navigate("/");
+          navigate("/page=1");
         },
         (error) => {
           localStorage.setItem("is_alive", false);

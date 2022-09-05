@@ -1,14 +1,19 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FadeLoader } from "react-spinners";
-import { Box, Pagination, Typography } from "@mui/material";
+import { Box, Input, Pagination, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { Grid } from "@material-ui/core";
 import * as subAllAdsDuck from "../redux/ducks/subAllAds";
 import ThumbNailBox from "./ThumbNailBox";
+import { useParams } from "react-router-dom";
 
 const SubAllAdsList = () => {
   const dispatch = useDispatch();
+  const { adId } = useParams();
   const subAllAds = useSelector((state) => state.subAllAds);
+  const theme = useTheme();
+  const MobileScreenOnly = useMediaQuery(theme.breakpoints.only("xs"));
+
 
   useEffect(() => {
     window.scrollTo(0, subAllAds.postionOfPage);
@@ -66,6 +71,7 @@ const SubAllAdsList = () => {
           </Grid>
         </Grid>
       )}
+       
       <Box
         sx={{
           width: "100%",
@@ -75,30 +81,126 @@ const SubAllAdsList = () => {
           justifyContent: "center",
           alignItems: "center",
         }}
-      >
+      >       
         {(subAllAds.pageIndex !== 0 || !subAllAds?.loading) && (
-          <Pagination
-            count={subAllAds?.totalPages}
-            size={"large"}
-            page={subAllAds?.pageIndex + 1}
-            onChange={(e, p) => {
-              if (
-                Object.keys(subAllAds?.filterSubAllData).includes(
-                  `${(p - 1).toString()}`
-                )
-              ) {
-                dispatch(subAllAdsDuck.laodSubAllCashedPageData(p - 1));
-              } else {
-                dispatch(
-                  subAllAdsDuck.loadMoreSubAllAdsStart({
-                    page_name: subAllAds?.pageName,
-                    number_of_pagead: process.env.REACT_APP_NO_OF_ADS_PER_PAGE,
-                    page_index: p - 1,
-                  })
-                );
-              }
+          <Grid
+            container
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
             }}
-          />
+          >
+            <Grid
+              item
+              lg={6}
+              xs={12}
+              md={9}
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Pagination
+                count={subAllAds?.totalPages}
+                size={"large"}
+                page={subAllAds?.pageIndex + 1}
+                onChange={(e, p) => {
+                  window.history.pushState(
+                    {},
+                    "",
+                    `http://localhost:3000/adDeatails/${adId}/allAds/page=${p}`
+                    //navigate(`adDeatails/${adId}/allAds/page=${subAllAds?.pageIndex + 1}`);
+                  );
+                  if (
+                    Object.keys(subAllAds?.filterSubAllData).includes(
+                      `${(p - 1).toString()}`
+                    )
+                  ) {
+                    dispatch(subAllAdsDuck.laodSubAllCashedPageData(p - 1));
+                  } else {
+                    dispatch(
+                      subAllAdsDuck.loadMoreSubAllAdsStart({
+                        page_name: subAllAds?.pageName,
+                        number_of_pagead:
+                          process.env.REACT_APP_NO_OF_ADS_PER_PAGE,
+                        page_index: p - 1,
+                      })
+                    );
+                  }
+                }}
+              />
+            </Grid>
+            
+            <Grid
+              item
+              lg={6}
+              md={3}
+              xs={12}
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                paddingTop: 2,
+                marginTop:MobileScreenOnly?"20px":"0px"
+              }}
+            >
+              <Box
+                sx={{ display: "flex", alignItems: "center", width: "auto" }}
+              >
+                <Typography sx={{ width: "auto", marginRight: 1 }}>
+                  {"Go to"}
+                </Typography>
+                <Input
+                  sx={{
+                    background: "white",
+                    borderRadius: 1,
+                    maxWidth: "40%",
+                    border: 1,
+                    borderColor: "#EBEBEB",
+                    pl: 1,
+                    p: 1,
+                    height: "45px",
+                  }}
+                  placeholder="Page No."
+                  type="number"
+                  disableUnderline={true}
+                  onKeyUp={(e) => {
+                    console.log("enter");
+                    if (e.key === "Enter") {
+                      window.history.pushState(
+                        {},
+                        "",
+                        `http://localhost:3000/adDeatails/${adId}/allAds/page=${e.currentTarget.value}`
+                      );
+
+                      if (
+                        Object.keys(subAllAds?.filterSubAllData).includes(
+                          `${(e.currentTarget.value - 1).toString()}`
+                        )
+                      ) {
+                        dispatch(
+                          subAllAdsDuck.laodSubAllCashedPageData(
+                            e.currentTarget.value - 1
+                          )
+                        );
+                      } else {
+                        dispatch(
+                          subAllAdsDuck.loadMoreSubAllAdsStart({
+                            page_name: subAllAds?.pageName,
+                            number_of_pagead:
+                              process.env.REACT_APP_NO_OF_ADS_PER_PAGE,
+                            page_index: e.currentTarget.value - 1,
+                          })
+                        );
+                      }
+                    }
+                  }}
+                />
+              </Box>
+            </Grid>
+          </Grid>
         )}
       </Box>
     </>

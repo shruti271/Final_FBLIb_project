@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   Avatar,
   Box,
@@ -164,6 +164,7 @@ const ThumbNailBox = ({ adInfo, index }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const { state } = useLocation();
   const [queryObject, setQueryObject] = useState({});
 
   const filteredSavedAds = useSelector((state) => state.filteredSavedAds);
@@ -512,6 +513,7 @@ const ThumbNailBox = ({ adInfo, index }) => {
                     .includes("savedAds")
                     ? "/savedAds"
                     : "/",
+                    // CurrentPage:state.Current,
                   CurrentAppliedFilter: queryObject,
                 },
               });

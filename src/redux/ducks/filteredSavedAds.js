@@ -155,6 +155,9 @@ const filteredSavedAdsReducer = (state = initialState, action) => {
       return {
         ...state,
         savedAdsIds: state.savedAdsIds.concat(action.payload.ad),
+        totalPage: Math.ceil(
+          state.totalAds / process.env.REACT_APP_NO_OF_ADS_PER_PAGE
+        ),
       };
     case ADD_TO_SAVED_ADS_ERROR:
       return {
@@ -181,6 +184,9 @@ const filteredSavedAdsReducer = (state = initialState, action) => {
             ? state.paginationIndex - 1
             : state.paginationIndex,
         totalAds: state.totalAds - 1,
+        totalPage: Math.ceil(
+          state.totalAds / process.env.REACT_APP_NO_OF_ADS_PER_PAGE
+        ),
       };
     case REMOVED_FROM_SAVED_ADS_ERROR:
       return {
@@ -206,7 +212,7 @@ const filteredSavedAdsReducer = (state = initialState, action) => {
         ),
         SavedCurrentPageStartPoint: action.payload.start,
         SavedCurrentPageEndPoint: action.payload.end,
-        paginationIndex: action.payload.currentPage,
+        paginationIndex: action.payload.currentPage,        
       };
     case LOAD_SAVED_ADS_IDS_LOCAL:
       return {

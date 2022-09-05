@@ -49,7 +49,7 @@ const SavedAds = () => {
       <Grid
         container
         sx={{
-          width: ShowFilterButton ? "97%" : "90%",
+          width: ShowFilterButton ? "95%" : "90%",
           margin: "auto",
           display: "flex",
           justifyContent: "center",

@@ -1,6 +1,6 @@
 import { Grid } from "@material-ui/core";
 import ThumbNailBox from "./ThumbNailBox";
-import { Box, Pagination, Stack, Typography } from "@mui/material";
+import { Box, Input, Pagination, Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import {
   loadsavedFilteredAdsStart,
@@ -9,16 +9,31 @@ import {
 import { useSkipInitialEffect } from "../utils/customHooks";
 import emptyImg from "../assets/empty.svg";
 import { FadeLoader } from "react-spinners";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 const SavedAdsList = () => {
   const dispatch = useDispatch();
   const filteredSavedAds = useSelector((state) => state.filteredSavedAds);
-  const { paginationIndex, SavedCurrentPage, totalAds } = useSelector(
+  const { paginationIndex, SavedCurrentPage, totalAds ,totalPage} = useSelector(
     (state) => state.filteredSavedAds
   );
   const savedAdsPerams = useSelector((state) => state.savedAdsPerams);
   const [queryObject, setQueryObject] = useState({});
+  // const [savepage, setSavePage] = useState(1);
+  const theme = useTheme();
+  const MobileScreenOnly = useMediaQuery(theme.breakpoints.only("xs"));
+
+
+  // const page = useMemo(() => totalPage, [totalPage])
+
+  // useEffect(()=>{
+  //   console.log("9-0- called",page,totalPage)
+  //   window.history.pushState(
+  //     {},
+  //     "",
+  //     `http://localhost:3000/savedAds/page=${page}`
+  //   );
+  // },[page])
 
   useEffect(() => {
     filteredSavedAds.filteredSavedAds.length &&
@@ -30,9 +45,10 @@ const SavedAdsList = () => {
           currentPage: paginationIndex,
         })
       );
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, filteredSavedAds.filteredSavedAds]);
 
+  console.log("9-0-",paginationIndex)
   useSkipInitialEffect(() => {
     const queryObject = {
       startdate: savedAdsPerams?.appliedFilters?.StartRunningDate?.startdate,
@@ -205,25 +221,111 @@ const SavedAdsList = () => {
           alignItems: "center",
         }}
       >
-        {!filteredSavedAds?.loading &&
-          filteredSavedAds?.filteredSavedAds?.length !== 0 && (
-            <Pagination
-              count={Math.ceil(
-                totalAds / process.env.REACT_APP_NO_OF_ADS_PER_PAGE
-              )}
-              size={"large"}
-              page={paginationIndex}
-              onChange={(e, p) => {
-                dispatch(
-                  setSavedCurrentPaginationAds({
-                    start: (p - 1) * process.env.REACT_APP_NO_OF_ADS_PER_PAGE,
-                    end: p * process.env.REACT_APP_NO_OF_ADS_PER_PAGE,
-                    currentPage: p,
-                  })
-                );
+        {/* {!filteredSavedAds?.loading &&
+          filteredSavedAds?.filteredSavedAds?.length !== 0 && ( */}
+            <Grid
+              container
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
               }}
-            />
-          )}
+            >
+              <Grid
+                item
+                lg={6}
+                xs={12}
+                md={9}
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Pagination
+                  count={Math.ceil(
+                    totalAds / process.env.REACT_APP_NO_OF_ADS_PER_PAGE
+                  )}
+                  size={"large"}
+                  page={paginationIndex}
+                  onChange={(e, p) => {
+                    window.history.pushState(
+                      {},
+                      "",
+                      `http://localhost:3000/savedAds/page=${p}`
+                    );
+                    dispatch(
+                      setSavedCurrentPaginationAds({
+                        start:
+                          (p - 1) * process.env.REACT_APP_NO_OF_ADS_PER_PAGE,
+                        end: p * process.env.REACT_APP_NO_OF_ADS_PER_PAGE,
+                        currentPage: p,
+                      })
+                    );
+                  }}
+                />
+              </Grid>
+              <Grid
+                item
+                lg={2}
+                md={3}
+                xs={12}
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  paddingTop: 2,
+                  marginTop:MobileScreenOnly?"20px":"0px"
+                }}
+              >
+                <Box
+                  sx={{ display: "flex", alignItems: "center", width: "auto" }}
+                >
+                  <Typography sx={{ width: "auto", marginRight: 1 }}>
+                    {"Go to"}
+                  </Typography>
+                  <Input
+                    sx={{
+                      background: "white",
+                      borderRadius: 1,
+                      maxWidth: "40%",
+                      border: 1,
+                      borderColor: "#EBEBEB",
+                      pl: 1,
+                      p: 1,
+                      height: "45px",
+                    }}
+                    placeholder="Page No."
+                    type="number"
+                    disableUnderline={true}
+                    onKeyUp={(e) => {
+                      console.log("enter");
+                      if (e.key === "Enter") {
+                        window.history.pushState(
+                          {},
+                          "",
+                          `http://localhost:3000/savedAds/page=${e.currentTarget.value}`
+                        );
+                        console.log("9-0-", e.currentTarget.value);
+
+                        dispatch(
+                          setSavedCurrentPaginationAds({
+                            start:
+                              (e.currentTarget.value - 1) *
+                              process.env.REACT_APP_NO_OF_ADS_PER_PAGE,
+                            end:
+                              e.currentTarget.value *
+                              process.env.REACT_APP_NO_OF_ADS_PER_PAGE,
+                            currentPage: Number(e.currentTarget.value),
+                          })
+                        );
+                      }
+                    }}
+                  />
+                </Box>
+              </Grid>
+            </Grid>
+           {/* )} */}
       </Box>
     </Box>
   );
