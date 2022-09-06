@@ -33,9 +33,6 @@ const AdsList = () => {
   const [queryObject, setQueryObject] = useState({});
   const MobileScreenOnly = useMediaQuery(theme.breakpoints.only("xs"));
 
-  useEffect(()=>{
-console.log(window.location.pathname)
-  },[window.location.pathname])
   
   useEffect(() => {
     window.scrollTo(0, filteredAds.postionOfPage);
@@ -146,7 +143,7 @@ console.log(window.location.pathname)
       });
     }
   }, [dispatch, allAdsPerams.searchType, allAdsPerams.searchBarData]);  
- 
+  console.log("aaagapnpati",filteredAds?.paginationIndex)
   return (
     <>
       {filteredAds?.loading && filteredAds?.filteredAds.length === 0 ? (
@@ -211,9 +208,11 @@ console.log(window.location.pathname)
           // display: "flex",
           // justifyContent: "center",
           // alignItems: "center",
-        }}
+        }
+      }
       >
-        {(allAdsPerams.pageIndex !== 0 || !filteredAds?.loading) && (
+        {
+        (Object.keys(filteredAds?.filterData).length !== 0) && (
         <Grid
           container
           style={{
@@ -241,7 +240,7 @@ console.log(window.location.pathname)
                 window.history.pushState(
                   {},
                   "",
-                  `http://localhost:3000/page=${p}`
+                  `${process.env.REACT_APP_API_UR}/page=${p}`
                 );
                 dispatch(setCurrentPaginationIndex(p - 1));
                 dispatch(allAdsPeramsDuck.setDatabasePageIndex(p - 1));
@@ -286,7 +285,7 @@ console.log(window.location.pathname)
                     window.history.pushState(
                       {},
                       "",
-                      `http://localhost:3000/page=${e.currentTarget.value}`
+                      `REACT_APP_API_URL/page=${e.currentTarget.value}`
                     );
                     console.log("enter--", e.currentTarget.value);
                     dispatch(

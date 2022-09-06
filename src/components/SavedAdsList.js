@@ -23,17 +23,18 @@ const SavedAdsList = () => {
   const theme = useTheme();
   const MobileScreenOnly = useMediaQuery(theme.breakpoints.only("xs"));
 
+// console.log("aaagapnpati",paginationIndex)
+  const page = useMemo(() => {return {paginationIndex}}, [paginationIndex])
 
-  // const page = useMemo(() => totalPage, [totalPage])
-
-  // useEffect(()=>{
-  //   console.log("9-0- called",page,totalPage)
-  //   window.history.pushState(
-  //     {},
-  //     "",
-  //     `http://localhost:3000/savedAds/page=${page}`
-  //   );
-  // },[page])
+  useEffect(()=>{
+    console.log("aaagapnpati ----------------- useefct ",paginationIndex)
+    window.history.pushState(
+      {},
+      "",
+      `${process.env.REACT_APP_API_UR}/savedAds/page=${paginationIndex}`
+    );
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[page])
 
   useEffect(() => {
     filteredSavedAds.filteredSavedAds.length &&
@@ -249,11 +250,7 @@ const SavedAdsList = () => {
                   size={"large"}
                   page={paginationIndex}
                   onChange={(e, p) => {
-                    window.history.pushState(
-                      {},
-                      "",
-                      `http://localhost:3000/savedAds/page=${p}`
-                    );
+                  
                     dispatch(
                       setSavedCurrentPaginationAds({
                         start:
@@ -301,12 +298,7 @@ const SavedAdsList = () => {
                     onKeyUp={(e) => {
                       console.log("enter");
                       if (e.key === "Enter") {
-                        window.history.pushState(
-                          {},
-                          "",
-                          `http://localhost:3000/savedAds/page=${e.currentTarget.value}`
-                        );
-                        console.log("9-0-", e.currentTarget.value);
+                                            
 
                         dispatch(
                           setSavedCurrentPaginationAds({

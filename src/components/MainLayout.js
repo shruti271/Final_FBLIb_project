@@ -45,7 +45,7 @@ const MainLayout = () => {
     dispatch(loadSubscriptionStart());
     dispatch(
       loadFilteredAdsStart({
-        page_index: window.location.pathname.split("=")[1]-1 || 0,
+        page_index: window.location.pathname.split("=")[1]-1,
         sort_by: "lastUpdatedTime",
         order_by: "asc",
         number_of_pagead: process.env.REACT_APP_NO_OF_ADS_PER_PAGE,
