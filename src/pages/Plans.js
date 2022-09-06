@@ -99,6 +99,7 @@ const Payment = () => {
     try {
       const res = await monthsubscription();
       window.open(res.data.data.url);
+      // window.open("http://http://localhost:3000/");
     } catch {
       setLoading(false);
     }

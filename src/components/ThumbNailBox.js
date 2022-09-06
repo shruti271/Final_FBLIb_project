@@ -164,7 +164,6 @@ const ThumbNailBox = ({ adInfo, index }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { state } = useLocation();
   const [queryObject, setQueryObject] = useState({});
 
   const filteredSavedAds = useSelector((state) => state.filteredSavedAds);
@@ -512,8 +511,7 @@ const ThumbNailBox = ({ adInfo, index }) => {
                     .split("/")
                     .includes("savedAds")
                     ? "/savedAds"
-                    : "/",
-                    // CurrentPage:state.Current,
+                    : "/",                    
                   CurrentAppliedFilter: queryObject,
                 },
               });

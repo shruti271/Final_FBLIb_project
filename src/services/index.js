@@ -93,7 +93,7 @@ export const monthsubscription = async () => {
           withCredentials: true,
         }
       )
-      .then((res) => window.open(res.data.data.url, "_self"))
+      .then((res) => window.open(res.data.data.url , "_self"))
       .catch((error) => console.log(error));
   } catch {
     console.log("error");

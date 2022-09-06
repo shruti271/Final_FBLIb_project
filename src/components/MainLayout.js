@@ -36,24 +36,21 @@ const MainLayout = () => {
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.subscriptionData);
   const [isOpen, setIsOpen] = React.useState(true);
-  const theme = useTheme();
-  let { id } = useParams()
+  const theme = useTheme();  
   const showhidedrawer = useMediaQuery(theme.breakpoints.down("md"));  
-
-  useEffect(() => {
-    console.log("909- id in route in main layout",id,window.location.pathname.split("=")[1])
+ 
+  useEffect(() => {    
     dispatch(loadSubscriptionStart());
     dispatch(
       loadFilteredAdsStart({
-        page_index: window.location.pathname.split("=")[1]-1,
+        page_index: window.location.pathname.split("=")[1]-1 || 0,
         sort_by: "lastUpdatedTime",
         order_by: "asc",
         number_of_pagead: process.env.REACT_APP_NO_OF_ADS_PER_PAGE,
       })
     );
     dispatch(
-      loadsavedFilteredAdsStart({
-        // page_index:window.location.pathname.split("=")[1]-1 || 0,
+      loadsavedFilteredAdsStart({        
         sort_by: "lastUpdatedTime",
         order_by: "asc",
         number_of_pagead: process.env.REACT_APP_NO_OF_ADS_PER_PAGE,
