@@ -20,6 +20,8 @@ export const SAVED_GET_PAGE_POSITION = "SAVED_GET_PAGE_POSITION";
 export const SET_PAGINATION_SAVED_ADS = "SET_PAGINATION_SAVED_ADS";
 export const LOAD_SAVED_ADS_IDS_LOCAL = "LOAD_SAVED_ADS_IDS_LOCAL";
 
+export const CLEAR_CASHED_SAVED_PAGE_DATA="CLEAR_CASHED_SAVED_PAGE_DATA";
+
 export const loadsavedFilteredAdsStart = (request) => ({
   type: LOAD_SAVED_FILTERED_ADS_START,
   payload: request,
@@ -83,6 +85,10 @@ export const setSavedCurrentPaginationAds = (page) => ({
 export const loadSavedAdsIdsLocal = (savedAdsIds) => ({
   type: LOAD_SAVED_ADS_IDS_LOCAL,
   payload: savedAdsIds,
+});
+
+export const clearCashedsavedPageData = () => ({
+  type: CLEAR_CASHED_SAVED_PAGE_DATA,
 });
 
 const initialState = {
@@ -219,7 +225,13 @@ const filteredSavedAdsReducer = (state = initialState, action) => {
         ...state,
         savedAdsIds: action.payload,
       };
-
+case CLEAR_CASHED_SAVED_PAGE_DATA:
+  return {
+    // filteredSavedAds: [],
+        // SavedCurrentPage: [],
+        ...state,
+        paginationIndex:1
+  }
     default:
       return state;
   }

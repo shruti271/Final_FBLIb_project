@@ -30,7 +30,64 @@ const AdsList = () => {
 
   const filteredAds = useSelector((state) => state.filteredAds);
   const allAdsPerams = useSelector((state) => state.allAdsPerams);
-  const [queryObject, setQueryObject] = useState({});
+  const [queryObject, setQueryObject] = useState({
+    startdate: allAdsPerams?.appliedFilters?.StartRunningDate?.startdate,
+    enddate: allAdsPerams?.appliedFilters?.StartRunningDate?.enddate,
+    adcount:
+      allAdsPerams?.appliedFilters?.AdCount?.chipText !== ""
+        ? [
+            allAdsPerams?.appliedFilters?.AdCount?.min,
+            allAdsPerams?.appliedFilters?.AdCount?.max,
+          ]
+        : [],
+    adstatus: allAdsPerams?.appliedFilters?.AdStatus?.selectedValue,
+    fb_likes:
+      allAdsPerams?.appliedFilters?.FacebookLikes?.chipText?.length !== 0
+        ? [
+            allAdsPerams?.appliedFilters?.FacebookLikes?.min,
+            allAdsPerams?.appliedFilters?.FacebookLikes?.max,
+          ]
+        : [],
+    insta_followers:
+      allAdsPerams?.appliedFilters?.InstagramFollowers?.chipText !== ""
+        ? [
+            allAdsPerams?.appliedFilters?.InstagramFollowers?.min,
+            allAdsPerams?.appliedFilters?.InstagramFollowers?.max,
+          ]
+        : [],
+    media_type: allAdsPerams?.appliedFilters?.MediaType?.selectedValue,
+    cta_status: allAdsPerams?.appliedFilters?.ButtonStatus?.selectedValue,
+
+    sort_by:
+      allAdsPerams?.sortFilter?.type?.selectedValue === "true" ||
+      allAdsPerams?.sortFilter?.type?.selectedValue === "false"
+        ? ""
+        : allAdsPerams?.sortFilter?.type?.selectedValue,
+
+    increaseCount:
+      allAdsPerams?.sortFilter?.type?.selectedValue === "true" ||
+      allAdsPerams?.sortFilter?.type?.selectedValue === "false"
+        ? allAdsPerams?.sortFilter?.type?.selectedValue
+        : null,
+
+    order_by:
+      allAdsPerams?.sortFilter?.type?.selectedValue === "true" ||
+      allAdsPerams?.sortFilter?.type?.selectedValue === "false"
+        ? ""
+        : allAdsPerams?.sortFilter?.order?.selectedValue,
+
+    keywords: allAdsPerams?.searchBarData.length
+      ? allAdsPerams?.searchType === "Ad Text"
+        ? allAdsPerams?.searchBarData.split(" ")
+        : null
+      : null,
+
+    phrase: allAdsPerams?.searchBarData.length
+      ? allAdsPerams?.searchType === "Exact Phrase"
+        ? allAdsPerams?.searchBarData.split(",")
+        : null
+      : null,
+  });
   const MobileScreenOnly = useMediaQuery(theme.breakpoints.only("xs"));
 
   useEffect(() => {
@@ -101,7 +158,7 @@ const AdsList = () => {
   }, [
     allAdsPerams.appliedFilters,
     allAdsPerams.sortFilter,
-    allAdsPerams.pageIndex,
+    // allAdsPerams.pageIndex,  
     allAdsPerams.searchBarData,
   ]);
 
@@ -121,7 +178,7 @@ const AdsList = () => {
         })
       );
     }
-  }, [dispatch, queryObject]);
+  }, [dispatch, queryObject,filteredAds?.paginationIndex]);
 
   useSkipInitialEffect(() => {
     if (allAdsPerams.searchBarData.length > 0) {

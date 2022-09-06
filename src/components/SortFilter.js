@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { Box } from "@mui/system";
 import {
@@ -16,8 +16,12 @@ import {
 import { PageNameEnum } from "../utils/enums";
 import * as allAdsPeramsDuck from "../redux/ducks/allAdsPerams";
 import * as savedAdsPeramsDuck from "../redux/ducks/savedAdsPerams";
-import { clearCashedPageData } from "../redux/ducks/filteredAds";
+import {
+  clearCashedPageData,
+  setCurrentPaginationIndex,
+} from "../redux/ducks/filteredAds";
 import Arrowdown from "../assets/Arrowdown.svg";
+import { clearCashedsavedPageData } from "../redux/ducks/filteredSavedAds";
 
 const useStyles = makeStyles((theme) => ({
   DropDownArrow: {
@@ -29,6 +33,7 @@ function SortFilter(props) {
   const classes = useStyles();
   const dispatch = useDispatch();
   const location = useLocation();
+  // const { pageno } = useParams();
 
   const allAdsPerams = useSelector((state) => state.allAdsPerams);
   const savedAdsPerams = useSelector((state) => state.savedAdsPerams);
@@ -39,10 +44,10 @@ function SortFilter(props) {
 
   useEffect(() => {
     switch (location.pathname) {
-      case "/":
+      case `/page=${window.location.pathname.split("=")[1]}`:
         setPageName(PageNameEnum.AdlibraryDatabase);
         break;
-      case "/savedAds":
+      case `/savedAds/page=${window.location.pathname.split("=")[1]}`:
         setPageName(PageNameEnum.SavedAds);
         break;
       default:
@@ -52,8 +57,14 @@ function SortFilter(props) {
 
   const handleChangeSortType = (event, newValue) => {
     setSortByAnchorel(null);
-    pageName === PageNameEnum.AdlibraryDatabase &&
-      dispatch(clearCashedPageData());
+    pageName === PageNameEnum.AdlibraryDatabase?
+       dispatch(clearCashedPageData()):
+       dispatch(clearCashedsavedPageData());
+
+    pageName === PageNameEnum.AdlibraryDatabase
+      ? window.history.pushState({}, "", `/page=1`)
+      : window.history.pushState({}, "", `/savedAds/page=1`);
+
     dispatch(
       pageName === PageNameEnum.AdlibraryDatabase
         ? allAdsPeramsDuck.changeSortFilters({
@@ -73,8 +84,17 @@ function SortFilter(props) {
 
   const handleChangeAceOrDes = (event, newValue) => {
     setSortByAnchorel(null);
+    pageName === PageNameEnum.AdlibraryDatabase
+    ? dispatch(clearCashedPageData())
+      : dispatch(clearCashedsavedPageData());
+
     pageName === PageNameEnum.AdlibraryDatabase &&
-      dispatch(clearCashedPageData());
+      dispatch(setCurrentPaginationIndex(0));
+
+    pageName === PageNameEnum.AdlibraryDatabase
+      ? window.history.pushState({}, "", `/page=1`)
+      : window.history.pushState({}, "", `/savedAds/page=1`);
+
     dispatch(
       pageName === PageNameEnum.AdlibraryDatabase
         ? allAdsPeramsDuck.changeSortFilters({

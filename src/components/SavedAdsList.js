@@ -14,7 +14,7 @@ import { useEffect, useMemo, useState } from "react";
 const SavedAdsList = () => {
   const dispatch = useDispatch();
   const filteredSavedAds = useSelector((state) => state.filteredSavedAds);
-  const { paginationIndex, SavedCurrentPage, totalAds ,totalPage} = useSelector(
+  const { paginationIndex, SavedCurrentPage, totalAds } = useSelector(
     (state) => state.filteredSavedAds
   );
   const savedAdsPerams = useSelector((state) => state.savedAdsPerams);

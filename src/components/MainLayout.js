@@ -17,7 +17,7 @@ import AdDeatailsTabs from "../pages/adDetails/AdDetailsTabs";
 import Payment from "../pages/Plans";
 import { loadSubscriptionStart } from "../redux/ducks/subscription";
 import { loadAccountSettingsStart } from "./../redux/ducks/accountSettings";
-import { loadFilteredAdsStart } from "../redux/ducks/filteredAds";
+import { loadFilteredAdsStart, setCurrentPaginationIndex } from "../redux/ducks/filteredAds";
 import { getButtonTypes } from "../redux/ducks/buttonType";
 import { loadsavedFilteredAdsStart } from "../redux/ducks/filteredSavedAds";
 import ActiveSubScription from "../ActiveSubScription";
@@ -34,9 +34,9 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 
 const MainLayout = () => {
   const dispatch = useDispatch();
+  const theme = useTheme();  
   const { loading } = useSelector((state) => state.subscriptionData);
   const [isOpen, setIsOpen] = React.useState(true);
-  const theme = useTheme();  
   const showhidedrawer = useMediaQuery(theme.breakpoints.down("md"));  
  
   useEffect(() => {    
@@ -49,6 +49,8 @@ const MainLayout = () => {
         number_of_pagead: process.env.REACT_APP_NO_OF_ADS_PER_PAGE,
       })
     );
+    // dispatch(setCurrentPaginationIndex(window.location.pathname.split("=")[1]-1));
+
     dispatch(
       loadsavedFilteredAdsStart({        
         sort_by: "lastUpdatedTime",
