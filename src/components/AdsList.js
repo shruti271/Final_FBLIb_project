@@ -240,7 +240,7 @@ const AdsList = () => {
                 window.history.pushState(
                   {},
                   "",
-                  `${process.env.REACT_APP_API_UR}/page=${p}`
+                  `/page=${p}`
                 );
                 dispatch(setCurrentPaginationIndex(p - 1));
                 dispatch(allAdsPeramsDuck.setDatabasePageIndex(p - 1));
@@ -285,7 +285,7 @@ const AdsList = () => {
                     window.history.pushState(
                       {},
                       "",
-                      `REACT_APP_API_URL/page=${e.currentTarget.value}`
+                      `/page=${e.currentTarget.value}`
                     );
                     console.log("enter--", e.currentTarget.value);
                     dispatch(

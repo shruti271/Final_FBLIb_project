@@ -110,7 +110,7 @@ const SubAllAdsList = () => {
                   window.history.pushState(
                     {},
                     "",
-                    `${process.env.REACT_APP_API_UR}/adDeatails/${adId}/allAds/page=${p}`
+                    `/adDeatails/${adId}/allAds/page=${p}`
                     //navigate(`adDeatails/${adId}/allAds/page=${subAllAds?.pageIndex + 1}`);
                   );
                   if (
@@ -172,7 +172,7 @@ const SubAllAdsList = () => {
                       window.history.pushState(
                         {},
                         "",
-                        `${process.env.REACT_APP_API_UR}/adDeatails/${adId}/allAds/page=${e.currentTarget.value}`
+                        `/page=${e.currentTarget.value}`
                       );
 
                       if (

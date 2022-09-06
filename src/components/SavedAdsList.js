@@ -31,7 +31,7 @@ const SavedAdsList = () => {
     window.history.pushState(
       {},
       "",
-      `${process.env.REACT_APP_API_UR}/savedAds/page=${paginationIndex}`
+      `/savedAds/page=${paginationIndex}`
     );
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[page])
