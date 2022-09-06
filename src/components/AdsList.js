@@ -33,6 +33,10 @@ const AdsList = () => {
   const [queryObject, setQueryObject] = useState({});
   const MobileScreenOnly = useMediaQuery(theme.breakpoints.only("xs"));
 
+  useEffect(()=>{
+console.log(window.location.pathname)
+  },[window.location.pathname])
+  
   useEffect(() => {
     window.scrollTo(0, filteredAds.postionOfPage);
     // eslint-disable-next-line react-hooks/exhaustive-deps

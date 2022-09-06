@@ -221,8 +221,8 @@ const SavedAdsList = () => {
           alignItems: "center",
         }}
       >
-        {/* {!filteredSavedAds?.loading &&
-          filteredSavedAds?.filteredSavedAds?.length !== 0 && ( */}
+        {!filteredSavedAds?.loading &&
+          filteredSavedAds?.filteredSavedAds?.length !== 0 && (
             <Grid
               container
               style={{
@@ -325,7 +325,7 @@ const SavedAdsList = () => {
                 </Box>
               </Grid>
             </Grid>
-           {/* )} */}
+            )} 
       </Box>
     </Box>
   );
