@@ -168,7 +168,8 @@ const ThumbNailBox = ({ adInfo, index }) => {
 
   const filteredSavedAds = useSelector((state) => state.filteredSavedAds);
   const savedAdsPerams = useSelector((state) => state.savedAdsPerams);
-
+  const filteredAds = useSelector((state) => state.filteredAds);
+  
   useEffect(() => {
     const queryObject = {
       startdate: savedAdsPerams?.appliedFilters?.StartRunningDate?.startdate,
@@ -492,7 +493,7 @@ const ThumbNailBox = ({ adInfo, index }) => {
               height: "30px",
             }}
             onClick={() => {
-              window.location.pathname === "/" &&
+              window.location.pathname === `/page=${filteredAds.paginationIndex + 1}` &&
                 dispatch(setPostionForScrollValueStart(window.pageYOffset));
 
               window.location.pathname.split("/").includes("allAds") &&

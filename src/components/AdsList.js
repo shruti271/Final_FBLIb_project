@@ -182,7 +182,7 @@ const AdsList = () => {
 
   useSkipInitialEffect(() => {
     if (allAdsPerams.searchBarData.length > 0) {
-      location.pathname === "/" && dispatch(clearCashedPageData());
+      location.pathname === `/page=${filteredAds.paginationIndex + 1}` && dispatch(clearCashedPageData());
       setQueryObject({
         ...queryObject,
         keywords: allAdsPerams?.searchBarData.length

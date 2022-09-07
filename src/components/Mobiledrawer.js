@@ -89,6 +89,10 @@ const MobileDrawer = ({ setIsOpen }) => {
     sideBarMenuItems.ADLIBSDATABASE
   );
   const filteredAds = useSelector((state) => state.filteredAds);
+  const { paginationIndex } = useSelector(
+    (state) => state.filteredSavedAds
+  );
+  
 
   // eslint-disable-next-line no-unused-vars
   const [currentPage, setCurrentPage] = useState();
@@ -100,7 +104,7 @@ const MobileDrawer = ({ setIsOpen }) => {
       setSelectedMenuItem(sideBarMenuItems.SUPPORT);
     } else if (window.location.pathname === `/page=${filteredAds.paginationIndex + 1}`) {
       setSelectedMenuItem(sideBarMenuItems.ADLIBSDATABASE);
-    } else if (window.location.pathname === `/savedAds`) {
+    } else if (window.location.pathname === `/savedAds/page=${paginationIndex}`) {
       setSelectedMenuItem(sideBarMenuItems.SAVEDADS);
     } else if (window.location.pathname === `/accountSettings`) {
       setSelectedMenuItem(sideBarMenuItems.ACCOUNTSETTINGS);

@@ -1927,7 +1927,7 @@ function AllFilters(props) {
                 Clear
               </Typography>
             </Button>
-            {window.location.pathname === `/savedAds` &&
+            {window.location.pathname.includes("savedAds") &&
               ShowFilterWithClearButton && (
                 <Button
                   sx={{
