@@ -1,5 +1,6 @@
 import axios from "axios";
 import axiosInstance from "../axios/Index";
+
 export const signUp = async (payload) => {
   let result = {};
   try {
