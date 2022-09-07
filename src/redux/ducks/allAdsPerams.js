@@ -217,8 +217,7 @@ const allAdsPeramsReducer = (state = initialState, action) => {
         },
       };
 
-    case CHANGE_SORTFILTERS:
-      console.log("9999999999999",action.payload.value)
+    case CHANGE_SORTFILTERS:      
       return {
         ...state,
         pageIndex: 0,
