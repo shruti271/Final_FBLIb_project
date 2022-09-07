@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { Box } from "@mui/system";
 import {
@@ -32,8 +32,7 @@ const useStyles = makeStyles((theme) => ({
 function SortFilter(props) {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const location = useLocation();
-  // const { pageno } = useParams();
+  const location = useLocation();  
 
   const allAdsPerams = useSelector((state) => state.allAdsPerams);
   const savedAdsPerams = useSelector((state) => state.savedAdsPerams);
