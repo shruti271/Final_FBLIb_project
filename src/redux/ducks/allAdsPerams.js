@@ -91,7 +91,7 @@ const allAdsPeramsReducer = (state = initialState, action) => {
         appliedFilters: {
           ...state.appliedFilters,
           [`${action.payload.key}`]: {
-            ...action.payload.value,
+            ...action?.payload.value,
           },
         },
       };

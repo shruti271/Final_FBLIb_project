@@ -14,17 +14,20 @@ const FilterChips = () => {
 
   const allAdsPerams = useSelector((state) => state.allAdsPerams);
   const savedAdsPerams = useSelector((state) => state.savedAdsPerams);
-
+  const filteredAds = useSelector((state) => state.filteredAds);
+  const { paginationIndex } = useSelector(
+    (state) => state.filteredSavedAds
+  );
   const [dataSource, setDataSource] = useState({});
   const [pageName, setPageName] = useState("");
 
   useEffect(() => {
     switch (location.pathname) {
-      case "/":
+      case `/page=${filteredAds.paginationIndex + 1}`:
         setDataSource(allAdsPerams);
         setPageName(PageNameEnum.AdlibraryDatabase);
         break;
-      case "/savedAds":
+      case `/savedAds/page=${paginationIndex}`:
         setDataSource(savedAdsPerams);
         setPageName(PageNameEnum.SavedAds);
         break;

@@ -78,7 +78,10 @@ function AllFilters(props) {
   const allAdsPerams = useSelector((state) => state.allAdsPerams);
   const savedAdsPerams = useSelector((state) => state.savedAdsPerams);
   const { buttonTypes } = useSelector((state) => state.buttonTypes);
-
+  const filteredAds = useSelector((state) => state.filteredAds);
+  const { paginationIndex } = useSelector(
+    (state) => state.filteredSavedAds
+  );
   const ShowFilterWithClearButton = useMediaQuery(theme.breakpoints.only("xs"));
   // const ExtraSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const LargeScreenOnly = useMediaQuery(theme.breakpoints.up("sm"));
@@ -135,10 +138,10 @@ function AllFilters(props) {
 
   useEffect(() => {
     switch (location.pathname) {
-      case "/":
+      case `/page=${filteredAds.paginationIndex + 1}`:
         setPageName(PageNameEnum.AdlibraryDatabase);
         break;
-      case "/savedAds":
+      case `/savedAds/page=${paginationIndex}`:
         setPageName(PageNameEnum.SavedAds);
         break;
       default:
@@ -289,6 +292,7 @@ function AllFilters(props) {
   };
 
   const handleButtonType = (newValue, isReset) => {
+    console.log("????=====================",newValue)
     pageName === PageNameEnum.AdlibraryDatabase &&
       dispatch(clearCashedPageData());
     dispatch(
@@ -1825,6 +1829,7 @@ function AllFilters(props) {
                           ?.selectedValue
                   }
                   onChange={(e) => {
+                    console.log("????????????????????",e.target.value)
                     handleButtonType(e.target.value);
                     setButtonTypeAnchorEl(null);
                   }}
