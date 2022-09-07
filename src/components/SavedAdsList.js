@@ -23,11 +23,11 @@ const SavedAdsList = () => {
   const theme = useTheme();
   const MobileScreenOnly = useMediaQuery(theme.breakpoints.only("xs"));
 
-// console.log("aaagapnpati",paginationIndex)
+
   const page = useMemo(() => {return {paginationIndex}}, [paginationIndex])
 
   useEffect(()=>{
-    console.log("aaagapnpati ----------------- useefct ",paginationIndex)
+    
     window.history.pushState(
       {},
       "",
@@ -49,7 +49,7 @@ const SavedAdsList = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, filteredSavedAds.filteredSavedAds]);
 
-  console.log("9-0-",paginationIndex)
+  
   useSkipInitialEffect(() => {
     const queryObject = {
       startdate: savedAdsPerams?.appliedFilters?.StartRunningDate?.startdate,
@@ -296,7 +296,7 @@ const SavedAdsList = () => {
                     type="number"
                     disableUnderline={true}
                     onKeyUp={(e) => {
-                      console.log("enter");
+                      
                       if (e.key === "Enter") {
                                             
 

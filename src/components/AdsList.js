@@ -329,14 +329,14 @@ const AdsList = () => {
                   type="number"
                   disableUnderline={true}
                   onKeyUp={(e) => {
-                    console.log("enter");
+                    
                     if (e.key === "Enter") {
                       window.history.pushState(
                         {},
                         "",
                         `/page=${e.currentTarget.value}`
                       );
-                      console.log("enter--", e.currentTarget.value);
+                      
                       dispatch(
                         setCurrentPaginationIndex(e.currentTarget.value - 1)
                       );

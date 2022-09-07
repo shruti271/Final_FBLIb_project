@@ -132,7 +132,7 @@ function AdDeatailsTabs() {
       >
         <Box
           onClick={() => {
-            // console.log("990099",state.)
+            
             // navigate(redirectToPage);
             navigate(`/page=${filteredAds.paginationIndex + 1}`)
             // window.history.back()
