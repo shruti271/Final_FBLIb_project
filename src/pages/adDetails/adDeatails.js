@@ -177,7 +177,7 @@ function AdDeatails() {
                       }}
                     >
                       <Avatar
-                        src={adDetail?.pageInfo?.logo}
+                        src={adDetail?.pageInfo?.bucketLogoURL}
                         aria-label="FirstCard"
                         style={{ width: "30px", height: "30px" }}
                       ></Avatar>
