@@ -94,7 +94,7 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
                 alt="444"
                 height={33}
                 onClick={() => {
-                  navigate(`/currentPage=${filteredAds.paginationIndex + 1}`);
+                  navigate(`/page=${filteredAds.paginationIndex + 1}`);
                 }}
                 style={{ cursor: "pointer" }}
               />

@@ -135,6 +135,13 @@ function AllFilters(props) {
       min: savedAdsPerams?.appliedFilters?.InstagramFollowers?.min,
       max: savedAdsPerams?.appliedFilters?.InstagramFollowers?.max,
     });
+useEffect(()=>{
+  console.log("99999999 , ",)
+  pageName === PageNameEnum.AdlibraryDatabase
+      ? window.history.pushState({}, "", `/page=1`)
+      : window.history.pushState({}, "", `/savedAds/page=1`);
+// eslint-disable-next-line react-hooks/exhaustive-deps
+},[allAdsPerams.appliedFilters,savedAdsPerams.appliedFilters])
 
   useEffect(() => {
     switch (location.pathname) {
