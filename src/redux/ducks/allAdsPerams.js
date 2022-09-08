@@ -217,13 +217,13 @@ const allAdsPeramsReducer = (state = initialState, action) => {
         },
       };
 
-    case CHANGE_SORTFILTERS:      
+    case CHANGE_SORTFILTERS:  
       return {
         ...state,
         pageIndex: 0,
         sortFilter: {
           ...state.sortFilter,
-          [`${action.payload.key}`]: action.payload.value.selectedValue,
+          [`${action.payload.key}`]: action.payload.value,
         },
       };
 

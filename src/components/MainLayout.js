@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Routes, useParams } from "react-router-dom";
+import { Navigate, Routes, useParams } from "react-router-dom";
 import { Route } from "react-router-dom";
 import FadeLoader from "react-spinners/FadeLoader";
 import { useMediaQuery, useTheme } from "@mui/material";
@@ -17,7 +17,10 @@ import AdDeatailsTabs from "../pages/adDetails/AdDetailsTabs";
 import Payment from "../pages/Plans";
 import { loadSubscriptionStart } from "../redux/ducks/subscription";
 import { loadAccountSettingsStart } from "./../redux/ducks/accountSettings";
-import { loadFilteredAdsStart, setCurrentPaginationIndex } from "../redux/ducks/filteredAds";
+import {
+  loadFilteredAdsStart,
+  setCurrentPaginationIndex,
+} from "../redux/ducks/filteredAds";
 import { getButtonTypes } from "../redux/ducks/buttonType";
 import { loadsavedFilteredAdsStart } from "../redux/ducks/filteredSavedAds";
 import ActiveSubScription from "../ActiveSubScription";
@@ -34,16 +37,16 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 
 const MainLayout = () => {
   const dispatch = useDispatch();
-  const theme = useTheme();  
+  const theme = useTheme();
   const { loading } = useSelector((state) => state.subscriptionData);
   const [isOpen, setIsOpen] = React.useState(true);
-  const showhidedrawer = useMediaQuery(theme.breakpoints.down("md"));  
- 
-  useEffect(() => {    
+  const showhidedrawer = useMediaQuery(theme.breakpoints.down("md"));
+
+  useEffect(() => {
     dispatch(loadSubscriptionStart());
     dispatch(
       loadFilteredAdsStart({
-        page_index: window.location.pathname.split("=")[1]-1 || 0,
+        page_index: window.location.pathname.split("=")[1] - 1 || 0,
         sort_by: "lastUpdatedTime",
         order_by: "asc",
         number_of_pagead: process.env.REACT_APP_NO_OF_ADS_PER_PAGE,
@@ -52,7 +55,7 @@ const MainLayout = () => {
     // dispatch(setCurrentPaginationIndex(window.location.pathname.split("=")[1]-1));
 
     dispatch(
-      loadsavedFilteredAdsStart({        
+      loadsavedFilteredAdsStart({
         sort_by: "lastUpdatedTime",
         order_by: "asc",
         number_of_pagead: process.env.REACT_APP_NO_OF_ADS_PER_PAGE,
@@ -105,6 +108,7 @@ const MainLayout = () => {
             </Box>
           ) : (
             <Routes>
+              <Route exact path="/" element={<Navigate to="/page=1" />} />
               <Route
                 exact
                 path="/page=:id"
