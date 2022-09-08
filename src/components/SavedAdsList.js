@@ -25,6 +25,9 @@ const SavedAdsList = () => {
 
 
   // const page = useMemo(() => {return {paginationIndex}}, [paginationIndex])
+  // const MeduimScreenOnly = useMediaQuery(theme.breakpoints.down("md"));
+  // const MeduimUpScreenOnly = useMediaQuery(theme.breakpoints.up("md"));
+  // const page = useMemo(() => {return {paginationIndex}}, [paginationIndex])
 
   // useEffect(()=>{
     
@@ -225,7 +228,84 @@ const SavedAdsList = () => {
         {!filteredSavedAds?.loading &&
           filteredSavedAds?.filteredSavedAds?.length !== 0 && (
             <>
+            <Stack
+            direction={MobileScreenOnly?"column":"row"}
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Stack>
             <Pagination
+              count={Math.ceil(
+                totalAds / process.env.REACT_APP_NO_OF_ADS_PER_PAGE
+              )}
+              size={"large"}
+              page={paginationIndex}
+              onChange={(e, p) => {
+                dispatch(
+                  setSavedCurrentPaginationAds({
+                    start: (p - 1) * process.env.REACT_APP_NO_OF_ADS_PER_PAGE,
+                    end: p * process.env.REACT_APP_NO_OF_ADS_PER_PAGE,
+                    currentPage: p,
+                  })
+                );
+              }}
+            />
+            </Stack>
+
+            <Stack sx={{paddingTop:MobileScreenOnly?2:""}}>
+              <Box
+                sx={{ display: "flex", alignItems: "center", justifyContent:"center"}}
+              >
+                <Typography sx={{ width: "auto", marginRight: 1 }}>
+                  <b>{"Go to"}</b>
+                </Typography>
+                <Input
+                  sx={{
+                    background: "white",
+                    borderRadius: 1,
+                    maxWidth: "30%",
+                    border: 1,
+                    borderColor: "#EBEBEB",
+                    pl: 1,
+                    // p: 1,
+                    // height: "45px",
+                  }}
+                  // placeholder="Page No."
+                  type="number"
+                  disableUnderline={true}
+                  onKeyUp={(e) => {
+                    
+                    if (e.key === "Enter") {
+                      // window.history.pushState(
+                      //   {},
+                      //   "",
+                      //   `/page=${e.currentTarget.value}`
+                      // );
+                      
+                      dispatch(
+                        setSavedCurrentPaginationAds({
+                          start:
+                            (e.currentTarget.value - 1) *
+                            process.env.REACT_APP_NO_OF_ADS_PER_PAGE,
+                          end:
+                            e.currentTarget.value *
+                            process.env.REACT_APP_NO_OF_ADS_PER_PAGE,
+                          currentPage: Number(e.currentTarget.value),
+                        })
+                      );
+                    }
+                  }}
+                />
+              </Box>
+            </Stack>
+          </Stack>
+
+
+
+            {/* <Pagination
               count={Math.ceil(
                 totalAds / process.env.REACT_APP_NO_OF_ADS_PER_PAGE
               )}
@@ -285,7 +365,7 @@ const SavedAdsList = () => {
                     }
                   }}
                 />
-              </Box>
+              </Box> */}
               </>
           )}
       </Box>

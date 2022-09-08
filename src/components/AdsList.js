@@ -81,6 +81,8 @@ const AdsList = () => {
       : null,
   });
   const MobileScreenOnly = useMediaQuery(theme.breakpoints.only("xs"));
+  const MeduimScreenOnly = useMediaQuery(theme.breakpoints.down("md"));
+  const MeduimUpScreenOnly = useMediaQuery(theme.breakpoints.up("md"));
 
   useEffect(() => {
     window.scrollTo(0, filteredAds.postionOfPage);
@@ -255,35 +257,136 @@ const AdsList = () => {
           marginTop: 5,
         }}
       >
-        {(allAdsPerams.pageIndex !== 0 || !filteredAds?.loading) && (
-          <>
-          <Pagination
-            count={filteredAds?.totalPages}
-            size={"large"}
-            page={filteredAds?.paginationIndex + 1}
-            onChange={(e, p) => {
-              dispatch(setCurrentPaginationIndex(p - 1));
-              dispatch(allAdsPeramsDuck.setDatabasePageIndex(p - 1));
+        {Object.keys(filteredAds?.filterData).length !== 0 && (
+          <Stack
+            direction={MobileScreenOnly?"column":"row"}
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
             }}
-          /> 
-           <Box
-                sx={{ display: "flex", alignItems: "center", width: "auto" }}
+          >
+            <Stack>
+              <Pagination 
+                count={filteredAds?.totalPages}
+                size={MobileScreenOnly?"small":MeduimUpScreenOnly?"large":"medium"}
+                page={filteredAds?.paginationIndex + 1}
+                onChange={(e, p) => {
+                  // window.history.pushState({}, "", `/page=${p}`);
+                  dispatch(setCurrentPaginationIndex(p - 1));
+                  dispatch(allAdsPeramsDuck.setDatabasePageIndex(p - 1));
+                }}
+              />
+            </Stack>
+
+            <Stack sx={{paddingTop:MobileScreenOnly?2:""}}>
+              <Box
+                sx={{ display: "flex", alignItems: "center", justifyContent:"center"}}
               >
                 <Typography sx={{ width: "auto", marginRight: 1 }}>
-                  {"Go to"}
+                  <b>{"Go to"}</b>
                 </Typography>
                 <Input
                   sx={{
                     background: "white",
                     borderRadius: 1,
-                    maxWidth: "40%",
+                    maxWidth: "30%",
                     border: 1,
                     borderColor: "#EBEBEB",
                     pl: 1,
-                    p: 1,
-                    height: "45px",
+                    // p: 1,
+                    // height: "45px",
                   }}
-                  placeholder="Page No."
+                  // placeholder="Page No."
+                  type="number"
+                  disableUnderline={true}
+                  onKeyUp={(e) => {
+                    
+                    if (e.key === "Enter") {
+                      // window.history.pushState(
+                      //   {},
+                      //   "",
+                      //   `/page=${e.currentTarget.value}`
+                      // );
+                      
+                      dispatch(
+                        setCurrentPaginationIndex(e.currentTarget.value - 1)
+                      );
+                      dispatch(
+                        allAdsPeramsDuck.setDatabasePageIndex(
+                          e.currentTarget.value.trim() - 1
+                        )
+                      );
+                    }
+                  }}
+                />
+              </Box>
+            </Stack>
+          </Stack>
+        )}
+        {/* {Object.keys(filteredAds?.filterData).length !== 0 && (
+          <Grid
+            container
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Grid
+              item
+              lg={4}
+              xs={12}
+              md={4}
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Pagination
+                count={filteredAds?.totalPages}
+                size={"large"}
+                page={filteredAds?.paginationIndex + 1}
+                onChange={(e, p) => {
+                  window.history.pushState({}, "", `/page=${p}`);
+                  dispatch(setCurrentPaginationIndex(p - 1));
+                  dispatch(allAdsPeramsDuck.setDatabasePageIndex(p - 1));
+                }}
+              />
+            </Grid>
+
+            <Grid
+              item
+              lg={4}
+              md={4}
+              xs={12}
+              style={{
+                display: "flex",
+                justifyContent: "start",
+                alignItems: "center",
+                paddingTop: 2,
+                marginTop: MobileScreenOnly ? "20px" : "0px",
+              }}
+            >
+              <Box
+                sx={{ display: "flex", alignItems: "center", width: "auto" }}
+              >
+                <Typography sx={{ width: "auto", marginRight: 1 }}>
+                  <b>{"Go to"}</b>
+                </Typography>
+                <Input
+                  sx={{
+                    background: "white",
+                    borderRadius: 1,
+                    maxWidth: "20%",
+                    border: 1,
+                    borderColor: "#EBEBEB",
+                    pl: 1,
+                    // p: 1,
+                    // height: "45px",
+                  }}
+                  // placeholder="Page No."
                   type="number"
                   disableUnderline={true}
                   onKeyUp={(e) => {
@@ -303,9 +406,9 @@ const AdsList = () => {
                   }}
                 />
               </Box>
-          </>
-                   
-        )}
+            </Grid>
+          </Grid>
+        )} */}
       </Box>
     </>
   );
