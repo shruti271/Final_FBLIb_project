@@ -20,14 +20,12 @@ const FilterChips = () => {
   const [pageName, setPageName] = useState("");
 
   useEffect(() => {
-    
-    if (location.pathname.includes("page")) {
-      console.log("99999999 88888888");
-      setDataSource(allAdsPerams);
-      setPageName(PageNameEnum.AdlibraryDatabase);
-    }else if(location.pathname.includes("savedAds")){
+    if((location.pathname.includes("savedAds") && location.pathname.includes("page"))){
       setDataSource(savedAdsPerams);
         setPageName(PageNameEnum.SavedAds);
+    }else if (location.pathname.includes("page")) {      
+      setDataSource(allAdsPerams);
+      setPageName(PageNameEnum.AdlibraryDatabase);
     }else{
       setDataSource({});
     }
