@@ -57,67 +57,67 @@ export const forgotPassword = async (payload) => {
     };
   }
 };
-export const changePassword = async (payload) => {
-  let result = {};
-  try {
-    const userid = await axios.get(
-      `http://localhost:8000/api/usermanager/`, //http://127.0.0.1:8000/api/usermanager/
-      { withCredentials: true }
-    );
-    const res = await axios.put(
-      `http://localhost:8000/api/usermanager/${userid?.data?.data?.id}/`, //http://127.0.0.1:8000/api/usermanager/
-      payload,
-      { withCredentials: true }
-    );
-    result = res.data || {};
-    return { success: true, data: result };
-  } catch (err) {
-    return {
-      success: false,
-      message: err || "something went wrong",
-    };
-  }
-};
+// export const changePassword = async (payload) => {
+//   let result = {};
+//   try {
+//     const userid = await axios.get(
+//       `http://localhost:8000/api/usermanager/`, //http://127.0.0.1:8000/api/usermanager/
+//       { withCredentials: true }
+//     );
+//     const res = await axios.put(
+//       `http://localhost:8000/api/usermanager/${userid?.data?.data?.id}/`, //http://127.0.0.1:8000/api/usermanager/
+//       payload,
+//       { withCredentials: true }
+//     );
+//     result = res.data || {};
+//     return { success: true, data: result };
+//   } catch (err) {
+//     return {
+//       success: false,
+//       message: err || "something went wrong",
+//     };
+//   }
+// };
 
-export const getName = async () => {
-  let result = {};
-  try {
-    const res = await axios.get(
-      `http://localhost:8000/api/usermanager/`, //http://127.0.0.1:8000/api/usermanager/
-      { withCredentials: true }
-    );
-    result = res.data.data || {};
-    return { success: true, data: result };
-  } catch (err) {
-    return {
-      success: false,
-      message: err || "something went wrong",
-    };
-  }
-};
+// export const getName = async () => {
+//   let result = {};
+//   try {
+//     const res = await axios.get(
+//       `http://localhost:8000/api/usermanager/`, //http://127.0.0.1:8000/api/usermanager/
+//       { withCredentials: true }
+//     );
+//     result = res.data.data || {};
+//     return { success: true, data: result };
+//   } catch (err) {
+//     return {
+//       success: false,
+//       message: err || "something went wrong",
+//     };
+//   }
+// };
 
-export const changeName = async (payload) => {
-  let result = {};
-  try {
-    const userid = await axios.get(
-      `http://localhost:8000/api/usermanager/`, //http://127.0.0.1:8000/api/usermanager/
-      { withCredentials: true }
-    );
-    const res = await axios.put(
-      `http://localhost:8000/api/usermanager/${userid?.data?.data?.id}/`, //http://127.0.0.1:8000/api/usermanager/
-      payload,
-      { withCredentials: true }
-    );
-    result = res.data || {};
-    return { success: true, data: result };
-  } catch (err) {
-    return {
-      success: false,
-      message: err || "something went wrong",
-      data: null,
-    };
-  }
-};
+// export const changeName = async (payload) => {
+//   let result = {};
+//   try {
+//     const userid = await axios.get(
+//       `http://localhost:8000/api/usermanager/`, //http://127.0.0.1:8000/api/usermanager/
+//       { withCredentials: true }
+//     );
+//     const res = await axios.put(
+//       `http://localhost:8000/api/usermanager/${userid?.data?.data?.id}/`, //http://127.0.0.1:8000/api/usermanager/
+//       payload,
+//       { withCredentials: true }
+//     );
+//     result = res.data || {};
+//     return { success: true, data: result };
+//   } catch (err) {
+//     return {
+//       success: false,
+//       message: err || "something went wrong",
+//       data: null,
+//     };
+//   }
+// };
 
 export const contactSupport = async (payload) => {
   let result = {};
@@ -145,7 +145,7 @@ export const monthsubscription = async () => {
     await axios
       .post(
         `${process.env.REACT_APP_API_URL}/api/create_checkout_session/`,
-        { lookup_key: "price_1LJcHhSDUd5CnxuZJVxj4oP9" },
+        { lookup_key: process.env.REACT_APP_MONTHLY_SUBSCRIPTION_KEY },
         {
           headers: {
             "Content-Type": "application/json",
@@ -166,7 +166,7 @@ export const yearsubcription = async () => {
     await axios
       .post(
         `${process.env.REACT_APP_API_URL}/api/create_checkout_session/`,
-        { lookup_key: "price_1LJcHhSDUd5CnxuZH9jfkvwr" },
+        { lookup_key: process.env.REACT_APP_YEARLY_SUBSCRIPTION_KEY},
         {
           headers: {
             "Content-Type": "application/json",

@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { FadeLoader } from "react-spinners";
 import { Grid } from "@material-ui/core";
-import { Box, Pagination, Stack, Typography } from "@mui/material";
+import { Box, Input, Pagination, Stack, Typography } from "@mui/material";
 import ThumbNailBox from "./ThumbNailBox";
 import { useSkipInitialEffect } from "../utils/customHooks";
 import * as allAdsPeramsDuck from "../redux/ducks/allAdsPerams";
@@ -200,6 +200,7 @@ const AdsList = () => {
         }}
       >
         {(allAdsPerams.pageIndex !== 0 || !filteredAds?.loading) && (
+          <>
           <Pagination
             count={filteredAds?.totalPages}
             size={"large"}
@@ -208,7 +209,46 @@ const AdsList = () => {
               dispatch(setCurrentPaginationIndex(p - 1));
               dispatch(allAdsPeramsDuck.setDatabasePageIndex(p - 1));
             }}
-          />          
+          /> 
+           <Box
+                sx={{ display: "flex", alignItems: "center", width: "auto" }}
+              >
+                <Typography sx={{ width: "auto", marginRight: 1 }}>
+                  {"Go to"}
+                </Typography>
+                <Input
+                  sx={{
+                    background: "white",
+                    borderRadius: 1,
+                    maxWidth: "40%",
+                    border: 1,
+                    borderColor: "#EBEBEB",
+                    pl: 1,
+                    p: 1,
+                    height: "45px",
+                  }}
+                  placeholder="Page No."
+                  type="number"
+                  disableUnderline={true}
+                  onKeyUp={(e) => {
+                    
+                    if (e.key === "Enter") {
+                      
+                      
+                      dispatch(
+                        setCurrentPaginationIndex(e.currentTarget.value - 1)
+                      );
+                      dispatch(
+                        allAdsPeramsDuck.setDatabasePageIndex(
+                          e.currentTarget.value.trim() - 1
+                        )
+                      );
+                    }
+                  }}
+                />
+              </Box>
+          </>
+                   
         )}
       </Box>
     </>

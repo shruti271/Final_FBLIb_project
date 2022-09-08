@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FadeLoader } from "react-spinners";
-import { Box, Pagination, Typography } from "@mui/material";
+import { Box, Input, Pagination, Typography } from "@mui/material";
 import { Grid } from "@material-ui/core";
 import * as subAllAdsDuck from "../redux/ducks/subAllAds";
 import ThumbNailBox from "./ThumbNailBox";
@@ -77,6 +77,7 @@ const SubAllAdsList = () => {
         }}
       >
         {(subAllAds.pageIndex !== 0 || !subAllAds?.loading) && (
+          <>
           <Pagination
             count={subAllAds?.totalPages}
             size={"large"}
@@ -99,6 +100,49 @@ const SubAllAdsList = () => {
               }
             }}
           />
+          <Box
+                sx={{ display: "flex", alignItems: "center", width: "auto" }}
+              >
+                <Typography sx={{ width: "auto", marginRight: 1 }}>
+                  {"Go to"}
+                </Typography>
+                <Input
+                  sx={{
+                    background: "white",
+                    borderRadius: 1,
+                    maxWidth: "40%",
+                    border: 1,
+                    borderColor: "#EBEBEB",
+                    pl: 1,
+                    p: 1,
+                    height: "45px",
+                  }}
+                  placeholder="Page No."
+                  type="number"
+                  disableUnderline={true}
+                  onKeyUp={(e) => {
+                    
+                    if (e.key === "Enter") {
+                      if (
+                        Object.keys(subAllAds?.filterSubAllData).includes(
+                          `${(e.currentTarget.value - 1).toString()}`
+                        )
+                      ) {
+                        dispatch(subAllAdsDuck.laodSubAllCashedPageData(e.currentTarget.value - 1));
+                      } else {
+                        dispatch(
+                          subAllAdsDuck.loadMoreSubAllAdsStart({
+                            page_name: subAllAds?.pageName,
+                            number_of_pagead: process.env.REACT_APP_NO_OF_ADS_PER_PAGE,
+                            page_index: e.currentTarget.value - 1,
+                          })
+                        );
+                      }
+                    }
+                  }}
+                />
+              </Box>
+              </>
         )}
       </Box>
     </>

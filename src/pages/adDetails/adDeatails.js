@@ -177,7 +177,7 @@ function AdDeatails() {
                       }}
                     >
                       <Avatar
-                        src={adDetail?.pageInfo?.logo}
+                        src={adDetail?.pageInfo?.bucketLogoURL}
                         aria-label="FirstCard"
                         style={{ width: "30px", height: "30px" }}
                       ></Avatar>
@@ -746,7 +746,7 @@ function AdDeatails() {
                   mb={2.9}
                 >
                   <Avatar
-                    src={adDetail?.pageInfo?.logo}
+                    src={adDetail?.pageInfo?.bucketLogoURL}
                     aria-label="FirstCard"
                     style={{ width: "100%", height: "100%" }}
                   ></Avatar>

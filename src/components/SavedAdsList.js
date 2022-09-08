@@ -1,6 +1,6 @@
 import { Grid } from "@material-ui/core";
 import ThumbNailBox from "./ThumbNailBox";
-import { Box, Pagination, Stack, Typography } from "@mui/material";
+import { Box, Input, Pagination, Stack, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import {
   loadsavedFilteredAdsStart,
@@ -207,6 +207,7 @@ const SavedAdsList = () => {
       >
         {!filteredSavedAds?.loading &&
           filteredSavedAds?.filteredSavedAds?.length !== 0 && (
+            <>
             <Pagination
               count={Math.ceil(
                 totalAds / process.env.REACT_APP_NO_OF_ADS_PER_PAGE
@@ -223,6 +224,52 @@ const SavedAdsList = () => {
                 );
               }}
             />
+            <Box
+                sx={{ display: "flex", alignItems: "center", width: "auto" }}
+              >
+                <Typography sx={{ width: "auto", marginRight: 1 }}>
+                  {"Go to"}
+                </Typography>
+                <Input
+                  sx={{
+                    background: "white",
+                    borderRadius: 1,
+                    maxWidth: "40%",
+                    border: 1,
+                    borderColor: "#EBEBEB",
+                    pl: 1,
+                    p: 1,
+                    height: "45px",
+                  }}
+                  placeholder="Page No."
+                  type="number"
+                  disableUnderline={true}
+                  onKeyUp={(e) => {
+                    
+                    if (e.key === "Enter") {
+                      // window.history.pushState(
+                      //   {},
+                      //   "",
+                      //   `/page=${e.currentTarget.value}`
+                      // );
+                      
+                     
+                      dispatch(
+                        setSavedCurrentPaginationAds({
+                          start:
+                            (e.currentTarget.value - 1) *
+                            process.env.REACT_APP_NO_OF_ADS_PER_PAGE,
+                          end:
+                            e.currentTarget.value *
+                            process.env.REACT_APP_NO_OF_ADS_PER_PAGE,
+                          currentPage: Number(e.currentTarget.value),
+                        })
+                      );
+                    }
+                  }}
+                />
+              </Box>
+              </>
           )}
       </Box>
     </Box>
