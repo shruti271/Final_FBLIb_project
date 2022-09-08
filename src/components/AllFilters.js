@@ -33,6 +33,7 @@ import {
 } from "../redux/ducks/filteredAds";
 import Arrowdown from "../assets/Arrowdown.svg";
 import filter from "../assets/filter.svg";
+import { clearCashedsavedPageData } from "../redux/ducks/filteredSavedAds";
 
 const useStyles = makeStyles((theme) => ({
   divider: {
@@ -137,9 +138,11 @@ function AllFilters(props) {
     });
 useEffect(()=>{
   console.log("99999999 , ",)
-  pageName === PageNameEnum.AdlibraryDatabase
-      ? window.history.pushState({}, "", `/page=1`)
-      : window.history.pushState({}, "", `/savedAds/page=1`);
+  // pageName === PageNameEnum.AdlibraryDatabase
+  window.location.pathname.includes("savedAds")                        
+  ? window.history.pushState({}, "", `/savedAds/page=1`)
+   : window.history.pushState({}, "", `/page=1`)
+
 // eslint-disable-next-line react-hooks/exhaustive-deps
 },[allAdsPerams.appliedFilters,savedAdsPerams.appliedFilters])
 
@@ -175,8 +178,8 @@ useEffect(()=>{
   ]);
 
   const handleAdsCountChange = (newValue, isReset) => {
-    pageName === PageNameEnum.AdlibraryDatabase &&
-      dispatch(clearCashedPageData());
+    pageName === PageNameEnum.AdlibraryDatabase ?
+      dispatch(clearCashedPageData()): dispatch(clearCashedsavedPageData())
     dispatch(
       pageName === PageNameEnum.AdlibraryDatabase
         ? allAdsPeramsDuck.changeAppliedFilters({
@@ -201,8 +204,8 @@ useEffect(()=>{
   };
 
   const handleChangeStatus = (newValue, isReset) => {
-    pageName === PageNameEnum.AdlibraryDatabase &&
-      dispatch(clearCashedPageData());
+    pageName === PageNameEnum.AdlibraryDatabase ?
+      dispatch(clearCashedPageData()): dispatch(clearCashedsavedPageData())
     dispatch(
       pageName === PageNameEnum.AdlibraryDatabase
         ? allAdsPeramsDuck.changeAppliedFilters({
@@ -225,8 +228,8 @@ useEffect(()=>{
   };
 
   const handleFacebookLikesChange = (newValue, isReset) => {
-    pageName === PageNameEnum.AdlibraryDatabase &&
-      dispatch(clearCashedPageData());
+    pageName === PageNameEnum.AdlibraryDatabase ?
+      dispatch(clearCashedPageData()): dispatch(clearCashedsavedPageData())
     dispatch(
       pageName === PageNameEnum.AdlibraryDatabase
         ? allAdsPeramsDuck.changeAppliedFilters({
@@ -251,8 +254,8 @@ useEffect(()=>{
   };
 
   const handleInstagramFollowersChange = (newValue, isReset) => {
-    pageName === PageNameEnum.AdlibraryDatabase &&
-      dispatch(clearCashedPageData());
+    pageName === PageNameEnum.AdlibraryDatabase ?
+      dispatch(clearCashedPageData()): dispatch(clearCashedsavedPageData())
     dispatch(
       pageName === PageNameEnum.AdlibraryDatabase
         ? allAdsPeramsDuck.changeAppliedFilters({
@@ -277,8 +280,8 @@ useEffect(()=>{
   };
 
   const handleMediaTypechange = (newValue, isReset) => {
-    pageName === PageNameEnum.AdlibraryDatabase &&
-      dispatch(clearCashedPageData());
+    pageName === PageNameEnum.AdlibraryDatabase ?
+      dispatch(clearCashedPageData()): dispatch(clearCashedsavedPageData())
     dispatch(
       pageName === PageNameEnum.AdlibraryDatabase
         ? allAdsPeramsDuck.changeAppliedFilters({
@@ -300,10 +303,9 @@ useEffect(()=>{
     );
   };
 
-  const handleButtonType = (newValue, isReset) => {
-    console.log("????=====================",newValue)
-    pageName === PageNameEnum.AdlibraryDatabase &&
-      dispatch(clearCashedPageData());
+  const handleButtonType = (newValue, isReset) => {    
+    pageName === PageNameEnum.AdlibraryDatabase ?
+      dispatch(clearCashedPageData()): dispatch(clearCashedsavedPageData())
     dispatch(
       pageName === PageNameEnum.AdlibraryDatabase
         ? allAdsPeramsDuck.changeAppliedFilters({
@@ -354,8 +356,8 @@ useEffect(()=>{
   };
 
   const handleStartDateChange = (newValue) => {
-    pageName === PageNameEnum.AdlibraryDatabase &&
-      dispatch(clearCashedPageData());
+    pageName === PageNameEnum.AdlibraryDatabase ?
+      dispatch(clearCashedPageData()): dispatch(clearCashedsavedPageData())
     dispatch(
       pageName === PageNameEnum.AdlibraryDatabase
         ? allAdsPeramsDuck.changeAppliedFilters({

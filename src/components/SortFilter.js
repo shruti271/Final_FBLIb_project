@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
 function SortFilter(props) {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const location = useLocation();  
+  const location = useLocation();
 
   const allAdsPerams = useSelector((state) => state.allAdsPerams);
   const savedAdsPerams = useSelector((state) => state.savedAdsPerams);
@@ -56,9 +56,9 @@ function SortFilter(props) {
 
   const handleChangeSortType = (event, newValue) => {
     setSortByAnchorel(null);
-    pageName === PageNameEnum.AdlibraryDatabase?
-       dispatch(clearCashedPageData()):
-       dispatch(clearCashedsavedPageData());
+    pageName === PageNameEnum.AdlibraryDatabase
+      ? dispatch(clearCashedPageData())
+      : dispatch(clearCashedsavedPageData());
 
     pageName === PageNameEnum.AdlibraryDatabase
       ? window.history.pushState({}, "", `/page=1`)
@@ -84,7 +84,7 @@ function SortFilter(props) {
   const handleChangeAceOrDes = (event, newValue) => {
     setSortByAnchorel(null);
     pageName === PageNameEnum.AdlibraryDatabase
-    ? dispatch(clearCashedPageData())
+      ? dispatch(clearCashedPageData())
       : dispatch(clearCashedsavedPageData());
 
     pageName === PageNameEnum.AdlibraryDatabase &&
@@ -257,17 +257,29 @@ function SortFilter(props) {
                 control={
                   <Radio
                     style={{
-                      color:
-                        allAdsPerams?.sortFilter?.type?.selectedValue ===
-                          "true" ||
-                        allAdsPerams?.sortFilter?.type?.selectedValue ===
-                          "false" ||
-                        savedAdsPerams?.sortFilter?.type?.selectedValue ===
+                      color:window.location.pathname.includes("savedAds")
+                      ? savedAdsPerams?.sortFilter?.type?.selectedValue ===
                           "false" ||
                         savedAdsPerams?.sortFilter?.type?.selectedValue ===
                           "true"
-                          ? "grey"
-                          : "#00CBFF",
+                        ? "grey"
+                        : "#00CBFF"
+                      : allAdsPerams?.sortFilter?.type?.selectedValue ===
+                          "false" ||
+                        allAdsPerams?.sortFilter?.type?.selectedValue ===
+                          "true"
+                      ? "grey"
+                      : "#00CBFF",
+                        // allAdsPerams?.sortFilter?.type?.selectedValue ===
+                        //   "true" ||
+                        // allAdsPerams?.sortFilter?.type?.selectedValue ===
+                        //   "false" ||
+                        // savedAdsPerams?.sortFilter?.type?.selectedValue ===
+                        //   "false" ||
+                        // savedAdsPerams?.sortFilter?.type?.selectedValue ===
+                        //   "true"
+                        //   ? "grey"
+                        //   : "#00CBFF",
                     }}
                   />
                 }
@@ -295,17 +307,44 @@ function SortFilter(props) {
                 control={
                   <Radio
                     style={{
-                      color:
-                        allAdsPerams?.sortFilter?.type?.selectedValue ===
-                          "true" ||
-                        allAdsPerams?.sortFilter?.type?.selectedValue ===
-                          "false" ||
-                        savedAdsPerams?.sortFilter?.type?.selectedValue ===
-                          "false" ||
-                        savedAdsPerams?.sortFilter?.type?.selectedValue ===
-                          "true"
+                      color: window.location.pathname.includes("savedAds")
+                        ? savedAdsPerams?.sortFilter?.type?.selectedValue ===
+                            "false" ||
+                          savedAdsPerams?.sortFilter?.type?.selectedValue ===
+                            "true"
                           ? "grey"
-                          : "#00CBFF",
+                          : "#00CBFF"
+                        : allAdsPerams?.sortFilter?.type?.selectedValue ===
+                            "false" ||
+                          allAdsPerams?.sortFilter?.type?.selectedValue ===
+                            "true"
+                        ? "grey"
+                        : "#00CBFF",
+
+                      // allAdsPerams?.sortFilter?.type?.selectedValue ===
+                      //     "false" ||
+                      //   allAdsPerams?.sortFilter?.type?.selectedValue === "true"
+                      //   ? true
+                      //   : false
+                      // : savedAdsPerams?.sortFilter?.type?.selectedValue ===
+                      //     "false" ||
+                      //   savedAdsPerams?.sortFilter?.type?.selectedValue === "true"
+                      //   ? "grey"
+                      //   : "#00CBFF",
+
+                      // (window.location.pathname.includes("savedAds") &&
+                      //   window.location.pathname.includes("page") &&
+                      //   (allAdsPerams?.sortFilter?.type?.selectedValue ===
+                      //     true ||
+                      //     allAdsPerams?.sortFilter?.type?.selectedValue ===
+                      //       false)) ||
+                      // (window.location.pathname.includes("page") &&
+                      //   (savedAdsPerams?.sortFilter?.type?.selectedValue ===
+                      //     false ||
+                      //     savedAdsPerams?.sortFilter?.type?.selectedValue ===
+                      //       true))
+                      //   ? "grey"
+                      //   : "#00CBFF",
                     }}
                   />
                 }

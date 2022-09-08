@@ -1,7 +1,14 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FadeLoader } from "react-spinners";
-import { Box, Input, Pagination, Typography, useMediaQuery, useTheme } from "@mui/material";
+import {
+  Box,
+  Input,
+  Pagination,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import { Grid } from "@material-ui/core";
 import * as subAllAdsDuck from "../redux/ducks/subAllAds";
 import ThumbNailBox from "./ThumbNailBox";
@@ -13,7 +20,6 @@ const SubAllAdsList = () => {
   const subAllAds = useSelector((state) => state.subAllAds);
   const theme = useTheme();
   const MobileScreenOnly = useMediaQuery(theme.breakpoints.only("xs"));
-
 
   useEffect(() => {
     window.scrollTo(0, subAllAds.postionOfPage);
@@ -71,7 +77,7 @@ const SubAllAdsList = () => {
           </Grid>
         </Grid>
       )}
-       
+
       <Box
         sx={{
           width: "100%",
@@ -81,7 +87,7 @@ const SubAllAdsList = () => {
           justifyContent: "center",
           alignItems: "center",
         }}
-      >       
+      >
         {(subAllAds.pageIndex !== 0 || !subAllAds?.loading) && (
           <Grid
             container
@@ -132,7 +138,7 @@ const SubAllAdsList = () => {
                 }}
               />
             </Grid>
-            
+
             <Grid
               item
               lg={6}
@@ -143,7 +149,7 @@ const SubAllAdsList = () => {
                 justifyContent: "center",
                 alignItems: "center",
                 paddingTop: 2,
-                marginTop:MobileScreenOnly?"20px":"0px"
+                marginTop: MobileScreenOnly ? "20px" : "0px",
               }}
             >
               <Box
@@ -171,7 +177,7 @@ const SubAllAdsList = () => {
                     if (e.key === "Enter") {
                       window.history.pushState(
                         {},
-                        "",                        
+                        "",
                         `/adDeatails/${adId}/allAds/page=${e.currentTarget.value}`
                       );
 
