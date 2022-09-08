@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Routes } from "react-router-dom";
+import { Navigate, Routes, useParams } from "react-router-dom";
 import { Route } from "react-router-dom";
 import FadeLoader from "react-spinners/FadeLoader";
 import { useMediaQuery, useTheme } from "@mui/material";
@@ -17,7 +17,10 @@ import AdDeatailsTabs from "../pages/adDetails/AdDetailsTabs";
 import Payment from "../pages/Plans";
 import { loadSubscriptionStart } from "../redux/ducks/subscription";
 import { loadAccountSettingsStart } from "./../redux/ducks/accountSettings";
-import { loadFilteredAdsStart } from "../redux/ducks/filteredAds";
+import {
+  loadFilteredAdsStart,
+  setCurrentPaginationIndex,
+} from "../redux/ducks/filteredAds";
 import { getButtonTypes } from "../redux/ducks/buttonType";
 import { loadsavedFilteredAdsStart } from "../redux/ducks/filteredSavedAds";
 import ActiveSubScription from "../ActiveSubScription";
@@ -34,11 +37,10 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 
 const MainLayout = () => {
   const dispatch = useDispatch();
+  const theme = useTheme();
   const { loading } = useSelector((state) => state.subscriptionData);
   const [isOpen, setIsOpen] = React.useState(true);
-  const theme = useTheme();
-  
-  const showhidedrawer = useMediaQuery(theme.breakpoints.down("md"));  
+  const showhidedrawer = useMediaQuery(theme.breakpoints.down("md"));
 
   useEffect(() => {
     dispatch(loadSubscriptionStart());
@@ -50,9 +52,10 @@ const MainLayout = () => {
         number_of_pagead: process.env.REACT_APP_NO_OF_ADS_PER_PAGE,
       })
     );
+    // dispatch(setCurrentPaginationIndex(window.location.pathname.split("=")[1]-1));
+
     dispatch(
       loadsavedFilteredAdsStart({
-        page_index: 0,
         sort_by: "lastUpdatedTime",
         order_by: "asc",
         number_of_pagead: process.env.REACT_APP_NO_OF_ADS_PER_PAGE,
@@ -105,9 +108,10 @@ const MainLayout = () => {
             </Box>
           ) : (
             <Routes>
+              
               <Route
                 exact
-                path="/"
+                path="/*"
                 element={
                   <ActiveSubScription>
                     <Addlibrarydatabase />

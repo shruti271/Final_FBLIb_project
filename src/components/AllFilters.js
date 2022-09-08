@@ -33,6 +33,7 @@ import {
 } from "../redux/ducks/filteredAds";
 import Arrowdown from "../assets/Arrowdown.svg";
 import filter from "../assets/filter.svg";
+import { clearCashedsavedPageData } from "../redux/ducks/filteredSavedAds";
 
 const useStyles = makeStyles((theme) => ({
   divider: {
@@ -78,7 +79,10 @@ function AllFilters(props) {
   const allAdsPerams = useSelector((state) => state.allAdsPerams);
   const savedAdsPerams = useSelector((state) => state.savedAdsPerams);
   const { buttonTypes } = useSelector((state) => state.buttonTypes);
-
+  const filteredAds = useSelector((state) => state.filteredAds);
+  const { paginationIndex } = useSelector(
+    (state) => state.filteredSavedAds
+  );
   const ShowFilterWithClearButton = useMediaQuery(theme.breakpoints.only("xs"));
   // const ExtraSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const LargeScreenOnly = useMediaQuery(theme.breakpoints.up("sm"));
@@ -132,13 +136,24 @@ function AllFilters(props) {
       min: savedAdsPerams?.appliedFilters?.InstagramFollowers?.min,
       max: savedAdsPerams?.appliedFilters?.InstagramFollowers?.max,
     });
+// useEffect(()=>{
+//   console.log("99999999 , ",)
+//   // pageName === PageNameEnum.AdlibraryDatabase
+//   // window.location.pathname.includes("savedAds")                        
+//   // ? window.history.pushState({}, "", `/savedAds/page=1`)
+//   //  : window.history.pushState({}, "", `/page=1`)
+
+// // eslint-disable-next-line react-hooks/exhaustive-deps
+// },[allAdsPerams.appliedFilters,savedAdsPerams.appliedFilters])
 
   useEffect(() => {
+    console.log("99999999 mineeeeeee ",)
+    
     switch (location.pathname) {
-      case "/":
+      case `/`:
         setPageName(PageNameEnum.AdlibraryDatabase);
         break;
-      case "/savedAds":
+      case `/savedAds`:
         setPageName(PageNameEnum.SavedAds);
         break;
       default:
@@ -163,8 +178,8 @@ function AllFilters(props) {
   ]);
 
   const handleAdsCountChange = (newValue, isReset) => {
-    pageName === PageNameEnum.AdlibraryDatabase &&
-      dispatch(clearCashedPageData());
+    pageName === PageNameEnum.AdlibraryDatabase ?
+      dispatch(clearCashedPageData()): dispatch(clearCashedsavedPageData())
     dispatch(
       pageName === PageNameEnum.AdlibraryDatabase
         ? allAdsPeramsDuck.changeAppliedFilters({
@@ -189,8 +204,8 @@ function AllFilters(props) {
   };
 
   const handleChangeStatus = (newValue, isReset) => {
-    pageName === PageNameEnum.AdlibraryDatabase &&
-      dispatch(clearCashedPageData());
+    pageName === PageNameEnum.AdlibraryDatabase ?
+      dispatch(clearCashedPageData()): dispatch(clearCashedsavedPageData())
     dispatch(
       pageName === PageNameEnum.AdlibraryDatabase
         ? allAdsPeramsDuck.changeAppliedFilters({
@@ -213,8 +228,8 @@ function AllFilters(props) {
   };
 
   const handleFacebookLikesChange = (newValue, isReset) => {
-    pageName === PageNameEnum.AdlibraryDatabase &&
-      dispatch(clearCashedPageData());
+    pageName === PageNameEnum.AdlibraryDatabase ?
+      dispatch(clearCashedPageData()): dispatch(clearCashedsavedPageData())
     dispatch(
       pageName === PageNameEnum.AdlibraryDatabase
         ? allAdsPeramsDuck.changeAppliedFilters({
@@ -239,8 +254,8 @@ function AllFilters(props) {
   };
 
   const handleInstagramFollowersChange = (newValue, isReset) => {
-    pageName === PageNameEnum.AdlibraryDatabase &&
-      dispatch(clearCashedPageData());
+    pageName === PageNameEnum.AdlibraryDatabase ?
+      dispatch(clearCashedPageData()): dispatch(clearCashedsavedPageData())
     dispatch(
       pageName === PageNameEnum.AdlibraryDatabase
         ? allAdsPeramsDuck.changeAppliedFilters({
@@ -265,8 +280,8 @@ function AllFilters(props) {
   };
 
   const handleMediaTypechange = (newValue, isReset) => {
-    pageName === PageNameEnum.AdlibraryDatabase &&
-      dispatch(clearCashedPageData());
+    pageName === PageNameEnum.AdlibraryDatabase ?
+      dispatch(clearCashedPageData()): dispatch(clearCashedsavedPageData())
     dispatch(
       pageName === PageNameEnum.AdlibraryDatabase
         ? allAdsPeramsDuck.changeAppliedFilters({
@@ -288,9 +303,9 @@ function AllFilters(props) {
     );
   };
 
-  const handleButtonType = (newValue, isReset) => {
-    pageName === PageNameEnum.AdlibraryDatabase &&
-      dispatch(clearCashedPageData());
+  const handleButtonType = (newValue, isReset) => {    
+    pageName === PageNameEnum.AdlibraryDatabase ?
+      dispatch(clearCashedPageData()): dispatch(clearCashedsavedPageData())
     dispatch(
       pageName === PageNameEnum.AdlibraryDatabase
         ? allAdsPeramsDuck.changeAppliedFilters({
@@ -341,8 +356,8 @@ function AllFilters(props) {
   };
 
   const handleStartDateChange = (newValue) => {
-    pageName === PageNameEnum.AdlibraryDatabase &&
-      dispatch(clearCashedPageData());
+    pageName === PageNameEnum.AdlibraryDatabase ?
+      dispatch(clearCashedPageData()): dispatch(clearCashedsavedPageData())
     dispatch(
       pageName === PageNameEnum.AdlibraryDatabase
         ? allAdsPeramsDuck.changeAppliedFilters({
@@ -1825,6 +1840,7 @@ function AllFilters(props) {
                           ?.selectedValue
                   }
                   onChange={(e) => {
+                    console.log("????????????????????",e.target.value)
                     handleButtonType(e.target.value);
                     setButtonTypeAnchorEl(null);
                   }}
@@ -1922,7 +1938,7 @@ function AllFilters(props) {
                 Clear
               </Typography>
             </Button>
-            {window.location.pathname === `/savedAds` &&
+            {window.location.pathname.includes("savedAds") &&
               ShowFilterWithClearButton && (
                 <Button
                   sx={{

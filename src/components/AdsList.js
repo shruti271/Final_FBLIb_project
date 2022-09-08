@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { FadeLoader } from "react-spinners";
 import { Grid } from "@material-ui/core";
-import { Box, Input, Pagination, Stack, Typography } from "@mui/material";
+import { Box, Input, Pagination, Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
 import ThumbNailBox from "./ThumbNailBox";
 import { useSkipInitialEffect } from "../utils/customHooks";
 import * as allAdsPeramsDuck from "../redux/ducks/allAdsPerams";
@@ -18,10 +18,69 @@ import emptyImg from "../assets/empty.svg";
 const AdsList = () => {
   const dispatch = useDispatch();
   const location = useLocation();
+  const theme = useTheme();
 
   const filteredAds = useSelector((state) => state.filteredAds);
   const allAdsPerams = useSelector((state) => state.allAdsPerams);
-  const [queryObject, setQueryObject] = useState({});
+  const [queryObject, setQueryObject] = useState({
+    startdate: allAdsPerams?.appliedFilters?.StartRunningDate?.startdate,
+    enddate: allAdsPerams?.appliedFilters?.StartRunningDate?.enddate,
+    adcount:
+      allAdsPerams?.appliedFilters?.AdCount?.chipText !== ""
+        ? [
+            allAdsPerams?.appliedFilters?.AdCount?.min,
+            allAdsPerams?.appliedFilters?.AdCount?.max,
+          ]
+        : [],
+    adstatus: allAdsPerams?.appliedFilters?.AdStatus?.selectedValue,
+    fb_likes:
+      allAdsPerams?.appliedFilters?.FacebookLikes?.chipText?.length !== 0
+        ? [
+            allAdsPerams?.appliedFilters?.FacebookLikes?.min,
+            allAdsPerams?.appliedFilters?.FacebookLikes?.max,
+          ]
+        : [],
+    insta_followers:
+      allAdsPerams?.appliedFilters?.InstagramFollowers?.chipText !== ""
+        ? [
+            allAdsPerams?.appliedFilters?.InstagramFollowers?.min,
+            allAdsPerams?.appliedFilters?.InstagramFollowers?.max,
+          ]
+        : [],
+    media_type: allAdsPerams?.appliedFilters?.MediaType?.selectedValue,
+    cta_status: allAdsPerams?.appliedFilters?.ButtonStatus?.selectedValue,
+
+    sort_by:
+      allAdsPerams?.sortFilter?.type?.selectedValue === "true" ||
+      allAdsPerams?.sortFilter?.type?.selectedValue === "false"
+        ? ""
+        : allAdsPerams?.sortFilter?.type?.selectedValue,
+
+    increaseCount:
+      allAdsPerams?.sortFilter?.type?.selectedValue === "true" ||
+      allAdsPerams?.sortFilter?.type?.selectedValue === "false"
+        ? allAdsPerams?.sortFilter?.type?.selectedValue
+        : null,
+
+    order_by:
+      allAdsPerams?.sortFilter?.type?.selectedValue === "true" ||
+      allAdsPerams?.sortFilter?.type?.selectedValue === "false"
+        ? ""
+        : allAdsPerams?.sortFilter?.order?.selectedValue,
+
+    keywords: allAdsPerams?.searchBarData.length
+      ? allAdsPerams?.searchType === "Ad Text"
+        ? allAdsPerams?.searchBarData.split(" ")
+        : null
+      : null,
+
+    phrase: allAdsPerams?.searchBarData.length
+      ? allAdsPerams?.searchType === "Exact Phrase"
+        ? allAdsPerams?.searchBarData.split(",")
+        : null
+      : null,
+  });
+  const MobileScreenOnly = useMediaQuery(theme.breakpoints.only("xs"));
 
   useEffect(() => {
     window.scrollTo(0, filteredAds.postionOfPage);
@@ -91,7 +150,7 @@ const AdsList = () => {
   }, [
     allAdsPerams.appliedFilters,
     allAdsPerams.sortFilter,
-    allAdsPerams.pageIndex,
+    // allAdsPerams.pageIndex,  
     allAdsPerams.searchBarData,
   ]);
 
@@ -111,11 +170,11 @@ const AdsList = () => {
         })
       );
     }
-  }, [dispatch, queryObject]);
+  }, [dispatch, queryObject,filteredAds?.paginationIndex]);
 
   useSkipInitialEffect(() => {
     if (allAdsPerams.searchBarData.length > 0) {
-      location.pathname === "/" && dispatch(clearCashedPageData());
+      location.pathname === `/` && dispatch(clearCashedPageData());
       setQueryObject({
         ...queryObject,
         keywords: allAdsPerams?.searchBarData.length
@@ -194,9 +253,6 @@ const AdsList = () => {
           width: "100%",
           marginBottom: 5,
           marginTop: 5,
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
         }}
       >
         {(allAdsPerams.pageIndex !== 0 || !filteredAds?.loading) && (

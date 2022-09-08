@@ -1,14 +1,18 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FadeLoader } from "react-spinners";
-import { Box, Input, Pagination, Typography } from "@mui/material";
+import { Box, Input, Pagination, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { Grid } from "@material-ui/core";
 import * as subAllAdsDuck from "../redux/ducks/subAllAds";
 import ThumbNailBox from "./ThumbNailBox";
+import { useParams } from "react-router-dom";
 
 const SubAllAdsList = () => {
   const dispatch = useDispatch();
+  const { adId } = useParams();
   const subAllAds = useSelector((state) => state.subAllAds);
+  const theme = useTheme();
+  const MobileScreenOnly = useMediaQuery(theme.breakpoints.only("xs"));
 
   useEffect(() => {
     window.scrollTo(0, subAllAds.postionOfPage);
@@ -66,6 +70,7 @@ const SubAllAdsList = () => {
           </Grid>
         </Grid>
       )}
+
       <Box
         sx={{
           width: "100%",

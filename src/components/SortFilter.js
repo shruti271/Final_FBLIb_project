@@ -16,8 +16,12 @@ import {
 import { PageNameEnum } from "../utils/enums";
 import * as allAdsPeramsDuck from "../redux/ducks/allAdsPerams";
 import * as savedAdsPeramsDuck from "../redux/ducks/savedAdsPerams";
-import { clearCashedPageData } from "../redux/ducks/filteredAds";
+import {
+  clearCashedPageData,
+  setCurrentPaginationIndex,
+} from "../redux/ducks/filteredAds";
 import Arrowdown from "../assets/Arrowdown.svg";
+import { clearCashedsavedPageData } from "../redux/ducks/filteredSavedAds";
 
 const useStyles = makeStyles((theme) => ({
   DropDownArrow: {
@@ -39,10 +43,10 @@ function SortFilter(props) {
 
   useEffect(() => {
     switch (location.pathname) {
-      case "/":
+      case `/`:
         setPageName(PageNameEnum.AdlibraryDatabase);
         break;
-      case "/savedAds":
+      case `/savedAds`:
         setPageName(PageNameEnum.SavedAds);
         break;
       default:
@@ -52,8 +56,14 @@ function SortFilter(props) {
 
   const handleChangeSortType = (event, newValue) => {
     setSortByAnchorel(null);
-    pageName === PageNameEnum.AdlibraryDatabase &&
-      dispatch(clearCashedPageData());
+    pageName === PageNameEnum.AdlibraryDatabase
+      ? dispatch(clearCashedPageData())
+      : dispatch(clearCashedsavedPageData());
+
+    // pageName === PageNameEnum.AdlibraryDatabase
+    //   ? window.history.pushState({}, "", `/page=1`)
+    //   : window.history.pushState({}, "", `/savedAds/page=1`);
+
     dispatch(
       pageName === PageNameEnum.AdlibraryDatabase
         ? allAdsPeramsDuck.changeSortFilters({
@@ -73,8 +83,17 @@ function SortFilter(props) {
 
   const handleChangeAceOrDes = (event, newValue) => {
     setSortByAnchorel(null);
+    pageName === PageNameEnum.AdlibraryDatabase
+      ? dispatch(clearCashedPageData())
+      : dispatch(clearCashedsavedPageData());
+
     pageName === PageNameEnum.AdlibraryDatabase &&
-      dispatch(clearCashedPageData());
+      dispatch(setCurrentPaginationIndex(0));
+
+    // pageName === PageNameEnum.AdlibraryDatabase
+    //   ? window.history.pushState({}, "", `/page=1`)
+    //   : window.history.pushState({}, "", `/savedAds/page=1`);
+
     dispatch(
       pageName === PageNameEnum.AdlibraryDatabase
         ? allAdsPeramsDuck.changeSortFilters({
@@ -238,17 +257,29 @@ function SortFilter(props) {
                 control={
                   <Radio
                     style={{
-                      color:
-                        allAdsPerams?.sortFilter?.type?.selectedValue ===
-                          "true" ||
-                        allAdsPerams?.sortFilter?.type?.selectedValue ===
-                          "false" ||
-                        savedAdsPerams?.sortFilter?.type?.selectedValue ===
+                      color:window.location.pathname.includes("savedAds")
+                      ? savedAdsPerams?.sortFilter?.type?.selectedValue ===
                           "false" ||
                         savedAdsPerams?.sortFilter?.type?.selectedValue ===
                           "true"
-                          ? "grey"
-                          : "#00CBFF",
+                        ? "grey"
+                        : "#00CBFF"
+                      : allAdsPerams?.sortFilter?.type?.selectedValue ===
+                          "false" ||
+                        allAdsPerams?.sortFilter?.type?.selectedValue ===
+                          "true"
+                      ? "grey"
+                      : "#00CBFF",
+                        // allAdsPerams?.sortFilter?.type?.selectedValue ===
+                        //   "true" ||
+                        // allAdsPerams?.sortFilter?.type?.selectedValue ===
+                        //   "false" ||
+                        // savedAdsPerams?.sortFilter?.type?.selectedValue ===
+                        //   "false" ||
+                        // savedAdsPerams?.sortFilter?.type?.selectedValue ===
+                        //   "true"
+                        //   ? "grey"
+                        //   : "#00CBFF",
                     }}
                   />
                 }
@@ -276,17 +307,44 @@ function SortFilter(props) {
                 control={
                   <Radio
                     style={{
-                      color:
-                        allAdsPerams?.sortFilter?.type?.selectedValue ===
-                          "true" ||
-                        allAdsPerams?.sortFilter?.type?.selectedValue ===
-                          "false" ||
-                        savedAdsPerams?.sortFilter?.type?.selectedValue ===
-                          "false" ||
-                        savedAdsPerams?.sortFilter?.type?.selectedValue ===
-                          "true"
+                      color: window.location.pathname.includes("savedAds")
+                        ? savedAdsPerams?.sortFilter?.type?.selectedValue ===
+                            "false" ||
+                          savedAdsPerams?.sortFilter?.type?.selectedValue ===
+                            "true"
                           ? "grey"
-                          : "#00CBFF",
+                          : "#00CBFF"
+                        : allAdsPerams?.sortFilter?.type?.selectedValue ===
+                            "false" ||
+                          allAdsPerams?.sortFilter?.type?.selectedValue ===
+                            "true"
+                        ? "grey"
+                        : "#00CBFF",
+
+                      // allAdsPerams?.sortFilter?.type?.selectedValue ===
+                      //     "false" ||
+                      //   allAdsPerams?.sortFilter?.type?.selectedValue === "true"
+                      //   ? true
+                      //   : false
+                      // : savedAdsPerams?.sortFilter?.type?.selectedValue ===
+                      //     "false" ||
+                      //   savedAdsPerams?.sortFilter?.type?.selectedValue === "true"
+                      //   ? "grey"
+                      //   : "#00CBFF",
+
+                      // (window.location.pathname.includes("savedAds") &&
+                      //   window.location.pathname.includes("page") &&
+                      //   (allAdsPerams?.sortFilter?.type?.selectedValue ===
+                      //     true ||
+                      //     allAdsPerams?.sortFilter?.type?.selectedValue ===
+                      //       false)) ||
+                      // (window.location.pathname.includes("page") &&
+                      //   (savedAdsPerams?.sortFilter?.type?.selectedValue ===
+                      //     false ||
+                      //     savedAdsPerams?.sortFilter?.type?.selectedValue ===
+                      //       true))
+                      //   ? "grey"
+                      //   : "#00CBFF",
                     }}
                   />
                 }

@@ -22,6 +22,7 @@ import { logoutUser } from "../services";
 import AdLibraryDatabaseIcon from "../SvgIcons/AdLibraryDatabaseIcon";
 import SaveIcon from "../SvgIcons/SaveIcon";
 import ContactIcon from "../SvgIcons/ContactIcon";
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   handbergurMenu: {
@@ -87,6 +88,11 @@ const MobileDrawer = ({ setIsOpen }) => {
   const [selectedMenuItem, setSelectedMenuItem] = useState(
     sideBarMenuItems.ADLIBSDATABASE
   );
+  const filteredAds = useSelector((state) => state.filteredAds);
+  const { paginationIndex } = useSelector(
+    (state) => state.filteredSavedAds
+  );
+  
 
   // eslint-disable-next-line no-unused-vars
   const [currentPage, setCurrentPage] = useState();
@@ -164,7 +170,7 @@ const MobileDrawer = ({ setIsOpen }) => {
               onClick={() => {
                 setSelectedMenuItem(sideBarMenuItems.ADLIBSDATABASE);
                 setIsOpen(() => false);
-                navigate("/");
+                navigate(`/`)
               }}
             >
               <Box

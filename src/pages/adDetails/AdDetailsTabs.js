@@ -43,10 +43,14 @@ function AdDeatailsTabs() {
   const subAllAds = useSelector((state) => state.subAllAds);
   const { filteredSavedAds } = useSelector((state) => state.filteredSavedAds);
   const { singleAdData } = useSelector((state) => state.singleAdData);
+  
+
+  
+
 
   const [isActiveTab, setIsActiveTab] = useState(adDetailsTabs.ADOVERVIEW);
   const [adDetail, setAdDetail] = useState();
-  const [redirectToPage, setRedirectToPage] = useState("/");
+  const [redirectToPage, setRedirectToPage] = useState(`/`);
 
   useEffect(() => {
     if (state) setRedirectToPage(state.fromPage);
@@ -128,7 +132,11 @@ function AdDeatailsTabs() {
       >
         <Box
           onClick={() => {
-            navigate(redirectToPage);
+            
+            // navigate(redirectToPage);
+            navigate(`/`)
+            // window.history.back()
+
           }}
           sx={{ cursor: "pointer", marginTop: "10px" }}
         >
@@ -169,6 +177,8 @@ function AdDeatailsTabs() {
               onClick={() => {
                 setIsActiveTab(adDetailsTabs.ADOVERVIEW);
                 navigate("");
+                // window.history.replace("")
+
               }}
             >
               <Typography
@@ -194,7 +204,10 @@ function AdDeatailsTabs() {
               }}
               onClick={() => {
                 setIsActiveTab(adDetailsTabs.ALLADS);
-                navigate("allAds");
+                //adDeatails/PSHN6oIB5wG9Mmewh9Dl/allAds/page
+                // navigate(`adDeatails/${adId}/allAds/page=${subAllAds?.pageIndex + 1}`);
+                navigate(`allAds`);
+                // window.history.replace("/allAds")
               }}
             >
               <Typography

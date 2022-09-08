@@ -91,7 +91,7 @@ const allAdsPeramsReducer = (state = initialState, action) => {
         appliedFilters: {
           ...state.appliedFilters,
           [`${action.payload.key}`]: {
-            ...action.payload.value,
+            ...action?.payload.value,
           },
         },
       };
@@ -217,7 +217,7 @@ const allAdsPeramsReducer = (state = initialState, action) => {
         },
       };
 
-    case CHANGE_SORTFILTERS:
+    case CHANGE_SORTFILTERS:  
       return {
         ...state,
         pageIndex: 0,

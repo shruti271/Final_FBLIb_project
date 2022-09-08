@@ -1,6 +1,6 @@
 import { Grid } from "@material-ui/core";
 import ThumbNailBox from "./ThumbNailBox";
-import { Box, Input, Pagination, Stack, Typography } from "@mui/material";
+import { Box, Input, Pagination, Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import {
   loadsavedFilteredAdsStart,
@@ -9,7 +9,7 @@ import {
 import { useSkipInitialEffect } from "../utils/customHooks";
 import emptyImg from "../assets/empty.svg";
 import { FadeLoader } from "react-spinners";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 const SavedAdsList = () => {
   const dispatch = useDispatch();
@@ -19,6 +19,22 @@ const SavedAdsList = () => {
   );
   const savedAdsPerams = useSelector((state) => state.savedAdsPerams);
   const [queryObject, setQueryObject] = useState({});
+  // const [savepage, setSavePage] = useState(1);
+  const theme = useTheme();
+  const MobileScreenOnly = useMediaQuery(theme.breakpoints.only("xs"));
+
+
+  // const page = useMemo(() => {return {paginationIndex}}, [paginationIndex])
+
+  // useEffect(()=>{
+    
+  //   window.history.pushState(
+  //     {},
+  //     "",
+  //     `/savedAds`
+  //   );
+  // // eslint-disable-next-line react-hooks/exhaustive-deps
+  // },[page])
 
   useEffect(() => {
     filteredSavedAds.filteredSavedAds.length &&
@@ -30,9 +46,10 @@ const SavedAdsList = () => {
           currentPage: paginationIndex,
         })
       );
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, filteredSavedAds.filteredSavedAds]);
 
+  
   useSkipInitialEffect(() => {
     const queryObject = {
       startdate: savedAdsPerams?.appliedFilters?.StartRunningDate?.startdate,

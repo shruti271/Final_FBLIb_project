@@ -1,5 +1,6 @@
 import axios from "axios";
 import axiosInstance from "../axios/Index";
+
 export const signUp = async (payload) => {
   let result = {};
   try {
@@ -154,7 +155,7 @@ export const monthsubscription = async () => {
           withCredentials: true,
         }
       )
-      .then((res) => window.open(res.data.data.url, "_self"))
+      .then((res) => window.open(res.data.data.url , "_self"))
       .catch((error) => console.log(error));
   } catch {
     console.log("error");

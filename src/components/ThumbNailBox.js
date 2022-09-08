@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   Avatar,
   Box,
@@ -168,7 +168,8 @@ const ThumbNailBox = ({ adInfo, index }) => {
 
   const filteredSavedAds = useSelector((state) => state.filteredSavedAds);
   const savedAdsPerams = useSelector((state) => state.savedAdsPerams);
-
+  const filteredAds = useSelector((state) => state.filteredAds);
+  
   useEffect(() => {
     const queryObject = {
       startdate: savedAdsPerams?.appliedFilters?.StartRunningDate?.startdate,
@@ -492,7 +493,7 @@ const ThumbNailBox = ({ adInfo, index }) => {
               height: "30px",
             }}
             onClick={() => {
-              window.location.pathname === "/" &&
+              window.location.pathname === `/` &&
                 dispatch(setPostionForScrollValueStart(window.pageYOffset));
 
               window.location.pathname.split("/").includes("allAds") &&
@@ -511,7 +512,7 @@ const ThumbNailBox = ({ adInfo, index }) => {
                     .split("/")
                     .includes("savedAds")
                     ? "/savedAds"
-                    : "/",
+                    : "/",                    
                   CurrentAppliedFilter: queryObject,
                 },
               });

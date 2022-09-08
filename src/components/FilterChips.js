@@ -14,7 +14,8 @@ const FilterChips = () => {
 
   const allAdsPerams = useSelector((state) => state.allAdsPerams);
   const savedAdsPerams = useSelector((state) => state.savedAdsPerams);
-
+  const filteredAds = useSelector((state) => state.filteredAds);
+  const { paginationIndex } = useSelector((state) => state.filteredSavedAds);
   const [dataSource, setDataSource] = useState({});
   const [pageName, setPageName] = useState("");
 
@@ -33,6 +34,32 @@ const FilterChips = () => {
     }
   }, [allAdsPerams, location.pathname, savedAdsPerams]);
 
+  // useEffect(() => {
+  //   if(location.pathname.includes("savedAds") ){
+  //     setDataSource(savedAdsPerams);
+  //       setPageName(PageNameEnum.SavedAds);
+  //   }else if (location.pathname==="/") {      
+  //     setDataSource(allAdsPerams);
+  //     setPageName(PageNameEnum.AdlibraryDatabase);
+  //   }else{
+  //     setDataSource({});
+  //   }
+
+  //   // switch (location.pathname) {
+  //   //   case `/page=${filteredAds.paginationIndex + 1}`:
+  //   //     setDataSource(allAdsPerams);
+  //   //     setPageName(PageNameEnum.AdlibraryDatabase);
+  //   //     break;
+  //   //   case `/savedAds/page=${paginationIndex}`:
+  //   //     setDataSource(savedAdsPerams);
+  //   //     setPageName(PageNameEnum.SavedAds);
+  //   //     break;
+  //   //   default:
+  //   //     setDataSource({});
+  //   // }
+  // }, [allAdsPerams, location.pathname, savedAdsPerams]);
+
+  console.log("99999999", dataSource?.appliedFilters);
   return (
     <Grid container sx={{ marginTop: 1 }}>
       {dataSource?.appliedFilters &&
