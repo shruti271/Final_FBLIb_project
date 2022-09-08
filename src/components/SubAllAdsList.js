@@ -171,8 +171,8 @@ const SubAllAdsList = () => {
                     if (e.key === "Enter") {
                       window.history.pushState(
                         {},
-                        "",
-                        `/page=${e.currentTarget.value}`
+                        "",                        
+                        `/adDeatails/${adId}/allAds/page=${e.currentTarget.value}`
                       );
 
                       if (

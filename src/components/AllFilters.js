@@ -144,6 +144,8 @@ useEffect(()=>{
 },[allAdsPerams.appliedFilters,savedAdsPerams.appliedFilters])
 
   useEffect(() => {
+    console.log("99999999 mineeeeeee ",)
+    
     switch (location.pathname) {
       case `/page=${filteredAds.paginationIndex + 1}`:
         setPageName(PageNameEnum.AdlibraryDatabase);
