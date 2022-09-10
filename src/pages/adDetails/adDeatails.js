@@ -468,7 +468,7 @@ function AdDeatails() {
             sx={{ width: "100% !important" }}
           >
             <Grid container>
-              <Grid
+              {adDetail?.adMediaType === "video" && <Grid
                 item
                 xs={12}
                 sm={12}
@@ -513,13 +513,13 @@ function AdDeatails() {
                     <FormControl></FormControl>
                   </a>
                 </Button>
-              </Grid>
+              </Grid>}
               <Grid
                 item
-                md={6}
+                md={adDetail?.adMediaType !== "video"?12:6}
                 xs={12}
                 sm={12}
-                lg={6}
+                lg={adDetail?.adMediaType !== "video"?12:6}
                 sx={{
                   display: "flex",
                   justifyContent: "center",
@@ -538,7 +538,7 @@ function AdDeatails() {
                     paddingLeft: "25px",
                     paddingRight: "16px",
                   }}
-                  disabled={adDetail?.adMediaType === "video" ? false : true}
+                  // disabled={adDetail?.adMediaType === "video" ? false : true}
                 >
                   <a
                     href={adDetail?.bucketMediaURL}
@@ -550,7 +550,7 @@ function AdDeatails() {
                       label={
                         <Typography ml={0.5} sx={{ fontWeight: "600" }}>
                           {" "}
-                          Download Video
+                          Download {adDetail?.adMediaType === "video" ?"Video":"Image"}
                         </Typography>
                       }
                     />
