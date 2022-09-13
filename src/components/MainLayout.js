@@ -48,7 +48,7 @@ const MainLayout = () => {
       loadFilteredAdsStart({
         page_index: 0,
         sort_by: "lastUpdatedTime",
-        order_by: "asc",
+        order_by: "desc",
         number_of_pagead: process.env.REACT_APP_NO_OF_ADS_PER_PAGE,
       })
     );
@@ -57,7 +57,7 @@ const MainLayout = () => {
     dispatch(
       loadsavedFilteredAdsStart({
         sort_by: "lastUpdatedTime",
-        order_by: "asc",
+        order_by: "desc",
         number_of_pagead: process.env.REACT_APP_NO_OF_ADS_PER_PAGE,
       })
     );

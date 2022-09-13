@@ -76,7 +76,7 @@ const initialState = {
   },
   sortFilter: {
     type: { selectedValue: "lastUpdatedTime" },
-    order: { selectedValue: "asc" },
+    order: { selectedValue: "desc" },
   },
   searchType: "Ad Text",
   searchBarData: "",
@@ -208,6 +208,11 @@ const savedAdsPeramsReducer = (state = initialState, action) => {
           AdCount: { min: 1, max: 1000 },
           FacebookLikes: { min: 1, max: 100000 },
           InstagramFollowers: { min: 1, max: 10000 },
+        },
+        sortFilter: {
+          ...state.sortFilter,
+          type: { selectedValue: "lastUpdatedTime" },
+          order: { selectedValue: "desc" },
         },
       };
     case SAVED_CHANGE_SORTFILTERS:

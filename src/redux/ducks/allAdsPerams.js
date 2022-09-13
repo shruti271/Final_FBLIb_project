@@ -76,7 +76,7 @@ const initialState = {
   },
   sortFilter: {
     type: { selectedValue: "lastUpdatedTime" },
-    order: { selectedValue: "asc" },
+    order: { selectedValue: "desc" },
   },
   searchType: "Ad Text",
   searchBarData: "",
@@ -213,7 +213,7 @@ const allAdsPeramsReducer = (state = initialState, action) => {
         sortFilter: {
           ...state.sortFilter,
           type: { selectedValue: "lastUpdatedTime" },
-          order: { selectedValue: "asc" },
+          order: { selectedValue: "desc" },
         },
       };
 
