@@ -719,7 +719,7 @@ function AccountSettings() {
                   </Typography>
                 </Grid>
                 <Grid item xs={12} sm={3} md={3} lg={2}>
-                  <Typography
+                  {subscriptionData?.data?.plan_type && <Typography
                     sx={{
                       marginTop: {
                         xs: "10px",
@@ -733,7 +733,7 @@ function AccountSettings() {
                   >
                     Plan:
                     <b>{subscriptionData?.data?.plan_type}</b>
-                  </Typography>
+                  </Typography>}
                 </Grid>
                 <Grid item xs={12} sm={4} lg={3}>
                   <Typography

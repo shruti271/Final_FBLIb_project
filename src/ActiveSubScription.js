@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 
 const ActiveSubScription = ({ children }) => {
   const { status } = useSelector((state) => state.subscriptionData?.data);
-  return status === "active" ? children : <Navigate to="/plans" />;
+  return status === "active" || status === "trialing" ? children : <Navigate to="/plans" />;
 };
 
 export default ActiveSubScription;
