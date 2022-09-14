@@ -1827,7 +1827,7 @@ function AllFilters(props) {
               horizontal: ShowFilterWithClearButton ? "center" : "left",
             }}
           >
-            <Box sx={{ width: "170px" }}>
+            <Box sx={{ width: "150px", height:"300px"}}>
               <FormControl sx={{ padding: "10px" }}>
                 <RadioGroup
                   aria-labelledby="demo-radio-buttons-group-label"
