@@ -209,6 +209,18 @@ export const fetch_payment_method = () => {
   );
 };
 
+export const addToCartEventRegister = () => {
+  return axios.get(
+    `${process.env.REACT_APP_API_URL}/api/addToCartEventRegister/`,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        accept: "application/json",
+      },
+    }
+  );
+};
+
 export const activatyoureemail = (token) => {
   console.log("first", token.getTkn);
   return axios.get(
