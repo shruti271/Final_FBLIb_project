@@ -15,8 +15,10 @@ import { Box } from "@mui/system";
 import { makeStyles } from "@material-ui/core/styles";
 import paymentCheckboxicon from "../../src/assets/paymentcheckboxicon.svg";
 import annualplancheckboxicon from "../../src/assets/annualplancheckboxicon.svg";
-import { monthsubscription, yearsubcription } from "../services";
+import { monthsubscription, startMonthlyTrial, startYearlyTrial, yearsubcription } from "../services";
 import GradientButton from "react-linear-gradient-button/lib/GradientButton";
+import { useDispatch, useSelector } from "react-redux";
+import { loadSubscriptionSuccess } from "../redux/ducks/subscription";
 
 const useStyles = makeStyles((theme) => ({
   paymentheading: {
@@ -86,20 +88,36 @@ const useStyles = makeStyles((theme) => ({
 const Payment = () => {
   const classes = useStyles();
   const theme = useTheme();
+  const dispatch = useDispatch();
 
+  const { status } = useSelector((state) => state.subscriptionData?.data);
+  
   const aligncenterfont = useMediaQuery(theme.breakpoints.up("sm"));
   const aligncentercard = useMediaQuery(theme.breakpoints.up("sm"));
   const paddingcard = useMediaQuery(theme.breakpoints.down("sm"));
 
   const [loading, setLoading] = useState(false);
   const [loadingyear, setLoadingyear] = useState(false);
+console.log("8888888888888888888888888888888",status)
 
   const buySubscriptionmonthly = async () => {
     setLoading(true);
     try {
+      if(status===false){
+        const res = await startMonthlyTrial();
+        console.log("00000000000000000",res)
+        // dispatch(loadSubscriptionSuccess(res.data.status));        
+        window.open("/","_self");
+      }else if(status==="Inactive"){
       const res = await monthsubscription();
       window.open(res.data.data.url);
-      // window.open("http://http://localhost:3000/");
+      }
+      // const res=(status===false && await startMonthlyTrial()) || (status==="Inactive" && await monthsubscription());
+      
+
+      
+     
+      // window.open("/");
     } catch {
       setLoading(false);
     }
@@ -108,8 +126,20 @@ const Payment = () => {
   const buySubscriptionAnnually = async () => {
     setLoadingyear(true);
     try {
+      if(status===false){
+        const res = await startYearlyTrial();
+        console.log("00000000000000000",res)      
+        window.open("/","_self");
+      }else if(status==="Inactive"){
       const res = await yearsubcription();
       window.open(res.data.data.url);
+      }
+
+
+      //  const res= (status===false && await startYearlyTrial()) || (status==="Inactive" && await yearsubcription());
+      // // const res =
+      // //  await yearsubcription();
+      // window.open(res.data.data.url);
     } catch {
       setLoadingyear(false);
     }
@@ -125,9 +155,12 @@ const Payment = () => {
           }}
           align={aligncenterfont ? "center" : "center"}
         >
-          Experience The{" "}
+          {status === false &&<span className={classes.paymentheading}>Select a Plan to Get Started</span>}
+          { status === "Inactive" &&<span className={classes.paymentheading}> Your Free Trial Has expired </span>}
+          
+          {/* Experience The{" "}
           <span className={classes.paymentheading}>All-Seeing Eye</span> For
-          Yourself
+          Yourself */}
         </Typography>
         <Typography
           variant="h5"
@@ -137,7 +170,9 @@ const Payment = () => {
           sx={{ fontWeight: 600 }}
           align={aligncenterfont ? "center" : "center"}
         >
-          Try it free for 24 hours!
+          {/* Try it free for 24 hours! */}
+          {status === "Inactive" && "Please select a plan to continue using Eye of Ecom!"}
+          {status === false && "No credit card needed. Try it free for 24 hours!"}
         </Typography>
       </Box>
 

@@ -162,6 +162,48 @@ export const monthsubscription = async () => {
   }
 };
 
+export const startYearlyTrial = async () => {
+  try {
+    await axios
+      .post(
+        `${process.env.REACT_APP_API_URL}/api/starttrial/`,//http://127.0.0.1:8000/api/starttrial/
+        { lookup_key: process.env.REACT_APP_YEARLY_SUBSCRIPTION_KEY},
+        {
+          headers: {
+            "Content-Type": "application/json",
+            accept: "application/json",
+          },
+          withCredentials: true,
+        }
+      )
+      .then((res) => window.open(res.data.data.url, "_self"))
+      .catch((error) => console.log(error));
+  } catch {
+    console.log("error");
+  }
+};
+
+export const startMonthlyTrial = async () => {
+  try {
+    await axios
+      .post(
+        `${process.env.REACT_APP_API_URL}/api/starttrial/`,
+        { lookup_key: process.env.REACT_APP_MONTHLY_SUBSCRIPTION_KEY },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            accept: "application/json",
+          },
+          withCredentials: true,
+        }
+      )
+      .then((res) => window.open(res.data.data.url , "_self"))
+      .catch((error) => console.log(error));
+  } catch {
+    console.log("error");
+  }
+};
+
 export const yearsubcription = async () => {
   try {
     await axios
