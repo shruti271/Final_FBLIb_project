@@ -23,13 +23,15 @@ import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { CssBaseline } from "@material-ui/core";
-import { signUp } from "../../services/index";
+import { addToCartEventRegister, signUp } from "../../services/index";
 import { themeLight, globalStyles, BootstrapInput } from "../../css/globalcss";
 import { registerValidationSchema } from "./../../utils/validationSchemas";
 import fbaddlogo from "../../assets/Eye of Ecom  Blue.png";
 import fbaddlogowhitecolor from "../../assets/Eye of Ecom White.png";
+import { useEffect } from "react";
 
 const Signup = () => {
+
   const global = globalStyles();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -57,6 +59,12 @@ const Signup = () => {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
+
+  useEffect(()=>{
+    addToCartEventRegister()
+    .then((res) => {})
+    .catch((error) => {});
+  },[])
 
   const submitsigninform = async (data) => {
     setLoading(true);
