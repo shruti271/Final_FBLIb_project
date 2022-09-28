@@ -1,5 +1,12 @@
 import React from "react";
-import { Grid, Typography, useMediaQuery, useTheme } from "@mui/material";
+import {
+  Divider,
+  Grid,
+  Stack,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import { Box } from "@mui/system";
 import "react-datepicker/dist/react-datepicker.css";
 import "react-date-range/dist/styles.css";
@@ -9,9 +16,11 @@ import AllFilters from "../components/AllFilters";
 import SortFilter from "../components/SortFilter";
 import AdsList from "../components/AdsList";
 import FilterChips from "../components/FilterChips";
+import TimerClock from "../components/TimerClock";
 
 const Addlibrarydatabase = () => {
   const theme = useTheme();
+  
   const showgrid = useMediaQuery(theme.breakpoints.only("xs"));
 
   return (
@@ -33,23 +42,33 @@ const Addlibrarydatabase = () => {
           }}
         >
           <Box component="main">
-            <Typography
-              variant="h5"
-              ml={2}
-              sx={{
-                fontWeight: 600,
-                fontSize: "24px",
-                color: "#3A3D4B",
-                "@media (max-width: 450px)": {
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  marginTop: "15px",
-                },
+            <Stack
+              direction={"row"}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
               }}
             >
-              Adlibrary Database
-            </Typography>
+              <Typography
+                variant="h5"
+                ml={2}
+                sx={{
+                  fontWeight: 600,
+                  fontSize: "24px",
+                  color: "#3A3D4B",
+                  "@media (max-width: 450px)": {
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginTop: "15px",
+                  },
+                }}
+              >
+                Adlibrary Database
+              </Typography>
+              <TimerClock/>
+            </Stack>
           </Box>
         </Grid>
         <Grid

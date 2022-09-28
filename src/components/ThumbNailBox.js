@@ -298,6 +298,7 @@ const ThumbNailBox = ({ adInfo, index }) => {
             >
               {adInfo?.pageInfo?.name}
             </Typography>
+            {/* <Typography>{adInfo?.ctaStatus}</Typography> */}
             {adInfo?.pageInfo?.platforms?.Facebook?.likes && (
               <Typography
                 noWrap

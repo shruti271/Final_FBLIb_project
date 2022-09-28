@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import MuiAppBar from "@mui/material/AppBar";
@@ -13,6 +13,8 @@ import EyeofEcomLaptopLogo from "../assets/EyeofEcomLaptopLogo.png";
 import settings from "../assets/settings.svg";
 import logout from "../assets/Logout.svg";
 import contactUs from "../assets/contactUs.svg";
+import Countdown from "react-countdown";
+import { updateScubsciptionStatus } from "../redux/ducks/subscription";
 
 const drawerWidth = 276;
 
@@ -40,7 +42,8 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
 
   const { accountSettings } = useSelector((state) => state.accountSettings);
   const filteredAds = useSelector((state) => state.filteredAds);
-
+  
+  
   const MenuListOptios = [
     { name: "Account Setings", icon: settings, url: "/accountSettings" },
     { name: "Contact Support", icon: contactUs, url: "/contactSupport" },
@@ -99,6 +102,7 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
                 style={{ cursor: "pointer" }}
               />
             </Stack>
+           
             <Stack>
               <Stack direction={"row"} spacing={2}>
                 <Box

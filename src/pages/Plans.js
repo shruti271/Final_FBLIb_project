@@ -108,7 +108,7 @@ console.log("8888888888888888888888888888888",status)
         console.log("00000000000000000",res)
         // dispatch(loadSubscriptionSuccess(res.data.status));        
         window.open("/","_self");
-      }else if(status==="Inactive"){
+      }else if(status==="Inactive" || "Canceled"){
       const res = await monthsubscription();
       window.open(res.data.data.url);
       }
@@ -130,7 +130,7 @@ console.log("8888888888888888888888888888888",status)
         const res = await startYearlyTrial();
         console.log("00000000000000000",res)      
         window.open("/","_self");
-      }else if(status==="Inactive"){
+      }else if(status==="Inactive" || "Canceled"){
       const res = await yearsubcription();
       window.open(res.data.data.url);
       }
@@ -156,7 +156,7 @@ console.log("8888888888888888888888888888888",status)
           align={aligncenterfont ? "center" : "center"}
         >
           {status === false &&<span className={classes.paymentheading}>Select a Plan to Get Started</span>}
-          { status === "Inactive" &&<span className={classes.paymentheading}> Your Free Trial Has expired </span>}
+          { (status === "Inactive" ||status === "Canceled") &&<span className={classes.paymentheading}> Your Free Trial Has expired </span>}
           
           {/* Experience The{" "}
           <span className={classes.paymentheading}>All-Seeing Eye</span> For
@@ -171,7 +171,7 @@ console.log("8888888888888888888888888888888",status)
           align={aligncenterfont ? "center" : "center"}
         >
           {/* Try it free for 24 hours! */}
-          {status === "Inactive" && "Please select a plan to continue using Eye of Ecom!"}
+          {(status === "Inactive" ||status === "Canceled") && "Please select a plan to continue using Eye of Ecom!"}
           {status === false && "No credit card needed. Try it free for 24 hours!"}
         </Typography>
       </Box>
@@ -318,7 +318,7 @@ console.log("8888888888888888888888888888888",status)
                 {loading ? (
                   <CircularProgress size={25} style={{ color: "#00CBFF" }} />
                 ) : (
-                  "Try It Free"
+                  (status === false  && "Try It Free") || ((status === "Inactive" ||status === "Canceled") && "Choose Plan")
                 )}
               </Button>
             </Box>
@@ -505,7 +505,7 @@ console.log("8888888888888888888888888888888",status)
                 {loadingyear ? (
                   <CircularProgress size={25} style={{ color: "#F6F6FB" }} />
                 ) : (
-                  "Try It Free"
+                  (status === false  && "Try It Free") || ((status === "Inactive" ||status === "Canceled") && "Choose Plan")                  
                 )}
               </Button>
             </Box>

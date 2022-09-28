@@ -13,6 +13,7 @@ import {
   addToSavedAdsError,
   removeFromSavedAdsError,
 } from "../../ducks/filteredSavedAds";
+import { updateScubsciptionStatus } from "../../ducks/subscription";
 
 export function* handleGetFilteredSavedAds({ payload }) {
   try {
@@ -22,6 +23,7 @@ export function* handleGetFilteredSavedAds({ payload }) {
       yield put(loadsavedFilteredAdsSuccess(response?.data));
     }
   } catch (error) {
+    yield put(updateScubsciptionStatus(error.response.data.data))
     yield put(loadsavedFilteredAdsError(error));
   }
 }

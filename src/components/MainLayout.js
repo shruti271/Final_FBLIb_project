@@ -50,6 +50,7 @@ const MainLayout = () => {
         sort_by: "lastUpdatedTime",
         order_by: "desc",
         number_of_pagead: process.env.REACT_APP_NO_OF_ADS_PER_PAGE,
+        cta_status:"shop Now"
       })
     );
     // dispatch(setCurrentPaginationIndex(window.location.pathname.split("=")[1]-1));

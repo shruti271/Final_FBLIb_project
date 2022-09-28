@@ -67,7 +67,7 @@ const initialState = {
     FacebookLikes: { min: 1, max: 100000, chipText: "", isApplied: false },
     InstagramFollowers: { min: 1, max: 10000, chipText: "", isApplied: false },
     MediaType: { selectedValue: "", chipText: "", isApplied: false },
-    ButtonStatus: { selectedValue: "", chipText: "", isApplied: false },
+    ButtonStatus: { selectedValue: "Shop Now", chipText: "", isApplied: false },
   },
   maxRanger: {
     AdCount: { min: 1, max: 1000 },
@@ -202,7 +202,7 @@ const allAdsPeramsReducer = (state = initialState, action) => {
             isApplied: false,
           },
           MediaType: { selectedValue: "", chipText: "", isApplied: false },
-          ButtonStatus: { selectedValue: "", chipText: "", isApplied: false },
+          ButtonStatus: { selectedValue: "Shop Now", chipText: "", isApplied: false },
         },
         maxRanger: {
           ...state.maxRanger,

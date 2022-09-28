@@ -2,6 +2,7 @@ export const LOAD_SUBSCRIPTION_START = "LOAD_SUBSCRIPTION_START";
 export const LOAD_SUBSCRIPTION_SUCCESS = "LOAD_SUBSCRIPTION_SUCCESS";
 export const LOAD_SUBSCRIPTION_ERROR = "LOAD_SUBSCRIPTION_ERROR";
 export const SET_SUBSCRIPTION = "SET_SUBSCRIPTION";
+export const UPDATE_SUBSCRIPTION = "UPDATE_SUBSCRIPTION";
 
 export const loadSubscriptionStart = () => ({
   type: LOAD_SUBSCRIPTION_START,
@@ -19,6 +20,10 @@ export const loadSubscriptionError = (error) => ({
 
 export const setSubscription = (data) => ({
   type: SET_SUBSCRIPTION,
+  payload: data,
+});
+export const updateScubsciptionStatus = (data) => ({
+  type: UPDATE_SUBSCRIPTION,
   payload: data,
 });
 
@@ -53,6 +58,12 @@ const subscriptionReducer = (state = initialState, action) => {
         loading: false,
         error: action.payload,
       };
+      case UPDATE_SUBSCRIPTION:
+        return {
+          ...state,
+          laoding:false,
+          data:action.payload
+        }
     default:
       return state;
   }

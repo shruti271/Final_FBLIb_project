@@ -25,6 +25,7 @@
     "node-sass": "^7.0.1",
     "query-string": "^7.1.1",
     "react": "^18.1.0",
+    "react-countdown": "^2.3.2",
     "react-date-range": "^1.4.0",
     "react-datepicker": "^4.8.0",
     "react-dom": "^18.1.0",
