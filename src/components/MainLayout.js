@@ -39,8 +39,52 @@ const MainLayout = () => {
   const dispatch = useDispatch();
   const theme = useTheme();
   const { loading } = useSelector((state) => state.subscriptionData);
+  const { status } = useSelector((state) => state.subscriptionData.data);
+
   const [isOpen, setIsOpen] = React.useState(true);
   const showhidedrawer = useMediaQuery(theme.breakpoints.down("md"));
+
+  // useEffect(() => {
+  //   if (status === true ||status ===  "active" ||status ===  "Active") {
+  //     dispatch(
+  //       loadFilteredAdsStart({
+  //         page_index: 0,
+  //         sort_by: "lastUpdatedTime",
+  //         order_by: "desc",
+  //         number_of_pagead: process.env.REACT_APP_NO_OF_ADS_PER_PAGE,
+  //         cta_status: "shop Now",
+  //       })
+  //     );
+  //     loadsavedFilteredAdsStart({
+  //       sort_by: "lastUpdatedTime",
+  //       order_by: "desc",
+  //       number_of_pagead: process.env.REACT_APP_NO_OF_ADS_PER_PAGE,
+  //     });
+
+  //     dispatch(getButtonTypes());
+  //   }
+
+  //   // (status === "Active" || status === true) &&
+  //   //   dispatch(
+  //   //     loadFilteredAdsStart({
+  //   //       page_index: 0,
+  //   //       sort_by: "lastUpdatedTime",
+  //   //       order_by: "desc",
+  //   //       number_of_pagead: process.env.REACT_APP_NO_OF_ADS_PER_PAGE,
+  //   //       cta_status: "shop Now",
+  //   //     })
+  //   //   );
+
+  //   // (status === "Active" || status === true) &&
+  //   //   dispatch(
+  //   //     loadsavedFilteredAdsStart({
+  //   //       sort_by: "lastUpdatedTime",
+  //   //       order_by: "desc",
+  //   //       number_of_pagead: process.env.REACT_APP_NO_OF_ADS_PER_PAGE,
+  //   //     })
+  //   //   );
+  //   // (status === "Active" || status === true) && dispatch(getButtonTypes());
+  // }, [dispatch, status]);
 
   useEffect(() => {
     dispatch(loadSubscriptionStart());
@@ -53,7 +97,6 @@ const MainLayout = () => {
         cta_status:"shop Now"
       })
     );
-    // dispatch(setCurrentPaginationIndex(window.location.pathname.split("=")[1]-1));
 
     dispatch(
       loadsavedFilteredAdsStart({
@@ -109,7 +152,6 @@ const MainLayout = () => {
             </Box>
           ) : (
             <Routes>
-              
               <Route
                 exact
                 path="/*"

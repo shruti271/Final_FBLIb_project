@@ -23,10 +23,15 @@ function TimerClock() {
 
   return (
     <Box>
-      <Typography style={{ fontWeight: "bold" }} s>
-        Trial will be expired after
-      </Typography>
+     
       {trial_end_date && (
+         <>
+         <Typography style={{ fontWeight: "bold" }}>
+         Trial will be expired after
+       </Typography>
+         
+         
+
         <Countdown
           date={new Date(trial_end_date)}
           autoStart="true"
@@ -92,6 +97,7 @@ function TimerClock() {
             </div>
           )}
         />
+        </>
       )}
     </Box>
   );
