@@ -142,87 +142,59 @@ export const contactSupport = async (payload) => {
 };
 
 export const monthsubscription = async () => {
-  try {
-    await axios
-      .post(
-        `${process.env.REACT_APP_API_URL}/api/create_checkout_session/`,
-        { lookup_key: process.env.REACT_APP_MONTHLY_SUBSCRIPTION_KEY },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            accept: "application/json",
-          },
-          withCredentials: true,
-        }
-      )
-      .then((res) => window.open(res.data.data.url , "_self"))
-      .catch((error) => console.log(error));
-  } catch {
-    console.log("error");
-  }
+  return await axios.post(
+    `${process.env.REACT_APP_API_URL}/api/create_checkout_session/`,
+    { lookup_key: process.env.REACT_APP_MONTHLY_SUBSCRIPTION_KEY },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        accept: "application/json",
+      },
+      withCredentials: true,
+    }
+  );
 };
 
-export const startYearlyTrial = async () => {
-  try {
-    await axios
-      .post(
-        `${process.env.REACT_APP_API_URL}/api/starttrial/`,//http://127.0.0.1:8000/api/starttrial/
-        { lookup_key: process.env.REACT_APP_YEARLY_SUBSCRIPTION_KEY},
-        {
-          headers: {
-            "Content-Type": "application/json",
-            accept: "application/json",
-          },
-          withCredentials: true,
-        }
-      )
-      .then((res) => window.open(res.data.data.url, "_self"))
-      .catch((error) => console.log(error));
-  } catch {
-    console.log("error");
-  }
+export const startYearlyTrial = () => {
+  return axios.post(
+    `${process.env.REACT_APP_API_URL}/api/starttrial/`, //http://127.0.0.1:8000/api/starttrial/
+    { lookup_key: process.env.REACT_APP_YEARLY_SUBSCRIPTION_KEY },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        accept: "application/json",
+      },
+      withCredentials: true,
+    }
+  );
 };
 
-export const startMonthlyTrial = async () => {
-  try {
-    await axios
-      .post(
-        `${process.env.REACT_APP_API_URL}/api/starttrial/`,
-        { lookup_key: process.env.REACT_APP_MONTHLY_SUBSCRIPTION_KEY },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            accept: "application/json",
-          },
-          withCredentials: true,
-        }
-      )
-      .then((res) => window.open(res.data.data.url , "_self"))
-      .catch((error) => console.log(error));
-  } catch {
-    console.log("error");
-  }
+export const startMonthlyTrial = () => {
+  return axios.post(
+    `${process.env.REACT_APP_API_URL}/api/starttrial/`,
+    { lookup_key: process.env.REACT_APP_MONTHLY_SUBSCRIPTION_KEY },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        accept: "application/json",
+      },
+      withCredentials: true,
+    }
+  );
 };
 
-export const yearsubcription = async () => {
-  try {
-    await axios
-      .post(
-        `${process.env.REACT_APP_API_URL}/api/create_checkout_session/`,
-        { lookup_key: process.env.REACT_APP_YEARLY_SUBSCRIPTION_KEY},
-        {
-          headers: {
-            "Content-Type": "application/json",
-            accept: "application/json",
-          },
-          withCredentials: true,
-        }
-      )
-      .then((res) => window.open(res.data.data.url, "_self"))
-      .catch((error) => console.log(error));
-  } catch {
-    console.log("error");
-  }
+export const yearsubcription = () => {
+  return axios.post(
+    `${process.env.REACT_APP_API_URL}/api/create_checkout_session/`,
+    { lookup_key: process.env.REACT_APP_YEARLY_SUBSCRIPTION_KEY },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        accept: "application/json",
+      },
+      withCredentials: true,
+    }
+  );
 };
 
 export const cancelusersubcription = () => {
@@ -281,7 +253,7 @@ export const resendactivateemail = async (payload) => {
   try {
     const res = await axios.post(
       `${process.env.REACT_APP_API_URL}/api/resend_email/`,
-      payload,
+      payload
     );
     result = res.data || {};
     return { success: true, data: result, message: null };

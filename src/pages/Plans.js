@@ -9,13 +9,18 @@ import {
   Stack,
   Typography,
   useMediaQuery,
-  useTheme,  
+  useTheme,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { makeStyles } from "@material-ui/core/styles";
 import paymentCheckboxicon from "../../src/assets/paymentcheckboxicon.svg";
 import annualplancheckboxicon from "../../src/assets/annualplancheckboxicon.svg";
-import { monthsubscription, startMonthlyTrial, startYearlyTrial, yearsubcription } from "../services";
+import {
+  monthsubscription,
+  startMonthlyTrial,
+  startYearlyTrial,
+  yearsubcription,
+} from "../services";
 import GradientButton from "react-linear-gradient-button/lib/GradientButton";
 import { useDispatch, useSelector } from "react-redux";
 import { loadSubscriptionSuccess } from "../redux/ducks/subscription";
@@ -91,57 +96,59 @@ const Payment = () => {
   const dispatch = useDispatch();
 
   const { status } = useSelector((state) => state.subscriptionData?.data);
-  
+
   const aligncenterfont = useMediaQuery(theme.breakpoints.up("sm"));
   const aligncentercard = useMediaQuery(theme.breakpoints.up("sm"));
   const paddingcard = useMediaQuery(theme.breakpoints.down("sm"));
 
   const [loading, setLoading] = useState(false);
   const [loadingyear, setLoadingyear] = useState(false);
-console.log("8888888888888888888888888888888",status)
 
-  const buySubscriptionmonthly = async () => {
+  const buySubscriptionmonthly = () => {
     setLoading(true);
-    try {
-      if(status===false){
-        const res = await startMonthlyTrial();
-        console.log("00000000000000000",res)
-        // dispatch(loadSubscriptionSuccess(res.data.status));        
-        window.open("/","_self");
-      }else if(status==="Inactive" || "Canceled"){
-      const res = await monthsubscription();
-      window.open(res.data.data.url);
-      }
-      // const res=(status===false && await startMonthlyTrial()) || (status==="Inactive" && await monthsubscription());
-      
-
-      
-     
-      // window.open("/");
-    } catch {
-      setLoading(false);
+    if (!status) {
+      startMonthlyTrial()
+        .then((res) => {
+          setLoading(false);
+          console.log("startMonthlyTrial Response:", res);
+          window.open("/", "_self");
+        })
+        .catch((error) => {
+          setLoading(false);
+          console.log(error);
+        });
+    } else if (status === "Inactive" || "Canceled") {
+      monthsubscription().then((res) => {
+        setLoading(false);
+        window.open(res.data.data.url, "_self");
+      })
+      .catch((error) => {
+        setLoading(false);
+        console.log(error);
+      });
     }
   };
 
-  const buySubscriptionAnnually = async () => {
+  const buySubscriptionAnnually = () => {
     setLoadingyear(true);
-    try {
-      if(status===false){
-        const res = await startYearlyTrial();
-        console.log("00000000000000000",res)      
-        window.open("/","_self");
-      }else if(status==="Inactive" || "Canceled"){
-      const res = await yearsubcription();
-      window.open(res.data.data.url);
-      }
-
-
-      //  const res= (status===false && await startYearlyTrial()) || (status==="Inactive" && await yearsubcription());
-      // // const res =
-      // //  await yearsubcription();
-      // window.open(res.data.data.url);
-    } catch {
-      setLoadingyear(false);
+    if (!status) {
+      startYearlyTrial()
+        .then((res) => {
+          setLoadingyear(false);
+          console.log("startYearlyTrial Response:", res);
+          window.open("/", "_self");
+        })
+        .catch((error) => console.log(error));
+    } else if (status === "Inactive" || "Canceled") {
+      yearsubcription()
+        .then((res) => {
+          setLoadingyear(false);
+          window.open(res.data.data.url, "_self");
+        })
+        .catch((error) => {
+          setLoadingyear(false);
+          console.log(error);
+        });
     }
   };
 
@@ -155,9 +162,18 @@ console.log("8888888888888888888888888888888",status)
           }}
           align={aligncenterfont ? "center" : "center"}
         >
-          {status === false &&<span className={classes.paymentheading}>Select a Plan to Get Started</span>}
-          { (status === "Inactive" ||status === "Canceled") &&<span className={classes.paymentheading}> Your Free Trial Has expired </span>}
-          
+          {status === false && (
+            <span className={classes.paymentheading}>
+              Select a Plan to Get Started
+            </span>
+          )}
+          {(status === "Inactive" || status === "Canceled") && (
+            <span className={classes.paymentheading}>
+              {" "}
+              Your Free Trial Has expired{" "}
+            </span>
+          )}
+
           {/* Experience The{" "}
           <span className={classes.paymentheading}>All-Seeing Eye</span> For
           Yourself */}
@@ -171,8 +187,10 @@ console.log("8888888888888888888888888888888",status)
           align={aligncenterfont ? "center" : "center"}
         >
           {/* Try it free for 24 hours! */}
-          {(status === "Inactive" ||status === "Canceled") && "Please select a plan to continue using Eye of Ecom!"}
-          {status === false && "No credit card needed. Try it free for 24 hours!"}
+          {(status === "Inactive" || status === "Canceled") &&
+            "Please select a plan to continue using Eye of Ecom!"}
+          {status === false &&
+            "No credit card needed. Try it free for 24 hours!"}
         </Typography>
       </Box>
 
@@ -211,7 +229,7 @@ console.log("8888888888888888888888888888888",status)
                 border: "1px solid #EBEBEB",
                 width: "148px",
                 borderRadius: "25px",
-                padding:"7px 15px"
+                padding: "7px 15px",
               }}
             >
               {" "}
@@ -318,7 +336,9 @@ console.log("8888888888888888888888888888888",status)
                 {loading ? (
                   <CircularProgress size={25} style={{ color: "#00CBFF" }} />
                 ) : (
-                  (status === false  && "Try It Free") || ((status === "Inactive" ||status === "Canceled") && "Choose Plan")
+                  (status === false && "Try It Free") ||
+                  ((status === "Inactive" || status === "Canceled") &&
+                    "Choose Plan")
                 )}
               </Button>
             </Box>
@@ -341,23 +361,22 @@ console.log("8888888888888888888888888888888",status)
           }}
         >
           <Stack p={2} pt={4}>
-            <Box  sx={{marginLeft: { xs: "26px", sm: "16px" }}}>
-            <GradientButton
-             gradient={[
-                    "rgba(103, 33, 255, 1)",
-                    "rgba(0, 203, 255, 1)",
-                    "rgba(181, 237, 255, 1)",
-                  ]}
-                  background=" #002838"
-                  color="#F6F6FB"
-                  fontSize="20px"
-                  // width="fitContent"
-              className={classes.annualheadinglabel}
-              align={aligncenterfont ? "" : "center"}
-
-            >
-              Annual Plan
-            </GradientButton>
+            <Box sx={{ marginLeft: { xs: "26px", sm: "16px" } }}>
+              <GradientButton
+                gradient={[
+                  "rgba(103, 33, 255, 1)",
+                  "rgba(0, 203, 255, 1)",
+                  "rgba(181, 237, 255, 1)",
+                ]}
+                background=" #002838"
+                color="#F6F6FB"
+                fontSize="20px"
+                // width="fitContent"
+                className={classes.annualheadinglabel}
+                align={aligncenterfont ? "" : "center"}
+              >
+                Annual Plan
+              </GradientButton>
             </Box>
             <Stack p={1.8}>
               <Box sx={{ display: "flex", justifyContent: "flex-start" }}>
@@ -505,7 +524,9 @@ console.log("8888888888888888888888888888888",status)
                 {loadingyear ? (
                   <CircularProgress size={25} style={{ color: "#F6F6FB" }} />
                 ) : (
-                  (status === false  && "Try It Free") || ((status === "Inactive" ||status === "Canceled") && "Choose Plan")                  
+                  (status === false && "Try It Free") ||
+                  ((status === "Inactive" || status === "Canceled") &&
+                    "Choose Plan")
                 )}
               </Button>
             </Box>
