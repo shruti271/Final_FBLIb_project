@@ -391,14 +391,14 @@ const ThumbNailBox = ({ adInfo, index }) => {
               {/* </Tooltip> */}
               <img
                 src={
-                  filteredSavedAds.savedAdsIds.includes(adInfo?.id)
+                  filteredSavedAds?.savedAdsIds?.includes(adInfo?.id)
                     ? StarFill
                     : Saveicon
                 }
                 alt="saved-icon"
                 className={classes.saveicon}
                 onClick={() => {
-                  if (filteredSavedAds.savedAdsIds.includes(adInfo?.id)) {
+                  if (filteredSavedAds?.savedAdsIds?.includes(adInfo?.id)) {
                     dispatch(removeFromSavedAdsStart(adInfo));
                   } else {
                     dispatch(addToSavedAdsStart({ ad: adInfo.id }));

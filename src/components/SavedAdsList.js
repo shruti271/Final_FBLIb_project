@@ -40,7 +40,7 @@ const SavedAdsList = () => {
   // },[page])
 
   useEffect(() => {
-    filteredSavedAds.filteredSavedAds.length &&
+    filteredSavedAds?.filteredSavedAds?.length &&
       dispatch(
         setSavedCurrentPaginationAds({
           start:
@@ -50,7 +50,7 @@ const SavedAdsList = () => {
         })
       );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, filteredSavedAds.filteredSavedAds]);
+  }, [dispatch, filteredSavedAds?.filteredSavedAds]);
 
   
   useSkipInitialEffect(() => {
@@ -190,7 +190,7 @@ const SavedAdsList = () => {
             }}
           >
             {filteredSavedAds?.filteredSavedAds?.length !== 0 &&
-              SavedCurrentPage.map((ads, index) => (
+              SavedCurrentPage?.map((ads, index) => (
                 <ThumbNailBox adInfo={ads} index={index} key={index} />
               ))}
             {filteredSavedAds?.filteredSavedAds?.length === 0 &&

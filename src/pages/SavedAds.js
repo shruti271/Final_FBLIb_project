@@ -58,23 +58,23 @@ const SavedAds = () => {
       >
         <Grid item xs={12}>
           <Box component="main">
-            <Typography
-              className={classes.titleHome}
-              variant="h5"
-              ml={1}
-              sx={{
-                fontWeight: "bold",
-                color: "#3A3D4B",
-                "@media (max-width: 450px)": {
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  marginTop: "15px",
-                },
-              }}
-            >
-              Saved Ads
-            </Typography>
+          <Typography
+                variant="h5"
+                ml={2}
+                sx={{
+                  fontWeight: 600,
+                  fontSize: "24px",
+                  color: "#3A3D4B",
+                  "@media (max-width: 450px)": {
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginTop: "15px",
+                  },
+                }}
+              >
+                Saved Ads
+              </Typography>
           </Box>
         </Grid>
         <Grid

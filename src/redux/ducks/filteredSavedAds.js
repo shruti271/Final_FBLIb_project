@@ -118,13 +118,13 @@ const filteredSavedAdsReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        filteredSavedAds: action.payload?.data.all_ads,
+        filteredSavedAds: action.payload?.data?.all_ads,
         totalPages: Math.ceil(
-          action.payload.data.total_ads /
+          action.payload?.data?.total_ads /
             process.env.REACT_APP_NO_OF_ADS_PER_PAGE
         ),
-        totalAds: action.payload.data.total_ads,
-        SavedCurrentPage: action.payload.data.all_ads.slice(
+        totalAds: action.payload?.data?.total_ads,
+        SavedCurrentPage: action.payload?.data?.all_ads?.slice(
           state.SavedCurrentPageStartPoint,
           state.SavedCurrentPageEndPoint
         ),
@@ -144,7 +144,7 @@ const filteredSavedAdsReducer = (state = initialState, action) => {
         filteredSavedAds: action.payload?.valid
           ? filterdListToBeUpdated
           : state.filteredSavedAds,
-        SavedCurrentPage: state.filteredSavedAds.slice(
+        SavedCurrentPage: state.filteredSavedAds?.slice(
           state.SavedCurrentPageStartPoint,
           state.SavedCurrentPageEndPoint
         ),
@@ -212,7 +212,7 @@ const filteredSavedAdsReducer = (state = initialState, action) => {
     case SET_PAGINATION_SAVED_ADS:
       return {
         ...state,
-        SavedCurrentPage: state.filteredSavedAds.slice(
+        SavedCurrentPage: state.filteredSavedAds?.slice(
           action.payload.start,
           action.payload.end
         ),
