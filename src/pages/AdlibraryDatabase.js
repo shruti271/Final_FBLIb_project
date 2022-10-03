@@ -56,6 +56,7 @@ const Addlibrarydatabase = () => {
                   fontWeight: 600,
                   fontSize: "24px",
                   color: "#3A3D4B",
+                  marginLeft:"0px",
                   "@media (max-width: 450px)": {
                     display: "flex",
                     justifyContent: "center",
@@ -66,7 +67,7 @@ const Addlibrarydatabase = () => {
               >
                 Adlibrary Database
               </Typography>
-              <TimerClock/>
+              {/* <TimerClock/> */}
             </Stack>
           </Box>
         </Grid>

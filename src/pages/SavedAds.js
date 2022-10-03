@@ -65,6 +65,7 @@ const SavedAds = () => {
                   fontWeight: 600,
                   fontSize: "24px",
                   color: "#3A3D4B",
+                  marginLeft:"0px",
                   "@media (max-width: 450px)": {
                     display: "flex",
                     justifyContent: "center",
@@ -95,8 +96,7 @@ const SavedAds = () => {
                 borderRadius: "15px",
                 padding: { lg: "16px 36px", xs: "15px 20px" },
                 marginTop: 2,
-                width: "99%",
-                margin: "auto",
+                width: "100%",
               }}
               style={filterActivate ? mountedStyle : unmountedStyle}
               className="transitionDiv"

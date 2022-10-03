@@ -309,7 +309,7 @@ const Payment = () => {
                   }}
                 >
                   {" "}
-                  <del>$49</del>
+                  <del>${process.env.REACT_APP_MONTHLY_CROSS_PRICE}</del>
                 </Typography>
                 <Typography
                   variant="h3"
@@ -321,9 +321,9 @@ const Payment = () => {
                     fontSize: "3.5vh",
                   }}
                 >
-                  $19
+                  ${process.env.REACT_APP_MONTHLY_PRICE}
                 </Typography>
-                <Typography variant="h6" m={2.7} className={classes.month}>
+                <Typography variant="h6" m={1} className={classes.month}>
                   /MONTH
                 </Typography>
               </Box>
@@ -481,9 +481,9 @@ const Payment = () => {
                     fontSize: "3.5vh",
                   }}
                 >
-                  $190
+                  ${process.env.REACT_APP_YEARLY_PRICE}
                 </Typography>
-                <Typography variant="h6" m={2.7} className={classes.month}>
+                <Typography variant="h6" m={1} className={classes.month}>
                   /YEAR
                 </Typography>
               </Box>
