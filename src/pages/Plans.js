@@ -232,7 +232,7 @@ const Payment = () => {
           {status === false &&
             "No credit card needed. Try it free for 24 hours!"}
         </Typography>
-        {(status === "Inactive" || status === "Canceled") && (
+        {(status === "Inactive" ) && (
           <Typography
             variant="h5"
             className={classes.paymentheading}
