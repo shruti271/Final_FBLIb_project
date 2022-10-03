@@ -87,6 +87,7 @@ const useStyles = makeStyles((theme) => ({
   },
   monthplanborder: {
     border: "1px solid #EBEBEB",
+    // border: "1px solid red",
   },
   dividerColor: {
     backgroundColor: "white",
@@ -185,7 +186,7 @@ const Payment = () => {
 
   return (
     <>
-      <Box className={classes.fontSizeCustomize} p={1}>
+      <Box className={classes.fontSizeCustomize} p={1} mb={1}>
         <Typography
           variant="h5"
           // sx={{
@@ -217,7 +218,7 @@ const Payment = () => {
           color="#2B2F42"
           p={1.5}
           // sx={{ fontWeight: 600 }}
-          sx={{ fontWeight: "bold" }}
+          sx={{ fontWeight: "bold" ,marginBottom:0}}
           align={aligncenterfont ? "center" : "center"}
         >
           {/* Try it free for 24 hours! */}
@@ -231,7 +232,7 @@ const Payment = () => {
           {status === false &&
             "No credit card needed. Try it free for 24 hours!"}
         </Typography>
-        {(status === "Inactive") && (
+        {(status === "Inactive" || status === "Canceled") && (
           <Typography
             variant="h5"
             className={classes.paymentheading}
@@ -253,7 +254,7 @@ const Payment = () => {
           justifyContent: "center",
           alignItems: "center",
           marginRight: 11,
-          marginBottom: paddingcard ? 5 : "",
+          marginBottom: 5//paddingcard ? 5 : "",
         }}
       >
         <Grid
@@ -269,6 +270,7 @@ const Payment = () => {
               lg: "60px 18px 18px 18px",
             },
             marginRight: aligncentercard ? 2 : "",
+            marginBottom: paddingcard ? 3 : "",
           }}
         >
           <Stack p={2} pt={4}>
@@ -286,7 +288,7 @@ const Payment = () => {
               {" "}
               Monthly Plan{" "}
             </Typography>
-            <Stack p={2}>
+            <Stack p={1}>
               <Box
                 sx={{
                   display: "flex",
@@ -302,7 +304,7 @@ const Payment = () => {
                     marginLeft: { xs: 3, sm: 0, lg: 0 },
                     marginRight: 1, //{ xs: 1, sm: 1, lg: 1},
                     // fontWeight: 600 ,
-                    fontSize: "3vh",
+                    fontSize: "2.5vh",
                     // display:"flex",alignSelf:"center"
                   }}
                 >
@@ -310,13 +312,13 @@ const Payment = () => {
                   <del>$49</del>
                 </Typography>
                 <Typography
-                  variant="h2"
+                  variant="h3"
                   gutterBottom
                   component="div"
                   sx={{
-                    // marginLeft: { xs: 1, sm: 0, lg: 0 },
                     fontWeight: 600,
                     color: "red",
+                    fontSize: "3.5vh",
                   }}
                 >
                   $19
@@ -426,19 +428,25 @@ const Payment = () => {
           xs={10}
           lg={5}
           sm={5}
+          className={classes.monthplanborder}
           sx={{
             background:
               "linear-gradient(321.16deg, #002838 87.91%, #5F5DC3 100%)",
-            borderRadius: {
+              borderRadius: {
               xs: "25px",
               sm: "18px 60px 18px 18px",
               lg: "18px 60px 18px 18px",
             },
-            marginTop: { xs: 4, sm: 0, md: 0, lg: 0 },
+            // borderRadius: {
+            //   xs: "25px",
+            //   sm: "60px 18px 18px 18px",
+            //   lg: "60px 18px 18px 18px",
+            // },
+            marginRight: aligncentercard ? 2 : "",
           }}
         >
           <Stack p={2} pt={4}>
-            <Box sx={{ marginLeft: { xs: "26px", sm: "16px" } }}>
+          <Box sx={{ marginLeft: { xs: "26px", sm: "16px" } }}>
               <GradientButton
                 gradient={[
                   "rgba(103, 33, 255, 1)",
@@ -455,23 +463,31 @@ const Payment = () => {
                 Annual Plan
               </GradientButton>
             </Box>
-            <Stack p={1.8}>
-              <Box sx={{ display: "flex", justifyContent: "flex-start" }}>
+            <Stack p={1}>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "flex-start",
+                  alignItems: "center",
+                }}
+              >
                 <Typography
                   variant="h3"
                   gutterBottom
                   component="div"
-                  className={classes.fontcolorheading}
-                  sx={{ marginLeft: { xs: 3, sm: 0, lg: 0 } }}
+                  sx={{
+                    fontWeight: 600,
+                    color: "white",
+                    fontSize: "3.5vh",
+                  }}
                 >
-                  {" "}
-                  {/* $29 */}
                   $190
                 </Typography>
                 <Typography variant="h6" m={2.7} className={classes.month}>
                   /YEAR
                 </Typography>
               </Box>
+
               <Typography
                 className={classes.fontcolorheading}
                 sx={{ fontSize: { xs: "18px", sm: "14px", lg: "15px" } }}
@@ -479,112 +495,79 @@ const Payment = () => {
               >
                 Get 5 Months Free By Paying Annually
               </Typography>
+
+
               <Divider
                 variant="fullWidth"
                 className={classes.dividerColor}
                 sx={{ marginTop: 1 }}
               />
-              <Stack direction={"row"} pl={0.8}>
-                <FormControlLabel
-                  control={
-                    <Avatar
-                      src={annualplancheckboxicon}
-                      alt="paymentchekbox"
-                      sx={{ height: "32px", width: "32px" }}
-                    />
-                  }
-                  label={
-                    <Typography
-                      m={2}
-                      sx={{ fontSize: { xs: "18px", sm: "14px", lg: "15px" } }}
-                      className={classes.fontcolor}
-                    >
-                      Adlibrary Database With Over 30,000 Active Dropshipping
-                      Sites
-                    </Typography>
-                  }
-                />
+              <Stack direction={"row"}>
+                <img src={annualplancheckboxicon} alt="paymentchekbox" />
+                <Typography
+                  m={2}
+                  className={classes.fontcolor}
+                  sx={{
+                    fontSize: { xs: "18px", sm: "14px", lg: 16 },
+                    fontWeight: 500,
+                  }}
+                >
+                  Adlibrary Database With Over 30,000 Active Dropshipping Sites
+                </Typography>
               </Stack>
-              <Stack direction={"row"} pl={0.8}>
-                <FormControlLabel
-                  control={
-                    <Avatar
-                      src={annualplancheckboxicon}
-                      alt="paymentchekbox"
-                      sx={{ height: "32px", width: "32px" }}
-                    />
-                  }
-                  label={
-                    <Typography
-                      m={2}
-                      sx={{ fontSize: { xs: "18px", sm: "14px", lg: "15px" } }}
-                      className={classes.fontcolor}
-                    >
-                      Early Access to the Most Powerful Ecom Spy Tool
-                    </Typography>
-                  }
-                />
+              <Stack direction={"row"}>
+                <img src={annualplancheckboxicon} alt="paymentchekbox" />
+                <Typography
+                  m={2}
+                  className={classes.fontcolor}
+                  sx={{
+                    fontSize: { xs: "18px", sm: "14px", lg: 16 },
+                    fontWeight: 500,
+                  }}
+                >
+                  Early Access to the Most Powerfull Ecom Spy Tool
+                </Typography>
               </Stack>
-              <Stack direction={"row"} pl={0.8}>
-                <FormControlLabel
-                  control={
-                    <Avatar
-                      src={annualplancheckboxicon}
-                      alt="paymentchekbox"
-                      sx={{ height: "32px", width: "32px" }}
-                    />
-                  }
-                  label={
-                    <Typography
-                      m={2}
-                      sx={{ fontSize: { xs: "18px", sm: "14px", lg: "15px" } }}
-                      className={classes.fontcolor}
-                    >
-                      Thousands of New Sites Added Daily
-                    </Typography>
-                  }
-                />
+              <Stack direction={"row"}>
+                <img src={annualplancheckboxicon} alt="paymentchekbox" />
+                <Typography
+                  m={2}
+                  className={classes.fontcolor}
+                  sx={{
+                    fontSize: { xs: "18px", sm: "14px", lg: 16 },
+                    fontWeight: 500,
+                    
+                  }}
+                >
+                  Thousands of New Sites Added Daily
+                </Typography>
               </Stack>
-              <Stack direction={"row"} pl={0.8}>
-                <FormControlLabel
-                  control={
-                    <Avatar
-                      src={annualplancheckboxicon}
-                      alt="paymentchekbox"
-                      sx={{ height: "32px", width: "32px" }}
-                    />
-                  }
-                  label={
-                    <Typography
-                      m={2}
-                      sx={{ fontSize: { xs: "18px", sm: "14px", lg: "15px" } }}
-                      className={classes.fontcolor}
-                    >
-                      Customer Support
-                    </Typography>
-                  }
-                />
+              <Stack direction={"row"}>
+                <img src={annualplancheckboxicon} alt="paymentchekbox" />
+                <Typography
+                  m={2}
+                  className={classes.fontcolor}
+                  sx={{
+                    fontSize: { xs: "18px", sm: "14px", lg: 16 },
+                    fontWeight: 500,
+                  }}
+                >
+                  Customer Support
+                </Typography>
               </Stack>
-
-              <Stack direction={"row"} pl={0.8}>
-                <FormControlLabel
-                  control={
-                    <Avatar
-                      src={annualplancheckboxicon}
-                      alt="paymentchekbox"
-                      sx={{ height: "32px", width: "32px" }}
-                    />
-                  }
-                  label={
-                    <Typography
-                      m={2}
-                      sx={{ fontSize: { xs: "18px", sm: "14px", lg: "15px" } }}
-                      className={classes.fontcolor}
-                    >
-                      New Tools and Features Coming Soon
-                    </Typography>
-                  }
-                />
+              <Stack direction={"row"}>
+                <img src={annualplancheckboxicon} alt="paymentchekbox" />
+                <Typography
+                  m={2}
+                  className={classes.fontcolor}
+                  sx={{
+                    fontSize: { xs: "18px", sm: "14px", lg: 16 },
+                    fontWeight: 500,
+                    // color:"white"
+                  }}
+                >
+                  New Tools and Features Coming Soon
+                </Typography>
               </Stack>
             </Stack>
             <Box style={{ display: "flex", justifyContent: "center" }}>
@@ -603,14 +586,21 @@ const Payment = () => {
                   <CircularProgress size={25} style={{ color: "#F6F6FB" }} />
                 ) : (
                   (status === false && "Try It Free") ||
-                  ((status === "Inactive" || status === "Canceled") &&
-                    "Get Started Now!")
+                  ((status === "Inactive" || status === "Canceled") && (                    
+                    <Typography
+                      sx={{ fontSize: "20px", fontWeight: "600 !important" }}
+                    noWrap>
+                      Get Started Now!
+                    </Typography>
+                  ))
                 )}
               </Button>
             </Box>
           </Stack>
         </Grid>
       </Grid>
+
+     
     </>
   );
 };

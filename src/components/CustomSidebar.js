@@ -12,10 +12,10 @@ import Menuicon from "../assets/bxs_left-arrow-circle.svg";
 import AdLibraryDatabaseIcon from "../SvgIcons/AdLibraryDatabaseIcon";
 import { useSelector } from "react-redux";
 
-// import ReactGA from "react-ga";
-// // const TRACKING_ID = "UA-335033091-1"; // OUR_TRACKING_ID UA-243661237-1
-// // const TRACKING_ID = "UA-243661237-1"; // OUR_TRACKING_ID UA-243661237-1
-// ReactGA.initialize(process.env.REACT_APP_TRACKING_ID);
+import ReactGA from "react-ga";
+// const TRACKING_ID = "UA-335033091-1"; // OUR_TRACKING_ID UA-243661237-1
+// const TRACKING_ID = "UA-243661237-1"; // OUR_TRACKING_ID UA-243661237-1
+ReactGA.initialize(process.env.REACT_APP_TRACKING_ID);
 
 const drawerWidth = 276;
 
@@ -285,12 +285,12 @@ export const CustomSidebar = ({ isOpen, setIsOpen }) => {
                 // })
 
 
-                // ReactGA.event({
-                //   category: "Button",
-                //   action: "contact",
-                // });
+                ReactGA.event({
+                  category: "shruti clicked",
+                  action: "shruti clicked",
+                });
 
-                
+
                 // window.gtag("event", "trialStart");
                 navigate("/ContactSupport");
               }}
