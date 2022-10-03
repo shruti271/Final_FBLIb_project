@@ -79,10 +79,7 @@ function AllFilters(props) {
   const allAdsPerams = useSelector((state) => state.allAdsPerams);
   const savedAdsPerams = useSelector((state) => state.savedAdsPerams);
   const { buttonTypes } = useSelector((state) => state.buttonTypes);
-  const filteredAds = useSelector((state) => state.filteredAds);
-  const { paginationIndex } = useSelector(
-    (state) => state.filteredSavedAds
-  );
+
   const ShowFilterWithClearButton = useMediaQuery(theme.breakpoints.only("xs"));
   // const ExtraSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const LargeScreenOnly = useMediaQuery(theme.breakpoints.up("sm"));
@@ -136,6 +133,10 @@ function AllFilters(props) {
       min: savedAdsPerams?.appliedFilters?.InstagramFollowers?.min,
       max: savedAdsPerams?.appliedFilters?.InstagramFollowers?.max,
     });
+    // useEffect(()=>{
+    //   buttonTypes.filter((e)=>e==='Shop Now')
+    //   buttonTypes.unshift('saij')
+    // },[])
 // useEffect(()=>{
 //   console.log("99999999 , ",)
 //   // pageName === PageNameEnum.AdlibraryDatabase

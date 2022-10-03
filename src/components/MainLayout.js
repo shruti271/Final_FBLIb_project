@@ -27,6 +27,12 @@ import ActiveSubScription from "../ActiveSubScription";
 import InActiveSubScription from "../InActiveSubScription";
 import MobileAppBar from "./MobileAppBar";
 
+// import ReactGA from 'react-ga';
+// const TRACKING_ID = "UA-243661237-1"; // OUR_TRACKING_ID UA-243661237-1
+// // const TRACKING_ID = "UA-243661237-1"; // OUR_TRACKING_ID
+// // const TRACKING_ID = "UA-335033091-1"; // OUR_TRACKING_ID
+// ReactGA.initialize(TRACKING_ID);
+
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
@@ -43,7 +49,15 @@ const MainLayout = () => {
 
   const [isOpen, setIsOpen] = React.useState(true);
   const showhidedrawer = useMediaQuery(theme.breakpoints.down("md"));
+ 
+ 
 
+
+
+  useEffect(()=>{
+    console.log("??????????????????????",window.location.pathname)
+    // ReactGA.pageview(window.location.pathname);
+  })
   // useEffect(() => {
   //   if (status === true ||status ===  "active" ||status ===  "Active") {
   //     dispatch(

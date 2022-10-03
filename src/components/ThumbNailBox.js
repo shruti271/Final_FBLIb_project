@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   Avatar,
   Box,
@@ -168,7 +168,6 @@ const ThumbNailBox = ({ adInfo, index }) => {
 
   const filteredSavedAds = useSelector((state) => state.filteredSavedAds);
   const savedAdsPerams = useSelector((state) => state.savedAdsPerams);
-  const filteredAds = useSelector((state) => state.filteredAds);
   
   useEffect(() => {
     const queryObject = {

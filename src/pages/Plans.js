@@ -22,8 +22,11 @@ import {
   yearsubcription,
 } from "../services";
 import GradientButton from "react-linear-gradient-button/lib/GradientButton";
-import { useDispatch, useSelector } from "react-redux";
-import { loadSubscriptionSuccess } from "../redux/ducks/subscription";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import ReactGA from "react-ga";
+ReactGA.initialize(process.env.REACT_APP_TRACKING_ID);
 
 const useStyles = makeStyles((theme) => ({
   paymentheading: {
@@ -93,7 +96,7 @@ const useStyles = makeStyles((theme) => ({
 const Payment = () => {
   const classes = useStyles();
   const theme = useTheme();
-  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { status } = useSelector((state) => state.subscriptionData?.data);
 
@@ -103,8 +106,19 @@ const Payment = () => {
 
   const [loading, setLoading] = useState(false);
   const [loadingyear, setLoadingyear] = useState(false);
-
+  useEffect(() => {
+    if (status === "active" || status === "Active") navigate("/");
+  });
   const buySubscriptionmonthly = () => {
+
+    status===false && ReactGA.event({
+      category: "TrialStart ",
+      action: "TrialStart ",
+    });
+    status === "Inactive"&& ReactGA.event({
+      category: "InitialCheckout",
+      action: "InitialCheckout",
+    });
     setLoading(true);
     if (!status) {
       startMonthlyTrial()
@@ -118,18 +132,29 @@ const Payment = () => {
           console.log(error);
         });
     } else if (status === "Inactive" || "Canceled") {
-      monthsubscription().then((res) => {
-        setLoading(false);
-        window.open(res.data.data.url, "_self");
-      })
-      .catch((error) => {
-        setLoading(false);
-        console.log(error);
-      });
+      monthsubscription()
+        .then((res) => {
+          setLoading(false);
+          window.open(res.data.data.url, "_self");
+        })
+        .catch((error) => {
+          setLoading(false);
+          console.log(error);
+        });
     }
   };
 
   const buySubscriptionAnnually = () => {
+
+    status===false && ReactGA.event({
+      category: "TrialStart ",
+      action: "TrialStart ",
+    });
+
+    status === "Inactive" && ReactGA.event({
+      category: "InitialCheckout",
+      action: "InitialCheckout",
+    });
     setLoadingyear(true);
     if (!status) {
       startYearlyTrial()
