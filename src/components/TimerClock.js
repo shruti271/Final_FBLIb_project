@@ -2,7 +2,6 @@ import { makeStyles } from "@material-ui/core";
 import { Divider, Stack, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
-import { useEffect } from "react";
 import Countdown from "react-countdown";
 import { useDispatch, useSelector } from "react-redux";
 import { updateScubsciptionStatus } from "../redux/ducks/subscription";

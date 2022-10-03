@@ -29,6 +29,8 @@ import { registerValidationSchema } from "./../../utils/validationSchemas";
 import fbaddlogo from "../../assets/Eye of Ecom  Blue.png";
 import fbaddlogowhitecolor from "../../assets/Eye of Ecom White.png";
 import { useEffect } from "react";
+import ReactGA from "react-ga";
+ReactGA.initialize(process.env.REACT_APP_TRACKING_ID);
 
 const Signup = () => {
 
@@ -61,6 +63,10 @@ const Signup = () => {
   };
 
   useEffect(()=>{
+    ReactGA.event({
+      category: "AddToCart",
+      action: "AddToCart",
+    });
     addToCartEventRegister()
     .then((res) => {})
     .catch((error) => {});

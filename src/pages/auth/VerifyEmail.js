@@ -18,6 +18,8 @@ import { activatyoureemail } from "../../services";
 import { themeLight, globalStyles } from "../../css/globalcss";
 import fbaddlogo from "../../assets/Eye of Ecom  Blue.png";
 import fbaddlogowhitecolor from "../../assets/Eye of Ecom White.png";
+import ReactGA from "react-ga";
+ReactGA.initialize(process.env.REACT_APP_TRACKING_ID);
 
 const VerifyEmail = () => {
   const global = globalStyles();
@@ -32,6 +34,10 @@ const VerifyEmail = () => {
 
   const verifymail = async () => {
     const res = await activatyoureemail({ getTkn });
+    ReactGA.event({
+      category: "CompleteRegister",
+      action: "CompleteRegister",
+    });
     setVerifiactionres(res.data.message);
   };
 

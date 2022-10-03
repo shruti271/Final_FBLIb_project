@@ -9,7 +9,7 @@ import {
 import { useSkipInitialEffect } from "../utils/customHooks";
 import emptyImg from "../assets/empty.svg";
 import { FadeLoader } from "react-spinners";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
 const SavedAdsList = () => {
   const dispatch = useDispatch();

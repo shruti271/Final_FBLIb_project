@@ -32,6 +32,12 @@ import StarFill from "../../assets/StarFill.svg";
 import Firsrcardimg from "../../assets/FirstCardImg.svg";
 import facebook from "../../assets/facebook.svg";
 import instragram from "../../assets/instragram.svg";
+// import ReactGA from "react-ga";
+// // const TRACKING_ID = "UA-335033091-1"; // OUR_TRACKING_ID UA-243661237-1
+// const TRACKING_ID = "UA-243661237-1"; // OUR_TRACKING_ID UA-243661237-1
+// ReactGA.initialize(TRACKING_ID);
+
+
 
 const ReadMore = ({ children }) => {
   const text = children;
@@ -39,6 +45,8 @@ const ReadMore = ({ children }) => {
   const toggleReadMore = () => {
     setIsReadMore(!isReadMore);
   };
+
+ 
   return (
     <>
       <Typography variant="p" className="text">
@@ -83,6 +91,12 @@ function AdDeatails() {
     },
     []
   );
+  // useEffect(()=>{
+  //   ReactGA.event({
+  //     category: "seedetails",
+  //     action: "seedetails",
+  //   });
+  // })
 
   useEffect(() => {
     if (filteredAds.filteredAds.length > 0) {

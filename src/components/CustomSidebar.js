@@ -12,6 +12,11 @@ import Menuicon from "../assets/bxs_left-arrow-circle.svg";
 import AdLibraryDatabaseIcon from "../SvgIcons/AdLibraryDatabaseIcon";
 import { useSelector } from "react-redux";
 
+import ReactGA from "react-ga";
+// const TRACKING_ID = "UA-335033091-1"; // OUR_TRACKING_ID UA-243661237-1
+// const TRACKING_ID = "UA-243661237-1"; // OUR_TRACKING_ID UA-243661237-1
+ReactGA.initialize(process.env.REACT_APP_TRACKING_ID);
+
 const drawerWidth = 276;
 
 const sideBarMenuItems = {
@@ -89,17 +94,25 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
+// export const useAnalyticsEventTracker = (category = "Blog category") => {
+//   const eventTracker = (action = "test action", label = "test label") => {
+//     ReactGA.event({ category: "saved", action: "done", label: "done" });
+//   };
+//   return eventTracker;
+// };
+
 export const CustomSidebar = ({ isOpen, setIsOpen }) => {
   const classes = useStyles();
   const navigate = useNavigate();
+
+  // const gaEventTracker = useAnalyticsEventTracker('Contact us');
+  // ReactGA.event({ category: "saved", action: "done", label: "done" });
 
   const [selectedMenuItem, setSelectedMenuItem] = useState(
     sideBarMenuItems.ADLIBSDATABASE
   );
   const filteredAds = useSelector((state) => state.filteredAds);
-  const { paginationIndex } = useSelector(
-    (state) => state.filteredSavedAds
-  );
+  const { paginationIndex } = useSelector((state) => state.filteredSavedAds);
 
   const [currentPage, setCurrentPage] = useState();
   const { state } = useLocation();
@@ -108,11 +121,11 @@ export const CustomSidebar = ({ isOpen, setIsOpen }) => {
   useEffect(() => {
     if (window.location.pathname === `/ContactSupport`) {
       setSelectedMenuItem(sideBarMenuItems.SUPPORT);
-    }else if (window.location.pathname.includes("savedAds")) {
+    } else if (window.location.pathname.includes("savedAds")) {
       setSelectedMenuItem(sideBarMenuItems.SAVEDADS);
     } else if (window.location.pathname.includes("/")) {
       setSelectedMenuItem(sideBarMenuItems.ADLIBSDATABASE);
-    }  else if (window.location.pathname.split("/").includes("adDeatails")) {
+    } else if (window.location.pathname.split("/").includes("adDeatails")) {
       if (currentPage === "/savedAds")
         setSelectedMenuItem(sideBarMenuItems.SAVEDADS);
       else setSelectedMenuItem(sideBarMenuItems.ADLIBSDATABASE);
@@ -257,6 +270,28 @@ export const CustomSidebar = ({ isOpen, setIsOpen }) => {
               }
               onClick={() => {
                 setSelectedMenuItem(sideBarMenuItems.SUPPORT);
+                // eslint-disable-next-line react-hooks/rules-of-hooks
+                // const gaEventTracker = useAnalyticsEventTracker('Contact us');
+                // ReactGA.event({
+                //   category: "saved",
+                //   action: "done",
+                //   label: "done",
+                // });
+                // ReactGA.event( {
+                //   category:"trialStart",
+                //   action:"trialStart",
+                //   label:"trialStart",
+                //   value:"trialStart"
+                // })
+
+
+                ReactGA.event({
+                  category: "shruti clicked",
+                  action: "shruti clicked",
+                });
+
+
+                // window.gtag("event", "trialStart");
                 navigate("/ContactSupport");
               }}
             >
