@@ -30,7 +30,8 @@ ReactGA.initialize(process.env.REACT_APP_TRACKING_ID);
 
 const useStyles = makeStyles((theme) => ({
   paymentheading: {
-    fontWeight: "900 !important",
+    // fontWeight: "900 !important",
+    fontWeight: "600 !important",
     fontSize: "24px !important",
     lineHeight: "31px !important",
     [theme.breakpoints.down("xs")]: {
@@ -55,12 +56,15 @@ const useStyles = makeStyles((theme) => ({
   chooseplanbutton: {
     fontWeight: "600 !important",
     height: "35px",
-    background:
-      "linear-gradient(270deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)",
-    WebkitBackgroundClip: "text",
-    WebkitTextFillColor: "transparent",
-    backgroundClip: "text",
-    textFillColor: "transparent",
+    // background:
+    //   "linear-gradient(270deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)",
+    background: "red !important",
+    color: "white !important",
+    fontFamily: "Neue Haas Grotesk Display Pro",
+    // WebkitBackgroundClip: "text",
+    // WebkitTextFillColor: "transparent",
+    // backgroundClip: "text",
+    // textFillColor: "transparent",
     width: "80%",
     textTransform: "none",
   },
@@ -110,15 +114,16 @@ const Payment = () => {
     if (status === "active" || status === "Active") navigate("/");
   });
   const buySubscriptionmonthly = () => {
-
-    status===false && ReactGA.event({
-      category: "TrialStart ",
-      action: "TrialStart ",
-    });
-    status === "Inactive"&& ReactGA.event({
-      category: "InitialCheckout",
-      action: "InitialCheckout",
-    });
+    status === false &&
+      ReactGA.event({
+        category: "TrialStart ",
+        action: "TrialStart ",
+      });
+    status === "Inactive" &&
+      ReactGA.event({
+        category: "InitialCheckout",
+        action: "InitialCheckout",
+      });
     setLoading(true);
     if (!status) {
       startMonthlyTrial()
@@ -145,16 +150,17 @@ const Payment = () => {
   };
 
   const buySubscriptionAnnually = () => {
+    status === false &&
+      ReactGA.event({
+        category: "TrialStart ",
+        action: "TrialStart ",
+      });
 
-    status===false && ReactGA.event({
-      category: "TrialStart ",
-      action: "TrialStart ",
-    });
-
-    status === "Inactive" && ReactGA.event({
-      category: "InitialCheckout",
-      action: "InitialCheckout",
-    });
+    status === "Inactive" &&
+      ReactGA.event({
+        category: "InitialCheckout",
+        action: "InitialCheckout",
+      });
     setLoadingyear(true);
     if (!status) {
       startYearlyTrial()
@@ -182,9 +188,11 @@ const Payment = () => {
       <Box className={classes.fontSizeCustomize} p={1}>
         <Typography
           variant="h5"
-          sx={{
-            fontWeight: "bold",
-          }}
+          // sx={{
+          //   fontWeight: "bold",
+          // }}
+          // sx={{ fontWeight: 600 }}
+          sx={{ fontWeight: 600 }}
           align={aligncenterfont ? "center" : "center"}
         >
           {status === false && (
@@ -195,7 +203,7 @@ const Payment = () => {
           {(status === "Inactive" || status === "Canceled") && (
             <span className={classes.paymentheading}>
               {" "}
-              Your Free Trial Has expired{" "}
+              Your Free Trial Has Ended{" "}
             </span>
           )}
 
@@ -208,15 +216,33 @@ const Payment = () => {
           gutterBottom
           color="#2B2F42"
           p={1.5}
-          sx={{ fontWeight: 600 }}
+          // sx={{ fontWeight: 600 }}
+          sx={{ fontWeight: "bold" }}
           align={aligncenterfont ? "center" : "center"}
         >
           {/* Try it free for 24 hours! */}
-          {(status === "Inactive" || status === "Canceled") &&
-            "Please select a plan to continue using Eye of Ecom!"}
+          {(status === "Inactive" || status === "Canceled") && (
+            <>
+              Sign up in the next 24 hours and get
+              <span style={{ color: "red" }}>&nbsp;&nbsp;60% off &nbsp;</span>
+              every month!
+            </>
+          )}
           {status === false &&
             "No credit card needed. Try it free for 24 hours!"}
         </Typography>
+        {(status === "Inactive") && (
+          <Typography
+            variant="h5"
+            className={classes.paymentheading}
+            sx={{
+              fontWeight: "bold",
+            }}
+            align={aligncenterfont ? "center" : "center"}
+          >
+            14 Day money back guarantee (for any reason)
+          </Typography>
+        )}
       </Box>
 
       <Grid
@@ -261,15 +287,39 @@ const Payment = () => {
               Monthly Plan{" "}
             </Typography>
             <Stack p={2}>
-              <Box sx={{ display: "flex", justifyContent: "flex-start" }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "flex-start",
+                  alignItems: "center",
+                }}
+              >
                 <Typography
-                  variant="h3"
+                  // variant="h5"
                   gutterBottom
                   component="div"
-                  sx={{ marginLeft: { xs: 3, sm: 0, lg: 0 }, fontWeight: 600 }}
+                  sx={{
+                    marginLeft: { xs: 3, sm: 0, lg: 0 },
+                    marginRight: 1, //{ xs: 1, sm: 1, lg: 1},
+                    // fontWeight: 600 ,
+                    fontSize: "3vh",
+                    // display:"flex",alignSelf:"center"
+                  }}
                 >
                   {" "}
-                  $49
+                  <del>$49</del>
+                </Typography>
+                <Typography
+                  variant="h2"
+                  gutterBottom
+                  component="div"
+                  sx={{
+                    // marginLeft: { xs: 1, sm: 0, lg: 0 },
+                    fontWeight: 600,
+                    color: "red",
+                  }}
+                >
+                  $19
                 </Typography>
                 <Typography variant="h6" m={2.7} className={classes.month}>
                   /MONTH
@@ -353,6 +403,8 @@ const Payment = () => {
                 onClick={buySubscriptionmonthly}
                 style={{
                   borderRadius: 30,
+                  // background:"red",
+                  // color:"white",
                   fontSize: "20px",
                   borderColor: "#EBEBEB",
                   textTransform: "none",
@@ -363,7 +415,7 @@ const Payment = () => {
                 ) : (
                   (status === false && "Try It Free") ||
                   ((status === "Inactive" || status === "Canceled") &&
-                    "Choose Plan")
+                    "Get Started Now!")
                 )}
               </Button>
             </Box>
@@ -413,10 +465,11 @@ const Payment = () => {
                   sx={{ marginLeft: { xs: 3, sm: 0, lg: 0 } }}
                 >
                   {" "}
-                  $29
+                  {/* $29 */}
+                  $190
                 </Typography>
                 <Typography variant="h6" m={2.7} className={classes.month}>
-                  /MONTH
+                  /YEAR
                 </Typography>
               </Box>
               <Typography
@@ -551,7 +604,7 @@ const Payment = () => {
                 ) : (
                   (status === false && "Try It Free") ||
                   ((status === "Inactive" || status === "Canceled") &&
-                    "Choose Plan")
+                    "Get Started Now!")
                 )}
               </Button>
             </Box>
