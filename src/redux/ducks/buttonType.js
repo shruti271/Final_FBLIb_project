@@ -30,9 +30,14 @@ const buttonTypesReducer = (state = initialState, action) => {
         loading: true,
       };
     case GET_BUTTON_TYPES_SUCCESS:
+      let addShopNowFirst =  action.payload;            
+      if(addShopNowFirst.find((a)=>a==="Shop Now")){
+        addShopNowFirst=addShopNowFirst.filter((a)=>a!=="Shop Now")
+        addShopNowFirst.unshift("Shop Now");
+    }          
       return {
         ...state,
-        buttonTypes: action.payload,
+        buttonTypes: addShopNowFirst,//action.payload,
         loading: false,
       };
     case GET_BUTTON_TYPES_ERROR:
