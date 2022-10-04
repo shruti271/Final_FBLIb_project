@@ -303,15 +303,14 @@ const Payment = () => {
                 }}
               >
                 <Typography
-                  // variant="h5"
+                  variant="h3"
                   gutterBottom
                   component="div"
                   sx={{
                     marginLeft: { xs: 3, sm: 0, lg: 0 },
                     marginRight: 1, //{ xs: 1, sm: 1, lg: 1},
-                    // fontWeight: 600 ,
-                    fontSize: "2.5vh",
-                    // display:"flex",alignSelf:"center"
+                    fontWeight: 600 ,
+                    fontSize: (status==="Inactive" || status==="Canceled")?"2.5vh":"3.5vh",                    
                   }}
                 >
                   {" "}
@@ -330,12 +329,13 @@ const Payment = () => {
                       fontWeight: 600,
                       color: "red",
                       fontSize: "3.5vh",
+                      marginRight:0.5
                     }}
                   >
                     ${process.env.REACT_APP_MONTHLY_PRICE}
                   </Typography>
                 )}
-                <Typography variant="h6" m={1} className={classes.month}>
+                <Typography variant="h6" className={classes.month}>
                   /MONTH
                 </Typography>
               </Box>
