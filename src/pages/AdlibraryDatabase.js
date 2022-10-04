@@ -66,7 +66,7 @@ const Addlibrarydatabase = () => {
               >
                 Adlibrary Database
               </Typography>
-              <TimerClock/>
+              {/* <TimerClock/> */}
             </Stack>
           </Box>
         </Grid>
