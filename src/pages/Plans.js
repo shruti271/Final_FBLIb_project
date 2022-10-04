@@ -56,15 +56,20 @@ const useStyles = makeStyles((theme) => ({
   chooseplanbutton: {
     fontWeight: "600 !important",
     height: "35px",
-    // background:
-    //   "linear-gradient(270deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)",
+    background: "linear-gradient(270deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)",
+    WebkitBackgroundClip: "text",
+    WebkitTextFillColor: "transparent",
+    backgroundClip: "text",
+    textFillColor: "transparent",
+    width: "80%",
+    textTransform: "none",
+},
+  chooseplanInactiveStusbutton: {
+    fontWeight: "600 !important",
+    height: "35px",
     background: "red !important",
     color: "white !important",
     fontFamily: "Neue Haas Grotesk Display Pro",
-    // WebkitBackgroundClip: "text",
-    // WebkitTextFillColor: "transparent",
-    // backgroundClip: "text",
-    // textFillColor: "transparent",
     width: "80%",
     textTransform: "none",
   },
@@ -218,7 +223,7 @@ const Payment = () => {
           color="#2B2F42"
           p={1.5}
           // sx={{ fontWeight: 600 }}
-          sx={{ fontWeight: "bold" ,marginBottom:0}}
+          sx={{ fontWeight: "bold", marginBottom: 0 }}
           align={aligncenterfont ? "center" : "center"}
         >
           {/* Try it free for 24 hours! */}
@@ -232,7 +237,7 @@ const Payment = () => {
           {status === false &&
             "No credit card needed. Try it free for 24 hours!"}
         </Typography>
-        {(status === "Inactive" ) && (
+        {status === "Inactive" && (
           <Typography
             variant="h5"
             className={classes.paymentheading}
@@ -254,7 +259,7 @@ const Payment = () => {
           justifyContent: "center",
           alignItems: "center",
           marginRight: 11,
-          marginBottom: 5//paddingcard ? 5 : "",
+          marginBottom: 5, //paddingcard ? 5 : "",
         }}
       >
         <Grid
@@ -401,12 +406,12 @@ const Payment = () => {
             <Box style={{ display: "flex", justifyContent: "center" }}>
               <Button
                 variant="outlined"
-                className={classes.chooseplanbutton}
+                className={status ===false ? classes.chooseplanbutton  : classes.chooseplanInactiveStusbutton}
                 onClick={buySubscriptionmonthly}
                 style={{
                   borderRadius: 30,
-                  // background:"red",
-                  // color:"white",
+                  background: status === "Inactive" && "red",
+                  // fontcolor:"black",
                   fontSize: "20px",
                   borderColor: "#EBEBEB",
                   textTransform: "none",
@@ -416,8 +421,16 @@ const Payment = () => {
                   <CircularProgress size={25} style={{ color: "#00CBFF" }} />
                 ) : (
                   (status === false && "Try It Free") ||
-                  ((status === "Inactive" || status === "Canceled") &&
-                    "Get Started Now!")
+                  ((status === "Inactive" || status === "Canceled") && (
+                    <p
+                      // style={{
+                      //   color:
+                      //     "linear-gradient(270deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)",
+                      // }}
+                    >
+                      Get Started Now!
+                    </p>
+                  ))
                 )}
               </Button>
             </Box>
@@ -432,7 +445,7 @@ const Payment = () => {
           sx={{
             background:
               "linear-gradient(321.16deg, #002838 87.91%, #5F5DC3 100%)",
-              borderRadius: {
+            borderRadius: {
               xs: "25px",
               sm: "18px 60px 18px 18px",
               lg: "18px 60px 18px 18px",
@@ -446,7 +459,7 @@ const Payment = () => {
           }}
         >
           <Stack p={2} pt={4}>
-          <Box sx={{ marginLeft: { xs: "26px", sm: "16px" } }}>
+            <Box sx={{ marginLeft: { xs: "26px", sm: "16px" } }}>
               <GradientButton
                 gradient={[
                   "rgba(103, 33, 255, 1)",
@@ -496,7 +509,6 @@ const Payment = () => {
                 Get 5 Months Free By Paying Annually
               </Typography>
 
-
               <Divider
                 variant="fullWidth"
                 className={classes.dividerColor}
@@ -536,7 +548,6 @@ const Payment = () => {
                   sx={{
                     fontSize: { xs: "18px", sm: "14px", lg: 16 },
                     fontWeight: 500,
-                    
                   }}
                 >
                   Thousands of New Sites Added Daily
@@ -586,10 +597,11 @@ const Payment = () => {
                   <CircularProgress size={25} style={{ color: "#F6F6FB" }} />
                 ) : (
                   (status === false && "Try It Free") ||
-                  ((status === "Inactive" || status === "Canceled") && (                    
+                  ((status === "Inactive" || status === "Canceled") && (
                     <Typography
                       sx={{ fontSize: "20px", fontWeight: "600 !important" }}
-                    noWrap>
+                      noWrap
+                    >
                       Get Started Now!
                     </Typography>
                   ))
@@ -599,7 +611,7 @@ const Payment = () => {
           </Stack>
         </Grid>
       </Grid>
-{/* <Grid
+      {/* <Grid
           item
           xs={10}
           lg={5}
@@ -800,11 +812,8 @@ const Payment = () => {
             </Box>
           </Stack>
         </Grid> */}
-     
     </>
   );
 };
-
-
 
 export default Payment;
