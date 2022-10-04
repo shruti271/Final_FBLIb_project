@@ -56,14 +56,15 @@ const useStyles = makeStyles((theme) => ({
   chooseplanbutton: {
     fontWeight: "600 !important",
     height: "35px",
-    background: "linear-gradient(270deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)",
+    background:
+      "linear-gradient(270deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)",
     WebkitBackgroundClip: "text",
     WebkitTextFillColor: "transparent",
     backgroundClip: "text",
     textFillColor: "transparent",
     width: "80%",
     textTransform: "none",
-},
+  },
   chooseplanInactiveStusbutton: {
     fontWeight: "600 !important",
     height: "35px",
@@ -230,14 +231,14 @@ const Payment = () => {
           {(status === "Inactive" || status === "Canceled") && (
             <>
               Sign up in the next 24 hours and get
-              <span style={{ color: "red" }}>&nbsp;&nbsp;60% off &nbsp;</span>
+              <span style={{ color: "red" }}>&nbsp;&nbsp; ${process.env.REACT_APP_DISCOUNT_PERCENTAGE}% off &nbsp;</span>
               every month!
             </>
           )}
           {status === false &&
             "No credit card needed. Try it free for 24 hours!"}
         </Typography>
-        {(status === "Inactive"|| status === "Canceled") && (
+        {status === "Inactive" && (
           <Typography
             variant="h5"
             className={classes.paymentheading}
@@ -314,21 +315,27 @@ const Payment = () => {
                   }}
                 >
                   {" "}
-                  <del>$49</del>
+                  {status === "Inactive" || status === "Canceled" ? (
+                    <del>${process.env.REACT_APP_MONTHLY_CROSS_PRICE}</del>
+                  ) : (
+                    `$${process.env.REACT_APP_MONTHLY_CROSS_PRICE}`
+                  )}
                 </Typography>
-                <Typography
-                  variant="h3"
-                  gutterBottom
-                  component="div"
-                  sx={{
-                    fontWeight: 600,
-                    color: "red",
-                    fontSize: "3.5vh",
-                  }}
-                >
-                  $19
-                </Typography>
-                <Typography variant="h6" m={2.7} className={classes.month}>
+                {(status === "Inactive" || status === "Canceled") && (
+                  <Typography
+                    variant="h3"
+                    gutterBottom
+                    component="div"
+                    sx={{
+                      fontWeight: 600,
+                      color: "red",
+                      fontSize: "3.5vh",
+                    }}
+                  >
+                    ${process.env.REACT_APP_MONTHLY_PRICE}
+                  </Typography>
+                )}
+                <Typography variant="h6" m={1} className={classes.month}>
                   /MONTH
                 </Typography>
               </Box>
@@ -406,7 +413,11 @@ const Payment = () => {
             <Box style={{ display: "flex", justifyContent: "center" }}>
               <Button
                 variant="outlined"
-                className={status ===false ? classes.chooseplanbutton  : classes.chooseplanInactiveStusbutton}
+                className={
+                  status === false
+                    ? classes.chooseplanbutton
+                    : classes.chooseplanInactiveStusbutton
+                }
                 onClick={buySubscriptionmonthly}
                 style={{
                   borderRadius: 30,
@@ -423,10 +434,10 @@ const Payment = () => {
                   (status === false && "Try It Free") ||
                   ((status === "Inactive" || status === "Canceled") && (
                     <p
-                      // style={{
-                      //   color:
-                      //     "linear-gradient(270deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)",
-                      // }}
+                    // style={{
+                    //   color:
+                    //     "linear-gradient(270deg, #B5EDFF 0%, #00CBFF 29.96%, #6721FF 89.87%, #C8BDFF 104.58%)",
+                    // }}
                     >
                       Get Started Now!
                     </p>
@@ -494,9 +505,9 @@ const Payment = () => {
                     fontSize: "3.5vh",
                   }}
                 >
-                  $190
+                  ${process.env.REACT_APP_YEARLY_PRICE}
                 </Typography>
-                <Typography variant="h6" m={2.7} className={classes.month}>
+                <Typography variant="h6" m={1} className={classes.month}>
                   /YEAR
                 </Typography>
               </Box>
