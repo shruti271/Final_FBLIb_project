@@ -495,7 +495,7 @@ const Payment = () => {
                   alignItems: "center",
                 }}
               >
-                <Typography
+                {/* <Typography
                   variant="h3"
                   gutterBottom
                   component="div"
@@ -505,9 +505,51 @@ const Payment = () => {
                     fontSize: "3.5vh",
                   }}
                 >
-                  ${process.env.REACT_APP_YEARLY_PRICE}
+                 {status === "Inactive" || status === "Canceled" ? (
+                    <del>${process.env.REACT_APP_YEARLY_CROSS_PRICE}</del>
+                  ) : (
+                    `$${process.env.REACT_APP_YEARLY_CROSS_PRICE}`
+                  )}
+
+                 
+                </Typography> */}
+
+
+                <Typography
+                  variant="h3"
+                  gutterBottom
+                  component="div"
+                  sx={{
+                    marginLeft: { xs: 3, sm: 0, lg: 0 },
+                    marginRight: 1, //{ xs: 1, sm: 1, lg: 1},
+                    fontWeight: 600 ,
+                    color:"white",
+                    fontSize: (status==="Inactive" || status==="Canceled")?"2.2vh":"3.5vh",                    
+                  }}
+                >
+                  {" "}
+                  {status === "Inactive" || status === "Canceled" ? (
+                    <del>${process.env.REACT_APP_YEARLY_CROSS_PRICE}</del>
+                  ) : (
+                    `$${process.env.REACT_APP_YEARLY_CROSS_PRICE}`
+                  )}
                 </Typography>
-                <Typography variant="h6" m={1} className={classes.month}>
+                {(status === "Inactive" || status === "Canceled") && (
+                  <Typography
+                    variant="h3"
+                    gutterBottom
+                    component="div"
+                    sx={{
+                      fontWeight: 600,
+                      color: "white",
+                      fontSize: "3.5vh",
+                      marginRight:0.5
+                    }}
+                  >
+                    ${process.env.REACT_APP_YEARLY_PRICE}
+                  </Typography>
+                )}
+                <Typography variant="h6" className={classes.month}>
                   /YEAR
                 </Typography>
               </Box>
@@ -517,7 +559,7 @@ const Payment = () => {
                 sx={{ fontSize: { xs: "18px", sm: "14px", lg: "15px" } }}
                 align={aligncenterfont ? "" : "center"}
               >
-                Get 5 Months Free By Paying Annually
+                Get 2 Months Free By Paying Annually
               </Typography>
 
               <Divider

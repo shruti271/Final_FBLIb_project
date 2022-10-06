@@ -23,6 +23,7 @@ import EyeofEcomTabletLogo from "../assets/EyeofEcomTabletLogo.png";
 import settings from "../assets/settings.svg";
 import logout from "../assets/Logout.svg";
 import contactUs from "../assets/contactUs.svg";
+import mobile_logo from "../assets/mobile_logo.png";
 
 const drawerWidth = 276;
 
@@ -119,7 +120,7 @@ function MobileAppBar() {
               <Box sx={{ marginRight: "8px", display: "flex" }}>
                 <img
                   alt="small-logo"
-                  src={EyeofEcomTabletLogo}
+                  src={mobile_logo}
                   onClick={() => navigate("/auth/login")}
                   style={{ cursor: "pointer", width: "71px" }}
                 />

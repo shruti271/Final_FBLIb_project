@@ -10,6 +10,7 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import useStyles from "../css/mediapage";
 import { logoutUser } from "../services";
 import EyeofEcomLaptopLogo from "../assets/EyeofEcomLaptopLogo.png";
+import desktop_logo from "../assets/desktop_logo.png";
 import settings from "../assets/settings.svg";
 import logout from "../assets/Logout.svg";
 import contactUs from "../assets/contactUs.svg";
@@ -93,7 +94,7 @@ export const CustomAppBar = ({ isOpen, setIsOpen }) => {
           >
             <Stack direction={"row"}>
               <img
-                src={EyeofEcomLaptopLogo}
+                src={desktop_logo}
                 alt="444"
                 height={33}
                 onClick={() => {
