@@ -559,7 +559,7 @@ const Payment = () => {
                 sx={{ fontSize: { xs: "18px", sm: "14px", lg: "15px" } }}
                 align={aligncenterfont ? "" : "center"}
               >
-                Get 2 Months Free By Paying Annually
+                Get {process.env.REACT_APP_FREE_MONTHS} Months Free By Paying Annually
               </Typography>
 
               <Divider
