@@ -15,6 +15,7 @@ import {
   useMediaQuery,
   useTheme,
   Stack,
+  Divider,
 } from "@mui/material";
 import { Grid } from "@mui/material";
 import { CircularProgress } from "@mui/material";
@@ -146,6 +147,7 @@ const Login = () => {
                 <Box
                   sx={{
                     padding: paddingcardsmalldevice ? "" : "1vmax 2.5vmax",
+                    paddingBottom:"0px"
                   }}
                 >
                   <Typography
@@ -370,6 +372,14 @@ const Login = () => {
               >
                 or
               </Typography> */}
+              <Box
+                sx={{
+                  padding: paddingcardsmalldevice ? "" : "1vmax 2.5vmax",
+                  paddingTop:"0px"
+                }}
+              >
+                <Divider>OR</Divider>
+              </Box>
 
               <div
                 style={{
@@ -378,7 +388,7 @@ const Login = () => {
                   alignItems: "center",
                 }}
               >
-              <GoogleAuthLogin/>
+                <GoogleAuthLogin />
                 {/* <GoogleOAuthProvider clientId="1051506495207-q9t49sm79f7e958lfc5r1fu17blputsp.apps.googleusercontent.com">
                   <GoogleLogin //useOneTap={googleLogin}
                     // type="icon"

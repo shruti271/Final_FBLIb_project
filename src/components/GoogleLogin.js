@@ -31,7 +31,13 @@ function GoogleAuthLogin() {
           // type="standard"
           // shape="pill"
           logo_alignment="left"
-          size="medium"
+          size="large"
+          width="250px"
+          theme="ououtline"
+          // shape="pill"
+          // auto_select={false}
+          // type="standard"
+          // auto_select={false}
           // locale="gudsgawu"
           onSuccess={async (credentialResponse) => {
             const abc =await axios.post(
