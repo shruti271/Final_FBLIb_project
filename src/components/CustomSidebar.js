@@ -132,19 +132,6 @@ export const CustomSidebar = ({ isOpen, setIsOpen }) => {
     } else {
       setSelectedMenuItem("");
     }
-    // if (window.location.pathname === `/ContactSupport`) {
-    //   setSelectedMenuItem(sideBarMenuItems.SUPPORT);
-    // } else if (window.location.pathname === `/page=${filteredAds.paginationIndex + 1}`) {
-    //   setSelectedMenuItem(sideBarMenuItems.ADLIBSDATABASE);
-    // } else if (window.location.pathname === `/savedAds/page=${paginationIndex}`) {
-    //   setSelectedMenuItem(sideBarMenuItems.SAVEDADS);
-    // } else if (window.location.pathname.split("/").includes("adDeatails")) {
-    //   if (currentPage === "/savedAds")
-    //     setSelectedMenuItem(sideBarMenuItems.SAVEDADS);
-    //   else setSelectedMenuItem(sideBarMenuItems.ADLIBSDATABASE);
-    // } else {
-    //   setSelectedMenuItem("");
-    // }
   });
 
   useEffect(() => {

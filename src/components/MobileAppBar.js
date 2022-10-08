@@ -69,6 +69,7 @@ function MobileAppBar() {
     logoutUser().then(
       (data) => {
         localStorage.setItem("is_alive", false);
+        console.log("in logout");
         handleCloseMenu();
         navigate("/auth/login");
       },

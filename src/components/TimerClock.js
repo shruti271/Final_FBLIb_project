@@ -14,14 +14,16 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function convertUTCDateToLocalDate(date) {
-  var newDate = new Date(date.getTime() + date.getTimezoneOffset() * 60 * 1000);
+  // var newDate = new Date(date.getTime() + date.getTimezoneOffset() * 60 * 1000);
 
-  var offset = date.getTimezoneOffset() / 60;
-  var hours = date.getHours();
+  // var offset = date.getTimezoneOffset() / 60;
+  // var hours = date.getHours();
 
-  newDate.setHours(hours - offset);
+  // newDate.setHours(hours - offset);
 
-  return newDate;
+  // return newDate;
+  var newDate = new Date(date.getTime() - date.getTimezoneOffset()*60*1000);
+  return newDate; 
 }
 
 function TimerClock() {
@@ -42,6 +44,7 @@ function TimerClock() {
 
           <Countdown
             date={convertUTCDateToLocalDate(new Date(trial_end_date)).getTime()}
+            // date={new Date(trial_end_date).getTime()}
             autoStart="true"
             onComplete={() => {
               dispatch(

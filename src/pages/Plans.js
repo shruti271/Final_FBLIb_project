@@ -109,8 +109,8 @@ const Payment = () => {
   const theme = useTheme();
   const navigate = useNavigate();
 
-  const { status } = useSelector((state) => state.subscriptionData?.data);
-
+  const { data } = useSelector((state) => state.subscriptionData);
+console.log("*******************************************",data)
   const aligncenterfont = useMediaQuery(theme.breakpoints.up("sm"));
   const aligncentercard = useMediaQuery(theme.breakpoints.up("sm"));
   const paddingcard = useMediaQuery(theme.breakpoints.down("sm"));
@@ -118,21 +118,21 @@ const Payment = () => {
   const [loading, setLoading] = useState(false);
   const [loadingyear, setLoadingyear] = useState(false);
   useEffect(() => {
-    if (status === "active" || status === "Active") navigate("/");
+    if (data.status === "active" || data.status === "Active") navigate("/");
   });
   const buySubscriptionmonthly = () => {
-    status === false &&
+    data.status === false &&
       ReactGA.event({
         category: "TrialStart ",
         action: "TrialStart ",
       });
-    status === "Inactive" &&
+    data.status === "Inactive" &&
       ReactGA.event({
         category: "InitialCheckout",
         action: "InitialCheckout",
       });
     setLoading(true);
-    if (!status) {
+    if (!data.status) {
       startMonthlyTrial()
         .then((res) => {
           setLoading(false);
@@ -143,7 +143,7 @@ const Payment = () => {
           setLoading(false);
           console.log(error);
         });
-    } else if (status === "Inactive" || "Canceled") {
+    } else if (data.status === "Inactive" || "Canceled") {
       monthsubscription()
         .then((res) => {
           setLoading(false);
@@ -157,19 +157,19 @@ const Payment = () => {
   };
 
   const buySubscriptionAnnually = () => {
-    status === false &&
+    data.status === false &&
       ReactGA.event({
         category: "TrialStart ",
         action: "TrialStart ",
       });
 
-    status === "Inactive" &&
+    data.status === "Inactive" &&
       ReactGA.event({
         category: "InitialCheckout",
         action: "InitialCheckout",
       });
     setLoadingyear(true);
-    if (!status) {
+    if (!data.status) {
       startYearlyTrial()
         .then((res) => {
           setLoadingyear(false);
@@ -177,7 +177,7 @@ const Payment = () => {
           window.open("/", "_self");
         })
         .catch((error) => console.log(error));
-    } else if (status === "Inactive" || "Canceled") {
+    } else if (data.status === "Inactive" || "Canceled") {
       yearsubcription()
         .then((res) => {
           setLoadingyear(false);
@@ -202,12 +202,12 @@ const Payment = () => {
           sx={{ fontWeight: 600 }}
           align={aligncenterfont ? "center" : "center"}
         >
-          {status === false && (
+          {data.status === false && (
             <span className={classes.paymentheading}>
               Select a Plan to Get Started
             </span>
           )}
-          {(status === "Inactive" || status === "Canceled") && (
+          {(data.status === "Inactive" || data.status === "Canceled") && (
             <span className={classes.paymentheading}>
               {" "}
               Your Free Trial Has Ended{" "}
@@ -228,17 +228,17 @@ const Payment = () => {
           align={aligncenterfont ? "center" : "center"}
         >
           {/* Try it free for 24 hours! */}
-          {(status === "Inactive" || status === "Canceled") && (
+          {(data.status === "Inactive" || data.status === "Canceled") && (
             <>
               Sign up in the next 24 hours and get
               <span style={{ color: "red" }}>&nbsp;&nbsp; ${process.env.REACT_APP_DISCOUNT_PERCENTAGE}% off &nbsp;</span>
               every month!
             </>
           )}
-          {status === false &&
+          {data.status === false &&
             "No credit card needed. Try it free for 24 hours!"}
         </Typography>
-        {status === "Inactive" && (
+        {data.status === "Inactive" && (
           <Typography
             variant="h5"
             className={classes.paymentheading}
@@ -310,17 +310,17 @@ const Payment = () => {
                     marginLeft: { xs: 3, sm: 0, lg: 0 },
                     marginRight: 1, //{ xs: 1, sm: 1, lg: 1},
                     fontWeight: 600 ,
-                    fontSize: (status==="Inactive" || status==="Canceled")?"2.5vh":"3.5vh",                    
+                    fontSize: (data.status==="Inactive" || data.status==="Canceled")?"2.5vh":"3.5vh",                    
                   }}
                 >
                   {" "}
-                  {status === "Inactive" || status === "Canceled" ? (
+                  {data.status === "Inactive" || data.status === "Canceled" ? (
                     <del>${process.env.REACT_APP_MONTHLY_CROSS_PRICE}</del>
                   ) : (
                     `$${process.env.REACT_APP_MONTHLY_CROSS_PRICE}`
                   )}
                 </Typography>
-                {(status === "Inactive" || status === "Canceled") && (
+                {(data.status === "Inactive" || data.status === "Canceled") && (
                   <Typography
                     variant="h3"
                     gutterBottom
@@ -414,14 +414,14 @@ const Payment = () => {
               <Button
                 variant="outlined"
                 className={
-                  status === false
+                  data.status === false
                     ? classes.chooseplanbutton
                     : classes.chooseplanInactiveStusbutton
                 }
                 onClick={buySubscriptionmonthly}
                 style={{
                   borderRadius: 30,
-                  background: status === "Inactive" && "red",
+                  background: data.status === "Inactive" && "red",
                   // fontcolor:"black",
                   fontSize: "20px",
                   borderColor: "#EBEBEB",
@@ -431,8 +431,8 @@ const Payment = () => {
                 {loading ? (
                   <CircularProgress size={25} style={{ color: "#00CBFF" }} />
                 ) : (
-                  (status === false && "Try It Free") ||
-                  ((status === "Inactive" || status === "Canceled") && (
+                  (data.status === false && "Try It Free") ||
+                  ((data.status === "Inactive" || data.status === "Canceled") && (
                     <p
                     // style={{
                     //   color:
@@ -505,7 +505,7 @@ const Payment = () => {
                     fontSize: "3.5vh",
                   }}
                 >
-                 {status === "Inactive" || status === "Canceled" ? (
+                 {data.status === "Inactive" || data.status === "Canceled" ? (
                     <del>${process.env.REACT_APP_YEARLY_CROSS_PRICE}</del>
                   ) : (
                     `$${process.env.REACT_APP_YEARLY_CROSS_PRICE}`
@@ -524,17 +524,17 @@ const Payment = () => {
                     marginRight: 1, //{ xs: 1, sm: 1, lg: 1},
                     fontWeight: 600 ,
                     color:"white",
-                    fontSize: (status==="Inactive" || status==="Canceled")?"2.2vh":"3.5vh",                    
+                    fontSize: (data.status==="Inactive" || data.status==="Canceled")?"2.2vh":"3.5vh",                    
                   }}
                 >
                   {" "}
-                  {status === "Inactive" || status === "Canceled" ? (
+                  {data.status === "Inactive" || data.status === "Canceled" ? (
                     <del>${process.env.REACT_APP_YEARLY_CROSS_PRICE}</del>
                   ) : (
                     `$${process.env.REACT_APP_YEARLY_CROSS_PRICE}`
                   )}
                 </Typography>
-                {(status === "Inactive" || status === "Canceled") && (
+                {(data.status === "Inactive" || data.status === "Canceled") && (
                   <Typography
                     variant="h3"
                     gutterBottom
@@ -649,8 +649,8 @@ const Payment = () => {
                 {loadingyear ? (
                   <CircularProgress size={25} style={{ color: "#F6F6FB" }} />
                 ) : (
-                  (status === false && "Try It Free") ||
-                  ((status === "Inactive" || status === "Canceled") && (
+                  (data.status === false && "Try It Free") ||
+                  ((data.status === "Inactive" || data.status === "Canceled") && (
                     <Typography
                       sx={{ fontSize: "20px", fontWeight: "600 !important" }}
                       noWrap
@@ -852,8 +852,8 @@ const Payment = () => {
                 {loadingyear ? (
                   <CircularProgress size={25} style={{ color: "#F6F6FB" }} />
                 ) : (
-                  (status === false && "Try It Free") ||
-                  ((status === "Inactive" || status === "Canceled") && (                    
+                  (data.status === false && "Try It Free") ||
+                  ((data.status === "Inactive" || data.status === "Canceled") && (                    
                     <Typography
                       sx={{ fontSize: "20px", fontWeight: "600 !important" }}
                     noWrap>

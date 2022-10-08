@@ -14,11 +14,12 @@ import {
   InputBase,
   useMediaQuery,
   useTheme,
+  Stack,
 } from "@mui/material";
 import { Grid } from "@mui/material";
 import { CircularProgress } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { login, resendactivateemail } from "../../services/index";
+import { gLogin, login, resendactivateemail } from "../../services/index";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { themeLight, globalStyles, BootstrapInput } from "../../css/globalcss";
@@ -27,6 +28,10 @@ import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { loginvalidationSchema } from "../../utils/validationSchemas";
+import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
+// import { GoogleLogin } from "react-google-login";
+import jwt_decode from "jwt-decode";
+import GoogleAuthLogin from "../../components/GoogleLogin";
 
 const Login = () => {
   const global = globalStyles();
@@ -57,7 +62,7 @@ const Login = () => {
   };
   const submitLoginform = (data) => {
     setLoading(true);
-    
+
     localStorage.setItem("email", data.email);
     try {
       login(data).then(
@@ -67,6 +72,7 @@ const Login = () => {
         },
         (error) => {
           localStorage.setItem("is_alive", false);
+          console.log("in login");
           setLoading(false);
           if (error.response.status === 401) {
             setVerificationmesssage("Please verify your email address");
@@ -345,8 +351,55 @@ const Login = () => {
                       )}
                     </Button>
                   </Box>
+                  {/* <GoogleLogin
+                     clientId={process.env.REACT_APP_GOOGLE_LOGIN_CLIENTID}
+                    buttonText="Login"
+                    onSuccess={()=>console.log("?????????????????????????????")}
+                    onFailure={()=>console.log("++++++++++++++++++++++sfdsafdsds+++++++++++++++++++")}
+                    cookiePolicy={"single_host_origin"}
+                  /> */}
                 </Box>
               </CardContent>
+
+              {/* <Typography
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                or
+              </Typography> */}
+
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+              <GoogleAuthLogin/>
+                {/* <GoogleOAuthProvider clientId="1051506495207-q9t49sm79f7e958lfc5r1fu17blputsp.apps.googleusercontent.com">
+                  <GoogleLogin //useOneTap={googleLogin}
+                    // type="icon"
+                    onSuccess={async (credentialResponse) => {
+                      let edata = jwt_decode(credentialResponse.credential, {
+                        credential: true,
+                      });
+                      console.log(edata.email);
+
+                      gLogin({ email: edata.email }).then((r) => {
+                        localStorage.setItem("is_alive", true);
+                        localStorage.setItem("email", edata.email);
+                        navigate("/");
+                      });
+                    }}
+                    onError={() => {
+                      console.log("Login Failed");
+                    }}
+                  />
+                </GoogleOAuthProvider> */}
+              </div>
             </Card>
           </Grid>
         </Box>

@@ -1,4 +1,4 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -23,26 +23,40 @@ import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { CssBaseline } from "@material-ui/core";
-import { addToCartEventRegister, signUp } from "../../services/index";
+import {
+  addToCartEventRegister,
+  gLogin,
+  login,
+  signUp,
+  startYearlyTrial,
+} from "../../services/index";
 import { themeLight, globalStyles, BootstrapInput } from "../../css/globalcss";
 import { registerValidationSchema } from "./../../utils/validationSchemas";
 import fbaddlogo from "../../assets/Eye of Ecom  Blue.png";
 import fbaddlogowhitecolor from "../../assets/Eye of Ecom White.png";
 import { useEffect } from "react";
 import ReactGA from "react-ga";
+import { setTrialStatus } from "../../redux/ducks/subscription";
+import { useDispatch } from "react-redux";
+import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
+import jwt_decode from "jwt-decode";
+import axios from "axios";
+import GoogleAuthLogin from "../../components/GoogleLogin";
+// import { gLogin } from "../../services/index.js";
+
 ReactGA.initialize(process.env.REACT_APP_TRACKING_ID);
 
 const Signup = () => {
-
   const global = globalStyles();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [errormessage, setErrormessage] = useState("");
   const theme = useTheme();
+  const dispatch = useDispatch();
 
   const showhidelogolargedevice = useMediaQuery(theme.breakpoints.up("sm"));
   const showhidelogosmalldevice = useMediaQuery(theme.breakpoints.down("sm"));
-  const paddingcardsmalldevice= useMediaQuery(theme.breakpoints.down("sm"));
+  const paddingcardsmalldevice = useMediaQuery(theme.breakpoints.down("sm"));
   const aligncenterfont = useMediaQuery(theme.breakpoints.up("sm"));
 
   const [values, setValues] = React.useState({
@@ -50,7 +64,7 @@ const Signup = () => {
   });
 
   const {
-    register:validate,
+    register: validate,
     control,
     handleSubmit,
     formState: { errors },
@@ -62,20 +76,23 @@ const Signup = () => {
     event.preventDefault();
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     ReactGA.event({
       category: "AddToCart",
       action: "AddToCart",
     });
     addToCartEventRegister()
-    .then((res) => {})
-    .catch((error) => {});
-  },[])
+      .then((res) => {})
+      .catch((error) => {});
+  }, []);
 
   const submitsigninform = async (data) => {
     setLoading(true);
+
     try {
-      const response = await signUp(data);      
+      console.log("come 1");
+      const response = await signUp(data);
+      console.log("come 2");
       if (response.data.message === "Password is too short") {
         setLoading(false);
         setErrormessage("Password is too short");
@@ -83,14 +100,27 @@ const Signup = () => {
         setLoading(false);
         setErrormessage("The email address is already in used");
       } else if (response.success) {
+        console.log("come 4 suc");
         localStorage.setItem("email", data.email);
-        navigate("/auth/activate");
+        localStorage.setItem("is_alive", true);
+        dispatch(setTrialStatus(true));
+
+        login(data).then((res) => {
+          localStorage.setItem("is_alive", true);
+          setLoading(false);
+          navigate("/");
+        });
+
+        console.log("??????????????????????????????????????????");
+        // navigate("/");
+
+        // navigate("/auth/activate");
       }
     } catch {
       setLoading(false);
     }
   };
-  
+
   return (
     <MuiThemeProvider theme={themeLight}>
       <CssBaseline />
@@ -136,13 +166,17 @@ const Signup = () => {
                 ""
               )}
               <form onSubmit={handleSubmit(submitsigninform)}>
-                <Box sx={{ padding:paddingcardsmalldevice ? "" :"1vmax 2.5vmax" }}>
+                <Box
+                  sx={{
+                    padding: paddingcardsmalldevice ? "" : "1vmax 2.5vmax",
+                  }}
+                >
                   <Typography
                     sx={{
                       fontWeight: 600,
                       fontSize: { xs: 23, lg: 25 },
                     }}
-                    align={aligncenterfont ?"" :"center"}
+                    align={aligncenterfont ? "" : "center"}
                   >
                     Create a Free account
                   </Typography>
@@ -151,9 +185,9 @@ const Signup = () => {
                     sx={{
                       fontSize: { xs: 13, sm: 16, lg: 16 },
                       paddingTop: { xs: 0, sm: 1, md: 1, lg: 1 },
-                      fontWeight:500
+                      fontWeight: 500,
                     }}
-                    align={aligncenterfont ?"" :"center"}
+                    align={aligncenterfont ? "" : "center"}
                   >
                     Already have an account?{" "}
                     <span
@@ -171,13 +205,37 @@ const Signup = () => {
                       "The email address is already in used" ? (
                         <Box mt={2}>
                           {errormessage && (
-                            <Alert severity="error" sx={{marginBottom:{xs:"10px" ,sm:"10px",md:"0px",lg:"0px"}}}>{errormessage}</Alert>
+                            <Alert
+                              severity="error"
+                              sx={{
+                                marginBottom: {
+                                  xs: "10px",
+                                  sm: "10px",
+                                  md: "0px",
+                                  lg: "0px",
+                                },
+                              }}
+                            >
+                              {errormessage}
+                            </Alert>
                           )}
                         </Box>
                       ) : (
                         <Box mt={2}>
                           {errormessage && (
-                            <Alert severity="error" sx={{marginBottom:{xs:"10px" ,sm:"10px",md:"0px",lg:"0px"}}}>{errormessage}</Alert>
+                            <Alert
+                              severity="error"
+                              sx={{
+                                marginBottom: {
+                                  xs: "10px",
+                                  sm: "10px",
+                                  md: "0px",
+                                  lg: "0px",
+                                },
+                              }}
+                            >
+                              {errormessage}
+                            </Alert>
                           )}
                         </Box>
                       )}
@@ -283,7 +341,10 @@ const Signup = () => {
                           <Typography
                             color={errors.acceptTerms ? "error" : "inherit"}
                             className={global.termsandcondition}
-                            sx={{ fontSize: { xs: 14, sm: 16, lg: 16 },fontWeight:500 }}
+                            sx={{
+                              fontSize: { xs: 14, sm: 16, lg: 16 },
+                              fontWeight: 500,
+                            }}
                           >
                             I agree to the
                             <Typography
@@ -333,13 +394,51 @@ const Signup = () => {
                           style={{ color: "#F6F6FB" }}
                         />
                       ) : (
-                      <Typography sx={{fontWeight:600,fontSize: "20px"}}> Create Account</Typography>
+                        <Typography sx={{ fontWeight: 600, fontSize: "20px" }}>
+                          {" "}
+                          Create Account
+                        </Typography>
                       )}
                     </Button>
                   </Box>
                 </Box>
               </form>
             </CardContent>
+            <GoogleAuthLogin />
+            {/* <GoogleOAuthProvider clientId="1051506495207-q9t49sm79f7e958lfc5r1fu17blputsp.apps.googleusercontent.com">
+              <GoogleLogin //useOneTap={googleLogin}
+                type="icon"
+                onSuccess={async (credentialResponse) => {
+                  // console.log(jsonwebtoken.decode(credentialResponse.credential));
+                  // document.cookie.remove("http://localhost:3001/");
+
+                  console.log(
+                    jwt_decode(credentialResponse.credential, {
+                      credential: true,
+                    })
+                  );
+
+                  const abc = await axios.post(
+                    "http://localhost:8000/api/googleauth/",
+                    jwt_decode(credentialResponse.credential, {
+                      credential: true,
+                    })
+                  ); //.then((res)=>{console.log("lkkkkkkkkkkkkkkkkkkkkkkkkkkkk",res)});
+
+                  gLogin({ email: abc.data.data.email }).then((r) => {
+                    localStorage.setItem("is_alive", true);
+                    localStorage.setItem("email", abc.data.data.email);
+                    console.log(")))))))))))))))))))))))))))",r);
+                    navigate("/");
+                  });
+
+                  console.log("???????????????????????", abc);
+                }}
+                onError={() => {
+                  console.log("Login Failed");
+                }}
+              />
+            </GoogleOAuthProvider> */}
           </Card>
         </Box>
       </Grid>

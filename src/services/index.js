@@ -26,6 +26,24 @@ export const login = async (payload) => {
     withCredentials: true,
   });
 };
+
+export const gLogin = async (payload) => {
+  await axios.post(`${process.env.REACT_APP_API_URL}/api/googlelogin/`, payload, {
+    withCredentials: true,
+  });
+};
+export const GoggleRegisterAuth = async (payload) => {
+  await axios.post(
+    `${process.env.REACT_APP_API_URL}/api/googleauth/`,
+    payload   
+  );
+};
+export const gRefister =async (payload) => {
+  await axios.post(
+    `${process.env.REACT_APP_API_URL}/api/googleauth/`,
+    payload);
+};
+
 export const logoutUser = () => {
   return axios.get(`${process.env.REACT_APP_API_URL}/api/logout/`, {
     withCredentials: true,
