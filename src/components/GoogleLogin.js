@@ -24,7 +24,7 @@ function GoogleAuthLogin() {
         alignItems: "center",
       }}
     >
-      <GoogleOAuthProvider clientId="1051506495207-q9t49sm79f7e958lfc5r1fu17blputsp.apps.googleusercontent.com">
+      <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_LOGIN_CLIENTID}>
         {/* <Button onClick={()=>onsucLogIn}>Sign In Google</Button> */}
 
         <GoogleLogin
