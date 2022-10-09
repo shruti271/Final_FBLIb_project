@@ -375,7 +375,8 @@ const Login = () => {
               <Box
                 sx={{
                   padding: paddingcardsmalldevice ? "" : "1vmax 2.5vmax",
-                  paddingTop:"0px"
+                  paddingTop:"0px",
+                  paddingBottom:"0px"
                 }}
               >
                 <Divider>OR</Divider>
@@ -386,6 +387,8 @@ const Login = () => {
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
+                  paddingTop:"16px",
+                  paddingBottom:"18px"
                 }}
               >
                 <GoogleAuthLogin />
