@@ -37,7 +37,7 @@ function TimerClock() {
   );
 
   return (
-    <Box sx={{mt:showgrid && 1}}>
+    <Box sx={{mt:showgrid && 1,}}>
       {trial_end_date && (
         <>
           <Typography style={{ fontWeight: "bold" }}>
@@ -46,7 +46,7 @@ function TimerClock() {
 
           <Countdown
             date={convertUTCDateToLocalDate(new Date(trial_end_date)).getTime()}
-            // date={new Date(trial_end_date).getTime()}
+            // date={new Date(trial_end_date).getTime()}            
             autoStart="true"
             onComplete={() => {
               dispatch(
@@ -57,10 +57,10 @@ function TimerClock() {
               );
             }}
             renderer={(props) => (
-              <div style={{ color: "black" }}>
+              <div style={{ color: "black"}}>
                 <Stack
                   direction={"row"}
-                  spacing={3}
+                  spacing={showgrid?1:3}
                   className={classes.DisplayBox}
                 >
                   <Stack className={classes.DisplayBox}>
