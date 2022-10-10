@@ -42,7 +42,7 @@ const Addlibrarydatabase = () => {
         >
           <Box component="main">
             <Stack
-              direction={"row"}
+              direction={showgrid?"column":"row"}
               style={{
                 display: "flex",
                 alignItems: "center",

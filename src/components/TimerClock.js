@@ -1,5 +1,5 @@
-import { makeStyles } from "@material-ui/core";
-import { Divider, Stack, Typography } from "@mui/material";
+import { makeStyles, useMediaQuery } from "@material-ui/core";
+import { Divider, Stack, Typography, useTheme } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
 import Countdown from "react-countdown";
@@ -29,13 +29,15 @@ function convertUTCDateToLocalDate(date) {
 function TimerClock() {
   const dispatch = useDispatch();
   const classes = useStyles();
+  const theme = useTheme();
+  const showgrid = useMediaQuery(theme.breakpoints.only("xs"));
 
   const { trial_end_date } = useSelector(
     (state) => state.subscriptionData.data
   );
 
   return (
-    <Box>
+    <Box sx={{mt:showgrid && 1}}>
       {trial_end_date && (
         <>
           <Typography style={{ fontWeight: "bold" }}>
