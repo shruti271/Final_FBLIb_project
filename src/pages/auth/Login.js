@@ -391,7 +391,7 @@ const Login = () => {
                   paddingBottom:"18px"
                 }}
               >
-                <GoogleAuthLogin />
+                <GoogleAuthLogin from='login'/>
                 {/* <GoogleOAuthProvider clientId="1051506495207-q9t49sm79f7e958lfc5r1fu17blputsp.apps.googleusercontent.com">
                   <GoogleLogin //useOneTap={googleLogin}
                     // type="icon"

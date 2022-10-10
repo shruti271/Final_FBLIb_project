@@ -10,11 +10,13 @@ import { gLogin, GoggleRegisterAuth, gRefister } from "../services";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@material-ui/core";
 
-function GoogleAuthLogin() {
+function GoogleAuthLogin({from}) {
   const navigate = useNavigate();
   //   const onsucLogIn = useGoogleLogin({
   //     onSuccess: codeResponse => console.log(codeResponse),
   //   });
+
+  console.log("from :::", from);
 
   return (
     <div
@@ -34,6 +36,7 @@ function GoogleAuthLogin() {
           size="large"
           width="250px"
           theme="ououtline"
+          text={from === 'signup' ? 'signup_with' : 'signin_with'}
           // shape="pill"
           // auto_select={false}
           // type="standard"

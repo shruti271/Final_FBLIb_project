@@ -18,6 +18,7 @@ import {
   InputBase,
   useMediaQuery,
   useTheme,
+  Divider,
 } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
@@ -169,6 +170,7 @@ const Signup = () => {
                 <Box
                   sx={{
                     padding: paddingcardsmalldevice ? "" : "1vmax 2.5vmax",
+                    paddingBottom:"0px"
                   }}
                 >
                   <Typography
@@ -320,7 +322,7 @@ const Signup = () => {
                         {errors.password?.message}
                       </Typography>
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid item xs={12} sx={{paddingTop:"0px !important"}}>
                       <FormControlLabel
                         control={
                           <Controller
@@ -404,7 +406,26 @@ const Signup = () => {
                 </Box>
               </form>
             </CardContent>
-            <GoogleAuthLogin />
+
+            <Box
+                sx={{
+                  padding: paddingcardsmalldevice ? "" : "1vmax 2.5vmax",
+                  paddingTop:"0px",
+                  paddingBottom:"0px"
+                }}
+              >
+                <Divider>OR</Divider>
+              </Box>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  paddingTop:"16px",
+                  paddingBottom:"18px"
+                }}
+              >
+<GoogleAuthLogin from='signup' />
             {/* <GoogleOAuthProvider clientId="1051506495207-q9t49sm79f7e958lfc5r1fu17blputsp.apps.googleusercontent.com">
               <GoogleLogin //useOneTap={googleLogin}
                 type="icon"
@@ -439,6 +460,8 @@ const Signup = () => {
                 }}
               />
             </GoogleOAuthProvider> */}
+              </div>
+            
           </Card>
         </Box>
       </Grid>
