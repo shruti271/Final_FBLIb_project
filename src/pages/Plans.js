@@ -590,7 +590,7 @@ console.log("*******************************************",data)
                     fontWeight: 500,
                   }}
                 >
-                  Early Access to the Most Powerfull Ecom Spy Tool
+                  Early Access to the Most Powerful Ecom Spy Tool
                 </Typography>
               </Stack>
               <Stack direction={"row"}>
