@@ -231,7 +231,7 @@ console.log("*******************************************",data)
           {(data.status === "Inactive" || data.status === "Canceled") && (
             <>
               Sign up in the next 24 hours and get
-              <span style={{ color: "red" }}>&nbsp;&nbsp; ${process.env.REACT_APP_DISCOUNT_PERCENTAGE}% off &nbsp;</span>
+              <span style={{ color: "red" }}>&nbsp;&nbsp;{process.env.REACT_APP_DISCOUNT_PERCENTAGE}% off &nbsp;</span>
               every month!
             </>
           )}
@@ -247,7 +247,7 @@ console.log("*******************************************",data)
             }}
             align={aligncenterfont ? "center" : "center"}
           >
-            14 Day money back guarantee (for any reason)
+            14 Day money back guarantee
           </Typography>
         )}
       </Box>
@@ -358,7 +358,7 @@ console.log("*******************************************",data)
                     fontWeight: 500,
                   }}
                 >
-                  Adlibrary Database With Over 30,000 Active Dropshipping Sites
+                  Adlibrary Database With Over 500,000 Active Dropshipping Sites
                 </Typography>
               </Stack>
               <Stack direction={"row"}>
@@ -370,7 +370,7 @@ console.log("*******************************************",data)
                     fontWeight: 500,
                   }}
                 >
-                  Early Access to the Most Powerfull Ecom Spy Tool
+                  Early Access to the Most Powerful Ecom Spy Tool
                 </Typography>
               </Stack>
               <Stack direction={"row"}>
@@ -577,7 +577,7 @@ console.log("*******************************************",data)
                     fontWeight: 500,
                   }}
                 >
-                  Adlibrary Database With Over 30,000 Active Dropshipping Sites
+                  Adlibrary Database With Over 500,000 Active Dropshipping Sites
                 </Typography>
               </Stack>
               <Stack direction={"row"}>
