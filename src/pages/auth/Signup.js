@@ -180,7 +180,7 @@ const Signup = () => {
                     }}
                     align={aligncenterfont ? "" : "center"}
                   >
-                    Create a Free account
+                    Create A Free Account To Get Immediate Access!
                   </Typography>
 
                   <Typography
